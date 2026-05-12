@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Events Directory</title>
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Oswald:wght@400;500;600;700;800&display=swap');
+    
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #FFF9F8;
+    }
+    
+    .font-oswald { font-family: 'Oswald', sans-serif; }
+    
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    
+    .speaker-img-bw { filter: grayscale(100%); transition: filter 0.3s ease; }
+    .speaker-card:hover .speaker-img-bw { filter: grayscale(0%); }
+
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 8px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: #f1f5f9; 
+      border-radius: 4px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #94a3b8; 
+      border-radius: 4px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+      background: #64748b; 
+    }
+  </style>
+</head>
+<body>
+  <!-- Root container for the app -->
+  <div id="app"></div>
+
+  <script>
+    // --- MOCK DATA ---
+    const MOCK_EVENTS = [
+      {
+        id: 1,
+        featured: true,
+        type: 'IN-PERSON',
+        status: 'Upcoming',
+        category: 'Funding Summit',
+        title: 'Annual SME Funding Gala 2026',
+        description: 'Join us for an exclusive evening of networking with top VCs and angel investors. A premier event for growth-focused SMEs looking to scale their operations globally.',
+        logistics: {
+          start_datetime: '2026-06-18T09:00:00+02:00',
+          end_datetime: '2026-06-18T17:00:00+02:00',
+          timezone: 'SAST',
+          display_date: 'June 18, 2026',
+          display_time: '09:00 - 17:00 SAST'
+        },
+        venue: {
+          name: 'Focus Rooms, Sandton',
+          address: 'Heaton Lane Longlake 20, Sandton',
+          directions: 'Secure basement parking available.'
+        },
+        sponsors: [
+          { name: "Resa", logo: "https://events.smesouthafrica.co.za/wp-content/uploads/2026/03/resa-logo.png" },
+          { name: "Raizcorp", logo: "https://events.smesouthafrica.co.za/wp-content/uploads/2026/03/raizcorp-logo.png" },
+          { name: "Tender Capital", logo: "https://events.smesouthafrica.co.za/wp-content/uploads/2026/03/tendercapital-logo.png" },
+          { name: "Alternative Finance Group", logo: "https://events.smesouthafrica.co.za/wp-content/uploads/2026/03/afg-logo.png" },
+          { name: "AAA Consortium", logo: "https://events.smesouthafrica.co.za/wp-content/uploads/2026/03/aaa-logo.png" },
+          { name: "Growise Capital", logo: "https://events.smesouthafrica.co.za/wp-content/uploads/2026/03/Growise-Capital.png" }
+        ],
+        speakers: [
+          { name: "Darlene Menzies", role: "CEO at Finfind", img: "https://advice.smesouthafrica.co.za/image/user/2801/MEDIUM", linkedin: "#", isBuddyBossUser: true },
+          { name: "Elton Singh", role: "Head of Business Dev at AAA", img: "https://advice.smesouthafrica.co.za/image/user/2801/MEDIUM", linkedin: "#", isBuddyBossUser: false },
+          { name: "Jameel Khan", role: "Co-founder at Unconventional CA", img: "https://advice.smesouthafrica.co.za/image/user/2801/MEDIUM", linkedin: "#", isBuddyBossUser: true }
+        ],
+        agenda: [
+          { time: "08:30 - 09:00", title: "Registration & Welcome Coffee", desc: "Arrive early, get your badge, and start networking." },
+          { time: "09:00 - 09:15", title: "Opening Keynote", desc: "Setting the stage for a day of growth and insights." },
+          { time: "09:15 - 10:30", title: "Targeted Opportunities: VC Deployments", speaker: "Darlene Menzies", desc: "Meet specific VCs deploying capital." },
+          { time: "10:30 - 11:00", title: "Morning Tea Break", desc: "Refreshments served in the main hall." },
+          { time: "11:00 - 12:30", title: "Valuation Masterclass", speaker: "Jameel Khan", desc: "Master mathematical frameworks for valuation." },
+          { time: "12:30 - 14:00", title: "Networking Lunch", desc: "Buffet lunch and structured networking sessions." }
+        ],
+        vault: null
+      },
+      {
+        id: 2,
+        featured: true,
+        type: 'ONLINE',
+        status: 'Past', 
+        category: 'Tax and Accounting',
+        title: 'The Importance of Good Record-Keeping in Business',
+        description: 'Running a business is more than just delivering a product or service — the real strength of a successful company lies in how well you track, manage, and understand your financial data.',
+        logistics: {
+          start_datetime: '2025-10-30T10:00:00+02:00',
+          end_datetime: '2025-10-30T11:30:00+02:00',
+          timezone: 'SAST',
+          display_date: '30 October 2025',
+          display_time: 'Recording Available'
+        },
+        venue: null,
+        sponsors: [],
+        speakers: [
+          { 
+            name: "Mpho Raseroka", 
+            role: "Founder and CEO - Lodirile Consulting", 
+            bio: "As the Founder and CEO, I have more than 20 years' experience in Human Resources Management.",
+            img: "https://advice.smesouthafrica.co.za/image/user/2801/MEDIUM", 
+            linkedin: "#", 
+            isBuddyBossUser: true 
+          }
+        ],
+        topics: [],
+        agenda: [],
+        vault: {
+          recording_url: "https://images.unsplash.com/photo-1588196749597-9ff0464ac4ab?auto=format&fit=crop&q=80&w=1200", 
+          gallery: [],
+          downloads: [{ title: "Record-Keeping Checklist.pdf", size: "1.2 MB" }]
+        }
+      },
+      {
+        id: 3,
+        featured: false,
+        type: 'IN-PERSON',
+        status: 'Past',
+        category: 'Networking',
+        title: 'The 2025 SME Funding Summit',
+        description: 'Our previous flagship event connecting founders directly with institutional capital providers.',
+        logistics: {
+          start_datetime: '2025-06-18T09:00:00+02:00',
+          end_datetime: '2025-06-18T17:00:00+02:00',
+          timezone: 'SAST',
+          display_date: '18 June 2025',
+          display_time: 'Concluded'
+        },
+        venue: { name: 'The Empire Venue, JHB', address: '', directions: '' },
+        sponsors: [],
+        speakers: [],
+        agenda: [],
+        vault: {
+          recording_url: null,
+          stats: { attendees: "500+", speakers: "30+", exhibitors: "15+", funders: "10+" },
+          gallery: [
+            "https://events.smesouthafrica.co.za/wp-content/uploads/2025/11/Sourcefin-Exhibition.jpg",
+            "https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&q=80&w=800",
+            "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&q=80&w=800"
+          ],
+          downloads: []
+        }
+      },
+      {
+        id: 4,
+        featured: false,
+        type: 'ONLINE',
+        status: 'LIVE NOW',
+        category: 'Business Planning',
+        title: 'Mastering B2B Sales Cycles - Live Session',
+        description: 'Learn how to shorten your B2B sales cycles, close enterprise deals, and build a predictable revenue engine from industry veterans.',
+        logistics: {
+          start_datetime: '2026-05-12T21:00:00+02:00',
+          end_datetime: '2026-05-12T23:00:00+02:00',
+          timezone: 'SAST',
+          display_date: '12 May 2026',
+          display_time: '21:00 - 23:00 SAST'
+        },
+        venue: {
+          name: 'Zoom Event',
+          link: 'https://zoom.us/j/123456789'
+        },
+        sponsors: [
+          { name: "Growise Capital", logo: "https://events.smesouthafrica.co.za/wp-content/uploads/2026/03/Growise-Capital.png" }
+        ],
+        host: {
+            name: "Lebo Madiba",
+            role: "Event Moderator",
+            bio: "Lebo has been hosting SME strategy sessions for 5 years and brings deep insights into B2B sales dynamics.",
+            img: "https://advice.smesouthafrica.co.za/image/user/2801/MEDIUM"
+        },
+        speakers: [{ 
+            name: "Vusi Ndlovu", 
+            role: "VP Sales", 
+            bio: "Vusi is an expert in B2B dynamics, having closed over R50M in enterprise deals over the last decade.",
+            img: "https://advice.smesouthafrica.co.za/image/user/2801/MEDIUM" 
+        }],
+        agenda: [],
+        vault: null
+      }
+    ];
+
+    // --- APPLICATION STATE ---
+    let state = {
+      activeView: 'directory', 
+      mainTab: 'feed', 
+      statusFilter: 'All',
+      typeFilter: 'All',
+      searchQuery: '',
+      selectedEvent: null,
+      vaultUnlocked: false,
+      isSponsorModalOpen: false,
+      isLoggedIn: false,
+      isWebinarRegistered: false,
+      showWebinarForm: false
+    };
+
+    // --- STATE MANAGEMENT ---
+    function updateState(newState) {
+      state = { ...state, ...newState };
+      renderApp();
+    }
+
+    // --- EVENT HANDLERS ---
+    function handleReset() {
+      updateState({ statusFilter: 'All', typeFilter: 'All', searchQuery: '' });
+    }
+
+    function openEventDetail(id) {
+      const event = MOCK_EVENTS.find(e => e.id === id);
+      updateState({
+        selectedEvent: event,
+        vaultUnlocked: false,
+        isWebinarRegistered: false,
+        showWebinarForm: false,
+        activeView: 'event_detail'
+      });
+      window.scrollTo(0,0);
+    }
+
+    function navigateBack() {
+      updateState({ activeView: 'directory', selectedEvent: null });
+      window.scrollTo(0,0);
+    }
+
+    function toggleSponsorModal(isOpen) {
+      updateState({ isSponsorModalOpen: isOpen });
+    }
+
+    function handleSponsorSubmit(e) {
+      e.preventDefault();
+      toggleSponsorModal(false);
+    }
+
+    function handleVaultSubmit(e) {
+      e.preventDefault();
+      updateState({ vaultUnlocked: true });
+    }
+
+    function handleWebinarRegister(e) {
+      e.preventDefault();
+      updateState({ isWebinarRegistered: true, showWebinarForm: false });
+    }
+
+    // --- STREAMING_CHUNK:Rendering Helper Functions... ---
+    function getFilteredEvents() {
+      return MOCK_EVENTS.filter(ev => {
+        if (state.statusFilter !== 'All' && ev.status !== state.statusFilter) return false;
+        if (state.typeFilter !== 'All' && ev.type !== state.typeFilter) return false;
+        if (state.searchQuery && !ev.title.toLowerCase().includes(state.searchQuery.toLowerCase())) return false;
+        return true;
+      }).sort((a, b) => {
+        if (a.status === 'LIVE NOW' && b.status !== 'LIVE NOW') return -1;
+        if (b.status === 'LIVE NOW' && a.status !== 'LIVE NOW') return 1;
+        return 0;
+      });
+    }
+
+    // --- RENDER FUNCTIONS ---
+    
+    // Top Navigation Bar
+    function renderTopBar() {
+      if (state.activeView === 'directory') return '';
+      
+      const isOnlineActive = state.selectedEvent?.type === 'ONLINE' && state.selectedEvent?.status !== 'Past';
+      
+      let memberSimulationHtml = '';
+      if (isOnlineActive) {
+        memberSimulationHtml = `
+          <label class="flex items-center gap-2 text-xs font-bold text-slate-500 cursor-pointer hover:text-[#9C1C1F]">
+            <input type="checkbox" ${state.isLoggedIn ? 'checked' : ''} onchange="updateState({isLoggedIn: this.checked})" class="rounded border-slate-300 text-[#9C1C1F] focus:ring-[#9C1C1F]" />
+            Simulate Logged In Member
+          </label>
+        `;
+      }
+
+      return `
+        <div class="border-b border-slate-200 bg-white sticky top-0 z-50">
+          <div class="max-w-[1200px] mx-auto px-6 py-4 flex items-center justify-between">
+            <button onclick="navigateBack()" class="flex items-center gap-2 text-slate-500 hover:text-[#0A2C3D] font-semibold transition-colors">
+              <i data-lucide="arrow-left" class="w-[18px] h-[18px]"></i> Back to Directory
+            </button>
+            <div class="flex items-center gap-6">
+              ${memberSimulationHtml}
+              <div class="flex items-center gap-2 text-xs text-slate-400 font-medium hidden sm:flex border-l border-slate-200 pl-6">
+                <span>Home</span> <i data-lucide="chevron-right" class="w-3 h-3 text-slate-300"></i> 
+                <span>Events</span> <i data-lucide="chevron-right" class="w-3 h-3 text-slate-300"></i> 
+                <span class="text-slate-800 line-clamp-1 max-w-[200px]">${state.selectedEvent?.title}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    // Main Directory
+    function renderDirectory() {
+      const filteredEvents = getFilteredEvents();
+      
+      let feedOrLibraryHtml = '';
+      
+      if (state.mainTab === 'feed') {
+        feedOrLibraryHtml = `
+          <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
+            ${filteredEvents.map(event => `
+              <div class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden relative flex flex-col hover:shadow-xl transition-shadow group">
+                ${event.featured ? '<div class="absolute top-0 left-0 bg-[#9C1C1F] text-white text-[10px] font-extrabold uppercase px-3 py-1.5 rounded-br-xl z-10">FEATURED</div>' : ''}
+                
+                <div class="p-6 md:p-8 flex-1 flex flex-col mt-4">
+                  <div class="flex justify-between items-center mb-4">
+                    <span class="text-slate-500 font-bold text-xs tracking-widest">${event.type}</span>
+                    ${event.status === 'LIVE NOW' ? `
+                      <span class="px-4 py-1.5 rounded-full text-xs font-bold bg-red-100 text-red-700 flex items-center gap-2 animate-pulse">
+                        <span class="w-2 h-2 rounded-full bg-red-600"></span> LIVE NOW
+                      </span>
+                    ` : `
+                      <span class="px-4 py-1.5 rounded-full text-xs font-bold ${event.status === 'Upcoming' ? 'bg-[#FFF2CD] text-[#A67B1E]' : 'bg-slate-100 text-slate-600'}">
+                        ${event.status}
+                      </span>
+                    `}
+                  </div>
+
+                  <h3 class="text-xl font-oswald font-extrabold text-[#0A2C3D] uppercase leading-tight mb-3 group-hover:text-[#9C1C1F] transition-colors">${event.title}</h3>
+                  <p class="text-slate-500 text-sm leading-relaxed line-clamp-3 mb-6 flex-1">${event.description}</p>
+
+                  <div class="mt-auto">
+                    <p class="font-extrabold text-slate-900 text-sm mb-5">${event.logistics.display_date} at ${event.logistics.display_time.split(' ')[0]}</p>
+                    <button onclick="openEventDetail(${event.id})" class="w-full bg-[#9C1C1F] hover:bg-[#7a1518] text-white font-bold py-3.5 rounded-xl transition-colors shadow-sm">
+                      View Details
+                    </button>
+                  </div>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        `;
+      } else {
+        feedOrLibraryHtml = `
+          <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
+            ${MOCK_EVENTS.filter(e => e.status === 'Past' && e.vault).map(item => `
+              <div onclick="openEventDetail(${item.id})" class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden cursor-pointer hover:shadow-xl transition-all group">
+                <div class="h-56 bg-slate-900 flex items-center justify-center relative overflow-hidden">
+                  ${item.type === 'ONLINE' ? `
+                    <img src="${item.vault.recording_url}" class="w-full h-full object-cover opacity-60 group-hover:scale-105 transition-transform" alt="Thumbnail" />
+                    <i data-lucide="play-circle" class="absolute text-white/90 group-hover:scale-110 transition-transform w-16 h-16"></i>
+                  ` : `
+                    <img src="${item.vault.gallery[0]}" class="w-full h-full object-cover opacity-80 group-hover:scale-105 transition-transform" alt="Gallery" />
+                    <i data-lucide="image" class="absolute text-white/90 w-12 h-12"></i>
+                  `}
+                </div>
+                <div class="p-6">
+                  <span class="text-[#9C1C1F] font-extrabold text-[10px] tracking-widest mb-2 block">
+                    ${item.type === 'ONLINE' ? 'VIDEO RECORDING' : 'PHOTO GALLERY'}
+                  </span>
+                  <h3 class="text-lg font-extrabold text-[#0A2C3D] mb-1 leading-tight">${item.title}</h3>
+                  <p class="text-sm text-slate-500 font-medium">From: ${item.logistics.display_date}</p>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        `;
+      }
+
+      return `
+        <div class="max-w-[1200px] mx-auto px-6 py-10">
+          <div class="flex items-center gap-2 text-sm text-slate-500 font-medium mb-8">
+            <i data-lucide="home" class="w-4 h-4"></i> <span>Home</span>
+            <i data-lucide="chevron-right" class="w-[14px] h-[14px] text-slate-300"></i> <span>Events</span>
+          </div>
+
+          <div class="mb-10">
+            <h1 class="text-4xl md:text-5xl font-extrabold text-slate-900 tracking-tight mb-3 font-oswald uppercase text-[#0A2C3D]">
+              Events & Webinars
+            </h1>
+            <p class="text-lg text-slate-500 font-medium">Explore our upcoming and past events. Join us to learn, network, and grow.</p>
+          </div>
+
+          <div class="flex gap-4 mb-8">
+            <button onclick="updateState({mainTab: 'feed'})" class="px-6 py-3 rounded-lg font-bold text-sm shadow-sm ${state.mainTab === 'feed' ? 'bg-[#9C1C1F] text-white' : 'bg-white text-slate-700 border border-slate-200'}">
+              Event Feed
+            </button>
+            <button onclick="updateState({mainTab: 'library'})" class="px-6 py-3 rounded-lg font-bold text-sm shadow-sm ${state.mainTab === 'library' ? 'bg-[#9C1C1F] text-white' : 'bg-white text-slate-700 border border-slate-200'}">
+              Event Library
+            </button>
+          </div>
+
+          <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-5 mb-10 flex flex-wrap lg:flex-nowrap items-center justify-between gap-6">
+            <div class="flex items-center gap-6 w-full lg:w-auto">
+              <div class="flex items-center gap-3">
+                <span class="font-bold text-slate-900 text-sm">Status:</span>
+                <button onclick="updateState({statusFilter: 'All'})" class="flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold border ${state.statusFilter === 'All' ? 'bg-[#9C1C1F] text-white border-[#9C1C1F]' : 'bg-white text-slate-600'}">
+                  All <span class="px-2 py-0.5 rounded-full text-[10px] bg-white/20 text-white">${MOCK_EVENTS.length}</span>
+                </button>
+                <button onclick="updateState({statusFilter: 'Upcoming'})" class="flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold border ${state.statusFilter === 'Upcoming' ? 'bg-[#9C1C1F] text-white border-[#9C1C1F]' : 'bg-white text-slate-600'}">
+                  Upcoming <span class="px-2 py-0.5 rounded-full text-[10px] bg-slate-100 text-slate-500">${MOCK_EVENTS.filter(e=>e.status==='Upcoming').length}</span>
+                </button>
+                <button onclick="updateState({statusFilter: 'Past'})" class="flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold border ${state.statusFilter === 'Past' ? 'bg-[#9C1C1F] text-white border-[#9C1C1F]' : 'bg-white text-slate-600'}">
+                  Past <span class="px-2 py-0.5 rounded-full text-[10px] bg-slate-100 text-slate-500">${MOCK_EVENTS.filter(e=>e.status==='Past').length}</span>
+                </button>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-3 w-full lg:w-auto border-t lg:border-t-0 lg:border-l border-slate-100 pt-4 lg:pt-0 lg:pl-6">
+              <span class="font-bold text-slate-900 text-sm">Type:</span>
+              <button onclick="updateState({typeFilter: 'All'})" class="px-5 py-2 rounded-full text-sm font-semibold border ${state.typeFilter === 'All' ? 'bg-[#9C1C1F] text-white' : 'bg-white'}">All</button>
+              <button onclick="updateState({typeFilter: 'ONLINE'})" class="px-5 py-2 rounded-full text-sm font-semibold border ${state.typeFilter === 'ONLINE' ? 'bg-[#9C1C1F] text-white' : 'bg-white'}">Online</button>
+              <button onclick="updateState({typeFilter: 'IN-PERSON'})" class="px-5 py-2 rounded-full text-sm font-semibold border ${state.typeFilter === 'IN-PERSON' ? 'bg-[#9C1C1F] text-white' : 'bg-white'}">In-Person</button>
+            </div>
+
+            <div class="flex items-center gap-3 w-full xl:w-auto border-t xl:border-t-0 xl:border-l border-slate-100 pt-4 xl:pt-0 xl:pl-6">
+              <div class="relative flex-1 xl:w-64">
+                <i data-lucide="search" class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 w-4 h-4"></i>
+                <input type="text" placeholder="Search events..." value="${state.searchQuery}" oninput="updateState({searchQuery: this.value})" class="w-full pl-9 pr-4 py-2.5 rounded-lg border border-slate-200 text-sm bg-slate-50 outline-none focus:border-[#9C1C1F]" />
+              </div>
+              <button onclick="handleReset()" class="flex items-center gap-2 px-4 py-2.5 rounded-lg text-slate-500 bg-white border border-slate-200 text-sm font-semibold">
+                <i data-lucide="rotate-ccw" class="w-4 h-4"></i> Reset
+              </button>
+            </div>
+          </div>
+          
+          ${feedOrLibraryHtml}
+        </div>
+      `;
+    }
+
+    // --- STREAMING_CHUNK:Rendering Detailed Event Views... ---
+
+    // Past Webinar (Event Library Video)
+    function renderPastWebinar() {
+      const event = state.selectedEvent;
+      return `
+        <div class="max-w-[1200px] mx-auto px-6 py-12">
+          <div class="grid grid-cols-1 lg:grid-cols-3 gap-10 items-start">
+            <div class="lg:col-span-2">
+               <h1 class="text-3xl md:text-4xl font-oswald font-extrabold text-[#0A2C3D] mb-4 leading-tight uppercase">
+                 ${event.title}
+               </h1>
+               <p class="text-sm text-slate-500 font-medium mb-6">Recorded on ${event.logistics.display_date}</p>
+               
+               <div class="w-full aspect-video bg-slate-900 rounded-2xl overflow-hidden shadow-2xl relative">
+                  ${!state.vaultUnlocked ? `
+                    <img src="${event.vault.recording_url}" class="w-full h-full object-cover opacity-60" alt="Video Placeholder"/>
+                    <div class="absolute inset-0 bg-[#0A2C3D]/80 flex flex-col items-center justify-center p-8 text-center backdrop-blur-sm">
+                       <i data-lucide="lock" class="text-white mb-4 w-12 h-12"></i>
+                       <h3 class="text-2xl font-oswald font-bold text-white uppercase mb-2">Recording Locked</h3>
+                       <p class="text-slate-300 text-sm">Please submit the form to access the full replay.</p>
+                    </div>
+                  ` : `
+                    <iframe 
+                      width="100%" 
+                      height="100%" 
+                      src="https://www.youtube.com/embed/rJ67YiHpQnk?autoplay=1" 
+                      title="YouTube video player" 
+                      frameborder="0" 
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                      allowfullscreen
+                    ></iframe>
+                  `}
+               </div>
+            </div>
+
+            <div>
+              <div class="bg-white rounded-2xl shadow-xl border border-slate-100 p-8 sticky top-24">
+                 <h3 class="font-oswald text-2xl font-bold uppercase text-[#0A2C3D] mb-2">Access the Replay</h3>
+                 <p class="text-sm text-slate-500 mb-6 leading-relaxed">Enter your details below to instantly unlock the video recording and any accompanying resources.</p>
+                 
+                 ${!state.vaultUnlocked ? `
+                   <form onsubmit="handleVaultSubmit(event)" class="space-y-4">
+                     <input type="text" required placeholder="Full Name" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-[#9C1C1F]" />
+                     <input type="email" required placeholder="Work Email Address" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-[#9C1C1F]" />
+                     <input type="text" required placeholder="Company Name" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-[#9C1C1F]" />
+                     <button type="submit" class="w-full bg-[#9C1C1F] hover:bg-[#7a1518] text-white font-bold py-3.5 rounded-xl uppercase tracking-wider text-sm transition-colors mt-2 shadow-sm">
+                       Unlock Recording
+                     </button>
+                   </form>
+                 ` : `
+                   <div class="text-center py-8">
+                     <i data-lucide="check-circle-2" class="text-green-500 mx-auto mb-4 w-12 h-12 block"></i>
+                     <h4 class="font-bold text-slate-900 text-lg mb-2">Access Granted!</h4>
+                     <p class="text-slate-500 text-sm">You can now watch the video recording.</p>
+                   </div>
+                 `}
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    // Upcoming In Person Event
+    function renderUpcomingInPerson() {
+      const event = state.selectedEvent;
+      return `
+        <div class="max-w-[1200px] mx-auto px-6 py-12">
+          <div class="w-full rounded-2xl overflow-hidden shadow-2xl mb-16 aspect-[21/9] bg-slate-900 relative">
+            <iframe 
+              width="100%" 
+              height="100%" 
+              src="https://www.youtube.com/embed/fTQlWfMkc1Y?autoplay=1&mute=1&loop=1&playlist=fTQlWfMkc1Y" 
+              frameborder="0" 
+              allow="autoplay; encrypted-media" 
+              class="absolute inset-0 w-full h-full object-cover opacity-60 pointer-events-none"
+            ></iframe>
+            <div class="absolute inset-0 flex flex-col items-center justify-center p-6 text-center z-10 bg-gradient-to-t from-[#0A2C3D]/80 to-transparent">
+              <span class="inline-block bg-[#9C1C1F] text-white px-4 py-1 rounded-full text-xs font-bold uppercase tracking-widest mb-6">Live Event</span>
+              <h1 class="text-5xl md:text-7xl font-oswald font-extrabold uppercase leading-tight text-white drop-shadow-lg max-w-4xl">
+                ${event.title}
+              </h1>
+            </div>
+          </div>
+
+          <div class="flex flex-col lg:flex-row gap-12">
+            <div class="lg:w-2/3 space-y-16">
+              <div>
+                <h2 class="font-oswald text-3xl font-bold uppercase text-[#0A2C3D] mb-6">About The Event</h2>
+                <p class="text-lg text-slate-600 leading-relaxed font-medium">
+                  ${event.description}
+                </p>
+              </div>
+
+              ${event.speakers?.length > 0 ? `
+                <div>
+                  <div class="flex justify-between items-end border-b border-slate-200 pb-3 mb-8">
+                      <h2 class="font-oswald text-3xl font-bold uppercase text-[#0A2C3D]">Headline Experts</h2>
+                  </div>
+                  <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+                    ${event.speakers.map(speaker => `
+                      <div class="bg-white p-5 shadow-sm border border-slate-100 flex flex-col items-center text-center speaker-card group rounded-xl">
+                        <img src="${speaker.img}" alt="${speaker.name}" class="w-full aspect-square object-cover rounded-lg mb-4 speaker-img-bw" />
+                        <h3 class="font-bold text-[#0A2C3D] leading-tight mb-1">${speaker.name}</h3>
+                        <p class="text-xs text-slate-500 font-medium">${speaker.role}</p>
+                      </div>
+                    `).join('')}
+                  </div>
+                </div>
+              ` : ''}
+
+              ${event.agenda?.length > 0 ? `
+                 <div>
+                   <h2 class="font-oswald text-3xl font-bold uppercase text-[#0A2C3D] border-b border-slate-200 pb-3 mb-8">Schedule</h2>
+                   <div class="space-y-4">
+                     ${event.agenda.map(item => `
+                       <div class="flex gap-6 p-6 bg-white border border-slate-100 rounded-xl shadow-sm hover:shadow-md transition-shadow">
+                         <div class="w-32 shrink-0 font-bold text-[#9C1C1F]">${item.time}</div>
+                         <div>
+                           <h4 class="font-bold text-slate-900 text-lg mb-1">${item.title}</h4>
+                           ${item.speaker ? `<p class="text-sm font-semibold text-slate-600 mb-2">By ${item.speaker}</p>` : ''}
+                           <p class="text-sm text-slate-500">${item.desc}</p>
+                         </div>
+                       </div>
+                     `).join('')}
+                   </div>
+                 </div>
+              ` : ''}
+
+              ${event.venue ? `
+                 <div>
+                   <h2 class="font-oswald text-3xl font-bold uppercase text-[#0A2C3D] border-b border-[#9C1C1F] pb-3 mb-8 inline-block">Venue & Location</h2>
+                   <p class="font-bold text-slate-900 text-lg mb-6">${event.venue.address}</p>
+                   <div class="w-full aspect-[21/9] bg-slate-200 rounded-xl overflow-hidden border border-slate-300 relative shadow-sm">
+                     <img src="https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&q=80&w=1600" class="w-full h-full object-cover opacity-50 sepia-[.3]" alt="Map Background" />
+                     <div class="absolute top-4 left-4 bg-white p-3 rounded shadow-md border border-slate-100 max-w-xs">
+                        <h4 class="font-bold text-slate-800">${event.venue.name}</h4>
+                        <p class="text-xs text-slate-500 mt-1 line-clamp-1">${event.venue.address}</p>
+                        <a href="#" class="text-blue-600 text-xs font-semibold mt-2 inline-block">View larger map</a>
+                     </div>
+                     <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+                        <i data-lucide="map-pin" class="text-red-600 drop-shadow-md w-12 h-12" fill="white"></i>
+                     </div>
+                   </div>
+                 </div>
+              ` : ''}
+
+              ${event.sponsors?.length > 0 ? `
+                <div class="pt-8">
+                  <h2 class="font-oswald text-3xl font-bold uppercase text-[#0A2C3D] border-b border-[#9C1C1F] pb-3 mb-8 inline-block">Sponsors & Partners</h2>
+                  <div class="flex flex-wrap items-center gap-8 md:gap-12 opacity-70">
+                    ${event.sponsors.map(s => `
+                      <img src="${s.logo}" alt="${s.name}" class="h-12 object-contain grayscale hover:grayscale-0 transition-all duration-300 onerror="this.onerror=null; this.src='https://placehold.co/150x50/f8fafc/64748b?text=${s.name}'"/>
+                    `).join('')}
+                  </div>
+                  <div class="mt-12">
+                     <button onclick="toggleSponsorModal(true)" class="bg-[#9C1C1F] hover:bg-[#7a1518] text-white font-bold py-3 px-6 rounded text-sm uppercase tracking-wider transition-colors">
+                       Become A Sponsor
+                     </button>
+                  </div>
+                </div>
+              ` : ''}
+
+            </div>
+
+            <div class="lg:w-1/3">
+              <div class="bg-white rounded-2xl shadow-[0_20px_40px_-15px_rgba(0,0,0,0.1)] border border-slate-100 overflow-hidden sticky top-24">
+                <div class="bg-[#0A2C3D] p-8 text-white">
+                  <h3 class="font-oswald text-2xl font-bold uppercase mb-2">Secure Your Spot</h3>
+                  <p class="text-slate-400 text-sm font-medium">Tickets processed securely via WooCommerce.</p>
+                </div>
+                <div class="p-8 space-y-6">
+                  <div class="flex gap-4">
+                    <i data-lucide="calendar" class="text-[#9C1C1F] shrink-0 w-6 h-6"></i>
+                    <div>
+                      <p class="font-bold text-slate-900">${event.logistics.display_date}</p>
+                      <p class="text-slate-500 text-sm">${event.logistics.display_time}</p>
+                    </div>
+                  </div>
+                  <div class="flex gap-4">
+                    <i data-lucide="map-pin" class="text-[#9C1C1F] shrink-0 w-6 h-6"></i>
+                    <div>
+                      <p class="font-bold text-slate-900">${event.venue.name}</p>
+                      <p class="text-slate-500 text-sm">${event.venue.address}</p>
+                    </div>
+                  </div>
+                  <hr class="border-slate-100" />
+                  <button class="w-full bg-[#9C1C1F] hover:bg-[#7a1518] text-white font-oswald text-xl uppercase font-bold py-4 rounded-xl transition-all shadow-md">
+                    Get Tickets Now
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    // Past In Person Event (Gallery)
+    function renderPastInPerson() {
+      const event = state.selectedEvent;
+      return `
+        <div class="max-w-[1000px] mx-auto px-6 py-12">
+          <div class="border-l-[6px] border-[#9C1C1F] pl-6 mb-10">
+            <h2 class="font-oswald text-4xl md:text-5xl font-bold uppercase text-[#0A2C3D] leading-tight">
+              Event Gallery: <br/> ${event.title}
+            </h2>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            ${event.vault.gallery.map((imgUrl, idx) => `
+               <div class="w-full ${idx === 0 ? 'md:col-span-2 aspect-[21/9]' : 'aspect-video'} rounded-xl overflow-hidden shadow-sm bg-slate-100">
+                 <img src="${imgUrl}" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500" alt="Gallery item ${idx+1}" />
+               </div>
+            `).join('')}
+          </div>
+        </div>
+      `;
+    }
+
+    // Upcoming Webinar (Online Live)
+    function renderUpcomingWebinar() {
+      const event = state.selectedEvent;
+      const dateInfo = event.logistics.start_datetime ? new Date(event.logistics.start_datetime) : new Date();
+      const lumaMonth = dateInfo.toLocaleString('default', { month: 'short' }).toUpperCase();
+      const lumaDay = dateInfo.getDate();
+      const lumaWeekday = dateInfo.toLocaleString('default', { weekday: 'long' });
+      const lumaFullMonth = dateInfo.toLocaleString('default', { month: 'long' });
+
+      return `
+        <div class="max-w-[1200px] mx-auto px-6 py-12">
+          <div class="flex flex-col lg:flex-row gap-16">
+            <div class="lg:w-[60%]">
+              <div class="inline-flex items-center gap-2 px-3 py-1 bg-red-100 rounded-full text-xs font-bold tracking-widest uppercase text-red-700 mb-6 animate-pulse">
+                <span class="w-2 h-2 rounded-full bg-red-600"></span> ${event.status === 'LIVE NOW' ? 'Streaming Live' : 'Upcoming Webinar'}
+              </div>
+              <h1 class="text-4xl md:text-5xl font-oswald font-extrabold text-[#0A2C3D] leading-tight mb-6 uppercase">
+                ${event.title}
+              </h1>
+              <p class="text-lg text-slate-600 mb-10 leading-relaxed">${event.description}</p>
+
+              <h3 class="font-oswald text-2xl font-bold uppercase text-[#0A2C3D] mb-6">Presenters</h3>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
+                 ${event.host ? `
+                   <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 flex flex-col gap-4">
+                      <div class="flex items-center gap-4 border-b border-slate-100 pb-4">
+                        <img src="${event.host.img}" class="w-16 h-16 rounded-full object-cover border-2 border-slate-100" />
+                        <div>
+                           <h4 class="font-bold text-[#0A2C3D] text-lg leading-tight">${event.host.name}</h4>
+                           <p class="text-[10px] text-[#9C1C1F] font-bold uppercase tracking-wider mt-1">Host • ${event.host.role}</p>
+                        </div>
+                      </div>
+                      <p class="text-xs text-slate-500 leading-relaxed">${event.host.bio}</p>
+                   </div>
+                 ` : ''}
+                 ${event.speakers.map(speaker => `
+                   <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 flex flex-col gap-4">
+                      <div class="flex items-center gap-4 border-b border-slate-100 pb-4">
+                        <img src="${speaker.img}" class="w-16 h-16 rounded-full object-cover border-2 border-slate-100" />
+                        <div>
+                           <h4 class="font-bold text-[#0A2C3D] text-lg leading-tight">${speaker.name}</h4>
+                           <p class="text-[10px] text-slate-500 font-bold uppercase tracking-wider mt-1">Speaker • ${speaker.role}</p>
+                        </div>
+                      </div>
+                      <p class="text-xs text-slate-500 leading-relaxed">${speaker.bio}</p>
+                   </div>
+                 `).join('')}
+              </div>
+
+              ${event.sponsors?.length > 0 ? `
+                 <div class="pt-6 border-t border-slate-200">
+                   <h3 class="font-oswald text-sm font-bold uppercase text-slate-400 mb-4 tracking-widest">Sponsored By</h3>
+                   <div class="flex gap-6 items-center flex-wrap">
+                      ${event.sponsors.map(s => `<img src="${s.logo}" alt="${s.name}" class="h-12 object-contain grayscale hover:grayscale-0 transition-all onerror="this.onerror=null; this.src='https://placehold.co/150x50/f8fafc/64748b?text=${s.name}'"/>`).join('')}
+                   </div>
+                 </div>
+              ` : ''}
+            </div>
+
+            <div class="lg:w-[40%] mt-4 lg:mt-0">
+              <div class="sticky top-24 space-y-6">
+                
+                <div class="flex items-start gap-4 mb-4">
+                  <div class="flex flex-col items-center justify-center w-12 rounded-lg border border-slate-200 bg-white overflow-hidden shrink-0 shadow-sm">
+                    <div class="bg-slate-100 w-full text-[9px] font-bold text-slate-500 uppercase text-center py-1 border-b border-slate-200">${lumaMonth}</div>
+                    <div class="text-lg font-bold text-slate-800 leading-none py-2">${lumaDay}</div>
+                  </div>
+                  <div class="pt-0.5">
+                    <div class="font-semibold text-slate-900">${lumaWeekday}, ${lumaFullMonth} ${lumaDay}</div>
+                    <div class="text-slate-500 text-sm mt-0.5">${event.logistics.display_time}</div>
+                  </div>
+                </div>
+
+                <div class="flex items-center gap-4 mb-8">
+                  <div class="flex items-center justify-center w-12 h-12 rounded-lg border border-slate-200 bg-slate-50 shrink-0 shadow-sm text-slate-600">
+                    <i data-lucide="video" class="w-5 h-5"></i>
+                  </div>
+                  <div class="font-semibold text-slate-900">${event.venue?.name || 'Zoom'}</div>
+                </div>
+
+                <div class="border border-slate-200 rounded-xl overflow-hidden bg-white shadow-sm">
+                  <div class="bg-slate-50 px-4 py-3 border-b border-slate-200">
+                    <span class="text-xs font-bold text-slate-500">${state.isLoggedIn || state.isWebinarRegistered ? 'Event Link' : 'Registration'}</span>
+                  </div>
+                  <div class="p-5">
+                    ${state.isLoggedIn || state.isWebinarRegistered ? `
+                      <div class="space-y-4">
+                         <p class="text-slate-800 text-sm">Welcome back! You have access to this event.</p>
+                         <a href="${event.venue?.link || '#'}" target="_blank" rel="noreferrer" class="w-full flex justify-center bg-[#555555] hover:bg-[#333] text-white font-semibold py-2.5 rounded-lg transition-colors text-sm">
+                            Join Zoom Meeting
+                         </a>
+                      </div>
+                    ` : !state.showWebinarForm ? `
+                      <div class="space-y-4">
+                         <p class="text-slate-800 text-sm">Welcome! To join the event, please register below.</p>
+                         <button onclick="updateState({showWebinarForm: true})" class="w-full bg-[#555555] hover:bg-[#333] text-white font-semibold py-2.5 rounded-lg transition-colors text-sm">
+                            Register
+                         </button>
+                      </div>
+                    ` : `
+                      <form onsubmit="handleWebinarRegister(event)" class="space-y-3">
+                         <input type="text" required placeholder="First Name" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-slate-400" />
+                         <input type="email" required placeholder="Work Email" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-slate-400" />
+                         <button type="submit" class="w-full bg-[#555555] hover:bg-[#333] text-white font-semibold py-2.5 rounded-lg transition-colors text-sm mt-2">
+                            Submit Registration
+                         </button>
+                      </form>
+                    `}
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    // Sponsor Form Modal
+    function renderSponsorModal() {
+      return `
+        <div class="fixed inset-0 z-[100] flex items-center justify-center p-4">
+           <div class="absolute inset-0 bg-slate-900/60 backdrop-blur-sm" onclick="toggleSponsorModal(false)"></div>
+           
+           <div class="bg-white w-full max-w-lg rounded-xl shadow-2xl relative flex flex-col max-h-[90vh] overflow-hidden">
+             
+             <div class="bg-[#0A2C3D] p-8 text-center relative shrink-0">
+               <button onclick="toggleSponsorModal(false)" class="absolute top-4 right-4 text-slate-400 hover:text-white transition-colors">
+                 <i data-lucide="x" class="w-5 h-5"></i>
+               </button>
+               <span class="inline-block bg-[#9C1C1F] text-white px-3 py-1 rounded-sm text-[10px] font-bold uppercase tracking-widest mb-4">
+                 Corporate Inquiries
+               </span>
+               <h2 class="text-3xl font-oswald font-bold text-white uppercase mb-2">Partner With Us</h2>
+               <p class="text-slate-300 text-sm">Submit your details below and our team will be in touch.</p>
+             </div>
+
+             <div class="p-8 overflow-y-auto custom-scrollbar">
+               <form class="space-y-5" onsubmit="handleSponsorSubmit(event)">
+                 
+                 <div>
+                   <label class="block text-sm font-bold text-[#9C1C1F] mb-1">First Name</label>
+                   <input type="text" required class="w-full border border-slate-200 rounded-lg px-4 py-2.5 bg-slate-50 focus:outline-none focus:border-[#0A2C3D] focus:ring-1 focus:ring-[#0A2C3D]" />
+                 </div>
+                 
+                 <div>
+                   <label class="block text-sm font-bold text-[#9C1C1F] mb-1">Last name</label>
+                   <input type="text" required class="w-full border border-slate-200 rounded-lg px-4 py-2.5 bg-slate-50 focus:outline-none focus:border-[#0A2C3D] focus:ring-1 focus:ring-[#0A2C3D]" />
+                 </div>
+                 
+                 <div>
+                   <label class="block text-sm font-bold text-[#9C1C1F] mb-1">Email address</label>
+                   <input type="email" required class="w-full border border-slate-200 rounded-lg px-4 py-2.5 bg-slate-50 focus:outline-none focus:border-[#0A2C3D] focus:ring-1 focus:ring-[#0A2C3D]" />
+                 </div>
+                 
+                 <div>
+                   <label class="block text-sm font-bold text-[#9C1C1F] mb-1">Phone number</label>
+                   <input type="tel" placeholder="071 123 4567" required class="w-full border border-slate-200 rounded-lg px-4 py-2.5 bg-slate-50 focus:outline-none focus:border-[#0A2C3D] focus:ring-1 focus:ring-[#0A2C3D]" />
+                 </div>
+                 
+                 <div>
+                   <label class="block text-sm font-bold text-[#9C1C1F] mb-1">Company name</label>
+                   <input type="text" required class="w-full border border-slate-200 rounded-lg px-4 py-2.5 bg-slate-50 focus:outline-none focus:border-[#0A2C3D] focus:ring-1 focus:ring-[#0A2C3D]" />
+                 </div>
+                 
+                 <div>
+                   <label class="block text-sm font-bold text-[#9C1C1F] mb-1">Tell us about your business</label>
+                   <textarea rows="4" class="w-full border border-slate-200 rounded-lg px-4 py-2.5 bg-slate-50 focus:outline-none focus:border-[#0A2C3D] focus:ring-1 focus:ring-[#0A2C3D] resize-none"></textarea>
+                 </div>
+
+                 <button type="submit" class="w-full bg-[#0A2C3D] hover:bg-[#9C1C1F] text-white font-bold py-3.5 rounded-lg uppercase tracking-wider text-sm transition-colors mt-4">
+                   Submit Inquiry
+                 </button>
+               </form>
+             </div>
+           </div>
+        </div>
+      `;
+    }
+
+    // Router Logic
+    function routeEventDetail() {
+      if (!state.selectedEvent) return '';
+      if (state.selectedEvent.type === 'ONLINE') {
+        if (state.selectedEvent.status === 'Past') return renderPastWebinar();
+        return renderUpcomingWebinar();
+      } else {
+        if (state.selectedEvent.status === 'Past') return renderPastInPerson();
+        return renderUpcomingInPerson();
+      }
+    }
+
+    // Main App Compiler
+    function renderApp() {
+      const root = document.getElementById('app');
+      let html = '';
+      
+      if (state.activeView !== 'directory') {
+        html += renderTopBar();
+      }
+      
+      if (state.activeView === 'directory') {
+        html += renderDirectory();
+      } else if (state.activeView === 'event_detail') {
+        html += routeEventDetail();
+      }
+
+      if (state.isSponsorModalOpen) {
+        html += renderSponsorModal();
+      }
+
+      root.innerHTML = html;
+      
+      // Initialize Lucide Icons after the HTML is written to the DOM
+      if (window.lucide) {
+        window.lucide.createIcons();
+      }
+    }
+
+    // --- STREAMING_CHUNK:Bootstrapping App... ---
+    // Start the application
+    renderApp();
+
+  </script>
+</body>
+</html>
