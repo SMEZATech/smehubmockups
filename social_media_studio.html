@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SME Social Media Advisor | AI Strategist PRO</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700;900&family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: { sme: { red: '#9c1c1f', navy: '#0a2c3d', black: '#000000', gray: '#f8fafc' } },
+                    fontFamily: { oswald: ['Oswald', 'sans-serif'], roboto: ['Roboto', 'sans-serif'] }
+                }
+            }
+        }
+    </script>
+
+    <!-- Libraries for Export -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+    <style>
+        body { background-color: #0f172a; color: #f8fafc; font-family: 'Roboto', sans-serif; }
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: #0f172a; }
+        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #475569; }
+        
+        .preview-bg {
+            background-color: #1e293b;
+            background-image: radial-gradient(#334155 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+
+        /* Fluid Wrapper Scaling */
+        #canvas-wrapper {
+            transform-origin: top center;
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        /* Canvas Morphing Transitions */
+        #export-canvas { 
+            transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1), height 0.4s cubic-bezier(0.16, 1, 0.3, 1); 
+            overflow: hidden; 
+            background-color: #ffffff;
+            box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        .premium-bg {
+            background-color: #9c1c1f;
+            background-image: radial-gradient(rgba(255,255,255,0.1) 2px, transparent 2px);
+            background-size: 30px 30px;
+        }
+        
+        input[type=range] { accent-color: #ef4444; }
+
+        #toast {
+            visibility: hidden; min-width: 250px; background-color: #1e293b; color: #fff; text-align: center;
+            border-radius: 8px; padding: 16px; position: fixed; z-index: 1000; left: 50%; bottom: 30px;
+            transform: translateX(-50%); box-shadow: 0 10px 30px rgba(0,0,0,0.5); border: 1px solid #334155;
+            transition: visibility 0.3s, opacity 0.3s ease-in-out; opacity: 0;
+        }
+        #toast.show { visibility: visible; opacity: 1; }
+        
+        /* Utility class for disabled buttons */
+        .disabled-btn { opacity: 0.6; cursor: not-allowed; pointer-events: none; }
+    </style>
+</head>
+<body class="h-screen flex overflow-hidden">
+
+    <div id="toast"></div>
+
+    <!-- Sidebar Controls -->
+    <aside class="w-full md:w-[480px] bg-slate-900 border-r border-slate-800 flex flex-col h-full overflow-y-auto shrink-0 z-10 shadow-2xl relative">
+        
+        <!-- Header -->
+        <div class="p-6 border-b border-slate-800 bg-slate-900/95 sticky top-0 z-20 backdrop-blur-sm">
+            <h1 class="text-3xl font-black text-white uppercase tracking-tight leading-none">SME Advisor</h1>
+            <p class="text-xs text-slate-400 mt-1 tracking-widest uppercase font-bold">Studio & Strategy Engine</p>
+
+            <div id="advisor-panel" class="mt-4 bg-gradient-to-r from-blue-900/40 to-purple-900/40 border border-blue-500/30 p-4 rounded-xl advisor-pulse shadow-lg">
+                <div class="flex items-center gap-2 mb-2 text-sm font-bold text-blue-300 uppercase tracking-widest">
+                    <span>🤖</span> Tshepho's Strategy Proxy
+                </div>
+                <p id="advisor-msg" class="text-sm text-slate-300 leading-snug font-medium"></p>
+                <div id="advisor-action" class="mt-3 flex gap-2"></div>
+            </div>
+        </div>
+
+        <div class="p-6 space-y-8 flex-1">
+            
+            <!-- Step 1: Link & Context -->
+            <div class="space-y-3 bg-slate-800/40 p-5 rounded-xl border border-slate-700/50 shadow-inner">
+                <label class="text-xs font-bold text-blue-400 uppercase tracking-widest block flex items-center gap-2">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path></svg>
+                    1. Auto-Fill Content
+                </label>
+                <div class="flex gap-2">
+                    <input type="text" id="in-url" placeholder="Paste article link..." class="flex-1 bg-slate-900 text-white rounded-lg p-3 text-sm border border-slate-600 outline-none focus:ring-2 focus:ring-blue-500">
+                    <button onclick="fetchArticleData()" id="btn-fetch" class="bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 px-4 rounded-lg text-sm transition-colors whitespace-nowrap shadow-lg flex items-center justify-center min-w-[100px]">
+                        Auto-Fill
+                    </button>
+                </div>
+            </div>
+
+            <!-- Step 2: Strategic Format -->
+            <div>
+                <label class="text-xs font-bold text-red-500 uppercase tracking-widest block mb-2">2. Strategic Format</label>
+                <div class="grid grid-cols-2 gap-2 mb-2">
+                    <button onclick="setCampaign('standard')" id="camp-standard" class="camp-btn bg-sme-red text-white font-bold py-3 px-3 rounded-lg border border-red-500 transition-all text-xs uppercase tracking-wider">
+                        🖼️ Standard
+                    </button>
+                    <button onclick="setCampaign('carousel')" id="camp-carousel" class="camp-btn bg-slate-800 text-slate-400 font-bold py-3 px-3 rounded-lg border border-slate-600 transition-all text-xs uppercase tracking-wider">
+                        📄 Carousel/PDF
+                    </button>
+                </div>
+                <div class="grid grid-cols-2 gap-2">
+                    <button onclick="setCampaign('poll')" id="camp-poll" class="camp-btn bg-slate-800 text-slate-400 font-bold py-3 px-3 rounded-lg border border-slate-600 transition-all text-xs uppercase tracking-wider">
+                        📊 Community Poll
+                    </button>
+                    <button onclick="setCampaign('whatsapp')" id="camp-whatsapp" class="camp-btn bg-slate-800 text-slate-400 font-bold py-3 px-3 rounded-lg border border-slate-600 transition-all text-xs uppercase tracking-wider">
+                        💬 WhatsApp Channel
+                    </button>
+                </div>
+            </div>
+
+            <!-- Step 3: Theme Dimensions -->
+            <div id="size-controls">
+                <label class="text-xs font-bold text-red-500 uppercase tracking-widest block mb-2">3. Select Dimensions</label>
+                <div class="grid grid-cols-3 gap-2">
+                    <button onclick="setFormat('landscape')" id="btn-landscape" class="format-btn bg-slate-700 border-2 border-white text-white font-bold py-2 rounded text-center text-[10px] uppercase transition-all">Land (LinkedIn)</button>
+                    <button onclick="setFormat('square')" id="btn-square" class="format-btn bg-slate-800 border border-slate-600 text-slate-400 font-bold py-2 rounded text-center text-[10px] uppercase transition-all">Sq (IG Grid)</button>
+                    <button onclick="setFormat('portrait')" id="btn-portrait" class="format-btn bg-slate-800 border border-slate-600 text-slate-400 font-bold py-2 rounded text-center text-[10px] uppercase transition-all">Port (IG Feed)</button>
+                </div>
+            </div>
+
+            <!-- Step 4: Design Theme (Standard Only) -->
+            <div id="theme-controls">
+                <label class="text-xs font-bold text-red-500 uppercase tracking-widest block mb-2">4. Design Theme</label>
+                <div class="grid grid-cols-3 gap-2">
+                    <button onclick="setTheme('classic')" id="theme-classic" class="theme-btn bg-slate-700 border-2 border-white text-white font-bold py-2 rounded text-center text-[10px] uppercase transition-all">Classic</button>
+                    <button onclick="setTheme('cinematic')" id="theme-cinematic" class="theme-btn bg-slate-800 border border-slate-600 text-slate-400 font-bold py-2 rounded text-center text-[10px] uppercase transition-all">Cinematic</button>
+                    <button onclick="setTheme('modern')" id="theme-modern" class="theme-btn bg-slate-800 border border-slate-600 text-slate-400 font-bold py-2 rounded text-center text-[10px] uppercase transition-all">Modern</button>
+                </div>
+            </div>
+
+            <!-- Carousel UI -->
+            <div id="carousel-controls" class="hidden space-y-3 bg-slate-800/40 p-4 rounded-xl border border-slate-700/50">
+                <div class="flex justify-between items-center mb-2">
+                    <label class="text-xs font-bold text-white uppercase tracking-widest">Slides (6)</label>
+                </div>
+                <div class="grid grid-cols-3 gap-1">
+                    <button onclick="changeSlide(0)" id="sl-0" class="slide-nav py-1.5 rounded bg-red-600 text-white text-xs font-bold">1</button>
+                    <button onclick="changeSlide(1)" id="sl-1" class="slide-nav py-1.5 rounded bg-slate-700 text-slate-300 text-xs font-bold">2</button>
+                    <button onclick="changeSlide(2)" id="sl-2" class="slide-nav py-1.5 rounded bg-slate-700 text-slate-300 text-xs font-bold">3</button>
+                    <button onclick="changeSlide(3)" id="sl-3" class="slide-nav py-1.5 rounded bg-slate-700 text-slate-300 text-xs font-bold">4</button>
+                    <button onclick="changeSlide(4)" id="sl-4" class="slide-nav py-1.5 rounded bg-slate-700 text-slate-300 text-xs font-bold">5</button>
+                    <button onclick="changeSlide(5)" id="sl-5" class="slide-nav py-1.5 rounded bg-slate-700 text-slate-300 text-xs font-bold">6</button>
+                </div>
+            </div>
+
+            <!-- Focal Point Engine -->
+            <div id="framing-controls" class="space-y-4 bg-slate-800/40 p-5 rounded-xl border border-emerald-500/30 shadow-inner">
+                <label class="text-xs font-bold text-emerald-400 uppercase tracking-widest block">5. Image Framing</label>
+                <div class="space-y-3">
+                    <div>
+                        <div class="flex justify-between text-[10px] font-bold text-slate-400 uppercase mb-1">
+                            <span>Horizontal</span> <span id="val-img-x">50%</span>
+                        </div>
+                        <input type="range" id="in-img-x" min="0" max="100" value="50" class="w-full cursor-pointer" oninput="syncDOM()">
+                    </div>
+                    <div>
+                        <div class="flex justify-between text-[10px] font-bold text-slate-400 uppercase mb-1">
+                            <span>Vertical</span> <span id="val-img-y">50%</span>
+                        </div>
+                        <input type="range" id="in-img-y" min="0" max="100" value="50" class="w-full cursor-pointer" oninput="syncDOM()">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Content Inputs -->
+            <div class="space-y-4">
+                <label class="text-xs font-bold text-red-500 uppercase tracking-widest block mb-2">6. Content Adjustment</label>
+                <div>
+                    <label class="text-xs text-slate-400 block mb-1">Tag</label>
+                    <input type="text" id="in-tag" value="SME Knowledge HUB" class="w-full bg-slate-800 text-white rounded-lg p-3 text-sm border border-slate-700 outline-none focus:ring-2 focus:ring-red-500" oninput="syncDOM()">
+                </div>
+                <div>
+                    <label class="text-xs text-slate-400 block mb-1" id="lbl-title">Main Headline</label>
+                    <textarea id="in-title" rows="3" class="w-full bg-slate-800 text-white rounded-lg p-3 text-lg font-bold border border-slate-700 outline-none focus:ring-2 focus:ring-red-500 resize-none transition-shadow" oninput="syncDOM()">Four Business Ideas To Solve Socio-Economic Issues</textarea>
+                </div>
+                <div id="poll-controls" class="hidden space-y-2 mt-4">
+                    <label class="text-xs text-slate-400 block mb-1">Poll Options</label>
+                    <input type="text" id="poll-opt-1" class="w-full bg-slate-800 text-white rounded p-2 text-sm border border-slate-700 outline-none focus:ring-2 focus:ring-red-500" value="Yes, definitely" oninput="syncDOM()">
+                    <input type="text" id="poll-opt-2" class="w-full bg-slate-800 text-white rounded p-2 text-sm border border-slate-700 outline-none focus:ring-2 focus:ring-red-500" value="No, we need help" oninput="syncDOM()">
+                    <input type="text" id="poll-opt-3" class="w-full bg-slate-800 text-white rounded p-2 text-sm border border-slate-700 outline-none focus:ring-2 focus:ring-red-500" value="Not sure yet" oninput="syncDOM()">
+                </div>
+                <div id="image-upload-wrapper">
+                    <label class="text-xs text-slate-400 block mb-1">Featured Image</label>
+                    <input type="file" id="in-image" accept="image/*" class="w-full text-sm text-slate-300 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-xs file:font-bold file:bg-slate-700 file:text-white cursor-pointer hover:file:bg-slate-600 transition-colors">
+                </div>
+                
+                <!-- Toggle to show/hide the footer and CTA icons -->
+                <div class="flex items-center justify-between mt-4 bg-slate-800/50 p-3 rounded-lg border border-slate-700">
+                    <label class="text-xs text-slate-300 font-bold uppercase tracking-wide cursor-pointer flex-1" for="toggle-footer">Show Footer / CTA Branding</label>
+                    <input type="checkbox" id="toggle-footer" checked class="w-4 h-4 accent-red-500 cursor-pointer" onchange="state.showFooter = this.checked; renderLayout();">
+                </div>
+            </div>
+
+            <!-- Typography Scaling -->
+            <div class="space-y-4 pb-10">
+                <div class="bg-slate-800/40 p-4 rounded-xl border border-slate-700/50">
+                    <div class="flex justify-between items-center mb-2">
+                        <label class="text-xs text-slate-400 font-bold block">Typography Scale</label>
+                        <span id="font-size-val" class="text-xs font-mono font-bold text-white bg-red-900/50 px-2 py-0.5 rounded">100%</span>
+                    </div>
+                    <input type="range" id="in-font-size" min="60" max="140" value="100" class="w-full cursor-pointer" oninput="syncDOM()">
+                </div>
+            </div>
+        </div>
+
+        <!-- Export -->
+        <div class="p-6 bg-slate-900 border-t border-slate-800 sticky bottom-0 z-20 shadow-2xl">
+            <button onclick="triggerExport()" id="btn-download" class="w-full bg-red-700 hover:bg-red-600 text-white font-black py-4 px-6 rounded-xl text-lg transition-transform active:scale-[0.98] shadow-xl uppercase flex items-center justify-center gap-2 border border-red-500/50 relative overflow-hidden">
+                <svg id="icon-download" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                <svg id="icon-loading" class="w-6 h-6 animate-spin hidden absolute left-[20%]" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+                <span id="download-text">Download Graphic</span>
+            </button>
+            <div class="text-center mt-3">
+                <p class="text-[10px] text-slate-500 font-bold tracking-[0.2em] uppercase">Developed by Tshepho Joel &copy; 2026</p>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main Workspace -->
+    <main class="flex-1 preview-bg flex flex-col items-center p-8 relative overflow-y-auto overflow-x-hidden">
+        <div class="mb-6 text-center shrink-0 bg-slate-900/80 backdrop-blur px-6 py-2 rounded-full border border-slate-700 shadow-lg z-20">
+            <h2 class="text-slate-200 font-bold text-sm tracking-[0.2em] uppercase flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span> Live Preview
+            </h2>
+            <p id="preview-dim" class="text-red-400 font-mono text-xs font-bold mt-0.5">1200 x 628</p>
+        </div>
+        
+        <div id="canvas-wrapper" class="origin-top shrink-0 mb-20 shadow-2xl">
+            <div id="export-canvas" class="relative bg-white" style="width: 1200px; height: 628px;"></div>
+        </div>
+
+        <!-- App Instructions -->
+        <div class="w-full max-w-[1080px] shrink-0 bg-slate-800/80 backdrop-blur-md rounded-2xl border border-slate-700 p-8 shadow-xl mb-12 z-10">
+            <div class="flex items-center gap-3 mb-6 border-b border-slate-700 pb-4">
+                <span class="bg-blue-600 text-white p-2 rounded-lg"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg></span>
+                <h3 class="text-xl font-bold text-white uppercase tracking-wide">Quick Start Guide</h3>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm text-slate-300 mb-8">
+                <div class="space-y-4">
+                    <p><strong class="text-white">1. Auto-Fill:</strong> Paste a link from the SME site and hit "Auto-Fill" to instantly grab the headline and featured image.</p>
+                    <p><strong class="text-white">2. Format:</strong> Choose your campaign type. Standard graphics, IG Carousels, Polls, or WhatsApp layouts.</p>
+                    <p><strong class="text-white">3. Tweak:</strong> Manually edit the text, adjust the typography scale, or toggle the branding off for a cleaner look.</p>
+                </div>
+                <div class="space-y-4">
+                    <p><strong class="text-white">4. Framing:</strong> Use the sliders to properly frame the background image if faces are getting cut off.</p>
+                    <p><strong class="text-white">5. Export:</strong> Click Download. For carousels, click through the slides and export them one-by-one to ensure perfect layout rendering.</p>
+                </div>
+            </div>
+
+            <div class="bg-gradient-to-r from-blue-900/40 to-purple-900/40 border border-blue-500/30 rounded-xl p-4 flex items-start gap-4">
+                <div class="text-2xl pt-1">💬</div>
+                <div>
+                    <h4 class="text-white font-bold mb-1">Feedback & Support</h4>
+                    <p class="text-slate-300 text-sm">If the UI glitches, an image refuses to load, or you have an idea for a cool new feature/layout, just drop me (Tshepho) a message on Slack!</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // DOM References & Constants
+        const canvas = document.getElementById('export-canvas');
+        const wrapper = document.getElementById('canvas-wrapper');
+        const whiteLogo = "https://smesouthafrica.co.za/wp-content/uploads/2022/05/sme-white-logo.png";
+        
+        // App State
+        let currentImageSrc = "https://images.unsplash.com/photo-1664575602276-acd073f104c1?auto=format&fit=crop&w=1200&q=80";
+        let scrapedDesc = "";
+        const state = {
+            campaign: 'standard',
+            format: 'landscape',
+            theme: 'classic',
+            showFooter: true, 
+            currentSlide: 0,
+            slides: [
+                "Four Business Ideas To Solve Socio-Economic Issues",
+                "1. Focus on scalable solutions that address daily community pain points.",
+                "2. Leverage tech to bridge the gap in underserved markets.",
+                "3. Partner with local governments for distribution.",
+                "4. Measure impact alongside financial returns.",
+                "Read the full breakdown on SME South Africa today."
+            ],
+            isExporting: false
+        };
+
+        const baseFonts = { 'landscape': 65, 'square': 80, 'portrait': 95, 'whatsapp': 100 };
+
+        // 🛡️ SECURITY & ROBUSTNESS: Input Sanitizer to prevent XSS via innerHTML
+        function sanitizeHTML(str) {
+            if (!str) return "";
+            return str.replace(/[&<>'"]/g, tag => ({
+                '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;'
+            }[tag] || tag));
+        }
+
+        window.onload = function() {
+            // Robust Event Listener Binding
+            const imgInput = document.getElementById('in-image');
+            if (imgInput) {
+                imgInput.addEventListener('change', e => {
+                    const f = e.target.files[0];
+                    if(f) {
+                        const r = new FileReader();
+                        r.onload = ev => { 
+                            currentImageSrc = ev.target.result;
+                            const elX = document.getElementById('in-img-x');
+                            const elY = document.getElementById('in-img-y');
+                            if (elX) elX.value = 50;
+                            if (elY) elY.value = 50;
+                            syncDOM(); 
+                        };
+                        r.onerror = () => showToast("Failed to read image file.");
+                        r.readAsDataURL(f);
+                    }
+                });
+            }
+            initAdvisor();
+            setCampaign('standard');
+            window.addEventListener('resize', resizeWrapper);
+        };
+
+        // UI Toast Notification
+        function showToast(msg, type = 'error') {
+            const t = document.getElementById('toast');
+            if (!t) return;
+            t.innerText = msg;
+            t.style.borderLeft = type === 'error' ? '4px solid #ef4444' : '4px solid #10b981';
+            t.classList.add('show');
+            setTimeout(() => t.classList.remove('show'), 4000);
+        }
+
+        // Logic Initialization
+        function initAdvisor() {
+            const msgEl = document.getElementById('advisor-msg');
+            const actEl = document.getElementById('advisor-action');
+            if (!msgEl || !actEl) return;
+
+            const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+            const today = new Date().getDay();
+            
+            if (today === 2 || today === 4) {
+                msgEl.innerHTML = `It's <b>${days[today]}</b>! Polls work best today to drive mid-week community engagement.`;
+                actEl.innerHTML = `<button onclick="setCampaign('poll')" class="bg-blue-600 text-white text-[10px] font-bold py-1.5 px-3 rounded uppercase shadow hover:bg-blue-500 transition-colors">Create Poll</button>`;
+            } else if (today === 1 || today === 3) {
+                msgEl.innerHTML = `Happy <b>${days[today]}</b>. LinkedIn Carousels get 3x more reach today. Turn this article into a guide.`;
+                actEl.innerHTML = `<button onclick="setCampaign('carousel')" class="bg-blue-600 text-white text-[10px] font-bold py-1.5 px-3 rounded uppercase shadow hover:bg-blue-500 transition-colors">Build Carousel</button>`;
+            } else {
+                msgEl.innerHTML = "Weekend strategy: WhatsApp Channels have high open rates on weekends. Send a quick, punchy broadcast.";
+                actEl.innerHTML = `<button onclick="setCampaign('whatsapp')" class="bg-blue-600 text-white text-[10px] font-bold py-1.5 px-3 rounded uppercase shadow hover:bg-blue-500 transition-colors">WhatsApp Mode</button>`;
+            }
+        }
+
+        function resizeWrapper() {
+            const mainArea = document.querySelector('main');
+            if (!mainArea || !canvas || !wrapper) return;
+            // 80px buffer for padding
+            const availableWidth = mainArea.clientWidth - 80; 
+            const canvasWidth = canvas.offsetWidth;
+            
+            // Prevent division by zero or weird rendering bugs before canvas has dimensions
+            if (canvasWidth > 0 && canvasWidth > availableWidth) {
+                wrapper.style.transform = `scale(${availableWidth / canvasWidth})`;
+            } else {
+                wrapper.style.transform = `scale(1)`;
+            }
+        }
+
+        // --- View & State Controllers ---
+        
+        function setTheme(themeName) {
+            state.theme = themeName;
+            document.querySelectorAll('.theme-btn').forEach(btn => {
+                btn.classList.remove('bg-slate-700', 'border-white', 'text-white', 'shadow-inner');
+                btn.classList.add('bg-slate-800', 'border-transparent', 'text-slate-400');
+            });
+            const activeBtn = document.getElementById('theme-' + themeName);
+            if (activeBtn) {
+                activeBtn.classList.remove('bg-slate-800', 'border-transparent', 'text-slate-400');
+                activeBtn.classList.add('bg-slate-700', 'border-white', 'text-white', 'shadow-inner');
+            }
+            renderLayout();
+        }
+
+        function setFormat(formatName) {
+            state.format = formatName;
+            document.querySelectorAll('.format-btn').forEach(btn => {
+                btn.classList.remove('bg-slate-700', 'border-white', 'text-white', 'shadow-inner');
+                btn.classList.add('bg-slate-800', 'border-slate-600', 'text-slate-400');
+            });
+            const activeBtn = document.getElementById('btn-' + formatName);
+            if (activeBtn) {
+                activeBtn.classList.remove('bg-slate-800', 'border-slate-600', 'text-slate-400');
+                activeBtn.classList.add('bg-slate-700', 'border-white', 'text-white', 'shadow-inner');
+            }
+            
+            if (formatName === 'landscape') { canvas.style.width = '1200px'; canvas.style.height = '628px'; }
+            else if (formatName === 'square') { canvas.style.width = '1080px'; canvas.style.height = '1080px'; }
+            else if (formatName === 'portrait') { canvas.style.width = '1080px'; canvas.style.height = '1350px'; }
+            
+            const dimEl = document.getElementById('preview-dim');
+            if (dimEl) dimEl.innerText = canvas.style.width + ' x ' + canvas.style.height;
+            renderLayout();
+        }
+
+        function setCampaign(campType) {
+            state.campaign = campType;
+            document.querySelectorAll('.camp-btn').forEach(btn => {
+                btn.classList.remove('bg-sme-red', 'text-white', 'border-red-500', 'shadow-lg', 'shadow-red-900/20');
+                btn.classList.add('bg-slate-800', 'text-slate-400', 'border-slate-600');
+            });
+            const activeBtn = document.getElementById('camp-' + campType);
+            if (activeBtn) activeBtn.classList.add('bg-sme-red', 'text-white', 'border-red-500', 'shadow-lg', 'shadow-red-900/20');
+
+            const toggleVis = (id, show) => {
+                const el = document.getElementById(id);
+                if (el) show ? el.classList.remove('hidden') : el.classList.add('hidden');
+            };
+
+            const btnDown = document.getElementById('download-text');
+            const dimTxt = document.getElementById('preview-dim');
+            const inTitle = document.getElementById('in-title');
+
+            if (campType === 'carousel') {
+                toggleVis('theme-controls', false); toggleVis('size-controls', true);
+                toggleVis('carousel-controls', true); toggleVis('poll-controls', false);
+                toggleVis('image-upload-wrapper', false); toggleVis('framing-controls', false);
+                
+                if (inTitle) inTitle.value = state.slides[state.currentSlide] || "";
+                if (btnDown) btnDown.innerText = "Download Slide " + (state.currentSlide + 1);
+                setFormat(state.format); 
+            } else if (campType === 'poll') {
+                toggleVis('theme-controls', false); toggleVis('size-controls', false);
+                toggleVis('carousel-controls', false); toggleVis('poll-controls', true);
+                toggleVis('image-upload-wrapper', false); toggleVis('framing-controls', false);
+                
+                if (btnDown) btnDown.innerText = "Download Poll Graphic";
+                canvas.style.width = '1080px'; canvas.style.height = '1080px'; 
+                if (dimTxt) dimTxt.innerText = '1080 x 1080 (Poll)';
+            } else {
+                toggleVis('theme-controls', true); toggleVis('size-controls', true);
+                toggleVis('carousel-controls', false); toggleVis('poll-controls', false);
+                toggleVis('image-upload-wrapper', true); toggleVis('framing-controls', true);
+                
+                if (btnDown) btnDown.innerText = "Download HD PNG";
+                if (campType === 'whatsapp') {
+                    toggleVis('theme-controls', false); toggleVis('size-controls', false);
+                    canvas.style.width = '1080px'; canvas.style.height = '1350px'; 
+                    if (dimTxt) dimTxt.innerText = '1080 x 1350 (WhatsApp)';
+                } else {
+                    setFormat(state.format); // Restores the previous dimensions for standard
+                }
+            }
+            renderLayout();
+        }
+
+        function changeSlide(index) {
+            const inTitle = document.getElementById('in-title');
+            if (inTitle) state.slides[state.currentSlide] = inTitle.value;
+            state.currentSlide = index;
+            if (inTitle) inTitle.value = state.slides[index] || "";
+            document.querySelectorAll('.slide-nav').forEach((btn, i) => {
+                if (i === index) { btn.classList.remove('bg-slate-700', 'text-slate-300'); btn.classList.add('bg-red-600', 'text-white'); }
+                else { btn.classList.remove('bg-red-600', 'text-white'); btn.classList.add('bg-slate-700', 'text-slate-300'); }
+            });
+            
+            // UI UPDATE: Automatically change the button to target the current slide
+            const btnDown = document.getElementById('download-text');
+            if (state.campaign === 'carousel' && btnDown) {
+                btnDown.innerText = "Download Slide " + (index + 1);
+            }
+            
+            syncDOM();
+        }
+
+        // Rendering Core Engine
+        function renderLayout() {
+            const f = state.campaign === 'standard' ? state.format : (state.campaign === 'whatsapp' ? 'whatsapp' : 'square');
+            let html = '';
+            
+            // Strict spacing & shrink-0 classes to prevent icon paddling/squishing, and conditional rendering based on state.showFooter
+            const getFooter = (lineColor, textColor) => {
+                if (!state.showFooter) return '';
+                return `
+                <div class="flex justify-between items-center w-full border-t border-${lineColor} pt-6 mt-8 shrink-0">
+                    <div class="flex items-center gap-3">
+                        <svg class="w-6 h-6 text-sme-red shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M13 5l7 7-7 7M5 5l7 7-7 7"></path></svg>
+                        <span class="${textColor} font-oswald font-bold text-2xl tracking-widest uppercase leading-none mt-1">Read Insight</span>
+                    </div>
+                    <div class="flex items-center gap-3 ${textColor}">
+                        <svg class="w-6 h-6 opacity-90 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"></path></svg>
+                        <span class="font-roboto font-bold text-xl tracking-wide leading-none mt-1">smesouthafrica.co.za</span>
+                    </div>
+                </div>
+                `;
+            };
+
+            if (state.campaign === 'standard') {
+                if (state.theme === 'classic') {
+                    const isLand = f === 'landscape';
+                    html = `<div class="flex ${isLand?'flex-row':'flex-col'} w-full h-full bg-sme-red relative">
+                        <div class="${isLand?'w-[45%] h-full rounded-r-[60px]':'w-full h-[55%] rounded-b-[60px]'} relative overflow-hidden shadow-[20px_20px_50px_rgba(0,0,0,0.3)] z-10 bg-slate-800 shrink-0">
+                            <div id="render-img" class="absolute inset-0 w-full h-full bg-no-repeat" style="background-size: cover;"></div>
+                            <div class="absolute inset-0 bg-sme-navy opacity-20 mix-blend-multiply pointer-events-none"></div>
+                        </div>
+                        <div class="flex-1 p-16 flex flex-col justify-between">
+                            <div class="flex justify-between items-start w-full">
+                                <img src="${whiteLogo}" class="h-12 object-contain" crossorigin="anonymous"><div class="bg-white text-sme-red font-roboto font-bold px-6 pt-3 pb-4 rounded-sm tracking-widest uppercase text-sm shadow-md"><span id="render-tag"></span></div>
+                            </div>
+                            <div class="flex-1 flex items-center py-6"><h2 id="render-title" class="font-oswald font-bold text-white uppercase leading-[1.1] tracking-tight w-full"></h2></div>
+                            ${getFooter('white/20', 'text-white')}
+                        </div>
+                    </div>`;
+                } else if (state.theme === 'cinematic') {
+                    html = `<div class="relative w-full h-full bg-black overflow-hidden">
+                        <div id="render-img" class="absolute inset-0 w-full h-full bg-no-repeat opacity-90" style="background-size: cover;"></div>
+                        <div class="absolute inset-0 bg-gradient-to-t from-[#0a2c3d] via-[#0a2c3d]/80 to-[#0a2c3d]/20 pointer-events-none"></div>
+                        <div class="absolute inset-0 p-16 flex flex-col justify-between z-10">
+                            <div class="flex justify-between items-start w-full">
+                                <div class="bg-sme-red text-white font-roboto font-bold px-6 pt-3 pb-4 rounded-sm tracking-widest uppercase text-sm shadow-lg border border-white/20"><span id="render-tag"></span></div>
+                                <img src="${whiteLogo}" class="h-12 object-contain drop-shadow-lg" crossorigin="anonymous">
+                            </div>
+                            <div class="w-full flex flex-col justify-end mt-auto"><h2 id="render-title" class="font-oswald font-bold text-white uppercase leading-[1.05] tracking-tight w-full drop-shadow-2xl mb-6"></h2>${getFooter('white/20', 'text-white')}</div>
+                        </div>
+                    </div>`;
+                } else {
+                    const isLand = f === 'landscape';
+                    html = `<div class="flex ${isLand?'flex-row p-12 gap-8':'flex-col p-12 gap-6'} w-full h-full bg-sme-navy relative overflow-hidden">
+                        <div class="absolute top-0 right-0 w-[800px] h-[800px] bg-sme-red opacity-15 blur-[120px] rounded-full pointer-events-none"></div>
+                        <div class="${isLand?'w-[40%]':'w-full h-[45%]'} rounded-2xl relative overflow-hidden bg-slate-800 shadow-2xl shrink-0">
+                            <div id="render-img" class="absolute inset-0 w-full h-full bg-no-repeat" style="background-size: cover;"></div>
+                        </div>
+                        <div class="flex-1 rounded-2xl p-12 bg-white shadow-2xl flex flex-col justify-between z-10">
+                            <div class="flex justify-between items-start w-full">
+                                <img src="${whiteLogo}" class="h-10 object-contain grayscale brightness-0 opacity-80" crossorigin="anonymous"><div class="bg-sme-red text-white font-roboto font-bold px-6 pt-3 pb-4 rounded-sm tracking-widest uppercase text-xs shadow-md"><span id="render-tag"></span></div>
+                            </div>
+                            <div class="flex-1 flex items-center py-6"><h2 id="render-title" class="font-oswald font-bold text-sme-navy uppercase leading-[1.1] tracking-tight w-full"></h2></div>
+                            ${getFooter('slate-200', 'text-sme-navy')}
+                        </div>
+                    </div>`;
+                }
+            } else if (state.campaign === 'carousel') {
+                html = `<div class="relative w-full h-full bg-sme-navy flex flex-col p-20 overflow-hidden">
+                            <div class="absolute -top-[200px] -right-[200px] w-[800px] h-[800px] bg-sme-red rounded-full opacity-30 blur-[150px] pointer-events-none"></div>
+                            <div class="flex justify-between items-start w-full z-10">
+                                <img src="${whiteLogo}" class="h-16 object-contain" crossorigin="anonymous">
+                                <div class="bg-sme-red text-white font-roboto font-bold px-6 pt-3 pb-4 rounded-sm tracking-widest uppercase text-lg shadow-md border border-white/10"><span id="render-tag"></span></div>
+                            </div>
+                            <div class="w-full flex-1 flex items-center z-10"><h2 id="render-title" class="font-oswald font-bold text-white uppercase leading-[1.05] tracking-tight w-full drop-shadow-lg" style="font-size:110px;"></h2></div>
+                            ${state.showFooter ? `
+                            <div class="z-10 flex items-center gap-4 border-t-4 border-sme-red pt-6 shrink-0">
+                                <div class="bg-white text-sme-red rounded-full p-2 shrink-0"><svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg></div>
+                                <span class="text-white font-oswald text-2xl uppercase tracking-widest">Swipe to read</span>
+                            </div>` : ''}
+                        </div>`;
+                if(state.currentSlide > 0 && state.currentSlide < 5) {
+                    html = `<div class="relative w-full h-full bg-white flex flex-col p-20 border-l-[16px] border-sme-red">
+                                <div class="text-sme-red font-oswald text-4xl font-bold mb-10 opacity-50 shrink-0">0${state.currentSlide} / 05</div>
+                                <div class="w-full flex-1 flex items-center"><h2 id="render-title" class="font-oswald font-bold text-sme-navy uppercase leading-[1.1] tracking-tight w-full" style="font-size:80px;"></h2></div>
+                                ${state.showFooter ? `
+                                <div class="flex justify-between items-center w-full border-t-2 border-slate-200 pt-6 shrink-0">
+                                    <img src="${whiteLogo}" class="h-10 object-contain grayscale brightness-0 opacity-50 shrink-0" crossorigin="anonymous"><span class="text-slate-400 font-roboto text-xl tracking-widest uppercase font-bold shrink-0">Swipe →</span>
+                                </div>` : ''}
+                            </div>`;
+                } else if (state.currentSlide === 5) {
+                    html = `<div class="relative w-full h-full bg-sme-red flex flex-col items-center justify-center p-20 text-center text-white">
+                                <img src="${whiteLogo}" class="h-24 object-contain mb-16 shadow-xl shrink-0" crossorigin="anonymous">
+                                <h2 id="render-title" class="font-oswald font-bold uppercase leading-[1.05] tracking-tight w-full mb-12" style="font-size:90px;"></h2>
+                                ${state.showFooter ? `<div class="bg-white text-sme-navy font-oswald text-4xl font-bold uppercase py-6 px-16 shadow-2xl rounded-xl shrink-0">Read The Insight</div>` : ''}
+                            </div>`;
+                }
+            } else if (state.campaign === 'poll') {
+                html = `<div class="relative w-full h-full bg-[#0a2c3d] flex flex-col items-center justify-center p-16" style="background: linear-gradient(135deg, #0a2c3d 0%, #111827 100%);">
+                            <div class="z-10 w-full bg-[#1e293b] border border-slate-600 rounded-[40px] p-16 shadow-2xl text-center flex flex-col items-center">
+                                <div class="bg-sme-red text-white font-roboto font-bold px-6 pt-3 pb-4 rounded-full tracking-widest uppercase text-sm shadow-md mb-8 border border-white/20"><span id="render-tag"></span></div>
+                                <h2 id="render-title" class="font-oswald font-bold text-white uppercase leading-[1.15] tracking-tight mb-2" style="font-size:60px; text-shadow: 0 4px 10px rgba(0,0,0,0.5);"></h2>
+                                <div class="mt-8 space-y-4 w-full px-8 text-left">
+                                    <div class="bg-white p-5 rounded-xl text-sme-navy text-2xl font-bold flex justify-between items-center shadow-md"><span id="render-opt-1" class="font-roboto"></span> <div class="w-8 h-8 rounded-full border-[3px] border-slate-300"></div></div>
+                                    <div class="bg-white p-5 rounded-xl text-sme-navy text-2xl font-bold flex justify-between items-center shadow-md"><span id="render-opt-2" class="font-roboto"></span> <div class="w-8 h-8 rounded-full border-[3px] border-slate-300"></div></div>
+                                    <div id="opt-3-container" class="bg-white p-5 rounded-xl text-sme-navy text-2xl font-bold flex justify-between items-center shadow-md"><span id="render-opt-3" class="font-roboto"></span> <div class="w-8 h-8 rounded-full border-[3px] border-slate-300"></div></div>
+                                </div>
+                            </div>
+                        </div>`;
+            } else if (state.campaign === 'whatsapp') {
+                html = `<div class="relative w-full h-full flex flex-col justify-center bg-[#0a2c3d] overflow-hidden">
+                            <div id="render-img" class="absolute inset-0 w-full h-full bg-no-repeat" style="background-size: cover; background-position: center; opacity: 0.35;"></div>
+                            <div class="absolute inset-0" style="background: linear-gradient(to top, rgba(10,44,61,0.95), rgba(10,44,61,0.4));"></div>
+                            <div class="z-10 p-16 w-full flex flex-col h-full justify-between relative">
+                                <div class="flex justify-center pt-10"><div class="bg-sme-red text-white font-roboto font-bold px-6 pt-3 pb-4 rounded-full tracking-widest uppercase text-lg shadow-md border border-white/20"><span id="render-tag"></span></div></div>
+                                <div class="w-full text-center">
+                                    <h2 id="render-title" class="font-oswald font-bold text-white uppercase leading-[1.1] tracking-tight" style="font-size:100px; text-shadow: 2px 4px 15px rgba(0,0,0,0.9);"></h2>
+                                </div>
+                                ${state.showFooter ? `<div class="flex justify-center pb-10 shrink-0"><img src="${whiteLogo}" class="h-16 object-contain opacity-90 shrink-0" crossorigin="anonymous"></div>` : `<div class="pb-10"></div>`}
+                            </div>
+                        </div>`;
+            }
+
+            canvas.innerHTML = html;
+            
+            syncDOM(); 
+            setTimeout(() => {
+                resizeWrapper();
+            }, 50); 
+        }
+
+        function syncDOM() {
+            if (state.isExporting) return; // Prevent manual syncs via sliders during export loops
+            
+            const posX = document.getElementById('in-img-x')?.value || 50;
+            const posY = document.getElementById('in-img-y')?.value || 50;
+            const tagInput = document.getElementById('in-tag');
+            const titleInput = document.getElementById('in-title');
+            const fontInput = document.getElementById('in-font-size');
+            
+            const valX = document.getElementById('val-img-x');
+            const valY = document.getElementById('val-img-y');
+            const valFont = document.getElementById('font-size-val');
+
+            if (valX) valX.innerText = posX + '%';
+            if (valY) valY.innerText = posY + '%';
+            if (valFont) valFont.innerText = (fontInput?.value || 100) + '%';
+
+            // Sanitize inputs to prevent malicious execution if user pastes HTML code
+            let titleSource = state.campaign === 'carousel' 
+                ? sanitizeHTML(state.slides[state.currentSlide]).replace(/\n/g, '<br>') 
+                : sanitizeHTML(titleInput?.value || "").replace(/\n/g, '<br>');
+            
+            const rTag = document.getElementById('render-tag');
+            const rTitle = document.getElementById('render-title');
+            const rImg = document.getElementById('render-img');
+            
+            if (rTag && tagInput) rTag.innerHTML = sanitizeHTML(tagInput.value);
+            if (rTitle) {
+                rTitle.innerHTML = titleSource;
+                let baseSize = state.campaign === 'standard' ? baseFonts[state.format] 
+                             : (state.campaign === 'carousel' ? (state.currentSlide === 0 ? 110 : 80) 
+                             : (state.campaign === 'poll' ? 60 : (state.campaign === 'whatsapp' ? 85 : 100)));
+                rTitle.style.fontSize = Math.round(baseSize * ((fontInput?.value || 100) / 100)) + 'px';
+            }
+            if (rImg && currentImageSrc) {
+                rImg.style.backgroundImage = `url('${currentImageSrc}')`;
+                rImg.style.backgroundPosition = `${posX}% ${posY}%`;
+            }
+            
+            if (state.campaign === 'poll') {
+                for(let i=1; i<=3; i++) {
+                    const rOpt = document.getElementById('render-opt-'+i);
+                    const optInput = document.getElementById('poll-opt-'+i);
+                    const val = sanitizeHTML(optInput?.value || "");
+                    if(rOpt) rOpt.innerHTML = val;
+                    
+                    if (i === 3) {
+                        const opt3Container = document.getElementById('opt-3-container');
+                        if (opt3Container) opt3Container.style.display = val.trim() === '' ? 'none' : 'flex';
+                    }
+                }
+            }
+        }
+
+        async function fetchWithProxy(targetUrl) {
+            const encodedUrl = encodeURIComponent(targetUrl);
+            const proxies = [
+                `https://api.allorigins.win/raw?url=${encodedUrl}`,
+                `https://corsproxy.io/?url=${encodedUrl}`,
+                `https://api.codetabs.com/v1/proxy?quest=${encodedUrl}`
+            ];
+            
+            for (let proxy of proxies) {
+                try {
+                    const controller = new AbortController();
+                    const timeoutId = setTimeout(() => controller.abort(), 8000);
+                    
+                    const response = await fetch(proxy, { signal: controller.signal });
+                    clearTimeout(timeoutId);
+                    
+                    if (response.ok) {
+                        const clone = response.clone();
+                        const text = await clone.text();
+                        if (!text.toLowerCase().includes("error") || text.length > 500) {
+                             return response;
+                        }
+                    }
+                } catch (e) {
+                    // Suppress and try next proxy
+                }
+            }
+            throw new Error("Cannot access website metadata. The site may have security blocks in place.");
+        }
+
+        async function fetchArticleData() {
+            const urlInput = document.getElementById('in-url');
+            const btn = document.getElementById('btn-fetch');
+            const inTitle = document.getElementById('in-title');
+
+            if (!urlInput || !urlInput.value.trim()) return showToast("Please paste a valid URL first.");
+            
+            const ogBtnHtml = btn.innerHTML;
+            btn.innerHTML = `<svg class="animate-spin h-4 w-4" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>`;
+            btn.classList.add('disabled-btn');
+
+            try {
+                const response = await fetchWithProxy(urlInput.value.trim());
+                const htmlText = await response.text();
+                const doc = new DOMParser().parseFromString(htmlText, 'text/html');
+                
+                const title = doc.querySelector('meta[property="og:title"]')?.content || doc.title || "Extracted Article";
+                const cleanTitle = title.replace(" - SME South Africa", "").trim();
+                if (inTitle) inTitle.value = cleanTitle;
+                if(state.campaign === 'carousel' && state.slides.length > 0) state.slides[0] = cleanTitle;
+                
+                scrapedDesc = doc.querySelector('meta[property="og:description"]')?.content || "";
+                
+                const ogImage = doc.querySelector('meta[property="og:image"]')?.content;
+                if (ogImage) {
+                    try {
+                        const imgRes = await fetchWithProxy(ogImage);
+                        const blob = await imgRes.blob();
+                        currentImageSrc = URL.createObjectURL(blob);
+                        
+                        const elX = document.getElementById('in-img-x');
+                        const elY = document.getElementById('in-img-y');
+                        if (elX) elX.value = 50;
+                        if (elY) elY.value = 50;
+                        
+                    } catch (imgError) {
+                        showToast("Could not load article image. Using placeholder.", 'error');
+                    }
+                }
+                showToast("Data extracted successfully!", "success");
+                syncDOM();
+            } catch (error) { 
+                showToast(error.message); 
+            } finally { 
+                btn.innerHTML = ogBtnHtml; 
+                btn.classList.remove('disabled-btn'); 
+            }
+        }
+
+        // 🛡️ EXPORT ROBUSTNESS: Manual Export to guarantee perfect renders without ghosting
+        async function triggerExport() {
+            if (state.isExporting) return;
+            
+            const btn = document.getElementById('btn-download');
+            const txt = document.getElementById('download-text');
+            const iconDownload = document.getElementById('icon-download');
+            const iconLoading = document.getElementById('icon-loading');
+            
+            const ogText = txt.innerText;
+            state.isExporting = true;
+            btn.classList.add('disabled-btn');
+            
+            if (txt) txt.innerText = "Exporting..."; 
+            if (iconDownload) iconDownload.classList.add('hidden');
+            if (iconLoading) iconLoading.classList.remove('hidden');
+
+            const curS = wrapper.style.transform; 
+            wrapper.style.transform = 'scale(1)';
+            
+            wrapper.style.transition = 'none';
+            canvas.style.transition = 'none';
+            
+            await new Promise(r => setTimeout(r, 600));
+            
+            try {
+                let bgColor = state.campaign === 'standard' ? null : '#0a2c3d';
+                let fileName = `SME_Graphic_${Date.now()}.png`;
+
+                // Set perfect colors and explicit filenames based on the currently selected format
+                if (state.campaign === 'carousel') {
+                    if (state.currentSlide === 0) bgColor = '#0a2c3d';
+                    else if (state.currentSlide === 5) bgColor = '#9c1c1f';
+                    else bgColor = '#ffffff';
+                    fileName = `SME_Carousel_Slide_${state.currentSlide + 1}_${Date.now()}.png`;
+                } else if (state.campaign === 'whatsapp' || state.campaign === 'poll') {
+                    bgColor = '#0a2c3d';
+                }
+
+                const captureConfig = { 
+                    scale: 3, 
+                    useCORS: true,     
+                    allowTaint: false, 
+                    backgroundColor: bgColor,
+                    logging: false 
+                };
+
+                // Because we got rid of the loop, it flawlessly captures just the exact current frame
+                const c = await html2canvas(canvas, captureConfig);
+                const link = document.createElement('a'); 
+                link.download = fileName;
+                link.href = c.toDataURL('image/png'); 
+                link.click();
+
+                showToast("Export successful!", "success");
+            } catch (err) { 
+                console.error("Canvas Export Error:", err);
+                if (err.name === 'SecurityError' || err.message.includes('tainted')) {
+                    showToast("Export blocked: Cross-origin image issue. Try uploading a local image instead.");
+                } else {
+                    showToast("Export failed. Make sure all assets are loaded."); 
+                }
+            } finally { 
+                state.isExporting = false;
+                wrapper.style.transform = curS; 
+                
+                wrapper.style.transition = '';
+                canvas.style.transition = '';
+
+                if (txt) txt.innerText = ogText; 
+                if (iconDownload) iconDownload.classList.remove('hidden');
+                if (iconLoading) iconLoading.classList.add('hidden');
+                btn.classList.remove('disabled-btn');
+                resizeWrapper(); 
+            }
+        }
+    </script>
+</body>
+</html>
