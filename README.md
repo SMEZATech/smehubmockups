@@ -51,4 +51,4 @@ Use the interactive central dashboard to navigate between the different UI modul
 
 This repository and its contents (including all HTML, CSS, JavaScript, and UI/UX design architectures) are proprietary assets belonging to Tshepho Joel.
 
-Unauthorized copying, modification, distribution, or commercial use of these files and designs, via any medium, is strictly prohibited without explicit written permission from the copyright holder.
+Unauthorised copying, modification, distribution, or commercial use of these files and designs, via any medium, is strictly prohibited without explicit written permission from the copyright holder.
