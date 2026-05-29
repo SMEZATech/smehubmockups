@@ -150,8 +150,8 @@
   .pill-share{ background:hsl(36 100% 50% / .16); color:hsl(36 90% 36%); }
 
   .field{ display:flex; align-items:center; gap:0; border:1px solid hsl(var(--input)); border-radius:var(--radius); overflow:hidden; background:hsl(var(--card)); max-width:420px; }
-  .field input{ flex:1; border:none; padding:12px 16px; font-size:14px; font-family:'Inter'; outline:none; background:transparent; }
-  .field .btn{ border-radius:0; }
+  .field input{ flex:1 1 auto; min-width:0; border:none; padding:12px 16px; font-size:14px; font-family:'Inter'; outline:none; background:transparent; }
+  .field .btn{ border-radius:0; flex-shrink:0; white-space:nowrap; }
 
   .demo-input{ width:100%; padding:11px 14px; border:1px solid hsl(var(--input)); border-radius:var(--radius); font-size:14px; font-family:'Inter'; background:hsl(var(--background)); outline:none; transition:border-color .15s, box-shadow .15s; }
   .demo-input:focus{ border-color:hsl(var(--primary)); box-shadow:0 0 0 3px hsl(349 80% 48% / .12); }
@@ -648,17 +648,23 @@
   <div class="wrap">
     <p class="sec-label">07 · Content structure</p>
     <h2 class="sec-title">Cards &amp; content display</h2>
-    <p class="sec-desc">How articles, resources, and reports render in the 2026 system. Generous spacing, Jakarta headings, brand-red category labels and links.</p>
+    <p class="sec-desc">How articles, resources, and reports render in the 2026 system — generous spacing, Jakarta headings, brand-red category labels. Article cards and posts always carry an <b>author byline</b> (avatar + name); this powers author schema and strengthens E-E-A-T for search.</p>
 
     <div class="cta-grid" style="grid-template-columns:repeat(auto-fit,minmax(280px,1fr));">
       <!-- Article card -->
       <div class="article-card">
-        <div class="img"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div>
+        <div class="img" style="position:relative;">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+          <span style="position:absolute; top:12px; left:12px; background:hsl(var(--primary)); color:white; font-family:'Plus Jakarta Sans'; font-weight:700; font-size:10px; text-transform:uppercase; letter-spacing:.06em; padding:5px 11px; border-radius:999px;">Operations</span>
+        </div>
         <div class="bd">
-          <p class="cat">Business Opportunities</p>
-          <h4>How to set SMART goals for your business this year</h4>
-          <p class="meta">12 Jan 2026 · 5 min read</p>
-          <div style="margin-top:12px"><a href="#content" class="link-arrow">Read More →</a></div>
+          <p class="meta">8 April 2026 · 5 min read</p>
+          <h4>Compliance Basics Every Small Business Must Know</h4>
+          <p style="font-size:14px; color:hsl(var(--muted-foreground)); margin-top:4px;">Tax registration, BEE, labour laws — a no-jargon guide to staying on the right side of the rules.</p>
+          <div style="display:flex; align-items:center; gap:9px; margin-top:16px; padding-top:14px; border-top:1px solid hsl(var(--border));">
+            <span style="width:30px; height:30px; border-radius:50%; background:var(--gradient-accent); display:grid; place-items:center; color:white; font-family:'Plus Jakarta Sans'; font-weight:700; font-size:11px; flex-shrink:0;">TM</span>
+            <span style="font-size:13px; font-weight:700; font-family:'Plus Jakarta Sans';">Thabo Molefe</span>
+          </div>
         </div>
       </div>
 
@@ -677,8 +683,8 @@
       <div class="article-card">
         <div class="bd" style="padding-top:22px">
           <p class="cat">Article · Post Page</p>
-          <h4 style="font-size:22px">Lorem ipsum dolor sit amet, consetetur</h4>
-          <p class="meta" style="margin-bottom:14px">Updated on 29 November 2026</p>
+          <h4 style="font-size:22px">How to register your small business in SA</h4>
+          <p class="meta" style="margin-bottom:14px">By <b style="color:hsl(var(--foreground))">Thabo Molefe</b> · Updated 29 November 2026</p>
           <div style="display:flex; align-items:center; gap:14px; padding:12px 0; border-top:1px solid hsl(var(--border)); border-bottom:1px solid hsl(var(--border));">
             <span class="link-arrow" style="font-size:12px;">▷ Listen · 7 min</span>
             <span style="font-size:12px; color:hsl(var(--muted-foreground));">Share</span>
@@ -746,8 +752,8 @@
 
     <div class="subhead">Mobile</div>
     <div class="ad-grid">
-      <div><div class="ad-box" style="width:140px; aspect-ratio:350/250;">350 × 250</div><div class="ad-cap">Mobile MPU</div></div>
-      <div><div class="ad-box" style="width:120px; aspect-ratio:300/250;">300 × 250</div><div class="ad-cap">In-feed</div></div>
+      <div><div class="ad-box" style="width:200px; aspect-ratio:300/50;">300 × 50</div><div class="ad-cap">Mobile Banner</div></div>
+      <div><div class="ad-box" style="width:120px; aspect-ratio:300/250;">300 × 250</div><div class="ad-cap">In-feed MPU</div></div>
     </div>
   </div>
 </section>
