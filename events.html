@@ -34,10 +34,16 @@
     .sheet{ animation:sheetUp .42s cubic-bezier(.2,.8,.2,1) forwards; }
     @media (min-width:640px){ .sheet{ animation:popIn .3s cubic-bezier(.2,.7,.2,1) forwards; } }
     .perf{ background-image:radial-gradient(circle at center, transparent 5px, currentColor 5px); background-size:2px 14px; background-repeat:repeat-y; }
+    #print-portal{ display:none; }
     @media print{
-      body *{ visibility:hidden !important; }
-      #ticketCard, #ticketCard *{ visibility:visible !important; }
-      #ticketCard{ position:absolute; left:0; top:0; width:100%; box-shadow:none !important; }
+      @page{ size:auto; margin:10mm; }
+      html,body{ background:#fff !important; }
+      body > *:not(#print-portal){ display:none !important; }
+      #print-portal{ display:block !important; }
+      #print-portal #ticketCard{ box-shadow:none !important; max-width:640px !important; margin:0 auto !important; }
+      #print-portal, #print-portal *{ -webkit-print-color-adjust:exact !important; print-color-adjust:exact !important; color-adjust:exact !important; }
+      #print-portal .grain::after, #print-portal .hero-vignette{ display:none !important; }
+      #print-portal #ticketCard{ break-inside:avoid; page-break-inside:avoid; }
       .no-print{ display:none !important; }
     }
   </style>
@@ -105,9 +111,7 @@
           { icon:'globe', title:'Scaling Globally', description:'Strategies for taking your growth-focused SME into international markets.' }
         ],
         tickets:{ currency:'R', bookingFeePct:2.5, tiers:[
-          { id:'early', name:'Early Bird', price:1450, blurb:'Full-day access \u00b7 lunch \u00b7 cocktails', remaining:9, max:6, badge:'Best value' },
-          { id:'standard', name:'Standard', price:1950, blurb:'Full-day access \u00b7 lunch \u00b7 cocktails', remaining:84, max:10 },
-          { id:'vip', name:'VIP Table (seats 10)', price:18000, blurb:'Reserved table \u00b7 premium seating \u00b7 speaker dinner', remaining:3, max:2, badge:'Almost gone' }
+          { id:'standard', name:'Standard', price:1450, blurb:'Full-day access \u00b7 lunch \u00b7 cocktails', remaining:84, max:10 }
         ]}
       },
       { id:2, featured:false, type:'ONLINE', status:'Past', category:'Tax & Accounting',
@@ -713,15 +717,351 @@
         </form>
       </div></div>`);
     }
-    // Placeholder — wired in next chunk
+    // ===== CHECKOUT MODULE ========================================================
+    const Checkout = {
+      ev:null, step:1, qty:{}, lead:{}, attendees:[], card:{}, errors:{}, processing:false, order:null,
+
+      open(ev){
+        this.ev = ev; this.step = 1; this.qty = {};
+        ev.tickets.tiers.forEach(t=> this.qty[t.id] = 0);
+        this.lead = { name: state.isLoggedIn?'Tshepho Joel':'', email: state.isLoggedIn?'tshepho@smesouthafrica.co.za':'', phone:'', company:'', dietary:'' };
+        this.attendees = []; this.card = { number:'', name:'', expiry:'', cvc:'' };
+        this.errors = {}; this.processing = false; this.order = null;
+        document.body.style.overflow = 'hidden';
+        activeOverlayClose = ()=> this.close();
+        track('begin_checkout', { event_id:ev.id });
+        this.render();
+      },
+      close(){ const r=document.getElementById('overlay-root'); if(r) r.innerHTML=''; document.body.style.overflow=''; activeOverlayClose = null; },
+
+      count(){ return Object.values(this.qty).reduce((a,b)=>a+b,0); },
+      subtotal(){ return this.ev.tickets.tiers.reduce((s,t)=> s + (this.qty[t.id]||0)*t.price, 0); },
+      fee(){ return Math.round(this.subtotal() * (this.ev.tickets.bookingFeePct/100) * 100) / 100; },
+      total(){ return this.subtotal() + this.fee(); },
+
+      setQty(tierId, n){
+        const tier = this.ev.tickets.tiers.find(t=>t.id===tierId);
+        const max = Math.min(tier.remaining, tier.max);
+        this.qty[tierId] = Math.max(0, Math.min(n, max));
+        const needed = Math.max(0, this.count() - 1);
+        while(this.attendees.length < needed) this.attendees.push({ name:'' });
+        while(this.attendees.length > needed) this.attendees.pop();
+        this.render();
+      },
+
+      validate(step){
+        const e = {};
+        if(step===1 && this.count()===0) e.tickets = 'Please select at least 1 ticket';
+        if(step===2){
+          if(!this.lead.name.trim()) e.name='Required';
+          if(!/^\S+@\S+\.\S+$/.test(this.lead.email||'')) e.email='Please enter a valid email';
+          if(!(this.lead.phone||'').trim()) e.phone='Required';
+          this.attendees.forEach((a,i)=>{ if(!a.name.trim()) e['att'+i]='Required'; });
+        }
+        if(step===3){
+          const digits = (this.card.number||'').replace(/\s/g,'');
+          if(digits.length<13||digits.length>19) e.cardNumber='Enter a valid card number';
+          if(!(this.card.name||'').trim()) e.cardName='Required';
+          if(!/^\d{2}\/\d{2}$/.test(this.card.expiry||'')) e.expiry='MM/YY';
+          if(!/^\d{3,4}$/.test(this.card.cvc||'')) e.cvc='3–4 digits';
+        }
+        this.errors = e; return Object.keys(e).length===0;
+      },
+
+      next(){
+        if(!this.validate(this.step)){ this.render(); return; }
+        if(this.step < 3){ this.step++; track('checkout_step',{ event_id:this.ev.id, step:this.step }); this.render(); }
+        else this.pay();
+      },
+      back(){ if(this.step>1){ this.step--; this.render(); } },
+
+      pay(){
+        this.processing = true; this.render();
+        setTimeout(()=>{
+          const tickets = this.ev.tickets.tiers.filter(t=>this.qty[t.id]>0).map(t=>({ name:t.name, qty:this.qty[t.id], unit:t.price, subtotal:t.price*this.qty[t.id] }));
+          this.order = { ref:'SME-'+new Date().getFullYear()+'-'+String(Math.floor(Math.random()*9000+1000)), paidAt:Date.now(), attendees:[this.lead.name, ...this.attendees.map(a=>a.name)], tickets, subtotal:this.subtotal(), fee:this.fee(), total:this.total() };
+          track('purchase',{ event_id:this.ev.id, value:this.order.total, currency:'ZAR', tickets:this.count(), order_ref:this.order.ref });
+          this.processing = false; this.step = 4; this.render(); this.fireConfetti();
+        }, 1400);
+      },
+
+      fireConfetti(){
+        const root = document.getElementById('overlay-root'); if(!root) return;
+        const colors = ['#9C1C1F','#0A2C3D','#FFF2CD','#A67B1E','#10B981'];
+        const layer = document.createElement('div');
+        layer.style.cssText = 'position:fixed; inset:0; pointer-events:none; z-index:1200; overflow:hidden';
+        for(let i=0;i<80;i++){
+          const c = document.createElement('span');
+          c.className = 'confetti-piece';
+          c.style.left = (Math.random()*100)+'vw';
+          c.style.background = colors[Math.floor(Math.random()*colors.length)];
+          c.style.animationDuration = (1.6 + Math.random()*1.8)+'s';
+          c.style.animationDelay = (Math.random()*0.4)+'s';
+          c.style.transform = 'rotate('+(Math.random()*360)+'deg)';
+          layer.appendChild(c);
+        }
+        root.appendChild(layer);
+        setTimeout(()=> layer.remove(), 3800);
+      },
+
+      onCardInput(el){
+        const digits = el.value.replace(/\D/g,'').slice(0,19);
+        const formatted = digits.replace(/(\d{4})/g,'$1 ').trim();
+        this.card.number = formatted; el.value = formatted;
+      },
+      printTicket(){
+        const original = document.getElementById('ticketCard');
+        if(!original){ window.print(); return; }
+        const existing = document.getElementById('print-portal'); if(existing) existing.remove();
+        const portal = document.createElement('div'); portal.id = 'print-portal';
+        portal.appendChild(original.cloneNode(true));
+        document.body.appendChild(portal);
+        track('print_ticket', { event_id: this.ev.id, order_ref: this.order && this.order.ref });
+        try{ window.print(); } finally { setTimeout(()=>{ const p=document.getElementById('print-portal'); if(p) p.remove(); }, 1000); }
+      },
+      onExpiryInput(el){
+        let d = el.value.replace(/\D/g,'').slice(0,4);
+        if(d.length>=3) d = d.slice(0,2)+'/'+d.slice(2);
+        this.card.expiry = d; el.value = d;
+      },
+      cardBrand(){
+        const d = (this.card.number||'').replace(/\s/g,'');
+        if(/^4/.test(d)) return 'Visa';
+        if(/^5[1-5]/.test(d) || /^2[2-7]/.test(d)) return 'Mastercard';
+        if(/^3[47]/.test(d)) return 'Amex';
+        return '';
+      },
+
+      render(){
+        const root = document.getElementById('overlay-root'); if(!root) return;
+        setHTML(root, this.step===4 ? this.renderThankYou() : this.renderShell());
+      },
+
+      renderShell(){
+        const labels = ['Tickets','Details','Payment'];
+        const stepper = `<div class="flex items-center justify-between px-5 sm:px-7 py-4 border-b border-slate-100 bg-white shrink-0">
+          <div class="flex items-center gap-1.5 sm:gap-3 overflow-x-auto no-scrollbar">
+            ${[1,2,3].map(n=>{ const done=this.step>n, active=this.step===n; return `
+              <div class="flex items-center gap-2 shrink-0">
+                <span class="w-7 h-7 rounded-full grid place-items-center font-bold text-xs ${done?'bg-[#10B981] text-white':active?'bg-[#9C1C1F] text-white':'bg-slate-200 text-slate-500'}">${done?'<i data-lucide="check" class="w-3.5 h-3.5"></i>':n}</span>
+                <span class="hidden sm:inline font-bold uppercase text-[11px] tracking-wider ${active||done?'text-[#0A2C3D]':'text-slate-400'}">${labels[n-1]}</span>
+              </div>
+              ${n<3 ? `<div class="w-4 sm:w-8 h-px ${done?'bg-[#10B981]':'bg-slate-200'} shrink-0"></div>` : ''}
+            `; }).join('')}
+          </div>
+          <button onclick="Checkout.close()" aria-label="Close checkout" class="shrink-0 w-9 h-9 grid place-items-center rounded-full text-slate-400 hover:text-slate-700 bg-white border border-slate-200 ml-3"><i data-lucide="x" class="w-4 h-4"></i></button>
+        </div>`;
+
+        let body, ctaLabel;
+        if(this.step===1){ body = this.renderStepTickets(); ctaLabel = 'Continue'; }
+        else if(this.step===2){ body = this.renderStepDetails(); ctaLabel = 'Continue to payment'; }
+        else { body = this.renderStepPayment(); ctaLabel = 'Pay '+money(this.total()); }
+
+        const showBack = this.step>1 && !this.processing;
+        const showTotal = this.count()>0;
+
+        const footer = `<div class="border-t border-slate-100 bg-slate-50 px-5 sm:px-7 py-4 flex items-center gap-3 shrink-0" style="padding-bottom:max(1rem, env(safe-area-inset-bottom));">
+          ${showBack ? `<button onclick="Checkout.back()" class="text-sm font-bold text-slate-600 hover:text-[#0A2C3D] uppercase tracking-wide px-2 py-2.5">← Back</button>` : ''}
+          ${showTotal ? `<div class="hidden sm:block min-w-0"><p class="text-[10px] font-bold text-slate-400 uppercase tracking-wide leading-none">Total</p><p class="font-oswald text-xl font-bold text-[#0A2C3D] leading-none mt-1">${money(this.total())}</p></div>`:''}
+          <button onclick="${this.processing?'':'Checkout.next()'}" class="ml-auto bg-[#9C1C1F] hover:bg-[#7a1518] text-white font-bold uppercase tracking-wide text-sm px-5 sm:px-7 py-3.5 rounded-xl flex items-center gap-2 ${this.processing?'opacity-90 cursor-wait':''}">${this.processing ? `<svg class="spin w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><circle cx="12" cy="12" r="9" opacity=".3"/><path d="M12 3a9 9 0 0 1 9 9" stroke-linecap="round"/></svg> Processing…` : `${ctaLabel} <i data-lucide="arrow-right" class="w-4 h-4"></i>`}</button>
+        </div>`;
+
+        return `<div class="fixed inset-0 z-[70] bg-black/60 scrim flex items-end sm:items-center justify-center sm:p-4 backdrop-blur-sm" onclick="if(event.target===this) Checkout.close()">
+          <div role="dialog" aria-modal="true" aria-labelledby="checkout-title" class="bg-white w-full sm:max-w-2xl sm:rounded-2xl rounded-t-3xl overflow-hidden shadow-2xl sheet flex flex-col" style="max-height:95vh">
+            ${stepper}
+            <div class="flex-1 overflow-y-auto custom-scrollbar p-5 sm:p-7">${body}</div>
+            ${footer}
+          </div>
+        </div>`;
+      },
+
+      renderStepTickets(){
+        const tiers = this.ev.tickets.tiers;
+        return `<div class="space-y-5">
+          <div>
+            <h2 id="checkout-title" class="font-oswald text-2xl sm:text-3xl font-extrabold uppercase text-[#0A2C3D] mb-1">Select Tickets</h2>
+            <p class="text-sm text-slate-500">${esc(this.ev.title)} · ${esc(this.ev.logistics.display_date)}</p>
+          </div>
+          <div class="space-y-3">${tiers.map(tier=>{
+            const q = this.qty[tier.id]||0;
+            const max = Math.min(tier.remaining, tier.max);
+            const sold = tier.remaining<=0;
+            const low = tier.remaining<=10 && !sold;
+            const selected = q>0;
+            return `<div class="border-2 ${selected?'border-[#9C1C1F] bg-[#9C1C1F]/[0.04]':'border-slate-200 bg-white'} rounded-2xl p-4 sm:p-5 transition-colors">
+              <div class="flex flex-col sm:flex-row sm:items-start gap-4">
+                <div class="flex-1 min-w-0">
+                  <div class="flex flex-wrap items-center gap-2 mb-1">
+                    <h3 class="font-oswald font-bold text-lg text-[#0A2C3D] uppercase">${esc(tier.name)}</h3>
+                    ${tier.badge ? `<span class="text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-[#FFF2CD] text-[#A67B1E]">${esc(tier.badge)}</span>`:''}
+                  </div>
+                  <p class="text-sm text-slate-500">${esc(tier.blurb)}</p>
+                  <p class="font-oswald text-2xl font-extrabold text-[#9C1C1F] mt-2">${money(tier.price)}</p>
+                  ${low ? `<p class="text-[11px] font-bold text-[#9C1C1F] mt-1 flex items-center gap-1"><i data-lucide="flame" class="w-3.5 h-3.5"></i> Only ${tier.remaining} left</p>` : sold ? `<p class="text-[11px] font-bold text-slate-400 mt-1">Sold out</p>` : ''}
+                </div>
+                <div class="flex items-center gap-3 shrink-0 self-end sm:self-center">
+                  ${sold ? `<span class="text-xs font-bold text-slate-400 uppercase tracking-wide">Unavailable</span>` : `
+                    <button onclick="Checkout.setQty('${tier.id}',${q-1})" aria-label="Decrease quantity" ${q<=0?'disabled':''} class="w-10 h-10 rounded-full border-2 border-slate-200 hover:border-[#9C1C1F] hover:text-[#9C1C1F] grid place-items-center transition-colors disabled:opacity-30 disabled:hover:border-slate-200 disabled:hover:text-current"><i data-lucide="minus" class="w-4 h-4"></i></button>
+                    <span class="font-oswald font-bold text-xl w-7 text-center text-[#0A2C3D]">${q}</span>
+                    <button onclick="Checkout.setQty('${tier.id}',${q+1})" aria-label="Increase quantity" ${q>=max?'disabled':''} class="w-10 h-10 rounded-full border-2 border-slate-200 hover:border-[#9C1C1F] hover:text-[#9C1C1F] grid place-items-center transition-colors disabled:opacity-30 disabled:hover:border-slate-200 disabled:hover:text-current"><i data-lucide="plus" class="w-4 h-4"></i></button>
+                  `}
+                </div>
+              </div>
+            </div>`;
+          }).join('')}</div>
+          ${this.errors.tickets ? `<p class="text-sm text-[#9C1C1F] font-semibold">${this.errors.tickets}</p>` : ''}
+          ${this.count()>0 ? `<div class="bg-slate-50 rounded-xl p-4 space-y-2 border border-slate-200">
+            <div class="flex justify-between text-sm"><span class="text-slate-500">Subtotal</span><span class="font-bold">${money(this.subtotal())}</span></div>
+            <div class="flex justify-between text-sm"><span class="text-slate-500">Booking fee (${this.ev.tickets.bookingFeePct}%)</span><span class="font-bold">${money(this.fee())}</span></div>
+            <div class="flex justify-between pt-2 border-t border-slate-200"><span class="font-bold text-[#0A2C3D]">Total</span><span class="font-oswald font-extrabold text-xl text-[#0A2C3D]">${money(this.total())}</span></div>
+          </div>` : ''}
+        </div>`;
+      },
+
+      renderStepDetails(){
+        const errSpan = (k)=> this.errors[k] ? `<p class="text-xs text-[#9C1C1F] font-semibold mt-1">${this.errors[k]}</p>` : '';
+        const inp = 'w-full border border-slate-200 rounded-lg px-4 py-3 text-sm outline-none focus:border-[#9C1C1F] bg-slate-50';
+        const lbl = 'text-xs font-bold uppercase tracking-wide text-slate-500 mb-1 block';
+        const totalQty = this.count();
+        return `<div class="space-y-6">
+          <div>
+            <h2 id="checkout-title" class="font-oswald text-2xl sm:text-3xl font-extrabold uppercase text-[#0A2C3D] mb-1">Your Details</h2>
+            <p class="text-sm text-slate-500">Booking ${totalQty} ticket${totalQty>1?'s':''} for ${esc(this.ev.title)}</p>
+          </div>
+          <div>
+            <h3 class="font-oswald font-bold uppercase text-base text-[#0A2C3D] mb-3">Lead booker</h3>
+            <div class="space-y-3">
+              <div><label class="${lbl}">Full name</label><input id="co-name" type="text" value="${esc(this.lead.name)}" oninput="Checkout.lead.name=this.value" class="${inp}" />${errSpan('name')}</div>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div><label class="${lbl}">Email</label><input id="co-email" type="email" value="${esc(this.lead.email)}" oninput="Checkout.lead.email=this.value" class="${inp}" />${errSpan('email')}</div>
+                <div><label class="${lbl}">Phone</label><input id="co-phone" type="tel" value="${esc(this.lead.phone)}" oninput="Checkout.lead.phone=this.value" class="${inp}" placeholder="071 234 5678" />${errSpan('phone')}</div>
+              </div>
+              <div><label class="${lbl}">Company <span class="text-slate-400 font-normal normal-case">(optional)</span></label><input id="co-co" type="text" value="${esc(this.lead.company)}" oninput="Checkout.lead.company=this.value" class="${inp}" /></div>
+              <div><label class="${lbl}">Dietary requirements</label><select id="co-diet" onchange="Checkout.lead.dietary=this.value" class="${inp}">
+                <option value="" ${this.lead.dietary===''?'selected':''}>None</option>
+                <option value="vegetarian" ${this.lead.dietary==='vegetarian'?'selected':''}>Vegetarian</option>
+                <option value="vegan" ${this.lead.dietary==='vegan'?'selected':''}>Vegan</option>
+                <option value="halaal" ${this.lead.dietary==='halaal'?'selected':''}>Halaal</option>
+                <option value="kosher" ${this.lead.dietary==='kosher'?'selected':''}>Kosher</option>
+                <option value="gluten-free" ${this.lead.dietary==='gluten-free'?'selected':''}>Gluten-free</option>
+              </select></div>
+            </div>
+          </div>
+          ${totalQty>1 ? `<div>
+            <h3 class="font-oswald font-bold uppercase text-base text-[#0A2C3D] mb-3">Additional attendees</h3>
+            <div class="space-y-3">${this.attendees.map((a,i)=>`<div><label class="${lbl}">Attendee ${i+2} full name</label><input id="co-att${i}" type="text" value="${esc(a.name)}" oninput="Checkout.attendees[${i}].name=this.value" class="${inp}" />${errSpan('att'+i)}</div>`).join('')}</div>
+          </div>` : ''}
+        </div>`;
+      },
+
+      renderStepPayment(){
+        const errSpan = (k)=> this.errors[k] ? `<p class="text-xs text-[#9C1C1F] font-semibold mt-1">${this.errors[k]}</p>` : '';
+        const inp = 'w-full border border-slate-200 rounded-lg px-4 py-3 text-sm outline-none focus:border-[#9C1C1F] bg-slate-50';
+        const lbl = 'text-xs font-bold uppercase tracking-wide text-slate-500 mb-1 block';
+        const tickets = this.ev.tickets.tiers.filter(t=>this.qty[t.id]>0);
+        const brand = this.cardBrand();
+        return `<div class="space-y-6">
+          <div>
+            <h2 id="checkout-title" class="font-oswald text-2xl sm:text-3xl font-extrabold uppercase text-[#0A2C3D] mb-1">Payment</h2>
+            <p class="text-sm text-slate-500">Final step — review and pay.</p>
+          </div>
+          <div class="bg-slate-50 rounded-xl p-4 sm:p-5 border border-slate-200">
+            <h3 class="font-oswald font-bold uppercase text-sm text-[#0A2C3D] mb-3">Order summary</h3>
+            <div class="space-y-2 text-sm">
+              ${tickets.map(t=>`<div class="flex justify-between"><span class="text-slate-600">${esc(t.name)} × ${this.qty[t.id]}</span><span class="font-semibold">${money(t.price*this.qty[t.id])}</span></div>`).join('')}
+              <div class="flex justify-between text-slate-500 pt-2 border-t border-slate-200"><span>Booking fee</span><span>${money(this.fee())}</span></div>
+              <div class="flex justify-between pt-2 border-t border-slate-200"><span class="font-bold text-[#0A2C3D]">Total</span><span class="font-oswald font-extrabold text-xl text-[#0A2C3D]">${money(this.total())}</span></div>
+            </div>
+          </div>
+          <div>
+            <h3 class="font-oswald font-bold uppercase text-base text-[#0A2C3D] mb-3">Card details</h3>
+            <div class="space-y-3">
+              <div>
+                <label class="${lbl}">Card number</label>
+                <div class="relative">
+                  <input id="co-card" type="text" inputmode="numeric" autocomplete="cc-number" placeholder="4242 4242 4242 4242" value="${esc(this.card.number)}" oninput="Checkout.onCardInput(this)" class="${inp} pr-20" />
+                  <span class="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-2">${brand ? `<span class="text-[10px] font-bold uppercase tracking-wider text-[#0A2C3D] bg-slate-200 px-2 py-0.5 rounded">${brand}</span>`:''}<i data-lucide="credit-card" class="w-5 h-5 text-slate-400"></i></span>
+                </div>
+                ${errSpan('cardNumber')}
+              </div>
+              <div><label class="${lbl}">Name on card</label><input id="co-cardname" type="text" autocomplete="cc-name" value="${esc(this.card.name)}" oninput="Checkout.card.name=this.value" class="${inp}" />${errSpan('cardName')}</div>
+              <div class="grid grid-cols-2 gap-3">
+                <div><label class="${lbl}">Expiry (MM/YY)</label><input id="co-exp" type="text" inputmode="numeric" autocomplete="cc-exp" placeholder="08/27" value="${esc(this.card.expiry)}" oninput="Checkout.onExpiryInput(this)" maxlength="5" class="${inp}" />${errSpan('expiry')}</div>
+                <div><label class="${lbl}">CVC</label><input id="co-cvc" type="text" inputmode="numeric" autocomplete="cc-csc" placeholder="123" value="${esc(this.card.cvc)}" oninput="Checkout.card.cvc=this.value.replace(/\\D/g,'').slice(0,4)" maxlength="4" class="${inp}" />${errSpan('cvc')}</div>
+              </div>
+            </div>
+            <p class="text-[11px] text-slate-400 mt-3 flex items-center gap-1.5"><i data-lucide="shield-check" class="w-3.5 h-3.5"></i> Payments are simulated for this demo — no card is charged.</p>
+          </div>
+        </div>`;
+      },
+
+      renderThankYou(){
+        const ev = this.ev, o = this.order;
+        const qrText = `${linkFor(ev)}?order=${o.ref}`;
+        const ticketLine = o.tickets.map(t=>`${t.name} × ${t.qty}`).join(', ');
+        const cityShort = ev.venue.address ? ev.venue.address.split(',').slice(-3,-1).join(',').trim() : '';
+        return `<div class="fixed inset-0 z-[70] bg-black/60 scrim flex items-end sm:items-center justify-center sm:p-4 backdrop-blur-sm overflow-y-auto" onclick="if(event.target===this) Checkout.close()">
+          <div role="dialog" aria-modal="true" class="bg-white w-full sm:max-w-2xl sm:rounded-2xl rounded-t-3xl overflow-hidden shadow-2xl sheet my-auto" style="max-height:95vh">
+            <div class="overflow-y-auto custom-scrollbar p-6 sm:p-8 text-center" style="max-height:95vh">
+              <div class="no-print">
+                <div class="w-20 h-20 mx-auto bg-[#10B981]/15 rounded-full grid place-items-center mb-5" style="animation: successPop .6s cubic-bezier(.2,.7,.2,1)">
+                  <svg class="w-12 h-12 text-[#10B981]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7" stroke-dasharray="30" stroke-dashoffset="30" style="animation: ringDraw .5s .3s ease forwards"/></svg>
+                </div>
+                <p class="text-[#9C1C1F] font-bold text-xs tracking-[0.2em] uppercase mb-2">Order Confirmed</p>
+                <h2 class="font-oswald text-3xl sm:text-4xl font-extrabold uppercase text-[#0A2C3D] mb-2">You're going!</h2>
+                <p class="text-slate-500 text-sm mb-6 max-w-md mx-auto">A confirmation has been sent to <span class="font-semibold text-[#0A2C3D]">${esc(this.lead.email)}</span>. Save or print your ticket below.</p>
+              </div>
+
+              <div id="ticketCard" class="bg-white rounded-2xl overflow-hidden shadow-2xl border border-slate-200 text-left mx-auto" style="max-width:560px">
+                <div class="flex flex-col sm:flex-row">
+                  <div class="bg-[#0A2C3D] grain text-white p-6 sm:p-7 sm:w-2/3 relative overflow-hidden">
+                    <div class="hero-vignette absolute inset-0 opacity-30"></div>
+                    <div class="relative">
+                      <div class="flex items-center justify-between mb-5">
+                        <span class="bg-[#9C1C1F] text-white font-oswald font-bold px-2.5 py-1 text-[10px] uppercase tracking-widest rounded">SME</span>
+                        <span class="text-[10px] font-bold text-white/50 uppercase tracking-widest">e-Ticket</span>
+                      </div>
+                      <h3 class="font-oswald text-xl sm:text-2xl font-extrabold uppercase leading-tight mb-4">${esc(ev.title)}</h3>
+                      <div class="space-y-1.5 text-sm text-white/85 mb-5">
+                        <div class="flex items-center gap-2"><i data-lucide="calendar" class="w-4 h-4 text-[#FFF2CD] shrink-0"></i> ${esc(ev.logistics.display_date)}</div>
+                        <div class="flex items-center gap-2"><i data-lucide="clock" class="w-4 h-4 text-[#FFF2CD] shrink-0"></i> ${esc(ev.logistics.display_time)}</div>
+                        <div class="flex items-start gap-2"><i data-lucide="map-pin" class="w-4 h-4 text-[#FFF2CD] shrink-0 mt-0.5"></i> <span>${esc(ev.venue.name)}${cityShort?', '+esc(cityShort):''}</span></div>
+                      </div>
+                      <div class="border-t border-white/10 pt-4 grid grid-cols-2 gap-3 text-xs">
+                        <div><p class="text-white/50 font-bold uppercase tracking-wider mb-0.5">Attendee</p><p class="font-bold text-sm">${esc(this.lead.name)}</p></div>
+                        <div><p class="text-white/50 font-bold uppercase tracking-wider mb-0.5">Ticket${o.tickets.length>1?'s':''}</p><p class="font-bold text-sm">${esc(ticketLine)}</p></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="sm:hidden border-t-2 border-dashed border-[#0A2C3D]/20 relative"><div class="absolute -left-2 -top-2 w-4 h-4 bg-[#FFF9F8] rounded-full border border-slate-200"></div><div class="absolute -right-2 -top-2 w-4 h-4 bg-[#FFF9F8] rounded-full border border-slate-200"></div></div>
+                  <div class="hidden sm:block border-l-2 border-dashed border-[#0A2C3D]/20 relative"><div class="absolute -top-2 -left-2 w-4 h-4 bg-[#FFF9F8] rounded-full border border-slate-200"></div><div class="absolute -bottom-2 -left-2 w-4 h-4 bg-[#FFF9F8] rounded-full border border-slate-200"></div></div>
+                  <div class="bg-white p-6 sm:p-7 sm:w-1/3 flex flex-col items-center justify-center text-center">
+                    <div class="bg-white p-2 rounded-lg border border-slate-100 mb-3">${makeQR(qrText, 140)}</div>
+                    <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Order ref</p>
+                    <p class="font-oswald text-lg font-extrabold text-[#0A2C3D] tracking-wide">${esc(o.ref)}</p>
+                    <p class="text-[10px] text-slate-400 mt-2">${esc(money(o.total))}</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="no-print mt-7">
+                <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-3">
+                  <a href="${googleCalUrl(ev)}" target="_blank" rel="noreferrer" onclick="track('add_to_calendar',{method:'google',event_id:${ev.id}})" class="bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 text-xs font-bold uppercase tracking-wide py-3 rounded-lg flex items-center justify-center gap-2"><i data-lucide="calendar" class="w-4 h-4 text-[#9C1C1F]"></i> Google Cal</a>
+                  <button onclick="downloadICS(Checkout.ev)" class="bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 text-xs font-bold uppercase tracking-wide py-3 rounded-lg flex items-center justify-center gap-2"><i data-lucide="download" class="w-4 h-4 text-[#9C1C1F]"></i> .ics File</button>
+                  <button onclick="Checkout.printTicket()" class="col-span-2 sm:col-span-1 bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 text-xs font-bold uppercase tracking-wide py-3 rounded-lg flex items-center justify-center gap-2"><i data-lucide="printer" class="w-4 h-4 text-[#9C1C1F]"></i> Print / PDF</button>
+                </div>
+                <button onclick="Checkout.close()" class="w-full bg-[#0A2C3D] hover:bg-[#071d29] text-white font-bold uppercase tracking-wide py-4 rounded-xl text-sm">Done</button>
+              </div>
+            </div>
+          </div>
+        </div>`;
+      }
+    };
+
     function openCheckout(){
-      track('open_checkout_placeholder');
-      mountOverlay(`<div class="fixed inset-0 z-[60] flex items-end sm:items-center justify-center bg-black/60 scrim p-0 sm:p-4 backdrop-blur-sm" onclick="if(event.target===this) activeOverlayClose && activeOverlayClose()"><div role="dialog" aria-modal="true" class="bg-white w-full sm:max-w-md sm:rounded-2xl rounded-t-3xl overflow-hidden shadow-2xl sheet text-center p-8 sm:p-10">
-        <div class="w-16 h-16 mx-auto rounded-full bg-[#FFF2CD] grid place-items-center mb-5"><i data-lucide="ticket" class="w-7 h-7 text-[#9C1C1F]"></i></div>
-        <h3 class="font-oswald text-2xl font-extrabold uppercase text-[#0A2C3D] mb-2">Checkout coming next</h3>
-        <p class="text-slate-500 text-sm mb-7">The full ticket flow — tier selection, attendee details, payment, and the animated thank-you ticket with QR — lands in the next chunk.</p>
-        <button onclick="activeOverlayClose && activeOverlayClose()" class="bg-[#9C1C1F] hover:bg-[#7a1518] text-white font-bold uppercase tracking-wide px-7 py-3 rounded-xl">Got it</button>
-      </div></div>`);
+      const ev = byId(state.params.id);
+      if(!ev || !ev.tickets) return;
+      Checkout.open(ev);
     }
 
     // === App + bootstrap ==========================================================
