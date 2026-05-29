@@ -143,7 +143,8 @@
         'newsletter.html':          { title:'Newsletter',          desc:'High-conversion email capture component engineered for the SME ecosystem.',           icon:'mail' },
         'podcast.html':             { title:'Podcast UI',          desc:'Audio streaming interface and episode directory for SME business resources.',          icon:'mic' },
         'social_media_studio.html': { title:'Social Media Studio', desc:'AI-powered social media strategist and custom brand asset generator.',                 icon:'share' },
-        'member-hub.html':          { title:'Member Hub',          desc:'Community dashboard — Ask / Win / Share feed, member directory, and profiles.',         icon:'users' }
+        'member-hub.html':          { title:'Member Hub',          desc:'Community dashboard — Ask / Win / Share feed, member directory, and profiles.',         icon:'users' },
+        'brand_ci':                 { title:'Brand CI 2026',       desc:'The official SME South Africa corporate identity — colour, type, logo, and components.',  icon:'brand' }
     };
 
     // Files to ignore even if present.
@@ -157,7 +158,8 @@
         share:    "M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z",
         chart:    "M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z",
         users:    "M17 20h5v-2a4 4 0 00-3-3.87M9 20H4v-2a4 4 0 013-3.87m6-.13a4 4 0 100-8 4 4 0 000 8z",
-        file:     "M9 12h6m-6 4h6M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"
+        file:     "M9 12h6m-6 4h6M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z",
+        brand:    "M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"
     };
 
     const gridContainer = document.getElementById('project-grid');
@@ -173,6 +175,7 @@
         if (/social|share|studio/.test(n))               return 'share';
         if (/dash|stat|analytic|report|chart|metric/.test(n)) return 'chart';
         if (/member|profile|communit|user|hub|directory/.test(n)) return 'users';
+        if (/brand|identity|ci\b|style|guide/.test(n))             return 'brand';
         return 'file';
     }
 
@@ -277,10 +280,11 @@
             const res = await fetch(api, { headers: { 'Accept': 'application/vnd.github+json' } });
             if (!res.ok) throw new Error('GitHub API ' + res.status);
             const items = await res.json();
+            const INCLUDE_NAMES = new Set(Object.keys(META));
             const files = items
                 .filter(x => x.type === 'file'
-                          && /\.html?$/i.test(x.name)
-                          && !EXCLUDE.includes(x.name.toLowerCase()))
+                          && !EXCLUDE.includes(x.name.toLowerCase())
+                          && (/\.html?$/i.test(x.name) || INCLUDE_NAMES.has(x.name)))
                 .map(x => x.name);
             if (!files.length) { fallback(); return; }
             render(files);
