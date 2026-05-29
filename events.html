@@ -2,1319 +2,757 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Events Directory</title>
-  
-  <!-- Tailwind CSS -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Events &amp; Webinars — SME South Africa</title>
+  <meta name="description" id="meta-desc" content="Explore upcoming and past SME South Africa events and webinars. Learn, network, and grow your business.">
+  <meta property="og:type" content="website" id="og-type">
+  <meta property="og:title" content="Events &amp; Webinars — SME South Africa" id="og-title">
+  <meta property="og:description" content="Learn, network, and grow your business." id="og-desc">
+  <meta name="twitter:card" content="summary_large_image">
+  <script type="application/ld+json" id="ld-json">{}</script>
   <script src="https://cdn.tailwindcss.com"></script>
-  
-  <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
-
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Oswald:wght@400;500;600;700;800&display=swap');
-    
-    body {
-      font-family: 'Inter', sans-serif;
-      background-color: #FFF9F8;
-    }
-    
-    .font-oswald { font-family: 'Oswald', sans-serif; }
-    
-    .no-scrollbar::-webkit-scrollbar { display: none; }
-    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-    
-    .speaker-img-bw { filter: grayscale(100%); transition: filter 0.3s ease; }
-    .speaker-card:hover .speaker-img-bw { filter: grayscale(0%); }
-
-    .custom-scrollbar::-webkit-scrollbar {
-      width: 8px;
-    }
-    .custom-scrollbar::-webkit-scrollbar-track {
-      background: #f1f5f9; 
-      border-radius: 4px;
-    }
-    .custom-scrollbar::-webkit-scrollbar-thumb {
-      background: #94a3b8; 
-      border-radius: 4px;
-    }
-    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-      background: #64748b; 
+    *{ -webkit-tap-highlight-color: transparent; }
+    body{ font-family:'Inter',sans-serif; background-color:#FFF9F8; color:#0f172a; }
+    .font-oswald{ font-family:'Oswald',sans-serif; }
+    .no-scrollbar::-webkit-scrollbar{ display:none; } .no-scrollbar{ -ms-overflow-style:none; scrollbar-width:none; }
+    .speaker-img-bw{ filter:grayscale(100%); transition:filter .4s ease, transform .4s ease; }
+    .speaker-card:hover .speaker-img-bw{ filter:grayscale(0%); }
+    a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,[tabindex]:focus-visible{ outline:3px solid rgba(156,28,31,.45); outline-offset:2px; border-radius:8px; }
+    .grain{ position:relative; }
+    .grain::after{ content:""; position:absolute; inset:0; pointer-events:none; opacity:.06; mix-blend-mode:overlay; background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>"); }
+    .hero-vignette{ background:radial-gradient(120% 120% at 70% 0%, rgba(10,44,61,0) 30%, rgba(7,29,41,.85) 100%); }
+    @keyframes fadeUp{ from{opacity:0; transform:translateY(16px)} to{opacity:1; transform:none} }
+    .reveal{ opacity:0; animation:fadeUp .65s cubic-bezier(.2,.7,.2,1) forwards; }
+    @keyframes overlayIn{ from{opacity:0} to{opacity:1} }
+    @keyframes popIn{ from{opacity:0; transform:translateY(8px) scale(.98)} to{opacity:1; transform:none} }
+    @keyframes sheetUp{ from{transform:translateY(100%)} to{transform:none} }
+    @keyframes spin{ to{ transform:rotate(360deg) } } .spin{ animation:spin .8s linear infinite; }
+    .scrim{ animation:overlayIn .2s ease forwards; }
+    .sheet{ animation:sheetUp .42s cubic-bezier(.2,.8,.2,1) forwards; }
+    @media (min-width:640px){ .sheet{ animation:popIn .3s cubic-bezier(.2,.7,.2,1) forwards; } }
+    .perf{ background-image:radial-gradient(circle at center, transparent 5px, currentColor 5px); background-size:2px 14px; background-repeat:repeat-y; }
+    @media print{
+      body *{ visibility:hidden !important; }
+      #ticketCard, #ticketCard *{ visibility:visible !important; }
+      #ticketCard{ position:absolute; left:0; top:0; width:100%; box-shadow:none !important; }
+      .no-print{ display:none !important; }
     }
   </style>
 </head>
 <body>
-  <!-- Root container for the app -->
   <div id="app"></div>
+  <div id="overlay-root"></div>
 
   <script>
-
-    // --- IMAGE FALLBACK PLACEHOLDERS (inline SVG, no network required) ---
+    // === Image fallback placeholders (inline SVG, never break) ====================
     const PLACEHOLDER_AVATAR = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHdpZHRoPScyNDAnIGhlaWdodD0nMjQwJyB2aWV3Qm94PScwIDAgMjQwIDI0MCc+PHJlY3Qgd2lkdGg9JzI0MCcgaGVpZ2h0PScyNDAnIGZpbGw9JyNFN0VERjAnLz48Y2lyY2xlIGN4PScxMjAnIGN5PSc5Nicgcj0nNDInIGZpbGw9JyM5RkIzQkQnLz48cGF0aCBkPSdNNDYgMjE2YzAtNDEgMzMtNjggNzQtNjhzNzQgMjcgNzQgNjh6JyBmaWxsPScjOUZCM0JEJy8+PC9zdmc+';
     const PLACEHOLDER_IMAGE = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHdpZHRoPSc2NDAnIGhlaWdodD0nNDAwJyB2aWV3Qm94PScwIDAgNjQwIDQwMCc+PHJlY3Qgd2lkdGg9JzY0MCcgaGVpZ2h0PSc0MDAnIGZpbGw9JyMwQTJDM0QnLz48ZyBmaWxsPSdub25lJyBzdHJva2U9JyM0NzY0NzInIHN0cm9rZS13aWR0aD0nNicgc3Ryb2tlLWxpbmVjYXA9J3JvdW5kJyBzdHJva2UtbGluZWpvaW49J3JvdW5kJz48cmVjdCB4PScyNTAnIHk9JzEzOCcgd2lkdGg9JzE0MCcgaGVpZ2h0PScxMDAnIHJ4PScxMCcvPjxjaXJjbGUgY3g9JzI5MicgY3k9JzE3NCcgcj0nMTMnLz48cGF0aCBkPSdNMjYyIDIzMGwzOC0zOCAzMCAzMCAyNi0yNiAyOCAyOCcvPjwvZz48dGV4dCB4PSczMjAnIHk9JzI5MicgZm9udC1mYW1pbHk9J0FyaWFsLEhlbHZldGljYSxzYW5zLXNlcmlmJyBmb250LXNpemU9JzI0JyBmb250LXdlaWdodD0nNzAwJyBmaWxsPScjNkU4Qjk4JyB0ZXh0LWFuY2hvcj0nbWlkZGxlJz5JbWFnZSB1bmF2YWlsYWJsZTwvdGV4dD48L3N2Zz4=';
     const PLACEHOLDER_LOGO = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHdpZHRoPScyMDAnIGhlaWdodD0nODAnIHZpZXdCb3g9JzAgMCAyMDAgODAnPjxyZWN0IHdpZHRoPScyMDAnIGhlaWdodD0nODAnIHJ4PSc4JyBmaWxsPScjRjFGNUY4Jy8+PHRleHQgeD0nMTAwJyB5PSc0OCcgZm9udC1mYW1pbHk9J0FyaWFsLEhlbHZldGljYSxzYW5zLXNlcmlmJyBmb250LXNpemU9JzIwJyBmb250LXdlaWdodD0nNzAwJyBmaWxsPScjOUFBQUI0JyB0ZXh0LWFuY2hvcj0nbWlkZGxlJyBsZXR0ZXItc3BhY2luZz0nMic+TE9HTzwvdGV4dD48L3N2Zz4=';
-    // --- MOCK DATA ---
-    const MOCK_EVENTS = [
-      {
-        id: 1,
-        featured: true,
-        type: 'IN-PERSON',
-        status: 'Upcoming',
-        category: 'Funding Summit',
-        title: 'Annual SME Funding Gala 2026',
-        description: 'Join us for an exclusive evening of networking with top VCs and angel investors. A premier event for growth-focused SMEs looking to scale their operations globally.',
-        hero_video: 'https://www.youtube.com/embed/fTQlWfMkc1Y?autoplay=1&mute=1&loop=1',
-        logistics: {
-          start_datetime: '2026-06-18T09:00:00+02:00',
-          end_datetime: '2026-06-18T17:00:00+02:00',
-          timezone: 'SAST',
-          display_date: 'June 18, 2026',
-          display_time: '09:00 - 17:00 SAST'
-        },
-        venue: {
-          name: 'Focus Rooms',
-          address: 'Heaton Lane Longlake 20, Modderfontein Lethabong, Sandton, 1609',
-          directions: 'Secure basement parking available.'
-        },
-        sponsors: [
-          { name: "RESA", logo: "https://placehold.co/150x60/ffffff/0a2c3d?text=RESA" },
-          { name: "RAIZCORP", logo: "https://placehold.co/150x60/ffffff/0a2c3d?text=RAIZCORP" },
-          { name: "TenderCapital", logo: "https://placehold.co/150x60/ffffff/0a2c3d?text=TenderCapital" },
-          { name: "Alternative Finance", logo: "https://placehold.co/150x60/ffffff/0a2c3d?text=Alt+Finance" }
-        ],
-        speakers: [
-          { name: "Darlene Menzies", role: "CEO at Finfind", img: "https://advice.smesouthafrica.co.za/image/user/2801/MEDIUM", linkedin: "#" },
-          { name: "Elton Singh", role: "Head of Business Dev", img: "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80&w=400", linkedin: "#" },
-          { name: "Jameel Khan", role: "Co-founder", img: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&q=80&w=400", linkedin: "#" }
-        ],
-        agenda: [
-          { time: "09:00", title: "Registration & Morning Coffee", speaker: null },
-          { time: "10:00", title: "Opening Keynote: The State of VC in SA", speaker: "Darlene Menzies" },
-          { time: "11:30", title: "Panel: Alternative Financing", speaker: "Elton Singh" },
-          { time: "13:00", title: "Networking Lunch", speaker: null },
-          { time: "14:00", title: "Valuation Masterclass", speaker: "Jameel Khan" },
-          { time: "16:00", title: "Closing Remarks & Cocktails", speaker: null }
-        ],
-        topics: [
-          { icon: "trending-up", title: "Venture Capital & Angel Investment", description: "Understand what investors look for and how to position your SME for funding." },
-          { icon: "landmark", title: "Alternative & Debt Financing", description: "Explore non-dilutive funding options including grants, revenue-based finance and tender capital." },
-          { icon: "calculator", title: "Business Valuation", description: "Learn how to value your business and negotiate fair terms with confidence." },
-          { icon: "users", title: "Investor Networking", description: "Connect directly with VCs, angels and institutional capital providers." },
-          { icon: "file-text", title: "Pitch & Due Diligence Readiness", description: "Get your financials, documents and pitch deck investor-ready." },
-          { icon: "globe", title: "Scaling Globally", description: "Strategies for taking your growth-focused SME into international markets." }
-        ]
-      },
-      {
-        id: 2,
-        featured: false,
-        type: 'ONLINE', // This is a Webinar Replay (Maintains Webinar structure)
-        status: 'Past', 
-        category: 'Tax and Accounting',
-        title: 'The Importance of Good Record-Keeping in Business',
-        description: 'Running a business is more than just delivering a product or service — the real strength of a successful company lies in how well you track, manage, and understand your financial data. In this free masterclass, you will discover how meticulous record-keeping can protect your business, support growth, and give you confidence — whether you are preparing for tax season or chasing funding.',
-        logistics: {
-          display_date: '30 October 2025',
-          display_time: 'Recording Available',
-          day_split: '30',
-          month_split: 'OCT'
-        },
-        venue: {
-          platform: "Zoom Replay",
-          link: "#"
-        },
-        vault: {
-          recording_url: "https://images.unsplash.com/photo-1588196749597-9ff0464ac4ab?auto=format&fit=crop&q=80&w=1200", 
-          video_embed: "https://www.youtube.com/embed/rJ67YiHpQnk",
-          gallery: []
-        },
-        sponsors: [
-          { name: "Standard Bank", logo: "https://placehold.co/120x40/ffffff/0a2c3d?text=Standard+Bank" }
-        ],
-        host: {
-          name: "Mpho Raseroka", 
-          role: "Founder - Lodirile Consulting", 
-          img: "https://images.unsplash.com/photo-1531123897727-8f129e1bf98c?auto=format&fit=crop&q=80&w=400",
-          bio: "Mpho has over 20 years of experience in HR Management and organizational design."
-        },
-        speaker: {
-          name: "Jameel Khan", 
-          role: "Tax Specialist", 
-          img: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&q=80&w=400",
-          bio: "Jameel demystifies complex tax compliance issues for growing African SMEs."
-        }
-      },
-      {
-        id: 3,
-        featured: false,
-        type: 'IN-PERSON',
-        status: 'Past',
-        category: 'Networking',
-        title: 'The 2025 SME Funding Summit',
-        description: 'Our previous flagship event connecting founders directly with institutional capital providers.',
-        logistics: { display_date: '18 June 2025', display_time: 'Concluded' },
-        vault: {
-          gallery: [
-            "https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&q=80&w=1200",
-            "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&q=80&w=800"
-          ]
-        }
-      },
-      {
-        id: 4,
-        featured: true,
-        type: 'ONLINE',
-        status: 'LIVE NOW',
-        category: 'Business Planning',
-        title: 'Mastering B2B Sales Cycles - Live Session',
-        description: 'Learn how to shorten your B2B sales cycles, close enterprise deals, and build a predictable revenue engine from industry veterans. This session covers practical CRM tactics, negotiation strategies, and how to identify key decision-makers early in the process. We will dive deep into case studies of successful African startups scaling their B2B operations.',
-        logistics: {
-          display_date: '12 May 2026',
-          display_time: '21:00 - 23:00 SAST',
-          day_split: '12',
-          month_split: 'MAY'
-        },
-        venue: {
-          platform: "Zoom",
-          link: "https://zoom.us/j/123456789"
-        },
-        sponsors: [
-          { name: "Salesforce", logo: "https://placehold.co/120x40/ffffff/0a2c3d?text=Salesforce" }
-        ],
-        host: {
-          name: "Vusi Ndlovu", 
-          role: "VP Sales at TechGrowth", 
-          img: "https://advice.smesouthafrica.co.za/image/user/2801/MEDIUM",
-          bio: "Vusi has over 15 years of experience leading high-performance sales teams across Africa and Europe. He specializes in enterprise SaaS and building scalable revenue models."
-        },
-        speaker: {
-          name: "Lerato Kganyago", 
-          role: "Revenue Ops Lead", 
-          img: "https://i.pravatar.cc/150?u=5",
-          bio: "Lerato builds robust revenue architectures and scalable sales processes for series B startups."
-        }
-      },
-      {
-        id: 5,
-        featured: false,
-        type: 'ONLINE',
-        status: 'Upcoming',
-        category: 'Business Planning',
-        title: 'Q3 Goal Setting Workshop',
-        description: 'Prepare your SME for the upcoming quarter with our strategic planning experts. We will cover actionable KPIs, alignment strategies across departments, and resource allocation frameworks to maximize growth. This interactive session includes a live Q&A where you can workshop your specific quarterly targets.',
-        logistics: {
-          start_datetime: '2026-08-24T14:00:00+02:00',
-          display_date: '24 August 2026',
-          display_time: '14:00 - 15:30 SAST',
-          day_split: '24',
-          month_split: 'AUG'
-        },
-        venue: {
-          platform: "Zoom",
-          link: "https://zoom.us/j/987654321"
-        },
-        sponsors: [],
-        host: {
-          name: "Sarah Jenkins", 
-          role: "Strategy Consultant", 
-          img: "https://i.pravatar.cc/150?u=12",
-          bio: "Sarah helps high-growth startups map out actionable quarterly goals."
-        },
-        speaker: {
-          name: "David Osei", 
-          role: "Growth Marketer", 
-          img: "https://i.pravatar.cc/150?u=11",
-          bio: "David specializes in aligning marketing and sales goals for Q3 sprints."
-        }
-      },
-      {
-        id: 6,
-        featured: true,
-        type: 'ONLINE',
-        status: 'Upcoming',
-        category: 'Business Planning',
-        title: 'Mastering B2B Sales Cycles - Future Session',
-        description: 'Learn how to shorten your B2B sales cycles, close enterprise deals, and build a predictable revenue engine from industry veterans. This session covers practical CRM tactics, negotiation strategies, and how to identify key decision-makers early in the process.',
-        logistics: {
-          start_datetime: '2026-05-25T14:00:00+02:00',
-          display_date: '25 May 2026',
-          display_time: '14:00 - 16:00 SAST',
-          day_split: '25',
-          month_split: 'MAY'
-        },
-        venue: {
-          platform: "Zoom",
-          link: "https://zoom.us/j/123456789"
-        },
-        sponsors: [
-          { name: "Salesforce", logo: "https://placehold.co/120x40/ffffff/0a2c3d?text=Salesforce" }
-        ],
-        host: {
-          name: "Vusi Ndlovu", 
-          role: "VP Sales at TechGrowth", 
-          img: "https://advice.smesouthafrica.co.za/image/user/2801/MEDIUM",
-          bio: "Vusi has over 15 years of experience leading high-performance sales teams across Africa and Europe."
-        },
-        speaker: {
-          name: "Lerato Kganyago", 
-          role: "Revenue Ops Lead", 
-          img: "https://i.pravatar.cc/150?u=5",
-          bio: "Lerato builds robust revenue architectures and scalable sales processes for series B startups."
-        }
-      },
-      {
-        id: 7,
-        featured: false,
-        type: 'VIDEO', // This represents an isolated Video Snippet from an in-person event
-        status: 'Past',
-        category: 'Funding Summit',
-        title: 'Panel Discussion: Debt vs Equity Financing',
-        description: 'A 20-minute deep dive snippet from the 2025 SME Funding Summit featuring top institutional lenders discussing when founders should choose debt over equity.',
-        logistics: {
-          display_date: '18 June 2025',
-          display_time: 'Snippet'
-        },
-        vault: {
-          recording_url: "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=1200&q=80",
-          video_embed: "https://www.youtube.com/embed/fTQlWfMkc1Y"
-        }
-      }
-    ];
+    const OE_AV = `onerror="this.onerror=null;this.src='${PLACEHOLDER_AVATAR}'"`;
+    const OE_IM = `onerror="this.onerror=null;this.src='${PLACEHOLDER_IMAGE}'"`;
+    const OE_LO = `onerror="this.onerror=null;this.src='${PLACEHOLDER_LOGO}'"`;
 
-    // --- APPLICATION STATE ---
-    let state = {
-      activeView: 'directory', 
-      mainTab: 'feed', 
-      statusFilter: 'All',
-      typeFilter: 'All',
-      searchQuery: '',
-      selectedEvent: null,
-      isLoggedIn: false,
-      hasRegistered: false,
-      showSponsorModal: false,
-      showShareModal: false,
-      copySuccess: false,
+    // === SPEAKERS (single source of truth) ========================================
+    const SPEAKERS = {
+      s1:{ id:'s1', name:'Darlene Menzies', role:'CEO', company:'Finfind', img:'https://i.pravatar.cc/480?img=47', linkedin:'#', bio:'Serial entrepreneur and founder of Finfind, SA\u2019s leading access-to-finance platform connecting SMEs with over 200 lenders.' },
+      s2:{ id:'s2', name:'Elton Singh', role:'Head of Business Development', company:'TenderCapital', img:'https://i.pravatar.cc/480?img=12', linkedin:'#', bio:'Has structured over R1.2bn in alternative and working-capital finance for high-growth small businesses across the continent.' },
+      s3:{ id:'s3', name:'Jameel Khan', role:'Co-founder & Tax Specialist', company:'Lodirile Advisory', img:'https://i.pravatar.cc/480?img=33', linkedin:'#', bio:'Demystifies valuations and tax compliance for founders, turning complex financials into investor-ready stories.' },
+      s4:{ id:'s4', name:'Nomsa Dlamini', role:'Investment Principal', company:'Khula Ventures', img:'https://i.pravatar.cc/480?img=45', linkedin:'#', bio:'Leads early-stage deal flow at Khula Ventures, with a focus on township economy and B2B SaaS founders.' },
+      s5:{ id:'s5', name:'Thabo Molefe', role:'Founder & CEO', company:'GridPay Africa', img:'https://i.pravatar.cc/480?img=15', linkedin:'#', bio:'Scaled GridPay from a Soweto pilot to four markets, raising a Series A in 2024. Speaks candidly about the funding grind.' },
+      s6:{ id:'s6', name:'Aisha Patel', role:'Angel Investor', company:'Jozi Angels', img:'https://i.pravatar.cc/480?img=44', linkedin:'#', bio:'Has angel-invested in 30+ African startups and chairs the Jozi Angels syndicate. Passionate about first-cheque founders.' },
+      s7:{ id:'s7', name:'Mpho Raseroka', role:'Founder', company:'Lodirile Consulting', img:'https://i.pravatar.cc/480?img=32', linkedin:'#', bio:'20+ years in HR management and organisational design, helping SMEs build teams that scale.' },
+      s8:{ id:'s8', name:'Vusi Ndlovu', role:'VP Sales', company:'TechGrowth', img:'https://i.pravatar.cc/480?img=68', linkedin:'#', bio:'15+ years leading high-performance sales teams across Africa and Europe, specialising in enterprise SaaS.' },
+      s9:{ id:'s9', name:'Lerato Kganyago', role:'Revenue Ops Lead', company:'Series\u2011B Collective', img:'https://i.pravatar.cc/480?img=49', linkedin:'#', bio:'Builds robust revenue architectures and scalable sales processes for fast-growing startups.' },
+      s10:{ id:'s10', name:'Sarah Jenkins', role:'Strategy Consultant', company:'NorthBeam', img:'https://i.pravatar.cc/480?img=31', linkedin:'#', bio:'Helps high-growth startups map actionable quarterly goals and align teams around them.' },
+      s11:{ id:'s11', name:'David Osei', role:'Growth Marketer', company:'Loop Labs', img:'https://i.pravatar.cc/480?img=53', linkedin:'#', bio:'Specialises in aligning marketing and sales goals into predictable growth sprints.' }
     };
+    const sp = (id)=> SPEAKERS[id];
 
-    let countdownInterval;
+    // === EVENTS ===================================================================
+    const MOCK_EVENTS = [
+      { id:1, featured:true, type:'IN-PERSON', status:'Upcoming', category:'Funding Summit',
+        title:'Annual SME Funding Gala 2026',
+        description:'An exclusive day of masterclasses, candid founder panels and direct networking with the VCs, angels and lenders actually writing cheques. Built for growth-focused SMEs ready to raise and scale.',
+        hero_image:'https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&q=80&w=1600',
+        logistics:{},
+        venue:{ name:'Focus Rooms', address:'Heaton Lane Longlake 20, Modderfontein, Sandton, 1609', directions:'Secure basement parking available.' },
+        sponsors:[
+          { name:'RESA', logo:'https://placehold.co/150x60/ffffff/0a2c3d?text=RESA' },
+          { name:'RAIZCORP', logo:'https://placehold.co/150x60/ffffff/0a2c3d?text=RAIZCORP' },
+          { name:'TenderCapital', logo:'https://placehold.co/150x60/ffffff/0a2c3d?text=TenderCapital' },
+          { name:'Alt Finance', logo:'https://placehold.co/150x60/ffffff/0a2c3d?text=Alt+Finance' }
+        ],
+        speakerIds:['s1','s2','s3','s4','s5','s6'],
+        agenda:[
+          { time:'08:30', title:'Registration & Welcome Coffee', type:'break' },
+          { time:'09:30', title:'Opening Keynote: The State of SME Funding in SA', type:'keynote', speakerIds:['s1'] },
+          { time:'10:30', title:'Panel: Debt vs Equity \u2014 Choosing the Right Capital', type:'panel', moderatorId:'s3', speakerIds:['s2','s4','s6'] },
+          { time:'12:00', title:'Networking Lunch', type:'break' },
+          { time:'13:00', title:'Masterclass: Building an Investor-Ready Valuation', type:'talk', speakerIds:['s3'] },
+          { time:'14:30', title:'Panel: Scaling Across African Markets', type:'panel', moderatorId:'s1', speakerIds:['s5','s4','s2'] },
+          { time:'16:00', title:'Fireside Chat: Lessons from Funded Founders', type:'fireside', speakerIds:['s5','s6'] },
+          { time:'17:00', title:'Closing Remarks & Cocktail Networking', type:'break' }
+        ],
+        topics:[
+          { icon:'trending-up', title:'Venture Capital & Angel Investment', description:'Understand what investors look for and how to position your SME for funding.' },
+          { icon:'landmark', title:'Alternative & Debt Financing', description:'Explore non-dilutive options including grants, revenue-based finance and tender capital.' },
+          { icon:'calculator', title:'Business Valuation', description:'Learn how to value your business and negotiate fair terms with confidence.' },
+          { icon:'users', title:'Investor Networking', description:'Connect directly with VCs, angels and institutional capital providers.' },
+          { icon:'file-text', title:'Pitch & Due Diligence Readiness', description:'Get your financials, documents and pitch deck investor-ready.' },
+          { icon:'globe', title:'Scaling Globally', description:'Strategies for taking your growth-focused SME into international markets.' }
+        ],
+        tickets:{ currency:'R', bookingFeePct:2.5, tiers:[
+          { id:'early', name:'Early Bird', price:1450, blurb:'Full-day access \u00b7 lunch \u00b7 cocktails', remaining:9, max:6, badge:'Best value' },
+          { id:'standard', name:'Standard', price:1950, blurb:'Full-day access \u00b7 lunch \u00b7 cocktails', remaining:84, max:10 },
+          { id:'vip', name:'VIP Table (seats 10)', price:18000, blurb:'Reserved table \u00b7 premium seating \u00b7 speaker dinner', remaining:3, max:2, badge:'Almost gone' }
+        ]}
+      },
+      { id:2, featured:false, type:'ONLINE', status:'Past', category:'Tax & Accounting',
+        title:'The Importance of Good Record-Keeping in Business',
+        description:'A free masterclass on how meticulous record-keeping protects your business, supports growth and gives you confidence \u2014 whether you\u2019re preparing for tax season or chasing funding.',
+        logistics:{}, venue:{ platform:'Zoom Replay', link:'#' },
+        vault:{ recording_url:'https://images.unsplash.com/photo-1588196749597-9ff0464ac4ab?auto=format&fit=crop&q=80&w=1200', video_embed:'https://www.youtube.com/embed/rJ67YiHpQnk', gallery:[] },
+        sponsors:[{ name:'Standard Bank', logo:'https://placehold.co/120x40/ffffff/0a2c3d?text=Standard+Bank' }],
+        hostId:'s7', speakerId:'s3' },
+      { id:3, featured:false, type:'IN-PERSON', status:'Past', category:'Networking',
+        title:'SME Funding Summit \u2014 Previous Edition',
+        description:'Our previous flagship event connecting founders directly with institutional capital providers.',
+        logistics:{},
+        vault:{ gallery:[
+          'https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&q=80&w=1200',
+          'https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&q=80&w=800',
+          'https://images.unsplash.com/photo-1559136555-9303baea8ebd?auto=format&fit=crop&q=80&w=800',
+          'https://images.unsplash.com/photo-1505373877841-8d25f7d46678?auto=format&fit=crop&q=80&w=1200'
+        ]} },
+      { id:4, featured:true, type:'ONLINE', status:'LIVE NOW', category:'Business Planning',
+        title:'Mastering B2B Sales Cycles \u2014 Live Session',
+        description:'Shorten your B2B sales cycles, close enterprise deals and build a predictable revenue engine. Practical CRM tactics, negotiation strategy and how to spot decision-makers early.',
+        logistics:{}, venue:{ platform:'Zoom', link:'https://zoom.us/j/123456789' },
+        sponsors:[{ name:'Salesforce', logo:'https://placehold.co/120x40/ffffff/0a2c3d?text=Salesforce' }],
+        hostId:'s8', speakerId:'s9' },
+      { id:5, featured:false, type:'ONLINE', status:'Upcoming', category:'Business Planning',
+        title:'Q3 Goal Setting Workshop',
+        description:'Prepare your SME for the next quarter with actionable KPIs, cross-department alignment and resource-allocation frameworks. Includes a live workshop of your own targets.',
+        logistics:{}, venue:{ platform:'Zoom', link:'https://zoom.us/j/987654321' },
+        sponsors:[], hostId:'s10', speakerId:'s11' },
+      { id:6, featured:true, type:'ONLINE', status:'Upcoming', category:'Business Planning',
+        title:'Mastering B2B Sales Cycles \u2014 Encore',
+        description:'Back by demand: the predictable-revenue playbook. CRM tactics, negotiation strategy and identifying key decision-makers early in the cycle.',
+        logistics:{}, venue:{ platform:'Zoom', link:'https://zoom.us/j/123456789' },
+        sponsors:[{ name:'Salesforce', logo:'https://placehold.co/120x40/ffffff/0a2c3d?text=Salesforce' }],
+        hostId:'s8', speakerId:'s9' },
+      { id:7, featured:false, type:'VIDEO', status:'Past', category:'Funding Summit',
+        title:'Panel: Debt vs Equity Financing',
+        description:'A 20-minute deep-dive snippet from the previous SME Funding Summit, featuring institutional lenders on when founders should choose debt over equity.',
+        logistics:{ display_time:'Snippet' },
+        vault:{ recording_url:'https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=1200&q=80', video_embed:'https://www.youtube.com/embed/fTQlWfMkc1Y' } }
+    ];
+    const byId = (id)=> MOCK_EVENTS.find(e=> e.id === Number(id));
 
-    // --- STATE MANAGEMENT ---
-    function updateState(newState) {
-      // Preserve input focus state during vanilla DOM re-renders
-      const activeElementId = document.activeElement ? document.activeElement.id : null;
-      let selectionStart = null;
-      let selectionEnd = null;
-      
-      if (activeElementId && (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA')) {
-        selectionStart = document.activeElement.selectionStart;
-        selectionEnd = document.activeElement.selectionEnd;
-      }
+    // === Date formatting & demo seeding ===========================================
+    const MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+    const MONTHS_SHORT = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
+    const fmtDate = (d)=> `${d.getDate()} ${MONTHS[d.getMonth()]} ${d.getFullYear()}`;
+    const fmtTime = (d)=> `${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;
+    const atTime = (base,h,m)=>{ const d=new Date(base); d.setHours(h,m,0,0); return d; };
+    function applyTimes(ev, start, end){
+      ev.logistics.startMs = start.getTime();
+      ev.logistics.endMs = end ? end.getTime() : null;
+      ev.logistics.display_date = fmtDate(start);
+      ev.logistics.display_time = end ? `${fmtTime(start)} \u2013 ${fmtTime(end)} SAST` : 'Recording available';
+      ev.logistics.day_split = String(start.getDate());
+      ev.logistics.month_split = MONTHS_SHORT[start.getMonth()];
+    }
+    function seedDemoDates(){
+      const now = new Date();
+      const plus = (days)=>{ const d=new Date(now); d.setDate(d.getDate()+days); return d; };
+      let d;
+      d=plus(25); applyTimes(byId(1), atTime(d,8,30), atTime(d,17,0));
+      applyTimes(byId(4), new Date(now.getTime()-30*60000), new Date(now.getTime()+90*60000));
+      d=plus(14); applyTimes(byId(6), atTime(d,14,0), atTime(d,16,0));
+      d=plus(63); applyTimes(byId(5), atTime(d,14,0), atTime(d,15,30));
+      d=plus(-32); { const ev=byId(2); ev.logistics.startMs=atTime(d,12,0).getTime(); ev.logistics.endMs=atTime(d,13,30).getTime(); ev.logistics.display_date=fmtDate(d); ev.logistics.display_time='Recording available'; ev.logistics.day_split=String(d.getDate()); ev.logistics.month_split=MONTHS_SHORT[d.getMonth()]; }
+      d=plus(-75); { const ev=byId(3); ev.logistics.startMs=atTime(d,9,0).getTime(); ev.logistics.display_date=fmtDate(d); ev.logistics.display_time='Concluded'; }
+      d=plus(-75); { const ev=byId(7); ev.logistics.startMs=atTime(d,9,0).getTime(); ev.logistics.display_date=fmtDate(d); ev.logistics.display_time='Snippet'; }
+    }
+    function computeStatus(ev){
+      const s = ev.logistics.startMs ?? null;
+      const e = ev.logistics.endMs ?? (s ? s + 2*3600000 : null);
+      const now = Date.now();
+      if(s == null) return ev.status || 'Past';
+      if(now < s) return 'Upcoming';
+      if(now >= s && now <= e) return 'LIVE NOW';
+      return 'Past';
+    }
 
-      state = { ...state, ...newState };
-      renderApp();
+    // === Utilities ================================================================
+    const esc = (s)=> String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+    const money = (n, cur='R')=> cur + Number(n).toLocaleString('en-US');
+    const initials = (name)=> name.split(/\s+/).filter(Boolean).map(p=>p[0]).slice(0,2).join('').toUpperCase();
+    function track(name, props){ (window.dataLayer = window.dataLayer || []).push(Object.assign({ event:name }, props||{})); try{ console.debug('%c[track]','color:#9C1C1F;font-weight:bold', name, props||{}); }catch(e){} }
+    const toICS = (ms)=> new Date(ms).toISOString().replace(/[-:]/g,'').replace(/\.\d{3}/,'');
+    function googleCalUrl(ev){
+      const t = encodeURIComponent(ev.title);
+      const details = encodeURIComponent(ev.description);
+      const loc = encodeURIComponent((ev.venue && ev.venue.address) || (ev.venue && ev.venue.platform) || 'Online');
+      let dates = '';
+      if(ev.logistics.startMs){ const end = ev.logistics.endMs || (ev.logistics.startMs + 2*3600000); dates = `&dates=${toICS(ev.logistics.startMs)}/${toICS(end)}`; }
+      return `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${t}&details=${details}&location=${loc}${dates}`;
+    }
+    function downloadICS(ev){
+      const end = ev.logistics.endMs || (ev.logistics.startMs ? ev.logistics.startMs + 2*3600000 : Date.now());
+      const loc = (ev.venue && ev.venue.address) || (ev.venue && ev.venue.platform) || 'Online';
+      const ics = ['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//SME South Africa//Events//EN','BEGIN:VEVENT',
+        `UID:sme-${ev.id}-${Date.now()}@smesouthafrica.co.za`, `DTSTAMP:${toICS(Date.now())}`,
+        ev.logistics.startMs ? `DTSTART:${toICS(ev.logistics.startMs)}` : '', `DTEND:${toICS(end)}`,
+        `SUMMARY:${ev.title.replace(/,/g,'\\,')}`, `DESCRIPTION:${ev.description.replace(/,/g,'\\,').replace(/\n/g,' ')}`,
+        `LOCATION:${String(loc).replace(/,/g,'\\,')}`, 'END:VEVENT','END:VCALENDAR'].filter(Boolean).join('\r\n');
+      const blob = new Blob([ics], { type:'text/calendar;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a'); a.href = url; a.download = `${ev.title.replace(/[^a-z0-9]+/gi,'-').toLowerCase()}.ics`;
+      document.body.appendChild(a); a.click(); document.body.removeChild(a);
+      setTimeout(()=>URL.revokeObjectURL(url), 1500);
+      track('add_to_calendar', { method:'ics', event_id:ev.id });
+    }
+    const linkFor = (ev)=> `${location.origin}${location.pathname}#/event/${ev.id}`;
+    function makeQR(text, size=176){
+      const N = 25; let h = 2166136261;
+      for(let i=0;i<text.length;i++){ h ^= text.charCodeAt(i); h = Math.imul(h, 16777619) >>> 0; }
+      const rnd = ()=>{ h = (Math.imul(h,1103515245) + 12345) >>> 0; return (h >>> 16) / 65536; };
+      const cell = size / N;
+      const finders = [[0,0],[0,N-7],[N-7,0]];
+      const inFinder = (r,c)=> finders.some(([br,bc])=> r>=br && r<br+7 && c>=bc && c<bc+7);
+      const finderOn = (r,c)=>{ const f = finders.find(([br,bc])=> r>=br && r<br+7 && c>=bc && c<bc+7); const rr=r-f[0], cc=c-f[1]; const border=(rr===0||rr===6||cc===0||cc===6); const center=(rr>=2&&rr<=4&&cc>=2&&cc<=4); return border||center; };
+      let rects = '';
+      for(let r=0;r<N;r++){ for(let c=0;c<N;c++){ const on = inFinder(r,c) ? finderOn(r,c) : (rnd() > 0.52); if(on) rects += `<rect x="${(c*cell).toFixed(2)}" y="${(r*cell).toFixed(2)}" width="${cell.toFixed(2)}" height="${cell.toFixed(2)}"/>`; } }
+      return `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 ${size} ${size}" shape-rendering="crispEdges" role="img" aria-label="Ticket QR code"><rect width="${size}" height="${size}" fill="#ffffff"/><g fill="#0A2C3D">${rects}</g></svg>`;
+    }
+    function setHTML(el, html){
+      const a = document.activeElement; const id = a && a.id; let ss=null, se=null;
+      if(id && (a.tagName==='INPUT' || a.tagName==='TEXTAREA')){ ss=a.selectionStart; se=a.selectionEnd; }
+      el.innerHTML = html;
+      if(window.lucide) window.lucide.createIcons();
+      if(id){ const n=document.getElementById(id); if(n){ n.focus(); if(ss!=null && n.setSelectionRange){ try{ n.setSelectionRange(ss,se); }catch(e){} } } }
+    }
+    function sessionsFor(id){
+      const out = [];
+      MOCK_EVENTS.forEach(ev=>{
+        if(ev.hostId === id) out.push({ ev, title:ev.title, kind:'Host' });
+        if(ev.speakerId === id) out.push({ ev, title:ev.title, kind:'Speaker' });
+        (ev.agenda||[]).forEach(it=>{
+          const ids = [].concat(it.speakerIds||[], it.moderatorId? [it.moderatorId]:[]);
+          if(ids.includes(id)) out.push({ ev, title:it.title, kind: it.moderatorId===id ? 'Moderator' : (it.type? it.type.charAt(0).toUpperCase()+it.type.slice(1) : 'Speaker'), time:it.time });
+        });
+      });
+      return out;
+    }
 
-      if (activeElementId) {
-        const el = document.getElementById(activeElementId);
-        if (el) {
-          el.focus();
-          if (selectionStart !== null && selectionEnd !== null) {
-            el.setSelectionRange(selectionStart, selectionEnd);
-          }
+    // === SEO ======================================================================
+    function setSEO(){
+      let title = 'Events & Webinars — SME South Africa';
+      let desc = 'Explore upcoming and past SME South Africa events and webinars.';
+      let ld = { '@context':'https://schema.org', '@type':'ItemList', name:'SME South Africa Events' };
+      if(state.view === 'event'){
+        const ev = byId(state.params.id);
+        if(ev){
+          title = `${ev.title} — SME South Africa`;
+          desc = ev.description.slice(0,155);
+          ld = {
+            '@context':'https://schema.org', '@type':'Event', name:ev.title, description:ev.description,
+            eventAttendanceMode: ev.type==='IN-PERSON' ? 'https://schema.org/OfflineEventAttendanceMode' : 'https://schema.org/OnlineEventAttendanceMode',
+            eventStatus:'https://schema.org/EventScheduled',
+            startDate: ev.logistics.startMs ? new Date(ev.logistics.startMs).toISOString() : undefined,
+            endDate: ev.logistics.endMs ? new Date(ev.logistics.endMs).toISOString() : undefined,
+            location: ev.type==='IN-PERSON'
+              ? { '@type':'Place', name: ev.venue.name, address: ev.venue.address }
+              : { '@type':'VirtualLocation', url: (ev.venue && ev.venue.link) || location.href },
+            organizer:{ '@type':'Organization', name:'SME South Africa', url:'https://smesouthafrica.co.za' },
+            performer: (ev.speakerIds||[]).map(i=>({ '@type':'Person', name: sp(i).name })),
+            image: ev.hero_image || (ev.vault && ev.vault.recording_url) || undefined,
+            offers: ev.tickets ? ev.tickets.tiers.map(t=>({ '@type':'Offer', name:t.name, price:t.price, priceCurrency:'ZAR', availability: t.remaining>0 ? 'https://schema.org/InStock' : 'https://schema.org/SoldOut' })) : undefined
+          };
         }
+      } else if(state.view === 'speaker'){
+        const s = sp(state.params.id);
+        if(s){ title = `${s.name} — Speaker — SME South Africa`; desc = s.bio.slice(0,155);
+          ld = { '@context':'https://schema.org', '@type':'Person', name:s.name, jobTitle:s.role, worksFor:{ '@type':'Organization', name:s.company }, description:s.bio, image:s.img }; }
       }
+      document.title = title;
+      const setMeta = (id,val)=>{ const el=document.getElementById(id); if(el) el.setAttribute('content', val); };
+      setMeta('meta-desc', desc); setMeta('og-title', title); setMeta('og-desc', desc);
+      setMeta('og-type', state.view==='event' ? 'event' : 'website');
+      const ldEl = document.getElementById('ld-json'); if(ldEl) ldEl.textContent = JSON.stringify(ld);
     }
 
-    // --- TIMER & COUNTDOWN LOGIC ---
-    function getCountdownText(start_datetime) {
-      const targetDate = start_datetime ? new Date(start_datetime) : new Date(Date.now() + 8 * 24 * 60 * 60 * 1000); 
-      const difference = +targetDate - +new Date();
-      if (difference > 0) {
-        const days = Math.floor(difference / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((difference / (1000 * 60 * 60)) % 24);
-        const minutes = Math.floor((difference / 1000 / 60) % 60);
-        const seconds = Math.floor((difference / 1000) % 60);
-        
-        if (days > 0) return `${days}d ${hours}h`;
-        if (hours > 0) return `${hours}h ${minutes}m`;
-        return `${minutes}m ${seconds}s`;
-      }
-      return 'Starting Soon';
+    // === State + Router ===========================================================
+    let state = { view:'directory', params:{}, mainTab:'feed', statusFilter:'All', typeFilter:'All', categoryFilter:'All', sort:'soonest', search:'', isLoggedIn:false, registered:{} };
+    let countdownInterval; let activeOverlayClose = null;
+    function setState(patch){ Object.assign(state, patch); renderApp(); }
+    function navigate(hash){ if(location.hash === hash){ route(); } else { location.hash = hash; } }
+    function route(){
+      const h = location.hash || '#/';
+      const mEvent = h.match(/^#\/event\/(\d+)/);
+      const mSpeaker = h.match(/^#\/speaker\/([a-z0-9]+)/i);
+      if(mEvent && byId(mEvent[1])){ state.view='event'; state.params={ id:Number(mEvent[1]) }; track('view_event',{ event_id:Number(mEvent[1]) }); }
+      else if(mSpeaker && sp(mSpeaker[1])){ state.view='speaker'; state.params={ id:mSpeaker[1] }; track('view_speaker',{ speaker_id:mSpeaker[1] }); }
+      else { state.view='directory'; state.params={}; }
+      window.scrollTo(0,0); renderApp(); setSEO();
     }
 
-    function initCountdown() {
+    // === Shared UI ================================================================
+    function statusChip(status){
+      if(status==='LIVE NOW') return `<span class="px-3 py-1.5 rounded-full text-[11px] font-bold bg-red-100 text-red-700 inline-flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-red-600 animate-pulse"></span> LIVE NOW</span>`;
+      if(status==='Upcoming') return `<span class="px-3 py-1.5 rounded-full text-[11px] font-bold bg-[#FFF2CD] text-[#A67B1E]">Upcoming</span>`;
+      return `<span class="px-3 py-1.5 rounded-full text-[11px] font-bold bg-slate-100 text-slate-600">Past</span>`;
+    }
+    function avatarStack(ids, size=40){
+      return `<div class="flex -space-x-3">${ids.map(id=>{ const s=sp(id); return `
+        <button type="button" onclick="event.stopPropagation(); navigate('#/speaker/${id}')" title="${esc(s.name)}" aria-label="View ${esc(s.name)}" class="relative block transition-transform hover:-translate-y-1 hover:z-10">
+          <img src="${s.img}" ${OE_AV} alt="${esc(s.name)}" style="width:${size}px;height:${size}px" class="rounded-full object-cover ring-2 ring-white shadow-sm" />
+        </button>`; }).join('')}</div>`;
+    }
+    function header(){
+      const onSub = state.view !== 'directory';
+      const member = state.isLoggedIn
+        ? `<div class="flex items-center gap-2 pl-1"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=160" ${OE_AV} alt="Member" class="w-8 h-8 rounded-full object-cover ring-2 ring-[#0A2C3D]/10" /><span class="hidden sm:block text-sm font-semibold text-slate-700">Tshepho Joel</span></div>`
+        : `<button onclick="setState({isLoggedIn:true})" class="text-sm font-bold text-[#0A2C3D] hover:text-[#9C1C1F] transition-colors">Sign in</button>`;
+      return `
+        <header class="sticky top-0 z-40 bg-[#FFF9F8]/85 backdrop-blur-md border-b border-slate-200/80">
+          <div class="max-w-[1200px] mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-3">
+            <div class="flex items-center gap-3 min-w-0">
+              ${onSub ? `<button onclick="navigate('#/')" aria-label="Back to events" class="shrink-0 w-9 h-9 grid place-items-center rounded-full border border-slate-200 bg-white text-slate-600 hover:text-[#0A2C3D] hover:border-slate-300 transition-colors"><i data-lucide="arrow-left" class="w-[18px] h-[18px]"></i></button>` : ''}
+              <button onclick="navigate('#/')" class="flex items-center gap-2.5 min-w-0">
+                <span class="shrink-0 w-9 h-9 rounded-lg bg-[#9C1C1F] text-white font-oswald font-bold grid place-items-center text-sm">SME</span>
+                <span class="font-oswald font-bold uppercase tracking-tight text-[#0A2C3D] leading-none truncate">South Africa</span>
+              </button>
+            </div>
+            <div class="flex items-center gap-4">
+              <button onclick="setState({isLoggedIn: !state.isLoggedIn})" title="Toggle member simulation" class="hidden md:flex items-center gap-1.5 text-[11px] font-bold text-slate-400 hover:text-slate-700 transition-colors">
+                <i data-lucide="${state.isLoggedIn?'toggle-right':'toggle-left'}" class="w-5 h-5 ${state.isLoggedIn?'text-[#0A2C3D]':''}"></i> Simulate member
+              </button>
+              ${member}
+            </div>
+          </div>
+        </header>`;
+    }
+
+    // === Directory ================================================================
+    function getFilteredEvents(){
+      return MOCK_EVENTS.map(ev=> ({ ev, status:computeStatus(ev) }))
+        .filter(({ev,status})=>{
+          if(ev.type==='VIDEO') return false;
+          if(state.statusFilter!=='All' && status!==state.statusFilter) return false;
+          if(state.typeFilter!=='All' && ev.type!==state.typeFilter) return false;
+          if(state.categoryFilter!=='All' && ev.category!==state.categoryFilter) return false;
+          if(state.search && !(`${ev.title} ${ev.description} ${ev.category}`.toLowerCase().includes(state.search.toLowerCase()))) return false;
+          return true;
+        })
+        .sort((a,b)=>{
+          const rank = s=> s==='LIVE NOW'?0 : s==='Upcoming'?1 : 2;
+          if(rank(a.status)!==rank(b.status)) return rank(a.status)-rank(b.status);
+          const am=a.ev.logistics.startMs||0, bm=b.ev.logistics.startMs||0;
+          return state.sort==='latest' ? bm-am : am-bm;
+        });
+    }
+    function cardMeta(ev, status){
+      if(status==='Past') return ev.type==='ONLINE' ? 'Recording available' : 'Event concluded';
+      if(status==='LIVE NOW') return 'Happening now';
+      if(ev.logistics.startMs){
+        const d=new Date(ev.logistics.startMs); const h=d.getHours(); const m=String(d.getMinutes()).padStart(2,'0');
+        const h12=(h%12)||12; const period=h>=12?'pm':'am';
+        return `${ev.logistics.display_date} at ${h12}:${m} ${period}`;
+      }
+      return ev.logistics.display_date || '';
+    }
+    function chip(label, active, onclick){ return `<button onclick="${onclick}" class="shrink-0 px-4 py-2 rounded-full text-sm font-semibold border transition-colors ${active?'bg-[#9C1C1F] text-white border-[#9C1C1F]':'bg-white text-slate-600 border-slate-200 hover:bg-slate-50'}">${label}</button>`; }
+    function emptyState(){
+      return `<div class="reveal bg-white border border-dashed border-slate-200 rounded-2xl py-16 px-6 text-center">
+        <div class="w-16 h-16 mx-auto rounded-full bg-slate-100 grid place-items-center mb-5"><i data-lucide="calendar-x" class="w-7 h-7 text-slate-400"></i></div>
+        <h3 class="font-oswald text-2xl font-bold uppercase text-[#0A2C3D] mb-2">No events match your filters</h3>
+        <p class="text-slate-500 max-w-sm mx-auto mb-6">Try widening your search or clearing the filters to see everything we have on.</p>
+        <button onclick="setState({statusFilter:'All',typeFilter:'All',categoryFilter:'All',search:'',mainTab:'feed'})" class="bg-[#9C1C1F] hover:bg-[#7a1518] text-white font-bold px-6 py-3 rounded-xl transition-colors">Clear all filters</button>
+      </div>`;
+    }
+    function renderDirectory(){
+      const list = getFilteredEvents();
+      let grid;
+      if(state.mainTab==='feed'){
+        grid = list.length ? `<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 md:gap-8">
+          ${list.map(({ev,status}, i)=>`
+            <article class="reveal bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden relative flex flex-col hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group" style="animation-delay:${i*70}ms">
+              ${ev.featured ? '<div class="absolute top-0 left-0 bg-[#9C1C1F] text-white text-[10px] font-extrabold uppercase tracking-wider px-3 py-1.5 rounded-br-xl z-10">FEATURED</div>' : ''}
+              <div class="p-6 md:p-7 flex-1 flex flex-col mt-4">
+                <div class="flex justify-between items-center mb-4">
+                  <span class="text-slate-500 font-bold text-xs tracking-widest">${ev.type}</span>
+                  ${statusChip(status)}
+                </div>
+                <h3 class="text-xl font-oswald font-extrabold text-[#0A2C3D] uppercase leading-tight mb-3 group-hover:text-[#9C1C1F] transition-colors">${ev.title}</h3>
+                <p class="text-slate-500 text-sm leading-relaxed line-clamp-3 mb-6 flex-1">${ev.description}</p>
+                <div class="mt-auto">
+                  <p class="font-extrabold text-slate-900 text-sm mb-4">${cardMeta(ev,status)}</p>
+                  <button onclick="navigate('#/event/${ev.id}')" class="w-full bg-[#9C1C1F] hover:bg-[#7a1518] text-white font-bold py-3.5 rounded-xl transition-colors shadow-sm">${status==='LIVE NOW'?'Join Now':'View Details'}</button>
+                </div>
+              </div>
+            </article>`).join('')}
+        </div>` : emptyState();
+      } else {
+        const lib = MOCK_EVENTS.map(e=>({ev:e,status:computeStatus(e)})).filter(({ev,status})=> status==='Past' && ev.vault && ev.type!=='ONLINE');
+        grid = lib.length ? `<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 md:gap-8">
+          ${lib.map(({ev},i)=>{ const isVideo = ev.type==='VIDEO'; const img = isVideo ? ev.vault.recording_url : ev.vault.gallery[0]; return `
+            <article onclick="navigate('#/event/${ev.id}')" class="reveal bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden cursor-pointer hover:shadow-xl hover:-translate-y-1 transition-all group" style="animation-delay:${i*70}ms">
+              <div class="h-56 bg-slate-900 relative overflow-hidden">
+                <img src="${img}" ${OE_IM} alt="" class="w-full h-full object-cover ${!state.isLoggedIn?'opacity-30 blur-[3px]':'opacity-60'} group-hover:scale-105 transition-all duration-500" />
+                ${!state.isLoggedIn ? `<div class="absolute inset-0 grid place-items-center bg-[#0A2C3D]/40"><div class="text-center"><div class="w-12 h-12 mx-auto bg-white/20 backdrop-blur rounded-full grid place-items-center border border-white/30 shadow-lg mb-2"><i data-lucide="lock" class="text-white w-5 h-5"></i></div><span class="text-white font-oswald text-[10px] uppercase tracking-widest font-bold">Members Only</span></div></div>` : `<i data-lucide="${isVideo?'play-circle':'image'}" class="absolute inset-0 m-auto text-white/90 ${isVideo?'w-16 h-16':'w-12 h-12'} drop-shadow-lg"></i>`}
+              </div>
+              <div class="p-6"><span class="text-[#9C1C1F] font-extrabold text-[10px] tracking-widest mb-2 block">${isVideo?'Event Snippet':'Photo Gallery'}</span><h3 class="text-lg font-extrabold text-[#0A2C3D] mb-1 leading-tight">${ev.title}</h3><p class="text-sm text-slate-500 font-medium">From ${ev.logistics.display_date}</p></div>
+            </article>`;}).join('')}
+        </div>` : emptyState();
+      }
+      return `<main class="max-w-[1200px] mx-auto px-4 sm:px-6 py-8 md:py-12">
+        <div class="reveal mb-8 md:mb-10">
+          <h1 class="text-4xl md:text-5xl font-oswald font-extrabold text-[#0A2C3D] tracking-tight uppercase">Events &amp; Webinars</h1>
+          <p class="text-lg text-slate-500 font-medium mt-3 max-w-2xl">Explore our upcoming and past events. Join us to learn, network, and grow.</p>
+        </div>
+        <div class="reveal flex gap-3 mb-6" style="animation-delay:60ms">
+          <button onclick="setState({mainTab:'feed'})" class="px-5 py-2.5 rounded-lg font-bold text-sm shadow-sm transition-colors ${state.mainTab==='feed'?'bg-[#0A2C3D] text-white':'bg-white text-slate-700 border border-slate-200'}">Event Feed</button>
+          <button onclick="setState({mainTab:'library'})" class="px-5 py-2.5 rounded-lg font-bold text-sm shadow-sm transition-colors ${state.mainTab==='library'?'bg-[#0A2C3D] text-white':'bg-white text-slate-700 border border-slate-200'}">Event Library</button>
+        </div>
+        ${state.mainTab==='feed' ? `
+        <div class="reveal bg-white rounded-2xl shadow-sm border border-slate-100 p-4 sm:p-5 mb-8" style="animation-delay:120ms">
+          <div class="flex flex-col lg:flex-row lg:items-center gap-4">
+            <div class="flex items-center gap-2 overflow-x-auto no-scrollbar -mx-1 px-1">
+              <span class="shrink-0 text-xs font-bold text-slate-400 uppercase tracking-wide pr-1">Status</span>
+              ${['All','Upcoming','Past'].map(s=>chip(s, state.statusFilter===s, `setState({statusFilter:'${s}'})`)).join('')}
+            </div>
+            <div class="hidden lg:block w-px h-7 bg-slate-200"></div>
+            <div class="flex items-center gap-2 overflow-x-auto no-scrollbar -mx-1 px-1">
+              <span class="shrink-0 text-xs font-bold text-slate-400 uppercase tracking-wide pr-1">Type</span>
+              ${['All','ONLINE','IN-PERSON'].map(t=>chip(t, state.typeFilter===t, `setState({typeFilter:'${t}'})`)).join('')}
+            </div>
+            <div class="hidden lg:block w-px h-7 bg-slate-200"></div>
+            <div class="flex items-center gap-2 lg:ml-auto">
+              <div class="relative flex-1 lg:flex-initial lg:w-56"><i data-lucide="search" class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 w-4 h-4"></i><input id="searchInput" type="text" placeholder="Search events…" value="${esc(state.search)}" oninput="state.search=this.value; renderApp();" class="w-full pl-9 pr-3 py-2.5 rounded-lg border border-slate-200 text-sm bg-slate-50 outline-none focus:border-[#9C1C1F]" /></div>
+              <button onclick="setState({statusFilter:'All',typeFilter:'All',categoryFilter:'All',search:''})" aria-label="Reset filters" class="shrink-0 w-11 h-11 grid place-items-center rounded-lg text-slate-500 bg-white border border-slate-200 hover:bg-slate-50"><i data-lucide="rotate-ccw" class="w-4 h-4"></i></button>
+            </div>
+          </div>
+        </div>` : ''}
+        ${grid}
+      </main>`;
+    }
+
+    // === Event Detail (router) ====================================================
+    function renderEventDetail(){
+      const ev = byId(state.params.id); if(!ev) return renderDirectory();
+      const status = computeStatus(ev);
+      if(ev.type==='ONLINE') return renderWebinar(ev, status);
+      if(ev.type==='VIDEO') return renderVideoSnippet(ev);
+      return status==='Past' ? renderPastInPerson(ev) : renderUpcomingInPerson(ev, status);
+    }
+    function personCard(id){
+      const s = sp(id);
+      return `<button onclick="navigate('#/speaker/${id}')" class="text-left bg-white p-5 rounded-2xl shadow-sm border border-slate-100 hover:shadow-lg hover:-translate-y-1 transition-all group w-full flex flex-col items-center text-center">
+        <div class="w-24 h-24 rounded-full mb-4 grid place-items-center bg-[#FFF2CD] text-[#0A2C3D] font-oswald font-bold text-3xl tracking-tight ring-4 ring-slate-50 group-hover:bg-[#9C1C1F] group-hover:text-white transition-colors">${initials(s.name)}</div>
+        <h3 class="text-lg font-bold text-[#0A2C3D] leading-tight group-hover:text-[#9C1C1F] transition-colors">${esc(s.name)}</h3>
+        <p class="text-xs text-slate-500 font-medium mt-1">${esc(s.role)}</p>
+        <p class="text-[11px] text-slate-400 font-semibold uppercase tracking-wide mt-0.5">${esc(s.company)}</p>
+      </button>`;
+    }
+    function agendaRow(item, i){
+      const typeStyles = { keynote:'bg-[#0A2C3D] text-white', panel:'bg-[#9C1C1F] text-white', talk:'bg-[#FFF2CD] text-[#A67B1E]', fireside:'bg-[#0A2C3D]/10 text-[#0A2C3D]' };
+      if(item.type==='break'){
+        const t = item.title.toLowerCase();
+        const icon = t.includes('lunch')?'utensils-crossed' : (t.includes('cocktail')||t.includes('network'))?'martini' : 'coffee';
+        return `<div class="reveal flex items-center gap-4 py-3 px-4 rounded-xl bg-slate-50/80 border border-slate-100" style="animation-delay:${i*60}ms"><span class="font-oswald font-bold text-slate-400 w-14 shrink-0 text-sm">${item.time}</span><i data-lucide="${icon}" class="w-4 h-4 text-slate-400"></i><span class="text-slate-500 font-semibold text-sm">${item.title}</span></div>`;
+      }
+      const ids = item.speakerIds || []; const isPanel = item.type==='panel';
+      const linkName = (id)=>`<button onclick="navigate('#/speaker/${id}')" class="text-[#9C1C1F] font-semibold hover:underline">${esc(sp(id).name)}</button>`;
+      const namesHtml = ids.length>1 ? ids.slice(0,-1).map(linkName).join(', ') + ' &amp; ' + linkName(ids[ids.length-1]) : (ids[0] ? linkName(ids[0]) : '');
+      return `<div class="reveal flex gap-6 bg-white p-5 rounded-xl border border-slate-100 shadow-sm hover:shadow-md transition-shadow" style="animation-delay:${i*60}ms">
+        <div class="font-oswald font-bold text-[#9C1C1F] w-16 shrink-0 text-base">${item.time}</div>
+        <div class="min-w-0 flex-1">
+          <div class="flex flex-wrap items-center gap-2 mb-1">
+            <h4 class="font-bold text-slate-800 leading-snug">${item.title}</h4>
+            ${isPanel ? `<span class="text-[10px] font-extrabold uppercase tracking-wider px-2 py-0.5 rounded bg-[#9C1C1F] text-white">Panel</span>`:''}
+          </div>
+          ${ids.length ? `<p class="text-sm text-slate-500 mt-1">${isPanel?'Panelists':'Speaker'}: ${namesHtml}</p>${isPanel && item.moderatorId ? `<p class="text-xs text-slate-400 mt-0.5">Moderated by ${linkName(item.moderatorId)}</p>`:''}`:''}
+        </div>
+      </div>`;
+    }
+    function ticketSidebar(ev){
+      const t = ev.tickets; const from = Math.min(...t.tiers.map(x=>x.price));
+      return `<div class="bg-white rounded-2xl shadow-[0_20px_50px_-20px_rgba(10,44,61,.35)] border border-slate-100 overflow-hidden sticky top-24">
+        <div class="bg-[#0A2C3D] grain p-6 text-white relative overflow-hidden">
+          <div class="hero-vignette absolute inset-0 opacity-40"></div>
+          <div class="relative">
+            <p class="text-white/60 text-[11px] font-bold uppercase tracking-widest mb-1">Tickets from</p>
+            <p class="font-oswald text-4xl font-extrabold leading-none">${money(from)}</p>
+          </div>
+        </div>
+        <div class="p-6 space-y-4">
+          <div class="flex gap-3"><i data-lucide="calendar" class="text-[#9C1C1F] shrink-0 w-5 h-5"></i><div><p class="font-bold text-slate-900 text-sm">${ev.logistics.display_date}</p><p class="text-slate-500 text-sm">${ev.logistics.display_time}</p></div></div>
+          <div class="flex gap-3"><i data-lucide="map-pin" class="text-[#9C1C1F] shrink-0 w-5 h-5"></i><div><p class="font-bold text-slate-900 text-sm">${ev.venue.name}</p><p class="text-slate-500 text-sm">${ev.venue.address}</p></div></div>
+          <hr class="border-slate-100" />
+          <button onclick="openCheckout()" class="w-full bg-[#9C1C1F] hover:bg-[#7a1518] text-white font-oswald text-lg uppercase font-bold py-4 rounded-xl transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2"><i data-lucide="ticket" class="w-5 h-5"></i> Get Tickets</button>
+          <div class="flex gap-2">
+            <button onclick="openCalendar(byId(${ev.id}))" class="flex-1 bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 text-xs font-bold uppercase tracking-wide py-3 rounded-lg flex items-center justify-center gap-1.5"><i data-lucide="calendar-plus" class="w-4 h-4 text-[#9C1C1F]"></i> Calendar</button>
+            <button onclick="openShare(byId(${ev.id}))" class="flex-1 bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 text-xs font-bold uppercase tracking-wide py-3 rounded-lg flex items-center justify-center gap-1.5"><i data-lucide="share-2" class="w-4 h-4 text-[#9C1C1F]"></i> Share</button>
+          </div>
+        </div>
+      </div>`;
+    }
+    function renderUpcomingInPerson(ev, status){
+      return `<main class="max-w-[1200px] mx-auto px-4 sm:px-6 py-6 md:py-10 pb-28 lg:pb-12">
+        <div class="reveal w-full aspect-video md:aspect-[21/9] rounded-3xl overflow-hidden relative shadow-2xl mb-6 lg:mb-12 bg-black">
+          ${ev.hero_video ? `<iframe class="w-full h-full absolute inset-0 opacity-80 pointer-events-none" src="${ev.hero_video}?autoplay=1&mute=1&loop=1&playlist=${(ev.hero_video.split('/').pop()||'').split('?')[0]}&controls=0&modestbranding=1&rel=0" title="Hero Video" frameborder="0" allow="autoplay; encrypted-media"></iframe>` : `<img src="${ev.hero_image}" ${OE_IM} alt="" class="w-full h-full absolute inset-0 object-cover opacity-80" />`}
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end p-6 sm:p-10 md:p-12">
+            <h1 class="text-3xl sm:text-5xl md:text-6xl font-oswald font-extrabold uppercase leading-tight text-white max-w-3xl drop-shadow-lg">${ev.title}</h1>
+          </div>
+        </div>
+        <div class="lg:hidden reveal mb-8 bg-white rounded-2xl shadow-lg border border-slate-100 overflow-hidden">
+          <div class="bg-[#0A2C3D] grain p-5 text-white relative overflow-hidden">
+            <div class="hero-vignette absolute inset-0 opacity-40"></div>
+            <div class="relative flex items-end justify-between gap-3">
+              <div>
+                <p class="text-white/60 text-[10px] font-bold uppercase tracking-widest mb-1">Tickets from</p>
+                <p class="font-oswald text-3xl font-extrabold leading-none">${money(Math.min(...ev.tickets.tiers.map(x=>x.price)))}</p>
+              </div>
+              <button onclick="openCheckout()" class="bg-[#9C1C1F] hover:bg-[#7a1518] text-white font-bold uppercase tracking-wide text-sm px-5 py-3 rounded-xl shadow flex items-center gap-2 shrink-0"><i data-lucide="ticket" class="w-4 h-4"></i> Get Tickets</button>
+            </div>
+          </div>
+          <div class="px-5 py-3 flex gap-2">
+            <button onclick="openCalendar(byId(${ev.id}))" class="flex-1 bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 text-xs font-bold uppercase tracking-wide py-2.5 rounded-lg flex items-center justify-center gap-1.5"><i data-lucide="calendar-plus" class="w-4 h-4 text-[#9C1C1F]"></i> Calendar</button>
+            <button onclick="openShare(byId(${ev.id}))" class="flex-1 bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 text-xs font-bold uppercase tracking-wide py-2.5 rounded-lg flex items-center justify-center gap-1.5"><i data-lucide="share-2" class="w-4 h-4 text-[#9C1C1F]"></i> Share</button>
+          </div>
+        </div>
+        <div class="flex flex-col lg:flex-row gap-10 lg:gap-16">
+          <div class="lg:w-2/3 space-y-14">
+            <p class="reveal text-lg text-slate-700 leading-relaxed font-medium">${ev.description}</p>
+            ${ev.topics?.length ? `<section>
+              <div class="reveal flex justify-between items-end border-b-2 border-[#0A2C3D] pb-3 mb-7"><h2 class="font-oswald text-2xl sm:text-3xl font-bold uppercase text-[#0A2C3D]">Event Topics</h2><span class="text-[10px] font-bold text-[#9C1C1F] uppercase tracking-[0.2em] hidden sm:block">What you'll learn</span></div>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+                ${ev.topics.map((tp,i)=>`<div class="reveal bg-white p-5 sm:p-6 rounded-2xl border border-slate-100 shadow-sm flex gap-4 hover:shadow-md transition-shadow group" style="animation-delay:${i*60}ms"><div class="w-12 h-12 rounded-xl bg-[#FFF2CD] grid place-items-center shrink-0 text-[#9C1C1F] group-hover:bg-[#9C1C1F] group-hover:text-white transition-colors"><i data-lucide="${tp.icon}" class="w-6 h-6"></i></div><div><h4 class="font-bold text-[#0A2C3D] leading-tight mb-1">${tp.title}</h4><p class="text-sm text-slate-500 leading-relaxed">${tp.description}</p></div></div>`).join('')}
+              </div>
+            </section>`:''}
+            <section>
+              <div class="reveal flex justify-between items-end border-b-2 border-[#0A2C3D] pb-3 mb-7"><h2 class="font-oswald text-2xl sm:text-3xl font-bold uppercase text-[#0A2C3D]">Speakers</h2><span class="text-[10px] font-bold text-[#9C1C1F] uppercase tracking-[0.2em] hidden sm:block">Investors · Founders · VCs</span></div>
+              <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 sm:gap-6">${ev.speakerIds.map((id,i)=>`<div class="reveal" style="animation-delay:${i*60}ms">${personCard(id)}</div>`).join('')}</div>
+            </section>
+            <section>
+              <div class="reveal flex justify-between items-end border-b-2 border-[#0A2C3D] pb-3 mb-7"><h2 class="font-oswald text-2xl sm:text-3xl font-bold uppercase text-[#0A2C3D]">Agenda</h2><span class="text-[10px] font-bold text-[#9C1C1F] uppercase tracking-[0.2em] hidden sm:block">Full-day programme</span></div>
+              <div class="space-y-3">${ev.agenda.map((it,i)=>agendaRow(it,i)).join('')}</div>
+            </section>
+            <section>
+              <h2 class="reveal font-oswald text-2xl sm:text-3xl font-bold uppercase text-[#0A2C3D] border-b-2 border-[#9C1C1F] pb-3 mb-6 inline-block">Venue &amp; Location</h2>
+              <div class="reveal mb-4"><h4 class="font-bold text-lg text-slate-900">${ev.venue.name}</h4><p class="text-slate-500">${ev.venue.address}</p><p class="text-sm text-slate-400 mt-1">${ev.venue.directions||''}</p></div>
+              <div class="reveal w-full h-72 bg-slate-200 relative border border-slate-300 rounded-2xl overflow-hidden grain">
+                <img src="https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&q=80&w=1600" ${OE_IM} alt="Map" class="w-full h-full object-cover opacity-60 sepia-[.2]" />
+                <div class="absolute top-4 left-4 bg-white p-3 shadow-lg rounded-xl border border-slate-200"><p class="font-bold text-sm text-slate-900">${ev.venue.name}</p><p class="text-xs text-slate-500 w-48 truncate">${ev.venue.address}</p></div>
+                <i data-lucide="map-pin" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[#9C1C1F] w-12 h-12 drop-shadow" fill="currentColor"></i>
+                <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(ev.venue.address)}" target="_blank" rel="noreferrer" class="absolute bottom-4 right-4 bg-white text-[#0A2C3D] text-xs font-bold px-4 py-2.5 rounded-lg shadow hover:bg-slate-50 inline-flex items-center gap-1.5"><i data-lucide="navigation" class="w-4 h-4"></i> Directions</a>
+              </div>
+            </section>
+            <section>
+              <h2 class="reveal font-oswald text-2xl sm:text-3xl font-bold uppercase text-[#0A2C3D] border-b-2 border-[#9C1C1F] pb-3 mb-7 inline-block">Sponsors &amp; Partners</h2>
+              <div class="reveal flex flex-wrap items-center gap-6 sm:gap-10 mb-8">${ev.sponsors.map(s=>`<img src="${s.logo}" ${OE_LO} alt="${esc(s.name)}" class="h-10 sm:h-14 grayscale hover:grayscale-0 transition-all opacity-80 hover:opacity-100 object-contain" />`).join('')}</div>
+              <button onclick="openSponsor()" class="bg-[#9C1C1F] hover:bg-[#7a1518] text-white font-bold uppercase text-xs py-3 px-6 rounded-lg transition-colors">Become a Sponsor</button>
+            </section>
+          </div>
+          <aside class="hidden lg:block lg:w-1/3">${ticketSidebar(ev)}</aside>
+        </div>
+      </main>
+      <div class="lg:hidden fixed bottom-0 inset-x-0 z-30 bg-white/95 backdrop-blur border-t border-slate-200 px-4 py-3 flex items-center justify-between" style="box-shadow:0 -10px 30px -14px rgba(0,0,0,.25); padding-bottom:max(0.75rem, env(safe-area-inset-bottom));">
+        <div><p class="text-[10px] text-slate-400 font-bold uppercase tracking-wide leading-none">Tickets from</p><p class="font-oswald text-2xl font-bold text-[#0A2C3D] leading-none mt-0.5">${money(Math.min(...ev.tickets.tiers.map(x=>x.price)))}</p></div>
+        <button onclick="openCheckout()" class="bg-[#9C1C1F] hover:bg-[#7a1518] text-white font-bold uppercase tracking-wide px-7 py-3.5 rounded-xl shadow flex items-center gap-2"><i data-lucide="ticket" class="w-5 h-5"></i> Get Tickets</button>
+      </div>`;
+    }
+    function renderPastInPerson(ev){
+      return `<main class="max-w-[1200px] mx-auto px-4 sm:px-6 py-10 md:py-14">
+        <div class="reveal text-center mb-10">
+          <span class="text-[#9C1C1F] font-bold text-xs tracking-[0.2em] uppercase">Past Event Gallery</span>
+          <h1 class="font-oswald text-3xl sm:text-5xl font-extrabold uppercase text-[#0A2C3D] tracking-tight mt-2">${ev.title}</h1>
+          <p class="text-slate-500 mt-2 font-medium">${ev.logistics.display_date}</p>
+        </div>
+        ${!state.isLoggedIn ? `
+          <div class="reveal relative rounded-3xl overflow-hidden bg-slate-900 border border-slate-200 shadow-xl">
+            <div class="grid grid-cols-2 gap-2 opacity-40 blur-md scale-105 pointer-events-none">${ev.vault.gallery.map(u=>`<div class="aspect-[4/3] bg-slate-800"><img src="${u}" ${OE_IM} class="w-full h-full object-cover" alt="" /></div>`).join('')}</div>
+            <div class="absolute inset-0 bg-white/70 backdrop-blur-sm grid place-items-center p-8 text-center">
+              <div>
+                <div class="w-20 h-20 mx-auto bg-white rounded-full shadow-lg grid place-items-center mb-6 border border-slate-100"><i data-lucide="lock" class="text-[#0A2C3D] w-9 h-9"></i></div>
+                <h3 class="font-oswald text-3xl sm:text-4xl font-extrabold uppercase text-[#0A2C3D] mb-3">Members Only</h3>
+                <p class="text-slate-700 font-medium mb-8 max-w-md mx-auto text-lg">Sign in to your free SME South Africa account to unlock the photo gallery.</p>
+                <div class="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
+                  <button onclick="setState({isLoggedIn:true})" class="flex-1 bg-[#0A2C3D] hover:bg-[#071d29] text-white font-bold uppercase text-sm py-4 rounded-xl shadow-md transition-all hover:-translate-y-0.5">Sign In</button>
+                  <button onclick="setState({isLoggedIn:true})" class="flex-1 bg-white hover:bg-slate-50 text-[#0A2C3D] border-2 border-[#0A2C3D] font-bold uppercase text-sm py-4 rounded-xl transition-all hover:-translate-y-0.5">Create Free Account</button>
+                </div>
+              </div>
+            </div>
+          </div>` : `
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-8">${ev.vault.gallery.map((u,i)=>`<div class="reveal aspect-[4/3] rounded-2xl overflow-hidden shadow-lg border border-slate-100 group" style="animation-delay:${i*70}ms"><img src="${u}" ${OE_IM} alt="Gallery ${i+1}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" /></div>`).join('')}</div>
+          <div class="reveal mt-8 flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
+            <div class="flex items-center gap-2 text-slate-500 text-sm font-medium"><i data-lucide="calendar" class="w-4 h-4 text-[#9C1C1F]"></i> Captured on ${esc(ev.logistics.display_date)}</div>
+            <button onclick="openShare(byId(${ev.id}))" class="bg-slate-50 hover:bg-slate-100 text-xs font-bold uppercase tracking-wider py-2.5 px-5 rounded-lg flex items-center justify-center gap-2 text-slate-700 border border-slate-200 shadow-sm self-start sm:self-auto">Share Gallery <i data-lucide="share-2" class="text-[#0A2C3D] w-4 h-4"></i></button>
+          </div>`}
+      </main>`;
+    }
+    function memberGate(ev, what){
+      return `<div class="relative w-full h-full grid place-items-center">
+        <img src="${ev.vault.recording_url}" ${OE_IM} class="absolute inset-0 w-full h-full object-cover opacity-40 blur-[4px]" alt="" />
+        <div class="absolute inset-0 bg-[#0A2C3D]/60"></div>
+        <div class="relative text-center px-6 max-w-md">
+          <div class="w-16 h-16 mx-auto bg-white/10 backdrop-blur rounded-full grid place-items-center mb-4 border border-white/20"><i data-lucide="lock" class="text-white w-8 h-8"></i></div>
+          <h3 class="text-3xl font-oswald font-bold text-white uppercase mb-2">Members Only</h3>
+          <p class="text-white/80 text-sm mb-7">Sign in or create a free account to unlock this ${what}.</p>
+          <div class="flex flex-col sm:flex-row gap-3">
+            <button onclick="setState({isLoggedIn:true})" class="flex-1 bg-[#9C1C1F] hover:bg-[#7a1518] text-white font-bold uppercase tracking-wide py-3.5 rounded-lg text-sm">Sign In</button>
+            <button onclick="setState({isLoggedIn:true})" class="flex-1 bg-white/10 hover:bg-white/20 border border-white/30 text-white font-bold uppercase tracking-wide py-3.5 rounded-lg text-sm">Free Account</button>
+          </div>
+        </div>
+      </div>`;
+    }
+    function renderVideoSnippet(ev){
+      return `<main class="max-w-[900px] mx-auto px-4 sm:px-6 py-12 md:py-16">
+        <div class="reveal mb-8">
+          <span class="inline-block px-3 py-1 bg-slate-200 rounded-full text-xs font-bold tracking-widest uppercase text-slate-700 mb-5">Event Snippet</span>
+          <h1 class="text-3xl sm:text-5xl font-oswald font-extrabold text-[#0A2C3D] leading-tight uppercase mb-4">${ev.title}</h1>
+          <p class="text-lg text-slate-600 leading-relaxed">${ev.description}</p>
+        </div>
+        <div class="reveal w-full aspect-video bg-slate-900 rounded-2xl overflow-hidden shadow-2xl border border-slate-200 relative">${state.isLoggedIn ? `<iframe width="100%" height="100%" src="${ev.vault.video_embed}" title="Replay" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>` : memberGate(ev,'recording')}</div>
+        ${state.isLoggedIn ? `<div class="reveal mt-6 flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
+          <div class="flex items-center gap-2 text-slate-500 text-sm font-medium"><i data-lucide="calendar" class="w-4 h-4 text-[#9C1C1F]"></i> Recorded on ${esc(ev.logistics.display_date)}</div>
+          <button onclick="openShare(byId(${ev.id}))" class="bg-slate-50 hover:bg-slate-100 text-xs font-bold uppercase tracking-wider py-2.5 px-5 rounded-lg flex items-center justify-center gap-2 text-slate-700 border border-slate-200 shadow-sm self-start sm:self-auto">Share <i data-lucide="share-2" class="text-[#0A2C3D] w-4 h-4"></i></button>
+        </div>`:''}
+      </main>`;
+    }
+    function renderWebinar(ev, status){
+      const isPast = status==='Past', isLive = status==='LIVE NOW';
+      const host = sp(ev.hostId), speaker = ev.speakerId ? sp(ev.speakerId) : null;
+      const registered = !!state.registered[ev.id];
+      const badge = isLive ? `<span class="w-2 h-2 rounded-full bg-red-600"></span> Streaming Live` : isPast ? 'Recorded Webinar' : 'Upcoming Online Event';
+      let media;
+      if(isPast){ media = state.isLoggedIn ? `<iframe width="100%" height="100%" src="${ev.vault.video_embed}" title="Replay" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>` : memberGate(ev,'recording'); }
+      else { media = `<img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&q=80&w=1200" ${OE_IM} alt="" class="w-full h-full object-cover opacity-50" /><div class="absolute inset-0 hero-vignette"></div><div class="absolute inset-0 grid place-items-center text-center p-6"><div><div class="w-20 h-20 mx-auto bg-black/40 backdrop-blur rounded-full grid place-items-center mb-4 border border-white/20 shadow-2xl"><i data-lucide="youtube" class="text-[#FF0000] w-10 h-10"></i></div><h4 class="text-2xl font-oswald font-bold text-white uppercase mb-2">${isLive?'Live Broadcast':'YouTube Live Stream'}</h4>${isLive ? `<p class="text-white text-sm bg-red-600/90 px-4 py-1.5 rounded-full inline-block animate-pulse font-semibold">Broadcast is live now</p>` : `<p class="text-slate-200 text-sm max-w-sm mx-auto font-medium">The stream appears here automatically when the event begins.</p>`}</div></div>`; }
+      const personBlock = (label, s)=> `<button onclick="navigate('#/speaker/${s.id}')" class="text-left bg-white p-6 rounded-2xl shadow-sm border border-slate-100 hover:shadow-lg transition-all w-full group"><h4 class="font-oswald font-bold uppercase text-[#0A2C3D] text-base mb-4">${label}</h4><div class="flex gap-4"><div class="w-16 h-16 shrink-0 rounded-full grid place-items-center bg-[#FFF2CD] text-[#0A2C3D] font-oswald font-bold text-xl ring-2 ring-slate-100 group-hover:bg-[#9C1C1F] group-hover:text-white transition-colors">${initials(s.name)}</div><div><h5 class="font-bold text-slate-900 group-hover:text-[#9C1C1F] transition-colors">${esc(s.name)}</h5><p class="text-sm text-[#9C1C1F] font-medium mb-1.5">${esc(s.role)}</p><p class="text-xs text-slate-500 leading-relaxed line-clamp-3">${esc(s.bio)}</p></div></div></button>`;
+      let cta;
+      if(!state.isLoggedIn){ cta = `<div class="bg-white rounded-2xl shadow-xl border border-slate-200 overflow-hidden"><div class="bg-[#0A2C3D] px-6 py-4"><span class="text-sm font-oswald font-bold uppercase tracking-wide text-white flex items-center gap-2"><i data-lucide="lock" class="w-4 h-4"></i> Member Access</span></div><div class="p-6"><p class="text-slate-600 text-sm font-medium mb-5">${isPast?'Sign in to unlock this recording and our full event library.':'Sign in or create a free account to register for this event.'}</p><div class="space-y-3"><button onclick="setState({isLoggedIn:true})" class="w-full bg-[#9C1C1F] hover:bg-[#7a1518] text-white font-bold uppercase tracking-wide py-3.5 rounded-lg text-sm shadow-md">Sign In</button><button onclick="setState({isLoggedIn:true})" class="w-full bg-white hover:bg-slate-50 text-[#0A2C3D] border-2 border-[#0A2C3D] font-bold uppercase tracking-wide py-3.5 rounded-lg text-sm">Create Free Account</button></div></div></div>`; }
+      else if(isPast){ cta = `<div class="bg-white rounded-2xl shadow-xl border border-slate-200 overflow-hidden"><div class="bg-[#10B981] px-6 py-4 text-white flex justify-between items-center"><h3 class="text-lg font-oswald font-bold uppercase">Access Granted</h3><i data-lucide="check-circle-2" class="w-6 h-6"></i></div><div class="p-6 text-center"><i data-lucide="play-circle" class="text-[#0A2C3D] mx-auto mb-3 w-12 h-12"></i><p class="text-slate-700 font-bold mb-1">You're all set</p><p class="text-slate-500 text-sm mb-5">Enjoy the full recording above.</p><button onclick="openShare(byId(${ev.id}))" class="w-full bg-slate-50 hover:bg-slate-100 text-xs font-bold uppercase tracking-wide py-3.5 rounded-lg flex items-center justify-center gap-2 text-slate-700 border border-slate-200">Share Replay <i data-lucide="share-2" class="w-4 h-4 text-[#0A2C3D]"></i></button></div></div>`; }
+      else if(!registered){ cta = `<div class="bg-white rounded-2xl shadow-xl border border-slate-200 overflow-hidden"><div class="bg-[#0A2C3D] px-6 py-4"><span class="text-sm font-oswald font-bold uppercase tracking-wide text-white">${isLive?'Join the Live Session':'Event Registration'}</span></div><div class="p-6"><p class="text-slate-600 text-sm font-medium mb-5">Welcome back! Confirm your details to register.</p><div class="space-y-3 mb-5"><input id="reg-name" type="text" value="Tshepho Joel" class="w-full border border-slate-200 rounded-lg px-4 py-3 text-sm outline-none focus:border-[#9C1C1F] bg-slate-50" /><input id="reg-email" type="email" value="tshepho@smesouthafrica.co.za" class="w-full border border-slate-200 rounded-lg px-4 py-3 text-sm outline-none focus:border-[#9C1C1F] bg-slate-50" /></div><button onclick="registerWebinar(${ev.id})" class="w-full bg-[#9C1C1F] hover:bg-[#7a1518] text-white font-bold uppercase tracking-wide py-3.5 rounded-lg text-sm shadow-md">${isLive?'Register & Join':'Register Now'}</button></div></div>`; }
+      else { cta = `<div class="bg-white rounded-2xl shadow-xl border border-slate-200 overflow-hidden"><div class="bg-[#10B981] px-6 py-4 text-white flex justify-between items-center"><h3 class="text-lg font-oswald font-bold uppercase">You're In!</h3><i data-lucide="check-circle-2" class="w-6 h-6"></i></div><div class="p-6">${isLive ? `<div class="bg-red-50 rounded-xl p-5 mb-5 border border-red-100"><div class="flex items-center gap-2 text-red-700 font-bold text-xs tracking-widest uppercase mb-4 animate-pulse"><span class="w-2.5 h-2.5 bg-red-600 rounded-full"></span> Streaming Live</div><a href="${ev.venue.link}" target="_blank" rel="noreferrer" class="flex items-center justify-center gap-2 w-full bg-[#9C1C1F] hover:bg-[#7a1518] text-white font-bold uppercase tracking-wide py-4 rounded-xl text-sm shadow-md"><i data-lucide="video" class="w-5 h-5"></i> Join Zoom Meeting</a></div>` : `<div class="bg-slate-50 rounded-xl p-5 mb-5 border border-slate-100"><div class="flex items-center gap-2 text-slate-500 font-bold text-xs uppercase tracking-widest mb-1"><i data-lucide="clock" class="w-4 h-4 text-slate-400"></i> Event starting in</div><div id="countdown-display" class="text-[#0A2C3D] font-oswald font-bold text-3xl tracking-wide">Calculating…</div><div class="h-px w-full bg-slate-200 my-4"></div><p class="text-slate-600 text-sm font-medium">The join link activates when the event is about to start.</p></div>`}<div class="flex gap-2"><button onclick="openCalendar(byId(${ev.id}))" class="flex-1 bg-white hover:bg-slate-50 text-xs font-bold uppercase tracking-wide py-3.5 rounded-lg flex items-center justify-center gap-1.5 text-slate-700 border border-slate-200"><i data-lucide="calendar-plus" class="w-4 h-4 text-[#9C1C1F]"></i> Calendar</button><button onclick="openShare(byId(${ev.id}))" class="flex-1 bg-white hover:bg-slate-50 text-xs font-bold uppercase tracking-wide py-3.5 rounded-lg flex items-center justify-center gap-1.5 text-slate-700 border border-slate-200">Invite <i data-lucide="share-2" class="w-4 h-4 text-[#9C1C1F]"></i></button></div></div></div>`; }
+      return `<main class="max-w-[1000px] mx-auto px-4 sm:px-6 py-8 md:py-14"><div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12"><div class="lg:col-span-7 space-y-8 order-2 lg:order-1"><div class="reveal"><span class="inline-flex items-center gap-2 px-3 py-1 ${isPast?'bg-slate-200 text-slate-700':'bg-red-100 text-red-700'} rounded-full text-xs font-bold tracking-widest uppercase mb-5">${badge}</span><h1 class="text-3xl sm:text-5xl font-oswald font-extrabold text-[#0A2C3D] leading-tight uppercase mb-4">${ev.title}</h1><p class="text-lg text-slate-600 leading-relaxed">${ev.description}</p><div class="mt-7 relative w-full aspect-video rounded-2xl overflow-hidden shadow-xl border border-slate-200 bg-slate-900">${media}</div></div><div class="grid grid-cols-1 sm:grid-cols-2 gap-5 reveal">${personBlock('Host', host)}${speaker?personBlock('Speaker', speaker):''}</div>${ev.sponsors&&ev.sponsors.length?`<div class="reveal"><p class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-3">Sponsored by</p><div class="flex gap-4">${ev.sponsors.map(s=>`<img src="${s.logo}" ${OE_LO} alt="${esc(s.name)}" class="h-10 opacity-70 hover:opacity-100 grayscale hover:grayscale-0 transition" />`).join('')}</div></div>`:''}</div><div class="lg:col-span-5 order-1 lg:order-2"><div class="lg:sticky lg:top-24 space-y-4"><div class="flex items-center gap-4 reveal"><div class="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm flex flex-col w-12 text-center shrink-0"><div class="bg-slate-100 text-[9px] font-bold text-slate-500 py-0.5 uppercase">${ev.logistics.month_split||''}</div><div class="font-oswald text-lg font-bold text-slate-800 py-1">${ev.logistics.day_split||''}</div></div><div><h3 class="font-semibold text-slate-900">${ev.logistics.display_date}</h3><p class="text-slate-500 text-sm">${ev.logistics.display_time}</p></div></div><div class="flex items-center gap-4 reveal"><div class="w-12 h-12 bg-white border border-slate-200 rounded-xl shadow-sm grid place-items-center shrink-0 text-slate-600"><i data-lucide="video" class="w-5 h-5"></i></div><div><p class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Location</p><h3 class="font-semibold text-slate-900">${ev.venue.platform}</h3></div></div><div class="pt-2 reveal">${cta}</div></div></div></div></main>`;
+    }
+    function registerWebinar(id){ state.registered[id]=true; track('webinar_register',{event_id:id}); renderApp(); }
+
+    // === Speaker Profile (inner page) =============================================
+    function renderSpeakerProfile(){
+      const s = sp(state.params.id); if(!s) return renderDirectory();
+      const sessions = sessionsFor(s.id);
+      return `<main class="max-w-[820px] mx-auto px-4 sm:px-6 py-10 md:py-16">
+        <div class="reveal">
+          <p class="text-[#9C1C1F] font-bold text-xs tracking-[0.2em] uppercase mb-3">Speaker</p>
+          <h1 class="text-5xl sm:text-7xl font-oswald font-extrabold text-[#0A2C3D] uppercase leading-[0.92] mb-3">${esc(s.name)}</h1>
+          <p class="text-lg sm:text-xl text-slate-600 font-semibold mb-7">${esc(s.role)} <span class="text-slate-300 mx-1">·</span> ${esc(s.company)}</p>
+          <a href="${s.linkedin}" target="_blank" rel="noreferrer" class="inline-flex items-center gap-2 bg-[#0A66C2] hover:bg-[#0a5aab] text-white font-bold text-sm px-5 py-3 rounded-xl transition-colors mb-8"><i data-lucide="linkedin" class="w-4 h-4"></i> View LinkedIn</a>
+          <div class="border-l-4 border-[#9C1C1F] pl-5"><p class="text-lg leading-relaxed text-slate-700">${esc(s.bio)}</p></div>
+        </div>
+        ${sessions.length ? `<section class="mt-14 reveal" style="animation-delay:120ms">
+          <div class="flex justify-between items-end border-b-2 border-[#0A2C3D] pb-3 mb-7"><h2 class="font-oswald text-2xl sm:text-3xl font-bold uppercase text-[#0A2C3D]">Speaking At</h2><span class="text-[10px] font-bold text-[#9C1C1F] uppercase tracking-[0.2em] hidden sm:block">${sessions.length} session${sessions.length>1?'s':''}</span></div>
+          <div class="space-y-3">${sessions.map((s,i)=>`<button onclick="navigate('#/event/${s.ev.id}')" class="reveal w-full text-left bg-white p-5 rounded-xl border border-slate-100 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all flex items-start gap-5" style="animation-delay:${i*60}ms"><div class="shrink-0 w-12 text-center bg-slate-50 rounded-lg py-2 border border-slate-100"><div class="text-[9px] font-bold text-slate-400 uppercase">${s.ev.logistics.month_split||''}</div><div class="font-oswald font-bold text-[#0A2C3D]">${s.ev.logistics.day_split||''}</div></div><div class="min-w-0 flex-1"><div class="flex flex-wrap items-center gap-2 mb-1"><span class="text-[10px] font-extrabold uppercase tracking-wider px-2 py-0.5 rounded bg-[#FFF2CD] text-[#A67B1E]">${s.kind}</span></div><p class="font-bold text-[#0A2C3D] leading-snug">${esc(s.title)}</p><p class="text-xs text-slate-500 mt-1">${esc(s.ev.title)} · ${esc(s.ev.logistics.display_date||'')}</p></div><i data-lucide="chevron-right" class="w-5 h-5 text-slate-300 mt-3 shrink-0"></i></button>`).join('')}</div>
+        </section>`:''}
+      </main>`;
+    }
+
+    // === Overlays: Share / Sponsor / Video / Calendar =============================
+    function closeOverlay(){ const r=document.getElementById('overlay-root'); if(r){ r.innerHTML=''; } document.body.style.overflow=''; activeOverlayClose=null; }
+    function mountOverlay(html, onClose){ const r=document.getElementById('overlay-root'); document.body.style.overflow='hidden'; setHTML(r, html); activeOverlayClose = onClose || closeOverlay; }
+    function openShare(ev){
+      const url = linkFor(ev);
+      track('open_share',{ event_id:ev.id });
+      mountOverlay(`<div class="fixed inset-0 z-[60] flex items-end sm:items-center justify-center bg-black/60 scrim p-0 sm:p-4 backdrop-blur-sm" onclick="if(event.target===this) activeOverlayClose && activeOverlayClose()"><div role="dialog" aria-modal="true" class="bg-white w-full sm:max-w-md sm:rounded-2xl rounded-t-3xl overflow-hidden shadow-2xl sheet">
+        <div class="px-6 py-5 border-b border-slate-100 flex justify-between items-center bg-slate-50"><h3 class="font-oswald text-xl font-bold uppercase text-[#0A2C3D]">Share Event</h3><button onclick="activeOverlayClose && activeOverlayClose()" aria-label="Close" class="w-9 h-9 grid place-items-center rounded-full text-slate-400 hover:text-slate-700 bg-white border border-slate-200"><i data-lucide="x" class="w-4 h-4"></i></button></div>
+        <div class="p-6">
+          <div class="flex items-start gap-4 mb-6"><div class="w-12 h-12 bg-slate-100 rounded-lg grid place-items-center shrink-0 border border-slate-200 text-[#0A2C3D]"><i data-lucide="calendar" class="w-5 h-5"></i></div><div><h4 class="font-bold text-sm text-slate-900 leading-tight mb-1 line-clamp-2">${esc(ev.title)}</h4><p class="text-xs font-medium text-slate-500">${esc(ev.logistics.display_date||'')}</p></div></div>
+          <label class="text-xs font-bold uppercase tracking-wider text-slate-500 mb-2 block">Share link</label>
+          <div class="flex bg-slate-50 border border-slate-200 rounded-lg overflow-hidden mb-5">
+            <input id="shareLink" type="text" readonly value="${esc(url)}" class="w-full bg-transparent text-sm text-slate-600 px-4 py-3 outline-none" />
+            <button onclick="(function(){const i=document.getElementById('shareLink'); i.select(); document.execCommand('copy'); const b=document.getElementById('copyBtn'); b.innerHTML='<i data-lucide=&quot;check-circle-2&quot; class=&quot;w-3.5 h-3.5&quot;></i> Copied'; b.className='px-4 py-3 font-bold text-xs uppercase tracking-wider border-l border-slate-200 bg-[#10B981] text-white flex items-center gap-2'; if(window.lucide) lucide.createIcons();})()" id="copyBtn" class="px-4 py-3 font-bold text-xs uppercase tracking-wider border-l border-slate-200 bg-white text-[#0A2C3D] hover:bg-slate-100 flex items-center gap-2"><i data-lucide="copy" class="w-3.5 h-3.5"></i> Copy</button>
+          </div>
+          <div class="grid grid-cols-3 gap-3">
+            <a href="https://twitter.com/intent/tweet?text=${encodeURIComponent('Join me at '+ev.title)}&url=${encodeURIComponent(url)}" target="_blank" rel="noreferrer" class="flex flex-col items-center justify-center gap-2 py-3 rounded-xl border border-slate-200 hover:bg-slate-50 hover:border-blue-400 transition-colors text-slate-600 hover:text-blue-500"><i data-lucide="twitter" class="w-6 h-6"></i><span class="text-[10px] font-bold uppercase tracking-wider">Twitter</span></a>
+            <a href="https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}" target="_blank" rel="noreferrer" class="flex flex-col items-center justify-center gap-2 py-3 rounded-xl border border-slate-200 hover:bg-slate-50 hover:border-blue-700 transition-colors text-slate-600 hover:text-blue-700"><i data-lucide="linkedin" class="w-6 h-6"></i><span class="text-[10px] font-bold uppercase tracking-wider">LinkedIn</span></a>
+            <a href="https://wa.me/?text=${encodeURIComponent(ev.title+' '+url)}" target="_blank" rel="noreferrer" class="flex flex-col items-center justify-center gap-2 py-3 rounded-xl border border-slate-200 hover:bg-slate-50 hover:border-emerald-500 transition-colors text-slate-600 hover:text-emerald-600"><i data-lucide="message-circle" class="w-6 h-6"></i><span class="text-[10px] font-bold uppercase tracking-wider">WhatsApp</span></a>
+          </div>
+        </div>
+      </div></div>`);
+    }
+    function openCalendar(ev){
+      track('open_calendar',{ event_id:ev.id });
+      mountOverlay(`<div class="fixed inset-0 z-[60] flex items-end sm:items-center justify-center bg-black/60 scrim p-0 sm:p-4 backdrop-blur-sm" onclick="if(event.target===this) activeOverlayClose && activeOverlayClose()"><div role="dialog" aria-modal="true" class="bg-white w-full sm:max-w-sm sm:rounded-2xl rounded-t-3xl overflow-hidden shadow-2xl sheet">
+        <div class="px-6 py-5 border-b border-slate-100 flex justify-between items-center bg-slate-50"><h3 class="font-oswald text-xl font-bold uppercase text-[#0A2C3D]">Add to Calendar</h3><button onclick="activeOverlayClose && activeOverlayClose()" aria-label="Close" class="w-9 h-9 grid place-items-center rounded-full text-slate-400 hover:text-slate-700 bg-white border border-slate-200"><i data-lucide="x" class="w-4 h-4"></i></button></div>
+        <div class="p-5 space-y-3">
+          <a href="${googleCalUrl(ev)}" target="_blank" rel="noreferrer" onclick="track('add_to_calendar',{method:'google',event_id:${ev.id}})" class="flex items-center gap-3 p-4 border border-slate-200 rounded-xl hover:bg-slate-50 transition-colors"><div class="w-10 h-10 bg-white border border-slate-200 rounded-lg grid place-items-center"><i data-lucide="calendar" class="w-5 h-5 text-[#0A2C3D]"></i></div><div class="flex-1 min-w-0"><p class="font-bold text-[#0A2C3D]">Google Calendar</p><p class="text-xs text-slate-500">Opens in a new tab</p></div><i data-lucide="external-link" class="w-4 h-4 text-slate-400"></i></a>
+          <button onclick="downloadICS(byId(${ev.id})); activeOverlayClose && activeOverlayClose();" class="w-full flex items-center gap-3 p-4 border border-slate-200 rounded-xl hover:bg-slate-50 transition-colors text-left"><div class="w-10 h-10 bg-white border border-slate-200 rounded-lg grid place-items-center"><i data-lucide="download" class="w-5 h-5 text-[#0A2C3D]"></i></div><div class="flex-1 min-w-0"><p class="font-bold text-[#0A2C3D]">Apple / Outlook (.ics)</p><p class="text-xs text-slate-500">Downloads a calendar file</p></div></button>
+        </div>
+      </div></div>`);
+    }
+    function openVideo(url){
+      mountOverlay(`<div class="fixed inset-0 z-[60] flex items-center justify-center bg-black/85 scrim p-4" onclick="if(event.target===this) activeOverlayClose && activeOverlayClose()"><div role="dialog" aria-modal="true" class="w-full max-w-4xl aspect-video bg-black rounded-2xl overflow-hidden shadow-2xl sheet relative"><button onclick="activeOverlayClose && activeOverlayClose()" aria-label="Close" class="absolute top-3 right-3 z-10 w-10 h-10 grid place-items-center rounded-full bg-black/60 text-white hover:bg-black/80"><i data-lucide="x" class="w-5 h-5"></i></button><iframe class="w-full h-full" src="${url}" frameborder="0" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe></div></div>`);
+    }
+    function openSponsor(){
+      track('open_sponsor_form');
+      mountOverlay(`<div class="fixed inset-0 z-[60] flex items-end sm:items-center justify-center bg-black/60 scrim p-0 sm:p-4 backdrop-blur-sm" onclick="if(event.target===this) activeOverlayClose && activeOverlayClose()"><div role="dialog" aria-modal="true" class="bg-white w-full sm:max-w-xl sm:rounded-2xl rounded-t-3xl overflow-hidden shadow-2xl sheet flex flex-col max-h-[92vh]">
+        <div class="bg-[#0A2C3D] text-center p-7 relative shrink-0 grain"><button onclick="activeOverlayClose && activeOverlayClose()" aria-label="Close" class="absolute top-4 right-4 text-white/70 hover:text-white"><i data-lucide="x" class="w-6 h-6"></i></button><span class="bg-[#9C1C1F] text-white text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded inline-block mb-2">Corporate Inquiries</span><h2 class="font-oswald text-3xl sm:text-4xl font-extrabold text-white uppercase tracking-wide">Partner With Us</h2><p class="text-slate-300 text-sm mt-2">Submit your details and our team will be in touch.</p></div>
+        <form onsubmit="event.preventDefault(); track('submit_sponsor_form'); activeOverlayClose && activeOverlayClose();" class="p-6 sm:p-7 overflow-y-auto no-scrollbar space-y-4">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4"><div><label class="text-xs font-bold text-[#9C1C1F] uppercase tracking-wide">First name</label><input id="sp-first" required class="w-full border border-slate-300 rounded-lg p-3 mt-1 outline-none focus:border-[#0A2C3D] bg-[#FAFAFA]" /></div><div><label class="text-xs font-bold text-[#9C1C1F] uppercase tracking-wide">Last name</label><input id="sp-last" required class="w-full border border-slate-300 rounded-lg p-3 mt-1 outline-none focus:border-[#0A2C3D] bg-[#FAFAFA]" /></div></div>
+          <div><label class="text-xs font-bold text-[#9C1C1F] uppercase tracking-wide">Email</label><input id="sp-email" type="email" required class="w-full border border-slate-300 rounded-lg p-3 mt-1 outline-none focus:border-[#0A2C3D] bg-[#FAFAFA]" /></div>
+          <div><label class="text-xs font-bold text-[#9C1C1F] uppercase tracking-wide">Phone</label><input id="sp-phone" type="tel" placeholder="071 123 4567" required class="w-full border border-slate-300 rounded-lg p-3 mt-1 outline-none focus:border-[#0A2C3D] bg-[#FAFAFA]" /></div>
+          <div><label class="text-xs font-bold text-[#9C1C1F] uppercase tracking-wide">Company</label><input id="sp-co" required class="w-full border border-slate-300 rounded-lg p-3 mt-1 outline-none focus:border-[#0A2C3D] bg-[#FAFAFA]" /></div>
+          <div><label class="text-xs font-bold text-[#9C1C1F] uppercase tracking-wide">Tell us about your business</label><textarea id="sp-msg" rows="3" class="w-full border border-slate-300 rounded-lg p-3 mt-1 outline-none focus:border-[#0A2C3D] bg-[#FAFAFA]"></textarea></div>
+          <button type="submit" class="w-full bg-[#0A2C3D] hover:bg-[#071d29] text-white font-bold py-4 rounded-lg uppercase tracking-wider transition-colors mt-2">Submit Inquiry</button>
+        </form>
+      </div></div>`);
+    }
+    // Placeholder — wired in next chunk
+    function openCheckout(){
+      track('open_checkout_placeholder');
+      mountOverlay(`<div class="fixed inset-0 z-[60] flex items-end sm:items-center justify-center bg-black/60 scrim p-0 sm:p-4 backdrop-blur-sm" onclick="if(event.target===this) activeOverlayClose && activeOverlayClose()"><div role="dialog" aria-modal="true" class="bg-white w-full sm:max-w-md sm:rounded-2xl rounded-t-3xl overflow-hidden shadow-2xl sheet text-center p-8 sm:p-10">
+        <div class="w-16 h-16 mx-auto rounded-full bg-[#FFF2CD] grid place-items-center mb-5"><i data-lucide="ticket" class="w-7 h-7 text-[#9C1C1F]"></i></div>
+        <h3 class="font-oswald text-2xl font-extrabold uppercase text-[#0A2C3D] mb-2">Checkout coming next</h3>
+        <p class="text-slate-500 text-sm mb-7">The full ticket flow — tier selection, attendee details, payment, and the animated thank-you ticket with QR — lands in the next chunk.</p>
+        <button onclick="activeOverlayClose && activeOverlayClose()" class="bg-[#9C1C1F] hover:bg-[#7a1518] text-white font-bold uppercase tracking-wide px-7 py-3 rounded-xl">Got it</button>
+      </div></div>`);
+    }
+
+    // === App + bootstrap ==========================================================
+    function initCountdown(){
       clearInterval(countdownInterval);
-      if (state.activeView !== 'event_detail' || !state.selectedEvent || state.selectedEvent.status !== 'Upcoming' || state.selectedEvent.type !== 'ONLINE') {
-        return;
-      }
-      
-      const el = document.getElementById('countdown-display');
-      if (el) el.innerText = getCountdownText(state.selectedEvent.logistics.start_datetime);
-      
-      countdownInterval = setInterval(() => {
-        const currentEl = document.getElementById('countdown-display');
-        if (currentEl) {
-          currentEl.innerText = getCountdownText(state.selectedEvent.logistics.start_datetime);
-        } else {
-          clearInterval(countdownInterval);
-        }
-      }, 1000);
+      const update = ()=>{
+        const el = document.getElementById('countdown-display'); if(!el) return clearInterval(countdownInterval);
+        const ev = byId(state.params.id); if(!ev || !ev.logistics.startMs) return;
+        const diff = ev.logistics.startMs - Date.now();
+        if(diff <= 0){ el.innerText = 'Starting Soon'; return; }
+        const days = Math.floor(diff/86400000), hrs = Math.floor(diff/3600000)%24, mins = Math.floor(diff/60000)%60, secs = Math.floor(diff/1000)%60;
+        el.innerText = days>0 ? `${days}d ${hrs}h` : hrs>0 ? `${hrs}h ${mins}m` : `${mins}m ${secs}s`;
+      };
+      update();
+      countdownInterval = setInterval(update, 1000);
     }
-
-    // --- EVENT HANDLERS ---
-    function handleReset() {
-      updateState({ statusFilter: 'All', typeFilter: 'All', searchQuery: '' });
-    }
-
-    function openEventDetail(id) {
-      const event = MOCK_EVENTS.find(e => e.id === id);
-      updateState({
-        selectedEvent: event,
-        hasRegistered: false,
-        activeView: 'event_detail'
-      });
-      window.scrollTo(0,0);
-    }
-
-    function navigateBack() {
-      updateState({ activeView: 'directory', selectedEvent: null });
-      window.scrollTo(0,0);
-    }
-
-    function toggleSponsorModal(isOpen) {
-      updateState({ showSponsorModal: isOpen });
-    }
-
-    function handleSponsorSubmit(e) {
-      e.preventDefault();
-      toggleSponsorModal(false);
-    }
-
-    function handleWebinarRegister(e) {
-      e.preventDefault();
-      updateState({ hasRegistered: true });
-    }
-
-    function handleAddCalendar() {
-      if (!state.selectedEvent) return;
-      const title = encodeURIComponent(state.selectedEvent.title);
-      const details = encodeURIComponent(state.selectedEvent.description);
-      const url = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&details=${details}`;
-      window.open(url, '_blank');
-    }
-
-    function handleInvite() {
-      updateState({ showShareModal: true, copySuccess: false });
-    }
-
-    function copyToClipboard() {
-      const dummy = document.createElement('input');
-      document.body.appendChild(dummy);
-      dummy.value = window.location.href;
-      dummy.select();
-      document.execCommand('copy');
-      document.body.removeChild(dummy);
-      
-      updateState({ copySuccess: true });
-      setTimeout(() => { updateState({ copySuccess: false }); }, 2000);
-    }
-
-    // --- HELPER FUNCTIONS ---
-    function getFilteredEvents() {
-      return MOCK_EVENTS.filter(ev => {
-        // Hide isolated Video Snippets from the main event feed
-        if (ev.type === 'VIDEO' && state.mainTab === 'feed') return false;
-
-        if (state.statusFilter !== 'All' && ev.status !== state.statusFilter) return false;
-        if (state.typeFilter !== 'All' && ev.type !== state.typeFilter) return false;
-        if (state.searchQuery && !ev.title.toLowerCase().includes(state.searchQuery.toLowerCase())) return false;
-        return true;
-      }).sort((a, b) => {
-        if (a.status === 'LIVE NOW' && b.status !== 'LIVE NOW') return -1;
-        if (b.status === 'LIVE NOW' && a.status !== 'LIVE NOW') return 1;
-        return 0;
-      });
-    }
-
-    // --- RENDER FUNCTIONS ---
-    
-    function renderTopBar() {
-      if (state.activeView === 'directory') return '';
-      
-      // We show the simulation toggle on ANY event detail page so the client can easily test the logged-in/logged-out states
-      let memberSimulationHtml = '';
-      if (state.activeView === 'event_detail') {
-        memberSimulationHtml = `
-          <button onclick="updateState({isLoggedIn: !${state.isLoggedIn}})" class="flex items-center gap-2 text-xs font-bold text-slate-500 hover:text-slate-800" title="Toggle this to test the conditional membership flow">
-            ${state.isLoggedIn 
-              ? '<i data-lucide="toggle-right" class="w-5 h-5 text-[#0A2C3D]"></i>' 
-              : '<i data-lucide="toggle-left" class="w-5 h-5"></i>'}
-            Simulate Logged In Member
-          </button>
-        `;
-      }
-
-      return `
-        <div class="border-b border-slate-200 bg-white sticky top-0 z-50">
-          <div class="max-w-[1200px] mx-auto px-6 py-4 flex items-center justify-between">
-            <button onclick="navigateBack()" class="flex items-center gap-2 text-slate-500 hover:text-[#0A2C3D] font-semibold transition-colors">
-              <i data-lucide="arrow-left" class="w-[18px] h-[18px]"></i> Back to Directory
-            </button>
-            <div class="flex items-center gap-6">
-              ${memberSimulationHtml}
-            </div>
-          </div>
-        </div>
-      `;
-    }
-
-    function renderDirectory() {
-      const filteredEvents = getFilteredEvents();
-      
-      let feedOrLibraryHtml = '';
-      if (state.mainTab === 'feed') {
-        feedOrLibraryHtml = `
-          <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
-            ${filteredEvents.map(event => `
-              <div class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden relative flex flex-col hover:shadow-xl transition-shadow group">
-                ${event.featured ? '<div class="absolute top-0 left-0 bg-[#9C1C1F] text-white text-[10px] font-extrabold uppercase px-3 py-1.5 rounded-br-xl z-10">FEATURED</div>' : ''}
-                
-                <div class="p-6 md:p-8 flex-1 flex flex-col mt-4">
-                  <div class="flex justify-between items-center mb-4">
-                    <span class="text-slate-500 font-bold text-xs tracking-widest">${event.type}</span>
-                    ${event.status === 'LIVE NOW' ? `
-                      <span class="px-4 py-1.5 rounded-full text-xs font-bold bg-red-100 text-red-700 flex items-center gap-2 animate-pulse">
-                        <span class="w-2 h-2 rounded-full bg-red-600"></span> LIVE NOW
-                      </span>
-                    ` : `
-                      <span class="px-4 py-1.5 rounded-full text-xs font-bold ${event.status === 'Upcoming' ? 'bg-[#FFF2CD] text-[#A67B1E]' : 'bg-slate-100 text-slate-600'}">
-                        ${event.status}
-                      </span>
-                    `}
-                  </div>
-
-                  <h3 class="text-xl font-oswald font-extrabold text-[#0A2C3D] uppercase leading-tight mb-3 group-hover:text-[#9C1C1F] transition-colors">${event.title}</h3>
-                  <p class="text-slate-500 text-sm leading-relaxed line-clamp-3 mb-6 flex-1">${event.description}</p>
-
-                  <div class="mt-auto">
-                    <p class="font-extrabold text-slate-900 text-sm mb-5">${event.logistics.display_date} at ${event.logistics.display_time.split(' ')[0]}</p>
-                    <button onclick="openEventDetail(${event.id})" class="w-full bg-[#9C1C1F] hover:bg-[#7a1518] text-white font-bold py-3.5 rounded-xl transition-colors shadow-sm">
-                      View Details
-                    </button>
-                  </div>
-                </div>
-              </div>
-            `).join('')}
-          </div>
-        `;
-      } else {
-        feedOrLibraryHtml = `
-          <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
-            ${MOCK_EVENTS.filter(e => e.status === 'Past' && e.vault && e.type !== 'ONLINE').map(item => {
-              
-              let badgeLabel = '';
-              if (item.type === 'VIDEO') badgeLabel = 'EVENT SNIPPET';
-              else badgeLabel = 'PHOTO GALLERY';
-
-              let imgSrc = (item.type === 'VIDEO') ? item.vault.recording_url : item.vault.gallery[0];
-              let isVideo = (item.type === 'VIDEO');
-
-              return `
-                <div onclick="openEventDetail(${item.id})" class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden cursor-pointer hover:shadow-xl transition-all group relative">
-                  
-                  <div class="h-56 bg-slate-900 flex items-center justify-center relative overflow-hidden">
-                    <img src="${imgSrc}" onerror="this.onerror=null;this.src='${PLACEHOLDER_IMAGE}'" class="w-full h-full object-cover ${!state.isLoggedIn ? 'opacity-30 blur-[3px]' : 'opacity-60'} group-hover:scale-105 transition-all duration-500" alt="Thumbnail" />
-                    
-                    ${!state.isLoggedIn ? `
-                      <div class="absolute inset-0 flex flex-col items-center justify-center z-10 bg-[#0A2C3D]/40 mix-blend-multiply"></div>
-                      <div class="absolute inset-0 flex flex-col items-center justify-center z-20">
-                        <div class="w-12 h-12 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center border border-white/30 shadow-lg mb-2">
-                          <i data-lucide="lock" class="text-white w-5 h-5"></i>
-                        </div>
-                        <span class="text-white font-oswald text-[10px] uppercase tracking-widest font-bold drop-shadow-md">Members Only</span>
-                      </div>
-                    ` : (isVideo ? `
-                      <i data-lucide="play-circle" class="absolute text-white/90 group-hover:scale-110 transition-transform w-16 h-16 z-10 drop-shadow-lg"></i>
-                    ` : `
-                      <i data-lucide="image" class="absolute text-white/90 w-12 h-12 z-10 drop-shadow-lg"></i>
-                    `)}
-                  </div>
-                  
-                  <div class="p-6">
-                    <span class="text-[#9C1C1F] font-extrabold text-[10px] tracking-widest mb-2 block">
-                      ${badgeLabel}
-                    </span>
-                    <h3 class="text-lg font-extrabold text-[#0A2C3D] mb-1 leading-tight">${item.title}</h3>
-                    <p class="text-sm text-slate-500 font-medium">From: ${item.logistics.display_date}</p>
-                  </div>
-                </div>
-              `;
-            }).join('')}
-          </div>
-        `;
-      }
-
-      return `
-        <div class="max-w-[1200px] mx-auto px-6 py-10">
-          <div class="flex items-center gap-2 text-sm text-slate-500 font-medium mb-8">
-            <i data-lucide="home" class="w-4 h-4"></i> <span>Home</span>
-            <i data-lucide="chevron-right" class="w-[14px] h-[14px] text-slate-300"></i> <span>Events</span>
-          </div>
-
-          <div class="mb-10 flex justify-between items-end">
-            <div>
-              <h1 class="text-4xl md:text-5xl font-extrabold text-slate-900 tracking-tight mb-3 font-oswald uppercase text-[#0A2C3D]">
-                Events & Webinars
-              </h1>
-              <p class="text-lg text-slate-500 font-medium">Explore our upcoming and past events. Join us to learn, network, and grow.</p>
-            </div>
-          </div>
-
-          <div class="flex gap-4 mb-8">
-            <button onclick="updateState({mainTab: 'feed'})" class="px-6 py-3 rounded-lg font-bold text-sm shadow-sm ${state.mainTab === 'feed' ? 'bg-[#9C1C1F] text-white' : 'bg-white text-slate-700 border border-slate-200'}">
-              Event Feed
-            </button>
-            <button onclick="updateState({mainTab: 'library'})" class="px-6 py-3 rounded-lg font-bold text-sm shadow-sm ${state.mainTab === 'library' ? 'bg-[#9C1C1F] text-white' : 'bg-white text-slate-700 border border-slate-200'}">
-              Event Library
-            </button>
-          </div>
-
-          <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-5 mb-10 flex flex-wrap lg:flex-nowrap items-center justify-between gap-6">
-            <div class="flex items-center gap-6 w-full lg:w-auto">
-              <div class="flex items-center gap-3">
-                <span class="font-bold text-slate-900 text-sm">Status:</span>
-                ${['All', 'Upcoming', 'Past'].map(status => `
-                  <button 
-                    onclick="updateState({statusFilter: '${status}'})" 
-                    class="flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold border ${state.statusFilter === status ? 'bg-[#9C1C1F] text-white border-[#9C1C1F]' : 'bg-white text-slate-600 hover:bg-slate-50'}"
-                  >
-                    ${status} 
-                  </button>
-                `).join('')}
-              </div>
-            </div>
-
-            <div class="flex items-center gap-3 w-full lg:w-auto border-t lg:border-t-0 lg:border-l border-slate-100 pt-4 lg:pt-0 lg:pl-6">
-              <span class="font-bold text-slate-900 text-sm">Type:</span>
-              ${['All', 'ONLINE', 'IN-PERSON'].map(type => `
-                <button onclick="updateState({typeFilter: '${type}'})" class="px-5 py-2 rounded-full text-sm font-semibold border ${state.typeFilter === type ? 'bg-[#9C1C1F] text-white' : 'bg-white hover:bg-slate-50'}">${type}</button>
-              `).join('')}
-            </div>
-
-            <div class="flex items-center gap-3 w-full xl:w-auto border-t xl:border-t-0 xl:border-l border-slate-100 pt-4 xl:pt-0 xl:pl-6">
-              <div class="relative flex-1 xl:w-64">
-                <i data-lucide="search" class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 w-4 h-4"></i>
-                <input id="searchInput" type="text" placeholder="Search events..." value="${state.searchQuery}" oninput="updateState({searchQuery: this.value})" class="w-full pl-9 pr-4 py-2.5 rounded-lg border border-slate-200 text-sm bg-slate-50 outline-none focus:border-[#9C1C1F]" />
-              </div>
-              <button onclick="handleReset()" class="flex items-center gap-2 px-4 py-2.5 rounded-lg text-slate-500 bg-white border border-slate-200 text-sm font-semibold hover:bg-slate-50">
-                <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
-              </button>
-            </div>
-          </div>
-          
-          ${feedOrLibraryHtml}
-        </div>
-      `;
-    }
-
-    function renderVideoRecording() {
-      const event = state.selectedEvent;
-      return `
-        <div class="max-w-[900px] mx-auto px-6 py-16">
-          <div class="mb-8">
-            <div class="inline-flex items-center gap-2 px-3 py-1 bg-slate-200 rounded-full text-xs font-bold tracking-widest uppercase text-slate-700 mb-6">
-              Event Snippet
-            </div>
-            <h1 class="text-4xl md:text-5xl font-oswald font-extrabold text-[#0A2C3D] leading-tight mb-4 uppercase">
-              ${event.title}
-            </h1>
-            <p class="text-lg text-slate-600 leading-relaxed">${event.description}</p>
-          </div>
-
-          <div class="w-full aspect-video bg-slate-900 rounded-2xl overflow-hidden shadow-2xl border border-slate-200 relative mb-8">
-            ${state.isLoggedIn ? `
-               <iframe 
-                  width="100%" 
-                  height="100%" 
-                  src="${event.vault.video_embed}" 
-                  title="Video Replay" 
-                  frameborder="0" 
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                  allowfullscreen
-               ></iframe>
-            ` : `
-               <div class="relative w-full h-full flex flex-col items-center justify-center">
-                  <img src="${event.vault.recording_url}" onerror="this.onerror=null;this.src='${PLACEHOLDER_IMAGE}'" class="absolute inset-0 w-full h-full object-cover opacity-40 blur-[4px]" alt="Video Background" />
-                  <div class="absolute inset-0 bg-[#0A2C3D]/60 backdrop-blur-sm mix-blend-multiply"></div>
-                  <div class="z-10 flex flex-col items-center text-center px-4 w-full max-w-md">
-                    <div class="w-16 h-16 bg-white/10 backdrop-blur-md rounded-full flex items-center justify-center mb-4 border border-white/20 shadow-lg">
-                      <i data-lucide="lock" class="text-white w-8 h-8"></i>
-                    </div>
-                    <h3 class="text-3xl font-oswald font-bold text-white uppercase tracking-wide drop-shadow-md mb-2">Members Only</h3>
-                    <p class="text-white/80 font-medium text-sm mb-8 text-center drop-shadow-md">Sign in or create a free SME South Africa account to unlock this full recording.</p>
-                    
-                    <div class="flex flex-col sm:flex-row gap-4 w-full">
-                      <button onclick="updateState({isLoggedIn: true})" class="flex-1 bg-[#9C1C1F] hover:bg-[#7a1518] text-white font-bold uppercase tracking-wider py-3.5 rounded-lg transition-colors text-sm shadow-md">
-                        Sign In
-                      </button>
-                      <button onclick="updateState({isLoggedIn: true})" class="flex-1 bg-white/10 hover:bg-white/20 border border-white/30 text-white font-bold uppercase tracking-wider py-3.5 rounded-lg transition-colors text-sm">
-                        Free Account
-                      </button>
-                    </div>
-                  </div>
-               </div>
-            `}
-          </div>
-          
-          ${state.isLoggedIn ? `
-              <div class="flex justify-between items-center bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
-                  <div class="flex items-center gap-4 text-slate-500 text-sm font-medium">
-                    <span class="flex items-center gap-1.5"><i data-lucide="calendar" class="w-4 h-4"></i> Recorded On: ${event.logistics.display_date}</span>
-                  </div>
-                  <button onclick="handleInvite()" class="bg-slate-50 hover:bg-slate-100 text-xs font-bold uppercase tracking-wider py-2.5 px-5 rounded-lg flex items-center gap-2 transition-colors text-slate-700 border border-slate-200 shadow-sm">
-                      Share <i data-lucide="share-2" class="text-[#0A2C3D] w-4 h-4"></i>
-                  </button>
-              </div>
-          ` : ''}
-        </div>
-      `;
-    }
-
-    function renderWebinar() {
-      const event = state.selectedEvent;
-      const isPast = event.status === 'Past';
-      const isLive = event.status === 'LIVE NOW';
-
-      let badgeHtml = '';
-      if (isLive) {
-          badgeHtml = '<span class="w-2 h-2 rounded-full bg-red-600"></span> Streaming Live';
-      } else if (isPast) {
-          badgeHtml = 'Recorded Webinar';
-      } else {
-          badgeHtml = 'Upcoming Online Event';
-      }
-
-      let mediaHtml = '';
-      if (isPast) {
-          if (state.isLoggedIn) {
-              mediaHtml = `<iframe width="100%" height="100%" src="${event.vault.video_embed}" title="Video Replay" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
-          } else {
-              mediaHtml = `
-                 <div class="relative w-full h-full flex flex-col items-center justify-center">
-                    <img src="${event.vault.recording_url}" onerror="this.onerror=null;this.src='${PLACEHOLDER_IMAGE}'" class="absolute inset-0 w-full h-full object-cover opacity-40 blur-[4px]" alt="Video Background" />
-                    <div class="absolute inset-0 bg-[#0A2C3D]/60 backdrop-blur-sm mix-blend-multiply"></div>
-                    <div class="z-10 flex flex-col items-center text-center px-4 w-full max-w-md">
-                      <div class="w-16 h-16 bg-white/10 backdrop-blur-md rounded-full flex items-center justify-center mb-4 border border-white/20 shadow-lg">
-                        <i data-lucide="lock" class="text-white w-8 h-8"></i>
-                      </div>
-                      <h3 class="text-3xl font-oswald font-bold text-white uppercase tracking-wide drop-shadow-md mb-2">Members Only</h3>
-                      <p class="text-white/80 font-medium text-sm mb-8 text-center drop-shadow-md">Sign in or create a free SME South Africa account to unlock this full recording.</p>
-                      
-                      <div class="flex flex-col sm:flex-row gap-4 w-full">
-                        <button onclick="updateState({isLoggedIn: true})" class="flex-1 bg-[#9C1C1F] hover:bg-[#7a1518] text-white font-bold uppercase tracking-wider py-3.5 rounded-lg transition-colors text-sm shadow-md">
-                          Sign In
-                        </button>
-                        <button onclick="updateState({isLoggedIn: true})" class="flex-1 bg-white/10 hover:bg-white/20 border border-white/30 text-white font-bold uppercase tracking-wider py-3.5 rounded-lg transition-colors text-sm">
-                          Free Account
-                        </button>
-                      </div>
-                    </div>
-                 </div>
-              `;
-          }
-      } else {
-          mediaHtml = `
-             <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&q=80&w=1200" onerror="this.onerror=null;this.src='${PLACEHOLDER_IMAGE}'" alt="Stream Placeholder" class="w-full h-full object-cover opacity-50 group-hover:opacity-40 transition-opacity duration-700" />
-             <div class="absolute inset-0 bg-gradient-to-t from-[#0A2C3D]/80 via-transparent to-transparent"></div>
-             
-             <div class="absolute inset-0 flex flex-col items-center justify-center p-6 text-center z-10">
-               <div class="w-20 h-20 bg-black/40 backdrop-blur-md rounded-full flex items-center justify-center mb-4 border border-white/20 shadow-2xl group-hover:scale-110 transition-transform duration-500">
-                  <i data-lucide="youtube" class="text-[#FF0000] w-10 h-10"></i>
-               </div>
-               <h4 class="text-2xl font-oswald font-bold text-white uppercase tracking-wide mb-2 drop-shadow-md">YouTube Live Stream</h4>
-               ${isLive ? `
-                 <p class="text-white font-medium text-sm drop-shadow-md bg-red-600/90 px-4 py-1.5 rounded-full animate-pulse">Broadcast is currently live</p>
-               ` : `
-                 <p class="text-slate-200 text-sm max-w-sm drop-shadow-md font-medium">The broadcast will appear here automatically when the event goes live.</p>
-               `}
-             </div>
-             
-             <div class="absolute top-6 left-6 flex items-start sm:items-center gap-3 z-10 pr-6">
-                <div class="w-10 h-10 sm:w-12 sm:h-12 bg-white rounded-full flex items-center justify-center shadow-lg shrink-0 overflow-hidden p-1">
-                  <img src="https://events.smesouthafrica.co.za/wp-content/uploads/2023/10/sme-sa-logo.png" onerror="this.onerror=null;this.src='${PLACEHOLDER_LOGO}'" class="w-full h-full object-contain" alt="SME SA Logo" />
-                </div>
-                <div>
-                  <p class="text-white font-bold text-sm sm:text-base leading-tight drop-shadow-md line-clamp-1">${event.title}</p>
-                  <p class="text-white/90 font-medium text-[10px] sm:text-xs leading-tight drop-shadow-md mt-0.5">SME South Africa • Official Broadcast</p>
-                </div>
-             </div>
-          `;
-      }
-
-      return `
-        <div class="max-w-[1000px] mx-auto px-6 py-16">
-          <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
-            <div class="lg:col-span-7 space-y-10">
-              <div>
-                <div class="inline-flex items-center gap-2 px-3 py-1 ${isPast ? 'bg-slate-200 text-slate-700' : 'bg-red-100 text-red-700 animate-pulse'} rounded-full text-xs font-bold tracking-widest uppercase mb-6">
-                  ${badgeHtml}
-                </div>
-                <h1 class="text-4xl md:text-5xl font-oswald font-extrabold text-[#0A2C3D] leading-tight mb-4 uppercase">
-                  ${event.title}
-                </h1>
-                <p class="text-lg text-slate-600 leading-relaxed">${event.description}</p>
-                
-                <!-- Main Media Area (Stream or Replay) -->
-                <div class="mt-8 relative w-full aspect-video rounded-2xl overflow-hidden shadow-[0_10px_40px_-10px_rgba(0,0,0,0.2)] border border-slate-200 bg-slate-900 group">
-                   ${mediaHtml}
-                </div>
-              </div>
-
-              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
-                   <h4 class="font-oswald font-bold uppercase text-[#0A2C3D] text-lg mb-4">Host</h4>
-                   <div class="flex gap-4">
-                     <img src="${event.host.img}" onerror="this.onerror=null;this.src='${PLACEHOLDER_AVATAR}'" alt="${event.host.name}" class="w-16 h-16 rounded-full object-cover border border-slate-200" />
-                     <div>
-                       <h5 class="font-bold text-slate-900">${event.host.name}</h5>
-                       <p class="text-sm text-[#9C1C1F] font-medium mb-2">${event.host.role}</p>
-                       <p class="text-xs text-slate-500 leading-relaxed">${event.host.bio}</p>
-                     </div>
-                   </div>
-                </div>
-                
-                ${event.speaker ? `
-                  <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
-                     <h4 class="font-oswald font-bold uppercase text-[#0A2C3D] text-lg mb-4">Speaker</h4>
-                     <div class="flex gap-4">
-                       <img src="${event.speaker.img}" onerror="this.onerror=null;this.src='${PLACEHOLDER_AVATAR}'" alt="${event.speaker.name}" class="w-16 h-16 rounded-full object-cover border border-slate-200" />
-                       <div>
-                         <h5 class="font-bold text-slate-900">${event.speaker.name}</h5>
-                         <p class="text-sm text-[#9C1C1F] font-medium mb-2">${event.speaker.role}</p>
-                         <p class="text-xs text-slate-500 leading-relaxed">${event.speaker.bio}</p>
-                       </div>
-                     </div>
-                  </div>
-                ` : ''}
-              </div>
-
-              ${event.sponsors?.length > 0 ? `
-                <div>
-                  <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-3">Sponsored By</p>
-                  <div class="flex gap-4">
-                    ${event.sponsors.map(sponsor => `
-                      <img src="${sponsor.logo}" onerror="this.onerror=null;this.src='${PLACEHOLDER_LOGO}'" alt="${sponsor.name}" class="h-10 opacity-70 hover:opacity-100 transition-opacity grayscale hover:grayscale-0" />
-                    `).join('')}
-                  </div>
-                </div>
-              ` : ''}
-            </div>
-
-            <div class="lg:col-span-5">
-              <div class="sticky top-24 space-y-4">
-                
-                <!-- Luma Style Date Block -->
-                <div class="flex items-center gap-4">
-                   <div class="bg-white border border-slate-200 rounded-lg overflow-hidden shadow-sm flex flex-col w-12 text-center shrink-0">
-                      <div class="bg-slate-100 text-[9px] font-bold text-slate-500 py-0.5 border-b border-slate-200 uppercase">${event.logistics.month_split}</div>
-                      <div class="font-oswald text-lg font-bold text-slate-800 py-1">${event.logistics.day_split}</div>
-                   </div>
-                   <div>
-                      <h3 class="font-semibold text-slate-900">${event.logistics.display_date}</h3>
-                      <p class="text-slate-500 text-sm">${event.logistics.display_time}</p>
-                   </div>
-                </div>
-
-                <!-- Luma Style Location Block -->
-                <div class="flex items-center gap-4">
-                   <div class="w-12 h-12 bg-white border border-slate-200 rounded-lg shadow-sm flex items-center justify-center shrink-0 text-slate-600">
-                     <i data-lucide="video" class="w-5 h-5"></i>
-                   </div>
-                   <div>
-                     <p class="text-[10px] font-bold text-slate-500 uppercase tracking-widest leading-tight">Location</p>
-                     <h3 class="font-semibold text-slate-900 leading-tight">${event.venue.platform}</h3>
-                   </div>
-                </div>
-
-                <div class="pt-4">
-                   ${isPast ? `
-                      ${!state.isLoggedIn ? `
-                        <div class="bg-white rounded-xl shadow-xl border border-slate-200 overflow-hidden">
-                          <div class="bg-[#0A2C3D] px-6 py-4 border-b border-[#0A2C3D]">
-                            <span class="text-sm font-oswald font-bold uppercase tracking-wide text-white flex items-center gap-2"><i data-lucide="lock" class="w-4 h-4"></i> Member Access</span>
-                          </div>
-                          <div class="p-6">
-                            <p class="text-slate-600 text-sm font-medium mb-5">Sign in or create a free SME South Africa account to unlock this recording and our full event library.</p>
-                            <div class="space-y-3">
-                              <button onclick="updateState({isLoggedIn: true})" class="w-full bg-[#9C1C1F] hover:bg-[#7a1518] text-white font-bold uppercase tracking-wider py-3.5 rounded-lg transition-colors text-sm shadow-md">Sign In</button>
-                              <button onclick="updateState({isLoggedIn: true})" class="w-full bg-white hover:bg-slate-50 text-[#0A2C3D] border-2 border-[#0A2C3D] font-bold uppercase tracking-wider py-3.5 rounded-lg transition-colors text-sm">Create Free Account</button>
-                            </div>
-                          </div>
-                        </div>
-                      ` : `
-                        <div class="bg-white rounded-xl shadow-xl border border-slate-200 overflow-hidden">
-                          <div class="bg-[#10B981] px-6 py-4 border-b border-[#10B981] text-white flex justify-between items-center">
-                              <h3 class="text-xl font-oswald font-bold tracking-wide uppercase">Access Granted</h3>
-                              <i data-lucide="check-circle-2" class="text-white w-6 h-6"></i>
-                          </div>
-                          <div class="p-6 text-center">
-                            <i data-lucide="play-circle" class="text-[#0A2C3D] mx-auto mb-4 w-12 h-12 block"></i>
-                            <p class="text-slate-700 font-bold mb-1">You're all set!</p>
-                            <p class="text-slate-500 text-sm mb-6">Enjoy the full video recording and insights from the session.</p>
-                            <button onclick="handleInvite()" class="w-full bg-slate-50 hover:bg-slate-100 text-xs font-bold uppercase tracking-wider py-3.5 rounded-lg flex items-center justify-center gap-2 transition-colors text-slate-700 border border-slate-200 shadow-sm">
-                                Share Replay <i data-lucide="share-2" class="text-[#0A2C3D] w-4 h-4"></i>
-                            </button>
-                          </div>
-                        </div>
-                      `}
-                   ` : `
-                      ${!state.isLoggedIn ? `
-                        <div class="bg-white rounded-xl shadow-xl border border-slate-200 overflow-hidden">
-                          <div class="bg-[#0A2C3D] px-6 py-4 border-b border-[#0A2C3D]">
-                            <span class="text-sm font-oswald font-bold uppercase tracking-wide text-white flex items-center gap-2"><i data-lucide="lock" class="w-4 h-4"></i> Member Access</span>
-                          </div>
-                          <div class="p-6">
-                            <p class="text-slate-600 text-sm font-medium mb-5">Sign in or create a free SME South Africa account to register for this event.</p>
-                            <div class="space-y-3">
-                              <button onclick="updateState({isLoggedIn: true})" class="w-full bg-[#9C1C1F] hover:bg-[#7a1518] text-white font-bold uppercase tracking-wider py-3.5 rounded-lg transition-colors text-sm shadow-md">
-                                Sign In
-                              </button>
-                              <button onclick="updateState({isLoggedIn: true})" class="w-full bg-white hover:bg-slate-50 text-[#0A2C3D] border-2 border-[#0A2C3D] font-bold uppercase tracking-wider py-3.5 rounded-lg transition-colors text-sm">
-                                Create Free Account
-                              </button>
-                            </div>
-                          </div>
-                        </div>
-                      ` : !state.hasRegistered ? `
-                        <div class="bg-white rounded-xl shadow-xl border border-slate-200 overflow-hidden">
-                          <div class="bg-[#0A2C3D] px-6 py-4 border-b border-[#0A2C3D]">
-                            <span class="text-sm font-oswald font-bold uppercase tracking-wide text-white">Event Registration</span>
-                          </div>
-                          <div class="p-6">
-                             <p class="text-slate-600 text-sm font-medium mb-5">Welcome back! Please confirm your details to register for this event.</p>
-                             <form onsubmit="handleWebinarRegister(event)">
-                               <div class="space-y-4 mb-6">
-                                 <!-- Pre-filled simulation -->
-                                 <input type="text" required placeholder="Your Name" value="Jane Doe" class="w-full border border-slate-200 rounded-lg px-4 py-3 text-sm outline-none focus:border-[#9C1C1F] bg-slate-50 transition-colors" />
-                                 <input type="email" required placeholder="Email Address" value="jane@smesouthafrica.co.za" class="w-full border border-slate-200 rounded-lg px-4 py-3 text-sm outline-none focus:border-[#9C1C1F] bg-slate-50 transition-colors" />
-                               </div>
-                               <button type="submit" class="w-full bg-[#9C1C1F] hover:bg-[#7a1518] shadow-md text-white font-bold uppercase tracking-wider py-3.5 rounded-lg transition-colors text-sm">
-                                 Register Now
-                               </button>
-                             </form>
-                          </div>
-                        </div>
-                      ` : `
-                        <div class="bg-white rounded-xl shadow-xl border border-slate-200 overflow-hidden">
-                          <div class="bg-[#10B981] px-6 py-4 border-b border-[#10B981] text-white flex justify-between items-center">
-                              <h3 class="text-xl font-oswald font-bold tracking-wide uppercase">You're In!</h3>
-                              <i data-lucide="check-circle-2" class="text-[#10B981] w-6 h-6"></i>
-                          </div>
-                          <div class="p-6">
-                              ${isLive ? `
-                                <div class="bg-red-50 rounded-xl p-6 mb-6 border border-red-100 shadow-inner">
-                                    <div class="flex justify-between items-center mb-5">
-                                        <div class="flex items-center gap-2 text-red-700 font-bold text-sm tracking-widest uppercase animate-pulse">
-                                            <span class="w-2.5 h-2.5 bg-red-600 rounded-full"></span> Streaming Live
-                                        </div>
-                                    </div>
-                                    <a href="${event.venue.link}" target="_blank" rel="noreferrer" class="flex items-center justify-center gap-2 w-full bg-[#9C1C1F] hover:bg-[#7a1518] text-white font-bold uppercase tracking-wider py-4 rounded-xl transition-colors text-sm shadow-md">
-                                        <i data-lucide="video" class="w-5 h-5"></i> Join Zoom Meeting
-                                    </a>
-                                </div>
-                              ` : `
-                                <div class="bg-slate-50 rounded-xl p-6 mb-6 border border-slate-100 shadow-inner">
-                                    <div class="flex flex-col gap-1 mb-5">
-                                        <div class="flex items-center gap-2 text-slate-500 font-bold text-xs uppercase tracking-widest">
-                                            <i data-lucide="clock" class="text-slate-400 w-4 h-4"></i> Event starting in
-                                        </div>
-                                        <div id="countdown-display" class="text-[#0A2C3D] font-oswald font-bold text-3xl tracking-wide">
-                                            Calculating...
-                                        </div>
-                                    </div>
-                                    <div class="h-px w-full bg-slate-200 mb-5"></div>
-                                    <p class="text-slate-600 text-sm leading-relaxed font-medium">The join link will become active when the event is about to start.</p>
-                                </div>
-                              `}
-
-                              <div class="flex gap-3">
-                                  <button onclick="handleAddCalendar()" class="flex-1 bg-white hover:bg-slate-50 text-xs font-bold uppercase tracking-wider py-3.5 rounded-lg flex items-center justify-center gap-2 transition-colors text-slate-700 border border-slate-200 shadow-sm">
-                                      <i data-lucide="calendar" class="text-[#9C1C1F] w-4 h-4"></i> Add to Calendar
-                                  </button>
-                                  <button onclick="handleInvite()" class="flex-1 bg-white hover:bg-slate-50 text-xs font-bold uppercase tracking-wider py-3.5 rounded-lg flex items-center justify-center gap-2 transition-colors text-slate-700 border border-slate-200 shadow-sm">
-                                      Invite <i data-lucide="share-2" class="text-[#9C1C1F] w-4 h-4"></i>
-                                  </button>
-                              </div>
-                          </div>
-                        </div>
-                     `}
-                   `}
-                </div>
-
-              </div>
-            </div>
-          </div>
-        </div>
-      `;
-    }
-
-    function renderUpcomingInPerson() {
-      const event = state.selectedEvent;
-      return `
-        <div class="max-w-[1200px] mx-auto px-6 py-12">
-          
-          <div class="w-full aspect-video md:aspect-[21/9] rounded-3xl overflow-hidden relative shadow-2xl mb-12 bg-black">
-            <iframe 
-              class="w-full h-full absolute inset-0 opacity-80 pointer-events-none" 
-              src="${event.hero_video}" 
-              title="Hero Video" 
-              frameborder="0" 
-              allow="autoplay; loop; muted"
-            ></iframe>
-            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end p-8 md:p-12">
-               <h1 class="text-4xl md:text-6xl font-oswald font-extrabold uppercase leading-tight text-white max-w-3xl drop-shadow-lg">
-                 ${event.title}
-               </h1>
-            </div>
-          </div>
-
-          <div class="flex flex-col lg:flex-row gap-16">
-            <div class="lg:w-2/3 space-y-16">
-              
-              <div class="text-lg text-slate-700 leading-relaxed font-medium">
-                <p>${event.description}</p>
-              </div>
-
-              ${event.topics?.length ? `
-              <div>
-                <div class="flex justify-between items-end border-b border-[#0A2C3D] pb-3 mb-8">
-                    <h2 class="font-oswald text-3xl font-bold uppercase text-[#0A2C3D]">Event Topics</h2>
-                    <span class="text-[10px] font-bold text-[#9C1C1F] uppercase tracking-[0.2em] hidden sm:block">What You'll Learn</span>
-                </div>
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                  ${event.topics.map(topic => `
-                    <div class="bg-white p-6 rounded-xl border border-slate-100 shadow-sm flex gap-4 hover:shadow-md transition-shadow group">
-                      <div class="w-12 h-12 rounded-lg bg-[#FFF2CD] flex items-center justify-center shrink-0 text-[#9C1C1F] group-hover:bg-[#9C1C1F] group-hover:text-white transition-colors">
-                        <i data-lucide="${topic.icon}" class="w-6 h-6"></i>
-                      </div>
-                      <div>
-                        <h4 class="font-bold text-[#0A2C3D] leading-tight mb-1">${topic.title}</h4>
-                        <p class="text-sm text-slate-500 leading-relaxed">${topic.description}</p>
-                      </div>
-                    </div>
-                  `).join('')}
-                </div>
-              </div>
-              ` : ''}
-
-              <div>
-                <div class="flex justify-between items-end border-b border-[#0A2C3D] pb-3 mb-8">
-                    <h2 class="font-oswald text-3xl font-bold uppercase text-[#0A2C3D]">Speakers</h2>
-                    <span class="text-[10px] font-bold text-[#9C1C1F] uppercase tracking-[0.2em] hidden sm:block">Investors • Founders • VCs</span>
-                </div>
-                <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
-                  ${event.speakers.map(speaker => `
-                    <div class="bg-white p-5 shadow-md border border-slate-100 flex flex-col items-center text-center speaker-card group rounded-xl">
-                      <img src="${speaker.img}" onerror="this.onerror=null;this.src='${PLACEHOLDER_AVATAR}'" alt="${speaker.name}" class="w-24 h-24 rounded-full object-cover mb-4 speaker-img-bw border-2 border-slate-100" />
-                      <h3 class="font-inter text-lg font-bold text-[#0A2C3D] leading-tight mb-1 group-hover:text-[#9C1C1F] transition-colors">${speaker.name}</h3>
-                      <p class="text-xs text-slate-500 font-medium">${speaker.role}</p>
-                    </div>
-                  `).join('')}
-                </div>
-              </div>
-
-              <div>
-                 <h2 class="font-oswald text-3xl font-bold uppercase text-[#0A2C3D] border-b border-[#0A2C3D] pb-3 mb-8">Agenda</h2>
-                 <div class="space-y-4">
-                   ${event.agenda.map(item => `
-                     <div class="flex gap-6 bg-white p-5 rounded-xl border border-slate-100 shadow-sm">
-                       <div class="font-bold text-[#9C1C1F] w-16 shrink-0">${item.time}</div>
-                       <div>
-                         <h4 class="font-bold text-slate-800">${item.title}</h4>
-                         ${item.speaker ? `<p class="text-sm text-slate-500 mt-1">Speaker: ${item.speaker}</p>` : ''}
-                       </div>
-                     </div>
-                   `).join('')}
-                 </div>
-              </div>
-
-              <div>
-                 <h2 class="font-oswald text-3xl font-bold uppercase text-[#0A2C3D] border-b border-[#9C1C1F] pb-3 mb-6 inline-block">VENUE & LOCATION</h2>
-                 <div class="mb-4">
-                   <h4 class="font-bold text-lg text-slate-900">${event.venue.address}</h4>
-                 </div>
-                 
-                 <div class="w-full h-80 bg-slate-200 relative border border-slate-300 rounded overflow-hidden">
-                    <img src="https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&q=80&w=1600" onerror="this.onerror=null;this.src='${PLACEHOLDER_IMAGE}'" alt="Map Styling Reference" class="w-full h-full object-cover opacity-50 sepia-[.3]" />
-                    <div class="absolute top-4 left-4 bg-white p-3 shadow-md rounded border border-slate-200">
-                       <p class="font-bold text-sm text-slate-900">${event.venue.name}</p>
-                       <p class="text-xs text-slate-500 w-48 truncate">${event.venue.address}</p>
-                    </div>
-                    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-red-600">
-                      <i data-lucide="map-pin" class="text-red-100 w-12 h-12" fill="currentColor"></i>
-                    </div>
-                 </div>
-              </div>
-
-              <div>
-                 <h2 class="font-oswald text-3xl font-bold uppercase text-[#0A2C3D] border-b border-[#9C1C1F] pb-3 mb-8 inline-block">SPONSORS & PARTNERS</h2>
-                 <div class="flex flex-wrap items-center gap-8 md:gap-12 mb-10">
-                    ${event.sponsors.map(sponsor => `
-                      <img src="${sponsor.logo}" onerror="this.onerror=null;this.src='${PLACEHOLDER_LOGO}'" alt="${sponsor.name}" class="h-12 md:h-16 grayscale hover:grayscale-0 transition-all opacity-80 hover:opacity-100 object-contain" />
-                    `).join('')}
-                 </div>
-                 <button onclick="toggleSponsorModal(true)" class="bg-[#9C1C1F] hover:bg-[#7a1518] text-white font-bold uppercase text-xs py-3 px-6 rounded transition-colors">
-                   BECOME A SPONSOR
-                 </button>
-              </div>
-
-            </div>
-
-            <div class="lg:w-1/3">
-              <div class="bg-white rounded-2xl shadow-[0_20px_40px_-15px_rgba(0,0,0,0.1)] border border-slate-100 overflow-hidden sticky top-24">
-                <div class="bg-[#0A2C3D] p-8 text-white">
-                  <h3 class="font-oswald text-2xl font-bold uppercase mb-2">Secure Your Spot</h3>
-                  <p class="text-slate-400 text-sm font-medium">Tickets processed securely via WooCommerce.</p>
-                </div>
-                <div class="p-8 space-y-6">
-                  <div class="flex gap-4">
-                    <i data-lucide="calendar" class="text-[#9C1C1F] shrink-0 w-6 h-6"></i>
-                    <div>
-                      <p class="font-bold text-slate-900">${event.logistics.display_date}</p>
-                      <p class="text-slate-500 text-sm">${event.logistics.display_time}</p>
-                    </div>
-                  </div>
-                  <div class="flex gap-4">
-                    <i data-lucide="map-pin" class="text-[#9C1C1F] shrink-0 w-6 h-6"></i>
-                    <div>
-                      <p class="font-bold text-slate-900">${event.venue.name}</p>
-                      <p class="text-slate-500 text-sm">${event.venue.address}</p>
-                    </div>
-                  </div>
-                  <hr class="border-slate-100" />
-                  <button class="w-full bg-[#9C1C1F] hover:bg-[#7a1518] text-white font-oswald text-xl uppercase font-bold py-4 rounded-xl transition-all shadow-md">
-                    Get Tickets Now
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      `;
-    }
-
-    function renderPastInPerson() {
-      const event = state.selectedEvent;
-      return `
-        <div class="max-w-[1200px] mx-auto px-6 py-12 relative">
-          <div class="text-center mb-10">
-            <h2 class="font-oswald text-4xl font-extrabold uppercase text-[#0A2C3D] tracking-tight">${event.title} Gallery</h2>
-            <p class="text-slate-500 mt-2 font-medium">${event.logistics.display_date}</p>
-          </div>
-          
-          ${!state.isLoggedIn ? `
-            <div class="relative rounded-3xl overflow-hidden bg-slate-900 border border-slate-200 shadow-xl">
-               <!-- Blurry Teaser Grid -->
-               <div class="grid grid-cols-1 md:grid-cols-2 gap-2 opacity-40 pointer-events-none filter blur-md transform scale-105">
-                 ${event.vault.gallery.map(imgUrl => `
-                   <div class="w-full aspect-[4/3] bg-slate-800">
-                     <img src="${imgUrl}" onerror="this.onerror=null;this.src='${PLACEHOLDER_IMAGE}'" class="w-full h-full object-cover" alt="" />
-                   </div>
-                 `).join('')}
-               </div>
-               
-               <!-- Overlay -->
-               <div class="absolute inset-0 bg-white/70 backdrop-blur-sm flex flex-col items-center justify-center p-8 text-center z-10">
-                  <div class="w-20 h-20 bg-white rounded-full shadow-lg flex items-center justify-center mb-6 border border-slate-100">
-                    <i data-lucide="lock" class="text-[#0A2C3D] w-9 h-9"></i>
-                  </div>
-                  <h3 class="font-oswald text-4xl font-extrabold uppercase text-[#0A2C3D] mb-3">Members Only</h3>
-                  <p class="text-slate-700 font-medium mb-8 max-w-md text-lg">Sign in to your SME South Africa account to unlock the exclusive photo gallery from this event.</p>
-                  
-                  <div class="flex flex-col sm:flex-row gap-4 w-full max-w-md">
-                    <button onclick="updateState({isLoggedIn: true})" class="flex-1 bg-[#0A2C3D] hover:bg-[#071d29] text-white font-bold uppercase text-sm py-4 rounded-xl shadow-md transition-all hover:-translate-y-0.5">
-                      Sign In
-                    </button>
-                    <button onclick="updateState({isLoggedIn: true})" class="flex-1 bg-white hover:bg-slate-50 text-[#0A2C3D] border-2 border-[#0A2C3D] font-bold uppercase text-sm py-4 rounded-xl transition-all hover:-translate-y-0.5">
-                      Register
-                    </button>
-                  </div>
-               </div>
-            </div>
-          ` : `
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-              ${event.vault.gallery.map((imgUrl, idx) => `
-                <div class="w-full aspect-[4/3] rounded-2xl overflow-hidden shadow-lg border border-slate-100 group">
-                  <img src="${imgUrl}" onerror="this.onerror=null;this.src='${PLACEHOLDER_IMAGE}'" alt="Gallery Image ${idx + 1}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out" />
-                </div>
-              `).join('')}
-            </div>
-          `}
-        </div>
-      `;
-    }
-
-    function renderSponsorModal() {
-      return `
-        <div class="fixed inset-0 bg-black/60 z-[999] flex items-center justify-center p-4 backdrop-blur-sm">
-          <div class="bg-white w-full max-w-xl rounded-xl overflow-hidden shadow-2xl relative flex flex-col max-h-[90vh]">
-            
-            <div class="bg-[#0A2C3D] text-center p-8 relative shrink-0">
-              <button onclick="toggleSponsorModal(false)" class="absolute top-4 right-4 text-white/70 hover:text-white">
-                <i data-lucide="x" class="w-6 h-6"></i>
-              </button>
-              <span class="bg-[#9C1C1F] text-white text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded inline-block mb-3">Corporate Inquiries</span>
-              <h2 class="font-oswald text-4xl font-extrabold text-white uppercase tracking-wide">PARTNER WITH US</h2>
-              <p class="text-slate-300 text-sm mt-2">Submit your details below and our team will be in touch.</p>
-            </div>
-
-            <div class="p-8 overflow-y-auto no-scrollbar space-y-5 bg-white">
-              <form onsubmit="handleSponsorSubmit(event)">
-                <div class="space-y-4">
-                  <div>
-                    <label class="text-sm font-bold text-[#9C1C1F]">First Name</label>
-                    <input type="text" required class="w-full border border-slate-300 rounded-lg p-3 mt-1 outline-none focus:border-[#0A2C3D] bg-[#FAFAFA]" />
-                  </div>
-                  <div>
-                    <label class="text-sm font-bold text-[#9C1C1F]">Last name</label>
-                    <input type="text" required class="w-full border border-slate-300 rounded-lg p-3 mt-1 outline-none focus:border-[#0A2C3D] bg-[#FAFAFA]" />
-                  </div>
-                  <div>
-                    <label class="text-sm font-bold text-[#9C1C1F]">Email address</label>
-                    <input type="email" required class="w-full border border-slate-300 rounded-lg p-3 mt-1 outline-none focus:border-[#0A2C3D] bg-[#FAFAFA]" />
-                  </div>
-                  <div>
-                    <label class="text-sm font-bold text-[#9C1C1F]">Phone number</label>
-                    <input type="tel" placeholder="071 123 4567" required class="w-full border border-slate-300 rounded-lg p-3 mt-1 outline-none focus:border-[#0A2C3D] bg-[#FAFAFA] placeholder:text-slate-300" />
-                  </div>
-                  <div>
-                    <label class="text-sm font-bold text-[#9C1C1F]">Company name</label>
-                    <input type="text" required class="w-full border border-slate-300 rounded-lg p-3 mt-1 outline-none focus:border-[#0A2C3D] bg-[#FAFAFA]" />
-                  </div>
-                  <div>
-                    <label class="text-sm font-bold text-[#9C1C1F]">Tell us about your business</label>
-                    <textarea rows="4" class="w-full border border-slate-300 rounded-lg p-3 mt-1 outline-none focus:border-[#0A2C3D] bg-[#FAFAFA]"></textarea>
-                  </div>
-                </div>
-                <button type="submit" class="w-full bg-[#0A2C3D] hover:bg-[#071d29] text-white font-bold py-4 rounded-lg uppercase tracking-wider transition-colors mt-6">
-                  Submit Inquiry
-                </button>
-              </form>
-            </div>
-          </div>
-        </div>
-      `;
-    }
-
-    function renderShareModal() {
-      const event = state.selectedEvent;
-      return `
-        <div class="fixed inset-0 bg-black/60 z-[999] flex items-center justify-center p-4 backdrop-blur-sm animate-in fade-in duration-200">
-          <div class="bg-white w-full max-w-md rounded-2xl overflow-hidden shadow-2xl relative">
-            <div class="px-6 py-5 border-b border-slate-100 flex justify-between items-center bg-slate-50">
-              <h3 class="font-oswald text-xl font-bold uppercase text-[#0A2C3D]">Share Event</h3>
-              <button onclick="updateState({showShareModal: false})" class="text-slate-400 hover:text-slate-700 bg-white p-1 rounded-full shadow-sm border border-slate-200">
-                <i data-lucide="x" class="w-4 h-4"></i>
-              </button>
-            </div>
-            
-            <div class="p-6">
-              <div class="flex items-start gap-4 mb-6">
-                <div class="w-12 h-12 bg-slate-100 rounded-lg flex items-center justify-center shrink-0 border border-slate-200 text-[#0A2C3D]">
-                  <i data-lucide="calendar" class="w-5 h-5"></i>
-                </div>
-                <div>
-                  <h4 class="font-bold text-sm text-slate-900 leading-tight mb-1 line-clamp-2">${event.title}</h4>
-                  <p class="text-xs font-medium text-slate-500">${event.logistics.display_date}</p>
-                </div>
-              </div>
-
-              <div class="mb-6">
-                <label class="text-xs font-bold uppercase tracking-wider text-slate-500 mb-2 block">Share Link</label>
-                <div class="flex bg-slate-50 border border-slate-200 rounded-lg overflow-hidden">
-                  <input 
-                    type="text" 
-                    readonly 
-                    value="${window.location.href}" 
-                    class="w-full bg-transparent text-sm text-slate-600 px-4 py-3 outline-none"
-                  />
-                  <button 
-                    onclick="copyToClipboard()"
-                    class="px-4 py-3 font-bold text-xs uppercase tracking-wider transition-colors border-l border-slate-200 flex items-center gap-2 ${state.copySuccess ? 'bg-[#10B981] text-white' : 'bg-white text-[#0A2C3D] hover:bg-slate-100'}"
-                  >
-                    ${state.copySuccess ? '<i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i> Copied' : '<i data-lucide="copy" class="w-3.5 h-3.5"></i> Copy'}
-                  </button>
-                </div>
-              </div>
-
-              <div class="grid grid-cols-3 gap-3">
-                <a href="https://twitter.com/intent/tweet?text=${encodeURIComponent(`Join me at ${event.title}!`)}&url=${encodeURIComponent(window.location.href)}" target="_blank" rel="noreferrer" class="flex flex-col items-center justify-center gap-2 py-3 rounded-xl border border-slate-200 hover:bg-slate-50 hover:border-blue-400 transition-colors text-slate-600 hover:text-blue-500">
-                  <i data-lucide="twitter" class="w-6 h-6"></i>
-                  <span class="text-[10px] font-bold uppercase tracking-wider">Twitter</span>
-                </a>
-                <a href="https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(window.location.href)}" target="_blank" rel="noreferrer" class="flex flex-col items-center justify-center gap-2 py-3 rounded-xl border border-slate-200 hover:bg-slate-50 hover:border-blue-700 transition-colors text-slate-600 hover:text-blue-700">
-                  <i data-lucide="linkedin" class="w-6 h-6"></i>
-                  <span class="text-[10px] font-bold uppercase tracking-wider">LinkedIn</span>
-                </a>
-                <a href="https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}" target="_blank" rel="noreferrer" class="flex flex-col items-center justify-center gap-2 py-3 rounded-xl border border-slate-200 hover:bg-slate-50 hover:border-blue-600 transition-colors text-slate-600 hover:text-blue-600">
-                  <i data-lucide="facebook" class="w-6 h-6"></i>
-                  <span class="text-[10px] font-bold uppercase tracking-wider">Facebook</span>
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-      `;
-    }
-
-    // Router Logic
-    function routeEventDetail() {
-      if (!state.selectedEvent) return '';
-      if (state.selectedEvent.type === 'ONLINE') {
-        return renderWebinar();
-      } else if (state.selectedEvent.type === 'VIDEO') {
-        return renderVideoRecording();
-      } else {
-        if (state.selectedEvent.status === 'Past') return renderPastInPerson();
-        return renderUpcomingInPerson();
-      }
-    }
-
-    // Main App Compiler
-    function renderApp() {
-      const root = document.getElementById('app');
-      let html = '';
-      
-      html += renderTopBar();
-      
-      if (state.activeView === 'directory') {
-        html += renderDirectory();
-      } else if (state.activeView === 'event_detail') {
-        html += routeEventDetail();
-      }
-
-      if (state.showSponsorModal) {
-        html += renderSponsorModal();
-      }
-
-      if (state.showShareModal) {
-        html += renderShareModal();
-      }
-
-      root.innerHTML = html;
-      
-      // Initialize Lucide Icons after HTML is injected
-      if (window.lucide) {
-        window.lucide.createIcons();
-      }
-
-      // Re-initialize countdown timer if applicable
+    function renderApp(){
+      const app = document.getElementById('app');
+      let html = header();
+      if(state.view==='directory') html += renderDirectory();
+      else if(state.view==='event') html += renderEventDetail();
+      else if(state.view==='speaker') html += renderSpeakerProfile();
+      setHTML(app, html);
       initCountdown();
     }
-
-    // Bootstrapping App
-    document.addEventListener("DOMContentLoaded", function() {
-      renderApp();
+    document.addEventListener('DOMContentLoaded', ()=>{
+      seedDemoDates();
+      window.addEventListener('hashchange', route);
+      window.addEventListener('keydown', (e)=>{ if(e.key==='Escape' && activeOverlayClose){ activeOverlayClose(); } });
+      route();
     });
-
   </script>
 </body>
 </html>
