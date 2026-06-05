@@ -1,608 +1,104 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SME Hub Newsletters</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&family=Oswald:wght@400;500;600;700&display=swap');
-        
-        :root {
-            /* Brand colors from the provided screenshot */
-            --sme-red: #E62045; 
-            --sme-navy: #15263F; 
-            --sme-orange: #F26A25; 
-            --sme-bg: #f8fafc;
-            --sme-dash-bg: #FCFAFA;
-        }
-
-        body {
-            font-family: 'Roboto', sans-serif;
-            background-color: var(--sme-bg);
-            color: #1f2937;
-            -webkit-font-smoothing: antialiased;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-            overflow-x: hidden;
-        }
-
-        .font-heading { font-family: 'Oswald', sans-serif; text-transform: uppercase; }
-
-        /* =========================================
-           SPA View Transitions (The Interactivity)
-           ========================================= */
-        .view-section {
-            display: none;
-        }
-        
-        /* Fade In for switching major layouts (Public <-> Dashboard) */
-        .view-section.active-fade {
-            display: block;
-            animation: fadeIn 0.3s ease forwards;
-        }
-        
-        /* Slide In for opening the inner article page */
-        .view-section.active-slide-in {
-            display: block;
-            animation: slideInRight 0.4s cubic-bezier(0.25, 0.8, 0.25, 1) forwards;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes slideInRight {
-            from { opacity: 0; transform: translateX(50px); }
-            to { opacity: 1; transform: translateX(0); }
-        }
-
-        /* Directory List Styles */
-        .issue-row {
-            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-            border-left: 3px solid transparent;
-        }
-        .issue-row:hover {
-            background-color: #ffffff;
-            border-left-color: var(--sme-red);
-            box-shadow: 0 10px 25px -5px rgba(0,0,0,0.05);
-            transform: translateX(6px) translateY(-2px);
-        }
-
-        /* Reading View Styles */
-        .reading-content p { margin-bottom: 1.5rem; line-height: 1.8; font-size: 1.125rem; color: #374151; }
-        .reading-content h2 { font-family: 'Oswald', sans-serif; font-size: 1.75rem; color: var(--sme-navy); margin-top: 2.5rem; margin-bottom: 1rem; text-transform: uppercase; }
-        .reading-content a { color: var(--sme-red); font-weight: 600; text-decoration: underline; text-underline-offset: 4px; transition: color 0.2s; }
-        .reading-content a:hover { color: var(--sme-navy); }
-        .reading-content blockquote { border-left: 4px solid var(--sme-red); padding-left: 1.5rem; font-style: italic; font-size: 1.25rem; color: #4b5563; margin: 2rem 0; }
-
-        /* Sticky Form */
-        .sticky-subscribe { position: sticky; top: 100px; }
-
-        /* Dashboard Tab Styles */
-        .tab-btn {
-            color: #6b7280; 
-            border-bottom: 2px solid transparent;
-            transition: all 0.2s ease;
-        }
-        .tab-btn:hover { color: var(--sme-navy); }
-        .tab-btn.active { color: var(--sme-red); border-bottom-color: var(--sme-red); }
-
-        .tab-content { display: none; opacity: 0; animation: fadeIn 0.3s ease forwards; }
-        .tab-content.active { display: block; }
-    </style>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The SME Brief — Newsletter — SME South Africa</title>
+  <meta name="description" content="Weekly insights on funding, growth and the tools to scale — straight to your inbox." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script><script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  <script>tailwind.config={theme:{extend:{fontFamily:{jakarta:['Plus Jakarta Sans','sans-serif'],inter:['Inter','system-ui','sans-serif']}}}};</script>
+  <style>
+    html,body{font-family:'Inter',system-ui,sans-serif;} .font-jakarta{font-family:'Plus Jakarta Sans',sans-serif;letter-spacing:.005em;}
+    .hero-bg{background:linear-gradient(115deg,#0C1F31 0%,#0C1F31 50%,#2b1626 80%,#5e1a2c 115%);}
+    .dot-pattern{background-image:radial-gradient(rgba(255,255,255,.07) 1px,transparent 1.5px);background-size:22px 22px;}
+    .card-lift{transition:box-shadow .2s,transform .2s;} .card-lift:hover{box-shadow:0 10px 24px -10px rgba(10,44,61,.18);transform:translateY(-2px);}
+    .dev-badge{display:none;} body.dev-on .dev-badge{display:inline-flex;} #devToggle.on{background:#DC183C;color:#fff;border-color:#DC183C;}
+    .ov{position:fixed;inset:0;z-index:60;} .ov-bg{position:absolute;inset:0;background:rgba(12,31,49,.45);backdrop-filter:blur(2px);opacity:0;transition:opacity .3s;} .ov.open .ov-bg{opacity:1;}
+    .drawer{position:absolute;right:0;top:0;height:100%;width:100%;max-width:440px;background:#fff;box-shadow:-12px 0 40px rgba(12,31,49,.25);overflow-y:auto;transform:translateX(100%);transition:transform .3s cubic-bezier(.2,.7,.2,1);} .ov.open .drawer{transform:translateX(0);}
+  </style>
 </head>
-<body>
+<body class="bg-[#FCFCFC] text-[#121A21] antialiased">
+<header class="bg-white border-b border-[#E7EBEF] sticky top-0 z-40"><div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center gap-4">
+  <a href="public-home.html" class="flex items-center gap-2.5 shrink-0"><img src="assets/logo-icon.png" alt="SME South Africa" class="w-9 h-9" /><span class="font-jakarta font-extrabold text-[17px] tracking-tight">SME <span class="text-[#DC183C]">South Africa</span></span></a>
+  <nav class="hidden lg:flex items-center gap-1 ml-4">
+    <a href="public-articles.html" class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition">Articles</a>
+    <a href="public-resources.html" class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition">Resources</a>
+    <a href="public-funding.html" class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition">Funding</a>
+    <a href="public-solutions.html" class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition">Solutions</a>
+    <a href="public-shop.html" class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition">Shop</a>
+  </nav>
+  <div class="flex items-center gap-1 sm:gap-2 ml-auto">
+    <button id="devToggle" onclick="toggleDevMode()" class="hidden sm:flex items-center gap-1.5 px-3 h-9 rounded-full border border-slate-200 text-slate-500 hover:border-[#DC183C] hover:text-[#DC183C] transition text-[11px] font-bold uppercase tracking-wider"><i data-lucide="code-2" class="w-3.5 h-3.5"></i><span>Dev</span></button>
+    <a href="public-auth.html" class="hidden sm:inline-flex items-center px-3 h-9 rounded-full text-sm font-bold text-[#121A21] hover:bg-slate-100 transition">Sign in</a>
+    <a href="public-auth.html#join" class="inline-flex items-center px-4 h-9 rounded-full text-sm font-bold text-white bg-[#DC183C] hover:bg-[#B0142F] transition">Join Free</a>
+  </div>
+</div></header>
 
-    <!-- GLOBAL HEADER -->
-    <header class="bg-white border-b border-gray-200 sticky top-0 z-50 transition-all duration-300">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-            
-            <!-- Logo -->
-            <div class="flex items-center gap-2 cursor-pointer font-heading text-3xl tracking-tight text-[#15263F]" onclick="navigateTo('view-public')">
-                SME<span class="text-[#E62045]">Hub</span>
-            </div>
-            
-            <!-- Navigation -->
-            <nav class="hidden md:flex items-center gap-8 font-bold text-sm text-[#111827]">
-                <a href="#" class="hover:text-[#E62045] transition-colors">Home</a>
-                <a href="#" class="hover:text-[#E62045] transition-colors">Funding</a>
-                <a href="#" class="text-[#E62045]">Newsletters</a>
-            </nav>
-            
-            <!-- Right Side: Dynamic Authentication Block -->
-            <div id="header-auth-block">
-                
-                <!-- Logged OUT State -->
-                <div id="nav-logged-out" class="flex items-center gap-4">
-                    <button onclick="navigateTo('view-dashboard')" class="hidden md:flex items-center font-bold text-sm text-[#15263F] hover:text-[#E62045] transition-colors">
-                        Sign In <i class="fa-solid fa-arrow-right-to-bracket ml-2 text-gray-400"></i>
-                    </button>
-                    <button onclick="navigateTo('view-dashboard')" class="bg-[#E62045] text-white px-5 py-2.5 rounded shadow-sm font-bold text-sm hover:bg-[#c91b3b] transition-colors">
-                        Join Free
-                    </button>
-                </div>
+<!-- HERO: subscribe -->
+<section class="hero-bg text-white relative overflow-hidden"><div class="absolute inset-0 dot-pattern opacity-70 pointer-events-none"></div>
+  <div class="absolute top-0 right-0 w-2/3 h-full opacity-50 pointer-events-none" style="background:radial-gradient(55% 55% at 85% 40%, rgba(220,24,60,.25), transparent 70%)"></div>
+  <div class="max-w-3xl mx-auto px-4 sm:px-6 py-16 sm:py-20 relative text-center">
+    <span class="inline-flex items-center gap-2 px-3 h-7 rounded-full bg-white/10 border border-white/15 text-[11px] font-bold uppercase tracking-widest"><i data-lucide="mail" class="w-3.5 h-3.5 text-[#FF9900]"></i> The SME Brief
+      <button onclick="openBrief()" class="dev-badge ml-1 w-4 h-4 rounded-full bg-[#FF9900] text-[#0C1F31] items-center justify-center text-[9px] font-bold">i</button>
+    </span>
+    <h1 class="font-jakarta font-extrabold text-4xl sm:text-5xl mt-5 leading-tight">Weekly 5-minute business advice</h1>
+    <p class="mt-4 text-white/70 max-w-xl mx-auto">Funding tips, growth strategies and founder stories — straight to your inbox, every Thursday.</p>
+    <form onsubmit="subscribe(event)" class="mt-7 flex gap-2 max-w-md mx-auto">
+      <input type="email" required placeholder="you@business.co.za" class="flex-1 bg-white/10 border border-white/20 rounded-full px-5 h-12 text-sm text-white outline-none focus:border-[#FF9900] focus:bg-white/15 transition placeholder:text-white/50" />
+      <button class="px-6 h-12 rounded-full bg-[#DC183C] hover:bg-[#B0142F] font-bold transition whitespace-nowrap">Subscribe</button>
+    </form>
+    <p class="text-xs text-white/40 mt-2">Join 45,000+ founders. No spam, ever. Unsubscribe anytime.</p>
+  </div>
+</section>
 
-                <!-- Logged IN State (Hidden by default) -->
-                <div id="nav-logged-in" class="hidden flex items-center gap-4">
-                    <a href="#" class="text-gray-400 hover:text-[#15263F] transition-colors">
-                        <i class="fa-regular fa-bell text-lg"></i>
-                    </a>
-                    <div class="h-6 w-px bg-gray-200"></div>
-                    <div class="flex items-center gap-3 cursor-pointer group relative" onclick="toggleDropdown()">
-                        <div class="hidden sm:block text-right">
-                            <p class="text-sm font-bold text-[#15263F] leading-none group-hover:text-[#E62045] transition-colors">Alex Founder</p>
-                            <p class="text-[10px] text-gray-500 uppercase tracking-widest mt-1">Free Member <i class="fa-solid fa-chevron-down ml-1"></i></p>
-                        </div>
-                        <img src="https://ui-avatars.com/api/?name=Alex+Founder&background=15263F&color=fff&bold=true" alt="Profile" class="w-10 h-10 rounded-full border-2 border-gray-100 group-hover:border-[#E62045] transition-colors">
-                        
-                        <!-- Simple Profile Dropdown -->
-                        <div id="profile-dropdown" class="hidden absolute top-12 right-0 w-48 bg-white border border-gray-100 rounded-lg shadow-lg py-2 z-50">
-                            <button onclick="navigateTo('view-public')" class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-[#E62045] font-bold">Sign Out</button>
-                        </div>
-                    </div>
-                </div>
+<!-- value strip -->
+<section class="max-w-7xl mx-auto px-4 sm:px-6 py-12 grid sm:grid-cols-3 gap-6">
+  <div class="flex items-center gap-3"><div class="w-11 h-11 rounded-xl bg-[#FDECEF] text-[#DC183C] grid place-items-center shrink-0"><i data-lucide="banknote" class="w-5 h-5"></i></div><div><p class="font-jakarta font-bold text-sm">Funding alerts</p><p class="text-sm text-[#6A7581]">New grants and loans, first.</p></div></div>
+  <div class="flex items-center gap-3"><div class="w-11 h-11 rounded-xl bg-[#FFF1E0] text-[#AE6B0A] grid place-items-center shrink-0"><i data-lucide="trending-up" class="w-5 h-5"></i></div><div><p class="font-jakarta font-bold text-sm">Growth playbooks</p><p class="text-sm text-[#6A7581]">Tactics you can use this week.</p></div></div>
+  <div class="flex items-center gap-3"><div class="w-11 h-11 rounded-xl bg-[#E4F5EE] text-[#29A37A] grid place-items-center shrink-0"><i data-lucide="users" class="w-5 h-5"></i></div><div><p class="font-jakarta font-bold text-sm">Founder stories</p><p class="text-sm text-[#6A7581]">Real lessons from SA builders.</p></div></div>
+</section>
 
-            </div>
-        </div>
-    </header>
+<!-- archive -->
+<main class="max-w-7xl mx-auto px-4 sm:px-6 pb-14">
+  <h2 class="font-jakarta font-extrabold text-2xl sm:text-3xl mb-6">Latest issues</h2>
+  <div id="issues" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+</main>
 
-    <main class="flex-grow flex flex-col relative w-full overflow-hidden">
-        
-        <!-- ======================================================= -->
-        <!-- VIEW 1: PUBLIC ARCHIVE DIRECTORY                        -->
-        <!-- ======================================================= -->
-        <div id="view-public" class="view-section active-fade w-full bg-[#f8fafc]">
-            
-            <!-- Hero Section -->
-            <div class="bg-[#15263F] py-16 relative overflow-hidden">
-                <!-- Orange Gradient Decorative Element -->
-                <div class="absolute top-0 right-0 w-[600px] h-[600px] bg-gradient-to-br from-[#E62045] to-[#F26A25] rounded-full opacity-20 blur-[100px] -translate-y-1/2 translate-x-1/3"></div>
-                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
-                    <h1 class="font-heading text-4xl lg:text-6xl text-white mb-6 tracking-wide">SME Hub <span class="text-[#E62045]">Newsletters</span></h1>
-                    <p class="text-gray-300 text-lg max-w-2xl mx-auto mb-6 font-light">The smartest South African founders read our weekly breakdowns on funding, tech, and scaling strategies. Browse the archive or join 100K+ members today.</p>
-                </div>
-            </div>
+<footer class="bg-[#0C1F31] text-white"><div class="max-w-7xl mx-auto px-4 sm:px-6 py-10 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm">
+  <a href="public-home.html" class="flex items-center gap-2.5"><span class="w-8 h-8 rounded-lg bg-white grid place-items-center"><img src="assets/logo-icon.png" class="w-6 h-6" alt="" /></span><span class="font-jakarta font-extrabold">SME South Africa</span></a>
+  <div class="flex flex-wrap items-center gap-x-5 gap-y-2 text-white/60"><a href="public-about.html" class="hover:text-white">About</a><a href="public-contact.html" class="hover:text-white">Contact</a><a href="public-advertise.html" class="hover:text-white">Advertise</a><a href="public-privacy.html" class="hover:text-white">Privacy</a><a href="public-terms.html" class="hover:text-white">Terms</a><a href="public-popia.html" class="hover:text-white">POPIA</a></div>
+  <p class="text-white/40">© 2026 SME South Africa</p>
+</div></footer>
 
-            <!-- Main Layout (Split) -->
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-                <div class="flex flex-col lg:flex-row gap-12">
-                    
-                    <!-- Left: Sticky Subscribe Widget -->
-                    <div class="w-full lg:w-1/3 order-2 lg:order-1">
-                        <div class="sticky-subscribe">
-                            <div class="bg-white p-8 rounded-2xl shadow-lg border border-gray-100 relative overflow-hidden">
-                                <!-- Accent Top Line -->
-                                <div class="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-[#E62045] to-[#F26A25]"></div>
-                                
-                                <div class="w-12 h-12 bg-red-50 rounded-full flex items-center justify-center text-[#E62045] text-xl mb-4 shadow-inner">
-                                    <i class="fa-regular fa-envelope-open"></i>
-                                </div>
-                                <h3 class="font-heading text-2xl text-[#15263F] mb-2 tracking-wide">Get it in your inbox</h3>
-                                <p class="text-gray-500 text-sm mb-6">Don't miss the next issue. We send high-value insights, zero spam.</p>
-                                
-                                <form class="space-y-4" onsubmit="event.preventDefault(); alert('Subscribed!');">
-                                    <input type="email" placeholder="Your email address" required class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:bg-white focus:border-[#15263F] transition-colors font-medium text-gray-800">
-                                    
-                                    <div class="space-y-3 mt-4 border-t border-gray-100 pt-4">
-                                        <label class="flex items-center gap-3 cursor-pointer group">
-                                            <input type="checkbox" checked class="w-4 h-4 accent-[#E62045]">
-                                            <span class="text-sm font-bold text-gray-700 group-hover:text-[#E62045] transition-colors">The SME Weekly <span class="text-[10px] bg-gray-100 text-gray-500 px-2 py-0.5 rounded ml-1 font-normal group-hover:bg-red-50 transition-colors">Tue</span></span>
-                                        </label>
-                                        <label class="flex items-center gap-3 cursor-pointer group">
-                                            <input type="checkbox" checked class="w-4 h-4 accent-[#E62045]">
-                                            <span class="text-sm font-bold text-gray-700 group-hover:text-[#E62045] transition-colors">Funding Alerts <span class="text-[10px] bg-gray-100 text-gray-500 px-2 py-0.5 rounded ml-1 font-normal group-hover:bg-red-50 transition-colors">ASAP</span></span>
-                                        </label>
-                                        <label class="flex items-center gap-3 cursor-pointer group">
-                                            <input type="checkbox" class="w-4 h-4 accent-[#E62045]">
-                                            <span class="text-sm font-bold text-gray-700 group-hover:text-[#E62045] transition-colors">SME Solutions <span class="text-[10px] bg-gray-100 text-gray-500 px-2 py-0.5 rounded ml-1 font-normal group-hover:bg-red-50 transition-colors">Thu</span></span>
-                                        </label>
-                                        <label class="flex items-center gap-3 cursor-pointer group">
-                                            <input type="checkbox" class="w-4 h-4 accent-[#E62045]">
-                                            <span class="text-sm font-bold text-gray-700 group-hover:text-[#E62045] transition-colors">SME Events <span class="text-[10px] bg-gray-100 text-gray-500 px-2 py-0.5 rounded ml-1 font-normal group-hover:bg-red-50 transition-colors">Fri</span></span>
-                                        </label>
-                                    </div>
-
-                                    <button type="submit" class="w-full bg-[#E62045] hover:bg-[#c91b3b] text-white font-bold py-3.5 rounded-xl transition-colors mt-6 shadow-md shadow-red-200">
-                                        Subscribe Now
-                                    </button>
-                                </form>
-                                <p class="text-center text-[10px] text-gray-400 mt-4 uppercase tracking-widest font-semibold"><i class="fa-solid fa-lock text-green-600 mr-1"></i> No Spam. Unsubscribe Anytime.</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Right: The Archive List with Search -->
-                    <div class="w-full lg:w-2/3 order-1 lg:order-2">
-                        
-                        <!-- Search and Filter Header -->
-                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 border-b border-gray-200 pb-6">
-                            <h2 class="font-heading text-3xl text-[#15263F] tracking-wide whitespace-nowrap">Recent Dispatches</h2>
-                            
-                            <div class="flex flex-col sm:flex-row w-full sm:w-auto gap-3">
-                                <!-- Search Bar -->
-                                <div class="relative flex-grow sm:min-w-[250px]">
-                                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                        <i class="fa-solid fa-magnifying-glass text-gray-400 text-sm"></i>
-                                    </div>
-                                    <input type="text" placeholder="Search past issues..." class="w-full pl-10 pr-4 py-2.5 bg-white border border-gray-200 rounded-xl focus:outline-none focus:border-[#E62045] focus:ring-1 focus:ring-[#E62045] transition-colors text-sm shadow-sm text-gray-800 font-medium">
-                                </div>
-                                <!-- Edition Filter -->
-                                <select class="bg-white border border-gray-200 text-sm font-bold text-[#15263F] py-2.5 px-4 rounded-xl outline-none focus:border-[#E62045] shadow-sm cursor-pointer hover:bg-gray-50 transition-colors">
-                                    <option>All Editions</option>
-                                    <option>The Weekly</option>
-                                    <option>Funding Alerts</option>
-                                    <option>SME Solutions</option>
-                                    <option>SME Events</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <!-- Archive List -->
-                        <div class="space-y-4">
-                            
-                            <!-- Issue 1 -->
-                            <div class="issue-row bg-white sm:bg-transparent p-5 rounded-2xl sm:rounded-xl cursor-pointer group shadow-sm sm:shadow-none border border-gray-100 sm:border-transparent" onclick="openIssue()">
-                                <div class="flex flex-col sm:flex-row sm:items-start gap-4">
-                                    <!-- Image Thumbnail (Mobile Top, Desktop Right via CSS ordering) -->
-                                    <div class="w-full sm:w-32 h-48 sm:h-24 order-1 sm:order-3 rounded-lg overflow-hidden flex-shrink-0 shadow-sm">
-                                        <img src="https://images.unsplash.com/photo-1556761175-5973dc0f32d7?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Festive Retail" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-                                    </div>
-                                    
-                                    <!-- Date -->
-                                    <div class="sm:w-32 flex-shrink-0 text-sm font-bold text-gray-400 uppercase tracking-widest pt-1 order-2 sm:order-1">
-                                        Dec 23, 2025
-                                    </div>
-                                    
-                                    <!-- Content -->
-                                    <div class="flex-grow order-3 sm:order-2">
-                                        <div class="flex items-center gap-2 mb-2">
-                                            <span class="bg-[#15263F] text-white text-[10px] font-bold px-2.5 py-1 rounded-md uppercase tracking-wider shadow-sm">The Weekly</span>
-                                            <span class="text-xs text-gray-400 font-medium">Issue #245</span>
-                                        </div>
-                                        <h3 class="font-heading text-2xl text-[#15263F] group-hover:text-[#E62045] transition-colors mb-2 leading-tight tracking-wide">Make Your SME Shine This Festive Season</h3>
-                                        <p class="text-sm text-gray-500 mb-3 line-clamp-2">How to capitalize on the holiday rush, adjust your inventory forecasting, and prepare your team for the year-end wrap up without burning out.</p>
-                                        <span class="text-xs font-bold text-[#E62045] uppercase tracking-wider flex items-center gap-1">Read Issue <i class="fa-solid fa-arrow-right transform group-hover:translate-x-1 transition-transform"></i></span>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <!-- Issue 2 (Funding Alert) -->
-                            <div class="issue-row bg-white sm:bg-transparent p-5 rounded-2xl sm:rounded-xl cursor-pointer group shadow-sm sm:shadow-none border border-gray-100 sm:border-transparent" onclick="openIssue()">
-                                <div class="flex flex-col sm:flex-row sm:items-start gap-4">
-                                    <div class="w-full sm:w-32 h-48 sm:h-24 order-1 sm:order-3 rounded-lg overflow-hidden flex-shrink-0 bg-[#15263F] flex items-center justify-center shadow-inner relative">
-                                        <div class="absolute inset-0 opacity-20 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]"></div>
-                                        <i class="fa-solid fa-bolt text-4xl text-yellow-400 group-hover:scale-125 transition-transform duration-500"></i>
-                                    </div>
-                                    <div class="sm:w-32 flex-shrink-0 text-sm font-bold text-gray-400 uppercase tracking-widest pt-1 order-2 sm:order-1">
-                                        Dec 11, 2025
-                                    </div>
-                                    <div class="flex-grow order-3 sm:order-2">
-                                        <div class="flex items-center gap-2 mb-2">
-                                            <span class="bg-green-700 text-white text-[10px] font-bold px-2.5 py-1 rounded-md uppercase tracking-wider shadow-sm"><i class="fa-solid fa-bolt text-yellow-300 mr-1"></i> Funding Alert</span>
-                                        </div>
-                                        <h3 class="font-heading text-2xl text-[#15263F] group-hover:text-[#E62045] transition-colors mb-2 leading-tight tracking-wide">New R50M Green Tech Fund Opens</h3>
-                                        <p class="text-sm text-gray-500 mb-3 line-clamp-2">A major new grant has just opened for SMEs operating in the renewable energy and sustainability sectors. Here are the eligibility requirements.</p>
-                                        <span class="text-xs font-bold text-[#E62045] uppercase tracking-wider flex items-center gap-1">Read Issue <i class="fa-solid fa-arrow-right transform group-hover:translate-x-1 transition-transform"></i></span>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-
-                        <!-- Pagination -->
-                        <div class="mt-12 flex justify-center gap-2">
-                            <button class="w-10 h-10 rounded-xl border border-gray-200 flex items-center justify-center text-gray-400 hover:bg-gray-50 hover:text-[#15263F] transition-colors"><i class="fa-solid fa-chevron-left"></i></button>
-                            <button class="w-10 h-10 rounded-xl bg-[#E62045] text-white font-bold flex items-center justify-center shadow-md shadow-red-200">1</button>
-                            <button class="w-10 h-10 rounded-xl border border-gray-200 flex items-center justify-center text-gray-600 hover:bg-gray-50 transition-colors font-bold">2</button>
-                            <button class="w-10 h-10 rounded-xl border border-gray-200 flex items-center justify-center text-gray-600 hover:bg-gray-50 transition-colors font-bold">3</button>
-                            <button class="w-10 h-10 rounded-xl border border-gray-200 flex items-center justify-center text-gray-400 hover:bg-gray-50 hover:text-[#15263F] transition-colors"><i class="fa-solid fa-chevron-right"></i></button>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
-        <!-- ======================================================= -->
-        <!-- VIEW 2: LOGGED-IN DASHBOARD                             -->
-        <!-- ======================================================= -->
-        <div id="view-dashboard" class="view-section flex-grow w-full bg-[var(--sme-dash-bg)]">
-            
-            <!-- Dashboard Header -->
-            <div class="bg-white pt-10 pb-6 px-4 sm:px-6 lg:px-8 border-b border-gray-100 shadow-sm">
-                <div class="max-w-5xl mx-auto">
-                    <nav class="flex items-center gap-2 text-sm text-gray-500 mb-4 font-medium">
-                        <a href="#" class="hover:text-sme-navy transition-colors flex items-center gap-1">
-                            <i class="fa-solid fa-house-chimney text-xs"></i> Home
-                        </a>
-                        <i class="fa-solid fa-chevron-right text-[10px] text-gray-400"></i>
-                        <a href="#" class="hover:text-sme-navy transition-colors">Mockups</a>
-                        <i class="fa-solid fa-chevron-right text-[10px] text-gray-400"></i>
-                        <span class="font-bold text-gray-900">Newsletters</span>
-                    </nav>
-
-                    <h1 class="font-heading text-4xl sm:text-5xl text-[#15263F] mb-2 tracking-wide">SME Newsletters</h1>
-                    <p class="text-gray-500 text-lg">Manage your communications and access past issues.</p>
-                </div>
-            </div>
-
-            <!-- Main Dashboard Content Area -->
-            <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 pb-20">
-                
-                <!-- Tabs -->
-                <div class="flex items-center gap-8 border-b border-gray-200 mb-8 font-bold text-sm">
-                    <button onclick="switchTab('preferences')" id="tab-preferences" class="tab-btn active pb-4 px-1">Newsletter Preferences</button>
-                    <button onclick="switchTab('past-issues')" id="tab-past-issues" class="tab-btn pb-4 px-1">My Newsletters</button>
-                </div>
-
-                <!-- TAB CONTENT: Preferences -->
-                <div id="content-preferences" class="tab-content active">
-                    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 sm:p-8">
-                        <h2 class="font-heading text-2xl text-[#15263F] mb-1 tracking-wide">Stay in the Loop</h2>
-                        <p class="text-gray-500 text-sm mb-8">Choose the newsletters you'd like to receive directly in your inbox.</p>
-
-                        <!-- Toggle List -->
-                        <div class="flex flex-col border border-gray-100 rounded-xl overflow-hidden divide-y divide-gray-100">
-                            
-                            <!-- Toggle Item 1 -->
-                            <div class="flex items-center justify-between p-5 hover:bg-gray-50 transition-colors">
-                                <div>
-                                    <p class="font-bold text-gray-900 text-base mb-1">Weekly Newsletter</p>
-                                    <p class="text-xs text-gray-400">Last Sent: 2025-10-01</p>
-                                </div>
-                                <label class="relative inline-flex items-center cursor-pointer">
-                                    <input type="checkbox" value="" class="sr-only peer" checked>
-                                    <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#E62045] transition-colors duration-300 shadow-inner"></div>
-                                </label>
-                            </div>
-
-                            <!-- Toggle Item 2 -->
-                            <div class="flex items-center justify-between p-5 hover:bg-gray-50 transition-colors">
-                                <div>
-                                    <p class="font-bold text-gray-900 text-base mb-1">Business Funding Newsletter</p>
-                                    <p class="text-xs text-gray-400">Last Sent: 2025-09-28</p>
-                                </div>
-                                <label class="relative inline-flex items-center cursor-pointer">
-                                    <input type="checkbox" value="" class="sr-only peer" checked>
-                                    <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#E62045] transition-colors duration-300 shadow-inner"></div>
-                                </label>
-                            </div>
-
-                            <!-- Toggle Item 3 -->
-                            <div class="flex items-center justify-between p-5 hover:bg-gray-50 transition-colors">
-                                <div>
-                                    <p class="font-bold text-gray-900 text-base mb-1">Solutions Newsletter</p>
-                                    <p class="text-xs text-gray-400">Last Sent: 2025-09-25</p>
-                                </div>
-                                <label class="relative inline-flex items-center cursor-pointer">
-                                    <input type="checkbox" value="" class="sr-only peer">
-                                    <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#E62045] transition-colors duration-300 shadow-inner"></div>
-                                </label>
-                            </div>
-
-                            <!-- Toggle Item 4 -->
-                            <div class="flex items-center justify-between p-5 hover:bg-gray-50 transition-colors">
-                                <div>
-                                    <p class="font-bold text-gray-900 text-base mb-1">Events Newsletter</p>
-                                    <p class="text-xs text-gray-400">Last Sent: 2025-09-20</p>
-                                </div>
-                                <label class="relative inline-flex items-center cursor-pointer">
-                                    <input type="checkbox" value="" class="sr-only peer" checked>
-                                    <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#E62045] transition-colors duration-300 shadow-inner"></div>
-                                </label>
-                            </div>
-
-                        </div>
-
-                        <!-- Action Buttons -->
-                        <div class="mt-6 flex flex-wrap items-center gap-3">
-                            <button class="bg-[#E62045] hover:bg-[#c91b3b] text-white font-bold py-2.5 px-6 rounded-lg transition-colors shadow-sm shadow-red-200">
-                                Subscribe All
-                            </button>
-                            <button class="bg-white border border-gray-300 hover:bg-gray-50 text-gray-700 font-bold py-2.5 px-6 rounded-lg transition-colors shadow-sm">
-                                Unsubscribe All
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- TAB CONTENT: Past Issues -->
-                <div id="content-past-issues" class="tab-content">
-                    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 sm:p-8">
-                        <h2 class="font-heading text-2xl text-[#15263F] mb-6 tracking-wide">Past Issues</h2>
-                        
-                        <!-- List -->
-                        <div class="flex flex-col border-t border-gray-100 divide-y divide-gray-100">
-                            
-                            <a href="#" onclick="openIssue(event)" class="flex flex-col sm:flex-row sm:items-center justify-between py-4 hover:bg-gray-50 transition-colors group px-2 -mx-2 rounded-lg">
-                                <span class="font-bold text-gray-800 group-hover:text-[#E62045] transition-colors mb-1 sm:mb-0">Make Your SME Shine This Festive Season</span>
-                                <span class="text-sm text-gray-400 font-medium font-mono">2025-10-01</span>
-                            </a>
-
-                            <a href="#" onclick="openIssue(event)" class="flex flex-col sm:flex-row sm:items-center justify-between py-4 hover:bg-gray-50 transition-colors group px-2 -mx-2 rounded-lg">
-                                <span class="font-bold text-gray-800 group-hover:text-[#E62045] transition-colors mb-1 sm:mb-0">New R50M Green Tech Fund Opens</span>
-                                <span class="text-sm text-gray-400 font-medium font-mono">2025-09-28</span>
-                            </a>
-
-                            <a href="#" onclick="openIssue(event)" class="flex flex-col sm:flex-row sm:items-center justify-between py-4 hover:bg-gray-50 transition-colors group px-2 -mx-2 rounded-lg">
-                                <span class="font-bold text-gray-800 group-hover:text-[#E62045] transition-colors mb-1 sm:mb-0">Strategies to Close the Year Strong</span>
-                                <span class="text-sm text-gray-400 font-medium font-mono">2025-09-25</span>
-                            </a>
-
-                            <a href="#" onclick="openIssue(event)" class="flex flex-col sm:flex-row sm:items-center justify-between py-4 hover:bg-gray-50 transition-colors group px-2 -mx-2 rounded-lg">
-                                <span class="font-bold text-gray-800 group-hover:text-[#E62045] transition-colors mb-1 sm:mb-0">Affordable Workspaces for Entrepreneurs</span>
-                                <span class="text-sm text-gray-400 font-medium font-mono">2025-09-20</span>
-                            </a>
-
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-
-
-        <!-- ======================================================= -->
-        <!-- VIEW 3: SINGLE ISSUE (Reading Mode)                     -->
-        <!-- ======================================================= -->
-        <div id="view-single" class="view-section flex-grow w-full pb-20 bg-white">
-            
-            <div class="border-b border-gray-100 pt-8 pb-10 bg-[var(--sme-bg)]">
-                <div class="max-w-[700px] mx-auto px-4">
-                    <!-- Dynamic Back Button -->
-                    <button onclick="closeIssue()" class="text-sm font-bold text-gray-500 hover:text-[#E62045] transition-colors flex items-center gap-2 mb-8 uppercase tracking-widest group">
-                        <i class="fa-solid fa-arrow-left transform group-hover:-translate-x-1 transition-transform"></i> <span id="back-btn-text">Back to Archive</span>
-                    </button>
-
-                    <div class="flex items-center gap-3 mb-6">
-                        <span class="bg-[#15263F] text-white text-[10px] font-bold px-3 py-1 rounded-md uppercase tracking-widest shadow-sm">The SME Weekly</span>
-                        <span class="text-sm font-bold text-gray-400 uppercase tracking-widest">Dec 23, 2025</span>
-                    </div>
-
-                    <h1 class="font-heading text-4xl sm:text-5xl text-[#15263F] leading-tight mb-8 tracking-wide">
-                        Make Your SME Shine This Festive Season
-                    </h1>
-                    
-                    <div class="flex flex-col sm:flex-row sm:items-center justify-between border-t border-gray-200 pt-6 gap-4">
-                        <div class="flex items-center gap-3">
-                            <img src="https://smesouthafrica.co.za/wp-content/uploads/2026/03/SME_2021_Icon_512x512_white.png" class="w-10 h-10 rounded-full bg-[#15263F] p-1.5 shadow-sm">
-                            <div>
-                                <p class="text-sm font-bold text-[#15263F] leading-none mb-1">SME Hub Editorial</p>
-                                <p class="text-xs text-gray-500 font-medium">Read time: 4 minutes</p>
-                            </div>
-                        </div>
-                        <div class="flex gap-3">
-                            <button class="w-9 h-9 rounded-full bg-white border border-gray-200 shadow-sm flex items-center justify-center text-gray-400 hover:text-white hover:bg-[#0a66c2] hover:border-[#0a66c2] transition-all"><i class="fa-brands fa-linkedin-in"></i></button>
-                            <button class="w-9 h-9 rounded-full bg-white border border-gray-200 shadow-sm flex items-center justify-center text-gray-400 hover:text-white hover:bg-black hover:border-black transition-all"><i class="fa-brands fa-x-twitter"></i></button>
-                            <button class="w-9 h-9 rounded-full bg-white border border-gray-200 shadow-sm flex items-center justify-center text-gray-400 hover:text-white hover:bg-[#E62045] hover:border-[#E62045] transition-all"><i class="fa-solid fa-envelope"></i></button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Email Body Content -->
-            <div class="max-w-[700px] mx-auto px-4 pt-10 reading-content">
-                <p>Hello Founders,</p>
-                <p>As we approach the final weeks of the year, the energy shifts. For some retail and hospitality businesses, this is the absolute peak season. For B2B services, it’s often a quiet time to reflect and strategize for the new year.</p>
-                <p>Regardless of what industry you are in, how you handle December sets the tone for your Q1 revenue.</p>
-
-                <h2>1. Inventory & Cash Flow Preservation</h2>
-                <p>The biggest mistake retail SMEs make in December is over-ordering stock without a guaranteed sell-through plan. If you are sitting on massive inventory in January, your cash flow will choke just when you need to pay annual supplier increases.</p>
-
-                <blockquote>
-                    "Cash flow isn't just king; it's oxygen. Don't suffocate your January to chase a theoretical December sale."
-                </blockquote>
-
-                <p>Stay focused, protect your peace over the holidays, and we will see you back here next week.</p>
-                <p><em>— The SME Hub Team</em></p>
-                
-                <!-- Inline Subscribe Box -->
-                <div class="mt-16 bg-[#f8fafc] border border-gray-200 rounded-2xl p-8 text-center shadow-sm">
-                    <div class="w-12 h-12 bg-red-50 rounded-full flex items-center justify-center text-[#E62045] text-xl mx-auto mb-4 shadow-inner">
-                        <i class="fa-regular fa-envelope-open"></i>
-                    </div>
-                    <h3 class="font-heading text-2xl text-[#15263F] mb-2 tracking-wide">Enjoyed this dispatch?</h3>
-                    <p class="text-gray-500 text-sm mb-6 max-w-md mx-auto">Get actionable business advice and funding alerts delivered straight to your inbox.</p>
-                    
-                    <form class="flex flex-col sm:flex-row gap-3 max-w-md mx-auto" onsubmit="event.preventDefault(); alert('Subscribed!');">
-                        <input type="email" placeholder="Enter your email" required class="flex-grow px-4 py-3 bg-white border border-gray-300 rounded-xl focus:outline-none focus:border-[#15263F] focus:ring-1 focus:ring-[#15263F] transition-colors font-medium text-gray-800">
-                        <button type="submit" class="bg-[#E62045] hover:bg-[#c91b3b] text-white font-bold py-3 px-6 rounded-xl transition-colors shadow-md shadow-red-200 whitespace-nowrap">
-                            Subscribe
-                        </button>
-                    </form>
-                </div>
-            </div>
-        </div>
-
-    </main>
-
-    <footer class="bg-white border-t border-gray-200 py-8 text-center mt-auto relative z-10">
-        <p class="text-xs text-gray-400 font-bold uppercase tracking-widest">© 2026 SME South Africa. All Rights Reserved.</p>
-    </footer>
-
-    <script>
-        // Store where we came from to handle the "Back" button intelligently
-        let currentOrigin = 'view-public'; 
-
-        // Main Navigation Engine
-        function navigateTo(targetId) {
-            // Hide all views
-            document.querySelectorAll('.view-section').forEach(el => {
-                el.classList.remove('active-fade', 'active-slide-in');
-            });
-
-            // Show target
-            const target = document.getElementById(targetId);
-            
-            // If opening an issue, use slide-in. Otherwise use standard fade.
-            if(targetId === 'view-single') {
-                target.classList.add('active-slide-in');
-                // Update back button text context
-                const backText = document.getElementById('back-btn-text');
-                backText.innerText = (currentOrigin === 'view-dashboard') ? 'Back to Dashboard' : 'Back to Archive';
-            } else {
-                target.classList.add('active-fade');
-                currentOrigin = targetId; // Remember this for later
-                updateAuthHeader(targetId);
-            }
-
-            // Scroll to top
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        // Open an issue (can be called from public or dashboard)
-        function openIssue(event) {
-            if(event) event.preventDefault();
-            navigateTo('view-single');
-        }
-
-        // Close an issue (returns to the logical origin)
-        function closeIssue() {
-            navigateTo(currentOrigin);
-        }
-
-        // Toggle Auth Header State
-        function updateAuthHeader(viewId) {
-            const loggedOutNav = document.getElementById('nav-logged-out');
-            const loggedInNav = document.getElementById('nav-logged-in');
-            const profileDropdown = document.getElementById('profile-dropdown');
-            
-            // Ensure dropdown is closed
-            profileDropdown.classList.add('hidden');
-
-            if (viewId === 'view-dashboard') {
-                loggedOutNav.classList.add('hidden');
-                loggedInNav.classList.remove('hidden');
-            } else {
-                loggedOutNav.classList.remove('hidden');
-                loggedInNav.classList.add('hidden');
-            }
-        }
-
-        // Toggle Profile Dropdown
-        function toggleDropdown() {
-            const dropdown = document.getElementById('profile-dropdown');
-            dropdown.classList.toggle('hidden');
-        }
-
-        // Tab Switching in Dashboard
-        function switchTab(tabId) {
-            document.getElementById('tab-preferences').classList.remove('active');
-            document.getElementById('tab-past-issues').classList.remove('active');
-            document.getElementById('content-preferences').classList.remove('active');
-            document.getElementById('content-past-issues').classList.remove('active');
-
-            document.getElementById('tab-' + tabId).classList.add('active');
-            document.getElementById('content-' + tabId).classList.add('active');
-        }
-
-        // Initialize App State
-        navigateTo('view-public');
-    </script>
+<div id="overlay-root"></div><div id="toast" class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-50"></div>
+<script>
+  function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+  function showToast(m){const el=document.getElementById('toast');el.classList.remove('hidden');el.innerHTML=`<div class="bg-[#0C1F31] text-white rounded-full pl-3 pr-5 py-2.5 shadow-2xl flex items-center gap-2 text-sm font-semibold" style="border-left:4px solid #29A37A"><i data-lucide="check-circle" class="w-4 h-4" style="color:#29A37A"></i><span>${esc(m)}</span></div>`;lucide.createIcons();setTimeout(()=>{el.classList.add('hidden');el.innerHTML='';},2400);}
+  function subscribe(e){e.preventDefault();e.target.reset();showToast('Subscribed — check your inbox to confirm.');}
+  const ISSUES=[
+    {img:'assets/article-3.jpg',no:'#142',date:'12 Jun 2026',title:'The R0 marketing stack that actually converts',excerpt:'Five free tools SA founders are using to land their first 100 customers.'},
+    {img:'assets/article-5.jpg',no:'#141',date:'5 Jun 2026',title:'How to read a funder’s term sheet',excerpt:'The five clauses that matter most — and the ones that quietly cost you.'},
+    {img:'assets/article-7.jpg',no:'#140',date:'29 May 2026',title:'Hiring without breaking the bank',excerpt:'Interns, contractors and the first full-timer — when to make each move.'},
+    {img:'assets/article-2.jpg',no:'#139',date:'22 May 2026',title:'Township economy: where the growth is',excerpt:'Three sectors quietly outpacing the formal market this year.'},
+    {img:'assets/article-6.jpg',no:'#138',date:'15 May 2026',title:'Cash flow forecasting in 30 minutes',excerpt:'A simple model that keeps you ahead of the lean months.'},
+    {img:'assets/article-4.jpg',no:'#137',date:'8 May 2026',title:'Pricing for profit, not just sales',excerpt:'Why undercutting the competition caps your growth — and what to do instead.'}
+  ];
+  document.getElementById('issues').innerHTML=ISSUES.map((s,i)=>`
+    <a href="#" onclick="showToast('Opening issue ${s.no}…');return false;" class="group bg-white rounded-2xl border border-[#E7EBEF] overflow-hidden card-lift block">
+      <div class="aspect-[16/9] overflow-hidden relative"><img src="${s.img}" alt="${esc(s.title)}" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition duration-300" /><span class="absolute top-3 left-3 px-2.5 py-1 rounded-full text-[10px] font-bold bg-white/90 text-[#DC183C]">Issue ${s.no}</span></div>
+      <div class="p-5">
+        <p class="text-xs text-[#6A7581]">${esc(s.date)} · 5 min read</p>
+        <h3 class="font-jakarta font-bold text-lg leading-snug mt-1 group-hover:text-[#DC183C] transition">${esc(s.title)}</h3>
+        <p class="text-sm text-[#6A7581] mt-2 line-clamp-2">${esc(s.excerpt)}</p>
+        <span class="inline-flex items-center gap-1 text-sm font-bold text-[#DC183C] mt-3 group-hover:gap-2 transition-all">Read issue <i data-lucide="arrow-right" class="w-4 h-4"></i></span>
+      </div>
+    </a>`).join('');
+  const BRIEF={title:'Newsletter — The SME Brief',sub:'Kit (ConvertKit) · staggered sends',purpose:'Captures email subscribers (the platform’s owned audience) and archives past issues for SEO + re-engagement. Top-of-funnel and retention in one.',data:'Subscriber: <code>{ email, status, tags[], subscribed_at }</code>. Issue: <code>{ no, title, excerpt, body, sent_at, cover }</code>.',logic:'Subscribe → Kit (ConvertKit) with double opt-in. <b>All sends are staggered — never a simultaneous bulk blast</b> (deliverability + WP Engine load). Archive pages are public + indexable.',components:'Hero subscribe · value strip · issue archive grid.',api:'POST /v1/newsletter/subscribe (→ Kit) · GET /v1/newsletter/issues'};
+  function toggleDevMode(){const on=document.body.classList.toggle('dev-on');const b=document.getElementById('devToggle');if(b)b.classList.toggle('on',on);if(on)showToast('Dev Mode on — tap any ⓘ for implementation notes.');lucide.createIcons();}
+  function closeOverlay(id){const el=document.getElementById(id);if(!el)return;el.classList.remove('open');setTimeout(()=>{if(el&&el.parentNode)el.remove();},300);}
+  function openBrief(){const b=BRIEF;const sec=(i,l,h)=>`<div class="px-6 py-4 border-t border-slate-100"><p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] flex items-center gap-1.5 mb-2"><i data-lucide="${i}" class="w-3.5 h-3.5"></i>${l}</p><div class="text-sm text-slate-600 leading-relaxed">${h}</div></div>`;document.getElementById('overlay-root').innerHTML=`<div class="ov" id="ov"><div class="ov-bg" onclick="closeOverlay('ov')"></div><div class="drawer"><div class="sticky top-0 z-10 bg-[#0C1F31] text-white px-6 py-5 flex items-start justify-between"><div><p class="text-[10px] font-bold uppercase tracking-widest text-[#FF9900] mb-1">Dev Brief</p><h3 class="font-jakarta font-extrabold text-lg leading-tight">${b.title}</h3><p class="text-xs text-white/60 mt-1">${b.sub}</p></div><button onclick="closeOverlay('ov')" class="text-white/60 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button></div>${sec('target','Purpose',b.purpose)}${sec('database','Data model',b.data)}${sec('git-branch','Logic',b.logic)}${sec('boxes','Components',b.components)}${sec('plug','API',`<code class="block bg-slate-900 text-emerald-300 text-xs font-mono px-3 py-2 rounded-lg overflow-x-auto">${b.api}</code>`)}</div></div>`;requestAnimationFrame(()=>{const o=document.getElementById('ov');if(o)o.classList.add('open');});lucide.createIcons();}
+  lucide.createIcons();
+</script>
 </body>
 </html>
