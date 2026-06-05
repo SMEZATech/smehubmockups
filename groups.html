@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Groups | SME HUB</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  <script>tailwind.config={theme:{extend:{fontFamily:{jakarta:['Plus Jakarta Sans','sans-serif'],inter:['Inter','system-ui','sans-serif'],mono:['ui-monospace','monospace']},colors:{primary:'#DC183C',accent:'#FF9900',navy:'#0C1F31',success:'#29A37A',ink:'#121A21'}}}};</script>
+  <style>
+    html,body{font-family:'Inter',system-ui,sans-serif;} .font-jakarta{font-family:'Plus Jakarta Sans',sans-serif;letter-spacing:.005em;}
+    .no-scrollbar::-webkit-scrollbar{display:none;} .no-scrollbar{-ms-overflow-style:none;scrollbar-width:none;}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}} .reveal{animation:fadeUp .45s cubic-bezier(.2,.7,.2,1) backwards;}
+    @keyframes toastIn{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}} @keyframes toastOut{to{opacity:0;transform:translateY(20px);}}
+    .toast-in{animation:toastIn .25s ease forwards;} .toast-out{animation:toastOut .25s ease forwards;}
+    .card-lift{transition:box-shadow .2s,transform .2s;} .card-lift:hover{box-shadow:0 8px 20px -8px rgba(10,44,61,.12);transform:translateY(-1px);}
+    .cnav.active{color:#DC183C;border-color:#DC183C;} .seg.active{background:#0C1F31;color:#fff;}
+    #overlay-root:empty{display:none;}
+    .ov{position:fixed;inset:0;z-index:60;} .ov-bg{position:absolute;inset:0;background:rgba(12,31,49,.45);backdrop-filter:blur(2px);opacity:0;transition:opacity .3s;} .ov.open .ov-bg{opacity:1;}
+    .drawer{position:absolute;right:0;top:0;height:100%;width:100%;max-width:440px;background:#fff;box-shadow:-12px 0 40px rgba(12,31,49,.25);overflow-y:auto;transform:translateX(100%);transition:transform .3s cubic-bezier(.2,.7,.2,1);} .ov.open .drawer{transform:translateX(0);}
+    .dev-badge{display:none;} body.dev-on .dev-badge{display:inline-flex;} #devToggle.on{background:#DC183C;color:#fff;border-color:#DC183C;}
+  </style>
+</head>
+<body class="bg-[#FCFCFC] text-[#121A21] font-inter">
+
+<header class="bg-white border-b border-slate-100 sticky top-0 z-40">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center gap-3">
+    <a href="member-hub.html" class="flex items-center gap-2 shrink-0" aria-label="SME South Africa">
+      <img src="https://smesouthafrica.co.za/wp-content/uploads/2025/10/Asset-1-1.webp" alt="SME South Africa" class="h-8 w-auto" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+      <span style="display:none" class="font-jakarta font-extrabold text-[#121A21] text-lg items-center">SME<span class="text-[#DC183C]">HUB</span></span>
+    </a>
+    <div class="hidden md:block flex-1 max-w-md ml-2"><div class="relative"><i data-lucide="search" class="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400"></i><input type="text" placeholder="Search members, asks, wins…" class="w-full bg-slate-100 rounded-full pl-10 pr-4 py-2.5 text-sm outline-none focus:bg-white focus:ring-2 focus:ring-[#DC183C]/30 transition" /></div></div>
+    <div class="flex items-center gap-1 sm:gap-1.5 ml-auto">
+      <button id="devToggle" onclick="toggleDevMode()" class="hidden sm:flex items-center gap-1.5 px-3 h-9 rounded-full border border-slate-200 text-slate-500 hover:border-[#DC183C] hover:text-[#DC183C] transition text-[11px] font-bold uppercase tracking-wider mr-1"><i data-lucide="code-2" class="w-3.5 h-3.5"></i><span>Dev</span></button>
+      <a href="member-hub.html" title="Community feed" class="w-10 h-10 grid place-items-center rounded-full hover:bg-slate-100 text-slate-600"><i data-lucide="home" class="w-5 h-5"></i></a>
+      <a href="member-account.html" title="Messages" class="w-10 h-10 grid place-items-center rounded-full hover:bg-slate-100 text-slate-600"><i data-lucide="mail" class="w-5 h-5"></i></a>
+      <a href="member-account.html" title="Your account" class="flex items-center gap-2 pl-2 ml-1 border-l border-slate-200 py-1 hover:opacity-80"><div class="w-9 h-9 rounded-full bg-gradient-to-br from-[#DC183C] to-[#FF9900] grid place-items-center font-jakarta font-bold text-white text-xs">TJ</div><i data-lucide="chevron-down" class="w-4 h-4 text-slate-400"></i></a>
+    </div>
+  </div>
+  <div class="border-t border-slate-100">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 flex gap-1 overflow-x-auto no-scrollbar">
+      <a href="member-hub.html" class="cnav shrink-0 px-4 py-3 text-sm font-bold font-jakarta text-slate-500 hover:text-[#121A21] border-b-2 border-transparent flex items-center gap-2"><i data-lucide="rss" class="w-4 h-4"></i> Feed</a>
+      <a href="members.html" class="cnav shrink-0 px-4 py-3 text-sm font-bold font-jakarta text-slate-500 hover:text-[#121A21] border-b-2 border-transparent flex items-center gap-2"><i data-lucide="users" class="w-4 h-4"></i> Members</a>
+      <a href="groups.html" class="cnav active shrink-0 px-4 py-3 text-sm font-bold font-jakarta border-b-2 flex items-center gap-2"><i data-lucide="layout-grid" class="w-4 h-4"></i> Groups</a>
+      <a href="forums.html" class="cnav shrink-0 px-4 py-3 text-sm font-bold font-jakarta text-slate-500 hover:text-[#121A21] border-b-2 border-transparent flex items-center gap-2"><i data-lucide="messages-square" class="w-4 h-4"></i> Forums</a>
+      <a href="member-hub.html" class="cnav shrink-0 px-4 py-3 text-sm font-bold font-jakarta text-slate-500 hover:text-[#121A21] border-b-2 border-transparent flex items-center gap-2"><i data-lucide="calendar" class="w-4 h-4"></i> Events</a>
+    </div>
+  </div>
+</header>
+
+<main class="max-w-6xl mx-auto px-4 sm:px-6 py-6">
+  <div class="flex items-end justify-between gap-3 mb-5 flex-wrap">
+    <div>
+      <p class="text-[11px] font-bold uppercase tracking-widest text-[#DC183C]">Directory</p>
+      <h1 class="font-jakarta font-extrabold text-2xl text-[#121A21] tracking-tight flex items-center gap-2">Groups
+        <button onclick="openBrief('groupsdir')" class="dev-badge w-4 h-4 rounded-full bg-[#DC183C] text-white items-center justify-center text-[9px] font-bold leading-none animate-pulse" title="Implementation notes">i</button>
+      </h1>
+      <p id="result-count" class="text-sm text-slate-500 mt-0.5"></p>
+    </div>
+    <button onclick="showToast('Create a group (mockup).',null)" class="bg-[#DC183C] hover:bg-[#B0142F] text-white rounded-full px-5 py-2.5 font-jakarta font-bold text-sm transition flex items-center gap-2"><i data-lucide="plus" class="w-4 h-4"></i> Create group</button>
+  </div>
+
+  <div class="flex flex-col sm:flex-row sm:items-center gap-3 mb-5">
+    <div id="segs" class="flex gap-2 overflow-x-auto no-scrollbar"></div>
+    <div class="sm:ml-auto flex items-center gap-2">
+      <div class="relative"><i data-lucide="search" class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400"></i><input id="g-search" oninput="render()" placeholder="Search groups…" class="bg-white border border-slate-200 rounded-full pl-9 pr-3 py-2 text-sm outline-none focus:border-[#DC183C] w-full sm:w-56"></div>
+      <select id="g-sort" onchange="render()" class="text-xs font-semibold border border-slate-200 rounded-lg px-3 py-2 outline-none text-slate-600"><option value="active">Active</option><option value="popular">Popular</option><option value="newest">Newest</option></select>
+    </div>
+  </div>
+
+  <div id="results"></div>
+</main>
+
+<div id="overlay-root"></div>
+<div id="toast" class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-50"></div>
+
+<script>
+function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+
+const GROUPS = [
+  { name:'General',            members:1284, privacy:'Public',  active:'25m',   created:9,  desc:'Connect, collaborate and grow with fellow South African entrepreneurs.', joined:true,  suggested:false, c1:'#0C1F31', c2:'#1a3a54' },
+  { name:'Fintech Founders',   members:342,  privacy:'Private', active:'1h',    created:14, desc:'For founders building payments, lending and financial infrastructure in SA.', joined:true,  suggested:true,  c1:'#DC183C', c2:'#FF9900' },
+  { name:'Cape Town SMEs',     members:516,  privacy:'Public',  active:'3h',    created:7,  desc:'Regional group for Western Cape based small businesses and startups.', joined:false, suggested:true,  c1:'#29A37A', c2:'#0C1F31' },
+  { name:'Funding & Investors',members:889,  privacy:'Public',  active:'today', created:11, desc:'Capital raises, grants and investor intros for vetted SA founders.', joined:false, suggested:true,  c1:'#FF9900', c2:'#DC183C' },
+  { name:'Women in Business',  members:1102, privacy:'Public',  active:'2h',    created:20, desc:'A network for women founders to share, support and scale together.', joined:false, suggested:false, c1:'#DC183C', c2:'#0C1F31' },
+  { name:'Agritech ZA',        members:271,  privacy:'Public',  active:'6h',    created:5,  desc:'Innovating food, farming and supply-chain across South Africa.', joined:false, suggested:true,  c1:'#29A37A', c2:'#FF9900' },
+  { name:'SaaS & Tech Builders',members:438, privacy:'Private', active:'4h',    created:8,  desc:'Product, engineering and go-to-market for software founders.', joined:true,  suggested:false, c1:'#1a3a54', c2:'#29A37A' },
+  { name:'Retail & E-commerce',members:625,  privacy:'Public',  active:'1d',    created:13, desc:'Selling online and offline — logistics, payments, growth.', joined:false, suggested:false, c1:'#FF9900', c2:'#AE6B0A' }
+];
+
+const SEGS = [['all','All groups'],['mine','My groups'],['suggested','Suggested']];
+const state = { seg:'all' };
+
+function renderSegs(){ document.getElementById('segs').innerHTML = SEGS.map(([id,l])=>{ const n = id==='all'?GROUPS.length:id==='mine'?GROUPS.filter(g=>g.joined).length:GROUPS.filter(g=>g.suggested&&!g.joined).length; return `<button onclick="setSeg('${id}')" class="seg ${state.seg===id?'active':''} shrink-0 px-4 py-1.5 rounded-full text-xs font-bold border ${state.seg===id?'border-[#0C1F31]':'border-slate-200 text-slate-600 hover:bg-slate-50'}">${l} <span class="opacity-70">${n}</span></button>`; }).join(''); }
+function setSeg(s){ state.seg=s; renderSegs(); render(); }
+
+function joinBtn(g,i){
+  return g.joined
+    ? `<button onclick="toggleJoin(${i})" class="border border-[#29A37A] text-[#29A37A] rounded-full px-4 py-1.5 text-xs font-bold flex items-center gap-1.5 hover:bg-[#E4F5EE] transition"><i data-lucide="check" class="w-3.5 h-3.5"></i> Joined</button>`
+    : `<button onclick="toggleJoin(${i})" class="bg-[#DC183C] hover:bg-[#B0142F] text-white rounded-full px-4 py-1.5 text-xs font-bold transition flex items-center gap-1.5"><i data-lucide="plus" class="w-3.5 h-3.5"></i> Join</button>`;
+}
+function toggleJoin(i){ GROUPS[i].joined=!GROUPS[i].joined; renderSegs(); render(); showToast(GROUPS[i].joined?'You joined '+GROUPS[i].name+'.':'You left '+GROUPS[i].name+'.', GROUPS[i].joined?'win':null); }
+
+function card(g,i){
+  return `<div class="bg-white rounded-2xl border border-slate-100 overflow-hidden card-lift flex flex-col">
+    <a href="single-group.html" class="h-20 relative block" style="background:linear-gradient(135deg, ${g.c1}, ${g.c2})">
+      <div class="absolute inset-0 opacity-30" style="background:radial-gradient(circle at 75% 30%, #fff 0%, transparent 60%);"></div>
+      <span class="absolute top-2.5 right-2.5 inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold ${g.privacy==='Public'?'bg-white/90 text-[#29A37A]':'bg-white/90 text-slate-600'}"><i data-lucide="${g.privacy==='Public'?'globe':'lock'}" class="w-3 h-3"></i> ${g.privacy}</span>
+    </a>
+    <div class="p-5 -mt-8 flex-1 flex flex-col">
+      <div class="w-14 h-14 rounded-xl bg-[#0C1F31] grid place-items-center ring-4 ring-white shadow-sm shrink-0"><i data-lucide="users" class="w-6 h-6 text-[#FF9900]"></i></div>
+      <a href="single-group.html" class="font-jakarta font-bold text-[#121A21] hover:text-[#DC183C] transition mt-3">${esc(g.name)}</a>
+      <p class="text-xs text-slate-500 leading-snug mt-1 flex-1">${esc(g.desc)}</p>
+      <p class="text-[11px] text-slate-400 mt-3 flex items-center gap-1.5"><i data-lucide="users" class="w-3.5 h-3.5"></i> ${g.members.toLocaleString()} members <span class="text-slate-300">·</span> active ${esc(g.active)}</p>
+      <div class="mt-3">${joinBtn(g,i)}</div>
+    </div>
+  </div>`;
+}
+
+function render(){
+  const q = document.getElementById('g-search').value.toLowerCase();
+  const sort = document.getElementById('g-sort').value;
+  let list = GROUPS.map((g,i)=>({ ...g, _i:i }));
+  if(state.seg==='mine') list = list.filter(g=>g.joined);
+  else if(state.seg==='suggested') list = list.filter(g=>g.suggested && !g.joined);
+  list = list.filter(g => !q || (g.name+' '+g.desc).toLowerCase().includes(q));
+  if(sort==='popular') list.sort((a,b)=>b.members-a.members);
+  else if(sort==='newest') list.sort((a,b)=>a.created-b.created);
+  document.getElementById('result-count').textContent = `${list.length} group${list.length!==1?'s':''}`;
+  const host = document.getElementById('results');
+  host.innerHTML = list.length
+    ? `<div class="grid sm:grid-cols-2 xl:grid-cols-3 gap-4">${list.map(g=>card(g,g._i)).join('')}</div>`
+    : `<div class="bg-white rounded-2xl border border-slate-100 py-16 text-center text-slate-400"><i data-lucide="layout-grid" class="w-8 h-8 mx-auto mb-2"></i><p class="font-semibold">No groups here.</p>${state.seg==='mine'?'<a href="#" onclick="setSeg(\'all\');return false;" class="text-xs font-bold text-[#DC183C] uppercase mt-2 inline-block hover:underline">Browse all groups</a>':''}</div>`;
+  lucide.createIcons();
+}
+
+const BRIEFS = { groupsdir:{ title:'Groups Directory', sub:'Browse, filter & join groups', purpose:'Discovery for community groups. Segments (All / My groups / Suggested), search and sort. Suggested is scored by the member&rsquo;s sector/stage overlap. Joining a group multiplies engagement surface — members in groups post far more than those who aren&rsquo;t.', data:'<code>groups[] { id, name, privacy, member_count, last_active, created_at, my_membership, suggested_score }</code>.', logic:'Public groups join instantly; Private create a join request. &ldquo;Suggested&rdquo; ranks by {sector, stage, region} overlap excluding joined groups. Cards deep-link to the single-group page.', components:'Segmented tabs · search · sort · group cards · join toggle · create-group.', api:'GET /v1/groups?scope=&sort= · POST /v1/groups/{id}/members' } };
+function toggleDevMode(){const on=document.body.classList.toggle('dev-on');const b=document.getElementById('devToggle');if(b)b.classList.toggle('on',on);if(on)showToast('Dev Mode on — tap any ⓘ for implementation notes.',null);lucide.createIcons();}
+function closeOverlay(id){const el=document.getElementById(id);if(!el)return;el.classList.remove('open');setTimeout(()=>{if(el&&el.parentNode)el.remove();},300);}
+function openBrief(id){const b=BRIEFS[id];if(!b)return;const sec=(icon,label,html)=>`<div class="px-6 py-4 border-t border-slate-100"><p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] flex items-center gap-1.5 mb-2"><i data-lucide="${icon}" class="w-3.5 h-3.5"></i>${label}</p><div class="text-sm text-slate-600 leading-relaxed">${html}</div></div>`;document.getElementById('overlay-root').innerHTML=`<div class="ov" id="ov-brief"><div class="ov-bg" onclick="closeOverlay('ov-brief')"></div><div class="drawer"><div class="sticky top-0 z-10 bg-[#0C1F31] text-white px-6 py-5 flex items-start justify-between"><div class="min-w-0"><p class="text-[10px] font-bold uppercase tracking-widest text-[#FF9900] mb-1">Dev Brief</p><h3 class="font-jakarta font-extrabold text-lg leading-tight">${b.title}</h3><p class="text-xs text-white/60 mt-1">${b.sub}</p></div><button onclick="closeOverlay('ov-brief')" class="text-white/60 hover:text-white shrink-0 ml-3"><i data-lucide="x" class="w-5 h-5"></i></button></div>${sec('target','Purpose',b.purpose)}${sec('database','Data model',b.data)}${sec('git-branch','Logic',b.logic)}${sec('boxes','Components',b.components)}${sec('plug','API',`<code class="block bg-slate-900 text-emerald-300 text-xs font-mono px-3 py-2 rounded-lg overflow-x-auto">${b.api}</code>`)}</div></div>`;requestAnimationFrame(()=>{const o=document.getElementById('ov-brief');if(o)o.classList.add('open');});lucide.createIcons();}
+function showToast(msg,kind){const el=document.getElementById('toast');const color=kind==='ask'?'#DC183C':kind==='win'?'#29A37A':kind==='share'?'#FF9900':'#0C1F31';el.classList.remove('hidden');el.innerHTML=`<div class="toast-in bg-[#0C1F31] text-white rounded-full pl-3 pr-5 py-2.5 shadow-2xl flex items-center gap-2 text-sm font-semibold" style="border-left:4px solid ${color}"><i data-lucide="check-circle" class="w-4 h-4" style="color:${color}"></i><span>${esc(msg)}</span></div>`;lucide.createIcons();setTimeout(()=>{const i=el.firstElementChild;if(i){i.classList.remove('toast-in');i.classList.add('toast-out');}setTimeout(()=>{el.classList.add('hidden');el.innerHTML='';},250);},2400);}
+
+document.addEventListener('keydown',e=>{ if(e.key==='Escape') document.querySelectorAll('.ov.open').forEach(o=>closeOverlay(o.id)); });
+renderSegs(); render(); lucide.createIcons();
+</script>
+</body>
+</html>

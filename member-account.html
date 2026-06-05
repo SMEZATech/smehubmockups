@@ -1,0 +1,1855 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Member Account | SME HUB</title>
+  <meta name="description" content="SME South Africa — Member account: profile, activity, connections and settings." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            jakarta: ['Plus Jakarta Sans', 'sans-serif'],
+            inter: ['Inter', 'system-ui', 'sans-serif'],
+            mono: [ 'ui-monospace', 'monospace']
+          },
+          colors: { primary:'#DC183C', accent:'#FF9900', navy:'#0C1F31', success:'#29A37A', ink:'#121A21' }
+        }
+      }
+    };
+  </script>
+
+  <style>
+    :root{
+      --primary:349 80% 48%; --accent:36 100% 50%; --navy:210 60% 12%; --success:160 60% 40%;
+      --foreground:210 30% 10%; --muted-foreground:210 10% 45%; --border:210 20% 92%;
+      --background:0 0% 99%; --card:0 0% 100%; --radius:0.75rem;
+      --shadow-card:0 2px 8px rgba(12,31,49,.08); --shadow-card-hover:0 8px 24px rgba(12,31,49,.12);
+    }
+    html, body { font-family:'Inter', system-ui, sans-serif; }
+    .font-jakarta { font-family:'Plus Jakarta Sans', sans-serif; letter-spacing:.005em; }
+    .font-mono { font-family: ui-monospace, monospace; }
+
+    .no-scrollbar::-webkit-scrollbar { display:none; }
+    .no-scrollbar { -ms-overflow-style:none; scrollbar-width:none; }
+
+    /* Reveal */
+    @keyframes fadeUp { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+    .reveal { animation: fadeUp .45s cubic-bezier(.2,.7,.2,1) backwards; }
+
+    /* Toast */
+    @keyframes toastIn { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
+    @keyframes toastOut { to { opacity:0; transform:translateY(20px); } }
+    .toast-in { animation: toastIn .25s ease forwards; }
+    .toast-out { animation: toastOut .25s ease forwards; }
+
+    /* Type stripes */
+    .stripe-ask   { box-shadow: inset 4px 0 0 0 #DC183C; }
+    .stripe-win   { box-shadow: inset 4px 0 0 0 #29A37A; }
+    .stripe-share { box-shadow: inset 4px 0 0 0 #FF9900; }
+
+    /* Card lift */
+    .card-lift { transition: box-shadow .2s, transform .2s; }
+    .card-lift:hover { box-shadow:0 8px 20px -8px rgba(10,44,61,.12); transform:translateY(-1px); }
+
+    /* Profile sub-nav tabs */
+    .ptab { position:relative; transition:color .15s; }
+    .ptab.active { color:#DC183C; }
+    .ptab.active::after { content:""; position:absolute; left:0; right:0; bottom:-1px; height:3px; border-radius:3px 3px 0 0; background:#DC183C; }
+
+    /* Settings sidebar item */
+    .snav.active { background:#FDECEF; color:#DC183C; }
+    .snav.active i { color:#DC183C; }
+
+    /* Segmented control */
+    .seg.active { background:#0C1F31; color:#fff; }
+
+    /* Toggle switch */
+    .switch { width:42px; height:24px; border-radius:9999px; background:#CBD5E1; position:relative; transition:background .2s; flex:none; cursor:pointer; }
+    .switch::after { content:""; position:absolute; top:2px; left:2px; width:20px; height:20px; border-radius:9999px; background:#fff; box-shadow:0 1px 3px rgba(0,0,0,.25); transition:transform .2s; }
+    .switch.on { background:#29A37A; }
+    .switch.on::after { transform:translateX(18px); }
+    .switch.disabled { opacity:.45; cursor:not-allowed; }
+
+    /* Chip select (radio cards) */
+    .rcard { transition:border-color .15s, background-color .15s; cursor:pointer; }
+    .rcard.sel { border-color:#DC183C; background:#FDECEF; }
+
+    /* Overlays */
+    #overlay-root:empty { display:none; }
+    .ov { position:fixed; inset:0; z-index:60; }
+    .ov-bg { position:absolute; inset:0; background:rgba(12,31,49,.45); backdrop-filter:blur(2px); opacity:0; transition:opacity .3s; }
+    .ov.open .ov-bg { opacity:1; }
+    .drawer { position:absolute; right:0; top:0; height:100%; width:100%; max-width:440px; background:#fff; box-shadow:-12px 0 40px rgba(12,31,49,.25); overflow-y:auto; transform:translateX(100%); transition:transform .3s cubic-bezier(.2,.7,.2,1); }
+    .ov.open .drawer { transform:translateX(0); }
+    .modalbox { position:absolute; left:50%; top:50%; transform:translate(-50%,-46%); width:calc(100% - 2rem); max-width:440px; background:#fff; border-radius:1rem; box-shadow:0 24px 60px rgba(12,31,49,.3); opacity:0; transition:transform .25s, opacity .25s; max-height:90vh; overflow-y:auto; }
+    .ov.open .modalbox { transform:translate(-50%,-50%); opacity:1; }
+
+    /* Dev Mode */
+    .dev-badge { display:none; }
+    body.dev-on .dev-badge { display:inline-flex; }
+    #devToggle.on { background:#DC183C; color:#fff; border-color:#DC183C; }
+
+    [data-view]{ display:none; }
+    [data-view].view-on{ display:block; }
+  </style>
+</head>
+<body class="bg-[#FCFCFC] text-[#121A21] font-inter">
+
+<!-- ============================ HEADER ============================ -->
+<header class="bg-white border-b border-slate-100 sticky top-0 z-40">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center gap-3">
+    <a href="member-hub.html" class="flex items-center gap-2 shrink-0" aria-label="SME South Africa — Community Hub">
+      <img src="https://smesouthafrica.co.za/wp-content/uploads/2025/10/Asset-1-1.webp" alt="SME South Africa" class="h-8 w-auto" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+      <span style="display:none" class="font-jakarta font-extrabold text-[#121A21] text-lg items-center">SME<span class="text-[#DC183C]">HUB</span></span>
+    </a>
+
+    <div id="search-wrap" class="hidden md:block flex-1 max-w-md ml-2 relative">
+      <div class="relative">
+        <i data-lucide="search" class="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400"></i>
+        <input id="global-search" type="text" autocomplete="off" oninput="runSearch(this.value)" onfocus="runSearch(this.value)" placeholder="Search members, groups, asks, wins…" class="w-full bg-slate-100 rounded-full pl-10 pr-9 py-2.5 text-sm outline-none focus:bg-white focus:ring-2 focus:ring-[#DC183C]/30 transition" />
+        <button id="search-clear" onclick="clearSearch()" class="hidden absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"><i data-lucide="x" class="w-4 h-4"></i></button>
+      </div>
+      <div id="search-results" class="hidden absolute left-0 right-0 top-full mt-2 bg-white rounded-2xl border border-slate-100 shadow-xl overflow-hidden z-50 max-h-[70vh] overflow-y-auto"></div>
+    </div>
+
+    <div class="flex items-center gap-1 sm:gap-1.5 ml-auto">
+      <button id="devToggle" onclick="toggleDevMode()" class="hidden sm:flex items-center gap-1.5 px-3 h-9 rounded-full border border-slate-200 text-slate-500 hover:border-[#DC183C] hover:text-[#DC183C] transition text-[11px] font-bold uppercase tracking-wider mr-1" title="Toggle implementation notes for developers">
+        <i data-lucide="code-2" class="w-3.5 h-3.5"></i><span>Dev</span>
+      </button>
+      <a href="member-hub.html" aria-label="Community feed" title="Community feed" class="w-10 h-10 grid place-items-center rounded-full hover:bg-slate-100 text-slate-600"><i data-lucide="home" class="w-5 h-5"></i></a>
+      <button aria-label="Messages" onclick="openMessages()" class="w-10 h-10 grid place-items-center rounded-full hover:bg-slate-100 text-slate-600 relative">
+        <i data-lucide="mail" class="w-5 h-5"></i>
+        <span id="mail-badge" class="absolute top-1.5 right-1.5 bg-[#DC183C] text-white text-[10px] font-bold rounded-full min-w-[16px] h-4 px-1 grid place-items-center">2</span>
+      </button>
+
+      <!-- Notifications dropdown -->
+      <div class="relative">
+        <button aria-label="Notifications" onclick="toggleNotifMenu(event)" class="w-10 h-10 grid place-items-center rounded-full hover:bg-slate-100 text-slate-600 relative">
+          <i data-lucide="bell" class="w-5 h-5"></i>
+          <span id="notif-badge" class="absolute top-1.5 right-1.5 bg-[#DC183C] text-white text-[10px] font-bold rounded-full min-w-[16px] h-4 px-1 grid place-items-center">14</span>
+        </button>
+        <div id="notif-menu" class="hidden fixed sm:absolute left-2 right-2 sm:left-auto sm:right-0 top-16 sm:top-full sm:mt-2 w-auto sm:w-80 bg-white rounded-2xl border border-slate-100 shadow-xl overflow-hidden z-50"></div>
+      </div>
+
+      <!-- User dropdown -->
+      <div class="relative pl-2 ml-1 border-l border-slate-200">
+        <button onclick="toggleUserMenu(event)" class="flex items-center gap-2 py-1 rounded-full hover:opacity-80">
+          <div id="hdr-avatar" class="w-9 h-9 rounded-full bg-gradient-to-br from-[#DC183C] to-[#FF9900] grid place-items-center font-jakarta font-bold text-white text-xs">TJ</div>
+          <span id="hdr-name" class="hidden sm:block text-sm font-bold">Tshepho J.</span>
+          <i data-lucide="chevron-down" class="w-4 h-4 text-slate-400"></i>
+        </button>
+        <div id="user-menu" class="hidden absolute right-0 top-full mt-2 w-64 max-w-[calc(100vw-2rem)] bg-white rounded-2xl border border-slate-100 shadow-xl overflow-hidden z-50"></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- Demo role banner (mockup helper) -->
+<div class="bg-[#0C1F31] text-white/90">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 py-2 flex items-center gap-3 text-xs">
+    <span class="font-bold uppercase tracking-widest text-[#FF9900] flex items-center gap-1.5"><i data-lucide="eye" class="w-3.5 h-3.5"></i> Demo</span>
+    <span class="text-white/60 hidden sm:inline">Viewing this profile as:</span>
+    <div class="flex items-center gap-1 ml-auto sm:ml-0 bg-white/10 rounded-full p-0.5">
+      <button id="role-own"  onclick="setRole('own')"  class="px-3 py-1 rounded-full text-xs font-bold transition">Myself (own view)</button>
+      <button id="role-peer" onclick="setRole('peer')" class="px-3 py-1 rounded-full text-xs font-bold transition">Another member (peer)</button>
+    </div>
+    <button onclick="openBrief('roleStates')" class="dev-badge w-4 h-4 rounded-full bg-[#DC183C] text-white items-center justify-center text-[9px] font-bold leading-none animate-pulse ml-2" title="Implementation notes">i</button>
+  </div>
+</div>
+
+<!-- ============================ SCREEN A: PROFILE ============================ -->
+<main data-view="profile" class="view-on">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 py-6">
+
+    <!-- Hero (JS-rendered for own/peer + edit) -->
+    <div id="profile-hero"></div>
+
+    <!-- Stats bar -->
+    <div id="profile-stats"></div>
+
+    <!-- Sub-nav + content -->
+    <div class="mt-6 grid grid-cols-1 lg:grid-cols-12 gap-6">
+      <div class="lg:col-span-8 min-w-0">
+        <div class="bg-white rounded-2xl border border-slate-100 overflow-hidden">
+          <div id="profile-subnav" class="flex gap-1 px-2 border-b border-slate-100 overflow-x-auto no-scrollbar"></div>
+          <div id="profile-tabcontent" class="p-4 sm:p-5"></div>
+        </div>
+      </div>
+      <aside class="lg:col-span-4 space-y-5">
+        <div id="profile-aside"></div>
+      </aside>
+    </div>
+  </div>
+</main>
+
+<!-- ============================ SCREEN B: ACCOUNT SETTINGS ============================ -->
+<main data-view="settings">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 py-6">
+    <div class="mb-5">
+      <p class="text-[11px] font-bold uppercase tracking-widest text-[#DC183C]">Account</p>
+      <h1 class="font-jakarta font-extrabold text-2xl text-[#121A21] tracking-tight">Account Settings</h1>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+      <!-- Settings sidebar -->
+      <aside class="lg:col-span-3">
+        <div class="lg:sticky lg:top-24">
+          <div id="settings-nav" class="bg-white rounded-2xl border border-slate-100 p-2 flex lg:flex-col gap-1 overflow-x-auto no-scrollbar"></div>
+          <p class="hidden lg:block text-[11px] text-slate-400 mt-3 px-2 leading-relaxed">
+            <i data-lucide="shield-check" class="w-3.5 h-3.5 inline -mt-0.5 text-[#29A37A]"></i>
+            Your data is handled under <span class="font-semibold text-slate-500">POPIA</span>.
+          </p>
+        </div>
+      </aside>
+
+      <!-- Settings content -->
+      <section class="lg:col-span-9 min-w-0">
+        <div id="settings-content"></div>
+      </section>
+    </div>
+  </div>
+</main>
+
+<!-- ============================ MESSAGES ============================ -->
+<main data-view="messages">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 py-6">
+    <div class="flex items-center justify-between mb-4">
+      <div>
+        <p class="text-[11px] font-bold uppercase tracking-widest text-[#DC183C]">Inbox</p>
+        <h1 class="font-jakarta font-extrabold text-2xl text-[#121A21] tracking-tight flex items-center gap-2">Messages
+          <button onclick="openBrief('messages')" class="dev-badge w-4 h-4 rounded-full bg-[#DC183C] text-white items-center justify-center text-[9px] font-bold leading-none animate-pulse" title="Implementation notes">i</button>
+        </h1>
+      </div>
+      <button onclick="switchView('profile')" class="text-sm font-semibold text-slate-500 hover:text-[#DC183C] flex items-center gap-1.5"><i data-lucide="arrow-left" class="w-4 h-4"></i> Back to profile</button>
+    </div>
+    <div id="messages-content" class="bg-white rounded-2xl border border-slate-100 overflow-hidden"></div>
+  </div>
+</main>
+
+<!-- ============================ NOTIFICATIONS (full page) ============================ -->
+<main data-view="notifications">
+  <div class="max-w-3xl mx-auto px-4 sm:px-6 py-6">
+    <div class="flex items-center justify-between mb-4">
+      <div>
+        <p class="text-[11px] font-bold uppercase tracking-widest text-[#DC183C]">Activity</p>
+        <h1 class="font-jakarta font-extrabold text-2xl text-[#121A21] tracking-tight flex items-center gap-2">Notifications
+          <button onclick="openBrief('notifpage')" class="dev-badge w-4 h-4 rounded-full bg-[#DC183C] text-white items-center justify-center text-[9px] font-bold leading-none animate-pulse" title="Implementation notes">i</button>
+        </h1>
+      </div>
+      <button onclick="markAllRead()" class="text-xs font-bold text-[#DC183C] uppercase tracking-wide hover:underline">Mark all read</button>
+    </div>
+    <div id="notif-filters" class="flex gap-2 mb-4 overflow-x-auto no-scrollbar"></div>
+    <div id="notif-page" class="bg-white rounded-2xl border border-slate-100 overflow-hidden divide-y divide-slate-100"></div>
+  </div>
+</main>
+
+<div id="overlay-root"></div>
+<div id="toast" class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-50"></div>
+
+<script>
+/* ===================== HELPERS ===================== */
+function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+function monogram(initials, size=44){
+  const fs = Math.max(10, Math.floor(size*0.38));
+  return `<div class="rounded-full bg-gradient-to-br from-[#DC183C] to-[#FF9900] grid place-items-center font-jakarta font-bold text-white shrink-0" style="width:${size}px;height:${size}px;font-size:${fs}px">${esc(initials)}</div>`;
+}
+const TYPES = {
+  ask:   { color:'#DC183C', bgTint:'bg-[#DC183C]/10', text:'text-[#DC183C]', label:'Ask',   icon:'help-circle', headerBg:'#FDECEF' },
+  win:   { color:'#29A37A', bgTint:'bg-[#29A37A]/10', text:'text-[#29A37A]', label:'Win',   icon:'trophy',      headerBg:'#E4F5EE' },
+  share: { color:'#FF9900', bgTint:'bg-[#FF9900]/15', text:'text-[#AE6B0A]', label:'Share', icon:'megaphone',   headerBg:'#FFF1E0' }
+};
+
+/* ===================== DEMO DATA ===================== */
+const PEOPLE = {
+  own: {
+    id:'u_tj', name:'Tshepho Joel', initials:'TJ', handle:'tshepho', role:'Founder', company:'Langa Holdings',
+    stage:'Growing', sector:'Fintech', province:'Gauteng', city:'Johannesburg', tier:'Gold', joined:'Jan 2024',
+    bio:"Building payment infrastructure for South African SMEs. Ex-banking, now full-time founder. Here to help fellow founders avoid the mistakes I made — and to learn from people further down the road.",
+    website:'langaholdings.co.za', linkedin:'in/tshepho-joel', twitter:'@tshepho_j', whatsapp:'+27 82 000 0000',
+    contrib:{ asksHelped:24, winsCelebrated:10, sharesAmplified:15 }, connections:148, posts:32, strength:52
+  },
+  peer: {
+    id:'u_nm', name:'Naledi Mokoena', initials:'NM', handle:'naledi', role:'Founder', company:'GreenTrace',
+    stage:'Established', sector:'Cleantech', province:'Western Cape', city:'Cape Town', tier:'Gold', joined:'Mar 2023',
+    bio:"Founder of GreenTrace — carbon tracking for SA manufacturers. Signed our 50th enterprise customer this year. Always happy to talk go-to-market, enterprise sales and hiring your first 10.",
+    website:'greentrace.africa', linkedin:'in/naledi-mokoena', twitter:'@naledi_builds', whatsapp:'+27 83 111 1111',
+    contrib:{ asksHelped:41, winsCelebrated:33, sharesAmplified:28 }, connections:312, posts:58, strength:100,
+    mutual:12, connectStatus:'none' /* none | pending | connected */
+  }
+};
+
+const POSTS = {
+  own:[
+    { id:11, type:'win', timeAgo:'3h ago', content:"Closed our seed round 🎉 R4.5M to scale Langa across three more provinces. Huge thanks to everyone in this community who stress-tested the deck. The questions you asked were harder than the investors'." , likes:96, comments:18, liked:true },
+    { id:12, type:'ask', timeAgo:'1d ago', content:"Anyone here moved payroll off a spreadsheet onto a proper system for under 15 staff? Looking for something POPIA-friendly that won't cost the earth. Gauteng-based recommendations welcome.", likes:14, comments:6, liked:false },
+    { id:13, type:'share', timeAgo:'4d ago', content:"PSA for fellow fintech founders: SARB's updated sandbox guidelines dropped. If you're touching payments, read section 4 before you build. Saved us a 6-week detour. Happy to share my notes.", likes:52, comments:11, liked:false },
+    { id:14, type:'win', timeAgo:'1w ago', content:"We hit 1,000 active merchants on the platform. 18 months ago it was just me and a Figma file. Build in public — it compounds.", likes:71, comments:14, liked:false }
+  ],
+  peer:[
+    { id:21, type:'win', timeAgo:'5h ago', content:"Signed our 50th enterprise customer today. 14 months ago we had two. Thank you to everyone in this group who let me practice my pitch — you know who you are. 🙌", likes:86, comments:22, liked:false },
+    { id:22, type:'share', timeAgo:'2d ago', content:"Hard lesson worth sharing: don't sign a long-term supplier contract without a 30-day exit clause. Lost 8 months locked into the wrong CRM. Time you can't get back.", likes:64, comments:9, liked:false },
+    { id:23, type:'ask', timeAgo:'5d ago', content:"Hiring our first Head of Sales. Anyone done this transition from founder-led sales successfully? What did you wish you knew before the first hire?", likes:28, comments:13, liked:false }
+  ]
+};
+
+const CONNECTIONS = [
+  { name:'Sello Monare',    initials:'SM', role:'MD',          company:'TechSolve RSA', sector:'Fintech',   province:'Gauteng',       status:'connected', mutual:9  },
+  { name:'Naledi Mokoena', initials:'NM', role:'Founder',     company:'GreenTrace',    sector:'Cleantech', province:'Western Cape',  status:'connected', mutual:12 },
+  { name:'Karabo Kgophane',initials:'KK', role:'E-comm Lead', company:'Mzansi Cart',   sector:'Retail',    province:'Gauteng',       status:'connected', mutual:5  },
+  { name:'Mandla Dlamini', initials:'MD', role:'Co-founder',  company:'PesaPay',       sector:'Fintech',   province:'Western Cape',  status:'connected', mutual:7  },
+  { name:'Refiloe Sithole',initials:'RS', role:'Founder',     company:'Skhokho',       sector:'SaaS',      province:'Gauteng',       status:'connected', mutual:3  },
+  { name:'Lerato Phakathi',initials:'LP', role:'Founder',     company:'Inkundla AI',   sector:'AI',        province:'Gauteng',       status:'connected', mutual:6  }
+];
+const REQUESTS = [
+  { name:'Sipho Ngubane',  initials:'SN', role:'Founder', company:'TapWallet', sector:'Fintech', province:'KwaZulu-Natal', mutual:4 },
+  { name:'Thandi Nkosi',   initials:'TN', role:'CEO',     company:'Khula Agri',sector:'Agritech',province:'Limpopo',       mutual:2 }
+];
+const GROUPS = [
+  { name:'General',           members:1284, privacy:'Public',  active:'25 min ago', desc:'Connect, collaborate and grow with fellow South African entrepreneurs.', role:'Member' },
+  { name:'Fintech Founders',  members:342,  privacy:'Private', active:'1h ago',     desc:'For founders building payments, lending and financial infrastructure in SA.', role:'Organizer' },
+  { name:'Cape Town SMEs',    members:516,  privacy:'Public',  active:'3h ago',     desc:'Regional group for Western Cape based small businesses and startups.', role:'Member' },
+  { name:'Funding & Investors',members:889, privacy:'Public',  active:'today',      desc:'Capital raises, grants, and investor intros for vetted SA founders.', role:'Member' }
+];
+const FORUM = {
+  discussions:[
+    { title:'Best POPIA-compliant payroll tools for small teams?', group:'Fintech Founders', replies:5,  members:4, last:'2 days, 7 hours ago', excerpt:"Looking for something that won't cost the earth for under 15 staff…", status:'open' },
+    { title:'SARB sandbox — who has been through it?', group:'Fintech Founders', replies:11, members:8, last:'5 days ago', excerpt:"Sharing my notes from the application. Section 4 caught us out…", status:'open' }
+  ],
+  replies:[
+    { title:'Re: How do you handle late-paying clients?', group:'General', last:'1 day ago', excerpt:"We moved to 50% upfront and it changed everything…" },
+    { title:'Re: First sales hire — founder-led to team', group:'General', last:'6 days ago', excerpt:"Hire a closer, not a strategist, for your first rep…" }
+  ],
+  favorites:[
+    { title:'The R1M turnover tax threshold breakdown', group:'Funding & Investors', last:'1 week ago', excerpt:"Karabo's spreadsheet is gold. Saved us thousands…" }
+  ]
+};
+const BADGES = [
+  { label:'Gold Contributor', icon:'award',      color:'#FF9900', bg:'#FFF1E0', desc:'49+ community contributions' },
+  { label:'Founding Member',  icon:'flag',       color:'#DC183C', bg:'#FDECEF', desc:'Joined in the first year' },
+  { label:'Summit Attendee',  icon:'ticket',     color:'#0C1F31', bg:'#E7EBEF', desc:'SME Funding Summit 2025' },
+  { label:'Top Helper',       icon:'hand-heart', color:'#29A37A', bg:'#E4F5EE', desc:'20+ Asks answered helpfully' }
+];
+
+const CONVERSATIONS = [
+  { id:'c1', name:'Naledi Mokoena', initials:'NM', role:'Founder', company:'GreenTrace', online:true, unread:2, connected:true,
+    messages:[
+      { from:'them', text:"Hi Tshepho! Loved your post on the SARB sandbox — section 4 caught us out too.", time:'09:14' },
+      { from:'them', text:"Would you be open to a quick call this week? Comparing notes on enterprise sales.", time:'09:15' },
+      { from:'me',   text:"Hey Naledi 👋 Absolutely. Congrats on the 50th customer by the way — huge.", time:'09:22' }
+    ] },
+  { id:'c2', name:'Sello Monare', initials:'SM', role:'MD', company:'TechSolve RSA', online:false, unread:0, connected:true,
+    messages:[
+      { from:'me',   text:"Did you find a CIPC contact in the end?", time:'Yesterday' },
+      { from:'them', text:"Yes! DM'd you the details. Reasonable rates, Gauteng-based.", time:'Yesterday' }
+    ] },
+  { id:'c3', name:'Karabo Kgophane', initials:'KK', role:'E-comm Lead', company:'Mzansi Cart', online:true, unread:0, connected:true,
+    messages:[
+      { from:'them', text:"That turnover-tax breakdown saved us thousands. Thank you 🙏", time:'Mon' }
+    ] },
+  { id:'c4', name:'Mandla Dlamini', initials:'MD', role:'Co-founder', company:'PesaPay', online:false, unread:0, connected:false,
+    messages:[
+      { from:'them', text:"Still looking for a technical co-founder if you know anyone fintech in CT.", time:'Last week' }
+    ] }
+];
+const CANNED = ["Sounds good — let's lock it in.","Appreciate that 🙌","Perfect, I'll send a calendar invite.","Let me check and revert shortly."];
+
+const NOTIFICATIONS = [
+  { type:'ask',   initials:'SM', html:'<b>Sello Monare</b> replied to your Ask about POPIA payroll tools.', time:'5m', unread:true },
+  { type:'win',   initials:'NM', html:'<b>Naledi Mokoena</b> celebrated your Win on the seed round.', time:'1h', unread:true },
+  { type:'share', initials:'KK', html:'Your Share on the SARB sandbox was amplified <b>12 times</b>.', time:'3h', unread:true },
+  { type:null,    initials:'TN', html:'<b>Thandi Nkosi</b> sent you a connection request.', time:'1d', unread:false },
+  { type:'ask',   initials:'MD', html:'<b>Mandla Dlamini</b> mentioned you in <b>Fintech Founders</b>.', time:'2d', unread:false }
+];
+
+const MEDIA = {
+  albums:[
+    { name:'Launch Day',       count:8,  c1:'#DC183C', c2:'#FF9900' },
+    { name:'Team Offsite',     count:14, c1:'#0C1F31', c2:'#1a3a54' },
+    { name:'SME Summit 2025',  count:23, c1:'#29A37A', c2:'#0C1F31' }
+  ],
+  photos:[
+    ['#DC183C','#FF9900'],['#0C1F31','#1a3a54'],['#29A37A','#0C1F31'],['#FF9900','#DC183C'],
+    ['#1a3a54','#29A37A'],['#DC183C','#0C1F31'],['#FF9900','#AE6B0A'],['#0C1F31','#DC183C']
+  ]
+};
+const INVITES = [
+  { email:'thabo@kasi-eats.co.za',  status:'joined',  date:'2 weeks ago' },
+  { email:'lebo@craftbrew.co.za',   status:'pending', date:'5 days ago' },
+  { email:'amahle@finflow.io',      status:'pending', date:'2 days ago' }
+];
+let BLOCKED = [
+  { name:'Spam Account', initials:'SA', reason:'Repeated promotional DMs', date:'1 month ago' }
+];
+
+/* ===================== STATE ===================== */
+const state = {
+  view:'profile', role:'own', profileTab:'overview', editing:false,
+  activityFilter:'all', connTab:'connections', connView:'list', forumTab:'discussions',
+  settingsTab:'profile', activeConv:'c1', msgPane:'list', cannedIdx:0, notifUnread:14, notifFilter:'all',
+  notif:{ digest:'weekly', reply:true, mention:true, sectorAsk:true, winConn:true, event:true, suggested:false },
+  privacy:{ visibility:'community', postDefault:'community', messages:'connections', directory:true, stats:true }
+};
+function person(){ return PEOPLE[state.role]; }
+
+/* ===================== VIEW ROUTER ===================== */
+function switchView(v){
+  state.view = v;
+  document.querySelectorAll('[data-view]').forEach(el=> el.classList.toggle('view-on', el.getAttribute('data-view')===v));
+  ['profile','settings'].forEach(k=>{
+    const on = k===v;
+    const top = document.getElementById('navtab-'+k);
+    const mob = document.getElementById('navtabm-'+k);
+    if(top) top.className = `px-3.5 h-9 rounded-full text-sm font-bold font-jakarta transition flex items-center gap-1.5 ${on?'bg-[#DC183C] text-white':'text-slate-600 hover:bg-slate-100'}`;
+    if(mob) mob.className = `flex-1 py-2.5 text-xs font-bold font-jakarta uppercase tracking-wide ${on?'text-[#DC183C] border-b-2 border-[#DC183C]':'text-slate-500'}`;
+  });
+  if(v==='messages') renderMessages();
+  if(v==='notifications') renderNotificationsPage();
+  window.scrollTo({top:0, behavior:'smooth'});
+  lucide.createIcons();
+}
+
+function setRole(r, silent){
+  state.role = r; state.editing = false; state.profileTab='overview';
+  ['own','peer'].forEach(k=>{
+    const b = document.getElementById('role-'+k);
+    if(b) b.className = `px-3 py-1 rounded-full text-xs font-bold transition ${k===r?'bg-white text-[#121A21]':'text-white/70 hover:text-white'}`;
+  });
+  renderProfile();
+  if(!silent) showToast(r==='own' ? 'Now viewing as yourself.' : 'Now viewing as another member.', null);
+}
+
+/* ===================== HEADER DROPDOWN MENUS ===================== */
+function closeMenus(except){
+  ['user-menu','notif-menu'].forEach(id=>{ if(id!==except){ const el=document.getElementById(id); if(el) el.classList.add('hidden'); } });
+}
+function toggleUserMenu(e){
+  if(e) e.stopPropagation();
+  const el = document.getElementById('user-menu');
+  const willOpen = el.classList.contains('hidden');
+  closeMenus('user-menu');
+  if(willOpen){ renderUserMenu(); el.classList.remove('hidden'); } else { el.classList.add('hidden'); }
+}
+function toggleNotifMenu(e){
+  if(e) e.stopPropagation();
+  const el = document.getElementById('notif-menu');
+  const willOpen = el.classList.contains('hidden');
+  closeMenus('notif-menu');
+  if(willOpen){ renderNotifMenu(); el.classList.remove('hidden'); } else { el.classList.add('hidden'); }
+}
+
+function renderUserMenu(){
+  const p = PEOPLE.own;
+  const unreadMsgs = CONVERSATIONS.reduce((s,c)=>s+c.unread,0);
+  const inProfile = state.view==='profile';
+  const item = (dest,icon,label,opts={}) => {
+    const active = opts.active;
+    const badge = opts.badge ? `<span class="ml-auto bg-[#DC183C] text-white text-[10px] font-bold rounded-full min-w-[18px] h-[18px] px-1 grid place-items-center">${opts.badge}</span>` : '';
+    return `<button onclick="navTo('${dest}')" class="w-full flex items-center gap-3 px-4 py-2.5 text-sm font-semibold text-left transition ${active?'bg-[#FDECEF] text-[#DC183C]':'text-slate-600 hover:bg-slate-50'}">
+      <i data-lucide="${icon}" class="w-4 h-4 ${active?'text-[#DC183C]':'text-slate-400'}"></i><span>${label}</span>${badge}</button>`;
+  };
+  document.getElementById('user-menu').innerHTML = `
+    <button onclick="navTo('profile')" class="w-full flex items-center gap-3 px-4 py-3.5 border-b border-slate-100 hover:bg-slate-50 text-left">
+      <div class="w-10 h-10 rounded-full bg-gradient-to-br from-[#DC183C] to-[#FF9900] grid place-items-center font-jakarta font-bold text-white text-sm shrink-0">${esc(p.initials)}</div>
+      <div class="min-w-0"><p class="font-jakarta font-bold text-sm text-[#121A21] truncate">${esc(p.name)}</p><p class="text-xs text-slate-500 truncate">@${esc(p.handle)}</p></div>
+    </button>
+    <div class="py-1">
+      ${item('hub','home','Community Feed')}
+      ${item('profile','user-round','Profile',{active:inProfile && state.profileTab==='overview'})}
+      ${item('account','settings','Account',{active:state.view==='settings'})}
+    </div>
+    <div class="py-1 border-t border-slate-100">
+      ${item('timeline','rss','Timeline',{active:inProfile && state.profileTab==='activity'})}
+      ${item('media','image','Media',{active:inProfile && state.profileTab==='media'})}
+      ${item('notifpage','bell','Notifications',{active:state.view==='notifications', badge:state.notifUnread||null})}
+      ${item('messages','mail','Messages',{active:state.view==='messages', badge:unreadMsgs||null})}
+      ${item('connections','users','Connections',{active:inProfile && state.profileTab==='connections'})}
+      ${item('groups','layout-grid','Groups',{active:inProfile && state.profileTab==='groups'})}
+      ${item('forums','messages-square','Forums',{active:inProfile && state.profileTab==='forums'})}
+      ${item('invites','mail-plus','Email Invites',{active:inProfile && state.profileTab==='invites'})}
+      ${item('membership','crown','Membership',{active:state.view==='settings' && state.settingsTab==='membership'})}
+      ${item('orders','shopping-bag','My Orders',{active:state.view==='settings' && state.settingsTab==='orders'})}
+    </div>
+    <div class="py-1 border-t border-slate-100">
+      ${item('logout','log-out','Log Out')}
+    </div>`;
+  lucide.createIcons();
+}
+
+function renderNotifMenu(){
+  const rows = NOTIFICATIONS.map(n=>{
+    const t = n.type ? TYPES[n.type] : null;
+    const dot = t ? `<span class="w-2 h-2 rounded-full shrink-0 mt-1.5" style="background:${t.color}"></span>` : `<span class="w-2 h-2 rounded-full shrink-0 mt-1.5 bg-slate-300"></span>`;
+    return `<div class="flex gap-3 px-4 py-3 border-b border-slate-50 ${n.unread?'bg-[#FDECEF]/30':''} hover:bg-slate-50 transition">
+      <div class="relative shrink-0">${monogram(n.initials,36)}${t?`<span class="absolute -bottom-1 -right-1 w-4 h-4 rounded-full grid place-items-center ring-2 ring-white" style="background:${t.color}"><i data-lucide="${t.icon}" class="w-2.5 h-2.5 text-white"></i></span>`:''}</div>
+      <div class="min-w-0 flex-1"><p class="text-sm text-slate-600 leading-snug">${n.html}</p><p class="text-[11px] text-slate-400 mt-0.5">${esc(n.time)} ago</p></div>
+      ${n.unread?'<span class="w-2 h-2 rounded-full bg-[#DC183C] shrink-0 mt-1.5"></span>':''}
+    </div>`;
+  }).join('');
+  document.getElementById('notif-menu').innerHTML = `
+    <div class="flex items-center justify-between px-4 py-3 border-b border-slate-100 sticky top-0 bg-white">
+      <h4 class="font-jakarta font-bold uppercase text-sm text-[#121A21] tracking-wide">Notifications</h4>
+      <button onclick="markAllRead(event)" class="text-[11px] font-bold text-[#DC183C] uppercase tracking-wide hover:underline">Mark all read</button>
+    </div>
+    <div class="max-h-[60vh] overflow-y-auto">${rows}</div>
+    <button onclick="closeMenus();navTo('notifpage')" class="w-full py-3 text-center text-xs font-bold text-slate-500 hover:bg-slate-50 border-t border-slate-100">View all activity</button>`;
+  lucide.createIcons();
+}
+function markAllRead(e){
+  if(e) e.stopPropagation();
+  NOTIFICATIONS.forEach(n=>n.unread=false);
+  state.notifUnread = 0;
+  updateBadges(); renderNotifMenu();
+  if(state.view==='notifications') renderNotificationsPage();
+  showToast('All notifications marked as read.', null);
+}
+
+/* Full notifications page */
+function notifFilters(){ return [['all','All'],['ask','Asks'],['win','Wins'],['share','Shares'],['mention','Mentions']]; }
+function setNotifFilter(id){ state.notifFilter=id; renderNotificationsPage(); }
+function renderNotificationsPage(){
+  const ft = document.getElementById('notif-filters');
+  if(ft) ft.innerHTML = notifFilters().map(([id,label])=>`<button onclick="setNotifFilter('${id}')" class="shrink-0 px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider border ${state.notifFilter===id?'bg-[#0C1F31] text-white border-[#0C1F31]':'border-slate-200 bg-white text-slate-600 hover:bg-slate-50'}">${label}</button>`).join('');
+  let list = NOTIFICATIONS.slice();
+  if(state.notifFilter==='mention') list = list.filter(n=>/mention/i.test(n.html));
+  else if(state.notifFilter!=='all') list = list.filter(n=>n.type===state.notifFilter);
+  const host = document.getElementById('notif-page');
+  if(!host) return;
+  host.innerHTML = list.length ? list.map(n=>{
+    const t = n.type ? TYPES[n.type] : null;
+    return `<div class="flex gap-3 px-4 sm:px-5 py-4 ${n.unread?'bg-[#FDECEF]/30':''}">
+      <div class="relative shrink-0">${monogram(n.initials,40)}${t?`<span class="absolute -bottom-1 -right-1 w-4 h-4 rounded-full grid place-items-center ring-2 ring-white" style="background:${t.color}"><i data-lucide="${t.icon}" class="w-2.5 h-2.5 text-white"></i></span>`:''}</div>
+      <div class="min-w-0 flex-1"><p class="text-sm text-slate-700 leading-snug">${n.html}</p><p class="text-[11px] text-slate-400 mt-0.5">${esc(n.time)} ago</p></div>
+      ${n.unread?'<span class="w-2 h-2 rounded-full bg-[#DC183C] shrink-0 mt-1.5"></span>':''}
+    </div>`;
+  }).join('') : `<div class="px-4 py-12 text-center text-slate-400"><i data-lucide="bell-off" class="w-8 h-8 mx-auto mb-2"></i><p class="text-sm font-semibold">Nothing here yet.</p></div>`;
+  lucide.createIcons();
+}
+
+function navTo(dest){
+  closeMenus();
+  switch(dest){
+    case 'hub':         window.location.href = 'member-hub.html'; break;
+    case 'notifpage':   setRole('own', true); switchView('notifications'); break;
+    case 'media':       setRole('own', true); switchView('profile'); setProfileTab('media'); break;
+    case 'invites':     setRole('own', true); switchView('profile'); setProfileTab('invites'); break;
+    case 'profile':     setRole('own', true); switchView('profile'); setProfileTab('overview'); break;
+    case 'timeline':    setRole('own', true); switchView('profile'); setProfileTab('activity'); break;
+    case 'connections': setRole('own', true); switchView('profile'); setProfileTab('connections'); break;
+    case 'groups':      setRole('own', true); switchView('profile'); setProfileTab('groups'); break;
+    case 'forums':      setRole('own', true); switchView('profile'); setProfileTab('forums'); break;
+    case 'account':     switchView('settings'); setSettingsTab('profile'); break;
+    case 'membership':  switchView('settings'); setSettingsTab('membership'); break;
+    case 'orders':      switchView('settings'); setSettingsTab('orders'); break;
+    case 'messages':    openMessages(); break;
+    case 'notifications': toggleNotifMenu(); break;
+    case 'logout':      openLogoutModal(); break;
+  }
+}
+
+function updateBadges(){
+  const unreadMsgs = CONVERSATIONS.reduce((s,c)=>s+c.unread,0);
+  const mb = document.getElementById('mail-badge');
+  if(mb){ mb.textContent = unreadMsgs; mb.classList.toggle('hidden', unreadMsgs===0); }
+  const nb = document.getElementById('notif-badge');
+  if(nb){ nb.textContent = state.notifUnread; nb.classList.toggle('hidden', state.notifUnread===0); }
+  // keep header identity in sync with profile edits
+  const a = document.getElementById('hdr-avatar'); if(a) a.textContent = PEOPLE.own.initials;
+  const nm = document.getElementById('hdr-name'); if(nm) nm.textContent = PEOPLE.own.name.split(' ')[0] + ' ' + (PEOPLE.own.name.split(' ')[1]||'')[0] + '.';
+}
+
+/* ===================== GLOBAL SEARCH ===================== */
+const KIND_META = {
+  member:    { icon:'user-round',      label:'Members' },
+  group:     { icon:'layout-grid',     label:'Groups' },
+  discussion:{ icon:'messages-square', label:'Forum discussions' },
+  post:      { icon:'rss',             label:'Your posts' }
+};
+function searchIndex(){
+  const idx = [];
+  [...CONNECTIONS, ...REQUESTS].forEach(m=> idx.push({ kind:'member', title:m.name, sub:`${m.role} at ${m.company}`, initials:m.initials, extra:m.sector+' '+m.province }));
+  GROUPS.forEach(g=> idx.push({ kind:'group', title:g.name, sub:`${g.members.toLocaleString()} members · ${g.privacy}`, extra:g.desc }));
+  FORUM.discussions.forEach(d=> idx.push({ kind:'discussion', title:d.title, sub:d.group, extra:d.excerpt }));
+  POSTS.own.forEach(p=> idx.push({ kind:'post', title:p.content, sub:TYPES[p.type].label, type:p.type }));
+  return idx;
+}
+function runSearch(q){
+  const el = document.getElementById('search-results');
+  const clear = document.getElementById('search-clear');
+  q = (q||'').trim();
+  if(clear) clear.classList.toggle('hidden', !q);
+  if(!q){ el.classList.add('hidden'); el.innerHTML=''; return; }
+  const ql = q.toLowerCase();
+  const hits = searchIndex().filter(r => (r.title+' '+(r.sub||'')+' '+(r.extra||'')).toLowerCase().includes(ql));
+  if(!hits.length){
+    el.innerHTML = `<div class="px-4 py-8 text-center text-sm text-slate-400"><i data-lucide="search-x" class="w-6 h-6 mx-auto mb-2"></i>No results for “${esc(q)}”.</div>`;
+    el.classList.remove('hidden'); lucide.createIcons(); return;
+  }
+  let html = `<div class="px-4 pt-3 pb-1 text-[11px] text-slate-400">${hits.length} result${hits.length>1?'s':''} for “<span class="font-semibold text-slate-500">${esc(q)}</span>”</div>`;
+  ['member','group','discussion','post'].forEach(kind=>{
+    const group = hits.filter(h=>h.kind===kind).slice(0,4);
+    if(!group.length) return;
+    const m = KIND_META[kind];
+    html += `<div class="px-4 pt-2 pb-1 text-[10px] font-bold uppercase tracking-widest text-slate-400 flex items-center gap-1.5"><i data-lucide="${m.icon}" class="w-3 h-3"></i> ${m.label}</div>`;
+    html += group.map(h=>{
+      let lead;
+      if(kind==='member') lead = monogram(h.initials,32);
+      else if(kind==='post'){ const t=TYPES[h.type]; lead = `<span class="w-8 h-8 rounded-lg grid place-items-center shrink-0" style="background:${t.headerBg}"><i data-lucide="${t.icon}" class="w-4 h-4" style="color:${t.color}"></i></span>`; }
+      else lead = `<span class="w-8 h-8 rounded-lg bg-slate-100 grid place-items-center shrink-0"><i data-lucide="${m.icon}" class="w-4 h-4 text-slate-500"></i></span>`;
+      const title = kind==='post' ? esc(h.title.slice(0,64))+(h.title.length>64?'…':'') : esc(h.title);
+      return `<button onmousedown="searchSelect('${kind}','${encodeURIComponent(h.title)}')" class="w-full flex items-center gap-3 px-4 py-2.5 hover:bg-slate-50 text-left transition">
+        ${lead}<div class="min-w-0"><p class="text-sm font-semibold text-[#121A21] truncate">${title}</p><p class="text-xs text-slate-500 truncate">${esc(h.sub||'')}</p></div></button>`;
+    }).join('');
+  });
+  el.innerHTML = html;
+  el.classList.remove('hidden');
+  lucide.createIcons();
+}
+function searchSelect(kind, enc){
+  const title = decodeURIComponent(enc);
+  closeSearch();
+  switch(kind){
+    case 'member':
+      if(title===PEOPLE.peer.name){ setRole('peer'); switchView('profile'); showToast('Opening '+title.split(' ')[0]+'’s profile…', null); }
+      else { setRole('own', true); switchView('profile'); setProfileTab('connections'); showToast('Opening '+title.split(' ')[0]+'’s profile…', null); }
+      break;
+    case 'group':      setRole('own', true); switchView('profile'); setProfileTab('groups');  showToast('Opening group: '+title, null); break;
+    case 'discussion': setRole('own', true); switchView('profile'); setProfileTab('forums');  showToast('Opening discussion…', null); break;
+    case 'post':       setRole('own', true); switchView('profile'); setProfileTab('activity');showToast('Jumping to your post…', null); break;
+  }
+}
+function clearSearch(){ const i=document.getElementById('global-search'); if(i){ i.value=''; i.focus(); } runSearch(''); }
+function closeSearch(){
+  const el=document.getElementById('search-results'); if(el) el.classList.add('hidden');
+  const i=document.getElementById('global-search'); if(i) i.value='';
+  const c=document.getElementById('search-clear'); if(c) c.classList.add('hidden');
+}
+
+/* ===================== LOG OUT ===================== */
+function openLogoutModal(){
+  closeMenus();
+  document.getElementById('overlay-root').innerHTML = `
+    <div class="ov" id="ov-logout">
+      <div class="ov-bg" onclick="closeOverlay('ov-logout')"></div>
+      <div class="modalbox overflow-hidden">
+        <div class="px-6 pt-6 text-center">
+          <div class="w-14 h-14 rounded-full bg-[#FDECEF] grid place-items-center mx-auto mb-3"><i data-lucide="log-out" class="w-6 h-6 text-[#DC183C]"></i></div>
+          <h3 class="font-jakarta font-extrabold text-xl text-[#121A21]">Log out?</h3>
+          <p class="text-sm text-slate-600 mt-2">You’ll be signed out of SME HUB on this device. You can sign back in anytime.</p>
+        </div>
+        <div class="p-6 flex gap-2">
+          <button onclick="closeOverlay('ov-logout')" class="flex-1 border border-slate-200 text-slate-600 hover:bg-slate-50 rounded-full px-5 py-2.5 font-jakarta font-bold text-sm transition">Cancel</button>
+          <button onclick="confirmLogout()" class="flex-1 bg-[#DC183C] hover:bg-[#B0142F] text-white rounded-full px-5 py-2.5 font-jakarta font-bold text-sm transition">Log out</button>
+        </div>
+      </div>
+    </div>`;
+  requestAnimationFrame(()=>{ const o=document.getElementById('ov-logout'); if(o) o.classList.add('open'); });
+  lucide.createIcons();
+}
+function confirmLogout(){ closeOverlay('ov-logout'); showToast('You’ve been logged out.', null); }
+
+/* ===================== PROFILE: HERO ===================== */
+function renderProfile(){
+  renderHero(); renderStats(); renderSubnav(); renderProfileTab(); renderAside();
+  lucide.createIcons();
+}
+
+function pill(label, val){
+  return `<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-slate-100 text-slate-600 text-xs font-semibold">${esc(label)} <span class="text-[#121A21] font-bold">${esc(val)}</span></span>`;
+}
+
+function renderHero(){
+  const p = person(); const own = state.role==='own';
+  let actions;
+  if(own){
+    actions = `
+      <button onclick="toggleEdit()" class="bg-[#DC183C] hover:bg-[#B0142F] text-white rounded-full px-5 py-2.5 font-jakarta font-bold text-sm transition flex items-center gap-2">
+        <i data-lucide="${state.editing?'x':'pencil'}" class="w-4 h-4"></i> ${state.editing?'Cancel editing':'Edit Profile'}
+      </button>
+      <button onclick="switchView('settings')" class="border border-slate-200 hover:border-[#DC183C] hover:text-[#DC183C] text-slate-600 rounded-full w-11 h-11 grid place-items-center transition" title="Account settings"><i data-lucide="settings" class="w-4 h-4"></i></button>`;
+  } else {
+    const s = p.connectStatus;
+    const connBtn = s==='connected'
+      ? `<button class="border border-[#29A37A] text-[#29A37A] rounded-full px-5 py-2.5 font-jakarta font-bold text-sm flex items-center gap-2"><i data-lucide="check" class="w-4 h-4"></i> Connected</button>`
+      : s==='pending'
+      ? `<button onclick="peerConnect()" class="border border-slate-200 text-slate-500 rounded-full px-5 py-2.5 font-jakarta font-bold text-sm flex items-center gap-2"><i data-lucide="clock" class="w-4 h-4"></i> Request sent</button>`
+      : `<button onclick="peerConnect()" class="bg-[#DC183C] hover:bg-[#B0142F] text-white rounded-full px-5 py-2.5 font-jakarta font-bold text-sm transition flex items-center gap-2"><i data-lucide="user-plus" class="w-4 h-4"></i> Connect</button>`;
+    actions = `${connBtn}
+      <button onclick="openMessages('c1')" class="border border-slate-200 hover:border-[#DC183C] hover:text-[#DC183C] text-slate-600 rounded-full px-5 py-2.5 font-jakarta font-semibold text-sm transition flex items-center gap-2"><i data-lucide="mail" class="w-4 h-4"></i> Message</button>`;
+  }
+
+  const nameBlock = (state.editing && own)
+    ? `<input id="edit-name" value="${esc(p.name)}" class="font-jakarta font-extrabold text-2xl sm:text-3xl text-[#121A21] tracking-tight bg-slate-50 border border-slate-200 rounded-lg px-3 py-1 w-full max-w-sm outline-none focus:border-[#DC183C]">
+       <div class="flex flex-wrap gap-2 mt-2">
+         <input id="edit-role" value="${esc(p.role)}" class="text-sm bg-slate-50 border border-slate-200 rounded-lg px-2 py-1 outline-none focus:border-[#DC183C]" placeholder="Title">
+         <input id="edit-company" value="${esc(p.company)}" class="text-sm bg-slate-50 border border-slate-200 rounded-lg px-2 py-1 outline-none focus:border-[#DC183C]" placeholder="Company">
+       </div>`
+    : `<h1 class="font-jakarta font-extrabold text-2xl sm:text-3xl text-[#121A21] tracking-tight">${esc(p.name)}</h1>
+       <p class="text-sm text-slate-500 mt-1">${esc(p.role)} at <span class="font-bold text-[#121A21]">${esc(p.company)}</span> <span class="text-slate-300">·</span> <span class="text-slate-400">@${esc(p.handle)}</span></p>`;
+
+  const strength = own ? `
+    <div class="mt-4 sm:mt-0 sm:ml-auto w-full sm:w-56">
+      <div class="flex items-center justify-between mb-1.5">
+        <span class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Profile strength</span>
+        <span class="text-xs font-extrabold text-[#DC183C]">${p.strength}%</span>
+      </div>
+      <div class="h-2 rounded-full bg-slate-100 overflow-hidden"><div class="h-full rounded-full" style="width:${p.strength}%;background:linear-gradient(90deg,#DC183C,#FF9900)"></div></div>
+      <button onclick="setProfileTab('overview')" class="text-[11px] font-bold text-[#DC183C] uppercase tracking-wide hover:underline mt-1.5">Complete profile →</button>
+    </div>` : `
+    <div class="mt-4 sm:mt-0 sm:ml-auto text-sm text-slate-500 flex items-center gap-2">
+      <i data-lucide="users" class="w-4 h-4 text-[#DC183C]"></i> <span class="font-bold text-[#121A21]">${p.mutual}</span> mutual connections
+    </div>`;
+
+  document.getElementById('profile-hero').innerHTML = `
+    <div class="bg-white rounded-2xl border border-slate-100 overflow-hidden reveal">
+      <!-- Cover -->
+      <div class="h-36 sm:h-44 relative bg-gradient-to-br from-[#0C1F31] to-[#1a3a54]">
+        <div class="absolute inset-0 opacity-40" style="background:radial-gradient(circle at 75% 30%, #DC183C 0%, transparent 55%);"></div>
+        ${own ? `<button class="absolute top-3 right-3 bg-black/30 hover:bg-black/50 text-white text-xs font-semibold rounded-full px-3 py-1.5 flex items-center gap-1.5 transition"><i data-lucide="camera" class="w-3.5 h-3.5"></i> <span class="hidden sm:inline">Edit cover</span></button>` : ''}
+        <button onclick="openBrief('hero')" class="dev-badge absolute top-3 left-3 w-5 h-5 rounded-full bg-[#DC183C] text-white items-center justify-center text-[10px] font-bold leading-none animate-pulse" title="Implementation notes">i</button>
+      </div>
+      <div class="px-5 sm:px-7 pb-6">
+        <!-- Only the avatar overlaps the cover; name + actions sit on white below -->
+        <div class="relative shrink-0 inline-block -mt-14 sm:-mt-16">
+          <div class="w-24 h-24 sm:w-28 sm:h-28 rounded-full bg-gradient-to-br from-[#DC183C] to-[#FF9900] grid place-items-center font-jakarta font-extrabold text-white text-3xl sm:text-4xl ring-4 ring-white shadow-lg">${esc(p.initials)}</div>
+          <span class="absolute bottom-2 right-2 w-4 h-4 rounded-full bg-[#29A37A] ring-2 ring-white" title="Online"></span>
+          ${own ? `<button class="absolute -bottom-1 -right-1 w-8 h-8 rounded-full bg-[#0C1F31] text-white grid place-items-center ring-2 ring-white hover:bg-[#DC183C] transition" title="Change photo"><i data-lucide="camera" class="w-3.5 h-3.5"></i></button>` : ''}
+        </div>
+
+        <div class="mt-3 flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
+          <div class="min-w-0 flex-1">${nameBlock}</div>
+          <div class="flex items-center gap-2 shrink-0">${actions}</div>
+        </div>
+
+        <div class="flex flex-wrap items-center gap-2 mt-4">
+          ${pill('Stage', p.stage)} ${pill('Sector', p.sector)} ${pill('Region', p.province)}
+          <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold" style="background:#FFF1E0;color:#AE6B0A"><i data-lucide="award" class="w-3.5 h-3.5"></i> ${esc(p.tier)} Contributor</span>
+          <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-slate-100 text-slate-500 text-xs font-semibold"><i data-lucide="map-pin" class="w-3.5 h-3.5"></i> ${esc(p.city)}</span>
+        </div>
+
+        <div class="flex flex-col sm:flex-row sm:items-end">${strength}</div>
+
+        ${state.editing && own ? `<div class="mt-4 flex gap-2"><button onclick="saveProfile()" class="bg-[#29A37A] hover:opacity-90 text-white rounded-full px-5 py-2.5 font-jakarta font-bold text-sm transition flex items-center gap-2"><i data-lucide="check" class="w-4 h-4"></i> Save changes</button><button onclick="toggleEdit()" class="text-slate-500 hover:text-slate-700 text-sm font-semibold px-3">Discard</button></div>`:''}
+      </div>
+    </div>`;
+}
+
+/* ===================== PROFILE: STATS BAR ===================== */
+function renderStats(){
+  const p = person();
+  const c = p.contrib;
+  const stat = (val,label,color,onclick) => `
+    <button onclick="${onclick}" class="flex-1 min-w-[33%] sm:min-w-0 px-4 py-4 text-center hover:bg-slate-50 transition">
+      <p class="font-jakarta font-extrabold text-2xl" style="color:${color}">${val}</p>
+      <p class="text-[11px] font-bold uppercase tracking-wider text-slate-400 mt-0.5">${label}</p>
+    </button>`;
+  document.getElementById('profile-stats').innerHTML = `
+    <div class="mt-5 bg-white rounded-2xl border border-slate-100 reveal" style="animation-delay:60ms">
+      <div class="flex flex-wrap divide-x divide-slate-100">
+        ${stat(c.asksHelped,'Asks helped','#DC183C','openContribution()')}
+        ${stat(c.winsCelebrated,'Wins celebrated','#29A37A','openContribution()')}
+        ${stat(c.sharesAmplified,'Shares amplified','#AE6B0A','openContribution()')}
+        ${stat(p.connections,'Connections','#0C1F31',"setProfileTab('connections')")}
+        ${stat(p.posts,'Posts','#0C1F31',"setProfileTab('activity')")}
+      </div>
+    </div>`;
+}
+
+/* ===================== PROFILE: SUB-NAV ===================== */
+function profileTabs(){
+  const tabs = [
+    { id:'overview',    label:'Overview',    icon:'user-round' },
+    { id:'activity',    label:'Activity',    icon:'rss' },
+    { id:'media',       label:'Media',       icon:'image' },
+    { id:'connections', label:'Connections', icon:'users' },
+    { id:'groups',      label:'Groups',      icon:'layout-grid' },
+    { id:'forums',      label:'Forums',      icon:'messages-square' }
+  ];
+  if(state.role==='own') tabs.push({ id:'invites', label:'Invites', icon:'mail-plus' });
+  return tabs;
+}
+function renderSubnav(){
+  const el = document.getElementById('profile-subnav');
+  el.innerHTML = profileTabs().map(t=>`
+    <button onclick="setProfileTab('${t.id}')" class="ptab ${state.profileTab===t.id?'active':'text-slate-500 hover:text-[#121A21]'} shrink-0 px-4 py-3.5 text-sm font-bold font-jakarta flex items-center gap-2">
+      <i data-lucide="${t.icon}" class="w-4 h-4"></i> ${t.label}
+    </button>`).join('');
+}
+function setProfileTab(id){ state.profileTab = id; renderSubnav(); renderProfileTab(); lucide.createIcons(); }
+
+/* ===================== PROFILE: TAB CONTENT ===================== */
+function renderProfileTab(){
+  const host = document.getElementById('profile-tabcontent');
+  const map = { overview:tabOverview, activity:tabActivity, media:tabMedia, connections:tabConnections, groups:tabGroups, forums:tabForums, invites:tabInvites };
+  host.innerHTML = (map[state.profileTab]||tabOverview)();
+  lucide.createIcons();
+}
+
+function sectionLabel(text, brief){
+  const b = brief ? `<button onclick="openBrief('${brief}')" class="dev-badge w-4 h-4 rounded-full bg-[#DC183C] text-white items-center justify-center text-[9px] font-bold leading-none animate-pulse ml-1.5" title="Implementation notes">i</button>`:'';
+  return `<h3 class="font-jakarta font-bold uppercase text-sm text-[#121A21] tracking-wide flex items-center">${esc(text)}${b}</h3>`;
+}
+
+function tabOverview(){
+  const p = person(); const own = state.role==='own';
+  const editing = state.editing && own;
+  const about = editing
+    ? `<textarea id="edit-bio" rows="4" class="w-full text-[15px] text-[#121A21] leading-relaxed bg-slate-50 border border-slate-200 rounded-xl p-3 outline-none focus:border-[#DC183C]">${esc(p.bio)}</textarea>`
+    : `<p class="text-[15px] text-[#121A21] leading-relaxed">${esc(p.bio)}</p>`;
+
+  const detail = (icon,label,val,editId) => {
+    const v = editing && editId
+      ? `<input id="${editId}" value="${esc(val)}" class="text-sm bg-slate-50 border border-slate-200 rounded-lg px-2 py-1 outline-none focus:border-[#DC183C] w-full">`
+      : `<a href="#" class="text-sm font-semibold text-[#121A21] hover:text-[#DC183C] break-all">${esc(val)}</a>`;
+    return `<div class="flex items-start gap-3 py-2.5">
+      <div class="w-8 h-8 rounded-lg bg-slate-100 grid place-items-center shrink-0"><i data-lucide="${icon}" class="w-4 h-4 text-slate-500"></i></div>
+      <div class="min-w-0 flex-1"><p class="text-[11px] font-bold uppercase tracking-wider text-slate-400">${label}</p>${v}</div>
+    </div>`;
+  };
+
+  const badgeCards = BADGES.map(b=>`
+    <div class="flex items-center gap-3 p-3 rounded-xl border border-slate-100">
+      <div class="w-10 h-10 rounded-full grid place-items-center shrink-0" style="background:${b.bg}"><i data-lucide="${b.icon}" class="w-5 h-5" style="color:${b.color}"></i></div>
+      <div class="min-w-0"><p class="font-jakarta font-bold text-sm text-[#121A21] leading-tight">${esc(b.label)}</p><p class="text-[11px] text-slate-500 mt-0.5">${esc(b.desc)}</p></div>
+    </div>`).join('');
+
+  return `
+    <div class="space-y-6">
+      <div>
+        <div class="flex items-center justify-between mb-3">${sectionLabel('About','overview')}${own && !editing ? `<button onclick="toggleEdit()" class="text-xs font-bold text-[#DC183C] uppercase tracking-wide hover:underline">Edit</button>`:''}</div>
+        ${about}
+      </div>
+      <div class="border-t border-slate-100 pt-5">
+        ${sectionLabel('Details')}
+        <div class="mt-2 grid sm:grid-cols-2 gap-x-6">
+          ${detail('globe','Website',p.website,'edit-website')}
+          ${detail('map-pin','Location',p.city+', '+p.province,null)}
+          ${detail('briefcase','LinkedIn',p.linkedin,'edit-linkedin')}
+          ${detail('at-sign','X / Twitter',p.twitter,'edit-twitter')}
+          ${detail('message-circle','WhatsApp Business',p.whatsapp,'edit-whatsapp')}
+          ${detail('calendar','Member since',p.joined,null)}
+        </div>
+        ${editing ? `<div class="mt-3 flex gap-2"><button onclick="saveProfile()" class="bg-[#29A37A] text-white rounded-full px-4 py-2 font-jakarta font-bold text-sm flex items-center gap-1.5"><i data-lucide="check" class="w-4 h-4"></i> Save</button><button onclick="toggleEdit()" class="text-slate-500 text-sm font-semibold px-2">Cancel</button></div>`:''}
+      </div>
+      <div class="border-t border-slate-100 pt-5">
+        ${sectionLabel('Badges &amp; Achievements','badges')}
+        <div class="mt-3 grid sm:grid-cols-2 gap-2">${badgeCards}</div>
+      </div>
+    </div>`;
+}
+
+function activityFilters(){ return [['all','All'],['ask','Asks'],['win','Wins'],['share','Shares']]; }
+function tabActivity(){
+  const own = state.role==='own';
+  const composer = own ? `
+    <div class="mb-4 bg-white border border-slate-100 rounded-2xl p-4">
+      <div class="flex gap-3">
+        ${monogram(person().initials,40)}
+        <button onclick="showToast('Composer opens on the Member Hub feed.', null)" class="flex-1 text-left bg-slate-100 hover:bg-slate-200/70 rounded-full px-4 text-sm text-slate-500 transition">Share an Ask, a Win, or a Share…</button>
+      </div>
+      <div class="flex gap-2 mt-3">
+        <button onclick="showToast('Start an Ask', 'ask')" class="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-lg text-xs font-bold uppercase tracking-wider text-[#DC183C] bg-[#DC183C]/10 hover:bg-[#DC183C]/15 transition"><i data-lucide="help-circle" class="w-3.5 h-3.5"></i> Ask</button>
+        <button onclick="showToast('Share a Win', 'win')" class="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-lg text-xs font-bold uppercase tracking-wider text-[#29A37A] bg-[#29A37A]/10 hover:bg-[#29A37A]/15 transition"><i data-lucide="trophy" class="w-3.5 h-3.5"></i> Win</button>
+        <button onclick="showToast('Post a Share', 'share')" class="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-lg text-xs font-bold uppercase tracking-wider text-[#AE6B0A] bg-[#FF9900]/15 hover:bg-[#FF9900]/20 transition"><i data-lucide="megaphone" class="w-3.5 h-3.5"></i> Share</button>
+      </div>
+    </div>` : '';
+
+  const tabs = `<div class="flex gap-2 mb-4 overflow-x-auto no-scrollbar">
+    ${activityFilters().map(([id,label])=>`<button onclick="setActivityFilter('${id}')" class="shrink-0 px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider border ${state.activityFilter===id?'bg-[#0C1F31] text-white border-[#0C1F31]':'border-slate-200 bg-white text-slate-600 hover:bg-slate-50'}">${label}</button>`).join('')}
+  </div>`;
+
+  let posts = POSTS[state.role].slice();
+  if(state.activityFilter!=='all') posts = posts.filter(p=>p.type===state.activityFilter);
+  const emptyLabel = state.activityFilter==='all'?'activity':state.activityFilter+'s';
+  const empty = own
+    ? `<div class="text-center py-12"><div class="w-14 h-14 mx-auto rounded-full bg-slate-100 grid place-items-center mb-3"><i data-lucide="inbox" class="w-6 h-6 text-slate-400"></i></div><p class="font-jakarta font-bold text-[#121A21]">Nothing here yet — start the conversation</p><p class="text-sm text-slate-500 max-w-xs mx-auto mt-1">Post an Ask and the community jumps in. Most asks get a reply within hours.</p><button onclick="navTo('hub')" class="mt-4 bg-[#DC183C] hover:bg-[#B0142F] text-white rounded-full px-5 py-2.5 font-jakarta font-bold text-sm transition inline-flex items-center gap-2"><i data-lucide="help-circle" class="w-4 h-4"></i> Post an Ask</button></div>`
+    : `<div class="text-center py-12 text-slate-400"><i data-lucide="inbox" class="w-8 h-8 mx-auto mb-2"></i><p class="text-sm font-semibold">${esc(person().name.split(' ')[0])} hasn't shared any ${emptyLabel} yet.</p></div>`;
+  const feed = posts.length ? posts.map((p,i)=>postCard(p,i)).join('') : empty;
+
+  return `<div>${composer}<div class="flex items-center justify-between">${sectionLabel('Activity','activity')}</div><div class="mt-3">${tabs}<div class="space-y-4">${feed}</div></div></div>`;
+}
+function setActivityFilter(id){ state.activityFilter=id; renderProfileTab(); }
+
+function postCard(p,i){
+  const t = TYPES[p.type]; const a = person();
+  return `
+  <article class="bg-white rounded-2xl border border-slate-100 stripe-${p.type} card-lift reveal" style="animation-delay:${Math.min(i,5)*40}ms">
+    <div class="p-5">
+      <div class="flex items-center justify-between mb-3">
+        <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full ${t.bgTint} ${t.text} text-[10px] font-extrabold uppercase tracking-widest"><i data-lucide="${t.icon}" class="w-3 h-3"></i> ${t.label}</span>
+        <div class="flex items-center gap-1 text-[11px] text-slate-400"><span>${esc(p.timeAgo)}</span><button class="ml-1 text-slate-300 hover:text-slate-600 p-1"><i data-lucide="more-horizontal" class="w-4 h-4"></i></button></div>
+      </div>
+      <div class="flex gap-3 mb-4">
+        ${monogram(a.initials,40)}
+        <div class="min-w-0"><h4 class="font-bold text-[15px] text-[#121A21] leading-tight">${esc(a.name)}</h4><p class="text-xs text-slate-500 mt-0.5">${esc(a.role)} at <span class="font-semibold text-slate-700">${esc(a.company)}</span></p></div>
+      </div>
+      <p class="text-[15px] text-[#121A21] leading-relaxed whitespace-pre-line">${esc(p.content)}</p>
+    </div>
+    <div class="px-2 py-1 border-t border-slate-100 flex">
+      <button onclick="toggleLike(${p.id})" class="flex-1 flex items-center justify-center gap-2 py-3 rounded-lg hover:bg-slate-50 ${p.liked?'text-[#DC183C]':'text-slate-500'} text-sm font-semibold transition"><i data-lucide="heart" class="w-4 h-4 ${p.liked?'fill-current':''}"></i><span>${p.likes}</span></button>
+      <button class="flex-1 flex items-center justify-center gap-2 py-3 rounded-lg hover:bg-slate-50 text-slate-500 text-sm font-semibold transition"><i data-lucide="message-circle" class="w-4 h-4"></i><span>${p.comments}</span></button>
+      <button class="flex-1 flex items-center justify-center gap-2 py-3 rounded-lg hover:bg-slate-50 text-slate-500 text-sm font-semibold transition"><i data-lucide="share-2" class="w-4 h-4"></i><span class="hidden sm:inline">Share</span></button>
+    </div>
+  </article>`;
+}
+function toggleLike(id){
+  const p = POSTS[state.role].find(x=>x.id===id); if(!p) return;
+  p.liked=!p.liked; p.likes += p.liked?1:-1; renderProfileTab();
+}
+
+function tabConnections(){
+  const list = state.connTab==='requests' ? REQUESTS : CONNECTIONS;
+  const seg = `<div class="flex gap-2">
+    <button onclick="setConnTab('connections')" class="px-3.5 py-1.5 rounded-full text-xs font-bold border ${state.connTab==='connections'?'seg active border-[#0C1F31]':'border-slate-200 text-slate-600'}">My Connections <span class="opacity-70">${CONNECTIONS.length}</span></button>
+    <button onclick="setConnTab('requests')" class="px-3.5 py-1.5 rounded-full text-xs font-bold border ${state.connTab==='requests'?'seg active border-[#0C1F31]':'border-slate-200 text-slate-600'}">Requests <span class="opacity-70">${REQUESTS.length}</span></button>
+  </div>`;
+  const viewToggle = `<div class="flex items-center gap-1 border border-slate-200 rounded-lg p-0.5">
+    <button onclick="setConnView('list')" class="w-7 h-7 grid place-items-center rounded ${state.connView==='list'?'bg-[#0C1F31] text-white':'text-slate-400'}"><i data-lucide="list" class="w-4 h-4"></i></button>
+    <button onclick="setConnView('grid')" class="w-7 h-7 grid place-items-center rounded ${state.connView==='grid'?'bg-[#0C1F31] text-white':'text-slate-400'}"><i data-lucide="layout-grid" class="w-4 h-4"></i></button>
+  </div>`;
+
+  const actionFor = (c) => state.connTab==='requests'
+    ? `<div class="flex gap-2"><button onclick="showToast('Connected with ${esc(c.name.split(' ')[0])}.','win')" class="bg-[#DC183C] hover:bg-[#B0142F] text-white rounded-full px-4 py-1.5 text-xs font-bold transition">Accept</button><button onclick="showToast('Request dismissed.',null)" class="border border-slate-200 text-slate-500 rounded-full px-4 py-1.5 text-xs font-bold">Ignore</button></div>`
+    : `<button class="border border-slate-200 text-slate-500 rounded-full px-4 py-1.5 text-xs font-bold flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-[#29A37A]"></i> Connected</button>`;
+
+  const rows = state.connView==='grid'
+    ? `<div class="grid sm:grid-cols-2 gap-3 mt-4">${list.map(c=>`
+        <div class="border border-slate-100 rounded-2xl p-4 text-center card-lift">
+          <div class="flex justify-center mb-2">${monogram(c.initials,56)}</div>
+          <p class="font-jakarta font-bold text-[#121A21] text-sm">${esc(c.name)}</p>
+          <p class="text-xs text-slate-500">${esc(c.role)} · ${esc(c.company)}</p>
+          <p class="text-[11px] text-slate-400 mt-0.5">${c.mutual} mutual · ${esc(c.province)}</p>
+          <div class="mt-3 flex justify-center">${actionFor(c)}</div>
+        </div>`).join('')}</div>`
+    : `<div class="mt-4 divide-y divide-slate-100">${list.map(c=>`
+        <div class="flex items-center gap-3 py-3">
+          ${monogram(c.initials,44)}
+          <div class="min-w-0 flex-1"><p class="font-jakarta font-bold text-[#121A21] text-sm">${esc(c.name)}</p><p class="text-xs text-slate-500 truncate">${esc(c.role)} at ${esc(c.company)} <span class="text-slate-300">·</span> ${c.mutual} mutual</p></div>
+          ${actionFor(c)}
+        </div>`).join('')}</div>`;
+
+  return `<div>
+    <div class="flex items-center justify-between mb-1">${sectionLabel(state.role==='own'?'Your Connections':'Connections','connections')}</div>
+    <div class="flex items-center justify-between gap-3 mt-3 flex-wrap">${seg}<div class="flex items-center gap-2 ml-auto"><select class="text-xs font-semibold border border-slate-200 rounded-lg px-3 py-1.5 outline-none text-slate-600"><option>Recently active</option><option>Newest</option><option>Alphabetical</option></select>${viewToggle}</div></div>
+    ${rows}
+  </div>`;
+}
+function setConnTab(t){ state.connTab=t; renderProfileTab(); }
+function setConnView(v){ state.connView=v; renderProfileTab(); }
+
+function tabGroups(){
+  const cards = GROUPS.map(g=>`
+    <a href="single-group.html" class="border border-slate-100 rounded-2xl p-4 card-lift block">
+      <div class="flex items-start gap-3">
+        <div class="w-12 h-12 rounded-xl bg-[#0C1F31] grid place-items-center shrink-0"><i data-lucide="users" class="w-5 h-5 text-[#FF9900]"></i></div>
+        <div class="min-w-0 flex-1">
+          <div class="flex items-center gap-2 flex-wrap"><p class="font-jakarta font-bold text-[#121A21]">${esc(g.name)}</p>
+            <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold ${g.privacy==='Public'?'bg-[#E4F5EE] text-[#29A37A]':'bg-slate-100 text-slate-500'}"><i data-lucide="${g.privacy==='Public'?'globe':'lock'}" class="w-3 h-3"></i> ${g.privacy}</span>
+            ${g.role==='Organizer'?`<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#FDECEF] text-[#DC183C]">Organizer</span>`:''}
+          </div>
+          <p class="text-xs text-slate-500 mt-1 leading-snug">${esc(g.desc)}</p>
+          <p class="text-[11px] text-slate-400 mt-1.5">${g.members.toLocaleString()} members <span class="text-slate-300">·</span> active ${esc(g.active)}</p>
+        </div>
+      </div>
+    </a>`).join('');
+  return `<div><div class="flex items-center justify-between mb-3">${sectionLabel('Groups','groups')}<span class="text-xs font-bold text-slate-400">${GROUPS.length} joined</span></div><div class="grid sm:grid-cols-2 gap-3">${cards}</div></div>`;
+}
+
+function tabForums(){
+  const seg = [['discussions','My Discussions',FORUM.discussions.length],['replies','My Replies',FORUM.replies.length],['favorites','My Favorites',FORUM.favorites.length]];
+  const tabs = `<div class="flex gap-2 mb-4 overflow-x-auto no-scrollbar">${seg.map(([id,label,n])=>`<button onclick="setForumTab('${id}')" class="shrink-0 px-3.5 py-1.5 rounded-full text-xs font-bold border ${state.forumTab===id?'seg active border-[#0C1F31]':'border-slate-200 text-slate-600'}">${label} <span class="opacity-70">${n}</span></button>`).join('')}</div>`;
+  const list = FORUM[state.forumTab]||[];
+  const rows = list.length ? list.map(d=>`
+    <div class="border border-slate-100 rounded-2xl p-4 card-lift">
+      <div class="flex items-start justify-between gap-2">
+        <p class="font-jakarta font-bold text-[#121A21]">${esc(d.title)}</p>
+        ${d.status?`<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#FDECEF] text-[#DC183C] shrink-0">Open</span>`:''}
+      </div>
+      <p class="text-sm text-slate-500 mt-1 leading-snug">${esc(d.excerpt)}</p>
+      <div class="flex items-center gap-3 mt-2 text-[11px] text-slate-400">
+        <span class="inline-flex items-center gap-1"><i data-lucide="users" class="w-3.5 h-3.5"></i> ${esc(d.group)}</span>
+        ${d.replies!=null?`<span class="inline-flex items-center gap-1"><i data-lucide="message-circle" class="w-3.5 h-3.5"></i> ${d.replies} replies</span>`:''}
+        <span class="inline-flex items-center gap-1"><i data-lucide="clock" class="w-3.5 h-3.5"></i> ${esc(d.last)}</span>
+      </div>
+    </div>`).join('')
+    : `<div class="text-center py-12 text-slate-400"><i data-lucide="message-square-dashed" class="w-8 h-8 mx-auto mb-2"></i><p class="text-sm font-semibold">Nothing here yet.</p></div>`;
+  return `<div><div class="flex items-center justify-between mb-3">${sectionLabel('Forums','forums')}</div>${tabs}<div class="space-y-3">${rows}</div></div>`;
+}
+function setForumTab(t){ state.forumTab=t; renderProfileTab(); }
+
+function tabMedia(){
+  const own = state.role==='own';
+  const albumCard = a => `
+    <div class="card-lift cursor-pointer" onclick="showToast('Opening album: ${esc(a.name)}',null)">
+      <div class="aspect-[4/3] rounded-xl relative overflow-hidden" style="background:linear-gradient(135deg, ${a.c1}, ${a.c2})">
+        <div class="absolute inset-0 grid place-items-center text-white/90"><i data-lucide="images" class="w-7 h-7"></i></div>
+        <span class="absolute bottom-2 right-2 bg-black/40 text-white text-[10px] font-bold rounded-full px-2 py-0.5">${a.count}</span>
+      </div>
+      <p class="font-jakarta font-bold text-sm text-[#121A21] mt-2">${esc(a.name)}</p>
+      <p class="text-[11px] text-slate-400">${a.count} photos</p>
+    </div>`;
+  const photoTile = (c,i) => `<button onclick="showToast('Opening photo',null)" class="aspect-square rounded-xl card-lift relative overflow-hidden" style="background:linear-gradient(135deg, ${c[0]}, ${c[1]})"><span class="absolute inset-0 grid place-items-center text-white/70"><i data-lucide="image" class="w-5 h-5"></i></span></button>`;
+  return `
+    <div>
+      <div class="flex items-center justify-between mb-3">${sectionLabel('Albums','media')}${own?`<button onclick="showToast('Create album (mockup).',null)" class="text-xs font-bold text-[#DC183C] uppercase tracking-wide hover:underline flex items-center gap-1"><i data-lucide="plus" class="w-3.5 h-3.5"></i> New album</button>`:''}</div>
+      <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">${MEDIA.albums.map(albumCard).join('')}</div>
+      <div class="flex items-center justify-between mt-6 mb-3">${sectionLabel('Photos')}${own?`<button onclick="showToast('Photo upload (mockup).',null)" class="bg-[#0C1F31] text-white rounded-full px-4 py-1.5 text-xs font-bold flex items-center gap-1.5"><i data-lucide="upload" class="w-3.5 h-3.5"></i> Upload</button>`:''}</div>
+      <div class="grid grid-cols-3 sm:grid-cols-4 gap-2">${MEDIA.photos.map(photoTile).join('')}</div>
+      <p class="text-[11px] text-slate-400 mt-4 flex items-center gap-1.5"><i data-lucide="info" class="w-3.5 h-3.5"></i> Mockup uses brand-gradient placeholders — no real photos in prototypes.</p>
+    </div>`;
+}
+
+function tabInvites(){
+  const used = INVITES.length, quota = 10, left = quota - used;
+  const statusPill = s => s==='joined'
+    ? `<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#E4F5EE] text-[#29A37A]"><i data-lucide="check" class="w-3 h-3"></i> Joined</span>`
+    : `<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-slate-100 text-slate-500"><i data-lucide="clock" class="w-3 h-3"></i> Pending</span>`;
+  const rows = INVITES.map(iv=>`
+    <div class="flex items-center gap-3 py-3">
+      <div class="w-9 h-9 rounded-full bg-slate-100 grid place-items-center shrink-0"><i data-lucide="mail" class="w-4 h-4 text-slate-500"></i></div>
+      <div class="min-w-0 flex-1"><p class="text-sm font-semibold text-[#121A21] truncate">${esc(iv.email)}</p><p class="text-xs text-slate-400">Invited ${esc(iv.date)}</p></div>
+      ${statusPill(iv.status)}
+      ${iv.status==='pending'?`<button onclick="showToast('Invite re-sent to ${esc(iv.email)}',null)" class="text-xs font-bold text-[#DC183C] hover:underline ml-1">Resend</button>`:''}
+    </div>`).join('');
+  return `
+    <div>
+      <div class="flex items-center justify-between mb-3">${sectionLabel('Email Invites','invites')}<span class="text-xs font-bold text-slate-400">${left} of ${quota} left</span></div>
+      <div class="rounded-2xl border border-slate-100 p-4 mb-5">
+        <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1.5">Invite a founder by email</label>
+        <div class="flex flex-col sm:flex-row gap-2">
+          <input id="invite-email" type="email" placeholder="name@company.co.za" class="flex-1 bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-sm outline-none focus:border-[#DC183C] focus:bg-white transition">
+          <button onclick="sendInvite()" class="bg-[#DC183C] hover:bg-[#B0142F] text-white rounded-full px-5 py-2.5 font-jakarta font-bold text-sm transition flex items-center justify-center gap-2 shrink-0"><i data-lucide="send" class="w-4 h-4"></i> Send invite</button>
+        </div>
+        <div class="mt-3 pt-3 border-t border-slate-100">
+          <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1.5">Or share your invite link</label>
+          <div class="flex gap-2">
+            <input id="invite-link" readonly value="https://smesouthafrica.co.za/join?ref=tshepho" class="flex-1 bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-sm text-slate-500 outline-none font-mono">
+            <button onclick="copyInviteLink()" class="border border-slate-200 hover:border-[#DC183C] hover:text-[#DC183C] text-slate-600 rounded-full px-4 py-2.5 font-jakarta font-bold text-sm transition flex items-center gap-2 shrink-0"><i data-lucide="copy" class="w-4 h-4"></i> Copy</button>
+          </div>
+        </div>
+      </div>
+      <div class="flex items-center justify-between mb-1">${sectionLabel('Sent invites')}</div>
+      <div class="divide-y divide-slate-100">${rows}</div>
+    </div>`;
+}
+function sendInvite(){
+  const i = document.getElementById('invite-email'); if(!i) return;
+  const v = i.value.trim();
+  if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v)){ showToast('Enter a valid email address.', null); return; }
+  INVITES.unshift({ email:v, status:'pending', date:'just now' });
+  renderProfileTab();
+  showToast('Invite sent to '+v, 'win');
+}
+function copyInviteLink(){
+  const i = document.getElementById('invite-link');
+  if(i){ i.select(); try{ document.execCommand('copy'); }catch(e){} }
+  showToast('Invite link copied to clipboard.', null);
+}
+
+/* ===================== PROFILE: ASIDE ===================== */
+function renderAside(){
+  const p = person(); const own = state.role==='own';
+  const ring = (pct,color='#DC183C') => `
+    <div class="relative w-16 h-16 shrink-0">
+      <svg class="w-full h-full -rotate-90" viewBox="0 0 36 36">
+        <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" stroke="#F1F5F9" stroke-width="3" fill="none"></path>
+        <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" stroke="${color}" stroke-width="3" stroke-linecap="round" fill="none" stroke-dasharray="${pct}, 100"></path>
+      </svg>
+      <div class="absolute inset-0 grid place-items-center"><p class="font-jakarta font-extrabold text-base text-[#121A21] leading-none">${pct}<span class="text-[10px] align-top">%</span></p></div>
+    </div>`;
+
+  const strengthCard = own ? `
+    <div class="bg-white rounded-2xl border border-slate-100 p-5 reveal">
+      <div class="flex items-center justify-between mb-4">${sectionLabel('Profile Strength','strength')}</div>
+      <div class="flex items-center gap-4">${ring(p.strength)}
+        <div class="min-w-0"><p class="text-xs text-slate-600 leading-snug mb-2">A complete profile is <span class="font-bold text-[#121A21]">3× more discoverable</span> in member search.</p></div>
+      </div>
+      <p class="text-[11px] text-slate-400 mt-4 mb-2 font-semibold uppercase tracking-wide">A complete profile <span class="text-[#121A21]">participates</span> — not just fills fields.</p>
+      <div class="space-y-2">
+        ${[
+          ['Complete your bio','done',"setProfileTab('overview')"],
+          ['Add website &amp; socials','done',"setProfileTab('overview')"],
+          ['Post your first Ask','todo',"setProfileTab('activity')"],
+          ["Answer a founder's Ask",'todo',"navTo('hub')"],
+          ['Share a resource or Win','todo',"setProfileTab('activity')"]
+        ].map(([t,s,act])=>`
+          <button ${s==='todo'?`onclick="${act}"`:''} class="w-full flex items-center gap-2.5 text-left ${s==='done'?'opacity-60':''}">
+            <span class="w-5 h-5 rounded-full grid place-items-center shrink-0 ${s==='done'?'bg-[#29A37A] text-white':'border-2 border-slate-200 text-transparent'}"><i data-lucide="check" class="w-3 h-3"></i></span>
+            <span class="text-sm ${s==='done'?'text-slate-400 line-through':'text-[#121A21] font-semibold'}">${t}</span>
+            ${s==='todo'?`<i data-lucide="chevron-right" class="w-4 h-4 text-slate-300 ml-auto"></i>`:''}
+          </button>`).join('')}
+      </div>
+    </div>` : '';
+
+  const contribCard = `
+    <div role="button" tabindex="0" onclick="openContribution()" class="bg-white rounded-2xl border border-slate-100 overflow-hidden reveal cursor-pointer card-lift" style="animation-delay:80ms">
+      <div class="bg-[#0C1F31] px-5 py-4 relative">
+        <div class="absolute inset-0 opacity-40" style="background:radial-gradient(circle at 30% 50%, #FFF1E0 0%, transparent 65%);"></div>
+        <p class="relative text-[10px] font-bold uppercase tracking-widest text-[#FF9900] flex items-center gap-1.5">Contribution
+          <button onclick="event.stopPropagation();openBrief('contribution')" class="dev-badge w-4 h-4 rounded-full bg-[#DC183C] text-white items-center justify-center text-[9px] font-bold leading-none animate-pulse" title="Implementation notes">i</button>
+        </p>
+        <p class="relative font-jakarta font-extrabold text-3xl text-white leading-none mt-1">${p.contrib.asksHelped+p.contrib.winsCelebrated+p.contrib.sharesAmplified}</p>
+        <p class="relative text-[11px] text-white/60 mt-1">ways ${own?'you have':esc(p.name.split(' ')[0])+' has'} shown up</p>
+      </div>
+      <div class="grid grid-cols-3 text-center divide-x divide-slate-100">
+        <div class="py-3"><p class="font-jakarta font-extrabold text-lg text-[#DC183C]">${p.contrib.asksHelped}</p><p class="text-[9px] font-bold uppercase tracking-wider text-slate-400">Asks</p></div>
+        <div class="py-3"><p class="font-jakarta font-extrabold text-lg text-[#29A37A]">${p.contrib.winsCelebrated}</p><p class="text-[9px] font-bold uppercase tracking-wider text-slate-400">Wins</p></div>
+        <div class="py-3"><p class="font-jakarta font-extrabold text-lg text-[#AE6B0A]">${p.contrib.sharesAmplified}</p><p class="text-[9px] font-bold uppercase tracking-wider text-slate-400">Shares</p></div>
+      </div>
+    </div>`;
+
+  const badgeMini = `
+    <div class="bg-white rounded-2xl border border-slate-100 p-5 reveal" style="animation-delay:160ms">
+      <div class="flex items-center justify-between mb-3">${sectionLabel('Top Badges','badges')}<button onclick="setProfileTab('overview')" class="text-[11px] font-bold text-[#DC183C] uppercase hover:underline">All</button></div>
+      <div class="flex flex-wrap gap-2">${BADGES.slice(0,3).map(b=>`<span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold" style="background:${b.bg};color:${b.color}"><i data-lucide="${b.icon}" class="w-3.5 h-3.5"></i> ${esc(b.label)}</span>`).join('')}</div>
+    </div>`;
+
+  document.getElementById('profile-aside').innerHTML = strengthCard + contribCard + badgeMini;
+}
+
+function peerConnect(){
+  PEOPLE.peer.connectStatus = 'pending';
+  renderHero(); lucide.createIcons();
+  showToast('Connection request sent to '+PEOPLE.peer.name.split(' ')[0]+'.', null);
+}
+
+/* ===================== PROFILE: EDIT MODE ===================== */
+function toggleEdit(){
+  state.editing = !state.editing;
+  renderHero(); renderProfileTab(); lucide.createIcons();
+  if(state.editing) showToast('Edit mode on — update your details, then Save.', null);
+}
+function saveProfile(){
+  const p = PEOPLE.own; const g = id => document.getElementById(id);
+  if(g('edit-name')) p.name = g('edit-name').value.trim() || p.name;
+  if(g('edit-role')) p.role = g('edit-role').value.trim() || p.role;
+  if(g('edit-company')) p.company = g('edit-company').value.trim() || p.company;
+  if(g('edit-bio')) p.bio = g('edit-bio').value.trim() || p.bio;
+  ['website','linkedin','twitter','whatsapp'].forEach(f=>{ if(g('edit-'+f)) p[f] = g('edit-'+f).value.trim() || p[f]; });
+  p.initials = p.name.split(' ').map(w=>w[0]).slice(0,2).join('').toUpperCase();
+  p.strength = Math.min(100, p.strength + 8);
+  state.editing = false;
+  renderProfile(); updateBadges();
+  showToast('Profile updated.', 'win');
+}
+
+/* ===================== CONTRIBUTION MODAL ===================== */
+function openContribution(){
+  const p = person();
+  const rows = [
+    { c:'#DC183C', bg:'#FDECEF', icon:'help-circle', label:'Asks helped',      n:p.contrib.asksHelped,      sub:'answers that moved a founder forward' },
+    { c:'#29A37A', bg:'#E4F5EE', icon:'trophy',      label:'Wins celebrated',  n:p.contrib.winsCelebrated,  sub:'milestones cheered on' },
+    { c:'#AE6B0A', bg:'#FFF1E0', icon:'megaphone',   label:'Shares amplified', n:p.contrib.sharesAmplified, sub:'resources passed forward' }
+  ];
+  const total = rows.reduce((s,r)=>s+r.n,0);
+  document.getElementById('overlay-root').innerHTML = `
+    <div class="ov" id="ov-contrib">
+      <div class="ov-bg" onclick="closeOverlay('ov-contrib')"></div>
+      <div class="modalbox overflow-hidden">
+        <div class="bg-[#0C1F31] text-white px-6 py-5 relative">
+          <button onclick="closeOverlay('ov-contrib')" class="absolute top-4 right-4 text-white/60 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button>
+          <p class="text-[10px] font-bold uppercase tracking-widest text-[#FF9900] mb-1">Contribution</p>
+          <h3 class="font-jakarta font-extrabold text-3xl leading-none">${total}</h3>
+          <p class="text-xs text-white/60 mt-2">Reputation here is built on generosity — not follower counts.</p>
+        </div>
+        <div class="p-4 space-y-2">
+          ${rows.map(r=>`<div class="flex items-center gap-3 p-3 rounded-xl" style="background:${r.bg}">
+            <div class="w-10 h-10 rounded-full grid place-items-center shrink-0" style="background:${r.c}"><i data-lucide="${r.icon}" class="w-5 h-5 text-white"></i></div>
+            <div class="min-w-0 flex-1"><p class="font-jakarta font-bold text-[#121A21] leading-none">${r.label}</p><p class="text-[11px] text-slate-500 mt-1">${r.sub}</p></div>
+            <p class="font-jakarta font-extrabold text-2xl shrink-0" style="color:${r.c}">${r.n}</p></div>`).join('')}
+        </div>
+      </div>
+    </div>`;
+  requestAnimationFrame(()=>{ const o=document.getElementById('ov-contrib'); if(o) o.classList.add('open'); });
+  lucide.createIcons();
+}
+
+/* ===================== MESSAGES ===================== */
+function openMessages(convId){
+  if(convId) state.activeConv = convId;
+  state.msgPane = 'thread';
+  switchView('messages');
+}
+function renderMessages(){
+  const host = document.getElementById('messages-content');
+  if(!host) return;
+  const active = CONVERSATIONS.find(c=>c.id===state.activeConv) || CONVERSATIONS[0];
+
+  const listItem = c => {
+    const last = c.messages[c.messages.length-1] || { time:'', text:'New conversation — say hello 👋', from:'' };
+    const on = c.id===state.activeConv;
+    return `<button onclick="selectConversation('${c.id}')" class="w-full text-left px-4 py-3 flex gap-3 border-b border-slate-100 transition ${on?'bg-[#FDECEF]/60':'hover:bg-slate-50'}">
+      <div class="relative shrink-0">${monogram(c.initials,44)}${c.online?'<span class="absolute bottom-0 right-0 w-3 h-3 rounded-full bg-[#29A37A] ring-2 ring-white"></span>':''}</div>
+      <div class="min-w-0 flex-1">
+        <div class="flex items-center justify-between gap-2"><p class="font-jakarta font-bold text-sm text-[#121A21] truncate">${esc(c.name)}</p><span class="text-[11px] text-slate-400 shrink-0">${esc(last.time)}</span></div>
+        <div class="flex items-center justify-between gap-2 mt-0.5"><p class="text-xs text-slate-500 truncate">${last.from==='me'?'You: ':''}${esc(last.text)}</p>${c.unread?`<span class="shrink-0 bg-[#DC183C] text-white text-[10px] font-bold rounded-full min-w-[18px] h-[18px] px-1 grid place-items-center">${c.unread}</span>`:''}</div>
+      </div>
+    </button>`;
+  };
+
+  const listPane = `
+    <div class="flex flex-col h-full ${state.msgPane==='thread'?'hidden lg:flex':'flex'}">
+      <div class="px-4 py-3 border-b border-slate-100 flex items-center gap-2">
+        <div class="relative flex-1"><i data-lucide="search" class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400"></i><input placeholder="Search messages…" class="w-full bg-slate-100 rounded-full pl-9 pr-3 py-2 text-sm outline-none focus:bg-white focus:ring-2 focus:ring-[#DC183C]/30 transition"></div>
+        <button onclick="openComposeModal()" title="New message" class="w-9 h-9 grid place-items-center rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white transition shrink-0"><i data-lucide="pen-line" class="w-4 h-4"></i></button>
+      </div>
+      <div class="flex-1 overflow-y-auto no-scrollbar">${CONVERSATIONS.map(listItem).join('')}</div>
+    </div>`;
+
+  const bubbles = active.messages.map(m=> m.from==='me'
+    ? `<div class="flex justify-end"><div class="max-w-[78%]"><div class="bg-gradient-to-br from-[#DC183C] to-[#FF9900] text-white rounded-2xl rounded-br-md px-4 py-2.5 text-sm leading-relaxed">${esc(m.text)}</div><p class="text-[10px] text-slate-400 text-right mt-1 pr-1">${esc(m.time)}</p></div></div>`
+    : `<div class="flex justify-start gap-2"><div class="max-w-[78%]"><div class="bg-slate-100 text-[#121A21] rounded-2xl rounded-bl-md px-4 py-2.5 text-sm leading-relaxed">${esc(m.text)}</div><p class="text-[10px] text-slate-400 mt-1 pl-1">${esc(m.time)}</p></div></div>`
+  ).join('');
+
+  const canMessage = active.connected || state.privacy.messages==='everyone';
+  const composer = canMessage
+    ? `<div class="px-4 py-3 border-t border-slate-100 flex items-center gap-2">
+        <input id="msg-input" onkeydown="if(event.key==='Enter')sendMessage()" placeholder="Write a message…" class="flex-1 bg-slate-100 rounded-full px-4 py-2.5 text-sm outline-none focus:bg-white focus:ring-2 focus:ring-[#DC183C]/30 transition">
+        <button onclick="sendMessage()" class="w-10 h-10 grid place-items-center rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white transition shrink-0"><i data-lucide="send-horizontal" class="w-4 h-4"></i></button>
+      </div>`
+    : `<div class="px-4 py-3 border-t border-slate-100 text-center text-xs text-slate-400 flex items-center justify-center gap-1.5"><i data-lucide="lock" class="w-3.5 h-3.5"></i> You can only message your connections (Privacy setting).</div>`;
+
+  const threadPane = `
+    <div class="flex flex-col h-full ${state.msgPane==='list'?'hidden lg:flex':'flex'}">
+      <div class="px-4 py-3 border-b border-slate-100 flex items-center gap-3">
+        <button onclick="backToList()" class="lg:hidden text-slate-500 hover:text-[#DC183C]"><i data-lucide="arrow-left" class="w-5 h-5"></i></button>
+        <div class="relative shrink-0">${monogram(active.initials,40)}${active.online?'<span class="absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full bg-[#29A37A] ring-2 ring-white"></span>':''}</div>
+        <div class="min-w-0 flex-1"><p class="font-jakarta font-bold text-sm text-[#121A21] truncate">${esc(active.name)}</p><p class="text-xs text-slate-500 truncate">${esc(active.role)} at ${esc(active.company)} ${active.online?'<span class="text-[#29A37A]">· Online</span>':''}</p></div>
+        <button onclick="openMemberFromChat()" class="text-xs font-bold text-[#DC183C] uppercase tracking-wide hover:underline shrink-0">View profile</button>
+      </div>
+      <div id="msg-thread" class="flex-1 overflow-y-auto p-4 space-y-3 bg-slate-50/40">${bubbles || `<div class="h-full grid place-items-center text-center text-slate-400"><div><i data-lucide="message-circle" class="w-8 h-8 mx-auto mb-2"></i><p class="text-sm font-semibold">Start the conversation with ${esc(active.name.split(' ')[0])}.</p></div></div>`}</div>
+      ${composer}
+    </div>`;
+
+  host.innerHTML = `<div class="grid lg:grid-cols-[20rem_1fr] h-[68vh] min-h-[460px] divide-x divide-slate-100">${listPane}${threadPane}</div>`;
+  lucide.createIcons();
+  const t = document.getElementById('msg-thread'); if(t) t.scrollTop = t.scrollHeight;
+}
+function selectConversation(id){
+  state.activeConv = id; state.msgPane='thread';
+  const c = CONVERSATIONS.find(x=>x.id===id); if(c) c.unread = 0;
+  renderMessages(); updateBadges();
+  const inp = document.getElementById('msg-input'); if(inp && window.innerWidth>=1024) inp.focus();
+}
+
+/* New-message compose modal (message any connection) */
+function openComposeModal(){
+  closeMenus();
+  const rows = CONNECTIONS.map((c,i)=>`
+    <button data-name="${esc(c.name.toLowerCase())}" onclick="startConversation(${i})" class="conv-pick w-full flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-slate-50 text-left transition">
+      ${monogram(c.initials,40)}
+      <div class="min-w-0"><p class="font-jakarta font-bold text-sm text-[#121A21] truncate">${esc(c.name)}</p><p class="text-xs text-slate-500 truncate">${esc(c.role)} at ${esc(c.company)}</p></div>
+      <i data-lucide="chevron-right" class="w-4 h-4 text-slate-300 ml-auto shrink-0"></i>
+    </button>`).join('');
+  document.getElementById('overlay-root').innerHTML = `
+    <div class="ov" id="ov-compose">
+      <div class="ov-bg" onclick="closeOverlay('ov-compose')"></div>
+      <div class="modalbox overflow-hidden">
+        <div class="px-5 py-4 border-b border-slate-100 flex items-center justify-between">
+          <h3 class="font-jakarta font-extrabold text-lg text-[#121A21]">New message</h3>
+          <button onclick="closeOverlay('ov-compose')" class="text-slate-400 hover:text-slate-600"><i data-lucide="x" class="w-5 h-5"></i></button>
+        </div>
+        <div class="px-5 py-3 border-b border-slate-100">
+          <div class="relative"><i data-lucide="search" class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400"></i><input oninput="filterComposeList(this.value)" placeholder="Search your connections…" class="w-full bg-slate-100 rounded-full pl-9 pr-3 py-2 text-sm outline-none focus:bg-white focus:ring-2 focus:ring-[#DC183C]/30 transition"></div>
+        </div>
+        <div id="compose-list" class="p-2 max-h-[50vh] overflow-y-auto">${rows}</div>
+        <p class="px-5 py-3 text-[11px] text-slate-400 border-t border-slate-100 flex items-center gap-1.5"><i data-lucide="info" class="w-3.5 h-3.5"></i> You can start a conversation with any of your connections.</p>
+      </div>
+    </div>`;
+  requestAnimationFrame(()=>{ const o=document.getElementById('ov-compose'); if(o) o.classList.add('open'); });
+  lucide.createIcons();
+}
+function filterComposeList(q){
+  q = (q||'').toLowerCase();
+  document.querySelectorAll('#compose-list .conv-pick').forEach(el=>{ el.classList.toggle('hidden', !el.getAttribute('data-name').includes(q)); });
+}
+function startConversation(i){
+  const c = CONNECTIONS[i]; if(!c) return;
+  let conv = CONVERSATIONS.find(x=>x.name===c.name);
+  if(!conv){
+    conv = { id:'c'+(CONVERSATIONS.length+1), name:c.name, initials:c.initials, role:c.role, company:c.company, online:false, unread:0, connected:true, messages:[] };
+    CONVERSATIONS.push(conv);
+  }
+  closeOverlay('ov-compose');
+  state.activeConv = conv.id; state.msgPane='thread';
+  switchView('messages');
+}
+function backToList(){ state.msgPane='list'; renderMessages(); }
+function sendMessage(){
+  const inp = document.getElementById('msg-input'); if(!inp) return;
+  const text = inp.value.trim(); if(!text) return;
+  const c = CONVERSATIONS.find(x=>x.id===state.activeConv); if(!c) return;
+  c.messages.push({ from:'me', text, time:'Now' });
+  inp.value='';
+  renderMessages();
+  // canned reply for demo realism
+  setTimeout(()=>{
+    const reply = CANNED[state.cannedIdx % CANNED.length]; state.cannedIdx++;
+    c.messages.push({ from:'them', text:reply, time:'Now' });
+    if(state.view==='messages') renderMessages();
+  }, 1100);
+}
+function openMemberFromChat(){ setRole('peer'); switchView('profile'); }
+
+/* ===================== SCREEN B: SETTINGS ===================== */
+const SETTINGS_NAV = [
+  { id:'profile',       label:'Profile',        icon:'user-round' },
+  { id:'notifications', label:'Notifications',  icon:'bell' },
+  { id:'privacy',       label:'Privacy',        icon:'eye' },
+  { id:'blocked',       label:'Blocked Members',icon:'user-x' },
+  { id:'membership',    label:'Membership',     icon:'crown' },
+  { id:'orders',        label:'My Orders',      icon:'shopping-bag' },
+  { id:'security',      label:'Security',       icon:'lock' },
+  { id:'data',          label:'Data & POPIA',   icon:'shield-check' }
+];
+function renderSettingsNav(){
+  document.getElementById('settings-nav').innerHTML = SETTINGS_NAV.map(s=>`
+    <button onclick="setSettingsTab('${s.id}')" class="snav ${state.settingsTab===s.id?'active':'text-slate-600 hover:bg-slate-50'} shrink-0 w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-semibold text-left transition">
+      <i data-lucide="${s.icon}" class="w-4.5 h-4 text-slate-400"></i> <span>${s.label}</span>
+      <button onclick="event.stopPropagation();openBrief('set_${s.id}')" class="dev-badge w-4 h-4 rounded-full bg-[#DC183C] text-white items-center justify-center text-[9px] font-bold leading-none animate-pulse ml-auto" title="Implementation notes">i</button>
+    </button>`).join('');
+  lucide.createIcons();
+}
+function setSettingsTab(id){ state.settingsTab=id; renderSettingsNav(); renderSettingsContent(); window.scrollTo({top:120,behavior:'smooth'}); }
+
+function settingsCard(title, sub, body){
+  return `<div class="bg-white rounded-2xl border border-slate-100 overflow-hidden reveal">
+    <div class="px-5 sm:px-6 py-4 border-b border-slate-100">
+      <h2 class="font-jakarta font-extrabold text-lg text-[#121A21] tracking-tight">${esc(title)}</h2>
+      ${sub?`<p class="text-sm text-slate-500 mt-0.5">${sub}</p>`:''}
+    </div>
+    <div class="p-5 sm:p-6">${body}</div>
+  </div>`;
+}
+function field(label, inputHTML, hint){
+  return `<div><label class="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1.5">${esc(label)}</label>${inputHTML}${hint?`<p class="text-xs text-slate-400 mt-1">${hint}</p>`:''}</div>`;
+}
+function inp(id,val,ph=''){ return `<input id="${id}" value="${esc(val||'')}" placeholder="${esc(ph)}" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-sm outline-none focus:border-[#DC183C] focus:bg-white transition">`; }
+function sel(id,opts,cur){ return `<select id="${id}" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-sm outline-none focus:border-[#DC183C] focus:bg-white transition">${opts.map(o=>`<option ${o===cur?'selected':''}>${esc(o)}</option>`).join('')}</select>`; }
+function toggleRow(label, sub, on, onclick){
+  return `<div class="flex items-center justify-between gap-4 py-3.5">
+    <div class="min-w-0"><p class="text-sm font-semibold text-[#121A21]">${esc(label)}</p>${sub?`<p class="text-xs text-slate-500 mt-0.5">${esc(sub)}</p>`:''}</div>
+    <div onclick="${onclick}" class="switch ${on?'on':''}"></div>
+  </div>`;
+}
+
+function renderSettingsContent(){
+  const host = document.getElementById('settings-content');
+  const map = { profile:setProfile, notifications:setNotifications, privacy:setPrivacy, blocked:setBlocked, membership:setMembership, orders:setOrders, security:setSecurity, data:setData };
+  host.innerHTML = (map[state.settingsTab]||setProfile)();
+  lucide.createIcons();
+}
+
+function setProfile(){
+  const p = PEOPLE.own;
+  const body = `
+    <div class="flex items-center gap-4 pb-5 mb-5 border-b border-slate-100">
+      <div class="w-16 h-16 rounded-full bg-gradient-to-br from-[#DC183C] to-[#FF9900] grid place-items-center font-jakarta font-extrabold text-white text-xl ring-2 ring-slate-100">${esc(p.initials)}</div>
+      <div><button onclick="showToast('Avatar upload (mockup).',null)" class="bg-[#0C1F31] text-white rounded-full px-4 py-2 text-xs font-bold flex items-center gap-1.5"><i data-lucide="upload" class="w-3.5 h-3.5"></i> Change photo</button><p class="text-xs text-slate-400 mt-1.5">JPG or PNG, max 2MB.</p></div>
+    </div>
+    <div class="grid sm:grid-cols-2 gap-4">
+      ${field('Full name', inp('s-name',p.name))}
+      ${field('Username / handle', inp('s-handle','@'+p.handle))}
+      ${field('Title', inp('s-role',p.role))}
+      ${field('Company', inp('s-company',p.company))}
+      ${field('Stage', sel('s-stage',['Idea','Just Launched','Growing','Established'],p.stage))}
+      ${field('Sector', sel('s-sector',['Fintech','SaaS','Retail','Agritech','Cleantech','AI','Other'],p.sector))}
+      ${field('Province / Region', sel('s-prov',['Gauteng','Western Cape','KwaZulu-Natal','Eastern Cape','Free State','Limpopo','Mpumalanga','North West','Northern Cape'],p.province))}
+      ${field('City', inp('s-city',p.city))}
+    </div>
+    <div class="mt-4">${field('Bio', `<textarea id="s-bio" rows="3" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-sm outline-none focus:border-[#DC183C] focus:bg-white transition">${esc(p.bio)}</textarea>`, 'Max 280 characters.')}</div>
+    <div class="mt-5 pt-5 border-t border-slate-100">
+      <h3 class="font-jakarta font-bold uppercase text-sm text-[#121A21] tracking-wide mb-3">Links &amp; Socials</h3>
+      <div class="grid sm:grid-cols-2 gap-4">
+        ${field('Website', inp('s-website',p.website))}
+        ${field('LinkedIn', inp('s-linkedin',p.linkedin))}
+        ${field('X / Twitter', inp('s-twitter',p.twitter))}
+        ${field('WhatsApp Business', inp('s-whatsapp',p.whatsapp))}
+      </div>
+    </div>
+    <div class="mt-6 flex gap-2"><button onclick="saveSettingsProfile()" class="bg-[#DC183C] hover:bg-[#B0142F] text-white rounded-full px-6 py-2.5 font-jakarta font-bold text-sm transition">Save changes</button><button onclick="renderSettingsContent()" class="text-slate-500 hover:text-slate-700 text-sm font-semibold px-3">Cancel</button></div>`;
+  return settingsCard('Profile', 'This information appears on your public member profile.', body);
+}
+function saveSettingsProfile(){
+  const p = PEOPLE.own; const g = id=>document.getElementById(id);
+  p.name=g('s-name').value.trim()||p.name; p.handle=(g('s-handle').value.trim()||p.handle).replace(/^@/,'');
+  p.role=g('s-role').value.trim()||p.role; p.company=g('s-company').value.trim()||p.company;
+  p.stage=g('s-stage').value; p.sector=g('s-sector').value; p.province=g('s-prov').value; p.city=g('s-city').value.trim()||p.city;
+  p.bio=g('s-bio').value.trim()||p.bio; p.website=g('s-website').value.trim()||p.website;
+  p.linkedin=g('s-linkedin').value.trim()||p.linkedin; p.twitter=g('s-twitter').value.trim()||p.twitter; p.whatsapp=g('s-whatsapp').value.trim()||p.whatsapp;
+  p.initials=p.name.split(' ').map(w=>w[0]).slice(0,2).join('').toUpperCase();
+  renderProfile(); updateBadges();
+  showToast('Profile saved.', 'win');
+}
+
+function setNotifications(){
+  const n = state.notif;
+  const digest = ['daily','weekly','none'];
+  const digestUI = `<div class="grid sm:grid-cols-3 gap-2">${digest.map(d=>`
+    <div onclick="setDigest('${d}')" class="rcard ${n.digest===d?'sel':''} border border-slate-200 rounded-xl p-3 text-center">
+      <p class="font-jakarta font-bold text-sm text-[#121A21] capitalize">${d}</p>
+      <p class="text-[11px] text-slate-500 mt-0.5">${d==='daily'?'Every morning':d==='weekly'?'Monday digest':'No email digest'}</p>
+    </div>`).join('')}</div>`;
+  const events = [
+    ['reply','New reply to your post',"When someone replies to your Ask, Win or Share"],
+    ['mention','Mentions',"When a member @mentions you"],
+    ['sectorAsk','New Ask in your sector',"Fresh Asks from your sector so you can help"],
+    ['winConn','Win from a connection',"Celebrate milestones from people you know"],
+    ['event','Event reminders',"Upcoming SME events and summit alerts"],
+    ['suggested','New suggested connection',"When we find a founder worth meeting"]
+  ];
+  const body = `
+    <div class="pb-5 mb-5 border-b border-slate-100">
+      <h3 class="font-jakarta font-bold uppercase text-sm text-[#121A21] tracking-wide mb-1">Email digest</h3>
+      <p class="text-xs text-slate-500 mb-3">Batched email summary — sent via Kit (ConvertKit), staggered to protect deliverability.</p>
+      ${digestUI}
+    </div>
+    <h3 class="font-jakarta font-bold uppercase text-sm text-[#121A21] tracking-wide mb-1">In-app notifications</h3>
+    <div class="divide-y divide-slate-100">
+      ${events.map(([k,l,s])=>toggleRow(l,s,n[k],`toggleNotif('${k}')`)).join('')}
+    </div>`;
+  return settingsCard('Notifications', 'Choose what reaches you, and how.', body);
+}
+function setDigest(d){ state.notif.digest=d; renderSettingsContent(); showToast('Email digest: '+d+'.', null); }
+function toggleNotif(k){ state.notif[k]=!state.notif[k]; renderSettingsContent(); }
+
+function setPrivacy(){
+  const pr = state.privacy;
+  const radio = (group, opts, cur, fn) => `<div class="space-y-2">${opts.map(([v,l,s])=>`
+    <div onclick="${fn}('${v}')" class="rcard ${cur===v?'sel':''} border border-slate-200 rounded-xl p-3 flex items-start gap-3">
+      <span class="w-4 h-4 rounded-full border-2 mt-0.5 shrink-0 ${cur===v?'border-[#DC183C]':'border-slate-300'} grid place-items-center">${cur===v?'<span class="w-2 h-2 rounded-full bg-[#DC183C]"></span>':''}</span>
+      <div><p class="text-sm font-semibold text-[#121A21]">${l}</p><p class="text-xs text-slate-500">${s}</p></div>
+    </div>`).join('')}</div>`;
+  const body = `
+    <div class="pb-5 mb-5 border-b border-slate-100">
+      <h3 class="font-jakarta font-bold uppercase text-sm text-[#121A21] tracking-wide mb-2">Profile visibility</h3>
+      ${radio('vis',[['community','Community only','Visible to logged-in SME HUB members'],['public','Public','Anyone on the web can view (indexed)'],['private','Private','Only you and your connections']],pr.visibility,'setVisibility')}
+    </div>
+    <div class="pb-5 mb-5 border-b border-slate-100">
+      <h3 class="font-jakarta font-bold uppercase text-sm text-[#121A21] tracking-wide mb-2">Default post visibility</h3>
+      ${radio('post',[['community','Community','Posts visible to members'],['connections','Connections only','Only people you are connected with'],['public','Public','Visible to anyone']],pr.postDefault,'setPostDefault')}
+    </div>
+    <div class="pb-5 mb-5 border-b border-slate-100">
+      <h3 class="font-jakarta font-bold uppercase text-sm text-[#121A21] tracking-wide mb-2">Who can message you</h3>
+      ${radio('msg',[['everyone','Everyone','Any member can start a conversation'],['connections','Connections only','Only your connections can message you']],pr.messages,'setMessages')}
+    </div>
+    <h3 class="font-jakarta font-bold uppercase text-sm text-[#121A21] tracking-wide mb-1">Discoverability</h3>
+    <div class="divide-y divide-slate-100">
+      ${toggleRow('Show in member directory','Appear in search and Suggested Members',pr.directory,'togglePrivacy(\'directory\')')}
+      ${toggleRow('Show contribution stats','Display Asks helped / Wins / Shares on your profile',pr.stats,'togglePrivacy(\'stats\')')}
+    </div>`;
+  return settingsCard('Privacy', 'Control who sees you and how you can be reached.', body);
+}
+function setVisibility(v){ state.privacy.visibility=v; renderSettingsContent(); }
+function setPostDefault(v){ state.privacy.postDefault=v; renderSettingsContent(); }
+function setMessages(v){ state.privacy.messages=v; renderSettingsContent(); }
+function togglePrivacy(k){ state.privacy[k]=!state.privacy[k]; renderSettingsContent(); }
+
+function setBlocked(){
+  const rows = BLOCKED.length ? BLOCKED.map((b,i)=>`
+    <div class="flex items-center gap-3 py-3">
+      ${monogram(b.initials,40)}
+      <div class="min-w-0 flex-1"><p class="text-sm font-semibold text-[#121A21]">${esc(b.name)}</p><p class="text-xs text-slate-500">${esc(b.reason)} · blocked ${esc(b.date)}</p></div>
+      <button onclick="unblock(${i})" class="text-xs font-bold text-[#DC183C] border border-slate-200 hover:border-[#DC183C] rounded-full px-3 py-1.5 transition shrink-0">Unblock</button>
+    </div>`).join('') : `<div class="py-10 text-center text-slate-400"><i data-lucide="shield-check" class="w-8 h-8 mx-auto mb-2"></i><p class="text-sm font-semibold">You haven't blocked anyone.</p></div>`;
+  const body = `
+    <p class="text-sm text-slate-600 mb-4">Blocked members can't message you, see your posts, or send you connection requests — and they aren't told they've been blocked.</p>
+    <div class="divide-y divide-slate-100">${rows}</div>`;
+  return settingsCard('Blocked Members', "People you've blocked on SME HUB.", body);
+}
+function unblock(i){ const b=BLOCKED[i]; BLOCKED.splice(i,1); renderSettingsContent(); showToast('Unblocked '+(b?b.name:'member')+'.', null); }
+
+function setMembership(){
+  const usage = [['Posts this month',24,50,'#DC183C'],['Connections',148,250,'#0C1F31'],['Events attended',3,5,'#FF9900']];
+  const body = `
+    <div class="rounded-2xl overflow-hidden border border-slate-100 mb-6">
+      <div class="bg-[#0C1F31] px-5 py-5 relative">
+        <div class="absolute inset-0 opacity-40" style="background:radial-gradient(circle at 80% 30%, #DC183C 0%, transparent 60%);"></div>
+        <div class="relative flex items-center justify-between flex-wrap gap-3">
+          <div><p class="text-[10px] font-bold uppercase tracking-widest text-[#FF9900]">Current plan</p>
+            <h3 class="font-jakarta font-extrabold text-2xl text-white mt-0.5 flex items-center gap-2">Free Member <span class="text-[10px] bg-white/15 text-white px-2 py-0.5 rounded-full uppercase tracking-wide">Active</span></h3>
+            <p class="text-xs text-white/60 mt-1">Next billing date: — &nbsp;·&nbsp; No card on file</p>
+          </div>
+          <button onclick="showToast('Upgrade flow handled by MemberPress.',null)" class="bg-[#DC183C] hover:bg-[#B0142F] text-white rounded-full px-5 py-2.5 font-jakarta font-bold text-sm transition flex items-center gap-2"><i data-lucide="crown" class="w-4 h-4"></i> Upgrade to Premium</button>
+        </div>
+      </div>
+    </div>
+    <h3 class="font-jakarta font-bold uppercase text-sm text-[#121A21] tracking-wide mb-3">Usage this cycle</h3>
+    <div class="space-y-4">
+      ${usage.map(([l,v,m,c])=>`<div><div class="flex items-center justify-between mb-1.5"><span class="text-sm font-semibold text-[#121A21]">${l}</span><span class="text-xs font-bold text-slate-400">${v} / ${m}</span></div><div class="h-2 rounded-full bg-slate-100 overflow-hidden"><div class="h-full rounded-full" style="width:${Math.round(v/m*100)}%;background:${c}"></div></div></div>`).join('')}
+    </div>
+    <div class="mt-6 grid sm:grid-cols-2 gap-3">
+      <div class="border border-slate-200 rounded-2xl p-4"><p class="font-jakarta font-bold text-[#121A21] flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-[#29A37A]"></i> Free includes</p><ul class="text-sm text-slate-500 mt-2 space-y-1"><li>Community feed &amp; profile</li><li>Up to 250 connections</li><li>Join public groups</li></ul></div>
+      <div class="border-2 border-[#DC183C] rounded-2xl p-4 bg-[#FDECEF]/40"><p class="font-jakarta font-bold text-[#DC183C] flex items-center gap-2"><i data-lucide="crown" class="w-4 h-4"></i> Premium adds</p><ul class="text-sm text-slate-600 mt-2 space-y-1"><li>Priority funding applications</li><li>Unlimited connections</li><li>Event discounts &amp; replays</li></ul></div>
+    </div>
+    <p class="text-xs text-slate-400 mt-5 flex items-center gap-1.5"><i data-lucide="info" class="w-3.5 h-3.5"></i> Billing &amp; subscriptions are managed by <span class="font-mono">MemberPress</span>. SME HUB does not store card data.</p>`;
+  return settingsCard('Membership', 'Your plan, usage and upgrade options.', body);
+}
+
+function setOrders(){
+  const ORDERS = [
+    { id:'#SME-10042', date:'2 Jun 2026', product:'SME SA Snapback Cap', variant:'Navy · One size', qty:1, total:'R 280.00', status:'Delivered',     statusC:'#29A37A', bg:'#E4F5EE', trackable:true,  tracking:'CPT-88821' },
+    { id:'#SME-10039', date:'14 May 2026', product:'SME SA Branded Hoodie', variant:'Charcoal · Size L', qty:1, total:'R 650.00', status:'Delivered',  statusC:'#29A37A', bg:'#E4F5EE', trackable:true,  tracking:'CPT-77640' },
+    { id:'#SME-10031', date:'3 Apr 2026',  product:'SME SA T-Shirt (2-pack)', variant:'White & Navy · Size M', qty:1, total:'R 420.00', status:'Delivered', statusC:'#29A37A', bg:'#E4F5EE', trackable:false, tracking:'' },
+    { id:'#SME-10025', date:'10 Mar 2026', product:'SME SA Tote Bag', variant:'Black · Standard', qty:2, total:'R 300.00', status:'Delivered',         statusC:'#29A37A', bg:'#E4F5EE', trackable:false, tracking:'' },
+    { id:'#SME-10018', date:'20 Jan 2026', product:'SME SA Notebook Set', variant:'A5 · 2-pack', qty:1, total:'R 199.00', status:'Refunded',           statusC:'#DC183C', bg:'#FDECEF', trackable:false, tracking:'' }
+  ];
+  const rows = ORDERS.map(o=>`
+    <div class="flex flex-col sm:flex-row sm:items-start gap-3 py-4 border-b border-slate-100 last:border-0">
+      <div class="w-12 h-12 rounded-xl bg-slate-100 grid place-items-center shrink-0"><i data-lucide="shirt" class="w-6 h-6 text-slate-400"></i></div>
+      <div class="min-w-0 flex-1">
+        <div class="flex items-center gap-2 flex-wrap mb-1">
+          <p class="font-mono text-xs text-slate-400">${esc(o.id)}</p>
+          <span class="px-2 py-0.5 rounded-full text-[10px] font-bold" style="background:${o.bg};color:${o.statusC}">${esc(o.status)}</span>
+        </div>
+        <p class="text-sm font-semibold text-[#121A21]">${esc(o.product)}</p>
+        <p class="text-xs text-slate-400 mt-0.5">${esc(o.variant)} · Qty ${o.qty}</p>
+        <p class="text-xs text-slate-400">${esc(o.date)} · <span class="font-semibold text-[#121A21]">${esc(o.total)}</span></p>
+        ${o.trackable ? `<p class="text-[11px] text-slate-400 mt-1 flex items-center gap-1"><i data-lucide="package" class="w-3.5 h-3.5 text-[#29A37A]"></i> Tracking: <span class="font-mono">${esc(o.tracking)}</span></p>` : ''}
+      </div>
+      <div class="flex items-center gap-2 shrink-0 pt-1">
+        <button onclick="showToast('Opening order ${esc(o.id)} details.',null)" class="border border-slate-200 hover:border-[#DC183C] hover:text-[#DC183C] text-slate-600 rounded-full px-4 py-1.5 text-xs font-bold transition">View order</button>
+      </div>
+    </div>`).join('');
+
+  const body = `
+    <div class="rounded-2xl border border-[#E4F5EE] bg-[#E4F5EE]/30 p-4 flex items-center gap-3 mb-5">
+      <div class="w-10 h-10 rounded-full bg-[#29A37A] grid place-items-center shrink-0"><i data-lucide="truck" class="w-5 h-5 text-white"></i></div>
+      <div><p class="font-jakarta font-bold text-sm text-[#121A21]">Your most recent order is on its way</p><p class="text-xs text-slate-500">SME SA Snapback Cap · Tracking: CPT-88821</p></div>
+      <button onclick="showToast('Opening tracking for CPT-88821.',null)" class="ml-auto text-xs font-bold text-[#29A37A] hover:underline shrink-0">Track →</button>
+    </div>
+    <div class="rounded-2xl border border-slate-100 p-4 mb-6">
+      <div class="flex items-center justify-between mb-2">
+        <h3 class="font-jakarta font-bold uppercase text-sm text-[#121A21] tracking-wide">Order history</h3>
+        <a href="#" onclick="showToast('Opening full WooCommerce store account.',null); return false;" class="text-xs font-bold text-[#DC183C] hover:underline flex items-center gap-1">Full history <i data-lucide="external-link" class="w-3.5 h-3.5"></i></a>
+      </div>
+      ${rows}
+    </div>
+    <div class="grid sm:grid-cols-2 gap-3">
+      <button onclick="showToast('Opening delivery address management — WooCommerce.',null)" class="border border-slate-200 hover:border-[#DC183C] hover:text-[#DC183C] text-slate-600 rounded-2xl p-4 text-left transition flex items-center gap-3">
+        <div class="w-9 h-9 rounded-lg bg-slate-100 grid place-items-center shrink-0"><i data-lucide="map-pin" class="w-4 h-4 text-slate-500"></i></div>
+        <div><p class="text-sm font-semibold text-[#121A21]">Delivery addresses</p><p class="text-xs text-slate-400">Saved shipping addresses</p></div>
+        <i data-lucide="chevron-right" class="w-4 h-4 text-slate-300 ml-auto"></i>
+      </button>
+      <button onclick="showToast('Opening payment methods — WooCommerce.',null)" class="border border-slate-200 hover:border-[#DC183C] hover:text-[#DC183C] text-slate-600 rounded-2xl p-4 text-left transition flex items-center gap-3">
+        <div class="w-9 h-9 rounded-lg bg-slate-100 grid place-items-center shrink-0"><i data-lucide="credit-card" class="w-4 h-4 text-slate-500"></i></div>
+        <div><p class="text-sm font-semibold text-[#121A21]">Payment methods</p><p class="text-xs text-slate-400">Saved cards &amp; billing</p></div>
+        <i data-lucide="chevron-right" class="w-4 h-4 text-slate-300 ml-auto"></i>
+      </button>
+    </div>
+    <p class="text-xs text-slate-400 mt-5 flex items-center gap-1.5"><i data-lucide="info" class="w-3.5 h-3.5"></i> The SME SA store sells branded merchandise. Orders are managed securely by <span class="font-mono">WooCommerce</span> — payment and address management hands off to the WooCommerce secure account page. Member resources &amp; downloads are managed separately through your Membership.</p>`;
+  return settingsCard('My Orders', 'Your SME South Africa merchandise orders.', body);
+}
+
+function setSecurity(){
+  const sessions = [
+    ['Chrome · macOS','Johannesburg, ZA','Active now',true],
+    ['Safari · iPhone','Johannesburg, ZA','2 hours ago',false],
+    ['Firefox · Windows','Cape Town, ZA','3 days ago',false]
+  ];
+  const body = `
+    <div class="pb-5 mb-5 border-b border-slate-100">
+      <h3 class="font-jakarta font-bold uppercase text-sm text-[#121A21] tracking-wide mb-3">Change password</h3>
+      <div class="space-y-4 max-w-md">
+        ${field('Current password', `<input type="password" value="********" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-sm outline-none focus:border-[#DC183C] focus:bg-white">`)}
+        ${field('New password', `<input id="pw-new" type="password" placeholder="At least 8 characters" oninput="checkPw()" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-sm outline-none focus:border-[#DC183C] focus:bg-white">`)}
+        ${field('Confirm new password', `<input id="pw-conf" type="password" placeholder="Repeat new password" oninput="checkPw()" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-sm outline-none focus:border-[#DC183C] focus:bg-white">`)}
+        <p id="pw-msg" class="text-xs text-slate-400"></p>
+        <button onclick="showToast('Password updated.', 'win')" class="bg-[#DC183C] hover:bg-[#B0142F] text-white rounded-full px-5 py-2.5 font-jakarta font-bold text-sm transition">Update password</button>
+      </div>
+    </div>
+    <div class="pb-5 mb-5 border-b border-slate-100">
+      <div class="flex items-center justify-between gap-4">
+        <div><h3 class="font-jakarta font-bold uppercase text-sm text-[#121A21] tracking-wide">Two-factor authentication</h3><p class="text-xs text-slate-500 mt-0.5">Add a second step at sign-in. <span class="text-[#AE6B0A] font-semibold">Coming soon.</span></p></div>
+        <div class="switch disabled" title="Coming soon"></div>
+      </div>
+    </div>
+    <h3 class="font-jakarta font-bold uppercase text-sm text-[#121A21] tracking-wide mb-3">Active sessions</h3>
+    <div class="divide-y divide-slate-100">
+      ${sessions.map(([d,loc,t,cur])=>`<div class="flex items-center gap-3 py-3">
+        <div class="w-9 h-9 rounded-lg bg-slate-100 grid place-items-center shrink-0"><i data-lucide="${d.includes('iPhone')?'smartphone':'monitor'}" class="w-4 h-4 text-slate-500"></i></div>
+        <div class="min-w-0 flex-1"><p class="text-sm font-semibold text-[#121A21]">${d} ${cur?'<span class="text-[10px] bg-[#E4F5EE] text-[#29A37A] px-1.5 py-0.5 rounded-full font-bold uppercase ml-1">This device</span>':''}</p><p class="text-xs text-slate-500">${loc} · ${t}</p></div>
+        ${cur?'':`<button onclick="showToast('Session revoked.',null)" class="text-xs font-bold text-[#DC183C] border border-slate-200 hover:border-[#DC183C] rounded-full px-3 py-1.5 transition">Revoke</button>`}
+      </div>`).join('')}
+    </div>`;
+  return settingsCard('Security', 'Protect your account.', body);
+}
+function checkPw(){
+  const a=document.getElementById('pw-new'), b=document.getElementById('pw-conf'), m=document.getElementById('pw-msg');
+  if(!a||!b||!m) return;
+  if(a.value && a.value.length<8){ m.textContent='New password must be at least 8 characters.'; m.className='text-xs text-[#DC183C]'; }
+  else if(a.value && b.value && a.value!==b.value){ m.textContent='Passwords do not match.'; m.className='text-xs text-[#DC183C]'; }
+  else if(a.value && a.value===b.value){ m.textContent='Passwords match.'; m.className='text-xs text-[#29A37A]'; }
+  else { m.textContent=''; }
+}
+
+function setData(){
+  const body = `
+    <div class="rounded-2xl border border-[#29A37A]/30 bg-[#E4F5EE]/40 p-4 mb-6 flex gap-3">
+      <i data-lucide="shield-check" class="w-5 h-5 text-[#29A37A] shrink-0 mt-0.5"></i>
+      <div><p class="text-sm font-semibold text-[#121A21]">Your rights under POPIA</p><p class="text-xs text-slate-600 mt-1 leading-relaxed">Under the Protection of Personal Information Act (2013), you have the right to access, correct, export and request deletion of your personal information at any time. SME South Africa is the responsible party.</p></div>
+    </div>
+
+    <div class="pb-5 mb-5 border-b border-slate-100 flex items-center justify-between gap-4 flex-wrap">
+      <div><h3 class="font-jakarta font-bold uppercase text-sm text-[#121A21] tracking-wide">Download my data</h3><p class="text-xs text-slate-500 mt-0.5 max-w-md">Export everything we hold — profile, posts, connections, group activity — as a JSON file. We email a secure link when it is ready.</p></div>
+      <button onclick="showToast('Export requested — link will be emailed.', null)" class="border border-slate-200 hover:border-[#DC183C] hover:text-[#DC183C] text-slate-700 rounded-full px-5 py-2.5 font-jakarta font-bold text-sm transition flex items-center gap-2 shrink-0"><i data-lucide="download" class="w-4 h-4"></i> Request export</button>
+    </div>
+
+    <div class="pb-5 mb-5 border-b border-slate-100">
+      <h3 class="font-jakarta font-bold uppercase text-sm text-[#121A21] tracking-wide mb-2">Data retention policy</h3>
+      <ul class="text-sm text-slate-600 space-y-2">
+        <li class="flex gap-2"><i data-lucide="dot" class="w-4 h-4 text-[#DC183C] shrink-0 mt-0.5"></i> Active account data is retained while your membership is active.</li>
+        <li class="flex gap-2"><i data-lucide="dot" class="w-4 h-4 text-[#DC183C] shrink-0 mt-0.5"></i> On deletion, personal data is removed within <span class="font-semibold">30 days</span>; anonymised contribution counts may remain.</li>
+        <li class="flex gap-2"><i data-lucide="dot" class="w-4 h-4 text-[#DC183C] shrink-0 mt-0.5"></i> Financial records are kept for <span class="font-semibold">5 years</span> as required by SARS / FICA.</li>
+      </ul>
+    </div>
+
+    <div class="pb-5 mb-5 border-b border-slate-100">
+      <h3 class="font-jakarta font-bold uppercase text-sm text-[#121A21] tracking-wide mb-2">Information Officer</h3>
+      <p class="text-sm text-slate-600">For any data request or complaint, contact our designated Information Officer:</p>
+      <a href="mailto:privacy@smesouthafrica.co.za" class="inline-flex items-center gap-2 mt-2 text-sm font-bold text-[#DC183C] hover:underline"><i data-lucide="mail" class="w-4 h-4"></i> privacy@smesouthafrica.co.za</a>
+    </div>
+
+    <div class="rounded-2xl border-2 border-[#DC183C]/30 bg-[#FDECEF]/40 p-5">
+      <h3 class="font-jakarta font-bold text-[#DC183C] flex items-center gap-2"><i data-lucide="alert-triangle" class="w-4 h-4"></i> Delete my account</h3>
+      <p class="text-xs text-slate-600 mt-1.5 max-w-lg">This permanently removes your profile, posts and connections. This cannot be undone. Active subscriptions are cancelled via MemberPress.</p>
+      <button onclick="openDeleteModal()" class="mt-3 bg-[#DC183C] hover:bg-[#B0142F] text-white rounded-full px-5 py-2.5 font-jakarta font-bold text-sm transition">Delete account…</button>
+    </div>`;
+  return settingsCard('Data & POPIA', 'Your data, your rights — as required by South African law.', body);
+}
+
+function openDeleteModal(){
+  document.getElementById('overlay-root').innerHTML = `
+    <div class="ov" id="ov-del">
+      <div class="ov-bg" onclick="closeOverlay('ov-del')"></div>
+      <div class="modalbox overflow-hidden">
+        <div class="px-6 pt-6">
+          <div class="w-12 h-12 rounded-full bg-[#FDECEF] grid place-items-center mb-3"><i data-lucide="alert-triangle" class="w-6 h-6 text-[#DC183C]"></i></div>
+          <h3 class="font-jakarta font-extrabold text-xl text-[#121A21]">Delete your account?</h3>
+          <p class="text-sm text-slate-600 mt-2">This permanently erases your profile, ${PEOPLE.own.posts} posts and ${PEOPLE.own.connections} connections. Personal data is removed within 30 days under POPIA. <span class="font-semibold text-[#121A21]">This cannot be undone.</span></p>
+          <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mt-4 mb-1.5">Type <span class="font-mono text-[#DC183C]">DELETE</span> to confirm</label>
+          <input id="del-input" oninput="checkDelete()" placeholder="DELETE" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-sm outline-none focus:border-[#DC183C] font-mono tracking-widest">
+        </div>
+        <div class="p-6 flex gap-2 justify-end">
+          <button onclick="closeOverlay('ov-del')" class="text-slate-500 hover:text-slate-700 text-sm font-semibold px-4 py-2.5">Cancel</button>
+          <button id="del-confirm" disabled onclick="confirmDelete()" class="bg-[#DC183C] text-white rounded-full px-5 py-2.5 font-jakarta font-bold text-sm opacity-40 cursor-not-allowed transition">Permanently delete</button>
+        </div>
+      </div>
+    </div>`;
+  requestAnimationFrame(()=>{ const o=document.getElementById('ov-del'); if(o) o.classList.add('open'); });
+  lucide.createIcons();
+}
+function checkDelete(){
+  const v = document.getElementById('del-input').value;
+  const btn = document.getElementById('del-confirm');
+  const ok = v==='DELETE';
+  btn.disabled = !ok;
+  btn.className = `rounded-full px-5 py-2.5 font-jakarta font-bold text-sm transition ${ok?'bg-[#DC183C] hover:bg-[#B0142F] text-white cursor-pointer':'bg-[#DC183C] text-white opacity-40 cursor-not-allowed'}`;
+}
+function confirmDelete(){ closeOverlay('ov-del'); showToast('Account scheduled for deletion (mockup).', null); }
+
+/* ===================== DEV MODE + BRIEFS ===================== */
+const BRIEFS = {
+  roleStates:{ title:'Profile View States', sub:'Own-view vs peer-view',
+    purpose:'A single profile template renders two states. <b>Own-view</b> exposes Edit Profile, Settings and Profile Strength. <b>Peer-view</b> swaps those for Connect / Message and shows mutual-connection context. The demo toggle here is mockup-only — production derives state from the session.',
+    data:'<code>viewer_id === profile_owner_id</code> → own. Otherwise peer. Peer also loads <code>connection_status</code> ∈ {none, pending, connected} and <code>mutual_count</code>.',
+    logic:'Server resolves the relationship once and passes <code>is_owner</code> to the template. Private fields (email, settings) are never serialised for peer-view. Connect → POST creates a pending request; UI optimistically flips to “Request sent”.',
+    components:'Hero actions · stat bar · sub-nav (peers see a subset) · Connect/Message buttons.',
+    api:'GET /v1/members/{id}/profile?viewer={viewerId}' },
+  hero:{ title:'Profile Hero', sub:'Cover, avatar, identity, primary actions',
+    purpose:'The identity banner. Cover photo with gradient fallback, overlapping gradient monogram (no real photos in mockups), name + title + handle, and Stage/Sector/Region taxonomy pills that power discovery and matching.',
+    data:'<code>{ name, handle, role, company, stage, sector, province, city, tier, avatar_url, cover_url, online }</code>. Avatar is a generated monogram when no upload exists.',
+    logic:'Cover & avatar upload affordances render only for the owner. Online dot from presence service. Tier pill derived from total contribution thresholds (Bronze/Silver/Gold).',
+    components:'Cover · monogram · edit affordances · taxonomy pills · profile-strength bar (owner).',
+    api:'PATCH /v1/members/{id} (BuddyBoss xprofile fields)' },
+  contribution:{ title:'Contribution', sub:'Generosity, not vanity metrics',
+    purpose:'Reputation built on giving back, mirroring the Ask/Win/Share taxonomy: Asks you helped answer, Wins you celebrated, Shares you amplified. Tapping any stat opens the full breakdown.',
+    data:'Per member: <code>asks_helped</code>, <code>wins_celebrated</code>, <code>shares_amplified</code>. Total can drive the Contributor tier badge.',
+    logic:'Increment on each qualifying action (answer marked helpful, reaction on a Win, reshare/save of a Share). Honours the “Show contribution stats” privacy toggle.',
+    components:'Navy stat card → modal with three colour-coded rows (red/green/orange).',
+    api:'GET /v1/users/{id}/contribution' },
+  activity:{ title:'Activity Feed', sub:'The member’s own Ask/Win/Share posts',
+    purpose:'Replaces BuddyBoss “Timeline”. A personal feed of the member’s posts, filterable by type. Owner sees the composer entry point; everyone sees the striped cards.',
+    data:'Posts where <code>author_id = profile_id</code>, type ∈ {ask, win, share}, ordered by recency. Honours post-level visibility.',
+    logic:'Tabs filter by type client-side; server paginates. Composer routes to the Hub composer (single source for posting). Likes are optimistic.',
+    components:'Composer · filter tabs · feed cards with left-edge stripe.',
+    api:'GET /v1/users/{id}/posts?type={ask|win|share}&page={n}' },
+  connections:{ title:'Connections', sub:'My Connections + Requests',
+    purpose:'Redesign of the BuddyBoss connections list. Two segments (Connections / Requests), sortable, with list & grid views. Mutual-connection count provides social proof.',
+    data:'<code>connections[]</code> with status, and <code>requests[]</code> (incoming). Each row: member summary + <code>mutual_count</code>.',
+    logic:'Accept → POST confirms and moves the row to Connections. Respects “Connections only” messaging/visibility rules elsewhere.',
+    components:'Segmented control · sort select · list/grid toggle · member rows.',
+    api:'GET /v1/users/{id}/connections · GET /v1/users/{id}/connection-requests' },
+  groups:{ title:'Groups', sub:'BuddyBoss groups the member belongs to',
+    purpose:'The member’s groups with privacy and role context. Extends BuddyBoss groups — does not replace them.',
+    data:'<code>groups[] { id, name, privacy, members, last_active, role }</code> where role ∈ {Member, Organizer}.',
+    logic:'Private groups only render to members. Organizer badge surfaces moderation entry points (not in mockup).',
+    components:'Group cards · privacy pill · member count.',
+    api:'GET /v1/users/{id}/groups (BuddyBoss bp_groups)' },
+  forums:{ title:'Forums', sub:'My Discussions / Replies / Favorites',
+    purpose:'Redesign of the BuddyBoss/bbPress forum tab. Three segments mirroring the current IA, on the 2026 brand.',
+    data:'Discussions, replies and favourites scoped to the member, each linked to a parent group/forum.',
+    logic:'Empty states encourage participation. Counts come from bbPress meta.',
+    components:'Segmented tabs · discussion rows · status pill.',
+    api:'GET /v1/users/{id}/forum-activity?scope={discussions|replies|favorites}' },
+  badges:{ title:'Badges & Achievements', sub:'Earned recognition',
+    purpose:'Lightweight gamification tied to real behaviour: contributor tier, tenure, and event attendance. Reinforces the generosity model.',
+    data:'<code>badges[] { key, label, earned_at }</code>. Tier computed from contribution total; tenure from join date; event badges from ticket scans.',
+    logic:'Recomputed on contribution change / event check-in. Display order: tier → tenure → events → helpers.',
+    components:'Badge chips + grid cards with icon, label, criteria.',
+    api:'GET /v1/users/{id}/badges' },
+  strength:{ title:'Profile Strength', sub:'Completion nudge (owner only)',
+    purpose:'Drives profile completion — complete profiles are far more discoverable in search and Suggested Members. Owner-only.',
+    data:'Weighted checklist: bio, socials, cover photo, WhatsApp verified, groups joined. Score = Σ weights.',
+    logic:'Each unmet item is an actionable deep-link into the relevant editor. Score updates live on save.',
+    components:'Percentage ring · checklist with deep-links.',
+    api:'GET /v1/users/{id}/profile-strength' },
+  messages:{ title:'Messages', sub:'Private 1:1 conversations',
+    purpose:'Redesign of the BuddyBoss messenger. Two-pane inbox: conversation list + active thread, with own messages in the red→orange gradient and incoming in neutral grey. Opened from the header mail icon or a member’s “Message” button.',
+    data:'<code>conversations[] { id, participant_id, unread, last_message_at }</code> and <code>messages[] { id, conversation_id, sender_id, body, sent_at, read_at }</code>.',
+    logic:'“Who can message you” privacy gates thread creation — non-connections are blocked when set to <i>Connections only</i> (composer disabled here). Sends are optimistic; delivery/read receipts via websocket. Message bodies are personal data under POPIA and are included in the data export &amp; deletion scope.',
+    components:'Conversation list · unread badges · presence dot · message bubbles · composer with send.',
+    api:'GET /v1/messages/threads · GET /v1/messages/{threadId} · POST /v1/messages/{threadId}' },
+  media:{ title:'Media', sub:'Photos & albums (BuddyBoss Media)',
+    purpose:'The profile Photos/Media tab. Albums group a member’s uploaded images; loose photos show in a grid. Mockup uses brand-gradient placeholders since prototypes carry no real photos.',
+    data:'<code>albums[] { id, name, cover, photo_count }</code> and <code>media[] { id, album_id, url, uploaded_at, privacy }</code>.',
+    logic:'Upload affordances render for the owner only. Each item honours media-level privacy (BuddyBoss). Albums open a lightbox/gallery (not in mockup).',
+    components:'Album cards · photo grid · upload button.',
+    api:'GET /v1/users/{id}/media · POST /v1/media · GET /v1/users/{id}/albums' },
+  invites:{ title:'Email Invites', sub:'Invite founders to the platform',
+    purpose:'The BuddyBoss “Email Invites” tab. A member invites peers by email or a personal referral link, within a quota, and tracks who has joined.',
+    data:'<code>invites[] { email, status: pending|joined, sent_at }</code> · referral code per user · monthly quota.',
+    logic:'Validate email; enforce quota; send via <b>Kit (ConvertKit)</b> in staggered batches (never a bulk blast — WP Engine CPU). Status flips to <i>joined</i> on registration attributed to the ref code.',
+    components:'Email input + send · copyable referral link · sent-invite list with status pills + resend.',
+    api:'POST /v1/invites · GET /v1/users/{id}/invites' },
+  notifpage:{ title:'Notifications (page)', sub:'Full activity inbox',
+    purpose:'The standalone Notifications page (distinct from the header dropdown). Filterable by Ask/Win/Share/Mentions, with mark-all-read. Mirrors the BuddyBoss notifications component.',
+    data:'<code>notifications[] { id, actor_id, type, verb, target, read_at, created_at }</code>. type maps to the Ask/Win/Share taxonomy where relevant.',
+    logic:'Filter client-side by type; server paginates. Opening the page or “Mark all read” clears unread and zeroes the header badge. Real-time via websocket.',
+    components:'Filter tabs · notification rows with actor avatar + type glyph · unread markers.',
+    api:'GET /v1/users/{id}/notifications?filter={type} · POST /v1/notifications/read-all' },
+  set_blocked:{ title:'Settings · Blocked Members', sub:'Block list management',
+    purpose:'Lets a member review and lift blocks. Blocked users can’t message, view posts, or send connection requests, and aren’t notified they were blocked (BuddyBoss moderation).',
+    data:'<code>blocks[] { blocked_user_id, reason, created_at }</code>.',
+    logic:'Block relationships are enforced server-side across messaging, feed visibility, search and connections. Unblock removes the row and restores normal visibility.',
+    components:'Blocked-member rows · unblock action · empty state.',
+    api:'GET /v1/users/{id}/blocks · DELETE /v1/users/{id}/blocks/{blockedId}' },
+  set_profile:{ title:'Settings · Profile', sub:'Editable identity fields',
+    purpose:'Canonical editor for everything shown on the public profile. Writes to BuddyBoss xprofile fields; the public profile reads the same source.',
+    data:'name, handle, title, company, stage, sector, province, city, bio, website, linkedin, twitter, whatsapp, avatar, cover.',
+    logic:'Validate handle uniqueness; bio capped at 280 chars; image uploads to media library. Save updates profile + recalculates strength.',
+    components:'Avatar uploader · text inputs · taxonomy selects · socials block.',
+    api:'PATCH /v1/members/{id}' },
+  set_notifications:{ title:'Settings · Notifications', sub:'Email digest + in-app events',
+    purpose:'Per-member control of email digest cadence and six in-app event types, all mapped to the Ask/Win/Share model.',
+    data:'<code>{ digest: daily|weekly|none, reply, mention, sectorAsk, winConn, event, suggested }</code> (booleans).',
+    logic:'Email digests sent via <b>Kit (ConvertKit)</b> — staggered batches, never a single 10k+ blast (WP Engine CPU). In-app events fan out from a queue.',
+    components:'Radio cards (digest) · toggle rows (events).',
+    api:'PUT /v1/users/{id}/notification-preferences' },
+  set_privacy:{ title:'Settings · Privacy', sub:'Visibility & reachability',
+    purpose:'Controls profile visibility, default post audience, who can message, and directory/stats discoverability.',
+    data:'<code>{ visibility, postDefault, messages, directory, stats }</code>.',
+    logic:'Visibility gates serialisation for peer-view and search indexing (public = indexable, others = noindex). “Connections only” enforced server-side on messaging.',
+    components:'Radio cards · toggle rows.',
+    api:'PUT /v1/users/{id}/privacy' },
+  set_membership:{ title:'Settings · Membership', sub:'MemberPress integration',
+    purpose:'Member-facing plan summary: current plan, next billing date, usage bars and upgrade CTA.',
+    data:'Plan, status, next_billing, usage counters. Sourced from <b>MemberPress</b>; SME HUB stores no card data.',
+    logic:'Upgrade/cancel hand off to MemberPress hosted flows. Usage counters read from platform meta. Gating (funding apps, event discounts) enforced by MemberPress rules.',
+    components:'Plan banner · usage bars · plan comparison · upgrade CTA.',
+    api:'GET /v1/memberships/{userId} (MemberPress REST)' },
+  set_orders:{ title:'Settings · My Orders', sub:'WooCommerce store integration',
+    purpose:'Surfaces the member\'s WooCommerce purchase history, digital downloads and links to address/payment management — all inside the SME HUB member account, so members never need to visit a separate store account page. This is the "one place" goal in action.',
+    data:'Pulled live from WooCommerce via its REST API: <code>orders[]</code>, <code>downloads[]</code>, <code>addresses</code>. Scoped to the authenticated WordPress user (same user record shared by BuddyBoss, MemberPress and WooCommerce — no separate login).',
+    logic:'Order history and downloads render inline. Addresses and payment methods hand off to the WooCommerce My Account secure page (never rebuild card-handling UI in custom code). Download links use WooCommerce\'s own signed URLs with expiry. Order data falls under POPIA and is included in the data export scope — the data-export endpoint already covers this.',
+    components:'Order history rows · status pills · download buttons · address & payment quick-links.',
+    api:'GET /wp-json/wc/v3/orders?customer={userId} · GET /wp-json/wc/v3/customers/{id}/downloads' },
+  set_security:{ title:'Settings · Security', sub:'Password, sessions, 2FA',
+    purpose:'Account protection: change password, review & revoke active sessions, and a 2FA toggle shown as coming-soon.',
+    data:'Password (write-only), <code>sessions[] { device, location, last_active, current }</code>, <code>twofa_enabled</code>.',
+    logic:'Password requires current + min-8 + match. Revoke kills a session token. 2FA disabled until TOTP ships.',
+    components:'Password form · session list + revoke · disabled 2FA switch.',
+    api:'POST /v1/auth/change-password · GET/DELETE /v1/auth/sessions' },
+  set_data:{ title:'Settings · Data & POPIA', sub:'Legally required — South Africa',
+    purpose:'<b>Non-negotiable under POPIA (Act 4 of 2013).</b> Members must be able to access, export and delete their personal information, understand retention, and reach the Information Officer. This section satisfies the data-subject rights in sections 23–25.',
+    data:'All personal data: profile, posts, connections, group activity, membership records. Export bundled as JSON.',
+    logic:'Export is async — queue a job, generate JSON, email a time-limited secure link (never a synchronous heavy WP Engine request). Deletion typed-confirm → soft-delete → purge personal data within 30 days; anonymised counts and 5-year financial records (SARS/FICA) retained. Cancels MemberPress subscription.',
+    components:'POPIA rights notice · export button · retention summary · Information Officer link · typed-DELETE confirm modal.',
+    api:'POST /v1/users/{id}/data-export · DELETE /v1/users/{id}' }
+};
+
+function toggleDevMode(){
+  const on = document.body.classList.toggle('dev-on');
+  const btn = document.getElementById('devToggle');
+  if(btn) btn.classList.toggle('on', on);
+  if(on) showToast('Dev Mode on — tap any ⓘ for implementation notes.', null);
+  lucide.createIcons();
+}
+function closeOverlay(id){
+  const el = document.getElementById(id); if(!el) return;
+  el.classList.remove('open');
+  setTimeout(()=>{ if(el && el.parentNode) el.remove(); }, 300);
+}
+function openBrief(id){
+  const b = BRIEFS[id]; if(!b) return;
+  const sec = (icon,label,html) => `
+    <div class="px-6 py-4 border-t border-slate-100">
+      <p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] flex items-center gap-1.5 mb-2"><i data-lucide="${icon}" class="w-3.5 h-3.5"></i>${label}</p>
+      <div class="text-sm text-slate-600 leading-relaxed">${html}</div>
+    </div>`;
+  document.getElementById('overlay-root').innerHTML = `
+    <div class="ov" id="ov-brief">
+      <div class="ov-bg" onclick="closeOverlay('ov-brief')"></div>
+      <div class="drawer">
+        <div class="sticky top-0 z-10 bg-[#0C1F31] text-white px-6 py-5 flex items-start justify-between">
+          <div class="min-w-0"><p class="text-[10px] font-bold uppercase tracking-widest text-[#FF9900] mb-1">Dev Brief</p><h3 class="font-jakarta font-extrabold text-lg leading-tight">${b.title}</h3><p class="text-xs text-white/60 mt-1">${b.sub}</p></div>
+          <button onclick="closeOverlay('ov-brief')" class="text-white/60 hover:text-white shrink-0 ml-3"><i data-lucide="x" class="w-5 h-5"></i></button>
+        </div>
+        ${sec('target','Purpose', b.purpose)}
+        ${sec('database','Data model', b.data)}
+        ${sec('git-branch','Logic', b.logic)}
+        ${sec('boxes','Components', b.components)}
+        ${sec('plug','API', `<code class="block bg-slate-900 text-emerald-300 text-xs font-mono px-3 py-2 rounded-lg overflow-x-auto">${b.api}</code>`)}
+        <div class="px-6 py-4 border-t border-slate-100"><p class="text-[11px] text-slate-400 flex items-center gap-1.5"><i data-lucide="info" class="w-3.5 h-3.5"></i> Spec lives beside the feature — toggle Dev Mode off for the clean stakeholder view.</p></div>
+      </div>
+    </div>`;
+  requestAnimationFrame(()=>{ const o=document.getElementById('ov-brief'); if(o) o.classList.add('open'); });
+  lucide.createIcons();
+}
+
+/* ===================== TOAST ===================== */
+function showToast(msg, kind){
+  const el = document.getElementById('toast');
+  const t = TYPES[kind]; const color = t ? t.color : '#0C1F31';
+  el.classList.remove('hidden');
+  el.innerHTML = `<div class="toast-in bg-[#0C1F31] text-white rounded-full pl-3 pr-5 py-2.5 shadow-2xl flex items-center gap-2 text-sm font-semibold" style="border-left:4px solid ${color}">
+    <i data-lucide="check-circle" class="w-4 h-4" style="color:${color}"></i><span>${esc(msg)}</span></div>`;
+  lucide.createIcons();
+  setTimeout(()=>{ const inner=el.firstElementChild; if(inner){ inner.classList.remove('toast-in'); inner.classList.add('toast-out'); } setTimeout(()=>{ el.classList.add('hidden'); el.innerHTML=''; },250); }, 2400);
+}
+
+/* ===================== INIT ===================== */
+document.addEventListener('keydown', e=>{ if(e.key==='Escape'){ document.querySelectorAll('.ov.open').forEach(o=>closeOverlay(o.id)); closeMenus(); const sr=document.getElementById('search-results'); if(sr) sr.classList.add('hidden'); } });
+// Close header dropdowns / search when clicking outside them
+document.addEventListener('click', e=>{
+  if(!e.target.closest('#user-menu, #notif-menu, [onclick^="toggleUserMenu"], [onclick^="toggleNotifMenu"]')) closeMenus();
+  if(!e.target.closest('#search-wrap')){ const sr=document.getElementById('search-results'); if(sr) sr.classList.add('hidden'); }
+});
+
+switchView('profile');
+setRole('own', true);
+renderSettingsNav();
+renderSettingsContent();
+updateBadges();
+lucide.createIcons();
+</script>
+</body>
+</html>

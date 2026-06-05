@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Members | SME HUB</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  <script>tailwind.config={theme:{extend:{fontFamily:{jakarta:['Plus Jakarta Sans','sans-serif'],inter:['Inter','system-ui','sans-serif'],mono:['ui-monospace','monospace']},colors:{primary:'#DC183C',accent:'#FF9900',navy:'#0C1F31',success:'#29A37A',ink:'#121A21'}}}};</script>
+  <style>
+    html,body{font-family:'Inter',system-ui,sans-serif;} .font-jakarta{font-family:'Plus Jakarta Sans',sans-serif;letter-spacing:.005em;}
+    .no-scrollbar::-webkit-scrollbar{display:none;} .no-scrollbar{-ms-overflow-style:none;scrollbar-width:none;}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}} .reveal{animation:fadeUp .45s cubic-bezier(.2,.7,.2,1) backwards;}
+    @keyframes toastIn{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}} @keyframes toastOut{to{opacity:0;transform:translateY(20px);}}
+    .toast-in{animation:toastIn .25s ease forwards;} .toast-out{animation:toastOut .25s ease forwards;}
+    .card-lift{transition:box-shadow .2s,transform .2s;} .card-lift:hover{box-shadow:0 8px 20px -8px rgba(10,44,61,.12);transform:translateY(-1px);}
+    .cnav.active{color:#DC183C;border-color:#DC183C;}
+    #overlay-root:empty{display:none;}
+    .ov{position:fixed;inset:0;z-index:60;} .ov-bg{position:absolute;inset:0;background:rgba(12,31,49,.45);backdrop-filter:blur(2px);opacity:0;transition:opacity .3s;} .ov.open .ov-bg{opacity:1;}
+    .drawer{position:absolute;right:0;top:0;height:100%;width:100%;max-width:440px;background:#fff;box-shadow:-12px 0 40px rgba(12,31,49,.25);overflow-y:auto;transform:translateX(100%);transition:transform .3s cubic-bezier(.2,.7,.2,1);} .ov.open .drawer{transform:translateX(0);}
+    .dev-badge{display:none;} body.dev-on .dev-badge{display:inline-flex;} #devToggle.on{background:#DC183C;color:#fff;border-color:#DC183C;}
+  </style>
+</head>
+<body class="bg-[#FCFCFC] text-[#121A21] font-inter">
+
+<!-- HEADER -->
+<header class="bg-white border-b border-slate-100 sticky top-0 z-40">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center gap-3">
+    <a href="member-hub.html" class="flex items-center gap-2 shrink-0" aria-label="SME South Africa">
+      <img src="https://smesouthafrica.co.za/wp-content/uploads/2025/10/Asset-1-1.webp" alt="SME South Africa" class="h-8 w-auto" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+      <span style="display:none" class="font-jakarta font-extrabold text-[#121A21] text-lg items-center">SME<span class="text-[#DC183C]">HUB</span></span>
+    </a>
+    <div class="hidden md:block flex-1 max-w-md ml-2"><div class="relative"><i data-lucide="search" class="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400"></i><input type="text" placeholder="Search members, asks, wins…" class="w-full bg-slate-100 rounded-full pl-10 pr-4 py-2.5 text-sm outline-none focus:bg-white focus:ring-2 focus:ring-[#DC183C]/30 transition" /></div></div>
+    <div class="flex items-center gap-1 sm:gap-1.5 ml-auto">
+      <button id="devToggle" onclick="toggleDevMode()" class="hidden sm:flex items-center gap-1.5 px-3 h-9 rounded-full border border-slate-200 text-slate-500 hover:border-[#DC183C] hover:text-[#DC183C] transition text-[11px] font-bold uppercase tracking-wider mr-1"><i data-lucide="code-2" class="w-3.5 h-3.5"></i><span>Dev</span></button>
+      <a href="member-hub.html" title="Community feed" class="w-10 h-10 grid place-items-center rounded-full hover:bg-slate-100 text-slate-600"><i data-lucide="home" class="w-5 h-5"></i></a>
+      <a href="member-account.html" title="Messages" class="w-10 h-10 grid place-items-center rounded-full hover:bg-slate-100 text-slate-600"><i data-lucide="mail" class="w-5 h-5"></i></a>
+      <a href="member-account.html" title="Your account" class="flex items-center gap-2 pl-2 ml-1 border-l border-slate-200 py-1 hover:opacity-80"><div class="w-9 h-9 rounded-full bg-gradient-to-br from-[#DC183C] to-[#FF9900] grid place-items-center font-jakarta font-bold text-white text-xs">TJ</div><i data-lucide="chevron-down" class="w-4 h-4 text-slate-400"></i></a>
+    </div>
+  </div>
+  <!-- Community sub-nav -->
+  <div class="border-t border-slate-100">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 flex gap-1 overflow-x-auto no-scrollbar">
+      <a href="member-hub.html" class="cnav shrink-0 px-4 py-3 text-sm font-bold font-jakarta text-slate-500 hover:text-[#121A21] border-b-2 border-transparent flex items-center gap-2"><i data-lucide="rss" class="w-4 h-4"></i> Feed</a>
+      <a href="members.html" class="cnav active shrink-0 px-4 py-3 text-sm font-bold font-jakarta border-b-2 flex items-center gap-2"><i data-lucide="users" class="w-4 h-4"></i> Members</a>
+      <a href="groups.html" class="cnav shrink-0 px-4 py-3 text-sm font-bold font-jakarta text-slate-500 hover:text-[#121A21] border-b-2 border-transparent flex items-center gap-2"><i data-lucide="layout-grid" class="w-4 h-4"></i> Groups</a>
+      <a href="forums.html" class="cnav shrink-0 px-4 py-3 text-sm font-bold font-jakarta text-slate-500 hover:text-[#121A21] border-b-2 border-transparent flex items-center gap-2"><i data-lucide="messages-square" class="w-4 h-4"></i> Forums</a>
+      <a href="member-hub.html" class="cnav shrink-0 px-4 py-3 text-sm font-bold font-jakarta text-slate-500 hover:text-[#121A21] border-b-2 border-transparent flex items-center gap-2"><i data-lucide="calendar" class="w-4 h-4"></i> Events</a>
+    </div>
+  </div>
+</header>
+
+<main class="max-w-6xl mx-auto px-4 sm:px-6 py-6">
+  <div class="flex items-end justify-between gap-3 mb-5 flex-wrap">
+    <div>
+      <p class="text-[11px] font-bold uppercase tracking-widest text-[#DC183C]">Directory</p>
+      <h1 class="font-jakarta font-extrabold text-2xl text-[#121A21] tracking-tight flex items-center gap-2">Members
+        <button onclick="openBrief('directory')" class="dev-badge w-4 h-4 rounded-full bg-[#DC183C] text-white items-center justify-center text-[9px] font-bold leading-none animate-pulse" title="Implementation notes">i</button>
+      </h1>
+      <p id="result-count" class="text-sm text-slate-500 mt-0.5"></p>
+    </div>
+    <div class="flex items-center gap-2">
+      <select id="f-sort" onchange="render()" class="text-xs font-semibold border border-slate-200 rounded-lg px-3 py-2 outline-none text-slate-600"><option value="active">Recently active</option><option value="contrib">Top contributors</option><option value="az">A → Z</option></select>
+      <div class="flex items-center gap-1 border border-slate-200 rounded-lg p-0.5">
+        <button id="v-grid" onclick="setView('grid')" class="w-8 h-8 grid place-items-center rounded text-slate-400"><i data-lucide="layout-grid" class="w-4 h-4"></i></button>
+        <button id="v-list" onclick="setView('list')" class="w-8 h-8 grid place-items-center rounded text-slate-400"><i data-lucide="list" class="w-4 h-4"></i></button>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+    <!-- Filters -->
+    <aside class="lg:col-span-3">
+      <div class="lg:sticky lg:top-28 space-y-4">
+        <div class="relative"><i data-lucide="search" class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400"></i><input id="f-search" oninput="render()" placeholder="Search by name or company…" class="w-full bg-white border border-slate-200 rounded-xl pl-9 pr-3 py-2.5 text-sm outline-none focus:border-[#DC183C]"></div>
+        <div class="bg-white rounded-2xl border border-slate-100 p-4 space-y-4">
+          <div><p class="text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1.5">Sector</p><select id="f-sector" onchange="render()" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-sm outline-none focus:border-[#DC183C]"></select></div>
+          <div><p class="text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1.5">Stage</p><select id="f-stage" onchange="render()" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-sm outline-none focus:border-[#DC183C]"></select></div>
+          <div><p class="text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1.5">Region</p><select id="f-region" onchange="render()" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-sm outline-none focus:border-[#DC183C]"></select></div>
+          <label class="flex items-center gap-2 pt-1 cursor-pointer"><input id="f-complete" type="checkbox" onchange="render()" class="w-4 h-4 accent-[#DC183C]"><span class="text-sm text-slate-600">Complete profiles only</span></label>
+          <button onclick="resetFilters()" class="w-full text-xs font-bold text-[#DC183C] uppercase tracking-wide hover:underline pt-1">Reset filters</button>
+        </div>
+      </div>
+    </aside>
+    <!-- Results -->
+    <section class="lg:col-span-9 min-w-0">
+      <div id="results"></div>
+    </section>
+  </div>
+</main>
+
+<div id="overlay-root"></div>
+<div id="toast" class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-50"></div>
+
+<script>
+function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function monogram(i,s=44){const fs=Math.max(10,Math.floor(s*0.38));return `<div class="rounded-full bg-gradient-to-br from-[#DC183C] to-[#FF9900] grid place-items-center font-jakarta font-bold text-white shrink-0" style="width:${s}px;height:${s}px;font-size:${fs}px">${esc(i)}</div>`;}
+
+const MEMBERS = [
+  { name:'Naledi Mokoena',  initials:'NM', role:'Founder',     company:'GreenTrace',   sector:'Cleantech', stage:'Established',  province:'Western Cape',  contrib:102, complete:true,  status:'none',      active:'5m' },
+  { name:'Sello Monare',    initials:'SM', role:'MD',          company:'TechSolve RSA',sector:'Fintech',   stage:'Growing',      province:'Gauteng',       contrib:64,  complete:true,  status:'connected', active:'25m' },
+  { name:'Karabo Kgophane', initials:'KK', role:'E-comm Lead', company:'Mzansi Cart',  sector:'Retail',    stage:'Established',  province:'Gauteng',       contrib:58,  complete:true,  status:'connected', active:'1h' },
+  { name:'Mandla Dlamini',  initials:'MD', role:'Co-founder',  company:'PesaPay',      sector:'Fintech',   stage:'Just Launched',province:'Western Cape',  contrib:21,  complete:true,  status:'none',      active:'2h' },
+  { name:'Refiloe Sithole', initials:'RS', role:'Founder',     company:'Skhokho',      sector:'SaaS',      stage:'Growing',      province:'Gauteng',       contrib:47,  complete:true,  status:'connected', active:'3h' },
+  { name:'Sipho Ngubane',   initials:'SN', role:'Founder',     company:'TapWallet',    sector:'Fintech',   stage:'Just Launched',province:'KwaZulu-Natal', contrib:12,  complete:false, status:'none',      active:'5h' },
+  { name:'Lerato Phakathi', initials:'LP', role:'Founder',     company:'Inkundla AI',  sector:'AI',        stage:'Growing',      province:'Gauteng',       contrib:73,  complete:true,  status:'pending',   active:'6h' },
+  { name:'Thandi Nkosi',    initials:'TN', role:'CEO',         company:'Khula Agri',   sector:'Agritech',  stage:'Growing',      province:'Limpopo',       contrib:31,  complete:true,  status:'none',      active:'1d' },
+  { name:'Amahle Jacobs',   initials:'AJ', role:'Founder',     company:'FinFlow',      sector:'Fintech',   stage:'Established',  province:'Western Cape',  contrib:88,  complete:true,  status:'none',      active:'1d' },
+  { name:'Bongani Khumalo', initials:'BK', role:'Founder',     company:'BuildRight',   sector:'Construction',stage:'Growing',    province:'Gauteng',       contrib:19,  complete:false, status:'none',      active:'2d' },
+  { name:'Zinhle Mthembu',  initials:'ZM', role:'Founder',     company:'CraftBrew',    sector:'Retail',    stage:'Just Launched',province:'KwaZulu-Natal', contrib:9,   complete:false, status:'none',      active:'2d' },
+  { name:'Thabo Maseko',    initials:'TM', role:'Founder',     company:'Kasi Eats',    sector:'Food',      stage:'Growing',      province:'Gauteng',       contrib:54,  complete:true,  status:'none',      active:'3d' }
+];
+
+const state = { view:'grid' };
+
+function uniq(arr){ return [...new Set(arr)]; }
+function fillSelect(id, all, label){ const el=document.getElementById(id); el.innerHTML = `<option value="">All ${label}</option>` + uniq(MEMBERS.map(m=>m[all])).sort().map(v=>`<option>${esc(v)}</option>`).join(''); }
+
+function setView(v){ state.view=v; document.getElementById('v-grid').className=`w-8 h-8 grid place-items-center rounded ${v==='grid'?'bg-[#0C1F31] text-white':'text-slate-400'}`; document.getElementById('v-list').className=`w-8 h-8 grid place-items-center rounded ${v==='list'?'bg-[#0C1F31] text-white':'text-slate-400'}`; render(); }
+function resetFilters(){ ['f-search','f-sector','f-stage','f-region'].forEach(id=>document.getElementById(id).value=''); document.getElementById('f-complete').checked=false; render(); }
+
+function connectBtn(m,i){
+  if(m.status==='connected') return `<button class="border border-[#29A37A] text-[#29A37A] rounded-full px-4 py-1.5 text-xs font-bold flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5"></i> Connected</button>`;
+  if(m.status==='pending')  return `<button class="border border-slate-200 text-slate-500 rounded-full px-4 py-1.5 text-xs font-bold flex items-center gap-1.5"><i data-lucide="clock" class="w-3.5 h-3.5"></i> Pending</button>`;
+  return `<button onclick="connect(${i})" class="bg-[#DC183C] hover:bg-[#B0142F] text-white rounded-full px-4 py-1.5 text-xs font-bold transition flex items-center gap-1.5"><i data-lucide="user-plus" class="w-3.5 h-3.5"></i> Connect</button>`;
+}
+function connect(i){ MEMBERS[i].status='pending'; render(); showToast('Connection request sent to '+MEMBERS[i].name.split(' ')[0]+'.', null); }
+function pill(t){ return `<span class="inline-flex items-center px-2 py-0.5 rounded-full bg-slate-100 text-slate-600 text-[11px] font-semibold">${esc(t)}</span>`; }
+function completeBadge(m){ return m.complete?`<span class="inline-flex items-center gap-1 text-[10px] font-bold text-[#29A37A]"><i data-lucide="badge-check" class="w-3.5 h-3.5"></i></span>`:''; }
+
+function gridCard(m,gi){
+  return `<div class="bg-white rounded-2xl border border-slate-100 p-5 text-center card-lift">
+    <a href="member-account.html" class="inline-block">${monogram(m.initials,64)}</a>
+    <div class="flex items-center justify-center gap-1 mt-3"><a href="member-account.html" class="font-jakarta font-bold text-[#121A21] hover:text-[#DC183C] transition">${esc(m.name)}</a>${completeBadge(m)}</div>
+    <p class="text-xs text-slate-500">${esc(m.role)} · ${esc(m.company)}</p>
+    <div class="flex flex-wrap justify-center gap-1.5 mt-2">${pill(m.stage)}${pill(m.sector)}${pill(m.province)}</div>
+    <p class="text-[11px] text-slate-400 mt-2 flex items-center justify-center gap-1"><i data-lucide="hand-heart" class="w-3.5 h-3.5 text-[#29A37A]"></i> ${m.contrib} contributions · active ${esc(m.active)}</p>
+    <div class="mt-3 flex justify-center">${connectBtn(m,m._i)}</div>
+  </div>`;
+}
+function listRow(m){
+  return `<div class="flex items-center gap-3 py-3 px-4">
+    <a href="member-account.html">${monogram(m.initials,44)}</a>
+    <div class="min-w-0 flex-1"><div class="flex items-center gap-1"><a href="member-account.html" class="font-jakarta font-bold text-sm text-[#121A21] hover:text-[#DC183C]">${esc(m.name)}</a>${completeBadge(m)}</div><p class="text-xs text-slate-500 truncate">${esc(m.role)} at ${esc(m.company)} <span class="text-slate-300">·</span> ${esc(m.sector)} <span class="text-slate-300">·</span> ${esc(m.province)}</p></div>
+    <span class="hidden sm:flex text-[11px] text-slate-400 items-center gap-1 mr-2"><i data-lucide="hand-heart" class="w-3.5 h-3.5 text-[#29A37A]"></i> ${m.contrib}</span>
+    ${connectBtn(m,m._i)}
+  </div>`;
+}
+
+function render(){
+  const q = document.getElementById('f-search').value.toLowerCase();
+  const sec = document.getElementById('f-sector').value;
+  const stg = document.getElementById('f-stage').value;
+  const reg = document.getElementById('f-region').value;
+  const comp = document.getElementById('f-complete').checked;
+  const sort = document.getElementById('f-sort').value;
+  let list = MEMBERS.map((m,i)=>({ ...m, _i:i }));
+  list = list.filter(m => (!q || (m.name+' '+m.company+' '+m.role).toLowerCase().includes(q)) && (!sec||m.sector===sec) && (!stg||m.stage===stg) && (!reg||m.province===reg) && (!comp||m.complete));
+  if(sort==='contrib') list.sort((a,b)=>b.contrib-a.contrib);
+  else if(sort==='az') list.sort((a,b)=>a.name.localeCompare(b.name));
+  document.getElementById('result-count').textContent = `${list.length} member${list.length!==1?'s':''}${MEMBERS.length!==list.length?` of ${MEMBERS.length}`:''}`;
+  const host = document.getElementById('results');
+  if(!list.length){ host.innerHTML = `<div class="bg-white rounded-2xl border border-slate-100 py-16 text-center text-slate-400"><i data-lucide="user-x" class="w-8 h-8 mx-auto mb-2"></i><p class="font-semibold">No members match those filters.</p><button onclick="resetFilters()" class="text-xs font-bold text-[#DC183C] uppercase mt-2 hover:underline">Reset filters</button></div>`; }
+  else if(state.view==='grid'){ host.innerHTML = `<div class="grid sm:grid-cols-2 xl:grid-cols-3 gap-4">${list.map(gridCard).join('')}</div>`; }
+  else { host.innerHTML = `<div class="bg-white rounded-2xl border border-slate-100 divide-y divide-slate-100">${list.map(listRow).join('')}</div>`; }
+  lucide.createIcons();
+}
+
+const BRIEFS = { directory:{ title:'Members Directory', sub:'Browse & filter all members', purpose:'The discovery surface for the whole community. Search + facet filters (sector, stage, region, profile-complete) and sort. Drives connection density — the metric that makes a community sticky. Cards deep-link to the member profile and offer one-tap Connect.', data:'<code>members[] { id, name, role, company, sector, stage, province, contribution_total, profile_complete, last_active, connection_status }</code>.', logic:'Server-side faceted search with pagination. &ldquo;Top contributors&rdquo; sort surfaces generous members (reputation = generosity). Connect creates a pending request, optimistic UI. Honours each member&rsquo;s &ldquo;show in directory&rdquo; privacy setting.', components:'Filter sidebar · sort · grid/list toggle · member cards · connect.', api:'GET /v1/members?sector=&stage=&province=&complete=&sort=&page=' } };
+function toggleDevMode(){const on=document.body.classList.toggle('dev-on');const b=document.getElementById('devToggle');if(b)b.classList.toggle('on',on);if(on)showToast('Dev Mode on — tap any ⓘ for implementation notes.',null);lucide.createIcons();}
+function closeOverlay(id){const el=document.getElementById(id);if(!el)return;el.classList.remove('open');setTimeout(()=>{if(el&&el.parentNode)el.remove();},300);}
+function openBrief(id){const b=BRIEFS[id];if(!b)return;const sec=(icon,label,html)=>`<div class="px-6 py-4 border-t border-slate-100"><p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] flex items-center gap-1.5 mb-2"><i data-lucide="${icon}" class="w-3.5 h-3.5"></i>${label}</p><div class="text-sm text-slate-600 leading-relaxed">${html}</div></div>`;document.getElementById('overlay-root').innerHTML=`<div class="ov" id="ov-brief"><div class="ov-bg" onclick="closeOverlay('ov-brief')"></div><div class="drawer"><div class="sticky top-0 z-10 bg-[#0C1F31] text-white px-6 py-5 flex items-start justify-between"><div class="min-w-0"><p class="text-[10px] font-bold uppercase tracking-widest text-[#FF9900] mb-1">Dev Brief</p><h3 class="font-jakarta font-extrabold text-lg leading-tight">${b.title}</h3><p class="text-xs text-white/60 mt-1">${b.sub}</p></div><button onclick="closeOverlay('ov-brief')" class="text-white/60 hover:text-white shrink-0 ml-3"><i data-lucide="x" class="w-5 h-5"></i></button></div>${sec('target','Purpose',b.purpose)}${sec('database','Data model',b.data)}${sec('git-branch','Logic',b.logic)}${sec('boxes','Components',b.components)}${sec('plug','API',`<code class="block bg-slate-900 text-emerald-300 text-xs font-mono px-3 py-2 rounded-lg overflow-x-auto">${b.api}</code>`)}</div></div>`;requestAnimationFrame(()=>{const o=document.getElementById('ov-brief');if(o)o.classList.add('open');});lucide.createIcons();}
+function showToast(msg,kind){const el=document.getElementById('toast');const color=kind==='ask'?'#DC183C':kind==='win'?'#29A37A':kind==='share'?'#FF9900':'#0C1F31';el.classList.remove('hidden');el.innerHTML=`<div class="toast-in bg-[#0C1F31] text-white rounded-full pl-3 pr-5 py-2.5 shadow-2xl flex items-center gap-2 text-sm font-semibold" style="border-left:4px solid ${color}"><i data-lucide="check-circle" class="w-4 h-4" style="color:${color}"></i><span>${esc(msg)}</span></div>`;lucide.createIcons();setTimeout(()=>{const i=el.firstElementChild;if(i){i.classList.remove('toast-in');i.classList.add('toast-out');}setTimeout(()=>{el.classList.add('hidden');el.innerHTML='';},250);},2400);}
+
+document.addEventListener('keydown',e=>{ if(e.key==='Escape') document.querySelectorAll('.ov.open').forEach(o=>closeOverlay(o.id)); });
+fillSelect('f-sector','sector','sectors'); fillSelect('f-stage','stage','stages'); fillSelect('f-region','province','regions');
+setView('grid');
+lucide.createIcons();
+</script>
+</body>
+</html>

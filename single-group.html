@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Group · General | SME HUB</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  <script>
+    tailwind.config = { theme:{ extend:{ fontFamily:{ jakarta:['Plus Jakarta Sans','sans-serif'], inter:['Inter','system-ui','sans-serif'], mono:['ui-monospace','monospace'] }, colors:{ primary:'#DC183C', accent:'#FF9900', navy:'#0C1F31', success:'#29A37A', ink:'#121A21' } } } };
+  </script>
+  <style>
+    html, body { font-family:'Inter', system-ui, sans-serif; }
+    .font-jakarta { font-family:'Plus Jakarta Sans', sans-serif; letter-spacing:.005em; }
+    .font-mono { font-family: ui-monospace, monospace; }
+    .no-scrollbar::-webkit-scrollbar { display:none; } .no-scrollbar { -ms-overflow-style:none; scrollbar-width:none; }
+    @keyframes fadeUp { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+    .reveal { animation: fadeUp .45s cubic-bezier(.2,.7,.2,1) backwards; }
+    @keyframes toastIn { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
+    @keyframes toastOut { to { opacity:0; transform:translateY(20px); } }
+    .toast-in { animation: toastIn .25s ease forwards; } .toast-out { animation: toastOut .25s ease forwards; }
+    .stripe-ask{box-shadow:inset 4px 0 0 0 #DC183C;} .stripe-win{box-shadow:inset 4px 0 0 0 #29A37A;} .stripe-share{box-shadow:inset 4px 0 0 0 #FF9900;}
+    .card-lift{transition:box-shadow .2s, transform .2s;} .card-lift:hover{box-shadow:0 8px 20px -8px rgba(10,44,61,.12); transform:translateY(-1px);}
+    .gtab{position:relative; transition:color .15s;} .gtab.active{color:#DC183C;} .gtab.active::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:3px;border-radius:3px 3px 0 0;background:#DC183C;}
+    #overlay-root:empty{display:none;}
+    .ov{position:fixed;inset:0;z-index:60;} .ov-bg{position:absolute;inset:0;background:rgba(12,31,49,.45);backdrop-filter:blur(2px);opacity:0;transition:opacity .3s;} .ov.open .ov-bg{opacity:1;}
+    .drawer{position:absolute;right:0;top:0;height:100%;width:100%;max-width:440px;background:#fff;box-shadow:-12px 0 40px rgba(12,31,49,.25);overflow-y:auto;transform:translateX(100%);transition:transform .3s cubic-bezier(.2,.7,.2,1);} .ov.open .drawer{transform:translateX(0);}
+    .dev-badge{display:none;} body.dev-on .dev-badge{display:inline-flex;} #devToggle.on{background:#DC183C;color:#fff;border-color:#DC183C;}
+  </style>
+</head>
+<body class="bg-[#FCFCFC] text-[#121A21] font-inter">
+
+<!-- HEADER (shared, cross-linked) -->
+<header class="bg-white border-b border-slate-100 sticky top-0 z-40">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center gap-3">
+    <a href="member-hub.html" class="flex items-center gap-2 shrink-0" aria-label="SME South Africa — Community Hub">
+      <img src="https://smesouthafrica.co.za/wp-content/uploads/2025/10/Asset-1-1.webp" alt="SME South Africa" class="h-8 w-auto" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+      <span style="display:none" class="font-jakarta font-extrabold text-[#121A21] text-lg items-center">SME<span class="text-[#DC183C]">HUB</span></span>
+    </a>
+    <div class="hidden md:block flex-1 max-w-md ml-2">
+      <div class="relative"><i data-lucide="search" class="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400"></i>
+        <input type="text" placeholder="Search groups, members, asks…" class="w-full bg-slate-100 rounded-full pl-10 pr-4 py-2.5 text-sm outline-none focus:bg-white focus:ring-2 focus:ring-[#DC183C]/30 transition" /></div>
+    </div>
+    <div class="flex items-center gap-1 sm:gap-1.5 ml-auto">
+      <button id="devToggle" onclick="toggleDevMode()" class="hidden sm:flex items-center gap-1.5 px-3 h-9 rounded-full border border-slate-200 text-slate-500 hover:border-[#DC183C] hover:text-[#DC183C] transition text-[11px] font-bold uppercase tracking-wider mr-1"><i data-lucide="code-2" class="w-3.5 h-3.5"></i><span>Dev</span></button>
+      <a href="member-hub.html" title="Community feed" class="w-10 h-10 grid place-items-center rounded-full hover:bg-slate-100 text-slate-600"><i data-lucide="home" class="w-5 h-5"></i></a>
+      <a href="member-account.html" title="Messages" class="w-10 h-10 grid place-items-center rounded-full hover:bg-slate-100 text-slate-600"><i data-lucide="mail" class="w-5 h-5"></i></a>
+      <a href="member-account.html" title="Your account" class="flex items-center gap-2 pl-2 ml-1 border-l border-slate-200 py-1 hover:opacity-80">
+        <div class="w-9 h-9 rounded-full bg-gradient-to-br from-[#DC183C] to-[#FF9900] grid place-items-center font-jakarta font-bold text-white text-xs">TJ</div>
+        <i data-lucide="chevron-down" class="w-4 h-4 text-slate-400"></i>
+      </a>
+    </div>
+  </div>
+</header>
+
+<!-- COMMUNITY SUB-NAV -->
+<div class="bg-white border-b border-slate-100">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 flex gap-1 overflow-x-auto no-scrollbar">
+    <a href="member-hub.html" class="shrink-0 px-4 py-3 text-sm font-bold font-jakarta text-slate-500 hover:text-[#121A21] border-b-2 border-transparent flex items-center gap-2"><i data-lucide="rss" class="w-4 h-4"></i> Feed</a>
+    <a href="members.html" class="shrink-0 px-4 py-3 text-sm font-bold font-jakarta text-slate-500 hover:text-[#121A21] border-b-2 border-transparent flex items-center gap-2"><i data-lucide="users" class="w-4 h-4"></i> Members</a>
+    <a href="groups.html" class="shrink-0 px-4 py-3 text-sm font-bold font-jakarta text-[#DC183C] border-b-2 border-[#DC183C] flex items-center gap-2"><i data-lucide="layout-grid" class="w-4 h-4"></i> Groups</a>
+    <a href="forums.html" class="shrink-0 px-4 py-3 text-sm font-bold font-jakarta text-slate-500 hover:text-[#121A21] border-b-2 border-transparent flex items-center gap-2"><i data-lucide="messages-square" class="w-4 h-4"></i> Forums</a>
+    <a href="#" class="shrink-0 px-4 py-3 text-sm font-bold font-jakarta text-slate-500 hover:text-[#121A21] border-b-2 border-transparent flex items-center gap-2"><i data-lucide="calendar" class="w-4 h-4"></i> Events</a>
+  </div>
+</div>
+
+<!-- BREADCRUMB -->
+<div class="max-w-6xl mx-auto px-4 sm:px-6 pt-5">
+  <nav class="flex items-center gap-1.5 text-xs text-slate-400 font-semibold">
+    <a href="member-hub.html" class="hover:text-[#DC183C]">Community</a>
+    <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
+    <a href="groups.html" class="hover:text-[#DC183C]">Groups</a>
+    <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
+    <span class="text-slate-600">General</span>
+  </nav>
+</div>
+
+<main class="max-w-6xl mx-auto px-4 sm:px-6 py-5">
+  <!-- GROUP HERO -->
+  <div id="group-hero"></div>
+
+  <div class="mt-6 grid grid-cols-1 lg:grid-cols-12 gap-6">
+    <div class="lg:col-span-8 min-w-0">
+      <div class="bg-white rounded-2xl border border-slate-100 overflow-hidden">
+        <div id="group-subnav" class="flex gap-1 px-2 border-b border-slate-100 overflow-x-auto no-scrollbar"></div>
+        <div id="group-content" class="p-4 sm:p-5"></div>
+      </div>
+    </div>
+    <aside class="lg:col-span-4 space-y-5">
+      <!-- About -->
+      <div class="bg-white rounded-2xl border border-slate-100 p-5 reveal">
+        <h4 class="font-jakarta font-bold uppercase text-sm text-[#121A21] tracking-wide mb-3">About this group</h4>
+        <p class="text-sm text-slate-600 leading-relaxed">Connect, collaborate and grow with fellow South African entrepreneurs. Share insights, ask questions, and celebrate wins together.</p>
+        <div class="mt-4 space-y-2 text-sm">
+          <div class="flex items-center gap-2 text-slate-600"><i data-lucide="globe" class="w-4 h-4 text-slate-400"></i> Public group</div>
+          <div class="flex items-center gap-2 text-slate-600"><i data-lucide="users" class="w-4 h-4 text-slate-400"></i> 1,284 members</div>
+          <div class="flex items-center gap-2 text-slate-600"><i data-lucide="calendar" class="w-4 h-4 text-slate-400"></i> Created Mar 2023</div>
+        </div>
+      </div>
+      <!-- Other groups -->
+      <div class="bg-white rounded-2xl border border-slate-100 overflow-hidden reveal" style="animation-delay:80ms">
+        <div class="px-5 py-3 border-b border-slate-100 flex items-center gap-4">
+          <h4 class="font-jakarta font-bold uppercase text-sm text-[#121A21] tracking-wide">Groups</h4>
+          <div class="ml-auto flex gap-3 text-[11px] font-bold uppercase tracking-wide">
+            <button class="text-slate-400 hover:text-[#DC183C]">Newest</button>
+            <button class="text-[#DC183C] border-b-2 border-[#DC183C] pb-0.5">Active</button>
+            <button class="text-slate-400 hover:text-[#DC183C]">Popular</button>
+          </div>
+        </div>
+        <div id="other-groups"></div>
+      </div>
+      <!-- Latest updates -->
+      <div class="bg-white rounded-2xl border border-slate-100 overflow-hidden reveal" style="animation-delay:160ms">
+        <div class="px-5 py-3 border-b border-slate-100"><h4 class="font-jakarta font-bold uppercase text-sm text-[#121A21] tracking-wide">Latest updates</h4></div>
+        <div id="latest-updates"></div>
+      </div>
+    </aside>
+  </div>
+</main>
+
+<div id="overlay-root"></div>
+<div id="toast" class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-50"></div>
+
+<script>
+/* ===== helpers ===== */
+function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+function monogram(initials,size=44){ const fs=Math.max(10,Math.floor(size*0.38)); return `<div class="rounded-full bg-gradient-to-br from-[#DC183C] to-[#FF9900] grid place-items-center font-jakarta font-bold text-white shrink-0" style="width:${size}px;height:${size}px;font-size:${fs}px">${esc(initials)}</div>`; }
+const TYPES = {
+  ask:{color:'#DC183C',bgTint:'bg-[#DC183C]/10',text:'text-[#DC183C]',label:'Ask',icon:'help-circle'},
+  win:{color:'#29A37A',bgTint:'bg-[#29A37A]/10',text:'text-[#29A37A]',label:'Win',icon:'trophy'},
+  share:{color:'#FF9900',bgTint:'bg-[#FF9900]/15',text:'text-[#AE6B0A]',label:'Share',icon:'megaphone'}
+};
+
+/* ===== data ===== */
+const GROUP = { name:'General', privacy:'Public', members:1284, active:'25 minutes ago', joined:true, subscribed:false };
+const G_MEMBERS = [
+  { name:'Tshepho Joel',    initials:'TJ', role:'Founder',     company:'Langa Holdings', gRole:'Organizer', province:'Gauteng' },
+  { name:'Sello Monare',    initials:'SM', role:'MD',          company:'TechSolve RSA',  gRole:'Member',    province:'Gauteng' },
+  { name:'Naledi Mokoena',  initials:'NM', role:'Founder',     company:'GreenTrace',     gRole:'Moderator', province:'Western Cape' },
+  { name:'Karabo Kgophane', initials:'KK', role:'E-comm Lead', company:'Mzansi Cart',    gRole:'Member',    province:'Gauteng' },
+  { name:'Mandla Dlamini',  initials:'MD', role:'Co-founder',  company:'PesaPay',        gRole:'Member',    province:'Western Cape' },
+  { name:'Refiloe Sithole', initials:'RS', role:'Founder',     company:'Skhokho',        gRole:'Member',    province:'Gauteng' }
+];
+const G_POSTS = [
+  { id:1, type:'ask', who:'Sello Monare', initials:'SM', sub:'MD at TechSolve RSA', time:'2h ago', content:"Anyone have a reliable CIPC annual returns contact that doesn't charge extortionate fees? Gauteng-based preferred.", likes:14, comments:4, liked:false },
+  { id:2, type:'win', who:'Naledi Mokoena', initials:'NM', sub:'Founder at GreenTrace', time:'5h ago', content:"Signed our 50th enterprise customer today. 14 months ago we had two. Thank you to this group for the pitch practice 🙌", likes:86, comments:22, liked:true },
+  { id:3, type:'share', who:'Karabo Kgophane', initials:'KK', sub:'E-comm Lead at Mzansi Cart', time:'8h ago', content:"PSA: SARS updated the small-business turnover tax threshold. Under R1M turnover? The new bracket could save you money.", likes:47, comments:9, liked:false }
+];
+const G_DISCUSSIONS = [
+  { id:1, title:'Business advise', author:'Sipho N.', date:'26 May 2026 at 1:44pm', members:4, replies:5, last:'2 days, 7 hours ago', pinned:true, locked:false,
+    excerpt:"hey can someone help me, i need to start an investment business were i help people to invest in sat-rix divi/SA40 that pays dividends and SA bonds. i already created a basic website for this business using AI — the problem is i don't have knowledge on how to market this business or the right tools to use." },
+  { id:2, title:'Best POPIA-compliant payroll tools for under 15 staff?', author:'Tshepho J.', date:'24 May 2026', members:8, replies:11, last:'5 days ago', pinned:false, locked:false,
+    excerpt:"Looking for something that won't cost the earth. Must be POPIA-friendly. Gauteng-based recommendations welcome." },
+  { id:3, title:'Group rules & introductions — start here', author:'Admin', date:'1 Mar 2023', members:212, replies:48, last:'1 week ago', pinned:true, locked:true,
+    excerpt:"Welcome to General! Please introduce yourself and read the community guidelines before posting." }
+];
+const G_PHOTOS = [['#DC183C','#FF9900'],['#0C1F31','#1a3a54'],['#29A37A','#0C1F31'],['#FF9900','#DC183C'],['#1a3a54','#29A37A'],['#DC183C','#0C1F31'],['#FF9900','#AE6B0A'],['#0C1F31','#DC183C'],['#29A37A','#FF9900']];
+const OTHER_GROUPS = [
+  { name:'Fintech Founders', sub:'active 1h ago' },
+  { name:'Cape Town SMEs', sub:'active 3h ago' },
+  { name:'Funding & Investors', sub:'active today' }
+];
+const LATEST = [
+  { initials:'SM', html:'<b>Sello</b> started a discussion in the forum', time:'25m' },
+  { initials:'NM', html:'<b>Naledi</b> shared a Win: 50th customer', time:'5h' },
+  { initials:'KK', html:'<b>Karabo</b> posted the turnover-tax breakdown', time:'8h' }
+];
+
+const state = { tab:'feed', filter:'all' };
+
+/* ===== hero ===== */
+function renderHero(){
+  const g = GROUP;
+  const memberBtn = g.joined
+    ? `<button onclick="toggleJoin()" class="border border-[#29A37A] text-[#29A37A] rounded-full px-5 py-2.5 font-jakarta font-bold text-sm flex items-center gap-2 hover:bg-[#E4F5EE] transition"><i data-lucide="check" class="w-4 h-4"></i> Member</button>`
+    : `<button onclick="toggleJoin()" class="bg-[#DC183C] hover:bg-[#B0142F] text-white rounded-full px-5 py-2.5 font-jakarta font-bold text-sm transition flex items-center gap-2"><i data-lucide="plus" class="w-4 h-4"></i> Join group</button>`;
+  document.getElementById('group-hero').innerHTML = `
+    <div class="bg-white rounded-2xl border border-slate-100 overflow-hidden reveal">
+      <div class="h-32 sm:h-40 relative bg-gradient-to-br from-[#0C1F31] to-[#1a3a54]">
+        <div class="absolute inset-0 opacity-40" style="background:radial-gradient(circle at 70% 30%, #DC183C 0%, transparent 55%);"></div>
+        <div class="absolute inset-0 grid place-items-center"><div class="font-jakarta font-extrabold text-white/90 text-2xl sm:text-3xl tracking-tight flex items-center gap-2"><i data-lucide="hexagon" class="w-7 h-7 text-[#FF9900]"></i> SME <span class="font-light">SOUTH AFRICA</span></div></div>
+        <button onclick="openBrief('group')" class="dev-badge absolute top-3 left-3 w-5 h-5 rounded-full bg-[#DC183C] text-white items-center justify-center text-[10px] font-bold leading-none animate-pulse">i</button>
+      </div>
+      <div class="px-5 sm:px-7 pb-6">
+        <div class="relative shrink-0 inline-block -mt-12 sm:-mt-14">
+          <div class="w-24 h-24 rounded-2xl bg-[#0C1F31] grid place-items-center ring-4 ring-white shadow-lg"><i data-lucide="users" class="w-10 h-10 text-[#FF9900]"></i></div>
+        </div>
+        <div class="mt-3 flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
+          <div class="min-w-0 flex-1">
+            <div class="flex items-center gap-2 flex-wrap">
+              <h1 class="font-jakarta font-extrabold text-2xl sm:text-3xl text-[#121A21] tracking-tight">${esc(g.name)}</h1>
+              <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#E4F5EE] text-[#29A37A]"><i data-lucide="globe" class="w-3 h-3"></i> ${esc(g.privacy)}</span>
+            </div>
+            <p class="text-sm text-slate-500 mt-1 flex items-center gap-1.5"><i data-lucide="users" class="w-4 h-4"></i> ${g.members.toLocaleString()} members <span class="text-slate-300">·</span> active ${esc(g.active)}</p>
+          </div>
+          <div class="flex items-center gap-2 shrink-0">
+            ${memberBtn}
+            <button onclick="toggleSub()" id="sub-btn" class="border border-slate-200 hover:border-[#DC183C] hover:text-[#DC183C] text-slate-600 rounded-full w-11 h-11 grid place-items-center transition" title="Notifications"><i data-lucide="${g.subscribed?'bell-ring':'bell'}" class="w-4 h-4"></i></button>
+            <button onclick="showToast('Group options',null)" class="border border-slate-200 hover:border-[#DC183C] hover:text-[#DC183C] text-slate-600 rounded-full w-11 h-11 grid place-items-center transition"><i data-lucide="more-horizontal" class="w-4 h-4"></i></button>
+          </div>
+        </div>
+      </div>
+    </div>`;
+}
+function toggleJoin(){ GROUP.joined=!GROUP.joined; renderHero(); lucide.createIcons(); showToast(GROUP.joined?'You joined General.':'You left the group.', GROUP.joined?'win':null); }
+function toggleSub(){ GROUP.subscribed=!GROUP.subscribed; renderHero(); lucide.createIcons(); showToast(GROUP.subscribed?'Subscribed to group updates.':'Unsubscribed.', null); }
+
+/* ===== sub-nav ===== */
+const G_TABS = [
+  { id:'feed', label:'Feed', icon:'rss' },
+  { id:'members', label:'Members', icon:'users' },
+  { id:'photos', label:'Photos', icon:'image' },
+  { id:'discussions', label:'Discussions', icon:'messages-square' },
+  { id:'manage', label:'Manage', icon:'settings' },
+  { id:'invites', label:'Send Invites', icon:'mail-plus' }
+];
+function renderSubnav(){
+  document.getElementById('group-subnav').innerHTML = G_TABS.map(t=>`
+    <button onclick="setTab('${t.id}')" class="gtab ${state.tab===t.id?'active':'text-slate-500 hover:text-[#121A21]'} shrink-0 px-4 py-3.5 text-sm font-bold font-jakarta flex items-center gap-2">
+      <i data-lucide="${t.icon}" class="w-4 h-4"></i> ${t.label}${t.id==='manage'?'<span class="text-[9px] bg-[#FDECEF] text-[#DC183C] px-1.5 py-0.5 rounded-full uppercase ml-1">Organizer</span>':''}
+    </button>`).join('');
+}
+function setTab(id){ state.tab=id; renderSubnav(); renderTab(); lucide.createIcons(); }
+function renderTab(){
+  const map = { feed:tabFeed, members:tabMembers, photos:tabPhotos, discussions:tabDiscussions, manage:tabManage, invites:tabInvites };
+  document.getElementById('group-content').innerHTML = (map[state.tab]||tabFeed)();
+  lucide.createIcons();
+}
+function sectionLabel(t, brief){ const b = brief?`<button onclick="openBrief('${brief}')" class="dev-badge w-4 h-4 rounded-full bg-[#DC183C] text-white items-center justify-center text-[9px] font-bold leading-none animate-pulse ml-1.5">i</button>`:''; return `<h3 class="font-jakarta font-bold uppercase text-sm text-[#121A21] tracking-wide flex items-center">${esc(t)}${b}</h3>`; }
+
+/* ===== FEED ===== */
+function tabFeed(){
+  const composer = `
+    <div class="mb-4 bg-white border border-slate-100 rounded-2xl p-4">
+      <div class="flex gap-3">${monogram('TJ',40)}<button onclick="showToast('Composer opens on the Hub.',null)" class="flex-1 text-left bg-slate-100 hover:bg-slate-200/70 rounded-full px-4 text-sm text-slate-500 transition">Post to General…</button></div>
+      <div class="flex gap-2 mt-3">
+        <button onclick="showToast('Start an Ask','ask')" class="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-lg text-xs font-bold uppercase tracking-wider text-[#DC183C] bg-[#DC183C]/10 hover:bg-[#DC183C]/15"><i data-lucide="help-circle" class="w-3.5 h-3.5"></i> Ask</button>
+        <button onclick="showToast('Share a Win','win')" class="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-lg text-xs font-bold uppercase tracking-wider text-[#29A37A] bg-[#29A37A]/10 hover:bg-[#29A37A]/15"><i data-lucide="trophy" class="w-3.5 h-3.5"></i> Win</button>
+        <button onclick="showToast('Post a Share','share')" class="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-lg text-xs font-bold uppercase tracking-wider text-[#AE6B0A] bg-[#FF9900]/15 hover:bg-[#FF9900]/20"><i data-lucide="megaphone" class="w-3.5 h-3.5"></i> Share</button>
+      </div>
+    </div>`;
+  const filters = [['all','All'],['ask','Asks'],['win','Wins'],['share','Shares']];
+  const tabs = `<div class="flex gap-2 mb-4 overflow-x-auto no-scrollbar">${filters.map(([id,l])=>`<button onclick="setFilter('${id}')" class="shrink-0 px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider border ${state.filter===id?'bg-[#0C1F31] text-white border-[#0C1F31]':'border-slate-200 bg-white text-slate-600 hover:bg-slate-50'}">${l}</button>`).join('')}</div>`;
+  // Help a founder in this group (unanswered ask)
+  const help = `<div class="rounded-2xl border border-[#DC183C]/20 bg-[#FDECEF]/40 p-3.5 flex items-center gap-3 mb-4"><div class="w-9 h-9 rounded-full bg-gradient-to-br from-[#DC183C] to-[#FF9900] grid place-items-center font-jakarta font-bold text-white text-[11px] shrink-0">SN</div><div class="min-w-0 flex-1"><p class="text-[13px] text-[#121A21] leading-snug"><b>Sipho</b> asked a question in this group 4h ago with <span class="text-[#DC183C] font-bold">no replies</span> — help out?</p></div><button onclick="showToast('Opening your reply to Sipho — be specific and kind.','ask')" class="bg-[#DC183C] hover:bg-[#B0142F] text-white rounded-full px-4 py-1.5 text-xs font-bold transition shrink-0">Answer</button></div>`;
+  let posts = G_POSTS.slice(); if(state.filter!=='all') posts = posts.filter(p=>p.type===state.filter);
+  const empty = `<div class="text-center py-10"><div class="w-14 h-14 mx-auto rounded-full bg-slate-100 grid place-items-center mb-3"><i data-lucide="inbox" class="w-6 h-6 text-slate-400"></i></div><p class="font-jakarta font-bold text-[#121A21]">Be the first to post in General</p><p class="text-sm text-slate-500 max-w-xs mx-auto mt-1">Kick off the conversation — post an Ask, a Win, or a Share.</p><button onclick="showToast('Composer opens on the Hub.','ask')" class="mt-4 bg-[#DC183C] hover:bg-[#B0142F] text-white rounded-full px-5 py-2.5 font-jakarta font-bold text-sm transition inline-flex items-center gap-2"><i data-lucide="help-circle" class="w-4 h-4"></i> Post an Ask</button></div>`;
+  const feed = posts.length ? posts.map(p=>postCard(p)).join('') : empty;
+  return `${help}${composer}<div class="flex items-center justify-between">${sectionLabel('Group Feed','feed')}</div><div class="mt-3">${tabs}<div class="space-y-4">${feed}</div></div>`;
+}
+function setFilter(f){ state.filter=f; renderTab(); }
+function postCard(p){
+  const t = TYPES[p.type];
+  return `<article class="bg-white rounded-2xl border border-slate-100 stripe-${p.type} card-lift">
+    <div class="p-5">
+      <div class="flex items-center justify-between mb-3"><span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full ${t.bgTint} ${t.text} text-[10px] font-extrabold uppercase tracking-widest"><i data-lucide="${t.icon}" class="w-3 h-3"></i> ${t.label}</span><span class="text-[11px] text-slate-400">${esc(p.time)}</span></div>
+      <div class="flex gap-3 mb-4">${monogram(p.initials,40)}<div class="min-w-0"><h4 class="font-bold text-[15px] text-[#121A21] leading-tight">${esc(p.who)}</h4><p class="text-xs text-slate-500 mt-0.5">${esc(p.sub)}</p></div></div>
+      <p class="text-[15px] text-[#121A21] leading-relaxed">${esc(p.content)}</p>
+    </div>
+    <div class="px-2 py-1 border-t border-slate-100 flex">
+      <button onclick="like(${p.id})" class="flex-1 flex items-center justify-center gap-2 py-3 rounded-lg hover:bg-slate-50 ${p.liked?'text-[#DC183C]':'text-slate-500'} text-sm font-semibold"><i data-lucide="heart" class="w-4 h-4 ${p.liked?'fill-current':''}"></i><span>${p.likes}</span></button>
+      <button class="flex-1 flex items-center justify-center gap-2 py-3 rounded-lg hover:bg-slate-50 text-slate-500 text-sm font-semibold"><i data-lucide="message-circle" class="w-4 h-4"></i><span>${p.comments}</span></button>
+      <button class="flex-1 flex items-center justify-center gap-2 py-3 rounded-lg hover:bg-slate-50 text-slate-500 text-sm font-semibold"><i data-lucide="share-2" class="w-4 h-4"></i><span class="hidden sm:inline">Share</span></button>
+    </div>
+  </article>`;
+}
+function like(id){ const p=G_POSTS.find(x=>x.id===id); if(!p) return; p.liked=!p.liked; p.likes+=p.liked?1:-1; renderTab(); }
+
+/* ===== MEMBERS ===== */
+function tabMembers(){
+  const roleBadge = r => r==='Organizer' ? `<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#FDECEF] text-[#DC183C]">Organizer</span>` : r==='Moderator' ? `<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#FFF1E0] text-[#AE6B0A]">Moderator</span>` : `<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-slate-100 text-slate-500">Member</span>`;
+  const rows = G_MEMBERS.map(m=>`
+    <div class="flex items-center gap-3 py-3">
+      ${monogram(m.initials,44)}
+      <div class="min-w-0 flex-1"><div class="flex items-center gap-2"><p class="font-jakarta font-bold text-sm text-[#121A21]">${esc(m.name)}</p>${roleBadge(m.gRole)}</div><p class="text-xs text-slate-500 truncate">${esc(m.role)} at ${esc(m.company)} <span class="text-slate-300">·</span> ${esc(m.province)}</p></div>
+      ${m.name==='Tshepho Joel'?'<span class="text-xs text-slate-400 font-semibold">You</span>':`<button onclick="showToast('Connection request sent to ${esc(m.name.split(' ')[0])}.','win')" class="border border-slate-200 hover:border-[#DC183C] hover:text-[#DC183C] text-slate-600 rounded-full px-4 py-1.5 text-xs font-bold transition">Connect</button>`}
+    </div>`).join('');
+  return `<div class="flex items-center justify-between mb-1">${sectionLabel('Members','members')}<span class="text-xs font-bold text-slate-400">${GROUP.members.toLocaleString()} total</span></div><div class="divide-y divide-slate-100">${rows}</div>
+    <button onclick="showToast('Loading more members…',null)" class="w-full mt-4 py-2.5 rounded-full border border-slate-200 text-slate-600 hover:bg-slate-50 text-sm font-bold transition">Show all members</button>`;
+}
+
+/* ===== PHOTOS ===== */
+function tabPhotos(){
+  const tiles = G_PHOTOS.map(c=>`<button onclick="showToast('Opening photo',null)" class="aspect-square rounded-xl card-lift relative overflow-hidden" style="background:linear-gradient(135deg, ${c[0]}, ${c[1]})"><span class="absolute inset-0 grid place-items-center text-white/70"><i data-lucide="image" class="w-5 h-5"></i></span></button>`).join('');
+  return `<div class="flex items-center justify-between mb-3">${sectionLabel('Group Photos','photos')}<button onclick="showToast('Photo upload (mockup).',null)" class="bg-[#0C1F31] text-white rounded-full px-4 py-1.5 text-xs font-bold flex items-center gap-1.5"><i data-lucide="upload" class="w-3.5 h-3.5"></i> Upload</button></div>
+    <div class="grid grid-cols-3 sm:grid-cols-4 gap-2">${tiles}</div>
+    <p class="text-[11px] text-slate-400 mt-4 flex items-center gap-1.5"><i data-lucide="info" class="w-3.5 h-3.5"></i> Brand-gradient placeholders — no real photos in prototypes.</p>`;
+}
+
+/* ===== DISCUSSIONS ===== */
+function tabDiscussions(){
+  const rows = G_DISCUSSIONS.map(d=>`
+    <button onclick="openDiscussion(${d.id})" class="w-full text-left border border-slate-100 rounded-2xl p-4 card-lift block">
+      <div class="flex items-start justify-between gap-2">
+        <div class="flex items-center gap-2 min-w-0">${d.pinned?'<i data-lucide="pin" class="w-3.5 h-3.5 text-[#AE6B0A] shrink-0"></i>':''}${d.locked?'<i data-lucide="lock" class="w-3.5 h-3.5 text-slate-400 shrink-0"></i>':''}<p class="font-jakarta font-bold text-[#121A21] truncate">${esc(d.title)}</p></div>
+        <i data-lucide="chevron-right" class="w-4 h-4 text-slate-300 shrink-0"></i>
+      </div>
+      <p class="text-sm text-slate-500 mt-1 leading-snug line-clamp-2">${esc(d.excerpt)}</p>
+      <div class="flex items-center gap-3 mt-2 text-[11px] text-slate-400 flex-wrap">
+        <span>by ${esc(d.author)}</span><span class="inline-flex items-center gap-1"><i data-lucide="users" class="w-3.5 h-3.5"></i> ${d.members}</span><span class="inline-flex items-center gap-1"><i data-lucide="message-circle" class="w-3.5 h-3.5"></i> ${d.replies} replies</span><span class="inline-flex items-center gap-1"><i data-lucide="clock" class="w-3.5 h-3.5"></i> ${esc(d.last)}</span>
+      </div>
+    </button>`).join('');
+  return `<div class="flex items-center justify-between mb-3">${sectionLabel('Discussions','discussions')}<button onclick="showToast('New discussion composer (mockup).',null)" class="bg-[#DC183C] hover:bg-[#B0142F] text-white rounded-full px-4 py-1.5 text-xs font-bold flex items-center gap-1.5 transition"><i data-lucide="plus" class="w-3.5 h-3.5"></i> New</button></div><div class="space-y-3">${rows}</div>`;
+}
+function openDiscussion(id){
+  const d = G_DISCUSSIONS.find(x=>x.id===id); if(!d) return;
+  const replies = [
+    { who:'Naledi Mokoena', initials:'NM', time:'2 days ago', text:"Start with a clear niche. Don't try to serve everyone — pick the investor type you understand best and speak to them directly." },
+    { who:'Karabo Kgophane', initials:'KK', time:'2 days ago', text:"For marketing on a budget: build an email list from day one and post your reasoning publicly. Trust sells financial products." }
+  ];
+  document.getElementById('group-content').innerHTML = `
+    <button onclick="setTab('discussions')" class="text-sm font-semibold text-slate-500 hover:text-[#DC183C] flex items-center gap-1.5 mb-4"><i data-lucide="arrow-left" class="w-4 h-4"></i> Back to discussions</button>
+    <div class="border border-slate-100 rounded-2xl p-5">
+      <div class="flex items-start justify-between gap-2">
+        <div class="flex items-center gap-2">${d.pinned?'<i data-lucide="pin" class="w-4 h-4 text-[#AE6B0A]"></i>':''}${d.locked?'<i data-lucide="lock" class="w-4 h-4 text-slate-400"></i>':''}<h2 class="font-jakarta font-extrabold text-xl text-[#121A21]">${esc(d.title)}</h2></div>
+        <button class="text-slate-300 hover:text-slate-600"><i data-lucide="more-horizontal" class="w-5 h-5"></i></button>
+      </div>
+      <div class="flex items-center gap-3 mt-3 mb-4">${monogram('SN',40)}<div><p class="font-bold text-sm text-[#121A21]">${esc(d.author)}</p><p class="text-xs text-slate-400">Posted ${esc(d.date)}</p></div></div>
+      <p class="text-[15px] text-[#121A21] leading-relaxed whitespace-pre-line">${esc(d.excerpt)}</p>
+      <div class="flex gap-2 mt-4">
+        <button onclick="showToast('Reply box (mockup).',null)" class="bg-[#DC183C] hover:bg-[#B0142F] text-white rounded-full px-5 py-2 font-jakarta font-bold text-sm transition flex items-center gap-1.5"><i data-lucide="reply" class="w-4 h-4"></i> Reply</button>
+        <button onclick="showToast('Subscribed to this discussion.',null)" class="border border-slate-200 hover:border-[#DC183C] hover:text-[#DC183C] text-slate-600 rounded-full px-5 py-2 font-jakarta font-semibold text-sm transition flex items-center gap-1.5"><i data-lucide="bell" class="w-4 h-4"></i> Subscribe</button>
+        <button onclick="showToast('Added to favourites.',null)" class="border border-slate-200 hover:border-[#DC183C] hover:text-[#DC183C] text-slate-600 rounded-full px-5 py-2 font-jakarta font-semibold text-sm transition flex items-center gap-1.5"><i data-lucide="star" class="w-4 h-4"></i> Favorite</button>
+      </div>
+    </div>
+    <h4 class="font-jakarta font-bold uppercase text-sm text-[#121A21] tracking-wide mt-6 mb-3">${replies.length} replies</h4>
+    <div class="space-y-3">${replies.map(r=>`
+      <div class="border border-slate-100 rounded-2xl p-4">
+        <div class="flex items-center gap-3 mb-2">${monogram(r.initials,36)}<div><p class="font-bold text-sm text-[#121A21]">${esc(r.who)}</p><p class="text-[11px] text-slate-400">${esc(r.time)}</p></div></div>
+        <p class="text-sm text-[#121A21] leading-relaxed">${esc(r.text)}</p>
+      </div>`).join('')}</div>
+    <div class="mt-4 flex gap-3"><div class="shrink-0">${monogram('TJ',36)}</div><div class="flex-1"><input onkeydown="if(event.key==='Enter'){showToast('Reply posted.','win');this.value='';}" placeholder="Write a reply…" class="w-full bg-slate-100 rounded-full px-4 py-2.5 text-sm outline-none focus:bg-white focus:ring-2 focus:ring-[#DC183C]/30 transition"></div></div>`;
+  lucide.createIcons();
+}
+
+/* ===== MANAGE (organizer) ===== */
+function tabManage(){
+  const row = (icon,title,sub,action) => `<div class="flex items-center gap-3 py-3.5"><div class="w-9 h-9 rounded-lg bg-slate-100 grid place-items-center shrink-0"><i data-lucide="${icon}" class="w-4 h-4 text-slate-500"></i></div><div class="min-w-0 flex-1"><p class="text-sm font-semibold text-[#121A21]">${title}</p><p class="text-xs text-slate-500">${sub}</p></div>${action}</div>`;
+  const go = `<i data-lucide="chevron-right" class="w-4 h-4 text-slate-300"></i>`;
+  return `
+    <div class="flex items-center gap-2 mb-4">${sectionLabel('Manage Group','manage')}<span class="text-[10px] bg-[#FDECEF] text-[#DC183C] px-2 py-0.5 rounded-full uppercase font-bold">Organizer only</span></div>
+    <div class="grid sm:grid-cols-2 gap-4 mb-5">
+      <div><label class="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1.5">Group name</label><input value="General" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-sm outline-none focus:border-[#DC183C]"></div>
+      <div><label class="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1.5">Privacy</label><select class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-sm outline-none focus:border-[#DC183C]"><option>Public</option><option>Private</option><option>Hidden</option></select></div>
+    </div>
+    <div><label class="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1.5">Description</label><textarea rows="2" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-sm outline-none focus:border-[#DC183C]">Connect, collaborate and grow with fellow South African entrepreneurs.</textarea></div>
+    <button onclick="showToast('Group settings saved.','win')" class="mt-3 bg-[#DC183C] hover:bg-[#B0142F] text-white rounded-full px-5 py-2.5 font-jakarta font-bold text-sm transition">Save settings</button>
+    <div class="mt-5 pt-5 border-t border-slate-100 divide-y divide-slate-100">
+      ${row('user-cog','Members & roles','Promote, demote or remove members',go)}
+      ${row('shield','Pending requests','3 people waiting to join','<span class="bg-[#DC183C] text-white text-[10px] font-bold rounded-full px-2 py-0.5">3</span>')}
+      ${row('image','Cover photo','Change the group cover image',go)}
+    </div>
+    <div class="mt-5 rounded-2xl border-2 border-[#DC183C]/30 bg-[#FDECEF]/40 p-4"><p class="font-jakarta font-bold text-[#DC183C] flex items-center gap-2"><i data-lucide="alert-triangle" class="w-4 h-4"></i> Delete group</p><p class="text-xs text-slate-600 mt-1">Permanently delete General and all its content. This cannot be undone.</p><button onclick="showToast('Delete group requires confirmation.',null)" class="mt-2 bg-[#DC183C] hover:bg-[#B0142F] text-white rounded-full px-4 py-2 text-sm font-bold transition">Delete group…</button></div>`;
+}
+
+/* ===== SEND INVITES ===== */
+function tabInvites(){
+  const rows = G_MEMBERS.slice(1,5).map((m,i)=>`
+    <label class="flex items-center gap-3 py-2.5 cursor-pointer">
+      ${monogram(m.initials,36)}
+      <div class="min-w-0 flex-1"><p class="text-sm font-semibold text-[#121A21]">${esc(m.name)}</p><p class="text-xs text-slate-500 truncate">${esc(m.role)} at ${esc(m.company)}</p></div>
+      <input type="checkbox" class="w-4 h-4 accent-[#DC183C]">
+    </label>`).join('');
+  return `
+    <div class="mb-3">${sectionLabel('Send Invites','invites')}</div>
+    <p class="text-sm text-slate-600 mb-4">Invite your connections to join <b>General</b>. They'll get a notification and an email.</p>
+    <div class="rounded-2xl border border-slate-100 p-4 mb-4">
+      <div class="relative mb-2"><i data-lucide="search" class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400"></i><input placeholder="Search connections…" class="w-full bg-slate-50 rounded-full pl-9 pr-3 py-2 text-sm outline-none focus:bg-white focus:ring-2 focus:ring-[#DC183C]/30"></div>
+      <div class="divide-y divide-slate-100">${rows}</div>
+    </div>
+    <button onclick="showToast('Invites sent.','win')" class="bg-[#DC183C] hover:bg-[#B0142F] text-white rounded-full px-6 py-2.5 font-jakarta font-bold text-sm transition flex items-center gap-2"><i data-lucide="send" class="w-4 h-4"></i> Send invites</button>`;
+}
+
+/* ===== aside ===== */
+function renderAside(){
+  document.getElementById('other-groups').innerHTML = OTHER_GROUPS.map(g=>`
+    <a href="single-group.html" class="flex items-center gap-3 px-5 py-3 hover:bg-slate-50 transition border-b border-slate-50 last:border-0">
+      <div class="w-9 h-9 rounded-lg bg-[#0C1F31] grid place-items-center shrink-0"><i data-lucide="users" class="w-4 h-4 text-[#FF9900]"></i></div>
+      <div class="min-w-0"><p class="font-jakarta font-bold text-sm text-[#121A21] truncate">${esc(g.name)}</p><p class="text-[11px] text-slate-400">${esc(g.sub)}</p></div>
+    </a>`).join('');
+  document.getElementById('latest-updates').innerHTML = LATEST.map(u=>`
+    <div class="flex gap-3 px-5 py-3 border-b border-slate-50 last:border-0">
+      ${monogram(u.initials,34)}
+      <div class="min-w-0"><p class="text-sm text-slate-600 leading-snug">${u.html}</p><p class="text-[11px] text-slate-400 mt-0.5">${esc(u.time)} ago</p></div>
+    </div>`).join('');
+}
+
+/* ===== dev mode ===== */
+const BRIEFS = {
+  group:{ title:'Single Group', sub:'BuddyBoss group container', purpose:'The group home — hero with join/subscribe, tabbed content (Feed, Members, Photos, Discussions, Manage, Send Invites). Manage/Invites visibility depends on the viewer’s group role.', data:'<code>group { id, name, privacy, member_count, created_at, my_role }</code> · posts, members, media, forum topics scoped to the group.', logic:'Join → POST membership (auto for Public, request for Private). Subscribe toggles digest for this group. Manage tab renders only for organizers/mods.', components:'Group hero · tab bar · feed/members/photos/discussions/manage/invites panels · right rail.', api:'GET /v1/groups/{id} · POST /v1/groups/{id}/members' },
+  feed:{ title:'Group Feed', sub:'Posts scoped to the group', purpose:'Ask/Win/Share feed filtered to this group. Same taxonomy and card pattern as the global hub feed.', data:'Posts where <code>group_id = {id}</code>, type ∈ {ask, win, share}.', logic:'Composer posts into the group context. Filter tabs scope by type. Honours group privacy.', components:'Composer · filter tabs · striped post cards.', api:'GET /v1/groups/{id}/activity?type={type}' },
+  members:{ title:'Group Members', sub:'Roster with roles', purpose:'Lists members with their group role (Organizer/Moderator/Member) and a connect action.', data:'<code>members[] { user_id, group_role, joined_at }</code> joined to profile summary.', logic:'Roles drive permissions. Connect sends a platform-level connection request (separate from group membership).', components:'Member rows · role badges · connect buttons.', api:'GET /v1/groups/{id}/members' },
+  photos:{ title:'Group Photos', sub:'Shared media', purpose:'Media uploaded to the group. Mockup uses gradient placeholders.', data:'<code>media[] { id, group_id, url, uploaded_by, privacy }</code>.', logic:'Upload restricted to members; respects group privacy.', components:'Photo grid · upload button.', api:'GET /v1/groups/{id}/media' },
+  discussions:{ title:'Group Discussions', sub:'bbPress forum topics', purpose:'Forum topics attached to the group, with pin/lock states and a single-topic thread view (Reply / Subscribe / Favorite).', data:'<code>topics[] { id, title, author, replies, last_active, pinned, locked }</code> · <code>replies[]</code>.', logic:'Pinned topics float to top; locked topics disable replies. Reply/Subscribe/Favorite mirror bbPress actions.', components:'Topic list · single-topic view · reply composer.', api:'GET /v1/groups/{id}/topics · GET /v1/topics/{id}' },
+  manage:{ title:'Manage Group', sub:'Organizer settings', purpose:'Organizer-only controls: details, privacy, description, member roles, pending requests, cover, and delete.', data:'Editable group fields + pending-request queue.', logic:'Renders only when <code>my_role ∈ {organizer, moderator}</code>. Delete requires typed confirmation (like account deletion).', components:'Settings form · management rows · danger zone.', api:'PATCH /v1/groups/{id} · GET /v1/groups/{id}/requests' },
+  invites:{ title:'Send Invites', sub:'Invite connections to the group', purpose:'Invite your existing connections into the group; they receive an in-app notification + email (staggered via Kit).', data:'Selected connection IDs → group invitations.', logic:'Only connections are invitable. Batched email sends to protect WP Engine CPU.', components:'Connection picker · multi-select · send.', api:'POST /v1/groups/{id}/invites' }
+};
+function toggleDevMode(){ const on=document.body.classList.toggle('dev-on'); const b=document.getElementById('devToggle'); if(b) b.classList.toggle('on',on); if(on) showToast('Dev Mode on — tap any ⓘ for implementation notes.', null); lucide.createIcons(); }
+function closeOverlay(id){ const el=document.getElementById(id); if(!el) return; el.classList.remove('open'); setTimeout(()=>{ if(el&&el.parentNode) el.remove(); },300); }
+function openBrief(id){
+  const b = BRIEFS[id]; if(!b) return;
+  const sec = (icon,label,html)=>`<div class="px-6 py-4 border-t border-slate-100"><p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] flex items-center gap-1.5 mb-2"><i data-lucide="${icon}" class="w-3.5 h-3.5"></i>${label}</p><div class="text-sm text-slate-600 leading-relaxed">${html}</div></div>`;
+  document.getElementById('overlay-root').innerHTML = `
+    <div class="ov" id="ov-brief"><div class="ov-bg" onclick="closeOverlay('ov-brief')"></div>
+      <div class="drawer">
+        <div class="sticky top-0 z-10 bg-[#0C1F31] text-white px-6 py-5 flex items-start justify-between"><div class="min-w-0"><p class="text-[10px] font-bold uppercase tracking-widest text-[#FF9900] mb-1">Dev Brief</p><h3 class="font-jakarta font-extrabold text-lg leading-tight">${b.title}</h3><p class="text-xs text-white/60 mt-1">${b.sub}</p></div><button onclick="closeOverlay('ov-brief')" class="text-white/60 hover:text-white shrink-0 ml-3"><i data-lucide="x" class="w-5 h-5"></i></button></div>
+        ${sec('target','Purpose',b.purpose)}${sec('database','Data model',b.data)}${sec('git-branch','Logic',b.logic)}${sec('boxes','Components',b.components)}${sec('plug','API',`<code class="block bg-slate-900 text-emerald-300 text-xs font-mono px-3 py-2 rounded-lg overflow-x-auto">${b.api}</code>`)}
+      </div></div>`;
+  requestAnimationFrame(()=>{ const o=document.getElementById('ov-brief'); if(o) o.classList.add('open'); });
+  lucide.createIcons();
+}
+
+/* ===== toast ===== */
+function showToast(msg, kind){
+  const el=document.getElementById('toast'); const t=TYPES[kind]; const color=t?t.color:'#0C1F31';
+  el.classList.remove('hidden');
+  el.innerHTML = `<div class="toast-in bg-[#0C1F31] text-white rounded-full pl-3 pr-5 py-2.5 shadow-2xl flex items-center gap-2 text-sm font-semibold" style="border-left:4px solid ${color}"><i data-lucide="check-circle" class="w-4 h-4" style="color:${color}"></i><span>${esc(msg)}</span></div>`;
+  lucide.createIcons();
+  setTimeout(()=>{ const i=el.firstElementChild; if(i){ i.classList.remove('toast-in'); i.classList.add('toast-out'); } setTimeout(()=>{ el.classList.add('hidden'); el.innerHTML=''; },250); },2400);
+}
+
+/* ===== init ===== */
+document.addEventListener('keydown', e=>{ if(e.key==='Escape') document.querySelectorAll('.ov.open').forEach(o=>closeOverlay(o.id)); });
+renderHero(); renderSubnav(); renderTab(); renderAside(); lucide.createIcons();
+</script>
+</body>
+</html>

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SME South Africa — Solutions</title>
+  <meta name="description" content="Compare top small business solutions and make an informed decision with data-driven reviews." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  <script>
+    tailwind.config = { theme: { extend: { fontFamily: {
+      jakarta: ['Plus Jakarta Sans', 'sans-serif'], inter: ['Inter', 'system-ui', 'sans-serif']
+    } } } };
+  </script>
+  <style>
+    html, body { font-family: 'Inter', system-ui, sans-serif; }
+    .font-jakarta { font-family: 'Plus Jakarta Sans', sans-serif; letter-spacing: 0.005em; }
+    .no-scrollbar::-webkit-scrollbar { display:none; } .no-scrollbar { -ms-overflow-style:none; scrollbar-width:none; }
+    @keyframes fadeUp { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
+    .reveal { animation: fadeUp .5s cubic-bezier(.2,.7,.2,1) backwards; }
+    .card-lift { transition: box-shadow .2s, transform .2s; }
+    .card-lift:hover { box-shadow: 0 10px 24px -10px rgba(10,44,61,0.18); transform: translateY(-2px); }
+    .dev-badge { display:none; } body.dev-on .dev-badge { display:inline-flex; }
+    #devToggle.on { background:#DC183C; color:#fff; border-color:#DC183C; }
+    .ov { position:fixed; inset:0; z-index:60; }
+    .ov-bg { position:absolute; inset:0; background:rgba(12,31,49,.45); backdrop-filter:blur(2px); opacity:0; transition:opacity .3s; }
+    .ov.open .ov-bg { opacity:1; }
+    .drawer { position:absolute; right:0; top:0; height:100%; width:100%; max-width:440px; background:#fff; box-shadow:-12px 0 40px rgba(12,31,49,.25); overflow-y:auto; transform:translateX(100%); transition:transform .3s cubic-bezier(.2,.7,.2,1); }
+    .ov.open .drawer { transform:translateX(0); }
+  </style>
+</head>
+<body class="bg-[#FCFCFC] text-[#121A21] antialiased">
+
+<a href="#" class="block bg-[#DC183C] text-white text-center text-[13px] font-semibold py-2 px-4 hover:bg-[#B0142F] transition">
+  <i data-lucide="sparkles" class="inline w-3.5 h-3.5 -mt-0.5"></i> Funding Summit 2026 — secure your seat. <span class="underline underline-offset-2">Register now →</span>
+</a>
+
+<header class="bg-white border-b border-[#E7EBEF] sticky top-0 z-40">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center gap-4">
+    <a href="public-home.html" class="flex items-center gap-2.5 shrink-0">
+      <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-[#DC183C] to-[#FF9900] grid place-items-center text-white font-jakarta font-extrabold text-sm">S</div>
+      <span class="font-jakarta font-extrabold text-[17px] tracking-tight">SME <span class="text-[#DC183C]">South Africa</span></span>
+    </a>
+    <nav class="hidden lg:flex items-center gap-1 ml-4">
+      <a href="public-articles.html"  class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition">Articles</a>
+      <a href="public-resources.html" class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition">Resources</a>
+      <a href="public-funding.html"   class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition">Funding</a>
+      <a href="public-solutions.html" class="px-3 py-2 rounded-lg text-sm font-semibold text-[#DC183C] bg-[#FDECEF]">Solutions</a>
+      <a href="public-shop.html"      class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition">Shop</a>
+    </nav>
+    <div class="flex items-center gap-1 sm:gap-2 ml-auto">
+      <button id="devToggle" onclick="toggleDevMode()" class="hidden sm:flex items-center gap-1.5 px-3 h-9 rounded-full border border-slate-200 text-slate-500 hover:border-[#DC183C] hover:text-[#DC183C] transition text-[11px] font-bold uppercase tracking-wider" title="Toggle implementation notes"><i data-lucide="code-2" class="w-3.5 h-3.5"></i><span>Dev</span></button>
+      <a href="public-shop.html" aria-label="Cart" class="relative w-10 h-10 grid place-items-center rounded-full hover:bg-slate-100 text-slate-600"><i data-lucide="shopping-bag" class="w-5 h-5"></i><span class="absolute top-1.5 right-1.5 bg-[#DC183C] text-white text-[10px] font-bold rounded-full w-4 h-4 grid place-items-center">0</span></a>
+      <a href="member-hub.html" class="hidden sm:inline-flex items-center px-3 h-9 rounded-full text-sm font-bold text-[#121A21] hover:bg-slate-100 transition">Sign in</a>
+      <a href="member-hub.html" class="inline-flex items-center px-4 h-9 rounded-full text-sm font-bold text-white bg-[#DC183C] hover:bg-[#B0142F] transition">Join Free</a>
+    </div>
+  </div>
+</header>
+
+<!-- ===================== HERO ===================== -->
+<section class="text-white relative overflow-hidden" style="background:radial-gradient(800px 360px at 10% 0%,rgba(255,153,0,.22),transparent 55%),#0C1F31">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-16 sm:py-20 text-center">
+    <div class="flex items-center justify-center gap-2">
+      <h1 class="font-jakarta font-extrabold text-4xl sm:text-5xl tracking-tight">Top small business solutions</h1>
+      <button onclick="openBrief('solutions')" class="dev-badge w-6 h-6 rounded-full bg-[#FF9900] text-[#121A21] items-center justify-center text-[11px] font-bold" title="Implementation notes">i</button>
+    </div>
+    <p class="mt-4 text-lg text-white/75 max-w-2xl mx-auto">Compare solutions and make an informed decision with our data-driven reviews.</p>
+    <a href="#categories" class="mt-7 inline-flex items-center gap-2 px-6 h-12 rounded-full bg-[#FF9900] hover:bg-[#e08a00] text-[#121A21] font-bold transition">Browse categories <i data-lucide="arrow-down" class="w-4 h-4"></i></a>
+  </div>
+</section>
+
+<main class="max-w-7xl mx-auto px-4 sm:px-6">
+  <!-- How it works -->
+  <section class="py-16 grid sm:grid-cols-3 gap-5">
+    <div class="bg-white rounded-2xl border border-[#E7EBEF] p-6 text-center card-lift"><div class="w-12 h-12 rounded-xl bg-[#FDECEF] text-[#DC183C] grid place-items-center mx-auto mb-4"><i data-lucide="scale" class="w-6 h-6"></i></div><h3 class="font-jakarta font-bold text-lg">Compare</h3><p class="text-sm text-slate-600 mt-2">See pricing and features across brands, side by side.</p></div>
+    <div class="bg-white rounded-2xl border border-[#E7EBEF] p-6 text-center card-lift"><div class="w-12 h-12 rounded-xl bg-[#FFF1E0] text-[#AE6B0A] grid place-items-center mx-auto mb-4"><i data-lucide="link" class="w-6 h-6"></i></div><h3 class="font-jakarta font-bold text-lg">Get connected</h3><p class="text-sm text-slate-600 mt-2">Match the right solution to your business needs.</p></div>
+    <div class="bg-white rounded-2xl border border-[#E7EBEF] p-6 text-center card-lift"><div class="w-12 h-12 rounded-xl bg-[#E4F5EE] text-[#29A37A] grid place-items-center mx-auto mb-4"><i data-lucide="badge-check" class="w-6 h-6"></i></div><h3 class="font-jakarta font-bold text-lg">Buy smart</h3><p class="text-sm text-slate-600 mt-2">Make informed choices backed by real reviews.</p></div>
+  </section>
+
+  <!-- Categories -->
+  <section id="categories" class="pb-12">
+    <div class="flex items-end justify-between gap-4 mb-6">
+      <h2 class="font-jakarta font-extrabold text-2xl sm:text-3xl">Solution categories</h2>
+      <span id="catcount" class="text-sm text-slate-500"></span>
+    </div>
+    <div id="cat-grid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4"></div>
+  </section>
+
+  <!-- Trust -->
+  <section class="py-12">
+    <div class="rounded-2xl bg-white border border-[#E7EBEF] p-8 grid grid-cols-2 lg:grid-cols-4 gap-6 text-center">
+      <div><div class="w-11 h-11 rounded-xl bg-[#FDECEF] text-[#DC183C] grid place-items-center mx-auto mb-3"><i data-lucide="graduation-cap" class="w-5 h-5"></i></div><p class="font-jakarta font-bold">Learn</p><p class="text-sm text-slate-500 mt-1">Understand your options</p></div>
+      <div><div class="w-11 h-11 rounded-xl bg-[#FFF1E0] text-[#AE6B0A] grid place-items-center mx-auto mb-3"><i data-lucide="compass" class="w-5 h-5"></i></div><p class="font-jakarta font-bold">Explore</p><p class="text-sm text-slate-500 mt-1">Discover new tools</p></div>
+      <div><div class="w-11 h-11 rounded-xl bg-[#E4F5EE] text-[#29A37A] grid place-items-center mx-auto mb-3"><i data-lucide="git-compare" class="w-5 h-5"></i></div><p class="font-jakarta font-bold">Compare</p><p class="text-sm text-slate-500 mt-1">Weigh the trade-offs</p></div>
+      <div><div class="w-11 h-11 rounded-xl bg-[#FDECEF] text-[#DC183C] grid place-items-center mx-auto mb-3"><i data-lucide="file-signature" class="w-5 h-5"></i></div><p class="font-jakarta font-bold">Get quotes</p><p class="text-sm text-slate-500 mt-1">Request pricing fast</p></div>
+    </div>
+  </section>
+</main>
+
+<footer class="bg-[#0C1F31] text-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-12">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+      <div class="col-span-2 md:col-span-1">
+        <a href="public-home.html" class="flex items-center gap-2.5"><div class="w-9 h-9 rounded-xl bg-gradient-to-br from-[#DC183C] to-[#FF9900] grid place-items-center text-white font-jakarta font-extrabold text-sm">S</div><span class="font-jakarta font-extrabold text-[17px]">SME South Africa</span></a>
+        <p class="text-sm text-white/55 mt-4 max-w-xs leading-relaxed">South Africa's largest SME community — connecting founders with funding, mentorship, events, and the tools to scale.</p>
+      </div>
+      <div><p class="text-[11px] font-bold uppercase tracking-widest text-white/40">Platform</p><ul class="mt-4 space-y-2.5 text-sm text-white/70"><li><a href="member-hub.html" class="hover:text-white">Community</a></li><li><a href="#" class="hover:text-white">Events</a></li><li><a href="public-funding.html" class="hover:text-white">Funding</a></li><li><a href="public-solutions.html" class="hover:text-white">Solutions</a></li><li><a href="public-shop.html" class="hover:text-white">Shop</a></li></ul></div>
+      <div><p class="text-[11px] font-bold uppercase tracking-widest text-white/40">Learn</p><ul class="mt-4 space-y-2.5 text-sm text-white/70"><li><a href="public-articles.html" class="hover:text-white">Articles</a></li><li><a href="public-resources.html" class="hover:text-white">Resources</a></li><li><a href="public-resources.html" class="hover:text-white">Guides</a></li><li><a href="#" class="hover:text-white">Podcast</a></li></ul></div>
+      <div><p class="text-[11px] font-bold uppercase tracking-widest text-white/40">Company</p><ul class="mt-4 space-y-2.5 text-sm text-white/70"><li><a href="#" class="hover:text-white">About</a></li><li><a href="#" class="hover:text-white">Contact</a></li><li><a href="#" class="hover:text-white">Careers</a></li><li><a href="#" class="hover:text-white">Partners</a></li></ul></div>
+    </div>
+    <div class="flex flex-col sm:flex-row items-center justify-between gap-4 pt-8 mt-10 border-t border-white/10 text-sm text-white/50">
+      <p>© 2026 SME South Africa. All rights reserved.</p>
+      <div class="flex items-center gap-5"><a href="#" class="hover:text-white">Privacy Policy</a><a href="#" class="hover:text-white">Terms of Service</a><a href="#" class="hover:text-white">Cookie Policy</a></div>
+    </div>
+  </div>
+</footer>
+
+<div id="overlay-root"></div>
+<div id="toast" class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-50"></div>
+
+<script>
+  function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c])); }
+  function showToast(msg){ const el=document.getElementById('toast'); el.classList.remove('hidden'); el.innerHTML=`<div class="bg-[#0C1F31] text-white rounded-full pl-3 pr-5 py-2.5 shadow-2xl flex items-center gap-2 text-sm font-semibold" style="border-left:4px solid #FF9900"><i data-lucide="check-circle" class="w-4 h-4" style="color:#FF9900"></i><span>${esc(msg)}</span></div>`; lucide.createIcons(); setTimeout(()=>{el.classList.add('hidden');el.innerHTML='';},2400); }
+
+  const PAL = [['#FDECEF','#DC183C'],['#FFF1E0','#AE6B0A'],['#E4F5EE','#29A37A']];
+  const CATS = [
+    ['AI App & Website Builders','sparkles'], ['Accounting Software','calculator'], ['CRM Platforms','users-round'],
+    ['Payment Gateways','credit-card'], ['POS Systems','scan-line'], ['Payroll Software','wallet'],
+    ['Project Management','kanban'], ['Email Marketing','mail'], ['Web Hosting','server'],
+    ['Domain Registration','globe'], ['E-commerce Platforms','shopping-cart'], ['Invoicing & Billing','receipt'],
+    ['HR Software','id-card'], ['Business Insurance','shield'], ['VoIP & Telephony','phone-call'],
+    ['Cloud Storage','cloud'], ['Cybersecurity','lock'], ['Logistics & Delivery','truck'],
+    ['Inventory Management','boxes'], ['Booking & Scheduling','calendar-clock'], ['Legal & Compliance','scale'],
+    ['Business Loans','banknote'], ['Data & Analytics','bar-chart-3'], ['Design Tools','palette'],
+    ['Productivity Suites','layout-grid'], ['Customer Support','headset'], ['Social Media Tools','share-2']
+  ];
+  function renderCats(){
+    document.getElementById('catcount').textContent = CATS.length + ' categories';
+    document.getElementById('cat-grid').innerHTML = CATS.map((c,i)=>{ const p=PAL[i%3]; return `
+      <a href="#" class="bg-white rounded-2xl border border-[#E7EBEF] p-5 card-lift flex items-center gap-3 reveal" style="animation-delay:${i*22}ms">
+        <div class="w-11 h-11 rounded-xl grid place-items-center shrink-0" style="background:${p[0]};color:${p[1]}"><i data-lucide="${c[1]}" class="w-5 h-5"></i></div>
+        <span class="font-jakarta font-bold text-sm leading-tight">${esc(c[0])}</span>
+      </a>`; }).join('');
+    lucide.createIcons();
+  }
+
+  const BRIEFS = { solutions: {
+    title:'Solutions Directory', sub:'Affiliate / lead-gen comparison engine',
+    purpose:'A monetisable comparison directory: founders discover vetted software/services by category, compare and request quotes. Drives affiliate / lead-referral revenue and keeps members on-platform for buying decisions.',
+    data:'Category: <code>{ slug, name, icon }</code>. Solution: <code>{ id, category, vendor, pricing_from, rating, review_count, quote_url, affiliate }</code>.',
+    logic:'Category grid → category detail (ranked solutions) → quote request (lead capture, member-gated). Ratings aggregate member reviews. Quote requests route to vendors and are logged for attribution. Likely a JetEngine CPT + relationships.',
+    components:'Hero · how-it-works (3) · 27-category grid · trust band.',
+    api:'GET /v1/solutions/categories · GET /v1/solutions?category={slug}&sort=rating · POST /v1/solutions/{id}/quote'
+  } };
+  function toggleDevMode(){ const on=document.body.classList.toggle('dev-on'); const b=document.getElementById('devToggle'); if(b)b.classList.toggle('on',on); if(on)showToast('Dev Mode on — tap any ⓘ for implementation notes.'); lucide.createIcons(); }
+  function closeOverlay(id){ const el=document.getElementById(id); if(!el)return; el.classList.remove('open'); setTimeout(()=>{ if(el&&el.parentNode) el.remove(); },300); }
+  function openBrief(id){ const b=BRIEFS[id]; if(!b)return;
+    const sec=(icon,label,html)=>`<div class="px-6 py-4 border-t border-slate-100"><p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] flex items-center gap-1.5 mb-2"><i data-lucide="${icon}" class="w-3.5 h-3.5"></i>${label}</p><div class="text-sm text-slate-600 leading-relaxed">${html}</div></div>`;
+    document.getElementById('overlay-root').innerHTML=`<div class="ov" id="ov-brief"><div class="ov-bg" onclick="closeOverlay('ov-brief')"></div><div class="drawer"><div class="sticky top-0 z-10 bg-[#0C1F31] text-white px-6 py-5 flex items-start justify-between"><div class="min-w-0"><p class="text-[10px] font-bold uppercase tracking-widest text-[#FF9900] mb-1">Dev Brief</p><h3 class="font-jakarta font-extrabold text-lg leading-tight">${b.title}</h3><p class="text-xs text-white/60 mt-1">${b.sub}</p></div><button onclick="closeOverlay('ov-brief')" aria-label="Close" class="text-white/60 hover:text-white shrink-0 ml-3"><i data-lucide="x" class="w-5 h-5"></i></button></div>${sec('target','Purpose',b.purpose)}${sec('database','Data model',b.data)}${sec('git-branch','Logic',b.logic)}${sec('boxes','Components',b.components)}${sec('plug','API',`<code class="block bg-slate-900 text-emerald-300 text-xs font-mono px-3 py-2 rounded-lg overflow-x-auto">${b.api}</code>`)}<div class="px-6 py-4 border-t border-slate-100"><p class="text-[11px] text-slate-400 flex items-center gap-1.5"><i data-lucide="info" class="w-3.5 h-3.5"></i> Spec lives beside the feature — toggle Dev Mode off for the clean view.</p></div></div></div>`;
+    requestAnimationFrame(()=>{ const o=document.getElementById('ov-brief'); if(o)o.classList.add('open'); }); lucide.createIcons();
+  }
+
+  renderCats(); lucide.createIcons();
+</script>
+</body>
+</html>

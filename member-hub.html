@@ -85,7 +85,7 @@
     .ov.open .modalbox { transform:translate(-50%,-50%); opacity:1; }
   </style>
 </head>
-<body class="bg-[#FCFCFC] text-[#0C1F31] antialiased">
+<body class="bg-[#FCFCFC] text-[#121A21] antialiased">
 
 <!-- ===================== HEADER ===================== -->
 <header class="bg-white border-b border-slate-100 sticky top-0 z-40">
@@ -115,26 +115,37 @@
         <i data-lucide="bell" class="w-5 h-5"></i>
         <span class="absolute top-1.5 right-1.5 bg-[#DC183C] text-white text-[10px] font-bold rounded-full w-4 h-4 grid place-items-center">7</span>
       </button>
-      <div class="hidden sm:flex items-center gap-2 pl-3 ml-1 border-l border-slate-200 cursor-pointer hover:opacity-80">
+      <a href="member-account.html" title="Your account" class="hidden sm:flex items-center gap-2 pl-3 ml-1 border-l border-slate-200 cursor-pointer hover:opacity-80">
         <div class="w-8 h-8 rounded-full bg-gradient-to-br from-[#DC183C] to-[#FF9900] grid place-items-center font-jakarta font-bold text-white text-xs">TJ</div>
         <span class="text-sm font-bold">Tshepho J.</span>
         <i data-lucide="chevron-down" class="w-4 h-4 text-slate-400"></i>
-      </div>
+      </a>
     </div>
   </div>
 </header>
 
+<!-- ===================== COMMUNITY SUB-NAV ===================== -->
+<div class="bg-white border-b border-slate-100">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 flex gap-1 overflow-x-auto no-scrollbar">
+    <a href="member-hub.html" class="shrink-0 px-4 py-3 text-sm font-bold font-jakarta text-[#DC183C] border-b-2 border-[#DC183C] flex items-center gap-2"><i data-lucide="rss" class="w-4 h-4"></i> Feed</a>
+    <a href="members.html" class="shrink-0 px-4 py-3 text-sm font-bold font-jakarta text-slate-500 hover:text-[#121A21] border-b-2 border-transparent flex items-center gap-2"><i data-lucide="users" class="w-4 h-4"></i> Members</a>
+    <a href="groups.html" class="shrink-0 px-4 py-3 text-sm font-bold font-jakarta text-slate-500 hover:text-[#121A21] border-b-2 border-transparent flex items-center gap-2"><i data-lucide="layout-grid" class="w-4 h-4"></i> Groups</a>
+    <a href="forums.html" class="shrink-0 px-4 py-3 text-sm font-bold font-jakarta text-slate-500 hover:text-[#121A21] border-b-2 border-transparent flex items-center gap-2"><i data-lucide="messages-square" class="w-4 h-4"></i> Forums</a>
+    <a href="#" class="shrink-0 px-4 py-3 text-sm font-bold font-jakarta text-slate-500 hover:text-[#121A21] border-b-2 border-transparent flex items-center gap-2"><i data-lucide="calendar" class="w-4 h-4"></i> Events</a>
+  </div>
+</div>
+
 <!-- ===================== WELCOME RIBBON ===================== -->
 <div class="bg-white border-b border-slate-100">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex items-center gap-3 text-sm">
-    <i data-lucide="sparkles" class="w-4 h-4 text-[#AE6B0A] shrink-0"></i>
+    <i data-lucide="hand-heart" class="w-4 h-4 text-[#DC183C] shrink-0"></i>
     <p class="text-slate-600 min-w-0 truncate">
-      Good to see you, <span class="font-bold text-[#0C1F31]">Tshepho</span>.
-      <span class="hidden sm:inline">3 new asks were posted in the last hour — your community needs you.</span>
-      <span class="sm:hidden">3 new asks in the last hour.</span>
+      Good to see you, <span class="font-bold text-[#121A21]">Tshepho</span>.
+      <span class="hidden sm:inline"><span class="font-bold text-[#DC183C]">2 asks in Fintech are still unanswered</span> — your reply could unblock a founder today.</span>
+      <span class="sm:hidden"><span class="font-bold text-[#DC183C]">2 unanswered asks</span> in Fintech.</span>
     </p>
     <button onclick="openBrief('ribbon')" class="dev-badge w-4 h-4 rounded-full bg-[#DC183C] text-white items-center justify-center text-[9px] font-bold leading-none animate-pulse shrink-0" title="Implementation notes">i</button>
-    <button onclick="viewNewAsks()" class="ml-auto shrink-0 text-[#DC183C] font-bold text-xs uppercase tracking-wider hover:underline">View →</button>
+    <button onclick="viewNewAsks()" class="ml-auto shrink-0 text-[#DC183C] font-bold text-xs uppercase tracking-wider hover:underline">Help out →</button>
   </div>
 </div>
 
@@ -154,21 +165,22 @@
           </div>
         </div>
         <div class="pt-11 pb-4 px-5 text-center">
-          <h3 class="font-jakarta font-extrabold uppercase text-lg text-[#0C1F31] tracking-wide">Tshepho Joel</h3>
-          <p class="text-xs text-slate-500 mt-0.5">Founder at <span class="font-bold text-[#0C1F31]">Langa Holdings</span></p>
+          <a href="member-account.html" class="font-jakarta font-extrabold uppercase text-lg text-[#121A21] tracking-wide hover:text-[#DC183C] transition">Tshepho Joel</a>
+          <p class="text-xs text-slate-500 mt-0.5">Founder at <span class="font-bold text-[#121A21]">Langa Holdings</span></p>
+          <a href="member-account.html" class="inline-flex items-center gap-1 mt-2 text-xs font-bold text-[#DC183C] uppercase tracking-wide hover:underline">View profile <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i></a>
         </div>
         <div class="grid grid-cols-3 border-t border-slate-100 text-center">
           <div class="py-3 border-r border-slate-100">
             <p class="text-[9px] font-bold uppercase tracking-widest text-slate-400">Stage</p>
-            <p class="font-jakarta font-bold text-sm text-[#0C1F31] mt-1">Growing</p>
+            <p class="font-jakarta font-bold text-sm text-[#121A21] mt-1">Growing</p>
           </div>
           <div class="py-3 border-r border-slate-100">
             <p class="text-[9px] font-bold uppercase tracking-widest text-slate-400">Sector</p>
-            <p class="font-jakarta font-bold text-sm text-[#0C1F31] mt-1">Fintech</p>
+            <p class="font-jakarta font-bold text-sm text-[#121A21] mt-1">Fintech</p>
           </div>
           <div class="py-3">
             <p class="text-[9px] font-bold uppercase tracking-widest text-slate-400">Region</p>
-            <p class="font-jakarta font-bold text-sm text-[#0C1F31] mt-1">GP</p>
+            <p class="font-jakarta font-bold text-sm text-[#121A21] mt-1">GP</p>
           </div>
         </div>
         <div role="button" tabindex="0" onclick="openContribution()" class="w-full border-t border-slate-100 px-5 py-4 flex items-center justify-between hover:bg-slate-50 transition text-left cursor-pointer">
@@ -180,7 +192,7 @@
               <p class="text-[10px] font-bold uppercase tracking-widest text-slate-400 flex items-center gap-1.5">Asks helped with
                 <button onclick="event.stopPropagation();openBrief('contribution')" class="dev-badge w-4 h-4 rounded-full bg-[#DC183C] text-white items-center justify-center text-[9px] font-bold leading-none animate-pulse" title="Implementation notes">i</button>
               </p>
-              <p class="font-jakarta font-bold text-xl text-[#0C1F31] leading-none mt-0.5">24</p>
+              <p class="font-jakarta font-bold text-xl text-[#121A21] leading-none mt-0.5">24</p>
             </div>
           </div>
           <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400"></i>
@@ -189,7 +201,7 @@
 
       <!-- Profile strength -->
       <div class="bg-white rounded-2xl border border-slate-100 p-5 reveal" style="animation-delay:80ms">
-        <h4 class="font-jakarta font-bold uppercase text-sm text-[#0C1F31] mb-4 tracking-wide">Profile Strength</h4>
+        <h4 class="font-jakarta font-bold uppercase text-sm text-[#121A21] mb-4 tracking-wide">Profile Strength</h4>
         <div class="flex items-center gap-4">
           <div class="relative w-16 h-16 shrink-0">
             <svg class="w-full h-full -rotate-90" viewBox="0 0 36 36">
@@ -197,12 +209,12 @@
               <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" stroke="#DC183C" stroke-width="3" stroke-linecap="round" fill="none" stroke-dasharray="52, 100"></path>
             </svg>
             <div class="absolute inset-0 grid place-items-center">
-              <p class="font-jakarta font-extrabold text-base text-[#0C1F31] leading-none">52<span class="text-[10px] align-top">%</span></p>
+              <p class="font-jakarta font-extrabold text-base text-[#121A21] leading-none">52<span class="text-[10px] align-top">%</span></p>
             </div>
           </div>
           <div class="min-w-0">
-            <p class="text-xs text-slate-600 leading-snug mb-2">Complete your profile to be <span class="font-bold text-[#0C1F31]">discoverable in member search</span>.</p>
-            <button class="text-xs font-bold text-[#DC183C] uppercase tracking-wide hover:underline">Update →</button>
+            <p class="text-xs text-slate-600 leading-snug mb-2">Complete your profile to be <span class="font-bold text-[#121A21]">discoverable in member search</span>.</p>
+            <a href="member-account.html" class="text-xs font-bold text-[#DC183C] uppercase tracking-wide hover:underline">Update →</a>
           </div>
         </div>
       </div>
@@ -210,12 +222,16 @@
       <!-- Your activity -->
       <div class="bg-white rounded-2xl border border-slate-100 overflow-hidden reveal" style="animation-delay:160ms">
         <div class="px-5 py-3 border-b border-slate-100 flex items-center justify-between">
-          <h4 class="font-jakarta font-bold uppercase text-sm text-[#0C1F31] tracking-wide flex items-center gap-1.5">Your Activity
+          <h4 class="font-jakarta font-bold uppercase text-sm text-[#121A21] tracking-wide flex items-center gap-1.5">Your Activity
             <button onclick="openBrief('activity')" class="dev-badge w-4 h-4 rounded-full bg-[#DC183C] text-white items-center justify-center text-[9px] font-bold leading-none animate-pulse" title="Implementation notes">i</button>
           </h4>
         </div>
+        <button onclick="setSort('asks')" class="w-full px-5 py-3 bg-[#FDECEF]/60 hover:bg-[#FDECEF] transition text-left border-b border-slate-100 flex items-start gap-2">
+          <i data-lucide="clock" class="w-4 h-4 text-[#DC183C] shrink-0 mt-0.5"></i>
+          <span class="text-[13px] font-semibold text-[#121A21] leading-snug"><span class="text-[#DC183C] font-bold">2 of your asks</span> are still waiting for answers — bump them or thank those who helped.</span>
+        </button>
         <button onclick="setSort('asks')" class="w-full px-5 py-3 flex items-center justify-between hover:bg-slate-50 transition text-left">
-          <span class="text-sm font-semibold text-[#0C1F31] flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-[#DC183C]"></span> Open asks</span>
+          <span class="text-sm font-semibold text-[#121A21] flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-[#DC183C]"></span> Open asks</span>
           <span class="text-xs font-bold bg-[#DC183C] text-white rounded-full px-2 py-0.5">3</span>
         </button>
         <button onclick="setSort('asks')" class="w-full px-5 py-3 flex items-center justify-between hover:bg-slate-50 transition text-left border-t border-slate-100">
@@ -274,8 +290,9 @@
         <div class="w-14 h-14 mx-auto rounded-full bg-slate-100 grid place-items-center mb-4">
           <i data-lucide="inbox" class="w-6 h-6 text-slate-400"></i>
         </div>
-        <h3 class="font-jakarta font-bold uppercase text-lg text-[#0C1F31] mb-1">Nothing here yet</h3>
-        <p class="text-sm text-slate-500 max-w-sm mx-auto">Try a different filter, or be the first — your community is waiting.</p>
+        <h3 class="font-jakarta font-bold uppercase text-lg text-[#121A21] mb-1">Be the first to post</h3>
+        <p class="text-sm text-slate-500 max-w-sm mx-auto">Nothing in this view yet. Start an Ask and watch the community jump in — most asks get a reply within hours.</p>
+        <button onclick="openComposer('ask')" class="mt-4 bg-[#DC183C] hover:bg-[#B0142F] text-white rounded-full px-5 py-2.5 font-jakarta font-bold text-sm transition inline-flex items-center gap-2"><i data-lucide="help-circle" class="w-4 h-4"></i> Post an Ask</button>
       </div>
 
     </section>
@@ -283,20 +300,58 @@
     <!-- RIGHT RAIL -->
     <aside class="hidden lg:flex flex-col gap-5 lg:col-span-3">
 
+      <!-- Help a founder (unanswered asks — the reply-rate heartbeat) -->
+      <div id="help-founder" class="bg-white rounded-2xl border border-slate-100 overflow-hidden reveal">
+        <div class="bg-[#0C1F31] px-5 py-4 relative">
+          <div class="absolute inset-0 opacity-40" style="background:radial-gradient(circle at 30% 50%, #FFF1E0 0%, transparent 65%);"></div>
+          <p class="relative text-[10px] font-bold uppercase tracking-widest text-[#FF9900] mb-1 flex items-center gap-1.5"><i data-lucide="hand-heart" class="w-3.5 h-3.5"></i> Help a Founder
+            <button onclick="openBrief('help')" class="dev-badge w-4 h-4 rounded-full bg-[#DC183C] text-white items-center justify-center text-[9px] font-bold leading-none animate-pulse" title="Implementation notes">i</button>
+          </p>
+          <p class="relative text-xs text-white/70">These asks have no answers yet. Be the one who replies.</p>
+        </div>
+        <div class="divide-y divide-slate-100">
+          <div class="px-5 py-4">
+            <div class="flex items-center gap-2.5 mb-2">
+              <div class="w-9 h-9 rounded-full bg-gradient-to-br from-[#DC183C] to-[#FF9900] grid place-items-center font-jakarta font-bold text-white text-[11px] shrink-0">SM</div>
+              <div class="min-w-0"><p class="font-bold text-sm text-[#121A21] leading-tight">Sello Monare</p><p class="text-[11px] text-slate-400">Fintech · Gauteng</p></div>
+              <span class="ml-auto text-[10px] font-bold text-[#DC183C] bg-[#FDECEF] px-2 py-0.5 rounded-full shrink-0">0 replies</span>
+            </div>
+            <p class="text-[13px] text-slate-600 leading-snug">&ldquo;A reliable CIPC annual-returns contact that won&rsquo;t charge extortionate fees?&rdquo;</p>
+            <div class="flex items-center justify-between mt-2.5">
+              <span class="text-[11px] text-slate-400 flex items-center gap-1"><i data-lucide="clock" class="w-3 h-3"></i> waiting 2h</span>
+              <button onclick="helpAnswer('Sello')" class="bg-[#DC183C] hover:bg-[#B0142F] text-white rounded-full px-4 py-1.5 text-xs font-bold transition">Answer</button>
+            </div>
+          </div>
+          <div class="px-5 py-4">
+            <div class="flex items-center gap-2.5 mb-2">
+              <div class="w-9 h-9 rounded-full bg-gradient-to-br from-[#DC183C] to-[#FF9900] grid place-items-center font-jakarta font-bold text-white text-[11px] shrink-0">SN</div>
+              <div class="min-w-0"><p class="font-bold text-sm text-[#121A21] leading-tight">Sipho Ngubane</p><p class="text-[11px] text-slate-400">Fintech · KwaZulu-Natal</p></div>
+              <span class="ml-auto text-[10px] font-bold text-[#DC183C] bg-[#FDECEF] px-2 py-0.5 rounded-full shrink-0">0 replies</span>
+            </div>
+            <p class="text-[13px] text-slate-600 leading-snug">&ldquo;Yoco vs Stitch in production — settlement speed and chargeback flow?&rdquo;</p>
+            <div class="flex items-center justify-between mt-2.5">
+              <span class="text-[11px] text-slate-400 flex items-center gap-1"><i data-lucide="clock" class="w-3 h-3"></i> waiting 4h</span>
+              <button onclick="helpAnswer('Sipho')" class="bg-[#DC183C] hover:bg-[#B0142F] text-white rounded-full px-4 py-1.5 text-xs font-bold transition">Answer</button>
+            </div>
+          </div>
+        </div>
+        <button onclick="viewNewAsks()" class="w-full py-3 text-center text-xs font-bold text-[#DC183C] uppercase tracking-wider hover:bg-slate-50 border-t border-slate-100">See all unanswered asks →</button>
+      </div>
+
       <!-- Upcoming events -->
       <div class="bg-white rounded-2xl border border-slate-100 overflow-hidden reveal" style="animation-delay:120ms">
         <div class="px-5 py-3 border-b border-slate-100 flex items-center justify-between">
-          <h4 class="font-jakarta font-bold uppercase text-sm text-[#0C1F31] tracking-wide">Upcoming Events</h4>
+          <h4 class="font-jakarta font-bold uppercase text-sm text-[#121A21] tracking-wide">Upcoming Events</h4>
           <a href="#" class="text-[10px] font-bold uppercase text-[#DC183C] tracking-widest hover:underline">View all</a>
         </div>
         <a href="#" class="block px-5 py-4 hover:bg-slate-50 transition group">
           <div class="flex gap-4">
             <div class="shrink-0 w-12 text-center bg-[#FFF1E0] rounded-lg py-1.5 border border-[#FF9900]/20 group-hover:bg-[#DC183C] transition-colors">
               <p class="text-[9px] font-bold uppercase text-[#AE6B0A] tracking-widest group-hover:text-white">Jun</p>
-              <p class="font-jakarta font-extrabold text-xl text-[#0C1F31] leading-none mt-0.5 group-hover:text-white">23</p>
+              <p class="font-jakarta font-extrabold text-xl text-[#121A21] leading-none mt-0.5 group-hover:text-white">23</p>
             </div>
             <div class="min-w-0">
-              <h5 class="font-bold text-sm text-[#0C1F31] leading-tight group-hover:text-[#DC183C] transition">Annual SME Funding Gala 2026</h5>
+              <h5 class="font-bold text-sm text-[#121A21] leading-tight group-hover:text-[#DC183C] transition">Annual SME Funding Gala 2026</h5>
               <p class="text-[11px] text-slate-500 mt-1 flex items-center gap-1"><i data-lucide="map-pin" class="w-3 h-3"></i> Focus Rooms, Sandton</p>
               <p class="text-[11px] text-slate-500 mt-0.5 flex items-center gap-1"><i data-lucide="clock" class="w-3 h-3"></i> 08:30 AM SAST</p>
             </div>
@@ -306,10 +361,10 @@
           <div class="flex gap-4">
             <div class="shrink-0 w-12 text-center bg-[#FFF1E0] rounded-lg py-1.5 border border-[#FF9900]/20 group-hover:bg-[#DC183C] transition-colors">
               <p class="text-[9px] font-bold uppercase text-[#AE6B0A] tracking-widest group-hover:text-white">Jul</p>
-              <p class="font-jakarta font-extrabold text-xl text-[#0C1F31] leading-none mt-0.5 group-hover:text-white">09</p>
+              <p class="font-jakarta font-extrabold text-xl text-[#121A21] leading-none mt-0.5 group-hover:text-white">09</p>
             </div>
             <div class="min-w-0">
-              <h5 class="font-bold text-sm text-[#0C1F31] leading-tight group-hover:text-[#DC183C] transition">Funding Without Tears Webinar</h5>
+              <h5 class="font-bold text-sm text-[#121A21] leading-tight group-hover:text-[#DC183C] transition">Funding Without Tears Webinar</h5>
               <p class="text-[11px] text-slate-500 mt-1 flex items-center gap-1"><i data-lucide="video" class="w-3 h-3"></i> Online · Zoom</p>
               <p class="text-[11px] text-slate-500 mt-0.5 flex items-center gap-1"><i data-lucide="clock" class="w-3 h-3"></i> 11:00 AM SAST</p>
             </div>
@@ -320,11 +375,11 @@
       <!-- Latest discussions -->
       <div class="bg-white rounded-2xl border border-slate-100 overflow-hidden reveal" style="animation-delay:180ms">
         <div class="px-5 py-3 border-b border-slate-100 flex items-center justify-between">
-          <h4 class="font-jakarta font-bold uppercase text-sm text-[#0C1F31] tracking-wide">Latest Discussions</h4>
+          <h4 class="font-jakarta font-bold uppercase text-sm text-[#121A21] tracking-wide">Latest Discussions</h4>
           <a href="#" class="text-[10px] font-bold uppercase text-[#DC183C] tracking-widest hover:underline">All forums</a>
         </div>
         <a href="#" class="block px-5 py-4 hover:bg-slate-50 transition group">
-          <h5 class="font-bold text-sm text-[#0C1F31] leading-snug group-hover:text-[#DC183C] transition line-clamp-2">Best CRM for service businesses in SA right now?</h5>
+          <h5 class="font-bold text-sm text-[#121A21] leading-snug group-hover:text-[#DC183C] transition line-clamp-2">Best CRM for service businesses in SA right now?</h5>
           <div class="flex items-center justify-between mt-2">
             <div class="flex -space-x-1.5">
               <div class="w-5 h-5 rounded-full bg-gradient-to-br from-[#DC183C] to-[#FF9900] grid place-items-center font-jakarta font-bold text-white text-[8px] ring-2 ring-white">MD</div>
@@ -335,7 +390,7 @@
           </div>
         </a>
         <a href="#" class="block px-5 py-4 hover:bg-slate-50 transition group border-t border-slate-100">
-          <h5 class="font-bold text-sm text-[#0C1F31] leading-snug group-hover:text-[#DC183C] transition line-clamp-2">POPIA compliance audits — is anyone actually doing them?</h5>
+          <h5 class="font-bold text-sm text-[#121A21] leading-snug group-hover:text-[#DC183C] transition line-clamp-2">POPIA compliance audits — is anyone actually doing them?</h5>
           <div class="flex items-center justify-between mt-2">
             <div class="flex -space-x-1.5">
               <div class="w-5 h-5 rounded-full bg-gradient-to-br from-[#DC183C] to-[#FF9900] grid place-items-center font-jakarta font-bold text-white text-[8px] ring-2 ring-white">NM</div>
@@ -345,7 +400,7 @@
           </div>
         </a>
         <a href="#" class="block px-5 py-4 hover:bg-slate-50 transition group border-t border-slate-100">
-          <h5 class="font-bold text-sm text-[#0C1F31] leading-snug group-hover:text-[#DC183C] transition line-clamp-2">Hiring developers in SA — local vs international remote?</h5>
+          <h5 class="font-bold text-sm text-[#121A21] leading-snug group-hover:text-[#DC183C] transition line-clamp-2">Hiring developers in SA — local vs international remote?</h5>
           <div class="flex items-center justify-between mt-2">
             <div class="flex -space-x-1.5">
               <div class="w-5 h-5 rounded-full bg-gradient-to-br from-[#DC183C] to-[#FF9900] grid place-items-center font-jakarta font-bold text-white text-[8px] ring-2 ring-white">SM</div>
@@ -360,7 +415,7 @@
       <!-- Suggested members -->
       <div class="bg-white rounded-2xl border border-slate-100 overflow-hidden reveal" style="animation-delay:240ms">
         <div class="px-5 py-3 border-b border-slate-100 flex items-center justify-between">
-          <h4 class="font-jakarta font-bold uppercase text-sm text-[#0C1F31] tracking-wide flex items-center gap-1.5">Suggested For You
+          <h4 class="font-jakarta font-bold uppercase text-sm text-[#121A21] tracking-wide flex items-center gap-1.5">Suggested For You
             <button onclick="openBrief('suggested')" class="dev-badge w-4 h-4 rounded-full bg-[#DC183C] text-white items-center justify-center text-[9px] font-bold leading-none animate-pulse" title="Implementation notes">i</button>
           </h4>
           <a href="#" class="text-[10px] font-bold uppercase text-[#DC183C] tracking-widest hover:underline">All</a>
@@ -372,7 +427,7 @@
               <span class="absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 rounded-full bg-[#29A37A] ring-2 ring-white grid place-items-center" title="Completed profile"><i data-lucide="check" class="w-2 h-2 text-white"></i></span>
             </div>
             <div class="min-w-0 flex-1">
-              <p class="text-xs font-bold text-[#0C1F31] group-hover:text-[#DC183C] transition truncate">Mandla Dlamini</p>
+              <p class="text-xs font-bold text-[#121A21] group-hover:text-[#DC183C] transition truncate">Mandla Dlamini</p>
               <p class="text-[11px] text-slate-500 mt-0.5 truncate">Fintech · Western Cape</p>
               <span class="inline-flex items-center gap-1 mt-1.5 text-[9px] font-semibold text-slate-500 bg-slate-100 px-1.5 py-0.5 rounded"><i data-lucide="sparkles" class="w-2.5 h-2.5"></i> Shared interest · Fintech</span>
             </div>
@@ -388,7 +443,7 @@
               <span class="absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 rounded-full bg-[#29A37A] ring-2 ring-white grid place-items-center" title="Completed profile"><i data-lucide="check" class="w-2 h-2 text-white"></i></span>
             </div>
             <div class="min-w-0 flex-1">
-              <p class="text-xs font-bold text-[#0C1F31] group-hover:text-[#DC183C] transition truncate">Sipho Ngubane</p>
+              <p class="text-xs font-bold text-[#121A21] group-hover:text-[#DC183C] transition truncate">Sipho Ngubane</p>
               <p class="text-[11px] text-slate-500 mt-0.5 truncate">Fintech · KwaZulu-Natal</p>
               <span class="inline-flex items-center gap-1 mt-1.5 text-[9px] font-semibold text-slate-500 bg-slate-100 px-1.5 py-0.5 rounded"><i data-lucide="sparkles" class="w-2.5 h-2.5"></i> Shared interest · Fintech</span>
             </div>
@@ -404,7 +459,7 @@
               <span class="absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 rounded-full bg-[#29A37A] ring-2 ring-white grid place-items-center" title="Completed profile"><i data-lucide="check" class="w-2 h-2 text-white"></i></span>
             </div>
             <div class="min-w-0 flex-1">
-              <p class="text-xs font-bold text-[#0C1F31] group-hover:text-[#DC183C] transition truncate">Refiloe Sithole</p>
+              <p class="text-xs font-bold text-[#121A21] group-hover:text-[#DC183C] transition truncate">Refiloe Sithole</p>
               <p class="text-[11px] text-slate-500 mt-0.5 truncate">SaaS · Gauteng</p>
               <span class="inline-flex items-center gap-1 mt-1.5 text-[9px] font-semibold text-slate-500 bg-slate-100 px-1.5 py-0.5 rounded"><i data-lucide="sparkles" class="w-2.5 h-2.5"></i> Same stage · Growing</span>
             </div>
@@ -570,12 +625,12 @@
           <div class="flex gap-3 mb-4">
             ${monogram(p.author.initials, 44)}
             <div class="min-w-0">
-              <h4 class="font-bold text-[15px] text-[#0C1F31] leading-tight">${esc(p.author.name)}</h4>
+              <h4 class="font-bold text-[15px] text-[#121A21] leading-tight">${esc(p.author.name)}</h4>
               <p class="text-xs text-slate-500 mt-0.5">${esc(p.author.role)} at <span class="font-semibold text-slate-700">${esc(p.author.company)}</span></p>
               <p class="text-[11px] text-slate-400 mt-0.5">${esc(p.author.stage)} <span class="text-slate-300 mx-0.5">·</span> ${esc(p.author.sector)} <span class="text-slate-300 mx-0.5">·</span> ${esc(p.author.province)}</p>
             </div>
           </div>
-          <p class="text-[15px] text-[#0C1F31] leading-relaxed whitespace-pre-line">${esc(p.content)}</p>
+          <p class="text-[15px] text-[#121A21] leading-relaxed whitespace-pre-line">${esc(p.content)}</p>
         </div>
         <div class="px-2 py-1 border-t border-slate-100 flex">
           <button onclick="toggleLike(${p.id})" class="flex-1 flex items-center justify-center gap-2 py-3 rounded-lg hover:bg-slate-50 ${p.liked ? 'text-[#DC183C]' : 'text-slate-500'} text-sm font-semibold transition">
@@ -637,13 +692,13 @@
             <i data-lucide="${t.icon}" class="w-3.5 h-3.5"></i>
             New ${t.label}
           </span>
-          <button onclick="closeComposer()" aria-label="Close" class="text-slate-500 hover:text-[#0C1F31] w-7 h-7 grid place-items-center rounded-full hover:bg-white/50"><i data-lucide="x" class="w-4 h-4"></i></button>
+          <button onclick="closeComposer()" aria-label="Close" class="text-slate-500 hover:text-[#121A21] w-7 h-7 grid place-items-center rounded-full hover:bg-white/50"><i data-lucide="x" class="w-4 h-4"></i></button>
         </div>
         <div class="p-5">
           <div class="flex items-center gap-3 mb-3">
             ${monogram('TJ', 40)}
             <div>
-              <p class="font-bold text-sm text-[#0C1F31]">${esc(ME.name)}</p>
+              <p class="font-bold text-sm text-[#121A21]">${esc(ME.name)}</p>
               <p class="text-[11px] text-slate-400">${esc(ME.stage)} <span class="text-slate-300 mx-0.5">·</span> ${esc(ME.sector)} <span class="text-slate-300 mx-0.5">·</span> ${esc(ME.province)}</p>
             </div>
           </div>
@@ -654,7 +709,7 @@
           </p>
         </div>
         <div class="px-5 py-3 border-t border-slate-100 bg-slate-50 flex items-center justify-end gap-2">
-          <button onclick="closeComposer()" class="text-sm font-bold text-slate-500 hover:text-[#0C1F31] uppercase tracking-wider px-3 py-2.5">Cancel</button>
+          <button onclick="closeComposer()" class="text-sm font-bold text-slate-500 hover:text-[#121A21] uppercase tracking-wider px-3 py-2.5">Cancel</button>
           <button onclick="submitPost()" class="bg-[#DC183C] hover:bg-[#B0142F] text-white text-sm font-bold uppercase tracking-wider px-5 py-2.5 rounded-lg flex items-center gap-1.5">
             Post <i data-lucide="send" class="w-4 h-4"></i>
           </button>
@@ -713,12 +768,20 @@
   // ===== DEV MODE + IMPLEMENTATION BRIEFS ======================================
   const BRIEFS = {
     ribbon: {
-      title:'Activity Ribbon', sub:'Time-sensitive nudge above the feed',
-      purpose:'Surfaces fresh, high-intent activity (new Asks in the last hour) to pull members back into helping. <b>View →</b> filters the feed to Asks and scrolls to it — it does not open a separate page.',
-      data:'Count of posts where <code>type = ask</code> AND <code>created_at &gt; now() − 1h</code>, scoped to the member&rsquo;s community.',
-      logic:'Poll every ~60s (or websocket). Show the ribbon only when count &gt; 0; otherwise hide it. <b>View →</b> sets the feed filter to Asks and smooth-scrolls to the sort tabs.',
-      components:'Ribbon bar · live count · dismissible · deep-link <code>?filter=asks</code>.',
-      api:'GET /v1/feed/activity?window=1h'
+      title:'Activity Ribbon', sub:'Reply-rate nudge above the feed',
+      purpose:'Surfaces <b>unanswered</b> Asks in the member&rsquo;s sector — not just new ones. Unanswered Asks are the #1 churn driver in a young community, so the nudge targets <i>reply-rate</i>, the engagement heartbeat. <b>Help out →</b> filters the feed to Asks needing answers.',
+      data:'Asks where <code>type = ask</code> AND <code>reply_count = 0</code>, scoped to the member&rsquo;s sector/community, ordered by age.',
+      logic:'Poll every ~60s (or websocket). Show only when unanswered count &gt; 0. Copy escalates with wait time. <b>Help out →</b> sets the feed filter to unanswered Asks and scrolls to it.',
+      components:'Ribbon bar · unanswered count · deep-link <code>?filter=unanswered</code>.',
+      api:'GET /v1/feed/asks?status=unanswered&sector={sector}'
+    },
+    help: {
+      title:'Help a Founder', sub:'The reply-rate engine, made visible',
+      purpose:'Promotes the open-loop from a thin ribbon to a real module: 2&ndash;3 <b>unanswered</b> Asks in your sector with one-tap <b>Answer</b>. Communities die when Asks go unanswered — this module exists to guarantee they don&rsquo;t. It is the single highest-leverage retention surface.',
+      data:'Asks with <code>reply_count = 0</code>, matched to the viewer by {sector, stage, tags}, ranked by age + match strength. Excludes the viewer&rsquo;s own Asks.',
+      logic:'Refreshes as Asks get answered (they drop off the list). &ldquo;waiting Nh&rdquo; escalates urgency. Seed/ambassador layer should keep this list short — an empty list means a healthy reply-rate.',
+      components:'Navy header · unanswered-ask rows · Answer CTA · waiting timer · &ldquo;see all&rdquo; link.',
+      api:'GET /v1/members/{id}/asks-to-help?limit=3'
     },
     contribution: {
       title:'Contribution', sub:'How a member gives back — Ask / Win / Share',
@@ -825,7 +888,7 @@
               <div class="flex items-center gap-3 p-3 rounded-xl" style="background:${r.bg}">
                 <div class="w-10 h-10 rounded-full grid place-items-center shrink-0" style="background:${r.c}"><i data-lucide="${r.icon}" class="w-5 h-5 text-white"></i></div>
                 <div class="min-w-0 flex-1">
-                  <p class="font-jakarta font-bold text-[#0C1F31] leading-none">${r.label}</p>
+                  <p class="font-jakarta font-bold text-[#121A21] leading-none">${r.label}</p>
                   <p class="text-[11px] text-slate-500 mt-1">${r.sub}</p>
                 </div>
                 <p class="font-jakarta font-extrabold text-2xl shrink-0" style="color:${r.c}">${r.n}</p>
@@ -841,6 +904,13 @@
   }
 
   function viewNewAsks(){
+    setSort('asks');
+    const el = document.getElementById('sort-tabs');
+    if(el) el.scrollIntoView({ behavior:'smooth', block:'center' });
+  }
+
+  function helpAnswer(name){
+    showToast(`Opening your reply to ${name}'s ask — be specific and kind.`, 'ask');
     setSort('asks');
     const el = document.getElementById('sort-tabs');
     if(el) el.scrollIntoView({ behavior:'smooth', block:'center' });

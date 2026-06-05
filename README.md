@@ -1,54 +1,58 @@
-🚀 SME HUB | Platform UI Architecture
+# 🚀 SME HUB — Platform UI Architecture
 
-Central directory for frontend architecture, interactive prototypes, and modular components engineered for the South African SME Ecosystem.
+Central directory for the front-end architecture, interactive prototypes, and modular components engineered for the South African SME ecosystem.
 
-📋 Overview
+**Open [`index.html`](index.html)** — the Mockup Hub launcher. It is one link to every prototype: a grouped sidebar with an in-place preview, viewport toggles (desktop / tablet / mobile), and deep-linking (e.g. `index.html#public-funding.html`).
 
-This repository houses the proprietary UI/UX assets and modular frontend components for the SME Hub Platform. The architecture is built with a focus on premium modern design principles, mobile-first responsiveness, and high-conversion layouts tailored for B2B engagement.
+---
 
-🧩 Core Modules Included
+## 🧭 What's inside
 
-The architecture is split into several standalone mockup environments, all accessible via the central directory:
+### Public marketing site (logged-out front door)
+Recreated in the strict 2026 brand; hands off to the member hub at the **Join / Sign in** seam.
 
-🗓️ Events (events.html): Interactive scheduling and directory module featuring upcoming/past events toggles.
+| File | Module |
+|---|---|
+| [public-home.html](public-home.html) | Hero, metrics, pillars, journey stages, founder stories, CTA |
+| [public-articles.html](public-articles.html) | Articles archive with category filters + pagination |
+| [public-resources.html](public-resources.html) | Resource library (MemberPress-gated downloads) |
+| [public-funding.html](public-funding.html) | Funding products, eligibility, **working loan calculator**, FAQ |
+| [public-solutions.html](public-solutions.html) | Solutions comparison — 27 categories |
+| [public-shop.html](public-shop.html) | WooCommerce merch — working cart |
 
-✉️ Newsletter (newsletter.html): High-conversion email capture component and seamless reading experience engineered for the SME ecosystem.
+### Member community hub (logged-in)
+| File | Module |
+|---|---|
+| [member-hub.html](member-hub.html) | Community dashboard — feed-first, Help-a-Founder, activity |
+| [member-account.html](member-account.html) | Profile + 8-section settings (incl. POPIA), messages, notifications |
+| [members.html](members.html) · [groups.html](groups.html) · [single-group.html](single-group.html) · [forums.html](forums.html) | Directories + single-group + forums |
 
-🎙️ Podcast UI (podcast.html): An immersive, "studio dark mode" audio streaming interface and episode directory.
+### Content modules
+| File | Module |
+|---|---|
+| [events.html](events.html) | Events directory — upcoming / past toggles |
+| [newsletter.html](newsletter.html) | Newsletter capture + reading experience |
+| [podcast.html](podcast.html) | Podcast UI — "studio dark mode" audio interface |
+| [social_media_studio.html](social_media_studio.html) | AI social-media strategist + brand asset generator |
+| [Startup_Africa_Newsletter_Comparison.html](Startup_Africa_Newsletter_Comparison.html) | Newsletter comparison |
 
-📱 Social Media Studio (social_media_studio.html): AI-powered social media strategist and custom brand asset generator.
+### Reference
+- [brand_ci.html](brand_ci.html) — brand identity. The **authoritative 2026 CI** is `SME SA/2026/Brand CI/sme-brand-ci-2026.html`.
+- [AGENT-HANDOVER.md](AGENT-HANDOVER.md) · [SME-HUB-Developer-Briefing.docx](SME-HUB-Developer-Briefing.docx) — build context + the plain-English developer briefing.
 
-🛠 Tech Stack & Specifications
+> **Note:** the content modules above still carry pre-2026 brand tokens (and JetBrains Mono) and are queued for a CI-alignment pass. The public site + member hub are already aligned: Ink `#121A21` body text, navy `#0C1F31` surfaces only, Jakarta + Inter, system mono.
 
-Markup: Semantic HTML5
+---
 
-Styling: Tailwind CSS (Custom system configurations including dark, primary, and accent variables)
+## 🎨 Brand (2026)
+Red `#DC183C` · Orange `#FF9900` (text: `#AE6B0A`) · Navy `#0C1F31` (surfaces) · Green `#29A37A` · Ink `#121A21` (text) · Muted `#6A7581` · Border `#E7EBEF` · Background `#FCFCFC`. Fonts: **Plus Jakarta Sans** (headings) + **Inter** (body). Never Oswald.
 
-Logic & Interactions: Vanilla JavaScript (No heavy frameworks required for the mockup phase)
+Every module carries a **Dev Mode** toggle (top-right) — tap any ⓘ badge for the implementation brief (purpose, data model, logic, components, API).
 
-Typography System: * Plus Jakarta Sans (System Headings)
+## 🛠 Tech
+Semantic HTML5 · Tailwind (CDN) · vanilla JS · Lucide icons. No build step. For GitHub Pages, `index.html` is the site root.
 
-Inter (Body & Interface Text)
+---
 
-JetBrains Mono (System UI & Code snippets)
-
-💻 How to Use
-
-Since this is a static frontend architecture environment, no complex build processes or local servers are strictly required to view the prototypes.
-
-Clone the repository to your local machine:
-
-git clone <your-repository-url>
-
-
-Open the index.html file in your preferred modern web browser.
-
-Use the interactive central dashboard to navigate between the different UI modules.
-
-⚖️ Copyright & Legal Notice
-
-© 2026 Tshepho Joel. All rights reserved.
-
-This repository and its contents (including all HTML, CSS, JavaScript, and UI/UX design architectures) are proprietary assets belonging to Tshepho Joel.
-
-Unauthorised copying, modification, distribution, or commercial use of these files and designs, via any medium, is strictly prohibited without explicit written permission from the copyright holder.
+## ⚖️ Copyright
+© 2026 Tshepho Joel. All rights reserved. This repository and its contents (HTML, CSS, JavaScript, and UI/UX design architectures) are proprietary assets belonging to Tshepho Joel. Unauthorised copying, modification, distribution, or commercial use, via any medium, is strictly prohibited without explicit written permission from the copyright holder.

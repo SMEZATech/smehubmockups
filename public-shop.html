@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SME South Africa — Shop</title>
+  <meta name="description" content="Branded SME South Africa merchandise — caps, hoodies, tees, totes and notebooks. Equip your growth." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  <script>
+    tailwind.config = { theme: { extend: { fontFamily: {
+      jakarta: ['Plus Jakarta Sans', 'sans-serif'], inter: ['Inter', 'system-ui', 'sans-serif'], mono:['monospace']
+    } } } };
+  </script>
+  <style>
+    html, body { font-family: 'Inter', system-ui, sans-serif; }
+    .font-jakarta { font-family: 'Plus Jakarta Sans', sans-serif; letter-spacing: 0.005em; }
+    .font-mono { font-family: monospace; }
+    .no-scrollbar::-webkit-scrollbar { display:none; } .no-scrollbar { -ms-overflow-style:none; scrollbar-width:none; }
+    @keyframes fadeUp { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
+    .reveal { animation: fadeUp .5s cubic-bezier(.2,.7,.2,1) backwards; }
+    .card-lift { transition: box-shadow .2s, transform .2s; }
+    .card-lift:hover { box-shadow: 0 10px 24px -10px rgba(10,44,61,0.18); transform: translateY(-2px); }
+    .chip { transition: background-color .15s, color .15s, border-color .15s; cursor:pointer; }
+    .chip.active { background:#0C1F31; color:#fff; border-color:#0C1F31; }
+    .dev-badge { display:none; } body.dev-on .dev-badge { display:inline-flex; }
+    #devToggle.on { background:#DC183C; color:#fff; border-color:#DC183C; }
+    .ov { position:fixed; inset:0; z-index:60; }
+    .ov-bg { position:absolute; inset:0; background:rgba(12,31,49,.45); backdrop-filter:blur(2px); opacity:0; transition:opacity .3s; }
+    .ov.open .ov-bg { opacity:1; }
+    .drawer { position:absolute; right:0; top:0; height:100%; width:100%; max-width:440px; background:#fff; box-shadow:-12px 0 40px rgba(12,31,49,.25); overflow-y:auto; transform:translateX(100%); transition:transform .3s cubic-bezier(.2,.7,.2,1); }
+    .ov.open .drawer { transform:translateX(0); }
+  </style>
+</head>
+<body class="bg-[#FCFCFC] text-[#121A21] antialiased">
+
+<a href="#" class="block bg-[#DC183C] text-white text-center text-[13px] font-semibold py-2 px-4 hover:bg-[#B0142F] transition">
+  <i data-lucide="truck" class="inline w-3.5 h-3.5 -mt-0.5"></i> Free delivery on orders over R750 · nationwide.
+</a>
+
+<header class="bg-white border-b border-[#E7EBEF] sticky top-0 z-40">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center gap-4">
+    <a href="public-home.html" class="flex items-center gap-2.5 shrink-0">
+      <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-[#DC183C] to-[#FF9900] grid place-items-center text-white font-jakarta font-extrabold text-sm">S</div>
+      <span class="font-jakarta font-extrabold text-[17px] tracking-tight">SME <span class="text-[#DC183C]">South Africa</span></span>
+    </a>
+    <nav class="hidden lg:flex items-center gap-1 ml-4">
+      <a href="public-articles.html"  class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition">Articles</a>
+      <a href="public-resources.html" class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition">Resources</a>
+      <a href="public-funding.html"   class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition">Funding</a>
+      <a href="public-solutions.html" class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition">Solutions</a>
+      <a href="public-shop.html"      class="px-3 py-2 rounded-lg text-sm font-semibold text-[#DC183C] bg-[#FDECEF]">Shop</a>
+    </nav>
+    <div class="flex items-center gap-1 sm:gap-2 ml-auto">
+      <button id="devToggle" onclick="toggleDevMode()" class="hidden sm:flex items-center gap-1.5 px-3 h-9 rounded-full border border-slate-200 text-slate-500 hover:border-[#DC183C] hover:text-[#DC183C] transition text-[11px] font-bold uppercase tracking-wider" title="Toggle implementation notes"><i data-lucide="code-2" class="w-3.5 h-3.5"></i><span>Dev</span></button>
+      <button onclick="openCart()" aria-label="Cart" class="relative w-10 h-10 grid place-items-center rounded-full hover:bg-slate-100 text-slate-600"><i data-lucide="shopping-bag" class="w-5 h-5"></i><span id="cartCount" class="absolute top-1.5 right-1.5 bg-[#DC183C] text-white text-[10px] font-bold rounded-full w-4 h-4 grid place-items-center">0</span></button>
+      <a href="member-hub.html" class="hidden sm:inline-flex items-center px-3 h-9 rounded-full text-sm font-bold text-[#121A21] hover:bg-slate-100 transition">Sign in</a>
+      <a href="member-hub.html" class="inline-flex items-center px-4 h-9 rounded-full text-sm font-bold text-white bg-[#DC183C] hover:bg-[#B0142F] transition">Join Free</a>
+    </div>
+  </div>
+</header>
+
+<!-- ===================== PAGE HEAD ===================== -->
+<section class="bg-white border-b border-[#E7EBEF]">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-12">
+    <div class="flex items-start gap-2">
+      <h1 class="font-jakarta font-extrabold text-4xl sm:text-5xl tracking-tight">SME Shop</h1>
+      <button onclick="openBrief('shop')" class="dev-badge w-6 h-6 rounded-full bg-[#DC183C] text-white items-center justify-center text-[11px] font-bold mt-2" title="Implementation notes">i</button>
+    </div>
+    <p class="text-lg text-slate-600 mt-3 max-w-2xl">Wear the community. Branded merch to equip your growth — every order supports the platform.</p>
+  </div>
+</section>
+
+<main class="max-w-7xl mx-auto px-4 sm:px-6 py-10">
+  <div class="flex items-center justify-between gap-4 mb-7">
+    <div id="cat-bar" class="flex items-center gap-2 overflow-x-auto no-scrollbar -mx-1 px-1"></div>
+    <span id="count" class="text-sm text-slate-500 shrink-0"></span>
+  </div>
+  <div id="grid" class="grid grid-cols-2 lg:grid-cols-4 gap-5"></div>
+</main>
+
+<footer class="bg-[#0C1F31] text-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-12">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+      <div class="col-span-2 md:col-span-1">
+        <a href="public-home.html" class="flex items-center gap-2.5"><div class="w-9 h-9 rounded-xl bg-gradient-to-br from-[#DC183C] to-[#FF9900] grid place-items-center text-white font-jakarta font-extrabold text-sm">S</div><span class="font-jakarta font-extrabold text-[17px]">SME South Africa</span></a>
+        <p class="text-sm text-white/55 mt-4 max-w-xs leading-relaxed">South Africa's largest SME community — connecting founders with funding, mentorship, events, and the tools to scale.</p>
+      </div>
+      <div><p class="text-[11px] font-bold uppercase tracking-widest text-white/40">Platform</p><ul class="mt-4 space-y-2.5 text-sm text-white/70"><li><a href="member-hub.html" class="hover:text-white">Community</a></li><li><a href="#" class="hover:text-white">Events</a></li><li><a href="public-funding.html" class="hover:text-white">Funding</a></li><li><a href="public-solutions.html" class="hover:text-white">Solutions</a></li><li><a href="public-shop.html" class="hover:text-white">Shop</a></li></ul></div>
+      <div><p class="text-[11px] font-bold uppercase tracking-widest text-white/40">Learn</p><ul class="mt-4 space-y-2.5 text-sm text-white/70"><li><a href="public-articles.html" class="hover:text-white">Articles</a></li><li><a href="public-resources.html" class="hover:text-white">Resources</a></li><li><a href="public-resources.html" class="hover:text-white">Guides</a></li><li><a href="#" class="hover:text-white">Podcast</a></li></ul></div>
+      <div><p class="text-[11px] font-bold uppercase tracking-widest text-white/40">Company</p><ul class="mt-4 space-y-2.5 text-sm text-white/70"><li><a href="#" class="hover:text-white">About</a></li><li><a href="#" class="hover:text-white">Contact</a></li><li><a href="#" class="hover:text-white">Careers</a></li><li><a href="#" class="hover:text-white">Partners</a></li></ul></div>
+    </div>
+    <div class="flex flex-col sm:flex-row items-center justify-between gap-4 pt-8 mt-10 border-t border-white/10 text-sm text-white/50">
+      <p>© 2026 SME South Africa. All rights reserved.</p>
+      <div class="flex items-center gap-5"><a href="#" class="hover:text-white">Privacy Policy</a><a href="#" class="hover:text-white">Terms of Service</a><a href="#" class="hover:text-white">Cookie Policy</a></div>
+    </div>
+  </div>
+</footer>
+
+<div id="overlay-root"></div>
+<div id="toast" class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-50"></div>
+
+<script>
+  function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c])); }
+  function showToast(msg){ const el=document.getElementById('toast'); el.classList.remove('hidden'); el.innerHTML=`<div class="bg-[#0C1F31] text-white rounded-full pl-3 pr-5 py-2.5 shadow-2xl flex items-center gap-2 text-sm font-semibold" style="border-left:4px solid #29A37A"><i data-lucide="check-circle" class="w-4 h-4" style="color:#29A37A"></i><span>${esc(msg)}</span></div>`; lucide.createIcons(); setTimeout(()=>{el.classList.add('hidden');el.innerHTML='';},2200); }
+
+  let cart = 0;
+  const CATS = ['All','Caps','Hoodies','T-shirts','Totes','Notebooks'];
+  const ICON = { Caps:'crown', Hoodies:'shirt', 'T-shirts':'shirt', Totes:'shopping-bag', Notebooks:'notebook' };
+  const TINT = { Caps:['#FDECEF','#DC183C'], Hoodies:['#0C1F31','#FF9900'], 'T-shirts':['#FFF1E0','#AE6B0A'], Totes:['#E4F5EE','#29A37A'], Notebooks:['#FDECEF','#DC183C'] };
+  const PRODUCTS = [
+    { cat:'Caps',      name:'Founder Cap — Red',        price:249 },
+    { cat:'Caps',      name:'Dad Cap — Navy',           price:249 },
+    { cat:'Hoodies',   name:'Build Grow Thrive Hoodie', price:649 },
+    { cat:'Hoodies',   name:'Premium Zip Hoodie — Navy',price:799 },
+    { cat:'T-shirts',  name:'Classic Logo Tee — White', price:299 },
+    { cat:'T-shirts',  name:'"Ask · Win · Share" Tee',  price:329 },
+    { cat:'Totes',     name:'Canvas Tote — Natural',    price:179 },
+    { cat:'Totes',     name:'Heavy Tote — Black',       price:199 },
+    { cat:'Notebooks', name:'Founder Notebook — A5',    price:159 },
+    { cat:'Notebooks', name:'Hardcover Journal — Navy', price:219 },
+    { cat:'T-shirts',  name:'Proudly SA Founder Tee',   price:329 },
+    { cat:'Caps',      name:'Trucker Cap — Orange',     price:259 }
+  ];
+
+  let activeCat='All';
+  function renderCats(){ document.getElementById('cat-bar').innerHTML = CATS.map(c=>`<button onclick="setCat('${c}')" class="chip shrink-0 px-3.5 h-9 rounded-full border border-[#E7EBEF] bg-white text-sm font-semibold text-slate-600 ${c===activeCat?'active':''}">${esc(c)}</button>`).join(''); }
+  function setCat(c){ activeCat=c; renderCats(); renderGrid(); }
+  function renderGrid(){
+    const list = activeCat==='All' ? PRODUCTS : PRODUCTS.filter(p=>p.cat===activeCat);
+    document.getElementById('count').textContent = `${list.length} product${list.length===1?'':'s'}`;
+    document.getElementById('grid').innerHTML = list.map((p,i)=>{ const t=TINT[p.cat]; return `
+      <div class="bg-white rounded-2xl border border-[#E7EBEF] overflow-hidden card-lift reveal" style="animation-delay:${i*40}ms">
+        <div class="aspect-square grid place-items-center relative" style="background:${t[0]}">
+          <i data-lucide="${ICON[p.cat]}" class="w-16 h-16" style="color:${t[1]}"></i>
+          <span class="absolute top-3 left-3 px-2.5 py-1 rounded-full text-[10px] font-bold bg-white/80 text-[#121A21]">${esc(p.cat)}</span>
+        </div>
+        <div class="p-4">
+          <h3 class="font-jakarta font-bold leading-snug">${esc(p.name)}</h3>
+          <div class="flex items-center justify-between mt-3">
+            <span class="font-mono font-bold text-[#121A21]">R${p.price}</span>
+            <button onclick="addToCart('${esc(p.name).replace(/'/g,"&#39;")}')" class="inline-flex items-center gap-1.5 px-3 h-9 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white text-sm font-bold transition"><i data-lucide="plus" class="w-4 h-4"></i> Add</button>
+          </div>
+        </div>
+      </div>`; }).join('');
+    lucide.createIcons();
+  }
+  function addToCart(name){ cart++; document.getElementById('cartCount').textContent = cart; showToast('Added to cart: ' + name); }
+  function openCart(){ if(cart===0){ showToast('Your cart is empty — add some merch.'); return; } showToast('Checkout opens in WooCommerce (secure).'); }
+
+  const BRIEFS = { shop: {
+    title:'Merch Shop', sub:'WooCommerce · branded merch only',
+    purpose:'Sells <b>physical branded merchandise only</b> — caps, hoodies, tees, totes, notebooks. Builds belonging and a small revenue line. <b>No digital downloads here</b> — those live in MemberPress (Resources). Cart &amp; checkout hand off to WooCommerce secure pages; we never rebuild card/checkout UI.',
+    data:'WooCommerce Product: <code>{ id, name, category, price_zar, variations{size,colour}, stock, image }</code>. Order data falls under POPIA scope and is included in the member data export.',
+    logic:'Add-to-cart → WooCommerce cart session (shared WP user record with BuddyBoss + MemberPress — one login). Checkout, payment and delivery tracking all live in WooCommerce. Order history surfaces under My Orders in the member account.',
+    components:'Category filter · product grid · cart counter · WooCommerce checkout handoff.',
+    api:'WC REST: GET /wp-json/wc/v3/products?category={cat} · POST /wp-json/wc/store/cart/add-item'
+  } };
+  function toggleDevMode(){ const on=document.body.classList.toggle('dev-on'); const b=document.getElementById('devToggle'); if(b)b.classList.toggle('on',on); if(on)showToast('Dev Mode on — tap any ⓘ for implementation notes.'); lucide.createIcons(); }
+  function closeOverlay(id){ const el=document.getElementById(id); if(!el)return; el.classList.remove('open'); setTimeout(()=>{ if(el&&el.parentNode) el.remove(); },300); }
+  function openBrief(id){ const b=BRIEFS[id]; if(!b)return;
+    const sec=(icon,label,html)=>`<div class="px-6 py-4 border-t border-slate-100"><p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] flex items-center gap-1.5 mb-2"><i data-lucide="${icon}" class="w-3.5 h-3.5"></i>${label}</p><div class="text-sm text-slate-600 leading-relaxed">${html}</div></div>`;
+    document.getElementById('overlay-root').innerHTML=`<div class="ov" id="ov-brief"><div class="ov-bg" onclick="closeOverlay('ov-brief')"></div><div class="drawer"><div class="sticky top-0 z-10 bg-[#0C1F31] text-white px-6 py-5 flex items-start justify-between"><div class="min-w-0"><p class="text-[10px] font-bold uppercase tracking-widest text-[#FF9900] mb-1">Dev Brief</p><h3 class="font-jakarta font-extrabold text-lg leading-tight">${b.title}</h3><p class="text-xs text-white/60 mt-1">${b.sub}</p></div><button onclick="closeOverlay('ov-brief')" aria-label="Close" class="text-white/60 hover:text-white shrink-0 ml-3"><i data-lucide="x" class="w-5 h-5"></i></button></div>${sec('target','Purpose',b.purpose)}${sec('database','Data model',b.data)}${sec('git-branch','Logic',b.logic)}${sec('boxes','Components',b.components)}${sec('plug','API',`<code class="block bg-slate-900 text-emerald-300 text-xs font-mono px-3 py-2 rounded-lg overflow-x-auto">${b.api}</code>`)}<div class="px-6 py-4 border-t border-slate-100"><p class="text-[11px] text-slate-400 flex items-center gap-1.5"><i data-lucide="info" class="w-3.5 h-3.5"></i> Spec lives beside the feature — toggle Dev Mode off for the clean view.</p></div></div></div>`;
+    requestAnimationFrame(()=>{ const o=document.getElementById('ov-brief'); if(o)o.classList.add('open'); }); lucide.createIcons();
+  }
+
+  renderCats(); renderGrid(); lucide.createIcons();
+</script>
+</body>
+</html>
