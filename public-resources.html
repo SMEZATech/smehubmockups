@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SME South Africa — Resources</title>
+  <meta name="description" content="Everything you need to thrive — from starting up to scaling up, all in one place." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  <script>
+    tailwind.config = { theme: { extend: { fontFamily: {
+      jakarta: ['Plus Jakarta Sans', 'sans-serif'], inter: ['Inter', 'system-ui', 'sans-serif'], mono: ['monospace']
+    } } } };
+  </script>
+  <style>
+    html, body { font-family: 'Inter', system-ui, sans-serif; }
+    .font-jakarta { font-family: 'Plus Jakarta Sans', sans-serif; letter-spacing: 0.005em; }
+    .font-mono { font-family: monospace; }
+    .no-scrollbar::-webkit-scrollbar { display:none; } .no-scrollbar { -ms-overflow-style:none; scrollbar-width:none; }
+    @keyframes fadeUp { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
+    .reveal { animation: fadeUp .5s cubic-bezier(.2,.7,.2,1) backwards; }
+    .card-lift { transition: box-shadow .2s, transform .2s; }
+    .card-lift:hover { box-shadow: 0 10px 24px -10px rgba(10,44,61,0.18); transform: translateY(-2px); }
+    .chip { transition: background-color .15s, color .15s, border-color .15s; cursor:pointer; }
+    .chip.active { background:#0C1F31; color:#fff; border-color:#0C1F31; }
+    .dev-badge { display:none; } body.dev-on .dev-badge { display:inline-flex; }
+    #devToggle.on { background:#DC183C; color:#fff; border-color:#DC183C; }
+    .ov { position:fixed; inset:0; z-index:60; }
+    .ov-bg { position:absolute; inset:0; background:rgba(12,31,49,.45); backdrop-filter:blur(2px); opacity:0; transition:opacity .3s; }
+    .ov.open .ov-bg { opacity:1; }
+    .drawer { position:absolute; right:0; top:0; height:100%; width:100%; max-width:440px; background:#fff; box-shadow:-12px 0 40px rgba(12,31,49,.25); overflow-y:auto; transform:translateX(100%); transition:transform .3s cubic-bezier(.2,.7,.2,1); }
+    .ov.open .drawer { transform:translateX(0); }
+  </style>
+</head>
+<body class="bg-[#FCFCFC] text-[#121A21] antialiased">
+
+<a href="#" class="block bg-[#DC183C] text-white text-center text-[13px] font-semibold py-2 px-4 hover:bg-[#B0142F] transition">
+  <i data-lucide="sparkles" class="inline w-3.5 h-3.5 -mt-0.5"></i> Funding Summit 2026 — secure your seat. <span class="underline underline-offset-2">Register now →</span>
+</a>
+
+<header class="bg-white border-b border-[#E7EBEF] sticky top-0 z-40">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center gap-4">
+    <a href="public-home.html" class="flex items-center gap-2.5 shrink-0">
+      <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-[#DC183C] to-[#FF9900] grid place-items-center text-white font-jakarta font-extrabold text-sm">S</div>
+      <span class="font-jakarta font-extrabold text-[17px] tracking-tight">SME <span class="text-[#DC183C]">South Africa</span></span>
+    </a>
+    <nav class="hidden lg:flex items-center gap-1 ml-4">
+      <a href="public-articles.html"  class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition">Articles</a>
+      <a href="public-resources.html" class="px-3 py-2 rounded-lg text-sm font-semibold text-[#DC183C] bg-[#FDECEF]">Resources</a>
+      <a href="public-funding.html"   class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition">Funding</a>
+      <a href="public-solutions.html" class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition">Solutions</a>
+      <a href="public-shop.html"      class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition">Shop</a>
+    </nav>
+    <div class="flex items-center gap-1 sm:gap-2 ml-auto">
+      <button id="devToggle" onclick="toggleDevMode()" class="hidden sm:flex items-center gap-1.5 px-3 h-9 rounded-full border border-slate-200 text-slate-500 hover:border-[#DC183C] hover:text-[#DC183C] transition text-[11px] font-bold uppercase tracking-wider" title="Toggle implementation notes"><i data-lucide="code-2" class="w-3.5 h-3.5"></i><span>Dev</span></button>
+      <a href="public-shop.html" aria-label="Cart" class="relative w-10 h-10 grid place-items-center rounded-full hover:bg-slate-100 text-slate-600"><i data-lucide="shopping-bag" class="w-5 h-5"></i><span class="absolute top-1.5 right-1.5 bg-[#DC183C] text-white text-[10px] font-bold rounded-full w-4 h-4 grid place-items-center">0</span></a>
+      <a href="member-hub.html" class="hidden sm:inline-flex items-center px-3 h-9 rounded-full text-sm font-bold text-[#121A21] hover:bg-slate-100 transition">Sign in</a>
+      <a href="member-hub.html" class="inline-flex items-center px-4 h-9 rounded-full text-sm font-bold text-white bg-[#DC183C] hover:bg-[#B0142F] transition">Join Free</a>
+    </div>
+  </div>
+</header>
+
+<!-- ===================== PAGE HEAD ===================== -->
+<section class="bg-white border-b border-[#E7EBEF]">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-12">
+    <div class="flex items-start gap-2">
+      <h1 class="font-jakarta font-extrabold text-4xl sm:text-5xl tracking-tight">Small Business Resources</h1>
+      <button onclick="openBrief('resources')" class="dev-badge w-6 h-6 rounded-full bg-[#DC183C] text-white items-center justify-center text-[11px] font-bold mt-2" title="Implementation notes">i</button>
+    </div>
+    <p class="text-lg text-slate-600 mt-3 max-w-2xl">Everything you need to thrive — from starting up to scaling up, all in one place.</p>
+  </div>
+</section>
+
+<main class="max-w-7xl mx-auto px-4 sm:px-6 py-10">
+  <!-- Type cards -->
+  <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-10">
+    <button onclick="setType('Ebooks')" class="text-left bg-white rounded-2xl border border-[#E7EBEF] p-5 card-lift">
+      <div class="w-11 h-11 rounded-xl grid place-items-center bg-[#FDECEF] text-[#DC183C] mb-3"><i data-lucide="book-open" class="w-5 h-5"></i></div>
+      <h3 class="font-jakarta font-bold">Ebooks</h3><p class="text-sm text-slate-500 mt-1">In-depth reads on strategy, compliance and growth.</p>
+    </button>
+    <button onclick="setType('Templates')" class="text-left bg-white rounded-2xl border border-[#E7EBEF] p-5 card-lift">
+      <div class="w-11 h-11 rounded-xl grid place-items-center bg-[#FFF1E0] text-[#AE6B0A] mb-3"><i data-lucide="file-text" class="w-5 h-5"></i></div>
+      <h3 class="font-jakarta font-bold">Templates</h3><p class="text-sm text-slate-500 mt-1">Ready-to-use documents for your business.</p>
+    </button>
+    <button onclick="setType('Guides')" class="text-left bg-white rounded-2xl border border-[#E7EBEF] p-5 card-lift">
+      <div class="w-11 h-11 rounded-xl grid place-items-center bg-[#E4F5EE] text-[#29A37A] mb-3"><i data-lucide="map" class="w-5 h-5"></i></div>
+      <h3 class="font-jakarta font-bold">Guides</h3><p class="text-sm text-slate-500 mt-1">Step-by-step walkthroughs and how-tos.</p>
+    </button>
+    <button onclick="setType('Reports')" class="text-left bg-white rounded-2xl border border-[#E7EBEF] p-5 card-lift">
+      <div class="w-11 h-11 rounded-xl grid place-items-center bg-[#FDECEF] text-[#DC183C] mb-3"><i data-lucide="bar-chart-3" class="w-5 h-5"></i></div>
+      <h3 class="font-jakarta font-bold">Reports & Surveys</h3><p class="text-sm text-slate-500 mt-1">Data-driven insights into the SME landscape.</p>
+    </button>
+  </div>
+
+  <!-- Featured -->
+  <div class="rounded-2xl overflow-hidden mb-10 reveal text-white grid md:grid-cols-2" style="background:linear-gradient(135deg,#0C1F31,#243b52)">
+    <div class="p-8 sm:p-10 flex flex-col justify-center">
+      <span class="text-[11px] font-bold uppercase tracking-widest text-[#FF9900]">Featured · Free</span>
+      <h2 class="font-jakarta font-extrabold text-2xl sm:text-3xl mt-2 leading-snug">Your Guide to AI Prompting</h2>
+      <p class="text-white/70 mt-3 max-w-md">A practical playbook for using AI tools to write, plan and market your small business — built for SA founders.</p>
+      <button onclick="unlock('Your Guide to AI Prompting')" class="mt-6 inline-flex items-center gap-2 px-5 h-11 rounded-full bg-[#DC183C] hover:bg-[#B0142F] font-bold transition w-max"><i data-lucide="unlock" class="w-4 h-4"></i> Unlock free</button>
+    </div>
+    <div class="hidden md:grid place-items-center p-10"><i data-lucide="sparkles" class="w-24 h-24 text-[#FF9900]/40"></i></div>
+  </div>
+
+  <!-- Filter -->
+  <div class="flex items-center justify-between gap-4 mb-7">
+    <div id="type-bar" class="flex items-center gap-2 overflow-x-auto no-scrollbar -mx-1 px-1"></div>
+    <span id="count" class="text-sm text-slate-500 shrink-0"></span>
+  </div>
+
+  <div id="grid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+</main>
+
+<footer class="bg-[#0C1F31] text-white mt-10">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-12">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+      <div class="col-span-2 md:col-span-1">
+        <a href="public-home.html" class="flex items-center gap-2.5"><div class="w-9 h-9 rounded-xl bg-gradient-to-br from-[#DC183C] to-[#FF9900] grid place-items-center text-white font-jakarta font-extrabold text-sm">S</div><span class="font-jakarta font-extrabold text-[17px]">SME South Africa</span></a>
+        <p class="text-sm text-white/55 mt-4 max-w-xs leading-relaxed">South Africa's largest SME community — connecting founders with funding, mentorship, events, and the tools to scale.</p>
+      </div>
+      <div><p class="text-[11px] font-bold uppercase tracking-widest text-white/40">Platform</p><ul class="mt-4 space-y-2.5 text-sm text-white/70"><li><a href="member-hub.html" class="hover:text-white">Community</a></li><li><a href="#" class="hover:text-white">Events</a></li><li><a href="public-funding.html" class="hover:text-white">Funding</a></li><li><a href="public-solutions.html" class="hover:text-white">Solutions</a></li><li><a href="public-shop.html" class="hover:text-white">Shop</a></li></ul></div>
+      <div><p class="text-[11px] font-bold uppercase tracking-widest text-white/40">Learn</p><ul class="mt-4 space-y-2.5 text-sm text-white/70"><li><a href="public-articles.html" class="hover:text-white">Articles</a></li><li><a href="public-resources.html" class="hover:text-white">Resources</a></li><li><a href="public-resources.html" class="hover:text-white">Guides</a></li><li><a href="#" class="hover:text-white">Podcast</a></li></ul></div>
+      <div><p class="text-[11px] font-bold uppercase tracking-widest text-white/40">Company</p><ul class="mt-4 space-y-2.5 text-sm text-white/70"><li><a href="#" class="hover:text-white">About</a></li><li><a href="#" class="hover:text-white">Contact</a></li><li><a href="#" class="hover:text-white">Careers</a></li><li><a href="#" class="hover:text-white">Partners</a></li></ul></div>
+    </div>
+    <div class="flex flex-col sm:flex-row items-center justify-between gap-4 pt-8 mt-10 border-t border-white/10 text-sm text-white/50">
+      <p>© 2026 SME South Africa. All rights reserved.</p>
+      <div class="flex items-center gap-5"><a href="#" class="hover:text-white">Privacy Policy</a><a href="#" class="hover:text-white">Terms of Service</a><a href="#" class="hover:text-white">Cookie Policy</a></div>
+    </div>
+  </div>
+</footer>
+
+<div id="overlay-root"></div>
+<div id="toast" class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-50"></div>
+
+<script>
+  function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c])); }
+  function showToast(msg){ const el=document.getElementById('toast'); el.classList.remove('hidden'); el.innerHTML=`<div class="bg-[#0C1F31] text-white rounded-full pl-3 pr-5 py-2.5 shadow-2xl flex items-center gap-2 text-sm font-semibold" style="border-left:4px solid #29A37A"><i data-lucide="check-circle" class="w-4 h-4" style="color:#29A37A"></i><span>${esc(msg)}</span></div>`; lucide.createIcons(); setTimeout(()=>{el.classList.add('hidden');el.innerHTML='';},2400); }
+  function unlock(name){ showToast('Sign in or join free to download — redirecting…'); setTimeout(()=>{ window.location.href='member-hub.html'; }, 1200); }
+
+  const TYPES = ['All','Ebooks','Templates','Guides','Reports'];
+  const ICON = { Ebooks:['book-open','#FDECEF','#DC183C'], Templates:['file-text','#FFF1E0','#AE6B0A'], Guides:['map','#E4F5EE','#29A37A'], Reports:['bar-chart-3','#FDECEF','#DC183C'] };
+  const RES = [
+    { t:'Templates', title:'Business plan template (SA)',           desc:'A funder-ready business plan structure with worked examples.' },
+    { t:'Templates', title:'Cash flow forecast spreadsheet',         desc:'12-month rolling cash flow model — just plug in your numbers.' },
+    { t:'Ebooks',    title:'The SME compliance handbook',            desc:'CIPC, SARS, VAT, UIF and POPIA explained in plain language.' },
+    { t:'Guides',    title:'How to register your company in 7 steps',desc:'A step-by-step walkthrough of CIPC registration.' },
+    { t:'Reports',   title:'2026 SA SME confidence survey',          desc:'What 5,000 founders told us about the year ahead.' },
+    { t:'Ebooks',    title:'Pricing for profit',                     desc:'Frameworks to price your product or service with margin.' },
+    { t:'Guides',    title:'Applying for funding: a founder’s guide', desc:'What funders look for and how to prepare your application.' },
+    { t:'Templates', title:'Invoice & quotation pack',               desc:'Professional, compliant invoice and quote templates.' },
+    { t:'Reports',   title:'Township economy market report',         desc:'Sizing the opportunity in SA’s informal markets.' }
+  ];
+
+  let activeType='All';
+  function renderTypes(){ document.getElementById('type-bar').innerHTML = TYPES.map(t=>`<button onclick="setType('${t}')" class="chip shrink-0 px-3.5 h-9 rounded-full border border-[#E7EBEF] bg-white text-sm font-semibold text-slate-600 ${t===activeType?'active':''}">${t==='Reports'?'Reports & Surveys':t}</button>`).join(''); }
+  function setType(t){ activeType=t; renderTypes(); renderGrid(); }
+  function renderGrid(){
+    const list = activeType==='All' ? RES : RES.filter(r=>r.t===activeType);
+    document.getElementById('count').textContent = `${activeType==='All'?33:list.length} resource${list.length===1?'':'s'}`;
+    document.getElementById('grid').innerHTML = list.map((r,i)=>{ const ic=ICON[r.t]; return `
+      <div class="bg-white rounded-2xl border border-[#E7EBEF] overflow-hidden card-lift reveal" style="animation-delay:${i*50}ms">
+        <div class="h-32 grid place-items-center" style="background:${ic[1]}"><i data-lucide="${ic[0]}" class="w-10 h-10" style="color:${ic[2]}"></i></div>
+        <div class="p-5">
+          <span class="text-[11px] font-bold uppercase tracking-widest" style="color:${ic[2]}">${r.t==='Reports'?'Report':r.t.replace(/s$/,'')}</span>
+          <h3 class="font-jakarta font-bold text-lg leading-snug mt-1">${esc(r.title)}</h3>
+          <p class="text-sm text-slate-600 mt-2 line-clamp-2">${esc(r.desc)}</p>
+          <button onclick="unlock('${esc(r.title).replace(/'/g,"&#39;")}')" class="mt-4 inline-flex items-center gap-2 px-4 h-10 rounded-full bg-[#0C1F31] text-white text-sm font-bold hover:bg-[#1b3247] transition"><i data-lucide="download" class="w-4 h-4"></i> Download Free</button>
+        </div>
+      </div>`; }).join('');
+    lucide.createIcons();
+  }
+
+  const BRIEFS = { resources: {
+    title:'Resource Library', sub:'Lead-gen + member-gated downloads',
+    purpose:'Free, valuable downloads that capture leads and drive signups. Each download is the conversion moment: visitors must sign in / join (MemberPress) to receive the file. Doubles as the entry point to the member resource library.',
+    data:'Resource: <code>{ id, title, desc, type ∈ {ebook,template,guide,report}, file_url, gated:true, downloads }</code>. Files live in <b>MemberPress</b>, not WooCommerce.',
+    logic:'&ldquo;Download Free&rdquo;/&ldquo;Unlock&rdquo; → if logged-out, route to MemberPress register/login, then deliver file. Type cards set the filter. Counts are cached. Keep PDFs off the WP Engine app server (use object storage / CDN) to protect CPU.',
+    components:'4 type cards · featured unlock · type filter chips · download grid.',
+    api:'GET /v1/resources?type={type} · POST /v1/resources/{id}/download (auth)'
+  } };
+  function toggleDevMode(){ const on=document.body.classList.toggle('dev-on'); const b=document.getElementById('devToggle'); if(b)b.classList.toggle('on',on); if(on)showToast('Dev Mode on — tap any ⓘ for implementation notes.'); lucide.createIcons(); }
+  function closeOverlay(id){ const el=document.getElementById(id); if(!el)return; el.classList.remove('open'); setTimeout(()=>{ if(el&&el.parentNode) el.remove(); },300); }
+  function openBrief(id){ const b=BRIEFS[id]; if(!b)return;
+    const sec=(icon,label,html)=>`<div class="px-6 py-4 border-t border-slate-100"><p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] flex items-center gap-1.5 mb-2"><i data-lucide="${icon}" class="w-3.5 h-3.5"></i>${label}</p><div class="text-sm text-slate-600 leading-relaxed">${html}</div></div>`;
+    document.getElementById('overlay-root').innerHTML=`<div class="ov" id="ov-brief"><div class="ov-bg" onclick="closeOverlay('ov-brief')"></div><div class="drawer"><div class="sticky top-0 z-10 bg-[#0C1F31] text-white px-6 py-5 flex items-start justify-between"><div class="min-w-0"><p class="text-[10px] font-bold uppercase tracking-widest text-[#FF9900] mb-1">Dev Brief</p><h3 class="font-jakarta font-extrabold text-lg leading-tight">${b.title}</h3><p class="text-xs text-white/60 mt-1">${b.sub}</p></div><button onclick="closeOverlay('ov-brief')" aria-label="Close" class="text-white/60 hover:text-white shrink-0 ml-3"><i data-lucide="x" class="w-5 h-5"></i></button></div>${sec('target','Purpose',b.purpose)}${sec('database','Data model',b.data)}${sec('git-branch','Logic',b.logic)}${sec('boxes','Components',b.components)}${sec('plug','API',`<code class="block bg-slate-900 text-emerald-300 text-xs font-mono px-3 py-2 rounded-lg overflow-x-auto">${b.api}</code>`)}<div class="px-6 py-4 border-t border-slate-100"><p class="text-[11px] text-slate-400 flex items-center gap-1.5"><i data-lucide="info" class="w-3.5 h-3.5"></i> Spec lives beside the feature — toggle Dev Mode off for the clean view.</p></div></div></div>`;
+    requestAnimationFrame(()=>{ const o=document.getElementById('ov-brief'); if(o)o.classList.add('open'); }); lucide.createIcons();
+  }
+
+  renderTypes(); renderGrid(); lucide.createIcons();
+</script>
+</body>
+</html>

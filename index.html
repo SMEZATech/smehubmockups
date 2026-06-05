@@ -1,300 +1,182 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SME HUB | UI Architecture</title>
-
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-
-    <!-- SME 2026 Theme -->
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        dark:    '#0C1F31',  /* SME navy — page base */
-                        darker:  '#08141F',  /* deep navy — bars / chips */
-                        surface: '#142A40',  /* lifted navy — cards */
-                        primary: '#DC183C',  /* SME red */
-                        accent:  '#FF9900',  /* SME orange */
-                        success: '#29A37A'   /* SME green — status only */
-                    },
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                        heading: ['"Plus Jakarta Sans"', 'sans-serif'],
-                        mono: ['"JetBrains Mono"', 'ui-monospace', 'SFMono-Regular', 'monospace'],
-                    }
-                }
-            }
-        }
-    </script>
-
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SME South Africa — Mockup Hub</title>
+  <meta name="description" content="One link to every SME South Africa mockup — public marketing site and member community hub, side by side." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  <script>
+    tailwind.config = { theme: { extend: { fontFamily: {
+      jakarta: ['Plus Jakarta Sans', 'sans-serif'], inter: ['Inter', 'system-ui', 'sans-serif'], mono:['monospace']
+    } } } };
+  </script>
+  <style>
+    html, body { font-family: 'Inter', system-ui, sans-serif; height:100%; }
+    .font-jakarta { font-family: 'Plus Jakarta Sans', sans-serif; letter-spacing: 0.005em; }
+    .font-mono { font-family: monospace; }
+    .no-scrollbar::-webkit-scrollbar { display:none; } .no-scrollbar { -ms-overflow-style:none; scrollbar-width:none; }
+    .nav-item.active { background:#FDECEF; color:#DC183C; }
+    .nav-item.active .ni-dot { opacity:1; }
+    .vp-btn.active { background:#0C1F31; color:#fff; }
+    #sidebar { transition: transform .3s cubic-bezier(.2,.7,.2,1); }
+    @media (max-width: 1023px){
+      #sidebar { position:fixed; z-index:50; transform:translateX(-100%); }
+      #sidebar.open { transform:translateX(0); }
+    }
+    .frame-wrap { transition: max-width .35s cubic-bezier(.2,.7,.2,1); }
+  </style>
 </head>
-<body class="bg-dark text-white font-sans min-h-screen flex flex-col selection:bg-primary selection:text-white">
+<body class="bg-[#0C1F31] text-[#121A21] antialiased h-full overflow-hidden">
 
-    <!-- Top System Bar -->
-    <div class="w-full bg-darker border-b border-white/[0.08] py-2 px-6 flex justify-between items-center text-xs font-mono text-gray-400">
-        <div class="flex items-center gap-3">
-            <span class="flex h-2 w-2 relative">
-              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-success opacity-75"></span>
-              <span class="relative inline-flex rounded-full h-2 w-2 bg-success"></span>
-            </span>
-            <span>ENV: PRODUCTION</span>
-        </div>
-        <div>
-            <span>DEV_ID: T_JOEL_001</span>
-        </div>
+<div class="flex h-full">
+  <!-- ===================== SIDEBAR ===================== -->
+  <aside id="sidebar" class="w-72 shrink-0 bg-[#0C1F31] text-white h-full flex flex-col border-r border-white/10">
+    <div class="px-5 h-16 flex items-center gap-2.5 border-b border-white/10 shrink-0">
+      <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-[#DC183C] to-[#FF9900] grid place-items-center text-white font-jakarta font-extrabold text-sm">S</div>
+      <div class="leading-tight">
+        <p class="font-jakarta font-extrabold text-[15px]">SME South Africa</p>
+        <p class="text-[11px] text-white/50 font-mono">Mockup Hub</p>
+      </div>
     </div>
+    <nav id="nav" class="flex-1 overflow-y-auto no-scrollbar px-3 py-4 space-y-6"></nav>
+    <div class="px-5 py-4 border-t border-white/10 text-[11px] text-white/40 shrink-0">
+      <p>Consolidated view · June 2026</p>
+      <p class="mt-0.5">Public + member + CEO mockups</p>
+    </div>
+  </aside>
 
-    <!-- Main Content -->
-    <main class="flex-grow max-w-5xl w-full mx-auto p-6 md:p-12">
+  <!-- mobile sidebar backdrop -->
+  <div id="backdrop" onclick="closeSidebar()" class="hidden fixed inset-0 bg-black/50 z-40 lg:hidden"></div>
 
-        <!-- Header -->
-        <header class="mb-16 mt-8 relative">
-            <div class="absolute -top-10 -left-10 w-40 h-40 bg-primary/20 blur-[100px] rounded-full pointer-events-none"></div>
+  <!-- ===================== MAIN ===================== -->
+  <div class="flex-1 flex flex-col h-full bg-[#FCFCFC] min-w-0">
+    <!-- Top bar -->
+    <header class="h-16 bg-white border-b border-[#E7EBEF] flex items-center gap-3 px-4 sm:px-5 shrink-0">
+      <button onclick="openSidebar()" class="lg:hidden w-9 h-9 grid place-items-center rounded-lg hover:bg-slate-100 text-slate-600"><i data-lucide="menu" class="w-5 h-5"></i></button>
+      <div class="min-w-0">
+        <p id="curGroup" class="text-[11px] font-bold uppercase tracking-widest text-[#AE6B0A]">Public site</p>
+        <h1 id="curTitle" class="font-jakarta font-extrabold text-lg leading-tight truncate">Home</h1>
+      </div>
 
-            <img src="https://smesouthafrica.co.za/wp-content/uploads/2022/05/sme-white-logo.png"
-                 alt="SME South Africa" class="h-9 w-auto mb-8 relative" />
-
-            <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 border border-primary/30 text-accent text-sm font-medium mb-6">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
-                UI/UX Engineering
-            </div>
-
-            <h1 class="text-4xl md:text-6xl font-heading font-extrabold mb-4 text-white tracking-tight">
-                SME HUB <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent">Project</span>
-            </h1>
-            <p class="text-gray-400 text-lg md:text-xl max-w-2xl leading-relaxed">
-                Central directory for frontend architecture, interactive prototypes, and modular components engineered for the South African SME Ecosystem.
-            </p>
-
-            <div class="mt-8 flex items-center gap-4">
-                <div class="h-[1px] w-12 bg-white/20"></div>
-                <p class="text-sm font-mono text-gray-500 uppercase tracking-widest">Architect: Tshepho Joel</p>
-                <div class="h-[1px] w-12 bg-white/20"></div>
-            </div>
-        </header>
-
-        <!-- Projects Grid (auto-populated from the repository) -->
-        <div id="project-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
-
-    </main>
-
-    <!-- Footer -->
-    <footer class="w-full bg-darker border-t border-white/[0.08] mt-auto">
-        <div class="max-w-5xl mx-auto px-6 md:px-12 py-8">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-center border-b border-white/10 pb-8">
-                <div>
-                    <h3 class="text-lg font-heading font-bold text-white tracking-wide">SME HUB</h3>
-                    <p class="text-gray-500 text-sm mt-1">Platform Architecture &amp; Engineering</p>
-                </div>
-                <div class="flex justify-start md:justify-center">
-                    <div class="inline-flex flex-col items-center p-3 rounded-lg bg-dark border border-white/10">
-                        <span class="text-[10px] text-gray-500 font-mono uppercase mb-1">Platform Manager</span>
-                        <span class="text-sm text-accent font-heading font-bold">Tshepho Joel</span>
-                    </div>
-                </div>
-                <div class="flex flex-col items-start md:items-end font-mono text-xs text-gray-500 space-y-2">
-                    <div class="flex items-center gap-2">
-                        <span>SYS_VER:</span><span class="text-gray-300">v2.1.0-auto</span>
-                    </div>
-                    <div class="flex items-center gap-2">
-                        <span>BUILD:</span><span class="text-success">PASSING</span>
-                    </div>
-                </div>
-            </div>
-            <div class="pt-6 flex flex-col md:flex-row justify-between items-center gap-4 text-xs font-mono text-gray-600">
-                <p>&copy; 2026 Tshepho Joel. Proprietary UI/UX Assets. All rights reserved.</p>
-                <div class="flex items-center gap-2">
-                    <svg class="w-4 h-4 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
-                    <span>Secure Framework</span>
-                </div>
-            </div>
+      <div class="ml-auto flex items-center gap-2">
+        <!-- Viewport toggle -->
+        <div class="hidden sm:flex items-center gap-1 bg-slate-100 rounded-full p-1">
+          <button onclick="setVP('full')"   id="vp-full"   class="vp-btn active px-3 h-8 rounded-full text-xs font-bold flex items-center gap-1.5" title="Desktop"><i data-lucide="monitor" class="w-4 h-4"></i></button>
+          <button onclick="setVP('tablet')" id="vp-tablet" class="vp-btn px-3 h-8 rounded-full text-xs font-bold flex items-center gap-1.5" title="Tablet"><i data-lucide="tablet" class="w-4 h-4"></i></button>
+          <button onclick="setVP('mobile')" id="vp-mobile" class="vp-btn px-3 h-8 rounded-full text-xs font-bold flex items-center gap-1.5" title="Mobile"><i data-lucide="smartphone" class="w-4 h-4"></i></button>
         </div>
-    </footer>
+        <button onclick="reloadFrame()" class="w-9 h-9 grid place-items-center rounded-full hover:bg-slate-100 text-slate-600" title="Reload"><i data-lucide="rotate-cw" class="w-4 h-4"></i></button>
+        <a id="openTab" href="public-home.html" target="_blank" class="inline-flex items-center gap-1.5 px-3.5 h-9 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white text-sm font-bold transition"><i data-lucide="external-link" class="w-4 h-4"></i><span class="hidden sm:inline">Open standalone</span></a>
+      </div>
+    </header>
 
-    <!-- ============================================================= -->
-    <!--  AUTO-DISCOVERY ENGINE                                        -->
-    <!--  Drop a new .html into the repo → it appears here on refresh. -->
-    <!--  No manual registration needed.                               -->
-    <!-- ============================================================= -->
-    <script>
-    // ============ 1. CONFIG (optional) ============
-    // Leave blank to auto-detect from a GitHub Pages URL.
-    // Only fill these if you use a CUSTOM DOMAIN (where auto-detect can't see the repo).
-    const CONFIG = {
-        owner:  '',   // e.g. 'tshephojoel'
-        repo:   '',   // e.g. 'sme-hub'
-        branch: '',   // blank = repo's default branch
-        dir:    ''    // subfolder holding the mockups; blank = same folder as index.html
-    };
+    <!-- Frame area -->
+    <div class="flex-1 overflow-auto bg-slate-200/60 p-0 sm:p-4">
+      <div id="frameWrap" class="frame-wrap mx-auto h-full bg-white sm:rounded-xl sm:shadow-xl overflow-hidden" style="max-width:100%">
+        <iframe id="frame" src="public-home.html" title="Mockup preview" class="w-full h-full border-0"></iframe>
+      </div>
+    </div>
+  </div>
+</div>
 
-    // ============ 2. OPTIONAL ENRICHMENT ============
-    // Nice titles / descriptions / icons per file. ANY file not listed here
-    // STILL appears automatically — it just gets an auto title + default icon.
-    const META = {
-        'events.html':              { title:'Events',              desc:'Interactive scheduling and directory module featuring upcoming/past events toggles.', icon:'calendar' },
-        'newsletter.html':          { title:'Newsletter',          desc:'High-conversion email capture component engineered for the SME ecosystem.',           icon:'mail' },
-        'podcast.html':             { title:'Podcast UI',          desc:'Audio streaming interface and episode directory for SME business resources.',          icon:'mic' },
-        'social_media_studio.html': { title:'Social Media Studio', desc:'AI-powered social media strategist and custom brand asset generator.',                 icon:'share' },
-        'member-hub.html':          { title:'Member Hub',          desc:'Community dashboard — Ask / Win / Share feed, member directory, and profiles.',         icon:'users' },
-        'brand_ci':                 { title:'Brand CI 2026',       desc:'The official SME South Africa corporate identity — colour, type, logo, and components.',  icon:'brand' }
-    };
+<script>
+  const LIVE = 'https://shine-better-web.lovable.app';
+  const NAV = [
+    { group:'Public site', tag:'Logged-out', accent:'#FF9900', items:[
+      { label:'Home',      file:'public-home.html',      icon:'home' },
+      { label:'Articles',  file:'public-articles.html',  icon:'newspaper' },
+      { label:'Resources', file:'public-resources.html', icon:'folder-open' },
+      { label:'Funding',   file:'public-funding.html',   icon:'banknote' },
+      { label:'Solutions', file:'public-solutions.html', icon:'layout-grid' },
+      { label:'Shop',      file:'public-shop.html',      icon:'shopping-bag' }
+    ]},
+    { group:'Member hub', tag:'Logged-in', accent:'#DC183C', items:[
+      { label:'Community Feed',     file:'member-hub.html',     icon:'rss' },
+      { label:'Members',            file:'members.html',        icon:'users' },
+      { label:'Groups',             file:'groups.html',         icon:'layout-grid' },
+      { label:'Single group',       file:'single-group.html',   icon:'users-round' },
+      { label:'Forums',             file:'forums.html',         icon:'messages-square' },
+      { label:'Account & settings', file:'member-account.html', icon:'settings' }
+    ]},
+    { group:'Content modules', tag:'In repo', accent:'#FF9900', items:[
+      { label:'Events',              file:'events.html',                               icon:'calendar' },
+      { label:'Newsletter',          file:'newsletter.html',                           icon:'mail' },
+      { label:'Podcast',             file:'podcast.html',                              icon:'mic-2' },
+      { label:'Social Media Studio', file:'social_media_studio.html',                  icon:'share-2' }
+    ]},
+    { group:'Reference', tag:'Brand', accent:'#6A7581', items:[
+      { label:'Brand CI 2026',         file:'brand_ci.html',                           icon:'palette' },
+      { label:'Newsletter comparison', file:'Startup_Africa_Newsletter_Comparison.html', icon:'table' }
+    ]},
+    { group:'CEO mockups', tag:'Live · Lovable', accent:'#29A37A', external:true, items:[
+      { label:'CEO live site',       url:LIVE+'/',        icon:'globe' },
+      { label:'Newsletters',         url:LIVE+'/mockups', icon:'mail' },
+      { label:'Events & Webinars',   url:LIVE+'/mockups', icon:'calendar' },
+      { label:'Event Registration',  url:LIVE+'/mockups', icon:'ticket' },
+      { label:'Webinar Replay',      url:LIVE+'/mockups', icon:'play-circle' }
+    ]}
+  ];
 
-    // Files to ignore even if present.
-    const EXCLUDE = ['index.html', '404.html', 'readme.html'];
+  function buildNav(){
+    document.getElementById('nav').innerHTML = NAV.map(sec=>`
+      <div>
+        <div class="flex items-center justify-between px-2 mb-2">
+          <p class="text-[10px] font-bold uppercase tracking-widest text-white/40">${sec.group}</p>
+          <span class="text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded-full" style="background:${sec.accent}22;color:${sec.accent}">${sec.tag}</span>
+        </div>
+        <div class="space-y-0.5">
+          ${sec.items.map(it=> sec.external
+            ? `<a href="${it.url}" target="_blank" rel="noopener" class="nav-item group flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-semibold text-white/70 hover:bg-white/5 hover:text-white transition">
+                 <i data-lucide="${it.icon}" class="w-4 h-4 shrink-0"></i><span class="truncate">${it.label}</span>
+                 <i data-lucide="external-link" class="w-3.5 h-3.5 ml-auto text-white/30 group-hover:text-white/60"></i>
+               </a>`
+            : `<button onclick="load('${it.file}','${sec.group}','${it.label}','${sec.accent}')" data-file="${it.file}" class="nav-item w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-semibold text-white/70 hover:bg-white/5 hover:text-white transition text-left">
+                 <i data-lucide="${it.icon}" class="w-4 h-4 shrink-0"></i><span class="truncate">${it.label}</span>
+                 <span class="ni-dot ml-auto w-1.5 h-1.5 rounded-full bg-[#DC183C] opacity-0"></span>
+               </button>`
+          ).join('')}
+        </div>
+      </div>`).join('');
+    lucide.createIcons();
+  }
 
-    // ============ 3. SYSTEM LOGIC (no need to edit) ============
-    const ICONS = {
-        calendar: "M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z",
-        mail:     "M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z",
-        mic:      "M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z",
-        share:    "M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z",
-        chart:    "M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z",
-        users:    "M17 20h5v-2a4 4 0 00-3-3.87M9 20H4v-2a4 4 0 013-3.87m6-.13a4 4 0 100-8 4 4 0 000 8z",
-        file:     "M9 12h6m-6 4h6M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z",
-        brand:    "M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"
-    };
+  function load(file, group, label, accent){
+    document.getElementById('frame').src = file;
+    document.getElementById('curGroup').textContent = group;
+    document.getElementById('curGroup').style.color = accent || '#AE6B0A';
+    document.getElementById('curTitle').textContent = label;
+    document.getElementById('openTab').href = file;
+    document.querySelectorAll('.nav-item').forEach(n=> n.classList.toggle('active', n.dataset.file===file));
+    if(location.hash.slice(1) !== file) history.replaceState(null,'','#'+file);
+    closeSidebar();
+  }
+  function reloadFrame(){ const f=document.getElementById('frame'); f.src = f.src; }
 
-    const gridContainer = document.getElementById('project-grid');
+  function setVP(mode){
+    const wrap = document.getElementById('frameWrap');
+    const map = { full:'100%', tablet:'820px', mobile:'390px' };
+    wrap.style.maxWidth = map[mode];
+    ['full','tablet','mobile'].forEach(m=> document.getElementById('vp-'+m).classList.toggle('active', m===mode));
+  }
 
-    function titleFromFilename(f){
-        return f.replace(/\.html?$/i, '').replace(/[-_]+/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
-    }
-    function pickIcon(f){
-        const n = f.toLowerCase();
-        if (/event|calendar|schedul/.test(n))            return 'calendar';
-        if (/news|mail|email|subscrib/.test(n))          return 'mail';
-        if (/podcast|audio|listen|episode/.test(n))      return 'mic';
-        if (/social|share|studio/.test(n))               return 'share';
-        if (/dash|stat|analytic|report|chart|metric/.test(n)) return 'chart';
-        if (/member|profile|communit|user|hub|directory/.test(n)) return 'users';
-        if (/brand|identity|ci\b|style|guide/.test(n))             return 'brand';
-        return 'file';
-    }
+  function openSidebar(){ document.getElementById('sidebar').classList.add('open'); document.getElementById('backdrop').classList.remove('hidden'); }
+  function closeSidebar(){ document.getElementById('sidebar').classList.remove('open'); document.getElementById('backdrop').classList.add('hidden'); }
 
-    function cardHTML(filename, title, desc, iconPath){
-        return `
-        <a href="${filename}" class="block group bg-surface p-6 rounded-2xl border border-white/10 hover:border-primary/50 transition-all duration-500 hover:shadow-[0_0_30px_rgba(220,24,60,0.18)] relative overflow-hidden flex flex-col h-full">
-            <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary to-accent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-            <div class="flex-grow">
-                <div class="flex items-start justify-between mb-4">
-                    <div class="p-3 bg-darker rounded-xl border border-white/10 text-accent group-hover:scale-110 transition-transform duration-500">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="${iconPath}"></path></svg>
-                    </div>
-                    <svg class="w-5 h-5 text-gray-600 group-hover:text-accent transition-colors transform group-hover:translate-x-1 group-hover:-translate-y-1 duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
-                </div>
-                <h2 class="text-xl font-heading font-bold text-white group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-white group-hover:to-gray-400 transition-all mb-2">${title}</h2>
-                <p class="text-gray-400 text-sm leading-relaxed mb-6">${desc}</p>
-            </div>
-            <div class="mt-auto pt-6 border-t border-white/10 flex flex-wrap gap-2">
-                <span class="text-[10px] font-mono uppercase tracking-wider bg-darker text-accent px-2.5 py-1 rounded border border-primary/20">Vanilla JS</span>
-                <span class="text-[10px] font-mono uppercase tracking-wider bg-darker text-gray-400 px-2.5 py-1 rounded border border-white/10">Tailwind CSS</span>
-            </div>
-        </a>`;
-    }
-
-    const emptySlot = `
-        <div class="block bg-surface/30 p-6 rounded-2xl border border-dashed border-white/15 flex flex-col h-full min-h-[280px]">
-            <div class="flex flex-col items-center justify-center flex-grow text-center opacity-60">
-                <div class="w-12 h-12 rounded-xl bg-darker border border-white/10 flex items-center justify-center mb-4">
-                    <svg class="w-6 h-6 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
-                </div>
-                <p class="text-gray-400 font-heading font-semibold">Awaiting Deployment</p>
-                <p class="text-gray-500 text-sm mt-2 font-mono">Drop a new .html into the repo…</p>
-            </div>
-        </div>`;
-
-    function showLoading(){
-        gridContainer.innerHTML = `
-            <div class="col-span-full flex items-center justify-center gap-3 py-20 text-gray-500 font-mono text-sm">
-                <svg class="w-5 h-5 animate-spin text-accent" fill="none" viewBox="0 0 24 24">
-                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                    <path class="opacity-90" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
-                </svg>
-                Scanning repository for modules…
-            </div>`;
-    }
-
-    function render(files){
-        // sort: known/curated files first (in META order), then the rest alphabetically
-        const order = Object.keys(META);
-        files.sort((a, b) => {
-            const ia = order.indexOf(a), ib = order.indexOf(b);
-            if (ia !== -1 && ib !== -1) return ia - ib;
-            if (ia !== -1) return -1;
-            if (ib !== -1) return 1;
-            return a.localeCompare(b);
-        });
-        gridContainer.innerHTML = '';
-        files.forEach(name => {
-            const m = META[name] || {};
-            const title = m.title || titleFromFilename(name);
-            const desc  = m.desc  || 'Interactive prototype module for the SME ecosystem.';
-            const icon  = ICONS[m.icon || pickIcon(name)] || ICONS.file;
-            gridContainer.insertAdjacentHTML('beforeend', cardHTML(name, title, desc, icon));
-        });
-        gridContainer.insertAdjacentHTML('beforeend', emptySlot);
-    }
-
-    // Work out owner / repo / dir from a GitHub Pages URL when CONFIG is blank.
-    function resolveTarget(){
-        let { owner, repo, branch, dir } = CONFIG;
-        const host = location.hostname;
-        let segs = location.pathname.split('/').filter(Boolean);
-        if (segs.length && /index\.html?$/i.test(segs[segs.length - 1])) segs.pop();
-
-        if (host.endsWith('github.io')) {
-            if (!owner) owner = host.split('.')[0];
-            if (!repo)  repo  = segs.length ? segs[0] : host;          // project vs user page
-            if (dir === '') {
-                const rest = (segs[0] === repo) ? segs.slice(1) : segs;
-                dir = rest.join('/');
-            }
-        }
-        return { owner, repo, branch, dir };
-    }
-
-    function fallback(){
-        // API unavailable (custom domain / rate limit / offline / opened locally) —
-        // show the curated list so the page never breaks.
-        render(Object.keys(META));
-    }
-
-    async function boot(){
-        showLoading();
-        const { owner, repo, branch, dir } = resolveTarget();
-        if (!owner || !repo) { fallback(); return; }
-
-        const path = dir ? `/${dir}` : '';
-        const ref  = branch ? `?ref=${encodeURIComponent(branch)}` : '';
-        const api  = `https://api.github.com/repos/${owner}/${repo}/contents${path}${ref}`;
-
-        try {
-            const res = await fetch(api, { headers: { 'Accept': 'application/vnd.github+json' } });
-            if (!res.ok) throw new Error('GitHub API ' + res.status);
-            const items = await res.json();
-            const INCLUDE_NAMES = new Set(Object.keys(META));
-            const files = items
-                .filter(x => x.type === 'file'
-                          && !EXCLUDE.includes(x.name.toLowerCase())
-                          && (/\.html?$/i.test(x.name) || INCLUDE_NAMES.has(x.name)))
-                .map(x => x.name);
-            if (!files.length) { fallback(); return; }
-            render(files);
-        } catch (err) {
-            console.warn('[SME HUB] Auto-discovery fell back to curated list:', err.message);
-            fallback();
-        }
-    }
-
-    boot();
-    </script>
+  // Init — restore from hash if present
+  buildNav();
+  (function initLoad(){
+    const hash = location.hash.slice(1);
+    let found = null, grp = null, acc = null;
+    NAV.forEach(sec=>{ if(sec.external) return; sec.items.forEach(it=>{ if(it.file===hash){ found=it; grp=sec.group; acc=sec.accent; } }); });
+    if(found) load(found.file, grp, found.label, acc);
+    else load('public-home.html','Public site','Home','#FF9900');
+  })();
+  lucide.createIcons();
+</script>
 </body>
 </html>

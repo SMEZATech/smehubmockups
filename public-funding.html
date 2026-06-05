@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SME South Africa — Apply for Business Funding</title>
+  <meta name="description" content="Fast, transparent, and stress-free access to business capital for South African SMEs." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  <script>
+    tailwind.config = { theme: { extend: { fontFamily: {
+      jakarta: ['Plus Jakarta Sans', 'sans-serif'], inter: ['Inter', 'system-ui', 'sans-serif'], mono: ['monospace']
+    } } } };
+  </script>
+  <style>
+    html, body { font-family: 'Inter', system-ui, sans-serif; }
+    .font-jakarta { font-family: 'Plus Jakarta Sans', sans-serif; letter-spacing: 0.005em; }
+    .font-mono { font-family: monospace; }
+    @keyframes fadeUp { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
+    .reveal { animation: fadeUp .5s cubic-bezier(.2,.7,.2,1) backwards; }
+    .card-lift { transition: box-shadow .2s, transform .2s; }
+    .card-lift:hover { box-shadow: 0 10px 24px -10px rgba(10,44,61,0.18); transform: translateY(-2px); }
+    .dev-badge { display:none; } body.dev-on .dev-badge { display:inline-flex; }
+    #devToggle.on { background:#DC183C; color:#fff; border-color:#DC183C; }
+    .ov { position:fixed; inset:0; z-index:60; }
+    .ov-bg { position:absolute; inset:0; background:rgba(12,31,49,.45); backdrop-filter:blur(2px); opacity:0; transition:opacity .3s; }
+    .ov.open .ov-bg { opacity:1; }
+    .drawer { position:absolute; right:0; top:0; height:100%; width:100%; max-width:440px; background:#fff; box-shadow:-12px 0 40px rgba(12,31,49,.25); overflow-y:auto; transform:translateX(100%); transition:transform .3s cubic-bezier(.2,.7,.2,1); }
+    .ov.open .drawer { transform:translateX(0); }
+    /* Range slider */
+    input[type=range]{ -webkit-appearance:none; appearance:none; height:6px; border-radius:9999px; background:#E7EBEF; outline:none; }
+    input[type=range]::-webkit-slider-thumb{ -webkit-appearance:none; appearance:none; width:22px; height:22px; border-radius:9999px; background:#DC183C; cursor:pointer; border:3px solid #fff; box-shadow:0 2px 6px rgba(12,31,49,.25); }
+    input[type=range]::-moz-range-thumb{ width:22px; height:22px; border-radius:9999px; background:#DC183C; cursor:pointer; border:3px solid #fff; }
+  </style>
+</head>
+<body class="bg-[#FCFCFC] text-[#121A21] antialiased">
+
+<a href="#" class="block bg-[#DC183C] text-white text-center text-[13px] font-semibold py-2 px-4 hover:bg-[#B0142F] transition">
+  <i data-lucide="sparkles" class="inline w-3.5 h-3.5 -mt-0.5"></i> Funding Summit 2026 — secure your seat. <span class="underline underline-offset-2">Register now →</span>
+</a>
+
+<header class="bg-white border-b border-[#E7EBEF] sticky top-0 z-40">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center gap-4">
+    <a href="public-home.html" class="flex items-center gap-2.5 shrink-0">
+      <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-[#DC183C] to-[#FF9900] grid place-items-center text-white font-jakarta font-extrabold text-sm">S</div>
+      <span class="font-jakarta font-extrabold text-[17px] tracking-tight">SME <span class="text-[#DC183C]">South Africa</span></span>
+    </a>
+    <nav class="hidden lg:flex items-center gap-1 ml-4">
+      <a href="public-articles.html"  class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition">Articles</a>
+      <a href="public-resources.html" class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition">Resources</a>
+      <a href="public-funding.html"   class="px-3 py-2 rounded-lg text-sm font-semibold text-[#DC183C] bg-[#FDECEF]">Funding</a>
+      <a href="public-solutions.html" class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition">Solutions</a>
+      <a href="public-shop.html"      class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition">Shop</a>
+    </nav>
+    <div class="flex items-center gap-1 sm:gap-2 ml-auto">
+      <button id="devToggle" onclick="toggleDevMode()" class="hidden sm:flex items-center gap-1.5 px-3 h-9 rounded-full border border-slate-200 text-slate-500 hover:border-[#DC183C] hover:text-[#DC183C] transition text-[11px] font-bold uppercase tracking-wider" title="Toggle implementation notes"><i data-lucide="code-2" class="w-3.5 h-3.5"></i><span>Dev</span></button>
+      <a href="public-shop.html" aria-label="Cart" class="relative w-10 h-10 grid place-items-center rounded-full hover:bg-slate-100 text-slate-600"><i data-lucide="shopping-bag" class="w-5 h-5"></i><span class="absolute top-1.5 right-1.5 bg-[#DC183C] text-white text-[10px] font-bold rounded-full w-4 h-4 grid place-items-center">0</span></a>
+      <a href="member-hub.html" class="hidden sm:inline-flex items-center px-3 h-9 rounded-full text-sm font-bold text-[#121A21] hover:bg-slate-100 transition">Sign in</a>
+      <a href="member-hub.html" class="inline-flex items-center px-4 h-9 rounded-full text-sm font-bold text-white bg-[#DC183C] hover:bg-[#B0142F] transition">Join Free</a>
+    </div>
+  </div>
+</header>
+
+<!-- ===================== HERO ===================== -->
+<section class="text-white relative overflow-hidden" style="background:radial-gradient(800px 360px at 90% 0%,rgba(41,163,122,.25),transparent 55%),#0C1F31">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-16 sm:py-20">
+    <div class="max-w-2xl reveal">
+      <div class="flex items-start gap-2">
+        <h1 class="font-jakarta font-extrabold text-4xl sm:text-5xl leading-tight tracking-tight">Apply for business funding</h1>
+        <button onclick="openBrief('funding')" class="dev-badge w-6 h-6 rounded-full bg-[#FF9900] text-[#121A21] items-center justify-center text-[11px] font-bold mt-2" title="Implementation notes">i</button>
+      </div>
+      <p class="mt-4 text-lg text-white/75">Fast, transparent and stress-free access to capital — matched to verified funders who understand SA businesses.</p>
+      <a href="#apply" class="mt-7 inline-flex items-center gap-2 px-6 h-12 rounded-full bg-[#29A37A] hover:bg-[#23906c] font-bold transition">Start your application <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
+    </div>
+  </div>
+</section>
+
+<main class="max-w-7xl mx-auto px-4 sm:px-6">
+  <!-- Products -->
+  <section class="py-16">
+    <h2 class="font-jakarta font-extrabold text-2xl sm:text-3xl mb-8">Funding options</h2>
+    <div class="grid md:grid-cols-3 gap-5">
+      <div class="bg-white rounded-2xl border border-[#E7EBEF] p-6 card-lift">
+        <div class="w-12 h-12 rounded-xl grid place-items-center bg-[#FDECEF] text-[#DC183C] mb-4"><i data-lucide="trending-up" class="w-6 h-6"></i></div>
+        <h3 class="font-jakarta font-bold text-xl">Mezzanine Funding</h3>
+        <p class="text-sm text-slate-600 mt-2">Equity-style growth capital for the moments that matter — expansion, acquisition, big contracts.</p>
+        <ul class="mt-4 space-y-2 text-sm text-slate-600">
+          <li class="flex gap-2"><i data-lucide="check" class="w-4 h-4 text-[#29A37A] mt-0.5"></i> Larger ticket sizes</li>
+          <li class="flex gap-2"><i data-lucide="check" class="w-4 h-4 text-[#29A37A] mt-0.5"></i> Flexible repayment</li>
+          <li class="flex gap-2"><i data-lucide="check" class="w-4 h-4 text-[#29A37A] mt-0.5"></i> Growth-stage focus</li>
+        </ul>
+        <a href="#apply" class="inline-flex items-center gap-1 text-sm font-bold text-[#DC183C] mt-5 hover:gap-2 transition-all">Learn more <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
+      </div>
+      <div class="bg-white rounded-2xl border border-[#E7EBEF] p-6 card-lift">
+        <div class="w-12 h-12 rounded-xl grid place-items-center bg-[#FFF1E0] text-[#AE6B0A] mb-4"><i data-lucide="receipt" class="w-6 h-6"></i></div>
+        <h3 class="font-jakarta font-bold text-xl">Invoice Finance</h3>
+        <p class="text-sm text-slate-600 mt-2">Unlock working capital tied up in outstanding invoices — get paid now, not in 90 days.</p>
+        <ul class="mt-4 space-y-2 text-sm text-slate-600">
+          <li class="flex gap-2"><i data-lucide="check" class="w-4 h-4 text-[#29A37A] mt-0.5"></i> Fast access to cash</li>
+          <li class="flex gap-2"><i data-lucide="check" class="w-4 h-4 text-[#29A37A] mt-0.5"></i> No long-term debt</li>
+          <li class="flex gap-2"><i data-lucide="check" class="w-4 h-4 text-[#29A37A] mt-0.5"></i> Scales with sales</li>
+        </ul>
+        <a href="#apply" class="inline-flex items-center gap-1 text-sm font-bold text-[#AE6B0A] mt-5 hover:gap-2 transition-all">Learn more <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
+      </div>
+      <div class="bg-white rounded-2xl border border-[#E7EBEF] p-6 card-lift">
+        <div class="w-12 h-12 rounded-xl grid place-items-center bg-[#E4F5EE] text-[#29A37A] mb-4"><i data-lucide="truck" class="w-6 h-6"></i></div>
+        <h3 class="font-jakarta font-bold text-xl">Asset Finance</h3>
+        <p class="text-sm text-slate-600 mt-2">Fund equipment and vehicles without tying up your cash — the asset secures the finance.</p>
+        <ul class="mt-4 space-y-2 text-sm text-slate-600">
+          <li class="flex gap-2"><i data-lucide="check" class="w-4 h-4 text-[#29A37A] mt-0.5"></i> Equipment & vehicles</li>
+          <li class="flex gap-2"><i data-lucide="check" class="w-4 h-4 text-[#29A37A] mt-0.5"></i> Preserve cash flow</li>
+          <li class="flex gap-2"><i data-lucide="check" class="w-4 h-4 text-[#29A37A] mt-0.5"></i> Fixed monthly cost</li>
+        </ul>
+        <a href="#apply" class="inline-flex items-center gap-1 text-sm font-bold text-[#29A37A] mt-5 hover:gap-2 transition-all">Learn more <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Process -->
+  <section class="py-8">
+    <div class="bg-white rounded-2xl border border-[#E7EBEF] p-8 sm:p-10">
+      <h2 class="font-jakarta font-extrabold text-2xl sm:text-3xl mb-8 text-center">How it works</h2>
+      <div class="grid sm:grid-cols-3 gap-6">
+        <div class="text-center">
+          <div class="w-14 h-14 rounded-2xl bg-[#FDECEF] text-[#DC183C] grid place-items-center mx-auto font-jakarta font-extrabold text-xl">1</div>
+          <h3 class="font-jakarta font-bold text-lg mt-4">Apply online</h3>
+          <p class="text-sm text-slate-600 mt-1">One short form. No paperwork shuffle.</p>
+        </div>
+        <div class="text-center">
+          <div class="w-14 h-14 rounded-2xl bg-[#FFF1E0] text-[#AE6B0A] grid place-items-center mx-auto font-jakarta font-extrabold text-xl">2</div>
+          <h3 class="font-jakarta font-bold text-lg mt-4">Receive an offer</h3>
+          <p class="text-sm text-slate-600 mt-1">We match you to verified funders.</p>
+        </div>
+        <div class="text-center">
+          <div class="w-14 h-14 rounded-2xl bg-[#E4F5EE] text-[#29A37A] grid place-items-center mx-auto font-jakarta font-extrabold text-xl">3</div>
+          <h3 class="font-jakarta font-bold text-lg mt-4">Get funds in 24 hours</h3>
+          <p class="text-sm text-slate-600 mt-1">Accepted offers can pay out fast.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Calculator + Requirements -->
+  <section id="apply" class="py-16 grid lg:grid-cols-2 gap-8 items-start">
+    <!-- Calculator -->
+    <div class="bg-white rounded-2xl border border-[#E7EBEF] p-7">
+      <div class="flex items-start gap-2 mb-1">
+        <h2 class="font-jakarta font-extrabold text-2xl">Loan estimator</h2>
+        <button onclick="openBrief('calc')" class="dev-badge w-6 h-6 rounded-full bg-[#DC183C] text-white items-center justify-center text-[11px] font-bold" title="Implementation notes">i</button>
+      </div>
+      <p class="text-sm text-slate-500 mb-6">An indicative estimate — your real offer depends on your application.</p>
+
+      <div class="space-y-6">
+        <div>
+          <div class="flex justify-between text-sm font-semibold mb-2"><span>Loan amount</span><span id="amtV" class="font-mono text-[#DC183C]">R250,000</span></div>
+          <input id="amt" type="range" min="10000" max="5000000" step="10000" value="250000" class="w-full" oninput="calc()" />
+          <div class="flex justify-between text-[11px] text-slate-400 mt-1"><span>R10k</span><span>R5m</span></div>
+        </div>
+        <div>
+          <div class="flex justify-between text-sm font-semibold mb-2"><span>Term</span><span id="termV" class="font-mono text-[#DC183C]">24 months</span></div>
+          <input id="term" type="range" min="3" max="60" step="1" value="24" class="w-full" oninput="calc()" />
+          <div class="flex justify-between text-[11px] text-slate-400 mt-1"><span>3 mo</span><span>60 mo</span></div>
+        </div>
+        <div>
+          <div class="flex justify-between text-sm font-semibold mb-2"><span>Interest rate (p.a.)</span><span id="rateV" class="font-mono text-[#DC183C]">18%</span></div>
+          <input id="rate" type="range" min="5" max="50" step="0.5" value="18" class="w-full" oninput="calc()" />
+          <div class="flex justify-between text-[11px] text-slate-400 mt-1"><span>5%</span><span>50%</span></div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-2 gap-3 mt-7">
+        <div class="rounded-xl bg-[#0C1F31] text-white p-4">
+          <p class="text-[11px] uppercase tracking-widest text-white/50">Est. monthly</p>
+          <p id="monthly" class="font-jakarta font-extrabold text-2xl mt-1">R12,481</p>
+        </div>
+        <div class="rounded-xl bg-[#FCFCFC] border border-[#E7EBEF] p-4">
+          <p class="text-[11px] uppercase tracking-widest text-slate-400">Total interest</p>
+          <p id="interest" class="font-jakarta font-extrabold text-2xl mt-1 text-[#121A21]">R49,544</p>
+        </div>
+      </div>
+      <a href="member-hub.html" class="mt-5 w-full inline-flex items-center justify-center gap-2 h-12 rounded-full bg-[#29A37A] hover:bg-[#23906c] text-white font-bold transition">Apply with these figures <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
+    </div>
+
+    <!-- Requirements -->
+    <div>
+      <h2 class="font-jakarta font-extrabold text-2xl mb-5">Who can apply</h2>
+      <div class="grid sm:grid-cols-2 gap-4">
+        <div class="bg-white rounded-2xl border border-[#E7EBEF] p-5"><div class="w-10 h-10 rounded-xl bg-[#FDECEF] text-[#DC183C] grid place-items-center mb-3"><i data-lucide="building-2" class="w-5 h-5"></i></div><p class="font-bold text-sm">Registered business</p><p class="text-sm text-slate-500 mt-1">CIPC-registered and operating.</p></div>
+        <div class="bg-white rounded-2xl border border-[#E7EBEF] p-5"><div class="w-10 h-10 rounded-xl bg-[#E4F5EE] text-[#29A37A] grid place-items-center mb-3"><i data-lucide="wallet" class="w-5 h-5"></i></div><p class="font-bold text-sm">R50k+ monthly turnover</p><p class="text-sm text-slate-500 mt-1">Demonstrated trading revenue.</p></div>
+        <div class="bg-white rounded-2xl border border-[#E7EBEF] p-5"><div class="w-10 h-10 rounded-xl bg-[#FFF1E0] text-[#AE6B0A] grid place-items-center mb-3"><i data-lucide="calendar-check" class="w-5 h-5"></i></div><p class="font-bold text-sm">6+ months trading</p><p class="text-sm text-slate-500 mt-1">A track record to assess.</p></div>
+        <div class="bg-white rounded-2xl border border-[#E7EBEF] p-5"><div class="w-10 h-10 rounded-xl bg-[#FDECEF] text-[#DC183C] grid place-items-center mb-3"><i data-lucide="file-check-2" class="w-5 h-5"></i></div><p class="font-bold text-sm">Bank statements</p><p class="text-sm text-slate-500 mt-1">Latest 6 months on hand.</p></div>
+      </div>
+      <div class="mt-4 rounded-2xl bg-[#FFF1E0] border border-[#FF9900]/30 p-4 flex gap-3">
+        <i data-lucide="shield-check" class="w-5 h-5 text-[#AE6B0A] shrink-0 mt-0.5"></i>
+        <p class="text-sm text-[#7a4d08]">Your application is private and <b>not indexed by search engines</b>. We never share your details without consent.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Related articles -->
+  <section class="py-8">
+    <h2 class="font-jakarta font-extrabold text-2xl sm:text-3xl mb-6">Learn before you borrow</h2>
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+      <a href="public-articles.html" class="bg-white rounded-2xl border border-[#E7EBEF] p-5 card-lift"><span class="text-[11px] font-bold uppercase tracking-widest text-[#DC183C]">Funding</span><h3 class="font-jakarta font-bold mt-1 leading-snug">Understanding funding risk</h3></a>
+      <a href="public-articles.html" class="bg-white rounded-2xl border border-[#E7EBEF] p-5 card-lift"><span class="text-[11px] font-bold uppercase tracking-widest text-[#AE6B0A]">Finance</span><h3 class="font-jakarta font-bold mt-1 leading-snug">How data science is changing lending</h3></a>
+      <a href="public-articles.html" class="bg-white rounded-2xl border border-[#E7EBEF] p-5 card-lift"><span class="text-[11px] font-bold uppercase tracking-widest text-[#29A37A]">Finance</span><h3 class="font-jakarta font-bold mt-1 leading-snug">Business loans with bad credit</h3></a>
+      <a href="public-articles.html" class="bg-white rounded-2xl border border-[#E7EBEF] p-5 card-lift"><span class="text-[11px] font-bold uppercase tracking-widest text-[#DC183C]">Funding</span><h3 class="font-jakarta font-bold mt-1 leading-snug">Inside the Telkom funding platform</h3></a>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="py-16 max-w-3xl mx-auto">
+    <h2 class="font-jakarta font-extrabold text-2xl sm:text-3xl mb-6 text-center">Frequently asked questions</h2>
+    <div id="faq" class="space-y-3"></div>
+  </section>
+</main>
+
+<footer class="bg-[#0C1F31] text-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-12">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+      <div class="col-span-2 md:col-span-1">
+        <a href="public-home.html" class="flex items-center gap-2.5"><div class="w-9 h-9 rounded-xl bg-gradient-to-br from-[#DC183C] to-[#FF9900] grid place-items-center text-white font-jakarta font-extrabold text-sm">S</div><span class="font-jakarta font-extrabold text-[17px]">SME South Africa</span></a>
+        <p class="text-sm text-white/55 mt-4 max-w-xs leading-relaxed">South Africa's largest SME community — connecting founders with funding, mentorship, events, and the tools to scale.</p>
+      </div>
+      <div><p class="text-[11px] font-bold uppercase tracking-widest text-white/40">Platform</p><ul class="mt-4 space-y-2.5 text-sm text-white/70"><li><a href="member-hub.html" class="hover:text-white">Community</a></li><li><a href="#" class="hover:text-white">Events</a></li><li><a href="public-funding.html" class="hover:text-white">Funding</a></li><li><a href="public-solutions.html" class="hover:text-white">Solutions</a></li><li><a href="public-shop.html" class="hover:text-white">Shop</a></li></ul></div>
+      <div><p class="text-[11px] font-bold uppercase tracking-widest text-white/40">Learn</p><ul class="mt-4 space-y-2.5 text-sm text-white/70"><li><a href="public-articles.html" class="hover:text-white">Articles</a></li><li><a href="public-resources.html" class="hover:text-white">Resources</a></li><li><a href="public-resources.html" class="hover:text-white">Guides</a></li><li><a href="#" class="hover:text-white">Podcast</a></li></ul></div>
+      <div><p class="text-[11px] font-bold uppercase tracking-widest text-white/40">Company</p><ul class="mt-4 space-y-2.5 text-sm text-white/70"><li><a href="#" class="hover:text-white">About</a></li><li><a href="#" class="hover:text-white">Contact</a></li><li><a href="#" class="hover:text-white">Careers</a></li><li><a href="#" class="hover:text-white">Partners</a></li></ul></div>
+    </div>
+    <div class="flex flex-col sm:flex-row items-center justify-between gap-4 pt-8 mt-10 border-t border-white/10 text-sm text-white/50">
+      <p>© 2026 SME South Africa. All rights reserved.</p>
+      <div class="flex items-center gap-5"><a href="#" class="hover:text-white">Privacy Policy</a><a href="#" class="hover:text-white">Terms of Service</a><a href="#" class="hover:text-white">Cookie Policy</a></div>
+    </div>
+  </div>
+</footer>
+
+<div id="overlay-root"></div>
+<div id="toast" class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-50"></div>
+
+<script>
+  function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c])); }
+  const fmt = n => 'R' + Math.round(n).toLocaleString('en-ZA');
+  function calc(){
+    const P = +document.getElementById('amt').value;
+    const n = +document.getElementById('term').value;
+    const r = +document.getElementById('rate').value / 100 / 12;
+    document.getElementById('amtV').textContent = fmt(P);
+    document.getElementById('termV').textContent = n + ' months';
+    document.getElementById('rateV').textContent = (+document.getElementById('rate').value) + '%';
+    const m = r === 0 ? P/n : P * r / (1 - Math.pow(1+r, -n));
+    const total = m * n;
+    document.getElementById('monthly').textContent = fmt(m);
+    document.getElementById('interest').textContent = fmt(total - P);
+  }
+
+  const FAQS = [
+    ['How fast can I get funded?', 'Once your application is matched and you accept an offer, approved funding can pay out in as little as 24 hours.'],
+    ['Does applying affect my credit score?', 'Submitting an application for an estimate does not impact your score. A formal credit check only happens once you proceed with a specific funder.'],
+    ['What documents do I need?', 'Typically your CIPC registration, the latest 6 months of bank statements, and basic business details. The form guides you through it.'],
+    ['Is my information kept private?', 'Yes. Funding applications are private and excluded from search engines. Your details are only shared with funders you choose to proceed with.']
+  ];
+  function renderFaq(){
+    document.getElementById('faq').innerHTML = FAQS.map((f,i)=>`
+      <div class="bg-white rounded-2xl border border-[#E7EBEF] overflow-hidden">
+        <button onclick="toggleFaq(${i})" class="w-full flex items-center justify-between gap-4 px-5 py-4 text-left font-jakarta font-bold">
+          <span>${esc(f[0])}</span><i data-lucide="chevron-down" id="fi${i}" class="w-5 h-5 text-slate-400 transition-transform shrink-0"></i>
+        </button>
+        <div id="fb${i}" class="hidden px-5 pb-4 text-sm text-slate-600 leading-relaxed">${esc(f[1])}</div>
+      </div>`).join('');
+    lucide.createIcons();
+  }
+  function toggleFaq(i){
+    const b=document.getElementById('fb'+i), ic=document.getElementById('fi'+i);
+    const open=!b.classList.contains('hidden');
+    b.classList.toggle('hidden'); ic.style.transform = open ? '' : 'rotate(180deg)';
+  }
+
+  function showToast(msg){ const el=document.getElementById('toast'); el.classList.remove('hidden'); el.innerHTML=`<div class="bg-[#0C1F31] text-white rounded-full pl-3 pr-5 py-2.5 shadow-2xl flex items-center gap-2 text-sm font-semibold" style="border-left:4px solid #DC183C"><i data-lucide="check-circle" class="w-4 h-4" style="color:#DC183C"></i><span>${esc(msg)}</span></div>`; lucide.createIcons(); setTimeout(()=>{el.classList.add('hidden');el.innerHTML='';},2400); }
+  const BRIEFS = {
+    funding: {
+      title:'Funding Application', sub:'JetEngine CPT · gated · noindex',
+      purpose:'The platform&rsquo;s revenue + value core: match founders to verified funders. Public marketing on this page is indexable, but the <b>application itself is a gated JetEngine custom post type, set to noindex</b> so private financial data never hits search.',
+      data:'FundingApplication CPT: <code>{ applicant_id, product ∈ {mezzanine,invoice,asset}, amount, term, turnover, docs[], status }</code>. Funders are a separate verified directory.',
+      logic:'Apply → MemberPress auth → JetEngine form (multi-step). Matching engine scores applicant vs funder criteria. Yoast/RankMath: noindex on application + status pages. Email via Kit, staggered — never bulk blast.',
+      components:'Hero · 3 product cards · process steps · estimator · eligibility · FAQ.',
+      api:'POST /v1/funding/applications · GET /v1/funding/matches?application={id}'
+    },
+    calc: {
+      title:'Loan Estimator', sub:'Client-side indicative calculator',
+      purpose:'A no-commitment tool that gives an instant monthly estimate, building trust and qualifying intent before the real application. Pure front-end — no PII, no server round-trip, zero WP Engine CPU cost.',
+      data:'Inputs: <code>amount (R10k–R5m)</code>, <code>term (3–60 mo)</code>, <code>rate (5–50% p.a.)</code>. No data stored unless the member applies.',
+      logic:'Standard amortisation: <code>m = P·r / (1 − (1+r)⁻ⁿ)</code> where r = annual rate / 12. &ldquo;Apply with these figures&rdquo; passes the values into the gated application as defaults.',
+      components:'3 range sliders · live value labels · monthly + total-interest cards · apply CTA.',
+      api:'— (client-side only) · handoff: /apply?amount=&term=&rate='
+    }
+  };
+  function toggleDevMode(){ const on=document.body.classList.toggle('dev-on'); const b=document.getElementById('devToggle'); if(b)b.classList.toggle('on',on); if(on)showToast('Dev Mode on — tap any ⓘ for implementation notes.'); lucide.createIcons(); }
+  function closeOverlay(id){ const el=document.getElementById(id); if(!el)return; el.classList.remove('open'); setTimeout(()=>{ if(el&&el.parentNode) el.remove(); },300); }
+  function openBrief(id){ const b=BRIEFS[id]; if(!b)return;
+    const sec=(icon,label,html)=>`<div class="px-6 py-4 border-t border-slate-100"><p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] flex items-center gap-1.5 mb-2"><i data-lucide="${icon}" class="w-3.5 h-3.5"></i>${label}</p><div class="text-sm text-slate-600 leading-relaxed">${html}</div></div>`;
+    document.getElementById('overlay-root').innerHTML=`<div class="ov" id="ov-brief"><div class="ov-bg" onclick="closeOverlay('ov-brief')"></div><div class="drawer"><div class="sticky top-0 z-10 bg-[#0C1F31] text-white px-6 py-5 flex items-start justify-between"><div class="min-w-0"><p class="text-[10px] font-bold uppercase tracking-widest text-[#FF9900] mb-1">Dev Brief</p><h3 class="font-jakarta font-extrabold text-lg leading-tight">${b.title}</h3><p class="text-xs text-white/60 mt-1">${b.sub}</p></div><button onclick="closeOverlay('ov-brief')" aria-label="Close" class="text-white/60 hover:text-white shrink-0 ml-3"><i data-lucide="x" class="w-5 h-5"></i></button></div>${sec('target','Purpose',b.purpose)}${sec('database','Data model',b.data)}${sec('git-branch','Logic',b.logic)}${sec('boxes','Components',b.components)}${sec('plug','API',`<code class="block bg-slate-900 text-emerald-300 text-xs font-mono px-3 py-2 rounded-lg overflow-x-auto">${b.api}</code>`)}<div class="px-6 py-4 border-t border-slate-100"><p class="text-[11px] text-slate-400 flex items-center gap-1.5"><i data-lucide="info" class="w-3.5 h-3.5"></i> Spec lives beside the feature — toggle Dev Mode off for the clean view.</p></div></div></div>`;
+    requestAnimationFrame(()=>{ const o=document.getElementById('ov-brief'); if(o)o.classList.add('open'); }); lucide.createIcons();
+  }
+
+  calc(); renderFaq(); lucide.createIcons();
+</script>
+</body>
+</html>

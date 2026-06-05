@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Forums | SME HUB</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  <script>tailwind.config={theme:{extend:{fontFamily:{jakarta:['Plus Jakarta Sans','sans-serif'],inter:['Inter','system-ui','sans-serif'],mono:['ui-monospace','monospace']},colors:{primary:'#DC183C',accent:'#FF9900',navy:'#0C1F31',success:'#29A37A',ink:'#121A21'}}}};</script>
+  <style>
+    html,body{font-family:'Inter',system-ui,sans-serif;} .font-jakarta{font-family:'Plus Jakarta Sans',sans-serif;letter-spacing:.005em;}
+    .no-scrollbar::-webkit-scrollbar{display:none;} .no-scrollbar{-ms-overflow-style:none;scrollbar-width:none;}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}} .reveal{animation:fadeUp .45s cubic-bezier(.2,.7,.2,1) backwards;}
+    @keyframes toastIn{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}} @keyframes toastOut{to{opacity:0;transform:translateY(20px);}}
+    .toast-in{animation:toastIn .25s ease forwards;} .toast-out{animation:toastOut .25s ease forwards;}
+    .card-lift{transition:box-shadow .2s,transform .2s;} .card-lift:hover{box-shadow:0 8px 20px -8px rgba(10,44,61,.12);transform:translateY(-1px);}
+    .cnav.active{color:#DC183C;border-color:#DC183C;} .seg.active{background:#0C1F31;color:#fff;}
+    #overlay-root:empty{display:none;}
+    .ov{position:fixed;inset:0;z-index:60;} .ov-bg{position:absolute;inset:0;background:rgba(12,31,49,.45);backdrop-filter:blur(2px);opacity:0;transition:opacity .3s;} .ov.open .ov-bg{opacity:1;}
+    .drawer{position:absolute;right:0;top:0;height:100%;width:100%;max-width:440px;background:#fff;box-shadow:-12px 0 40px rgba(12,31,49,.25);overflow-y:auto;transform:translateX(100%);transition:transform .3s cubic-bezier(.2,.7,.2,1);} .ov.open .drawer{transform:translateX(0);}
+    .dev-badge{display:none;} body.dev-on .dev-badge{display:inline-flex;} #devToggle.on{background:#DC183C;color:#fff;border-color:#DC183C;}
+  </style>
+</head>
+<body class="bg-[#FCFCFC] text-[#121A21] font-inter">
+
+<header class="bg-white border-b border-slate-100 sticky top-0 z-40">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center gap-3">
+    <a href="member-hub.html" class="flex items-center gap-2 shrink-0" aria-label="SME South Africa">
+      <img src="https://smesouthafrica.co.za/wp-content/uploads/2025/10/Asset-1-1.webp" alt="SME South Africa" class="h-8 w-auto" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+      <span style="display:none" class="font-jakarta font-extrabold text-[#121A21] text-lg items-center">SME<span class="text-[#DC183C]">HUB</span></span>
+    </a>
+    <div class="hidden md:block flex-1 max-w-md ml-2"><div class="relative"><i data-lucide="search" class="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400"></i><input type="text" placeholder="Search members, asks, wins…" class="w-full bg-slate-100 rounded-full pl-10 pr-4 py-2.5 text-sm outline-none focus:bg-white focus:ring-2 focus:ring-[#DC183C]/30 transition" /></div></div>
+    <div class="flex items-center gap-1 sm:gap-1.5 ml-auto">
+      <button id="devToggle" onclick="toggleDevMode()" class="hidden sm:flex items-center gap-1.5 px-3 h-9 rounded-full border border-slate-200 text-slate-500 hover:border-[#DC183C] hover:text-[#DC183C] transition text-[11px] font-bold uppercase tracking-wider mr-1"><i data-lucide="code-2" class="w-3.5 h-3.5"></i><span>Dev</span></button>
+      <a href="member-hub.html" title="Community feed" class="w-10 h-10 grid place-items-center rounded-full hover:bg-slate-100 text-slate-600"><i data-lucide="home" class="w-5 h-5"></i></a>
+      <a href="member-account.html" title="Messages" class="w-10 h-10 grid place-items-center rounded-full hover:bg-slate-100 text-slate-600"><i data-lucide="mail" class="w-5 h-5"></i></a>
+      <a href="member-account.html" title="Your account" class="flex items-center gap-2 pl-2 ml-1 border-l border-slate-200 py-1 hover:opacity-80"><div class="w-9 h-9 rounded-full bg-gradient-to-br from-[#DC183C] to-[#FF9900] grid place-items-center font-jakarta font-bold text-white text-xs">TJ</div><i data-lucide="chevron-down" class="w-4 h-4 text-slate-400"></i></a>
+    </div>
+  </div>
+  <div class="border-t border-slate-100">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 flex gap-1 overflow-x-auto no-scrollbar">
+      <a href="member-hub.html" class="cnav shrink-0 px-4 py-3 text-sm font-bold font-jakarta text-slate-500 hover:text-[#121A21] border-b-2 border-transparent flex items-center gap-2"><i data-lucide="rss" class="w-4 h-4"></i> Feed</a>
+      <a href="members.html" class="cnav shrink-0 px-4 py-3 text-sm font-bold font-jakarta text-slate-500 hover:text-[#121A21] border-b-2 border-transparent flex items-center gap-2"><i data-lucide="users" class="w-4 h-4"></i> Members</a>
+      <a href="groups.html" class="cnav shrink-0 px-4 py-3 text-sm font-bold font-jakarta text-slate-500 hover:text-[#121A21] border-b-2 border-transparent flex items-center gap-2"><i data-lucide="layout-grid" class="w-4 h-4"></i> Groups</a>
+      <a href="forums.html" class="cnav active shrink-0 px-4 py-3 text-sm font-bold font-jakarta border-b-2 flex items-center gap-2"><i data-lucide="messages-square" class="w-4 h-4"></i> Forums</a>
+      <a href="member-hub.html" class="cnav shrink-0 px-4 py-3 text-sm font-bold font-jakarta text-slate-500 hover:text-[#121A21] border-b-2 border-transparent flex items-center gap-2"><i data-lucide="calendar" class="w-4 h-4"></i> Events</a>
+    </div>
+  </div>
+</header>
+
+<main class="max-w-6xl mx-auto px-4 sm:px-6 py-6">
+  <div class="flex items-end justify-between gap-3 mb-5 flex-wrap">
+    <div>
+      <p class="text-[11px] font-bold uppercase tracking-widest text-[#DC183C]">Community</p>
+      <h1 class="font-jakarta font-extrabold text-2xl text-[#121A21] tracking-tight flex items-center gap-2">Forums
+        <button onclick="openBrief('forumsdir')" class="dev-badge w-4 h-4 rounded-full bg-[#DC183C] text-white items-center justify-center text-[9px] font-bold leading-none animate-pulse" title="Implementation notes">i</button>
+      </h1>
+      <p class="text-sm text-slate-500 mt-0.5">Long-form discussions across the community.</p>
+    </div>
+    <button onclick="showToast('New discussion composer (mockup).',null)" class="bg-[#DC183C] hover:bg-[#B0142F] text-white rounded-full px-5 py-2.5 font-jakarta font-bold text-sm transition flex items-center gap-2"><i data-lucide="plus" class="w-4 h-4"></i> New discussion</button>
+  </div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+    <!-- Forum categories -->
+    <aside class="lg:col-span-4">
+      <div class="lg:sticky lg:top-28">
+        <h2 class="font-jakarta font-bold uppercase text-sm text-[#121A21] tracking-wide mb-3">Forums</h2>
+        <div id="forum-list" class="bg-white rounded-2xl border border-slate-100 overflow-hidden"></div>
+      </div>
+    </aside>
+    <!-- Discussions -->
+    <section class="lg:col-span-8 min-w-0">
+      <div class="flex flex-col sm:flex-row sm:items-center gap-3 mb-4">
+        <div id="segs" class="flex gap-2 overflow-x-auto no-scrollbar"></div>
+        <div class="sm:ml-auto relative"><i data-lucide="search" class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400"></i><input id="d-search" oninput="render()" placeholder="Search discussions…" class="bg-white border border-slate-200 rounded-full pl-9 pr-3 py-2 text-sm outline-none focus:border-[#DC183C] w-full sm:w-56"></div>
+      </div>
+      <div id="discussions" class="space-y-3"></div>
+    </section>
+  </div>
+</main>
+
+<div id="overlay-root"></div>
+<div id="toast" class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-50"></div>
+
+<script>
+function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function monogram(i,s=36){const fs=Math.max(10,Math.floor(s*0.38));return `<div class="rounded-full bg-gradient-to-br from-[#DC183C] to-[#FF9900] grid place-items-center font-jakarta font-bold text-white shrink-0" style="width:${s}px;height:${s}px;font-size:${fs}px">${esc(i)}</div>`;}
+
+const FORUMS = [
+  { name:'General Discussion', desc:'Anything and everything SME', topics:128, posts:642, last:'25m', color:'#0C1F31' },
+  { name:'Fintech & Payments', desc:'Building financial products in SA', topics:54, posts:311, last:'1h', color:'#DC183C' },
+  { name:'Funding & Investment', desc:'Raises, grants and investor intros', topics:73, posts:489, last:'3h', color:'#29A37A' },
+  { name:'Marketing & Growth', desc:'Acquisition, brand and retention', topics:61, posts:402, last:'5h', color:'#FF9900' },
+  { name:'Operations & Compliance', desc:'POPIA, CIPC, SARS, hiring', topics:47, posts:268, last:'1d', color:'#AE6B0A' }
+];
+const DISCUSSIONS = [
+  { id:1, title:'Business advise', forum:'General Discussion', author:'Sipho N.', initials:'SN', replies:5, members:4, last:'2 days, 7 hours ago', pinned:true, locked:false, mine:false, replied:true, favorite:false, excerpt:'I need to start an investment business helping people invest in SATRIX/SA40 and SA bonds…' },
+  { id:2, title:'What is your biggest business problem right now? Let\'s solve it together!', forum:'General Discussion', author:'Amahle H.', initials:'AH', replies:7, members:4, last:'2 weeks ago', pinned:false, locked:false, mine:false, replied:true, favorite:true, excerpt:'Drop your single biggest blocker below and the community will weigh in.' },
+  { id:3, title:'Best POPIA-compliant payroll tools for under 15 staff?', forum:'Operations & Compliance', author:'Tshepho J.', initials:'TJ', replies:11, members:8, last:'5 days ago', pinned:false, locked:false, mine:true, replied:false, favorite:false, excerpt:'Looking for something affordable and POPIA-friendly. Gauteng-based recommendations welcome.' },
+  { id:4, title:'SARB sandbox — who has been through it?', forum:'Fintech & Payments', author:'Tshepho J.', initials:'TJ', replies:9, members:6, last:'1 week ago', pinned:false, locked:false, mine:true, replied:true, favorite:true, excerpt:'Sharing my notes from the application. Section 4 caught us out…' },
+  { id:5, title:'Group rules & introductions — start here', forum:'General Discussion', author:'Admin', initials:'AD', replies:48, members:212, last:'1 week ago', pinned:true, locked:true, mine:false, replied:false, favorite:false, excerpt:'Welcome! Please introduce yourself and read the community guidelines.' },
+  { id:6, title:'How do you handle late-paying clients?', forum:'Operations & Compliance', author:'Karabo K.', initials:'KK', replies:23, members:15, last:'3 days ago', pinned:false, locked:false, mine:false, replied:true, favorite:false, excerpt:'We moved to 50% upfront and it changed everything. What works for you?' }
+];
+
+const SEGS = [['all','All discussions'],['mine','My discussions'],['replies','My replies'],['favorites','Favorites']];
+const state = { seg:'all', forum:'' };
+
+function renderForums(){
+  document.getElementById('forum-list').innerHTML = FORUMS.map(f=>`
+    <button onclick="filterForum('${esc(f.name)}')" class="w-full text-left px-4 py-3.5 flex items-center gap-3 hover:bg-slate-50 transition border-b border-slate-100 last:border-0 ${state.forum===f.name?'bg-[#FDECEF]/50':''}">
+      <div class="w-9 h-9 rounded-lg grid place-items-center shrink-0" style="background:${f.color}"><i data-lucide="messages-square" class="w-4 h-4 text-white"></i></div>
+      <div class="min-w-0 flex-1"><p class="font-jakarta font-bold text-sm text-[#121A21] truncate">${esc(f.name)}</p><p class="text-[11px] text-slate-400">${f.topics} topics · ${f.posts} posts · active ${esc(f.last)}</p></div>
+      ${state.forum===f.name?'<i data-lucide="x" class="w-4 h-4 text-slate-400"></i>':'<i data-lucide="chevron-right" class="w-4 h-4 text-slate-300"></i>'}
+    </button>`).join('');
+  lucide.createIcons();
+}
+function filterForum(name){ state.forum = state.forum===name ? '' : name; renderForums(); render(); }
+
+function renderSegs(){ document.getElementById('segs').innerHTML = SEGS.map(([id,l])=>`<button onclick="setSeg('${id}')" class="seg ${state.seg===id?'active':''} shrink-0 px-3.5 py-1.5 rounded-full text-xs font-bold border ${state.seg===id?'border-[#0C1F31]':'border-slate-200 text-slate-600 hover:bg-slate-50'}">${l}</button>`).join(''); }
+function setSeg(s){ state.seg=s; renderSegs(); render(); }
+
+function row(d){
+  return `<a href="single-group.html" class="block bg-white border border-slate-100 rounded-2xl p-4 card-lift">
+    <div class="flex items-start gap-3">
+      ${monogram(d.initials,40)}
+      <div class="min-w-0 flex-1">
+        <div class="flex items-center gap-2">${d.pinned?'<i data-lucide="pin" class="w-3.5 h-3.5 text-[#AE6B0A] shrink-0"></i>':''}${d.locked?'<i data-lucide="lock" class="w-3.5 h-3.5 text-slate-400 shrink-0"></i>':''}${d.favorite?'<i data-lucide="star" class="w-3.5 h-3.5 text-[#FF9900] shrink-0 fill-current"></i>':''}<p class="font-jakarta font-bold text-[#121A21] truncate">${esc(d.title)}</p></div>
+        <p class="text-sm text-slate-500 mt-0.5 leading-snug line-clamp-1">${esc(d.excerpt)}</p>
+        <div class="flex items-center gap-3 mt-2 text-[11px] text-slate-400 flex-wrap">
+          <span class="inline-flex items-center gap-1"><i data-lucide="messages-square" class="w-3.5 h-3.5"></i> ${esc(d.forum)}</span>
+          <span>by ${esc(d.author)}</span>
+          <span class="inline-flex items-center gap-1"><i data-lucide="message-circle" class="w-3.5 h-3.5"></i> ${d.replies}</span>
+          <span class="inline-flex items-center gap-1"><i data-lucide="clock" class="w-3.5 h-3.5"></i> ${esc(d.last)}</span>
+        </div>
+      </div>
+    </div>
+  </a>`;
+}
+
+function render(){
+  const q = document.getElementById('d-search').value.toLowerCase();
+  let list = DISCUSSIONS.slice();
+  if(state.seg==='mine') list = list.filter(d=>d.mine);
+  else if(state.seg==='replies') list = list.filter(d=>d.replied);
+  else if(state.seg==='favorites') list = list.filter(d=>d.favorite);
+  if(state.forum) list = list.filter(d=>d.forum===state.forum);
+  list = list.filter(d => !q || (d.title+' '+d.excerpt+' '+d.author).toLowerCase().includes(q));
+  // pinned first
+  list.sort((a,b)=> (b.pinned?1:0)-(a.pinned?1:0));
+  const host = document.getElementById('discussions');
+  const header = state.forum ? `<div class="flex items-center gap-2 mb-1 text-sm"><span class="text-slate-500">Filtered to</span><span class="font-bold text-[#121A21]">${esc(state.forum)}</span><button onclick="filterForum('${esc(state.forum)}')" class="text-[11px] font-bold text-[#DC183C] uppercase hover:underline">clear</button></div>` : '';
+  host.innerHTML = header + (list.length ? list.map(row).join('')
+    : `<div class="bg-white rounded-2xl border border-slate-100 py-16 text-center text-slate-400"><i data-lucide="message-square-dashed" class="w-8 h-8 mx-auto mb-2"></i><p class="font-semibold">No discussions here yet.</p><button onclick="showToast('New discussion composer (mockup).',null)" class="mt-3 bg-[#DC183C] hover:bg-[#B0142F] text-white rounded-full px-4 py-2 text-sm font-bold transition">Start one</button></div>`);
+  lucide.createIcons();
+}
+
+const BRIEFS = { forumsdir:{ title:'Forums Directory', sub:'Forum archive & discussions', purpose:'The long-form home (bbPress). Browse forum categories, filter discussions by scope (All / Mine / My replies / Favorites), search, and start topics. Forums hold durable, searchable knowledge that the fast-moving feed can&rsquo;t — and they feed the resource library as member-authored content.', data:'<code>forums[] { id, name, topic_count, post_count, last_active }</code> · <code>topics[] { id, forum_id, title, author, reply_count, pinned, locked, last_active }</code> · per-user flags (mine / replied / favorited).', logic:'Pinned topics float to the top; locked topics disable replies. Scope filters query the viewer&rsquo;s relationship. Topic rows deep-link to the single-topic thread (shown inside the group page).', components:'Forum-category list · scope tabs · search · discussion rows · new-discussion.', api:'GET /v1/forums · GET /v1/topics?forum=&scope=&q=' } };
+function toggleDevMode(){const on=document.body.classList.toggle('dev-on');const b=document.getElementById('devToggle');if(b)b.classList.toggle('on',on);if(on)showToast('Dev Mode on — tap any ⓘ for implementation notes.',null);lucide.createIcons();}
+function closeOverlay(id){const el=document.getElementById(id);if(!el)return;el.classList.remove('open');setTimeout(()=>{if(el&&el.parentNode)el.remove();},300);}
+function openBrief(id){const b=BRIEFS[id];if(!b)return;const sec=(icon,label,html)=>`<div class="px-6 py-4 border-t border-slate-100"><p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] flex items-center gap-1.5 mb-2"><i data-lucide="${icon}" class="w-3.5 h-3.5"></i>${label}</p><div class="text-sm text-slate-600 leading-relaxed">${html}</div></div>`;document.getElementById('overlay-root').innerHTML=`<div class="ov" id="ov-brief"><div class="ov-bg" onclick="closeOverlay('ov-brief')"></div><div class="drawer"><div class="sticky top-0 z-10 bg-[#0C1F31] text-white px-6 py-5 flex items-start justify-between"><div class="min-w-0"><p class="text-[10px] font-bold uppercase tracking-widest text-[#FF9900] mb-1">Dev Brief</p><h3 class="font-jakarta font-extrabold text-lg leading-tight">${b.title}</h3><p class="text-xs text-white/60 mt-1">${b.sub}</p></div><button onclick="closeOverlay('ov-brief')" class="text-white/60 hover:text-white shrink-0 ml-3"><i data-lucide="x" class="w-5 h-5"></i></button></div>${sec('target','Purpose',b.purpose)}${sec('database','Data model',b.data)}${sec('git-branch','Logic',b.logic)}${sec('boxes','Components',b.components)}${sec('plug','API',`<code class="block bg-slate-900 text-emerald-300 text-xs font-mono px-3 py-2 rounded-lg overflow-x-auto">${b.api}</code>`)}</div></div>`;requestAnimationFrame(()=>{const o=document.getElementById('ov-brief');if(o)o.classList.add('open');});lucide.createIcons();}
+function showToast(msg,kind){const el=document.getElementById('toast');const color=kind==='ask'?'#DC183C':kind==='win'?'#29A37A':kind==='share'?'#FF9900':'#0C1F31';el.classList.remove('hidden');el.innerHTML=`<div class="toast-in bg-[#0C1F31] text-white rounded-full pl-3 pr-5 py-2.5 shadow-2xl flex items-center gap-2 text-sm font-semibold" style="border-left:4px solid ${color}"><i data-lucide="check-circle" class="w-4 h-4" style="color:${color}"></i><span>${esc(msg)}</span></div>`;lucide.createIcons();setTimeout(()=>{const i=el.firstElementChild;if(i){i.classList.remove('toast-in');i.classList.add('toast-out');}setTimeout(()=>{el.classList.add('hidden');el.innerHTML='';},250);},2400);}
+
+document.addEventListener('keydown',e=>{ if(e.key==='Escape') document.querySelectorAll('.ov.open').forEach(o=>closeOverlay(o.id)); });
+renderForums(); renderSegs(); render(); lucide.createIcons();
+</script>
+</body>
+</html>
