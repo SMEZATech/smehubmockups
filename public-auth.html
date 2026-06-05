@@ -18,11 +18,8 @@
   <style>
     html, body { font-family: 'Inter', system-ui, sans-serif; }
     .font-jakarta { font-family: 'Plus Jakarta Sans', sans-serif; letter-spacing: 0.005em; }
-    .hero-bg { background: linear-gradient(150deg,#0C1F31 0%,#0C1F31 45%,#2b1626 78%,#5e1a2c 110%); }
-    .dot-pattern { background-image: radial-gradient(rgba(255,255,255,.07) 1px, transparent 1.5px); background-size: 22px 22px; }
-    @keyframes fadeUp { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
-    .reveal { animation: fadeUp .5s cubic-bezier(.2,.7,.2,1) backwards; }
-    .seg.active { background:#fff; color:#121A21; box-shadow:0 1px 3px rgba(12,31,49,.12); }
+    .field { width:100%; background:#fff; border:1px solid #E7EBEF; border-radius:.75rem; height:3rem; padding:0 1rem; font-size:.9rem; outline:none; transition:border-color .15s, box-shadow .15s; }
+    .field:focus { border-color:#DC183C; box-shadow:0 0 0 3px rgba(220,24,60,.12); }
     .dev-badge { display:none; } body.dev-on .dev-badge { display:inline-flex; }
     #devToggle.on { background:#DC183C; color:#fff; border-color:#DC183C; }
     .ov { position:fixed; inset:0; z-index:60; }
@@ -32,104 +29,106 @@
     .ov.open .drawer { transform:translateX(0); }
   </style>
 </head>
-<body class="bg-[#FCFCFC] text-[#121A21] antialiased">
+<body class="bg-[#F1F4F7] text-[#121A21] antialiased">
 
-<div class="min-h-screen grid lg:grid-cols-2">
-  <!-- ===== Brand panel (left) ===== -->
-  <div class="hero-bg text-white relative overflow-hidden hidden lg:flex flex-col justify-between p-10 xl:p-14">
-    <div class="absolute inset-0 dot-pattern opacity-70 pointer-events-none"></div>
-    <div class="absolute top-0 right-0 w-2/3 h-full opacity-50 pointer-events-none" style="background:radial-gradient(55% 55% at 80% 30%, rgba(220,24,60,.28), transparent 70%)"></div>
-    <a href="public-home.html" class="relative flex items-center gap-2.5">
-      <span class="w-10 h-10 rounded-lg bg-white grid place-items-center"><img src="assets/logo-icon.png" alt="SME South Africa" class="w-8 h-8" /></span>
-      <span class="font-jakarta font-extrabold text-lg">SME South Africa</span>
-    </a>
-    <div class="relative">
-      <h2 class="font-jakarta font-extrabold text-3xl xl:text-4xl leading-tight">Join South Africa's largest <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#DC183C] to-[#FF9900]">SME community</span>.</h2>
-      <p class="mt-4 text-white/70 max-w-md">Funding, mentorship, events and the tools to scale — alongside 100,000+ founders.</p>
-      <ul class="mt-8 space-y-3 text-sm text-white/80">
-        <li class="flex items-center gap-3"><i data-lucide="check-circle" class="w-5 h-5 text-[#29A37A]"></i> One application, matched to verified funders</li>
-        <li class="flex items-center gap-3"><i data-lucide="check-circle" class="w-5 h-5 text-[#29A37A]"></i> A community that answers your asks</li>
-        <li class="flex items-center gap-3"><i data-lucide="check-circle" class="w-5 h-5 text-[#29A37A]"></i> Free forever — no credit card required</li>
-      </ul>
-    </div>
-    <div class="relative flex items-center gap-3 text-sm text-white/70">
-      <div class="flex -space-x-2">
-        <img src="assets/founder-1.jpg" class="w-8 h-8 rounded-full border-2 border-[#0C1F31] object-cover" alt="" />
-        <img src="assets/founder-2.jpg" class="w-8 h-8 rounded-full border-2 border-[#0C1F31] object-cover" alt="" />
-        <img src="assets/founder-3.jpg" class="w-8 h-8 rounded-full border-2 border-[#0C1F31] object-cover" alt="" />
+<div class="min-h-screen max-w-7xl mx-auto px-4 sm:px-6 py-8 lg:py-0 grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+  <!-- ===== Left: value props ===== -->
+  <div class="order-2 lg:order-1">
+    <span class="inline-flex items-center gap-2 px-3.5 h-8 rounded-full bg-[#0C1F31] text-white text-[11px] font-bold uppercase tracking-widest">Premium Network</span>
+    <h1 class="font-jakarta font-extrabold text-4xl sm:text-5xl leading-[1.05] tracking-tight mt-5">Join South Africa's<br /><span class="text-[#DC183C]">Leading SME Community</span></h1>
+    <p class="text-[#475569] mt-4 max-w-md">Access funding, resources, networking, and expert insights tailored for ambitious small business owners across the continent.</p>
+    <div class="mt-8 space-y-5 max-w-md">
+      <div class="flex items-start gap-4">
+        <div class="w-11 h-11 rounded-xl bg-[#FDECEF] text-[#DC183C] grid place-items-center shrink-0"><i data-lucide="banknote" class="w-5 h-5"></i></div>
+        <div><p class="font-jakarta font-bold text-[#0C1F31]">Unlock Funding Opportunities</p><p class="text-sm text-[#6A7581] mt-0.5">Direct links to local and international grants, loans, and investment pools.</p></div>
       </div>
-      <span><span class="text-[#FF9900]">★★★★★</span> Loved by 100K+ founders</span>
+      <div class="flex items-start gap-4">
+        <div class="w-11 h-11 rounded-xl bg-[#FDECEF] text-[#DC183C] grid place-items-center shrink-0"><i data-lucide="book-open" class="w-5 h-5"></i></div>
+        <div><p class="font-jakarta font-bold text-[#0C1F31]">Download Essential Resources</p><p class="text-sm text-[#6A7581] mt-0.5">Access templates, reports, and toolkits for finance, marketing, and legal compliance.</p></div>
+      </div>
+      <div class="flex items-start gap-4">
+        <div class="w-11 h-11 rounded-xl bg-[#FDECEF] text-[#DC183C] grid place-items-center shrink-0"><i data-lucide="users" class="w-5 h-5"></i></div>
+        <div><p class="font-jakarta font-bold text-[#0C1F31]">Connect &amp; Network</p><p class="text-sm text-[#6A7581] mt-0.5">Find partners, mentors, and peers in your sector through focused groups and discussions.</p></div>
+      </div>
     </div>
   </div>
 
-  <!-- ===== Form panel (right) ===== -->
-  <div class="flex flex-col">
-    <!-- top bar -->
-    <div class="flex items-center justify-between px-5 sm:px-8 h-16 border-b border-[#E7EBEF]">
-      <a href="public-home.html" class="flex items-center gap-2 text-sm font-semibold text-slate-500 hover:text-[#121A21]"><i data-lucide="arrow-left" class="w-4 h-4"></i> Back to site</a>
-      <button id="devToggle" onclick="toggleDevMode()" class="flex items-center gap-1.5 px-3 h-9 rounded-full border border-slate-200 text-slate-500 hover:border-[#DC183C] hover:text-[#DC183C] transition text-[11px] font-bold uppercase tracking-wider" title="Toggle implementation notes"><i data-lucide="code-2" class="w-3.5 h-3.5"></i><span>Dev</span></button>
-    </div>
-
-    <div class="flex-1 grid place-items-center px-5 sm:px-8 py-10">
-      <div class="w-full max-w-md reveal">
-        <!-- mobile logo -->
-        <a href="public-home.html" class="lg:hidden flex items-center gap-2.5 mb-8">
-          <img src="assets/logo-icon.png" alt="SME South Africa" class="w-9 h-9" />
-          <span class="font-jakarta font-extrabold text-[17px]">SME <span class="text-[#DC183C]">South Africa</span></span>
-        </a>
-
-        <div class="flex items-start gap-2">
-          <h1 id="authTitle" class="font-jakarta font-extrabold text-3xl">Welcome back</h1>
-          <button onclick="openBrief('auth')" class="dev-badge w-6 h-6 rounded-full bg-[#DC183C] text-white items-center justify-center text-[11px] font-bold mt-1.5" title="Implementation notes">i</button>
-        </div>
-        <p id="authSub" class="text-[#6A7581] mt-1">Sign in to your SME South Africa account.</p>
-
-        <!-- segmented toggle -->
-        <div class="mt-6 grid grid-cols-2 gap-1 bg-slate-100 rounded-full p-1">
-          <button id="seg-in"  onclick="setMode('in')"  class="seg active rounded-full h-10 text-sm font-bold transition">Sign in</button>
-          <button id="seg-up"  onclick="setMode('up')"  class="seg rounded-full h-10 text-sm font-bold text-slate-500 transition">Join free</button>
-        </div>
-
-        <form onsubmit="authSubmit(event)" class="mt-6 space-y-4">
-          <!-- name (signup only) -->
-          <div id="f-name" class="hidden">
-            <label class="block text-sm font-semibold mb-1.5">Full name</label>
-            <div class="relative"><i data-lucide="user" class="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400"></i>
-              <input type="text" placeholder="Thabo Molefe" class="w-full bg-white border border-[#E7EBEF] rounded-xl pl-10 pr-4 h-12 text-sm outline-none focus:border-[#DC183C] focus:ring-2 focus:ring-[#DC183C]/15 transition" />
-            </div>
-          </div>
-          <div>
-            <label class="block text-sm font-semibold mb-1.5">Email address</label>
-            <div class="relative"><i data-lucide="mail" class="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400"></i>
-              <input type="email" required placeholder="you@business.co.za" class="w-full bg-white border border-[#E7EBEF] rounded-xl pl-10 pr-4 h-12 text-sm outline-none focus:border-[#DC183C] focus:ring-2 focus:ring-[#DC183C]/15 transition" />
-            </div>
-          </div>
-          <div>
-            <div class="flex items-center justify-between mb-1.5">
-              <label class="block text-sm font-semibold">Password</label>
-              <a id="forgot" href="#" class="text-xs font-bold text-[#DC183C] hover:underline">Forgot password?</a>
-            </div>
-            <div class="relative"><i data-lucide="lock" class="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400"></i>
-              <input id="pw" type="password" required placeholder="••••••••" class="w-full bg-white border border-[#E7EBEF] rounded-xl pl-10 pr-11 h-12 text-sm outline-none focus:border-[#DC183C] focus:ring-2 focus:ring-[#DC183C]/15 transition" />
-              <button type="button" onclick="togglePw()" class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"><i id="pwEye" data-lucide="eye" class="w-4 h-4"></i></button>
-            </div>
-          </div>
-          <!-- consent (signup only) -->
-          <label id="f-consent" class="hidden items-start gap-2.5 text-sm text-[#6A7581]">
-            <input type="checkbox" class="mt-0.5 w-4 h-4 rounded border-slate-300 text-[#DC183C] focus:ring-[#DC183C]" />
-            <span>I agree to the <a href="public-pages.html#terms" class="font-semibold text-[#DC183C] hover:underline">Terms</a> and consent to my data being processed per the <a href="public-pages.html#popia" class="font-semibold text-[#DC183C] hover:underline">POPIA notice</a>.</span>
-          </label>
-
-          <button id="authBtn" class="w-full h-12 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold transition flex items-center justify-center gap-2">Sign in <i data-lucide="arrow-right" class="w-4 h-4"></i></button>
-        </form>
-
-        <div class="flex items-center gap-3 my-6"><span class="h-px flex-1 bg-[#E7EBEF]"></span><span class="text-xs text-slate-400 font-semibold">OR</span><span class="h-px flex-1 bg-[#E7EBEF]"></span></div>
-        <button onclick="showToast('SSO handled by MemberPress / identity provider.')" class="w-full h-12 rounded-full border border-[#E7EBEF] bg-white hover:bg-slate-50 font-bold text-sm transition flex items-center justify-center gap-2">
-          <i data-lucide="globe" class="w-4 h-4 text-[#DC183C]"></i> Continue with Google
-        </button>
-
-        <p id="switchLine" class="text-center text-sm text-[#6A7581] mt-6">New to SME South Africa? <button onclick="setMode('up')" class="font-bold text-[#DC183C] hover:underline">Join free</button></p>
+  <!-- ===== Right: auth card ===== -->
+  <div class="order-1 lg:order-2 w-full max-w-md justify-self-center lg:justify-self-end">
+    <div class="bg-white rounded-3xl shadow-xl border border-[#E7EBEF] p-7 sm:p-9">
+      <div class="flex items-center justify-between mb-1">
+        <a href="public-home.html" class="flex items-center gap-2"><img src="assets/logo-icon.png" alt="SME South Africa" class="w-8 h-8" /></a>
+        <button id="devToggle" onclick="toggleDevMode()" class="flex items-center gap-1.5 px-2.5 h-8 rounded-full border border-slate-200 text-slate-400 hover:border-[#DC183C] hover:text-[#DC183C] transition text-[10px] font-bold uppercase tracking-wider" title="Dev"><i data-lucide="code-2" class="w-3.5 h-3.5"></i></button>
       </div>
+
+      <h2 id="authTitle" class="font-jakarta font-extrabold text-2xl sm:text-3xl text-center text-[#0C1F31] mt-3">Welcome Back to Your SME Hub
+        <button onclick="openBrief('auth')" class="dev-badge align-middle ml-1 w-5 h-5 rounded-full bg-[#DC183C] text-white items-center justify-center text-[10px] font-bold" title="Implementation notes">i</button>
+      </h2>
+      <p id="authSub" class="text-center text-sm text-[#6A7581] mt-2">Access your resources, funding opportunities, and community updates.</p>
+
+      <!-- SSO -->
+      <div class="flex items-center justify-center gap-3 mt-6">
+        <button onclick="showToast('SSO via identity provider (Google).')" class="w-14 h-12 rounded-xl border border-[#E7EBEF] hover:bg-slate-50 grid place-items-center transition" aria-label="Continue with Google"><i data-lucide="chrome" class="w-5 h-5 text-[#DC183C]"></i></button>
+        <button onclick="showToast('SSO via identity provider (LinkedIn).')" class="w-14 h-12 rounded-xl bg-[#0A66C2] hover:opacity-90 grid place-items-center transition" aria-label="Continue with LinkedIn"><i data-lucide="linkedin" class="w-5 h-5 text-white"></i></button>
+      </div>
+      <div class="flex items-center gap-3 my-5"><span class="h-px flex-1 bg-[#E7EBEF]"></span><span id="orLabel" class="text-[11px] text-slate-400 font-bold uppercase tracking-wider">Or sign in with email</span><span class="h-px flex-1 bg-[#E7EBEF]"></span></div>
+
+      <!-- ===== LOGIN form ===== -->
+      <form id="loginForm" onsubmit="doLogin(event)" class="space-y-4">
+        <div class="relative"><i data-lucide="user" class="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400"></i><input required placeholder="Username or email" class="field pl-10" /></div>
+        <div class="relative"><i data-lucide="key-round" class="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400"></i>
+          <input id="pw" type="password" required placeholder="Password" class="field pl-10 pr-11" />
+          <button type="button" onclick="togglePw('pw','eye1')" class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"><i id="eye1" data-lucide="eye" class="w-4 h-4"></i></button>
+        </div>
+        <div class="flex items-center justify-between">
+          <label class="flex items-center gap-2 text-sm text-[#6A7581]"><input type="checkbox" class="w-4 h-4 rounded border-slate-300 text-[#DC183C] focus:ring-[#DC183C]" /> Remember me</label>
+          <a href="#" class="text-sm font-bold text-[#DC183C] hover:underline">Forgot password?</a>
+        </div>
+        <button class="w-full h-12 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold transition">Log In</button>
+      </form>
+
+      <!-- ===== SIGNUP wizard ===== -->
+      <form id="signupForm" onsubmit="doSignup(event)" class="space-y-4 hidden">
+        <div>
+          <p id="stepLabel" class="text-sm font-bold text-[#0C1F31]">Step 1 of 3 — Personal Information</p>
+          <div class="h-2 rounded-full bg-slate-100 mt-2 overflow-hidden"><div id="progress" class="h-full bg-[#DC183C] transition-all" style="width:33%"></div></div>
+        </div>
+        <!-- step 1 -->
+        <div id="step1" class="space-y-4">
+          <div class="grid grid-cols-2 gap-3">
+            <div><label class="block text-[11px] font-bold uppercase tracking-wider text-[#6A7581] mb-1.5">First name *</label><input required class="field" placeholder="First name" /></div>
+            <div><label class="block text-[11px] font-bold uppercase tracking-wider text-[#6A7581] mb-1.5">Last name *</label><input required class="field" placeholder="Last name" /></div>
+          </div>
+          <div><label class="block text-[11px] font-bold uppercase tracking-wider text-[#6A7581] mb-1.5">Phone number *</label>
+            <div class="flex gap-2"><span class="inline-flex items-center gap-1.5 px-3 rounded-xl border border-[#E7EBEF] bg-slate-50 text-sm font-semibold shrink-0">🇿🇦 +27</span><input required type="tel" class="field" placeholder="Phone number" /></div>
+          </div>
+        </div>
+        <!-- step 2 -->
+        <div id="step2" class="space-y-4 hidden">
+          <div><label class="block text-[11px] font-bold uppercase tracking-wider text-[#6A7581] mb-1.5">Business name *</label><input class="field" placeholder="Your business" /></div>
+          <div><label class="block text-[11px] font-bold uppercase tracking-wider text-[#6A7581] mb-1.5">Sector</label>
+            <select class="field"><option>Select sector</option><option>Retail</option><option>Fintech</option><option>Agriculture</option><option>Manufacturing</option><option>Services</option><option>Other</option></select></div>
+          <div><label class="block text-[11px] font-bold uppercase tracking-wider text-[#6A7581] mb-1.5">Stage</label>
+            <select class="field"><option>Select stage</option><option>Idea</option><option>Startup</option><option>Growth</option><option>Established</option></select></div>
+        </div>
+        <!-- step 3 -->
+        <div id="step3" class="space-y-4 hidden">
+          <div class="relative"><i data-lucide="mail" class="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400"></i><input type="email" class="field pl-10" placeholder="Email address" /></div>
+          <div class="relative"><i data-lucide="key-round" class="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400"></i>
+            <input id="pw2" type="password" class="field pl-10 pr-11" placeholder="Create a password" />
+            <button type="button" onclick="togglePw('pw2','eye2')" class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"><i id="eye2" data-lucide="eye" class="w-4 h-4"></i></button>
+          </div>
+          <label class="flex items-start gap-2.5 text-sm text-[#6A7581]"><input type="checkbox" required class="mt-0.5 w-4 h-4 rounded border-slate-300 text-[#DC183C] focus:ring-[#DC183C]" /><span>I agree to the <a href="public-terms.html" class="font-semibold text-[#DC183C] hover:underline">Terms</a> and the <a href="public-popia.html" class="font-semibold text-[#DC183C] hover:underline">POPIA notice</a>.</span></label>
+        </div>
+
+        <div class="flex items-center gap-3 pt-1">
+          <button type="button" id="backBtn" onclick="wizard(-1)" class="hidden h-12 px-5 rounded-full border border-[#E7EBEF] bg-white font-bold text-sm hover:bg-slate-50 transition">Back</button>
+          <button type="button" id="nextBtn" onclick="wizard(1)" class="flex-1 h-12 rounded-full bg-[#0C1F31] hover:bg-[#1b3247] text-white font-bold transition">Next</button>
+          <button type="submit" id="createBtn" class="hidden flex-1 h-12 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold transition">Create account</button>
+        </div>
+      </form>
+
+      <p id="switchLine" class="text-center text-sm text-[#6A7581] mt-6 font-semibold">New to SME South Africa? <button onclick="setMode('up')" class="text-[#DC183C] hover:underline">Sign up</button></p>
     </div>
   </div>
 </div>
@@ -140,37 +139,42 @@
 <script>
   function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c])); }
   function showToast(msg){ const el=document.getElementById('toast'); el.classList.remove('hidden'); el.innerHTML=`<div class="bg-[#0C1F31] text-white rounded-full pl-3 pr-5 py-2.5 shadow-2xl flex items-center gap-2 text-sm font-semibold" style="border-left:4px solid #DC183C"><i data-lucide="check-circle" class="w-4 h-4" style="color:#DC183C"></i><span>${esc(msg)}</span></div>`; lucide.createIcons(); setTimeout(()=>{el.classList.add('hidden');el.innerHTML='';},2600); }
+  function togglePw(id,eye){ const i=document.getElementById(id); const e=document.getElementById(eye); const show=i.type==='password'; i.type=show?'text':'password'; e.setAttribute('data-lucide', show?'eye-off':'eye'); lucide.createIcons(); }
 
-  let mode = 'in';
+  let mode='in', step=1;
   function setMode(m){
-    mode = m;
-    const up = m==='up';
-    document.getElementById('seg-in').classList.toggle('active', !up);
-    document.getElementById('seg-in').classList.toggle('text-slate-500', up);
-    document.getElementById('seg-up').classList.toggle('active', up);
-    document.getElementById('seg-up').classList.toggle('text-slate-500', !up);
-    document.getElementById('authTitle').textContent = up ? 'Create your free account' : 'Welcome back';
-    document.getElementById('authSub').textContent = up ? 'Join 100,000+ South African founders — it’s free.' : 'Sign in to your SME South Africa account.';
-    document.getElementById('f-name').classList.toggle('hidden', !up);
-    document.getElementById('f-consent').classList.toggle('hidden', !up);
-    document.getElementById('f-consent').classList.toggle('flex', up);
-    document.getElementById('forgot').style.display = up ? 'none' : '';
-    document.getElementById('authBtn').innerHTML = up ? 'Create account <i data-lucide="arrow-right" class="w-4 h-4"></i>' : 'Sign in <i data-lucide="arrow-right" class="w-4 h-4"></i>';
+    mode=m; const up=m==='up';
+    document.getElementById('loginForm').classList.toggle('hidden', up);
+    document.getElementById('signupForm').classList.toggle('hidden', !up);
+    document.getElementById('authTitle').childNodes[0].nodeValue = up ? 'Create your account ' : 'Welcome Back to Your SME Hub ';
+    document.getElementById('authSub').textContent = up ? 'Join 100,000+ South African founders — it’s free.' : 'Access your resources, funding opportunities, and community updates.';
+    document.getElementById('orLabel').textContent = up ? 'Or sign up with email' : 'Or sign in with email';
     document.getElementById('switchLine').innerHTML = up
-      ? 'Already have an account? <button onclick="setMode(\'in\')" class="font-bold text-[#DC183C] hover:underline">Sign in</button>'
-      : 'New to SME South Africa? <button onclick="setMode(\'up\')" class="font-bold text-[#DC183C] hover:underline">Join free</button>';
+      ? 'Already a subscriber? <button onclick="setMode(\'in\')" class="text-[#DC183C] hover:underline">Sign in</button>'
+      : 'New to SME South Africa? <button onclick="setMode(\'up\')" class="text-[#DC183C] hover:underline">Sign up</button>';
+    if(up){ step=1; showStep(); }
     lucide.createIcons();
   }
-  function togglePw(){ const i=document.getElementById('pw'); const e=document.getElementById('pwEye'); const show=i.type==='password'; i.type=show?'text':'password'; e.setAttribute('data-lucide', show?'eye-off':'eye'); lucide.createIcons(); }
-  function authSubmit(e){ e.preventDefault(); showToast(mode==='up' ? 'Account created — welcome! Redirecting…' : 'Signed in — redirecting…'); setTimeout(()=>{ window.location.href='member-hub.html'; }, 1200); }
+  function showStep(){
+    [1,2,3].forEach(n=>document.getElementById('step'+n).classList.toggle('hidden', n!==step));
+    document.getElementById('progress').style.width = (step*33.34)+'%';
+    const labels={1:'Step 1 of 3 — Personal Information',2:'Step 2 of 3 — Business Details',3:'Step 3 of 3 — Account'};
+    document.getElementById('stepLabel').textContent = labels[step];
+    document.getElementById('backBtn').classList.toggle('hidden', step===1);
+    document.getElementById('nextBtn').classList.toggle('hidden', step===3);
+    document.getElementById('createBtn').classList.toggle('hidden', step!==3);
+  }
+  function wizard(d){ step=Math.min(3,Math.max(1,step+d)); showStep(); }
+  function doLogin(e){ e.preventDefault(); showToast('Signed in — redirecting…'); setTimeout(()=>{ window.location.href='member-hub.html'; },1100); }
+  function doSignup(e){ e.preventDefault(); showToast('Account created — welcome! Redirecting…'); setTimeout(()=>{ window.location.href='member-hub.html'; },1100); }
 
   const BRIEFS = { auth: {
     title:'Authentication', sub:'MemberPress — never rebuild auth',
-    purpose:'Single sign-in / join surface. Conversion-focused: the brand panel reinforces value while the form stays minimal. <b>All auth, billing and gating is owned by MemberPress</b> — this mockup only represents the UI; do not build a custom auth/session system.',
-    data:'Sign up: <code>{ name, email, password, consent }</code>. Sign in: <code>{ email, password }</code>. One WordPress user record is shared across MemberPress, BuddyBoss and WooCommerce.',
-    logic:'Submit → MemberPress register/login. POPIA consent is required on signup and stored with a timestamp. Successful auth routes to member-hub.html. SSO (Google) optional via an identity provider. Password reset is a MemberPress flow.',
-    components:'Split layout · segmented Sign in / Join free toggle · email + password · POPIA consent · SSO button.',
-    api:'MemberPress: POST /register · POST /login · POST /reset-password'
+    purpose:'Single sign-in / join surface, mirroring the live SME South Africa design. Conversion-focused: value props on the left, a minimal card on the right. <b>All auth, billing and gating is owned by MemberPress</b>; this mockup is UI only — do not build a custom auth/session system.',
+    data:'Login: <code>{ identifier, password, remember }</code>. Signup wizard: Step 1 <code>{first,last,phone}</code> · Step 2 <code>{business,sector,stage}</code> · Step 3 <code>{email,password,consent}</code>. One WP user record across MemberPress + BuddyBoss + WooCommerce.',
+    logic:'SSO (Google/LinkedIn) via identity provider. Email flow → MemberPress register/login. The 3-step wizard reduces drop-off; sector/stage personalise the hub after signup. POPIA consent required + timestamped. Success → member-hub.html.',
+    components:'Value-prop panel · SSO buttons · login form (remember + forgot) · 3-step signup wizard with progress bar.',
+    api:'MemberPress: POST /login · POST /register · POST /reset-password · OAuth: /auth/google · /auth/linkedin'
   } };
   function toggleDevMode(){ const on=document.body.classList.toggle('dev-on'); const b=document.getElementById('devToggle'); if(b)b.classList.toggle('on',on); if(on)showToast('Dev Mode on — tap any ⓘ for implementation notes.'); lucide.createIcons(); }
   function closeOverlay(id){ const el=document.getElementById(id); if(!el)return; el.classList.remove('open'); setTimeout(()=>{ if(el&&el.parentNode) el.remove(); },300); }
@@ -180,7 +184,6 @@
     requestAnimationFrame(()=>{ const o=document.getElementById('ov-brief'); if(o)o.classList.add('open'); }); lucide.createIcons();
   }
 
-  // open in signup mode via #join
   if(location.hash==='#join') setMode('up');
   lucide.createIcons();
 </script>
