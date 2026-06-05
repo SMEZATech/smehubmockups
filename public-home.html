@@ -13,12 +13,10 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
   <script>
-    tailwind.config = {
-      theme: { extend: { fontFamily: {
-        jakarta: ['Plus Jakarta Sans', 'sans-serif'],
-        inter: ['Inter', 'system-ui', 'sans-serif']
-      } } }
-    };
+    tailwind.config = { theme: { extend: { fontFamily: {
+      jakarta: ['Plus Jakarta Sans', 'sans-serif'],
+      inter: ['Inter', 'system-ui', 'sans-serif']
+    } } } };
   </script>
 
   <style>
@@ -30,10 +28,7 @@
     .reveal { animation: fadeUp .5s cubic-bezier(.2,.7,.2,1) backwards; }
     .card-lift { transition: box-shadow .2s, transform .2s; }
     .card-lift:hover { box-shadow: 0 10px 24px -10px rgba(10,44,61,0.18); transform: translateY(-2px); }
-    .stripe-ask   { box-shadow: inset 4px 0 0 0 #DC183C; }
-    .stripe-win   { box-shadow: inset 4px 0 0 0 #29A37A; }
-    .stripe-share { box-shadow: inset 4px 0 0 0 #FF9900; }
-    /* Dev Mode */
+    .jtab.active { background:#0C1F31; color:#fff; border-color:#0C1F31; }
     .dev-badge { display:none; }
     body.dev-on .dev-badge { display:inline-flex; }
     #devToggle.on { background:#DC183C; color:#fff; border-color:#DC183C; }
@@ -42,11 +37,6 @@
     .ov.open .ov-bg { opacity:1; }
     .drawer { position:absolute; right:0; top:0; height:100%; width:100%; max-width:440px; background:#fff; box-shadow:-12px 0 40px rgba(12,31,49,.25); overflow-y:auto; transform:translateX(100%); transition:transform .3s cubic-bezier(.2,.7,.2,1); }
     .ov.open .drawer { transform:translateX(0); }
-    /* Hero gradient mesh */
-    .hero-mesh { background:
-        radial-gradient(900px 400px at 12% -10%, rgba(220,24,60,.20), transparent 60%),
-        radial-gradient(700px 360px at 95% 0%, rgba(255,153,0,.18), transparent 55%),
-        #0C1F31; }
   </style>
 </head>
 <body class="bg-[#FCFCFC] text-[#121A21] antialiased">
@@ -54,17 +44,16 @@
 <!-- ===================== PROMO BANNER ===================== -->
 <a href="#" class="block bg-[#DC183C] text-white text-center text-[13px] font-semibold py-2 px-4 hover:bg-[#B0142F] transition">
   <i data-lucide="sparkles" class="inline w-3.5 h-3.5 -mt-0.5"></i>
-  Funding Summit 2026 — secure your seat. <span class="underline underline-offset-2">Register now →</span>
+  Funding Summit 2026 — <span class="underline underline-offset-2">Register Now</span>
 </a>
 
 <!-- ===================== HEADER (logged-out) ===================== -->
 <header class="bg-white border-b border-[#E7EBEF] sticky top-0 z-40">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center gap-4">
     <a href="public-home.html" class="flex items-center gap-2.5 shrink-0">
-      <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-[#DC183C] to-[#FF9900] grid place-items-center text-white font-jakarta font-extrabold text-sm">S</div>
+      <img src="assets/logo-icon.png" alt="SME South Africa" class="w-9 h-9" />
       <span class="font-jakarta font-extrabold text-[17px] tracking-tight">SME <span class="text-[#DC183C]">South Africa</span></span>
     </a>
-
     <nav class="hidden lg:flex items-center gap-1 ml-4">
       <a href="public-articles.html"  class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition">Articles</a>
       <a href="public-resources.html" class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition">Resources</a>
@@ -72,7 +61,6 @@
       <a href="public-solutions.html" class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition">Solutions</a>
       <a href="public-shop.html"      class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition">Shop</a>
     </nav>
-
     <div class="flex items-center gap-1 sm:gap-2 ml-auto">
       <button id="devToggle" onclick="toggleDevMode()" class="hidden sm:flex items-center gap-1.5 px-3 h-9 rounded-full border border-slate-200 text-slate-500 hover:border-[#DC183C] hover:text-[#DC183C] transition text-[11px] font-bold uppercase tracking-wider" title="Toggle implementation notes for developers">
         <i data-lucide="code-2" class="w-3.5 h-3.5"></i><span>Dev</span>
@@ -88,84 +76,91 @@
 </header>
 
 <!-- ===================== HERO ===================== -->
-<section class="hero-mesh text-white relative overflow-hidden">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-20 sm:py-28 relative">
-    <div class="max-w-3xl reveal">
-      <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 border border-white/15 text-[12px] font-semibold text-white/90 mb-6">
-        <i data-lucide="flag" class="w-3.5 h-3.5 text-[#FF9900]"></i> Proudly South African · since 2014
-      </span>
+<section class="bg-white border-b border-[#E7EBEF] relative overflow-hidden">
+  <div class="absolute -top-24 -right-24 w-96 h-96 rounded-full opacity-10" style="background:radial-gradient(circle, #FF9900, transparent 70%)"></div>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-14 sm:py-20 grid lg:grid-cols-2 gap-10 lg:gap-14 items-center relative">
+    <!-- Left: copy -->
+    <div class="reveal">
       <h1 class="font-jakarta font-extrabold text-4xl sm:text-6xl leading-[1.05] tracking-tight">
-        Build. Grow. <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#FF9900] to-[#DC183C]">Thrive.</span>
+        Build. Grow. <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#DC183C] to-[#FF9900]">Thrive.</span>
+        <button onclick="openBrief('hero')" class="dev-badge align-middle ml-1 w-6 h-6 rounded-full bg-[#DC183C] text-white items-center justify-center text-[11px] font-bold" title="Implementation notes">i</button>
       </h1>
-      <p class="mt-6 text-lg sm:text-xl text-white/75 leading-relaxed max-w-2xl">
+      <p class="mt-5 text-lg sm:text-xl text-[#475569] leading-relaxed max-w-xl">
         South Africa's largest SME community — connecting founders with funding, mentorship, events, and the tools to scale.
       </p>
-      <div class="mt-8 flex flex-wrap items-center gap-3">
+      <div class="mt-7 flex flex-wrap items-center gap-3">
         <a href="member-hub.html" class="inline-flex items-center gap-2 px-6 h-12 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold transition">
           Join for Free <i data-lucide="arrow-right" class="w-4 h-4"></i>
         </a>
-        <a href="public-resources.html" class="inline-flex items-center gap-2 px-6 h-12 rounded-full bg-white/10 hover:bg-white/15 border border-white/15 text-white font-bold transition">
+        <a href="public-resources.html" class="inline-flex items-center gap-2 px-6 h-12 rounded-full bg-white border border-[#E7EBEF] hover:border-[#0C1F31] text-[#121A21] font-bold transition">
           Explore Resources
         </a>
-        <button onclick="openBrief('hero')" class="dev-badge w-6 h-6 rounded-full bg-[#FF9900] text-[#121A21] items-center justify-center text-[11px] font-bold" title="Implementation notes">i</button>
+      </div>
+      <!-- Social proof -->
+      <div class="mt-8 flex items-center gap-3">
+        <div class="flex -space-x-2">
+          <img src="assets/founder-1.jpg" alt="" class="w-8 h-8 rounded-full border-2 border-white object-cover" />
+          <img src="assets/founder-2.jpg" alt="" class="w-8 h-8 rounded-full border-2 border-white object-cover" />
+          <img src="assets/founder-3.jpg" alt="" class="w-8 h-8 rounded-full border-2 border-white object-cover" />
+        </div>
+        <p class="text-sm text-[#6A7581]"><span class="font-bold text-[#121A21]">Loved by 100K+ founders</span> across South Africa</p>
       </div>
     </div>
+    <!-- Right: hero image -->
+    <div class="reveal" style="animation-delay:120ms">
+      <div class="relative">
+        <img src="assets/hero-entrepreneurs.jpg" alt="South African entrepreneurs collaborating" class="w-full rounded-3xl shadow-2xl object-cover aspect-[4/3]" />
+        <!-- floating stat chip -->
+        <div class="absolute -bottom-5 -left-3 sm:left-6 bg-white rounded-2xl shadow-xl border border-[#E7EBEF] px-5 py-3 flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-[#E4F5EE] text-[#29A37A] grid place-items-center"><i data-lucide="trending-up" class="w-5 h-5"></i></div>
+          <div><p class="font-jakarta font-extrabold text-lg leading-none">R100M+</p><p class="text-xs text-[#6A7581] mt-0.5">funding facilitated</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
 
-    <!-- Metric band -->
-    <div class="mt-14 grid grid-cols-2 md:grid-cols-4 gap-px bg-white/10 rounded-2xl overflow-hidden border border-white/10 reveal" style="animation-delay:120ms">
-      <div class="bg-[#0C1F31]/60 backdrop-blur px-5 py-6">
-        <p class="font-jakarta font-extrabold text-3xl">100K+</p>
-        <p class="text-sm text-white/60 mt-1">Members</p>
-      </div>
-      <div class="bg-[#0C1F31]/60 backdrop-blur px-5 py-6">
-        <p class="font-jakarta font-extrabold text-3xl">R100M+</p>
-        <p class="text-sm text-white/60 mt-1">Loans facilitated</p>
-      </div>
-      <div class="bg-[#0C1F31]/60 backdrop-blur px-5 py-6">
-        <p class="font-jakarta font-extrabold text-3xl">500+</p>
-        <p class="text-sm text-white/60 mt-1">Events hosted</p>
-      </div>
-      <div class="bg-[#0C1F31]/60 backdrop-blur px-5 py-6">
-        <p class="font-jakarta font-extrabold text-3xl">50K+</p>
-        <p class="text-sm text-white/60 mt-1">Downloads</p>
-      </div>
+  <!-- Trust stat strip -->
+  <div class="border-t border-[#E7EBEF] bg-[#FCFCFC]">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-6 grid grid-cols-3 gap-4 text-center">
+      <div><p class="font-jakarta font-extrabold text-2xl sm:text-3xl">100K+</p><p class="text-sm text-[#6A7581] mt-1">Members</p></div>
+      <div class="border-x border-[#E7EBEF]"><p class="font-jakarta font-extrabold text-2xl sm:text-3xl">R100M+</p><p class="text-sm text-[#6A7581] mt-1">Loans facilitated</p></div>
+      <div><p class="font-jakarta font-extrabold text-2xl sm:text-3xl">50K+</p><p class="text-sm text-[#6A7581] mt-1">Downloads</p></div>
     </div>
   </div>
 </section>
 
-<!-- ===================== FOUR PILLARS ===================== -->
+<!-- ===================== PLATFORM OVERVIEW ===================== -->
 <section class="max-w-7xl mx-auto px-4 sm:px-6 py-16 sm:py-20">
-  <div class="flex items-end justify-between gap-4 mb-10">
-    <div>
-      <p class="text-[12px] font-bold uppercase tracking-widest text-[#AE6B0A]">One platform</p>
-      <h2 class="font-jakarta font-extrabold text-3xl sm:text-4xl mt-2">Everything a founder needs</h2>
-    </div>
-    <button onclick="openBrief('pillars')" class="dev-badge w-6 h-6 rounded-full bg-[#DC183C] text-white items-center justify-center text-[11px] font-bold shrink-0" title="Implementation notes">i</button>
+  <div class="text-center max-w-2xl mx-auto mb-12">
+    <h2 class="font-jakarta font-extrabold text-3xl sm:text-4xl">Everything to Build &amp; Grow Your Business
+      <button onclick="openBrief('pillars')" class="dev-badge align-middle ml-1 w-6 h-6 rounded-full bg-[#DC183C] text-white items-center justify-center text-[11px] font-bold" title="Implementation notes">i</button>
+    </h2>
+    <p class="mt-4 text-lg text-[#6A7581]">One platform for your entire entrepreneurial journey — from first idea to full scale.</p>
   </div>
   <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
     <div class="bg-white rounded-2xl border border-[#E7EBEF] p-6 card-lift reveal">
       <div class="w-12 h-12 rounded-xl grid place-items-center bg-[#FDECEF] text-[#DC183C] mb-4"><i data-lucide="users" class="w-6 h-6"></i></div>
       <h3 class="font-jakarta font-bold text-lg">Community Connect</h3>
-      <p class="text-sm text-slate-600 mt-2 leading-relaxed">Network with 100K+ founders. Ask, win and share in a community built for SA entrepreneurs.</p>
-      <a href="member-hub.html" class="inline-flex items-center gap-1 text-sm font-bold text-[#DC183C] mt-4 hover:gap-2 transition-all">Join the hub <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
+      <p class="text-sm text-[#6A7581] mt-2 leading-relaxed">Network with 100,000+ founders, mentors, and industry leaders across South Africa.</p>
+      <a href="member-hub.html" class="inline-flex items-center gap-1 text-sm font-bold text-[#DC183C] mt-4 hover:gap-2 transition-all">Join the community <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
     </div>
     <div class="bg-white rounded-2xl border border-[#E7EBEF] p-6 card-lift reveal" style="animation-delay:60ms">
       <div class="w-12 h-12 rounded-xl grid place-items-center bg-[#FFF1E0] text-[#AE6B0A] mb-4"><i data-lucide="calendar-days" class="w-6 h-6"></i></div>
-      <h3 class="font-jakarta font-bold text-lg">Events & Webinars</h3>
-      <p class="text-sm text-slate-600 mt-2 leading-relaxed">Growth-acceleration sessions, summits and replays — learn from operators who've done it.</p>
-      <a href="#" class="inline-flex items-center gap-1 text-sm font-bold text-[#AE6B0A] mt-4 hover:gap-2 transition-all">See what's on <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
+      <h3 class="font-jakarta font-bold text-lg">Events &amp; Webinars</h3>
+      <p class="text-sm text-[#6A7581] mt-2 leading-relaxed">Exclusive live sessions and workshops designed to accelerate your growth.</p>
+      <a href="events.html" class="inline-flex items-center gap-1 text-sm font-bold text-[#AE6B0A] mt-4 hover:gap-2 transition-all">Browse events <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
     </div>
     <div class="bg-white rounded-2xl border border-[#E7EBEF] p-6 card-lift reveal" style="animation-delay:120ms">
       <div class="w-12 h-12 rounded-xl grid place-items-center bg-[#E4F5EE] text-[#29A37A] mb-4"><i data-lucide="banknote" class="w-6 h-6"></i></div>
       <h3 class="font-jakarta font-bold text-lg">Funding Access</h3>
-      <p class="text-sm text-slate-600 mt-2 leading-relaxed">Get matched with verified funders. Apply once, transparently — offers in as little as 24 hours.</p>
+      <p class="text-sm text-[#6A7581] mt-2 leading-relaxed">One application matches you with verified funders — from grants to equity.</p>
       <a href="public-funding.html" class="inline-flex items-center gap-1 text-sm font-bold text-[#29A37A] mt-4 hover:gap-2 transition-all">Apply for funding <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
     </div>
     <div class="bg-white rounded-2xl border border-[#E7EBEF] p-6 card-lift reveal" style="animation-delay:180ms">
       <div class="w-12 h-12 rounded-xl grid place-items-center bg-[#FDECEF] text-[#DC183C] mb-4"><i data-lucide="library" class="w-6 h-6"></i></div>
-      <h3 class="font-jakarta font-bold text-lg">Resources & Tools</h3>
-      <p class="text-sm text-slate-600 mt-2 leading-relaxed">Templates, guides and expert insights — everything you need to start up and scale up.</p>
-      <a href="public-resources.html" class="inline-flex items-center gap-1 text-sm font-bold text-[#DC183C] mt-4 hover:gap-2 transition-all">Browse resources <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
+      <h3 class="font-jakarta font-bold text-lg">Resources &amp; Tools</h3>
+      <p class="text-sm text-[#6A7581] mt-2 leading-relaxed">Curated templates, guides, and expert insights for every business stage.</p>
+      <a href="public-resources.html" class="inline-flex items-center gap-1 text-sm font-bold text-[#DC183C] mt-4 hover:gap-2 transition-all">Explore resources <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
     </div>
   </div>
 </section>
@@ -173,46 +168,31 @@
 <!-- ===================== BUSINESS JOURNEY ===================== -->
 <section class="bg-white border-y border-[#E7EBEF]">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 py-16 sm:py-20">
-    <div class="flex items-end justify-between gap-4 mb-10">
-      <div>
-        <p class="text-[12px] font-bold uppercase tracking-widest text-[#AE6B0A]">Wherever you are</p>
-        <h2 class="font-jakarta font-extrabold text-3xl sm:text-4xl mt-2">Support at every stage</h2>
-      </div>
-      <button onclick="openBrief('journey')" class="dev-badge w-6 h-6 rounded-full bg-[#DC183C] text-white items-center justify-center text-[11px] font-bold shrink-0" title="Implementation notes">i</button>
+    <div class="text-center max-w-2xl mx-auto mb-10">
+      <p class="text-[12px] font-bold uppercase tracking-widest text-[#AE6B0A]">Your Journey</p>
+      <h2 class="font-jakarta font-extrabold text-3xl sm:text-4xl mt-2">Guidance at Every Stage
+        <button onclick="openBrief('journey')" class="dev-badge align-middle ml-1 w-6 h-6 rounded-full bg-[#DC183C] text-white items-center justify-center text-[11px] font-bold" title="Implementation notes">i</button>
+      </h2>
+      <p class="mt-4 text-lg text-[#6A7581]">Whether you're starting out or scaling up, we've got you covered.</p>
     </div>
-    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
-      <div class="rounded-2xl border border-[#E7EBEF] p-6 bg-[#FCFCFC]">
-        <span class="font-mono text-xs font-bold text-slate-400">01</span>
-        <h3 class="font-jakarta font-bold text-xl mt-2">Launch</h3>
-        <p class="text-sm text-slate-600 mt-2">Register, validate your idea and get to market with starter templates and guides.</p>
-      </div>
-      <div class="rounded-2xl border border-[#E7EBEF] p-6 bg-[#FCFCFC]">
-        <span class="font-mono text-xs font-bold text-slate-400">02</span>
-        <h3 class="font-jakarta font-bold text-xl mt-2">Manage</h3>
-        <p class="text-sm text-slate-600 mt-2">Stay compliant, manage cash flow and run day-to-day operations with confidence.</p>
-      </div>
-      <div class="rounded-2xl border border-[#E7EBEF] p-6 bg-[#FCFCFC]">
-        <span class="font-mono text-xs font-bold text-slate-400">03</span>
-        <h3 class="font-jakarta font-bold text-xl mt-2">Growth</h3>
-        <p class="text-sm text-slate-600 mt-2">Reach new customers, hire your team and scale with marketing and sales playbooks.</p>
-      </div>
-      <div class="rounded-2xl border border-[#E7EBEF] p-6 bg-[#FCFCFC]">
-        <span class="font-mono text-xs font-bold text-slate-400">04</span>
-        <h3 class="font-jakarta font-bold text-xl mt-2">Fund</h3>
-        <p class="text-sm text-slate-600 mt-2">Access capital from verified funders matched to your stage and turnover.</p>
-      </div>
-    </div>
+
+    <!-- Stage tabs -->
+    <div id="jtabs" class="flex flex-wrap justify-center gap-2 mb-8"></div>
+
+    <!-- Detail panel -->
+    <div id="jpanel" class="grid lg:grid-cols-2 gap-8 items-center bg-[#FCFCFC] rounded-3xl border border-[#E7EBEF] p-7 sm:p-10"></div>
   </div>
 </section>
 
 <!-- ===================== FOUNDER FOCUS ===================== -->
 <section class="max-w-7xl mx-auto px-4 sm:px-6 py-16 sm:py-20">
-  <div class="flex items-end justify-between gap-4 mb-10">
+  <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-10">
     <div>
-      <p class="text-[12px] font-bold uppercase tracking-widest text-[#AE6B0A]">Founder focus</p>
-      <h2 class="font-jakarta font-extrabold text-3xl sm:text-4xl mt-2">Stories from the community</h2>
+      <p class="text-[12px] font-bold uppercase tracking-widest text-[#AE6B0A]">Founder Focus</p>
+      <h2 class="font-jakarta font-extrabold text-3xl sm:text-4xl mt-2">Real Stories. Real Impact.</h2>
+      <p class="mt-3 text-lg text-[#6A7581] max-w-xl">Inspiration from South Africa's boldest entrepreneurs building the future.</p>
     </div>
-    <a href="public-articles.html" class="hidden sm:inline-flex items-center gap-1 text-sm font-bold text-[#DC183C] hover:gap-2 transition-all">All articles <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
+    <a href="public-articles.html" class="inline-flex items-center gap-1 text-sm font-bold text-[#DC183C] hover:gap-2 transition-all shrink-0">View All Stories <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
   </div>
   <div id="founder-grid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
 </section>
@@ -220,32 +200,54 @@
 <!-- ===================== TESTIMONIAL ===================== -->
 <section class="bg-[#0C1F31] text-white">
   <div class="max-w-4xl mx-auto px-4 sm:px-6 py-16 sm:py-20 text-center">
+    <p class="text-[12px] font-bold uppercase tracking-widest text-[#FF9900]">Testimonials</p>
+    <h2 class="font-jakarta font-extrabold text-2xl sm:text-3xl mt-2 mb-8">What Our Members Say</h2>
     <i data-lucide="quote" class="w-10 h-10 text-[#FF9900] mx-auto"></i>
-    <blockquote class="font-jakarta font-bold text-2xl sm:text-3xl leading-snug mt-6">
-      "I applied on a Monday and had a funding offer by Wednesday. SME South Africa connected me with a funder who actually understood my business."
+    <blockquote class="font-jakarta font-bold text-2xl sm:text-3xl leading-snug mt-5">
+      "SME South Africa connected me with a funder within two weeks of joining. The platform literally changed the trajectory of my business."
     </blockquote>
     <div class="flex items-center justify-center gap-3 mt-8">
-      <div class="w-11 h-11 rounded-full bg-gradient-to-br from-[#DC183C] to-[#FF9900] grid place-items-center font-jakarta font-bold text-white">NM</div>
+      <img src="assets/founder-1.jpg" alt="Thandi Mokoena" class="w-12 h-12 rounded-full object-cover border-2 border-white/20" />
       <div class="text-left">
-        <p class="font-bold">Nomsa Mbeki</p>
-        <p class="text-sm text-white/60">Founder, Thrive Logistics · Gauteng</p>
+        <p class="font-bold">Thandi Mokoena</p>
+        <p class="text-sm text-white/60">Founder, GreenLeaf Organics</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ===================== FINAL CTA ===================== -->
+<!-- ===================== OUR IMPACT (animated counters) ===================== -->
 <section class="max-w-7xl mx-auto px-4 sm:px-6 py-16 sm:py-20">
+  <div class="text-center max-w-2xl mx-auto mb-12">
+    <p class="text-[12px] font-bold uppercase tracking-widest text-[#AE6B0A]">Our Impact</p>
+    <h2 class="font-jakarta font-extrabold text-3xl sm:text-4xl mt-2">Building the Future of SA Entrepreneurship
+      <button onclick="openBrief('impact')" class="dev-badge align-middle ml-1 w-6 h-6 rounded-full bg-[#DC183C] text-white items-center justify-center text-[11px] font-bold" title="Implementation notes">i</button>
+    </h2>
+  </div>
+  <div id="impact" class="grid grid-cols-2 lg:grid-cols-4 gap-5">
+    <div class="bg-white rounded-2xl border border-[#E7EBEF] p-6 text-center"><p class="font-jakarta font-extrabold text-3xl sm:text-4xl text-[#DC183C]" data-count="100" data-prefix="" data-suffix="K+">0</p><p class="text-sm text-[#6A7581] mt-2">Members and growing</p></div>
+    <div class="bg-white rounded-2xl border border-[#E7EBEF] p-6 text-center"><p class="font-jakarta font-extrabold text-3xl sm:text-4xl text-[#29A37A]" data-count="100" data-prefix="R" data-suffix="M+">0</p><p class="text-sm text-[#6A7581] mt-2">In loans facilitated</p></div>
+    <div class="bg-white rounded-2xl border border-[#E7EBEF] p-6 text-center"><p class="font-jakarta font-extrabold text-3xl sm:text-4xl text-[#AE6B0A]" data-count="500" data-prefix="" data-suffix="+">0</p><p class="text-sm text-[#6A7581] mt-2">Events &amp; webinars hosted</p></div>
+    <div class="bg-white rounded-2xl border border-[#E7EBEF] p-6 text-center"><p class="font-jakarta font-extrabold text-3xl sm:text-4xl text-[#0C1F31]" data-count="50" data-prefix="" data-suffix="K+">0</p><p class="text-sm text-[#6A7581] mt-2">Resource downloads</p></div>
+  </div>
+</section>
+
+<!-- ===================== PRIMARY CTA ===================== -->
+<section class="max-w-7xl mx-auto px-4 sm:px-6 pb-16 sm:pb-20">
   <div class="rounded-3xl bg-gradient-to-br from-[#DC183C] to-[#FF9900] text-white p-10 sm:p-14 text-center relative overflow-hidden">
-    <h2 class="font-jakarta font-extrabold text-3xl sm:text-4xl">Ready to start your journey?</h2>
-    <p class="mt-4 text-white/85 max-w-xl mx-auto">Join 100,000+ South African founders. Free to start — no credit card required.</p>
+    <h2 class="font-jakarta font-extrabold text-3xl sm:text-4xl">Ready to Start Your Journey?</h2>
+    <p class="mt-4 text-white/90 max-w-xl mx-auto">Join thousands of South African entrepreneurs accessing funding, tools, and a powerful network — completely free.</p>
     <div class="mt-8 flex flex-wrap items-center justify-center gap-3">
       <a href="member-hub.html" class="inline-flex items-center gap-2 px-7 h-12 rounded-full bg-white text-[#DC183C] font-extrabold hover:bg-white/90 transition">
         Join for Free <i data-lucide="arrow-right" class="w-4 h-4"></i>
       </a>
-      <a href="public-funding.html" class="inline-flex items-center px-7 h-12 rounded-full bg-white/15 border border-white/30 text-white font-bold hover:bg-white/25 transition">Apply for funding</a>
+      <a href="member-hub.html" class="inline-flex items-center px-7 h-12 rounded-full bg-white/15 border border-white/30 text-white font-bold hover:bg-white/25 transition">Sign In</a>
     </div>
-    <p class="mt-5 text-[13px] text-white/70 flex items-center justify-center gap-2"><i data-lucide="check-circle" class="w-4 h-4"></i> Free access · <i data-lucide="check-circle" class="w-4 h-4"></i> No credit card</p>
+    <div class="mt-6 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-[13px] text-white/85">
+      <span class="flex items-center gap-1.5"><i data-lucide="check-circle" class="w-4 h-4"></i> Free forever</span>
+      <span class="flex items-center gap-1.5"><i data-lucide="check-circle" class="w-4 h-4"></i> No credit card required</span>
+      <span class="flex items-center gap-1.5"><i data-lucide="check-circle" class="w-4 h-4"></i> Cancel anytime</span>
+    </div>
   </div>
 </section>
 
@@ -255,50 +257,52 @@
     <!-- Newsletter -->
     <div class="grid lg:grid-cols-2 gap-8 items-center pb-12 border-b border-white/10">
       <div>
-        <h3 class="font-jakarta font-extrabold text-2xl">Weekly insights, in your inbox</h3>
-        <p class="text-white/60 mt-2">Funding tips, founder stories and the tools to scale — every week.</p>
+        <h3 class="font-jakarta font-extrabold text-2xl">Stay in the Loop</h3>
+        <p class="text-white/60 mt-2">Get weekly insights on funding, growth strategies, and opportunities delivered straight to your inbox.</p>
       </div>
-      <form onsubmit="subscribe(event)" class="flex gap-2">
-        <input type="email" required placeholder="you@business.co.za" class="flex-1 bg-white/5 border border-white/15 rounded-full px-5 h-12 text-sm outline-none focus:border-[#FF9900] focus:bg-white/10 transition placeholder:text-white/40" />
-        <button class="px-6 h-12 rounded-full bg-[#DC183C] hover:bg-[#B0142F] font-bold transition whitespace-nowrap">Subscribe</button>
-      </form>
+      <div>
+        <form onsubmit="subscribe(event)" class="flex gap-2">
+          <input type="email" required placeholder="you@business.co.za" class="flex-1 bg-white/5 border border-white/15 rounded-full px-5 h-12 text-sm outline-none focus:border-[#FF9900] focus:bg-white/10 transition placeholder:text-white/40" />
+          <button class="px-6 h-12 rounded-full bg-[#DC183C] hover:bg-[#B0142F] font-bold transition whitespace-nowrap">Subscribe</button>
+        </form>
+        <p class="text-xs text-white/40 mt-2">No spam, ever. Unsubscribe anytime.</p>
+      </div>
     </div>
 
     <!-- Link columns -->
     <div class="grid grid-cols-2 md:grid-cols-4 gap-8 py-12">
       <div class="col-span-2 md:col-span-1">
         <a href="public-home.html" class="flex items-center gap-2.5">
-          <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-[#DC183C] to-[#FF9900] grid place-items-center text-white font-jakarta font-extrabold text-sm">S</div>
+          <span class="w-9 h-9 rounded-lg bg-white grid place-items-center"><img src="assets/logo-icon.png" alt="SME South Africa" class="w-7 h-7" /></span>
           <span class="font-jakarta font-extrabold text-[17px]">SME South Africa</span>
         </a>
-        <p class="text-sm text-white/55 mt-4 max-w-xs leading-relaxed">South Africa's largest SME community — connecting founders with funding, mentorship, events, and the tools to scale.</p>
+        <p class="text-sm text-white/55 mt-4 max-w-xs leading-relaxed">South Africa's leading SME community — empowering entrepreneurs to build, grow, and thrive.</p>
       </div>
       <div>
         <p class="text-[11px] font-bold uppercase tracking-widest text-white/40">Platform</p>
         <ul class="mt-4 space-y-2.5 text-sm text-white/70">
           <li><a href="member-hub.html" class="hover:text-white">Community</a></li>
-          <li><a href="#" class="hover:text-white">Events</a></li>
+          <li><a href="events.html" class="hover:text-white">Events</a></li>
           <li><a href="public-funding.html" class="hover:text-white">Funding</a></li>
-          <li><a href="public-solutions.html" class="hover:text-white">Solutions</a></li>
-          <li><a href="public-shop.html" class="hover:text-white">Shop</a></li>
+          <li><a href="public-resources.html" class="hover:text-white">Resources</a></li>
         </ul>
       </div>
       <div>
         <p class="text-[11px] font-bold uppercase tracking-widest text-white/40">Learn</p>
         <ul class="mt-4 space-y-2.5 text-sm text-white/70">
-          <li><a href="public-articles.html" class="hover:text-white">Articles</a></li>
-          <li><a href="public-resources.html" class="hover:text-white">Resources</a></li>
-          <li><a href="public-resources.html" class="hover:text-white">Guides</a></li>
-          <li><a href="#" class="hover:text-white">Podcast</a></li>
+          <li><a href="public-funding.html" class="hover:text-white">Start a Business</a></li>
+          <li><a href="public-resources.html" class="hover:text-white">Manage</a></li>
+          <li><a href="public-resources.html" class="hover:text-white">Grow</a></li>
+          <li><a href="public-articles.html" class="hover:text-white">Founder Focus</a></li>
         </ul>
       </div>
       <div>
         <p class="text-[11px] font-bold uppercase tracking-widest text-white/40">Company</p>
         <ul class="mt-4 space-y-2.5 text-sm text-white/70">
           <li><a href="#" class="hover:text-white">About</a></li>
+          <li><a href="#" class="hover:text-white">Partnerships</a></li>
           <li><a href="#" class="hover:text-white">Contact</a></li>
           <li><a href="#" class="hover:text-white">Careers</a></li>
-          <li><a href="#" class="hover:text-white">Partners</a></li>
         </ul>
       </div>
     </div>
@@ -318,130 +322,143 @@
 <div id="toast" class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-50"></div>
 
 <script>
-  // ===== Shared helpers (parity with member-hub.html) =========================
   function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c])); }
-  function monogram(initials, size=44){
-    const fs = Math.max(10, Math.floor(size * 0.38));
-    return `<div class="rounded-full bg-gradient-to-br from-[#DC183C] to-[#FF9900] grid place-items-center font-jakarta font-bold text-white shrink-0" style="width:${size}px;height:${size}px;font-size:${fs}px">${esc(initials)}</div>`;
-  }
   const TYPES = { ask:{color:'#DC183C'}, win:{color:'#29A37A'}, share:{color:'#FF9900'} };
   function showToast(msg, kind){
-    const el = document.getElementById('toast');
-    const t = TYPES[kind];
-    const color = t ? t.color : '#0C1F31';
+    const el = document.getElementById('toast'); const t = TYPES[kind]; const color = t ? t.color : '#0C1F31';
     el.classList.remove('hidden');
-    el.innerHTML = `<div class="bg-[#0C1F31] text-white rounded-full pl-3 pr-5 py-2.5 shadow-2xl flex items-center gap-2 text-sm font-semibold" style="border-left:4px solid ${color}">
-      <i data-lucide="check-circle" class="w-4 h-4" style="color:${color}"></i><span>${esc(msg)}</span></div>`;
-    lucide.createIcons();
-    setTimeout(()=>{ el.classList.add('hidden'); el.innerHTML=''; }, 2400);
+    el.innerHTML = `<div class="bg-[#0C1F31] text-white rounded-full pl-3 pr-5 py-2.5 shadow-2xl flex items-center gap-2 text-sm font-semibold" style="border-left:4px solid ${color}"><i data-lucide="check-circle" class="w-4 h-4" style="color:${color}"></i><span>${esc(msg)}</span></div>`;
+    lucide.createIcons(); setTimeout(()=>{ el.classList.add('hidden'); el.innerHTML=''; }, 2400);
   }
+  function subscribe(e){ e.preventDefault(); e.target.reset(); showToast('Subscribed — welcome to the community.', 'win'); }
 
-  // ===== Founder Focus data ===================================================
+  // ===== Business Journey tabs =================================================
+  const STAGES = [
+    { key:'start',  tab:'Start',  head:'Launch with Confidence', icon:'rocket',
+      body:'Expert guidance on legal setup, ideation, business registration, and finding your first customers. We help you move from idea to revenue.',
+      points:['Business registration guides','Market research templates','Ideation frameworks','First customer playbook'], cta:'Start Your Business', href:'public-funding.html' },
+    { key:'manage', tab:'Manage', head:'Run a Tight Ship', icon:'clipboard-check',
+      body:'Stay compliant and on top of cash flow, tax, and operations as your business finds its feet.',
+      points:['Compliance & tax checklists','Cash flow templates','Bookkeeping tools','HR & payroll basics'], cta:'Manage Smarter', href:'public-resources.html' },
+    { key:'growth', tab:'Growth', head:'Scale What Works', icon:'trending-up',
+      body:'Reach new customers, build your team, and grow revenue with proven, SA-specific playbooks.',
+      points:['Marketing & sales playbooks','Hiring frameworks','Customer retention guides','Growth funding options'], cta:'Grow Faster', href:'public-resources.html' },
+    { key:'fund',   tab:'Fund',   head:'Access the Right Capital', icon:'banknote',
+      body:'Get matched with verified funders suited to your stage and turnover — apply once, transparently.',
+      points:['Verified funder matching','Loan readiness checklist','Application templates','Funding calculator'], cta:'Apply for Funding', href:'public-funding.html' }
+  ];
+  let activeStage = 'start';
+  function renderTabs(){
+    document.getElementById('jtabs').innerHTML = STAGES.map(s=>`
+      <button onclick="setStage('${s.key}')" class="jtab px-5 h-11 rounded-full border border-[#E7EBEF] bg-white text-sm font-bold font-jakarta text-slate-600 transition ${s.key===activeStage?'active':''}">${s.tab}</button>`).join('');
+  }
+  function renderPanel(){
+    const s = STAGES.find(x=>x.key===activeStage);
+    document.getElementById('jpanel').innerHTML = `
+      <div>
+        <div class="w-12 h-12 rounded-xl bg-[#FDECEF] text-[#DC183C] grid place-items-center mb-4"><i data-lucide="${s.icon}" class="w-6 h-6"></i></div>
+        <h3 class="font-jakarta font-extrabold text-2xl sm:text-3xl">${esc(s.head)}</h3>
+        <p class="mt-3 text-[#6A7581] leading-relaxed">${esc(s.body)}</p>
+        <a href="${s.href}" class="mt-6 inline-flex items-center gap-2 px-6 h-12 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold transition">${esc(s.cta)} <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
+      </div>
+      <div class="grid sm:grid-cols-2 gap-3">
+        ${s.points.map(p=>`<div class="flex items-start gap-2.5 bg-white rounded-xl border border-[#E7EBEF] p-4"><i data-lucide="check" class="w-5 h-5 text-[#29A37A] shrink-0 mt-0.5"></i><span class="text-sm font-semibold">${esc(p)}</span></div>`).join('')}
+      </div>`;
+    lucide.createIcons();
+  }
+  function setStage(k){ activeStage=k; renderTabs(); renderPanel(); }
+
+  // ===== Founder Focus (CEO's exact stories) ===================================
   const FOUNDERS = [
-    { cat:'Branding',        tint:'#FFF1E0', txt:'#AE6B0A', init:'LK', name:'Lerato Khumalo', title:'Founder, Stitch & Story', date:'12 May 2026', read:'5 min', head:'How a township brand became a national name' },
-    { cat:'Innovation',      tint:'#FDECEF', txt:'#DC183C', init:'SP', name:'Sipho Pillay',    title:'CEO, GridPay',           date:'29 Apr 2026', read:'6 min', head:'Building fintech rails for the informal economy' },
-    { cat:'Food & Beverage', tint:'#E4F5EE', txt:'#29A37A', init:'AB', name:'Aisha Bashir',    title:'Founder, Maputo Spice',  date:'18 Apr 2026', read:'4 min', head:'From a home kitchen to 40 retail shelves' }
+    { img:'assets/founder-1.jpg', cat:'Branding',        tint:'#FFF1E0', txt:'#AE6B0A', title:'Crafting an AURA for Brands', author:'Nicole Mirkin', date:'April 10, 2026', read:'5 min read', desc:'How one creative entrepreneur turned a passion for branding into a full-scale agency.' },
+    { img:'assets/founder-2.jpg', cat:'Innovation',      tint:'#FDECEF', txt:'#DC183C', title:'Reframing Innovation Through Hackathons', author:'Francois van der Merwe', date:'March 25, 2026', read:'4 min read', desc:'Building bridges between corporate South Africa and the grassroots innovation ecosystem.' },
+    { img:'assets/founder-3.jpg', cat:'Food & Beverage', tint:'#E4F5EE', txt:'#29A37A', title:'Feeding the Body and Mind with PujoPujo', author:'Dorothy Fatima', date:'March 19, 2026', read:'6 min read', desc:'A mother’s mission to create nutritious, affordable baby food for every South African family.' }
   ];
   function renderFounders(){
     document.getElementById('founder-grid').innerHTML = FOUNDERS.map((f,i)=>`
       <a href="public-articles.html" class="group bg-white rounded-2xl border border-[#E7EBEF] overflow-hidden card-lift reveal block" style="animation-delay:${i*80}ms">
-        <div class="h-44 relative grid place-items-center" style="background:linear-gradient(135deg,#0C1F31,#243b52)">
-          ${monogram(f.init, 64)}
-          <span class="absolute top-3 left-3 px-2.5 py-1 rounded-full text-[11px] font-bold" style="background:${f.tint};color:${f.txt}">${f.cat}</span>
+        <div class="relative aspect-[16/10] overflow-hidden">
+          <img src="${f.img}" alt="${esc(f.title)}" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition duration-300" />
+          <span class="absolute top-3 left-3 px-2.5 py-1 rounded-full text-[11px] font-bold" style="background:${f.tint};color:${f.txt}">${esc(f.cat)}</span>
         </div>
         <div class="p-5">
-          <h3 class="font-jakarta font-bold text-lg leading-snug group-hover:text-[#DC183C] transition">${f.head}</h3>
-          <div class="flex items-center gap-2.5 mt-4">
-            ${monogram(f.init, 32)}
-            <div class="min-w-0">
-              <p class="text-sm font-bold truncate">${f.name}</p>
-              <p class="text-xs text-slate-500 truncate">${f.title}</p>
-            </div>
+          <h3 class="font-jakarta font-bold text-lg leading-snug group-hover:text-[#DC183C] transition">${esc(f.title)}</h3>
+          <p class="text-sm text-[#6A7581] mt-2 leading-snug">${esc(f.desc)}</p>
+          <div class="flex items-center justify-between mt-4 text-xs text-[#6A7581]">
+            <span class="font-bold text-[#121A21]">${esc(f.author)}</span>
+            <span>${esc(f.date)} · ${esc(f.read)}</span>
           </div>
-          <p class="text-xs text-slate-400 mt-3">${f.date} · ${f.read} read</p>
         </div>
       </a>`).join('');
     lucide.createIcons();
   }
 
-  function subscribe(e){ e.preventDefault(); e.target.reset(); showToast('Subscribed — welcome to the community.', 'win'); }
+  // ===== Animated impact counters =============================================
+  function animateCounters(){
+    document.querySelectorAll('#impact [data-count]').forEach(el=>{
+      const target = +el.dataset.count, pre = el.dataset.prefix||'', suf = el.dataset.suffix||'';
+      const dur = 1200, t0 = performance.now();
+      function tick(now){
+        const p = Math.min(1, (now - t0)/dur);
+        const val = Math.round(target * (1 - Math.pow(1-p, 3)));
+        el.textContent = pre + val + suf;
+        if(p < 1) requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+    });
+  }
+  // run when the impact section scrolls into view
+  (function(){
+    const sec = document.getElementById('impact');
+    if('IntersectionObserver' in window){
+      const io = new IntersectionObserver((ents)=>{ ents.forEach(e=>{ if(e.isIntersecting){ animateCounters(); io.disconnect(); } }); }, { threshold:.4 });
+      io.observe(sec);
+    } else { animateCounters(); }
+  })();
 
   // ===== Dev Mode + briefs ====================================================
   const BRIEFS = {
     hero: {
       title:'Public Hero', sub:'Top-of-funnel conversion surface',
-      purpose:'The logged-out front door. Its one job is to convert a visitor into a free member (<b>Join for Free</b> → MemberPress signup) or send them to a value page (<b>Explore Resources</b>). Headline metrics build social proof above the fold.',
-      data:'Static marketing copy + live counters: <code>members_total</code>, <code>loans_facilitated_zar</code>, <code>events_total</code>, <code>downloads_total</code>.',
-      logic:'CTAs route to MemberPress register/login. Counters can be cached server-side (hourly) to avoid CPU cost on WP Engine. This is a public, indexable page (unlike gated funding apps).',
-      components:'Promo banner · sticky header · hero · metric band · CTA buttons.',
+      purpose:'The logged-out front door. One job: convert a visitor into a free member (<b>Join for Free</b> → MemberPress signup) or send them to value (<b>Explore Resources</b>). The entrepreneur photo + social proof + stat strip build trust above the fold.',
+      data:'Static marketing copy + live counters: <code>members_total</code>, <code>loans_facilitated_zar</code>, <code>downloads_total</code>. Hero image is a static asset (assets/hero-entrepreneurs.jpg).',
+      logic:'CTAs route to MemberPress register/login. Counters cached server-side (hourly) to protect WP Engine CPU. Public, indexable page.',
+      components:'Promo banner · sticky header · 2-col hero (copy + image) · floating stat chip · 3-stat trust strip.',
       api:'GET /v1/stats/platform (cached) · MemberPress /register'
     },
     pillars: {
-      title:'Four Pillars', sub:'The platform value proposition',
-      purpose:'Summarises the four reasons to join — Community, Events, Funding, Resources — each linking to its destination. Maps marketing promise to real product surfaces so the funnel is honest.',
-      data:'Static cards. Each links to a route: member-hub (community), events, funding, resources.',
-      logic:'Order is fixed (Community first — it is the retention engine). Icons + tints use the Ask/Win/Share palette for brand cohesion.',
-      components:'4 icon cards · tinted icon chips · deep links.',
-      api:'— (static, no endpoint)'
+      title:'Platform Pillars', sub:'The four-part value proposition',
+      purpose:'Summarises the four reasons to join — Community, Events, Funding, Resources — each linking to its destination so the marketing promise maps to real product surfaces.',
+      data:'Static cards. Each links to a route: member-hub, events, funding, resources.',
+      logic:'Order fixed (Community first — the retention engine). Icon tints use the Ask/Win/Share palette for brand cohesion.',
+      components:'4 icon cards · tinted icon chips · deep links.', api:'— (static)'
     },
     journey: {
-      title:'Business Journey', sub:'Stage-based content routing',
-      purpose:'Lets a visitor self-identify by stage (Launch / Manage / Growth / Fund) so content and funding can be tailored. Feeds the recommendation engine post-signup.',
-      data:'Stage taxonomy: <code>stage ∈ {launch, manage, growth, fund}</code>. Stored on the member profile after signup.',
-      logic:'On a public page these are informational. After signup the chosen stage personalises the hub feed, suggested members and funding matches.',
-      components:'4 numbered stage cards.',
+      title:'Business Journey', sub:'Stage tabs + detail panel',
+      purpose:'Lets a visitor self-identify by stage (Start / Manage / Growth / Fund). Each tab swaps a detail panel with stage-specific guidance + CTA, and the chosen stage personalises the experience after signup.',
+      data:'Stage taxonomy <code>stage ∈ {start, manage, growth, fund}</code>; per stage: heading, body, feature list, CTA. Stored on the member profile post-signup.',
+      logic:'Tab click swaps the panel (client-side). After signup the chosen stage personalises hub feed, suggested members and funding matches.',
+      components:'Tab row · detail panel (heading + body + CTA + 4 feature tiles).',
       api:'PATCH /v1/members/{id} { stage }'
+    },
+    impact: {
+      title:'Impact Counters', sub:'Animated social-proof metrics',
+      purpose:'Reinforces credibility with headline platform metrics that count up when scrolled into view — a low-cost trust signal near the final CTA.',
+      data:'Live aggregates: members, loans facilitated (ZAR), events hosted, downloads. Same source as the hero strip.',
+      logic:'IntersectionObserver triggers a one-time count-up animation (eased). Values cached server-side; the animation is purely client-side (no CPU cost).',
+      components:'4 stat cards · count-up animation · IntersectionObserver trigger.',
+      api:'GET /v1/stats/platform (cached)'
     }
   };
-  function toggleDevMode(){
-    const on = document.body.classList.toggle('dev-on');
-    const btn = document.getElementById('devToggle');
-    if(btn) btn.classList.toggle('on', on);
-    if(on) showToast('Dev Mode on — tap any ⓘ for implementation notes.', null);
-    lucide.createIcons();
-  }
-  function closeOverlay(id){
-    const el = document.getElementById(id);
-    if(!el) return;
-    el.classList.remove('open');
-    setTimeout(()=>{ if(el && el.parentNode) el.remove(); }, 300);
-  }
-  function openBrief(id){
-    const b = BRIEFS[id];
-    if(!b) return;
-    const sec = (icon,label,html) => `
-      <div class="px-6 py-4 border-t border-slate-100">
-        <p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] flex items-center gap-1.5 mb-2"><i data-lucide="${icon}" class="w-3.5 h-3.5"></i>${label}</p>
-        <div class="text-sm text-slate-600 leading-relaxed">${html}</div>
-      </div>`;
-    document.getElementById('overlay-root').innerHTML = `
-      <div class="ov" id="ov-brief">
-        <div class="ov-bg" onclick="closeOverlay('ov-brief')"></div>
-        <div class="drawer">
-          <div class="sticky top-0 z-10 bg-[#0C1F31] text-white px-6 py-5 flex items-start justify-between">
-            <div class="min-w-0">
-              <p class="text-[10px] font-bold uppercase tracking-widest text-[#FF9900] mb-1">Dev Brief</p>
-              <h3 class="font-jakarta font-extrabold text-lg leading-tight">${b.title}</h3>
-              <p class="text-xs text-white/60 mt-1">${b.sub}</p>
-            </div>
-            <button onclick="closeOverlay('ov-brief')" aria-label="Close" class="text-white/60 hover:text-white shrink-0 ml-3"><i data-lucide="x" class="w-5 h-5"></i></button>
-          </div>
-          ${sec('target','Purpose', b.purpose)}
-          ${sec('database','Data model', b.data)}
-          ${sec('git-branch','Logic', b.logic)}
-          ${sec('boxes','Components', b.components)}
-          ${sec('plug','API', `<code class="block bg-slate-900 text-emerald-300 text-xs font-mono px-3 py-2 rounded-lg overflow-x-auto">${b.api}</code>`)}
-          <div class="px-6 py-4 border-t border-slate-100">
-            <p class="text-[11px] text-slate-400 flex items-center gap-1.5"><i data-lucide="info" class="w-3.5 h-3.5"></i> Spec lives beside the feature — toggle Dev Mode off for the clean stakeholder view.</p>
-          </div>
-        </div>
-      </div>`;
-    requestAnimationFrame(()=>{ const o=document.getElementById('ov-brief'); if(o) o.classList.add('open'); });
-    lucide.createIcons();
+  function toggleDevMode(){ const on=document.body.classList.toggle('dev-on'); const b=document.getElementById('devToggle'); if(b)b.classList.toggle('on',on); if(on)showToast('Dev Mode on — tap any ⓘ for implementation notes.', null); lucide.createIcons(); }
+  function closeOverlay(id){ const el=document.getElementById(id); if(!el)return; el.classList.remove('open'); setTimeout(()=>{ if(el&&el.parentNode) el.remove(); },300); }
+  function openBrief(id){ const b=BRIEFS[id]; if(!b)return;
+    const sec=(icon,label,html)=>`<div class="px-6 py-4 border-t border-slate-100"><p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] flex items-center gap-1.5 mb-2"><i data-lucide="${icon}" class="w-3.5 h-3.5"></i>${label}</p><div class="text-sm text-slate-600 leading-relaxed">${html}</div></div>`;
+    document.getElementById('overlay-root').innerHTML=`<div class="ov" id="ov-brief"><div class="ov-bg" onclick="closeOverlay('ov-brief')"></div><div class="drawer"><div class="sticky top-0 z-10 bg-[#0C1F31] text-white px-6 py-5 flex items-start justify-between"><div class="min-w-0"><p class="text-[10px] font-bold uppercase tracking-widest text-[#FF9900] mb-1">Dev Brief</p><h3 class="font-jakarta font-extrabold text-lg leading-tight">${b.title}</h3><p class="text-xs text-white/60 mt-1">${b.sub}</p></div><button onclick="closeOverlay('ov-brief')" aria-label="Close" class="text-white/60 hover:text-white shrink-0 ml-3"><i data-lucide="x" class="w-5 h-5"></i></button></div>${sec('target','Purpose',b.purpose)}${sec('database','Data model',b.data)}${sec('git-branch','Logic',b.logic)}${sec('boxes','Components',b.components)}${sec('plug','API',`<code class="block bg-slate-900 text-emerald-300 text-xs font-mono px-3 py-2 rounded-lg overflow-x-auto">${b.api}</code>`)}<div class="px-6 py-4 border-t border-slate-100"><p class="text-[11px] text-slate-400 flex items-center gap-1.5"><i data-lucide="info" class="w-3.5 h-3.5"></i> Spec lives beside the feature — toggle Dev Mode off for the clean stakeholder view.</p></div></div></div>`;
+    requestAnimationFrame(()=>{ const o=document.getElementById('ov-brief'); if(o)o.classList.add('open'); }); lucide.createIcons();
   }
 
-  renderFounders();
-  lucide.createIcons();
+  renderTabs(); renderPanel(); renderFounders(); lucide.createIcons();
 </script>
 </body>
 </html>
