@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SME South Africa — Site Pages</title>
+  <meta name="description" content="SME South Africa policies and information pages — Privacy, Terms, Refunds, POPIA, About, Contact, Advertise." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  <script>
+    tailwind.config = { theme: { extend: { fontFamily: {
+      jakarta: ['Plus Jakarta Sans', 'sans-serif'], inter: ['Inter', 'system-ui', 'sans-serif']
+    } } } };
+  </script>
+  <style>
+    html, body { font-family: 'Inter', system-ui, sans-serif; }
+    .font-jakarta { font-family: 'Plus Jakarta Sans', sans-serif; letter-spacing: 0.005em; }
+    .no-scrollbar::-webkit-scrollbar { display:none; } .no-scrollbar { -ms-overflow-style:none; scrollbar-width:none; }
+    .hero-bg { background: linear-gradient(115deg,#0C1F31 0%,#0C1F31 50%,#2b1626 80%,#5e1a2c 115%); }
+    .dot-pattern { background-image: radial-gradient(rgba(255,255,255,.07) 1px, transparent 1.5px); background-size: 22px 22px; }
+    .pnav.active { background:#FDECEF; color:#DC183C; }
+    .prose h3 { font-family:'Plus Jakarta Sans',sans-serif; font-weight:800; font-size:1.15rem; margin:1.5rem 0 .5rem; color:#121A21; }
+    .prose p, .prose li { color:#475569; line-height:1.7; font-size:.95rem; margin-bottom:.6rem; }
+    .prose ul { list-style:disc; padding-left:1.25rem; margin-bottom:.6rem; }
+    .dev-badge { display:none; } body.dev-on .dev-badge { display:inline-flex; }
+    #devToggle.on { background:#DC183C; color:#fff; border-color:#DC183C; }
+    .ov { position:fixed; inset:0; z-index:60; }
+    .ov-bg { position:absolute; inset:0; background:rgba(12,31,49,.45); backdrop-filter:blur(2px); opacity:0; transition:opacity .3s; }
+    .ov.open .ov-bg { opacity:1; }
+    .drawer { position:absolute; right:0; top:0; height:100%; width:100%; max-width:440px; background:#fff; box-shadow:-12px 0 40px rgba(12,31,49,.25); overflow-y:auto; transform:translateX(100%); transition:transform .3s cubic-bezier(.2,.7,.2,1); }
+    .ov.open .drawer { transform:translateX(0); }
+  </style>
+</head>
+<body class="bg-[#FCFCFC] text-[#121A21] antialiased">
+
+<a href="#" class="block bg-[#DC183C] text-white text-center text-[13px] font-semibold py-2 px-4 hover:bg-[#B0142F] transition">
+  <i data-lucide="sparkles" class="inline w-3.5 h-3.5 -mt-0.5"></i> Funding Summit 2026 — <span class="underline underline-offset-2">Register Now</span>
+</a>
+
+<header class="bg-white border-b border-[#E7EBEF] sticky top-0 z-40">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center gap-4">
+    <a href="public-home.html" class="flex items-center gap-2.5 shrink-0">
+      <img src="assets/logo-icon.png" alt="SME South Africa" class="w-9 h-9" />
+      <span class="font-jakarta font-extrabold text-[17px] tracking-tight">SME <span class="text-[#DC183C]">South Africa</span></span>
+    </a>
+    <nav class="hidden lg:flex items-center gap-1 ml-4">
+      <a href="public-articles.html"  class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition">Articles</a>
+      <a href="public-resources.html" class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition">Resources</a>
+      <a href="public-funding.html"   class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition">Funding</a>
+      <a href="public-solutions.html" class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition">Solutions</a>
+      <a href="public-shop.html"      class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition">Shop</a>
+    </nav>
+    <div class="flex items-center gap-1 sm:gap-2 ml-auto">
+      <button id="devToggle" onclick="toggleDevMode()" class="hidden sm:flex items-center gap-1.5 px-3 h-9 rounded-full border border-slate-200 text-slate-500 hover:border-[#DC183C] hover:text-[#DC183C] transition text-[11px] font-bold uppercase tracking-wider" title="Toggle implementation notes"><i data-lucide="code-2" class="w-3.5 h-3.5"></i><span>Dev</span></button>
+      <a href="public-shop.html" aria-label="Cart" class="relative w-10 h-10 grid place-items-center rounded-full hover:bg-slate-100 text-slate-600"><i data-lucide="shopping-bag" class="w-5 h-5"></i><span class="absolute top-1.5 right-1.5 bg-[#DC183C] text-white text-[10px] font-bold rounded-full w-4 h-4 grid place-items-center">0</span></a>
+      <a href="public-auth.html" class="hidden sm:inline-flex items-center px-3 h-9 rounded-full text-sm font-bold text-[#121A21] hover:bg-slate-100 transition">Sign in</a>
+      <a href="public-auth.html#join" class="inline-flex items-center px-4 h-9 rounded-full text-sm font-bold text-white bg-[#DC183C] hover:bg-[#B0142F] transition">Join Free</a>
+    </div>
+  </div>
+</header>
+
+<!-- page hero -->
+<section class="hero-bg text-white relative overflow-hidden">
+  <div class="absolute inset-0 dot-pattern opacity-70 pointer-events-none"></div>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-10 relative">
+    <p class="text-[12px] font-bold uppercase tracking-widest text-white/50">Information</p>
+    <h1 id="pageHero" class="font-jakarta font-extrabold text-3xl sm:text-4xl mt-1">About Us
+      <button onclick="openBrief('pages')" class="dev-badge align-middle ml-1 w-6 h-6 rounded-full bg-[#FF9900] text-[#0C1F31] items-center justify-center text-[11px] font-bold" title="Implementation notes">i</button>
+    </h1>
+  </div>
+</section>
+
+<main class="max-w-7xl mx-auto px-4 sm:px-6 py-10 grid lg:grid-cols-[260px_1fr] gap-8 items-start">
+  <!-- sidebar -->
+  <aside class="lg:sticky lg:top-24">
+    <nav id="pnav" class="bg-white rounded-2xl border border-[#E7EBEF] p-2 flex lg:flex-col gap-1 overflow-x-auto no-scrollbar"></nav>
+  </aside>
+  <!-- content -->
+  <div id="pcontent" class="bg-white rounded-2xl border border-[#E7EBEF] p-6 sm:p-10 min-h-[60vh]"></div>
+</main>
+
+<footer class="bg-[#0C1F31] text-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-12">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+      <div class="col-span-2 md:col-span-1">
+        <a href="public-home.html" class="flex items-center gap-2.5"><span class="w-9 h-9 rounded-lg bg-white grid place-items-center"><img src="assets/logo-icon.png" alt="SME South Africa" class="w-7 h-7" /></span><span class="font-jakarta font-extrabold text-[17px]">SME South Africa</span></a>
+        <p class="text-sm text-white/55 mt-4 max-w-xs leading-relaxed">South Africa's leading SME community — empowering entrepreneurs to build, grow, and thrive.</p>
+      </div>
+      <div><p class="text-[11px] font-bold uppercase tracking-widest text-white/40">Platform</p><ul class="mt-4 space-y-2.5 text-sm text-white/70"><li><a href="member-hub.html" class="hover:text-white">Community</a></li><li><a href="events.html" class="hover:text-white">Events</a></li><li><a href="public-funding.html" class="hover:text-white">Funding</a></li><li><a href="public-resources.html" class="hover:text-white">Resources</a></li></ul></div>
+      <div><p class="text-[11px] font-bold uppercase tracking-widest text-white/40">Company</p><ul class="mt-4 space-y-2.5 text-sm text-white/70"><li><a href="public-pages.html#about" class="hover:text-white">About</a></li><li><a href="public-pages.html#contact" class="hover:text-white">Contact</a></li><li><a href="public-pages.html#advertise" class="hover:text-white">Advertise</a></li></ul></div>
+      <div><p class="text-[11px] font-bold uppercase tracking-widest text-white/40">Legal</p><ul class="mt-4 space-y-2.5 text-sm text-white/70"><li><a href="public-pages.html#privacy" class="hover:text-white">Privacy Policy</a></li><li><a href="public-pages.html#terms" class="hover:text-white">Terms of Service</a></li><li><a href="public-pages.html#refunds" class="hover:text-white">Refunds Policy</a></li><li><a href="public-pages.html#popia" class="hover:text-white">POPIA</a></li></ul></div>
+    </div>
+    <div class="flex flex-col sm:flex-row items-center justify-between gap-4 pt-8 mt-10 border-t border-white/10 text-sm text-white/50">
+      <p>© 2026 SME South Africa. All rights reserved.</p>
+      <p class="text-white/40">Proprietary &amp; confidential.</p>
+    </div>
+  </div>
+</footer>
+
+<div id="overlay-root"></div>
+<div id="toast" class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-50"></div>
+
+<script>
+  function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c])); }
+  function showToast(msg){ const el=document.getElementById('toast'); el.classList.remove('hidden'); el.innerHTML=`<div class="bg-[#0C1F31] text-white rounded-full pl-3 pr-5 py-2.5 shadow-2xl flex items-center gap-2 text-sm font-semibold" style="border-left:4px solid #29A37A"><i data-lucide="check-circle" class="w-4 h-4" style="color:#29A37A"></i><span>${esc(msg)}</span></div>`; lucide.createIcons(); setTimeout(()=>{el.classList.add('hidden');el.innerHTML='';},2400); }
+  function formSubmit(e){ e.preventDefault(); e.target.reset(); showToast('Thanks — we’ll be in touch shortly.'); }
+
+  // Doc renderer for legal/policy text pages
+  function doc(updated, sections){
+    return `<p class="text-xs text-[#6A7581] mb-6">Last updated: ${updated} · <span class="text-[#AE6B0A] font-semibold">Mockup copy — final text syncs from smesouthafrica.co.za</span></p>
+      <div class="prose max-w-none">${sections.map(s=>`<h3>${esc(s.h)}</h3>${(s.p||[]).map(x=>`<p>${x}</p>`).join('')}${s.list?`<ul>${s.list.map(li=>`<li>${li}</li>`).join('')}</ul>`:''}`).join('')}</div>`;
+  }
+
+  const PAGES = {
+    about: { label:'About Us', icon:'building-2', render:()=>`
+      <div class="prose max-w-none">
+        <p class="text-lg text-[#121A21] font-semibold">SME South Africa is the country's largest community for small and medium business owners — connecting founders with funding, mentorship, events, and the tools to scale.</p>
+        <h3>Our story</h3>
+        <p>Since 2014, we've grown from a resource site into a gated membership community — a place where South African founders ask for help, celebrate wins, and share what works. Today more than 100,000 members rely on the platform.</p>
+        <h3>Our mission</h3>
+        <p>To remove the barriers that hold SMEs back — access to capital, knowledge, and a network that has your back — so more South African businesses can build, grow, and thrive.</p>
+      </div>
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 my-8">
+        ${[['100K+','Members'],['R100M+','Loans facilitated'],['500+','Events hosted'],['50K+','Downloads']].map(s=>`<div class="bg-[#FCFCFC] rounded-2xl border border-[#E7EBEF] p-5 text-center"><p class="font-jakarta font-extrabold text-2xl text-[#DC183C]">${s[0]}</p><p class="text-sm text-[#6A7581] mt-1">${s[1]}</p></div>`).join('')}
+      </div>
+      <div class="grid sm:grid-cols-3 gap-4">
+        ${[['heart-handshake','Community first','Reputation is built on generosity, not vanity metrics.'],['shield-check','Trust & transparency','Funding and data handled openly and within POPIA.'],['flag','Proudly South African','Built for the realities of doing business in SA.']].map(v=>`<div class="rounded-2xl border border-[#E7EBEF] p-5"><div class="w-10 h-10 rounded-xl bg-[#FDECEF] text-[#DC183C] grid place-items-center mb-3"><i data-lucide="${v[0]}" class="w-5 h-5"></i></div><p class="font-jakarta font-bold">${v[1]}</p><p class="text-sm text-[#6A7581] mt-1">${v[2]}</p></div>`).join('')}
+      </div>` },
+
+    contact: { label:'Contact Us', icon:'mail', render:()=>`
+      <div class="grid md:grid-cols-2 gap-8">
+        <div>
+          <p class="text-[#475569] leading-relaxed">Have a question, partnership idea, or need support? Send us a message and the team will get back to you.</p>
+          <div class="mt-6 space-y-4 text-sm">
+            <div class="flex items-center gap-3"><div class="w-10 h-10 rounded-xl bg-[#FDECEF] text-[#DC183C] grid place-items-center"><i data-lucide="mail" class="w-5 h-5"></i></div><div><p class="text-[#6A7581]">Email</p><p class="font-semibold">hello@smesouthafrica.co.za</p></div></div>
+            <div class="flex items-center gap-3"><div class="w-10 h-10 rounded-xl bg-[#E4F5EE] text-[#29A37A] grid place-items-center"><i data-lucide="phone" class="w-5 h-5"></i></div><div><p class="text-[#6A7581]">Phone</p><p class="font-semibold">+27 (0)11 000 0000</p></div></div>
+            <div class="flex items-center gap-3"><div class="w-10 h-10 rounded-xl bg-[#FFF1E0] text-[#AE6B0A] grid place-items-center"><i data-lucide="map-pin" class="w-5 h-5"></i></div><div><p class="text-[#6A7581]">Office</p><p class="font-semibold">Johannesburg, South Africa</p></div></div>
+          </div>
+        </div>
+        <form onsubmit="formSubmit(event)" class="space-y-4">
+          <div><label class="block text-sm font-semibold mb-1.5">Name</label><input required class="w-full bg-white border border-[#E7EBEF] rounded-xl px-4 h-12 text-sm outline-none focus:border-[#DC183C] focus:ring-2 focus:ring-[#DC183C]/15" placeholder="Your name" /></div>
+          <div><label class="block text-sm font-semibold mb-1.5">Email</label><input type="email" required class="w-full bg-white border border-[#E7EBEF] rounded-xl px-4 h-12 text-sm outline-none focus:border-[#DC183C] focus:ring-2 focus:ring-[#DC183C]/15" placeholder="you@business.co.za" /></div>
+          <div><label class="block text-sm font-semibold mb-1.5">Subject</label><input class="w-full bg-white border border-[#E7EBEF] rounded-xl px-4 h-12 text-sm outline-none focus:border-[#DC183C] focus:ring-2 focus:ring-[#DC183C]/15" placeholder="How can we help?" /></div>
+          <div><label class="block text-sm font-semibold mb-1.5">Message</label><textarea required rows="4" class="w-full bg-white border border-[#E7EBEF] rounded-xl px-4 py-3 text-sm outline-none focus:border-[#DC183C] focus:ring-2 focus:ring-[#DC183C]/15" placeholder="Your message…"></textarea></div>
+          <button class="w-full h-12 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold transition flex items-center justify-center gap-2">Send message <i data-lucide="send" class="w-4 h-4"></i></button>
+        </form>
+      </div>` },
+
+    advertise: { label:'Advertise With Us', icon:'megaphone', render:()=>`
+      <p class="text-[#475569] leading-relaxed max-w-2xl">Reach South Africa's most engaged community of SME founders and decision-makers. Put your brand in front of an audience actively looking to grow.</p>
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 my-8">
+        ${[['100K+','Members'],['250K+','Monthly readers'],['45K+','Newsletter subs'],['4.6%','Avg. CTR']].map(s=>`<div class="bg-[#FCFCFC] rounded-2xl border border-[#E7EBEF] p-5 text-center"><p class="font-jakarta font-extrabold text-2xl text-[#DC183C]">${s[0]}</p><p class="text-sm text-[#6A7581] mt-1">${s[1]}</p></div>`).join('')}
+      </div>
+      <h3 class="font-jakarta font-extrabold text-xl mb-3">Ways to partner</h3>
+      <div class="grid sm:grid-cols-3 gap-4 mb-8">
+        ${[['newspaper','Sponsored articles','Native content in the SME Articles feed.'],['mail','Newsletter placements','Reach inboxes with the weekly send.'],['calendar','Event sponsorship','Brand the Funding Summit and webinars.']].map(o=>`<div class="rounded-2xl border border-[#E7EBEF] p-5"><div class="w-10 h-10 rounded-xl bg-[#FFF1E0] text-[#AE6B0A] grid place-items-center mb-3"><i data-lucide="${o[0]}" class="w-5 h-5"></i></div><p class="font-jakarta font-bold">${o[1]}</p><p class="text-sm text-[#6A7581] mt-1">${o[2]}</p></div>`).join('')}
+      </div>
+      <form onsubmit="formSubmit(event)" class="bg-[#FCFCFC] rounded-2xl border border-[#E7EBEF] p-6 grid sm:grid-cols-2 gap-4">
+        <div><label class="block text-sm font-semibold mb-1.5">Company</label><input required class="w-full bg-white border border-[#E7EBEF] rounded-xl px-4 h-12 text-sm outline-none focus:border-[#DC183C] focus:ring-2 focus:ring-[#DC183C]/15" placeholder="Company name" /></div>
+        <div><label class="block text-sm font-semibold mb-1.5">Work email</label><input type="email" required class="w-full bg-white border border-[#E7EBEF] rounded-xl px-4 h-12 text-sm outline-none focus:border-[#DC183C] focus:ring-2 focus:ring-[#DC183C]/15" placeholder="you@company.co.za" /></div>
+        <div class="sm:col-span-2"><label class="block text-sm font-semibold mb-1.5">What are you interested in?</label><textarea rows="3" class="w-full bg-white border border-[#E7EBEF] rounded-xl px-4 py-3 text-sm outline-none focus:border-[#DC183C] focus:ring-2 focus:ring-[#DC183C]/15" placeholder="Tell us about your campaign…"></textarea></div>
+        <div class="sm:col-span-2"><button class="h-12 px-6 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold transition inline-flex items-center gap-2">Request media kit <i data-lucide="arrow-right" class="w-4 h-4"></i></button></div>
+      </form>` },
+
+    privacy: { label:'Privacy Policy', icon:'shield', render:()=>doc('1 June 2026', [
+      { h:'Introduction', p:['SME South Africa ("we", "us") respects your privacy. This policy explains what personal information we collect, why, and how we protect it, in line with the Protection of Personal Information Act (POPIA).'] },
+      { h:'Information we collect', p:['Account details (name, email), profile information you choose to add, funding application data you submit, merch order details, and usage data.'] },
+      { h:'How we use your information', p:['To operate the community, match you with funders, process merch orders, send communications you have opted into, and improve the platform.'] },
+      { h:'Sharing', p:['We share data only with service providers needed to run the platform and, with your consent, with funders you choose to apply to. We never sell your data.'] },
+      { h:'Your rights', p:['You may access, correct, export or delete your data at any time from Account → Data & POPIA, or by contacting our Information Officer.'] },
+      { h:'Contact', p:['Information Officer: privacy@smesouthafrica.co.za'] }
+    ]) },
+
+    terms: { label:'Terms & Conditions', icon:'file-text', render:()=>doc('1 June 2026', [
+      { h:'Acceptance of terms', p:['By accessing or using SME South Africa you agree to these terms. If you do not agree, please do not use the platform.'] },
+      { h:'Your account', p:['You are responsible for keeping your login secure and for activity under your account. One membership is for one person.'] },
+      { h:'Acceptable use', p:['Be respectful. No spam, harassment, unlawful content, or scraping. We may suspend accounts that breach these rules.'] },
+      { h:'Funding applications', p:['We facilitate connections with verified funders but do not guarantee funding. Approval, terms and payout are at the funder’s discretion.'] },
+      { h:'Limitation of liability', p:['The platform is provided "as is". To the extent permitted by law, we are not liable for indirect or consequential loss.'] },
+      { h:'Governing law', p:['These terms are governed by the laws of the Republic of South Africa.'] }
+    ]) },
+
+    refunds: { label:'Refunds Policy', icon:'rotate-ccw', render:()=>doc('1 June 2026', [
+      { h:'Memberships', p:['Free membership has no charge. Where paid tiers exist, you may cancel anytime; access continues to the end of the billing period.'] },
+      { h:'Merchandise (Shop)', p:['Branded merch is sold via WooCommerce. Unused items in original condition may be returned within 14 days of delivery for a refund or exchange.'], list:['Faulty or incorrect items: full refund or replacement','Change of mind: refund less return shipping','Custom items: non-refundable unless faulty'] },
+      { h:'Digital resources', p:['Free downloadable resources are provided as-is and are not refundable as no payment is taken.'] },
+      { h:'How to request', p:['Email hello@smesouthafrica.co.za with your order number. Approved refunds are processed to the original payment method within 5–10 business days.'] }
+    ]) },
+
+    popia: { label:'POPIA', icon:'lock', render:()=>doc('1 June 2026', [
+      { h:'Our commitment', p:['We process personal information lawfully under the Protection of Personal Information Act, 2013 (POPIA).'] },
+      { h:'Information Officer', p:['Our registered Information Officer can be reached at privacy@smesouthafrica.co.za for any data request or complaint.'] },
+      { h:'Your data subject rights', p:['You have the right to:'], list:['Access the personal information we hold about you','Request correction or deletion','Download your data (JSON export)','Object to processing and withdraw consent'] },
+      { h:'Data retention', p:['Account data is deleted within 30 days of an account-deletion request. Financial records (e.g. merch orders) are retained for 5 years to meet SARS / FICA obligations.'] },
+      { h:'Complaints', p:['You may lodge a complaint with the Information Regulator of South Africa if you believe your rights have been infringed.'] }
+    ]) }
+  };
+  const ORDER = ['about','contact','advertise','privacy','terms','refunds','popia'];
+
+  function renderNav(active){
+    document.getElementById('pnav').innerHTML = ORDER.map(id=>{
+      const p=PAGES[id];
+      return `<button onclick="go('${id}')" class="pnav ${id===active?'active':'text-slate-600 hover:bg-slate-100'} shrink-0 w-full flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl text-sm font-semibold transition text-left"><i data-lucide="${p.icon}" class="w-4 h-4 shrink-0"></i><span class="whitespace-nowrap">${p.label}</span></button>`;
+    }).join('');
+    lucide.createIcons();
+  }
+  function go(id){
+    if(!PAGES[id]) id='about';
+    document.getElementById('pageHero').childNodes[0].nodeValue = PAGES[id].label + ' ';
+    document.getElementById('pcontent').innerHTML = PAGES[id].render();
+    renderNav(id);
+    if(location.hash.slice(1)!==id) history.replaceState(null,'','#'+id);
+    lucide.createIcons();
+    window.scrollTo({ top:0, behavior:'smooth' });
+  }
+
+  const BRIEFS = { pages: {
+    title:'Site / Policy Pages', sub:'WordPress pages — content-managed',
+    purpose:'Standard information & legal pages (About, Contact, Advertise, Privacy, Terms, Refunds, POPIA). In production these are individual WordPress pages with their own URLs and SEO; this mockup consolidates them behind one shell for a consistent design review.',
+    data:'Each = a WP Page: <code>{ slug, title, body, updated_at }</code>. Contact/Advertise post to a form handler (e.g. Kit/CRM). Legal copy is content-managed; final text syncs from smesouthafrica.co.za.',
+    logic:'In production: one page per slug (/privacy, /about, …) with Yoast/RankMath meta. Forms send via Kit (staggered, never bulk). POPIA page links to the in-app Data & POPIA tools (export/delete).',
+    components:'Header · page hero · sidebar nav · content area (doc / form / about layouts) · footer.',
+    api:'GET /wp-json/wp/v2/pages?slug={slug} · POST /v1/contact · POST /v1/advertise'
+  } };
+  function toggleDevMode(){ const on=document.body.classList.toggle('dev-on'); const b=document.getElementById('devToggle'); if(b)b.classList.toggle('on',on); if(on)showToast('Dev Mode on — tap any ⓘ for implementation notes.'); lucide.createIcons(); }
+  function closeOverlay(id){ const el=document.getElementById(id); if(!el)return; el.classList.remove('open'); setTimeout(()=>{ if(el&&el.parentNode) el.remove(); },300); }
+  function openBrief(id){ const b=BRIEFS[id]; if(!b)return;
+    const sec=(icon,label,html)=>`<div class="px-6 py-4 border-t border-slate-100"><p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] flex items-center gap-1.5 mb-2"><i data-lucide="${icon}" class="w-3.5 h-3.5"></i>${label}</p><div class="text-sm text-slate-600 leading-relaxed">${html}</div></div>`;
+    document.getElementById('overlay-root').innerHTML=`<div class="ov" id="ov-brief"><div class="ov-bg" onclick="closeOverlay('ov-brief')"></div><div class="drawer"><div class="sticky top-0 z-10 bg-[#0C1F31] text-white px-6 py-5 flex items-start justify-between"><div class="min-w-0"><p class="text-[10px] font-bold uppercase tracking-widest text-[#FF9900] mb-1">Dev Brief</p><h3 class="font-jakarta font-extrabold text-lg leading-tight">${b.title}</h3><p class="text-xs text-white/60 mt-1">${b.sub}</p></div><button onclick="closeOverlay('ov-brief')" aria-label="Close" class="text-white/60 hover:text-white shrink-0 ml-3"><i data-lucide="x" class="w-5 h-5"></i></button></div>${sec('target','Purpose',b.purpose)}${sec('database','Data model',b.data)}${sec('git-branch','Logic',b.logic)}${sec('boxes','Components',b.components)}${sec('plug','API',`<code class="block bg-slate-900 text-emerald-300 text-xs font-mono px-3 py-2 rounded-lg overflow-x-auto">${b.api}</code>`)}<div class="px-6 py-4 border-t border-slate-100"><p class="text-[11px] text-slate-400 flex items-center gap-1.5"><i data-lucide="info" class="w-3.5 h-3.5"></i> Spec lives beside the feature — toggle Dev Mode off for the clean view.</p></div></div></div>`;
+    requestAnimationFrame(()=>{ const o=document.getElementById('ov-brief'); if(o)o.classList.add('open'); }); lucide.createIcons();
+  }
+
+  go((location.hash.slice(1) in PAGES) ? location.hash.slice(1) : 'about');
+  lucide.createIcons();
+</script>
+</body>
+</html>
