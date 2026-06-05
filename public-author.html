@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Karabo Kgophane — SME South Africa</title>
+  <meta name="description" content="Articles by Karabo Kgophane — Social Media & Digital Community Manager at SME South Africa." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  <script>
+    tailwind.config = { theme: { extend: { fontFamily: {
+      jakarta: ['Plus Jakarta Sans', 'sans-serif'], inter: ['Inter', 'system-ui', 'sans-serif']
+    } } } };
+  </script>
+  <style>
+    html, body { font-family: 'Inter', system-ui, sans-serif; }
+    .font-jakarta { font-family: 'Plus Jakarta Sans', sans-serif; letter-spacing: 0.005em; }
+    .no-scrollbar::-webkit-scrollbar { display:none; } .no-scrollbar { -ms-overflow-style:none; scrollbar-width:none; }
+    @keyframes fadeUp { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
+    .reveal { animation: fadeUp .5s cubic-bezier(.2,.7,.2,1) backwards; }
+    .card-lift { transition: box-shadow .2s, transform .2s; }
+    .card-lift:hover { box-shadow: 0 10px 24px -10px rgba(10,44,61,0.18); transform: translateY(-2px); }
+    .fpill { transition: all .15s; cursor:pointer; }
+    .fpill.active { background:#DC183C; color:#fff; border-color:#DC183C; }
+    .dev-badge { display:none; } body.dev-on .dev-badge { display:inline-flex; }
+    #devToggle.on { background:#DC183C; color:#fff; border-color:#DC183C; }
+    .ov { position:fixed; inset:0; z-index:60; }
+    .ov-bg { position:absolute; inset:0; background:rgba(12,31,49,.45); backdrop-filter:blur(2px); opacity:0; transition:opacity .3s; }
+    .ov.open .ov-bg { opacity:1; }
+    .drawer { position:absolute; right:0; top:0; height:100%; width:100%; max-width:440px; background:#fff; box-shadow:-12px 0 40px rgba(12,31,49,.25); overflow-y:auto; transform:translateX(100%); transition:transform .3s cubic-bezier(.2,.7,.2,1); }
+    .ov.open .drawer { transform:translateX(0); }
+  </style>
+</head>
+<body class="bg-[#FCFCFC] text-[#121A21] antialiased">
+
+<a href="#" class="block bg-[#DC183C] text-white text-center text-[13px] font-semibold py-2 px-4 hover:bg-[#B0142F] transition">
+  <i data-lucide="sparkles" class="inline w-3.5 h-3.5 -mt-0.5"></i> Funding Summit 2026 — <span class="underline underline-offset-2">Register Now</span>
+</a>
+
+<header class="bg-white border-b border-[#E7EBEF] sticky top-0 z-40">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center gap-4">
+    <a href="public-home.html" class="flex items-center gap-2.5 shrink-0">
+      <img src="assets/logo-icon.png" alt="SME South Africa" class="w-9 h-9" />
+      <span class="font-jakarta font-extrabold text-[17px] tracking-tight">SME <span class="text-[#DC183C]">South Africa</span></span>
+    </a>
+    <nav class="hidden lg:flex items-center gap-1 ml-4">
+      <a href="public-articles.html"  class="px-3 py-2 rounded-lg text-sm font-semibold text-[#DC183C] bg-[#FDECEF]">Articles</a>
+      <a href="public-resources.html" class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition">Resources</a>
+      <a href="public-funding.html"   class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition">Funding</a>
+      <a href="public-solutions.html" class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition">Solutions</a>
+      <a href="public-shop.html"      class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition">Shop</a>
+    </nav>
+    <div class="flex items-center gap-1 sm:gap-2 ml-auto">
+      <button id="devToggle" onclick="toggleDevMode()" class="hidden sm:flex items-center gap-1.5 px-3 h-9 rounded-full border border-slate-200 text-slate-500 hover:border-[#DC183C] hover:text-[#DC183C] transition text-[11px] font-bold uppercase tracking-wider" title="Toggle implementation notes"><i data-lucide="code-2" class="w-3.5 h-3.5"></i><span>Dev</span></button>
+      <a href="public-shop.html" aria-label="Cart" class="relative w-10 h-10 grid place-items-center rounded-full hover:bg-slate-100 text-slate-600"><i data-lucide="shopping-bag" class="w-5 h-5"></i><span class="absolute top-1.5 right-1.5 bg-[#DC183C] text-white text-[10px] font-bold rounded-full w-4 h-4 grid place-items-center">0</span></a>
+      <a href="public-auth.html" class="hidden sm:inline-flex items-center px-3 h-9 rounded-full text-sm font-bold text-[#121A21] hover:bg-slate-100 transition">Sign in</a>
+      <a href="public-auth.html#join" class="inline-flex items-center px-4 h-9 rounded-full text-sm font-bold text-white bg-[#DC183C] hover:bg-[#B0142F] transition">Join Free</a>
+    </div>
+  </div>
+</header>
+
+<!-- ===================== AUTHOR HEADER ===================== -->
+<section class="bg-white border-b border-[#E7EBEF]">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-10">
+    <p class="text-xs text-[#6A7581] mb-5"><a href="public-articles.html" class="hover:text-[#DC183C]">Articles</a> <span class="mx-1">/</span> <span>Authors</span> <span class="mx-1">/</span> <span class="text-[#121A21] font-semibold">Karabo Kgophane</span></p>
+    <div class="flex flex-col sm:flex-row gap-6 sm:gap-8">
+      <div class="w-32 h-36 rounded-2xl bg-gradient-to-br from-[#DC183C] to-[#FF9900] grid place-items-center font-jakarta font-extrabold text-white text-4xl shrink-0 shadow-lg">KK</div>
+      <div class="min-w-0">
+        <div class="flex items-start gap-2">
+          <h1 class="font-jakarta font-extrabold text-3xl sm:text-4xl text-[#0C1F31] tracking-tight">Karabo Kgophane</h1>
+          <button onclick="openBrief('author')" class="dev-badge w-6 h-6 rounded-full bg-[#DC183C] text-white items-center justify-center text-[11px] font-bold mt-1.5" title="Implementation notes">i</button>
+        </div>
+        <p class="text-[#DC183C] font-semibold mt-1">Social Media &amp; Digital Community Manager</p>
+        <div class="flex flex-wrap items-center gap-4 mt-3 text-sm text-[#6A7581]">
+          <span class="flex items-center gap-1.5"><i data-lucide="file-text" class="w-4 h-4"></i> <span id="artCount">8</span> articles</span>
+          <span class="flex items-center gap-1.5"><i data-lucide="map-pin" class="w-4 h-4"></i> Johannesburg, SA</span>
+          <span class="flex items-center gap-2">
+            <a href="#" class="w-8 h-8 rounded-full bg-slate-100 hover:bg-[#FDECEF] hover:text-[#DC183C] grid place-items-center transition" aria-label="LinkedIn"><i data-lucide="linkedin" class="w-4 h-4"></i></a>
+            <a href="#" class="w-8 h-8 rounded-full bg-slate-100 hover:bg-[#FDECEF] hover:text-[#DC183C] grid place-items-center transition" aria-label="X"><i data-lucide="twitter" class="w-4 h-4"></i></a>
+            <a href="#" class="w-8 h-8 rounded-full bg-slate-100 hover:bg-[#FDECEF] hover:text-[#DC183C] grid place-items-center transition" aria-label="Email"><i data-lucide="mail" class="w-4 h-4"></i></a>
+          </span>
+        </div>
+        <p class="text-[10px] font-bold uppercase tracking-widest text-[#AE6B0A] mt-5">Bio</p>
+        <p class="text-[#475569] leading-relaxed mt-1 max-w-3xl">Karabo Kgophane is a Social Media &amp; Digital Community Manager with a background in journalism and film &amp; television, and over four years of experience curating content for entrepreneurs. He manages social platforms, creates content for newsletters, writes articles, and builds relationships with stakeholders. Passionate about helping entrepreneurs thrive, Karabo stays on top of trends to keep founders ahead of the game.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== AUTHOR ARTICLES ===================== -->
+<main class="max-w-7xl mx-auto px-4 sm:px-6 py-10">
+  <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 mb-7">
+    <h2 class="font-jakarta font-extrabold text-2xl">Latest from Karabo</h2>
+    <div id="cat-bar" class="flex items-center gap-2 overflow-x-auto no-scrollbar -mx-1 px-1"></div>
+  </div>
+  <div id="grid" class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6"></div>
+</main>
+
+<footer class="bg-[#0C1F31] text-white mt-6">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-12">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+      <div class="col-span-2 md:col-span-1">
+        <a href="public-home.html" class="flex items-center gap-2.5"><span class="w-9 h-9 rounded-lg bg-white grid place-items-center"><img src="assets/logo-icon.png" alt="SME South Africa" class="w-7 h-7" /></span><span class="font-jakarta font-extrabold text-[17px]">SME South Africa</span></a>
+        <p class="text-sm text-white/55 mt-4 max-w-xs leading-relaxed">South Africa's leading SME community — empowering entrepreneurs to build, grow, and thrive.</p>
+      </div>
+      <div><p class="text-[11px] font-bold uppercase tracking-widest text-white/40">Learn</p><ul class="mt-4 space-y-2.5 text-sm text-white/70"><li><a href="public-articles.html" class="hover:text-white">Articles</a></li><li><a href="public-resources.html" class="hover:text-white">Resources</a></li><li><a href="public-funding.html" class="hover:text-white">Funding</a></li></ul></div>
+      <div><p class="text-[11px] font-bold uppercase tracking-widest text-white/40">Company</p><ul class="mt-4 space-y-2.5 text-sm text-white/70"><li><a href="public-about.html" class="hover:text-white">About</a></li><li><a href="public-contact.html" class="hover:text-white">Contact</a></li><li><a href="public-advertise.html" class="hover:text-white">Advertise</a></li></ul></div>
+      <div><p class="text-[11px] font-bold uppercase tracking-widest text-white/40">Legal</p><ul class="mt-4 space-y-2.5 text-sm text-white/70"><li><a href="public-privacy.html" class="hover:text-white">Privacy Policy</a></li><li><a href="public-terms.html" class="hover:text-white">Terms of Service</a></li><li><a href="public-popia.html" class="hover:text-white">POPIA</a></li></ul></div>
+    </div>
+    <div class="flex flex-col sm:flex-row items-center justify-between gap-4 pt-8 mt-10 border-t border-white/10 text-sm text-white/50">
+      <p>© 2026 SME South Africa. All rights reserved.</p>
+      <p class="text-white/40">Proprietary &amp; confidential.</p>
+    </div>
+  </div>
+</footer>
+
+<div id="overlay-root"></div>
+<div id="toast" class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-50"></div>
+
+<script>
+  function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c])); }
+  function showToast(msg){ const el=document.getElementById('toast'); el.classList.remove('hidden'); el.innerHTML=`<div class="bg-[#0C1F31] text-white rounded-full pl-3 pr-5 py-2.5 shadow-2xl flex items-center gap-2 text-sm font-semibold" style="border-left:4px solid #DC183C"><i data-lucide="check-circle" class="w-4 h-4" style="color:#DC183C"></i><span>${esc(msg)}</span></div>`; lucide.createIcons(); setTimeout(()=>{el.classList.add('hidden');el.innerHTML='';},2200); }
+
+  const CATS = ['All','Articles','Brands','Guides','SME Resources','SME Reviews','Loan Options'];
+  const ARTICLES = [
+    { img:'assets/article-1.jpg', cat:'Articles',      title:'Kasi Money Starts With How You Earn', date:'Jan 20, 2026' },
+    { img:'assets/article-2.jpg', cat:'Guides',        title:'Tips For Increasing Scooter Delivery Profits', date:'Jan 14, 2026' },
+    { img:'assets/article-3.jpg', cat:'SME Resources', title:'Free AI Tools To Use in Your Business', date:'Jan 12, 2026' },
+    { img:'assets/article-4.jpg', cat:'Guides',        title:'Tips on Increasing e-hailing Profits in South Africa', date:'Jan 7, 2026' },
+    { img:'assets/article-5.jpg', cat:'Articles',      title:'Happy Holidays! Make Your SME Shine This Festive Season', date:'Dec 22, 2025' },
+    { img:'assets/article-6.jpg', cat:'Articles',      title:'Time Management for Entrepreneurs During the Festive Season', date:'Dec 18, 2025' },
+    { img:'assets/article-7.jpg', cat:'SME Reviews',   title:'Affordable Workspaces for South African Entrepreneurs', date:'Dec 12, 2025' },
+    { img:'assets/article-8.jpg', cat:'Brands',        title:'Queen’s Green Makes its Mark at the 2025 Township Economy Summit', date:'Dec 5, 2025' }
+  ];
+  let activeCat='All';
+  function renderCats(){ document.getElementById('cat-bar').innerHTML = CATS.map(c=>`<button onclick="setCat('${c.replace(/'/g,"\\'")}')" class="fpill shrink-0 px-3.5 h-9 rounded-full border border-[#E7EBEF] bg-white text-sm font-semibold text-slate-600 ${c===activeCat?'active':''}">${esc(c)}</button>`).join(''); }
+  function setCat(c){ activeCat=c; renderCats(); renderGrid(); }
+  function renderGrid(){
+    const list = activeCat==='All' ? ARTICLES : ARTICLES.filter(a=>a.cat===activeCat);
+    document.getElementById('artCount').textContent = ARTICLES.length;
+    document.getElementById('grid').innerHTML = list.map((a,i)=>`
+      <a href="public-article.html" class="group bg-white rounded-2xl border border-[#E7EBEF] overflow-hidden card-lift reveal block" style="animation-delay:${i*40}ms">
+        <div class="relative aspect-[16/10] overflow-hidden">
+          <img src="${a.img}" alt="${esc(a.title)}" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition duration-300" />
+          <span class="absolute top-3 left-3 px-2.5 py-1 rounded-full text-[10px] font-bold bg-white/90 text-[#121A21]">${esc(a.cat)}</span>
+        </div>
+        <div class="p-4">
+          <h3 class="font-jakarta font-bold leading-snug group-hover:text-[#DC183C] transition">${esc(a.title)}</h3>
+          <div class="flex items-center gap-2 mt-4">
+            <span class="w-7 h-7 rounded-full bg-gradient-to-br from-[#DC183C] to-[#FF9900] grid place-items-center text-white text-[10px] font-bold">KK</span>
+            <span class="text-xs font-semibold truncate">Karabo Kgophane</span>
+            <span class="text-xs text-[#6A7581] ml-auto shrink-0">${esc(a.date)}</span>
+          </div>
+        </div>
+      </a>`).join('');
+    lucide.createIcons();
+  }
+
+  const BRIEFS = { author: {
+    title:'Author Page', sub:'Contributor profile + their posts',
+    purpose:'A public author/contributor profile: bio, role, socials, and every article they’ve written. Builds credibility (E-E-A-T) for SEO and lets readers follow a writer. Each author has a clean, indexable URL.',
+    data:'Author: <code>{ id, name, role, bio, avatar, socials[], location }</code>. Articles: filtered by <code>author_id</code>, grouped by category, newest first.',
+    logic:'Category chips filter this author’s posts client-side; server paginates for long lists. Author pages are public + indexable (Yoast/RankMath author schema). Cards link to the single article.',
+    components:'Author header (avatar, bio, socials, count) · category filter · article grid.',
+    api:'GET /v1/authors/{slug} · GET /v1/articles?author={id}&category={cat}'
+  } };
+  function toggleDevMode(){ const on=document.body.classList.toggle('dev-on'); const b=document.getElementById('devToggle'); if(b)b.classList.toggle('on',on); if(on)showToast('Dev Mode on — tap any ⓘ for implementation notes.'); lucide.createIcons(); }
+  function closeOverlay(id){ const el=document.getElementById(id); if(!el)return; el.classList.remove('open'); setTimeout(()=>{ if(el&&el.parentNode) el.remove(); },300); }
+  function openBrief(id){ const b=BRIEFS[id]; if(!b)return;
+    const sec=(icon,label,html)=>`<div class="px-6 py-4 border-t border-slate-100"><p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] flex items-center gap-1.5 mb-2"><i data-lucide="${icon}" class="w-3.5 h-3.5"></i>${label}</p><div class="text-sm text-slate-600 leading-relaxed">${html}</div></div>`;
+    document.getElementById('overlay-root').innerHTML=`<div class="ov" id="ov-brief"><div class="ov-bg" onclick="closeOverlay('ov-brief')"></div><div class="drawer"><div class="sticky top-0 z-10 bg-[#0C1F31] text-white px-6 py-5 flex items-start justify-between"><div class="min-w-0"><p class="text-[10px] font-bold uppercase tracking-widest text-[#FF9900] mb-1">Dev Brief</p><h3 class="font-jakarta font-extrabold text-lg leading-tight">${b.title}</h3><p class="text-xs text-white/60 mt-1">${b.sub}</p></div><button onclick="closeOverlay('ov-brief')" aria-label="Close" class="text-white/60 hover:text-white shrink-0 ml-3"><i data-lucide="x" class="w-5 h-5"></i></button></div>${sec('target','Purpose',b.purpose)}${sec('database','Data model',b.data)}${sec('git-branch','Logic',b.logic)}${sec('boxes','Components',b.components)}${sec('plug','API',`<code class="block bg-slate-900 text-emerald-300 text-xs font-mono px-3 py-2 rounded-lg overflow-x-auto">${b.api}</code>`)}<div class="px-6 py-4 border-t border-slate-100"><p class="text-[11px] text-slate-400 flex items-center gap-1.5"><i data-lucide="info" class="w-3.5 h-3.5"></i> Spec lives beside the feature — toggle Dev Mode off for the clean view.</p></div></div></div>`;
+    requestAnimationFrame(()=>{ const o=document.getElementById('ov-brief'); if(o)o.classList.add('open'); }); lucide.createIcons();
+  }
+
+  renderCats(); renderGrid(); lucide.createIcons();
+</script>
+</body>
+</html>

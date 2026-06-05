@@ -4,28 +4,30 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SME South Africa — Shop</title>
-  <meta name="description" content="Branded SME South Africa merchandise — caps, hoodies, tees, totes and notebooks. Equip your growth." />
+  <meta name="description" content="Premium branded merchandise for South Africa's SME community — built to last, priced to ship." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet" />
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
   <script>
     tailwind.config = { theme: { extend: { fontFamily: {
-      jakarta: ['Plus Jakarta Sans', 'sans-serif'], inter: ['Inter', 'system-ui', 'sans-serif'], mono:['monospace']
+      jakarta: ['Plus Jakarta Sans', 'sans-serif'], inter: ['Inter', 'system-ui', 'sans-serif'], mono:['ui-monospace','SFMono-Regular','Menlo','monospace']
     } } } };
   </script>
   <style>
     html, body { font-family: 'Inter', system-ui, sans-serif; }
     .font-jakarta { font-family: 'Plus Jakarta Sans', sans-serif; letter-spacing: 0.005em; }
-    .font-mono { font-family: monospace; }
+    .font-mono { font-family:'ui-monospace','SFMono-Regular',Menlo,monospace; }
     .no-scrollbar::-webkit-scrollbar { display:none; } .no-scrollbar { -ms-overflow-style:none; scrollbar-width:none; }
+    .hero-bg { background: linear-gradient(115deg,#0C1F31 0%,#0C1F31 50%,#2b1626 80%,#5e1a2c 115%); }
+    .dot-pattern { background-image: radial-gradient(rgba(255,255,255,.07) 1px, transparent 1.5px); background-size: 22px 22px; }
     @keyframes fadeUp { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
     .reveal { animation: fadeUp .5s cubic-bezier(.2,.7,.2,1) backwards; }
     .card-lift { transition: box-shadow .2s, transform .2s; }
     .card-lift:hover { box-shadow: 0 10px 24px -10px rgba(10,44,61,0.18); transform: translateY(-2px); }
-    .chip { transition: background-color .15s, color .15s, border-color .15s; cursor:pointer; }
-    .chip.active { background:#0C1F31; color:#fff; border-color:#0C1F31; }
+    .fpill { transition: all .15s; cursor:pointer; }
+    .fpill.active { background:#0C1F31; color:#fff; border-color:#0C1F31; }
     .dev-badge { display:none; } body.dev-on .dev-badge { display:inline-flex; }
     #devToggle.on { background:#DC183C; color:#fff; border-color:#DC183C; }
     .ov { position:fixed; inset:0; z-index:60; }
@@ -57,45 +59,74 @@
     <div class="flex items-center gap-1 sm:gap-2 ml-auto">
       <button id="devToggle" onclick="toggleDevMode()" class="hidden sm:flex items-center gap-1.5 px-3 h-9 rounded-full border border-slate-200 text-slate-500 hover:border-[#DC183C] hover:text-[#DC183C] transition text-[11px] font-bold uppercase tracking-wider" title="Toggle implementation notes"><i data-lucide="code-2" class="w-3.5 h-3.5"></i><span>Dev</span></button>
       <button onclick="openCart()" aria-label="Cart" class="relative w-10 h-10 grid place-items-center rounded-full hover:bg-slate-100 text-slate-600"><i data-lucide="shopping-bag" class="w-5 h-5"></i><span id="cartCount" class="absolute top-1.5 right-1.5 bg-[#DC183C] text-white text-[10px] font-bold rounded-full w-4 h-4 grid place-items-center">0</span></button>
-      <a href="member-hub.html" class="hidden sm:inline-flex items-center px-3 h-9 rounded-full text-sm font-bold text-[#121A21] hover:bg-slate-100 transition">Sign in</a>
-      <a href="member-hub.html" class="inline-flex items-center px-4 h-9 rounded-full text-sm font-bold text-white bg-[#DC183C] hover:bg-[#B0142F] transition">Join Free</a>
+      <a href="public-auth.html" class="hidden sm:inline-flex items-center px-3 h-9 rounded-full text-sm font-bold text-[#121A21] hover:bg-slate-100 transition">Sign in</a>
+      <a href="public-auth.html#join" class="inline-flex items-center px-4 h-9 rounded-full text-sm font-bold text-white bg-[#DC183C] hover:bg-[#B0142F] transition">Join Free</a>
     </div>
   </div>
 </header>
 
-<!-- ===================== PAGE HEAD ===================== -->
-<section class="bg-white border-b border-[#E7EBEF]">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-12">
-    <div class="flex items-start gap-2">
-      <h1 class="font-jakarta font-extrabold text-4xl sm:text-5xl tracking-tight">SME Shop</h1>
-      <button onclick="openBrief('shop')" class="dev-badge w-6 h-6 rounded-full bg-[#DC183C] text-white items-center justify-center text-[11px] font-bold mt-2" title="Implementation notes">i</button>
+<!-- ===================== HERO ===================== -->
+<section class="hero-bg text-white relative overflow-hidden">
+  <div class="absolute inset-0 dot-pattern opacity-60 pointer-events-none"></div>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-12 sm:py-16 grid lg:grid-cols-2 gap-10 items-center relative">
+    <div class="reveal">
+      <p class="text-[12px] text-white/50 mb-4"><a href="public-home.html" class="hover:text-white">Home</a> <span class="mx-1">/</span> <span class="text-white/80">Shop</span></p>
+      <span class="inline-flex items-center gap-2 px-3 h-7 rounded-full bg-white/10 border border-white/15 text-[11px] font-bold uppercase tracking-widest mb-5">
+        <i data-lucide="shopping-bag" class="w-3.5 h-3.5 text-[#FF9900]"></i> SME Shop
+        <button onclick="openBrief('shop')" class="dev-badge ml-1 w-4 h-4 rounded-full bg-[#FF9900] text-[#0C1F31] items-center justify-center text-[9px] font-bold" title="Implementation notes">i</button>
+      </span>
+      <h1 class="font-jakarta font-extrabold text-4xl sm:text-6xl leading-[1.05] tracking-tight">Equip Your <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#DC183C] to-[#FF9900]">Growth</span></h1>
+      <p class="mt-4 text-lg text-white/70 max-w-md">Premium merchandise designed for South Africa's SME community. Show up as the leader your business deserves — built to last, priced to ship.</p>
+      <div class="mt-7 flex flex-wrap items-center gap-3">
+        <a href="#collection" class="inline-flex items-center gap-2 px-6 h-12 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold transition">Shop the Collection <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
+        <a href="public-home.html" class="inline-flex items-center gap-2 px-6 h-12 rounded-full bg-white/5 border border-white/20 hover:bg-white/10 text-white font-bold transition">Back to Main Platform</a>
+      </div>
     </div>
-    <p class="text-lg text-slate-600 mt-3 max-w-2xl">Wear the community. Branded merch to equip your growth — every order supports the platform.</p>
+    <!-- hero product thumbnails 2x2 -->
+    <div class="grid grid-cols-2 gap-4 reveal" style="animation-delay:120ms">
+      <div class="aspect-square rounded-2xl bg-white/90 grid place-items-center"><i data-lucide="shirt" class="w-14 h-14 text-[#0C1F31]/70"></i></div>
+      <div class="aspect-square rounded-2xl bg-white/90 grid place-items-center"><i data-lucide="hard-hat" class="w-14 h-14 text-[#0C1F31]/70"></i></div>
+      <div class="aspect-square rounded-2xl bg-white/90 grid place-items-center"><i data-lucide="shopping-bag" class="w-14 h-14 text-[#0C1F31]/70"></i></div>
+      <div class="aspect-square rounded-2xl bg-white/90 grid place-items-center"><i data-lucide="coffee" class="w-14 h-14 text-[#0C1F31]/70"></i></div>
+    </div>
   </div>
 </section>
 
-<main class="max-w-7xl mx-auto px-4 sm:px-6 py-10">
-  <div class="flex items-center justify-between gap-4 mb-7">
+<!-- ===================== COLLECTION ===================== -->
+<main id="collection" class="max-w-7xl mx-auto px-4 sm:px-6 py-14">
+  <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-5 mb-8">
+    <div>
+      <p class="text-[12px] font-bold uppercase tracking-widest text-[#DC183C]">Shop the Collection</p>
+      <h2 class="font-jakarta font-extrabold text-3xl sm:text-4xl mt-1">Built for Founders.</h2>
+    </div>
     <div id="cat-bar" class="flex items-center gap-2 overflow-x-auto no-scrollbar -mx-1 px-1"></div>
-    <span id="count" class="text-sm text-slate-500 shrink-0"></span>
   </div>
-  <div id="grid" class="grid grid-cols-2 lg:grid-cols-4 gap-5"></div>
+  <div id="grid" class="grid grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6"></div>
 </main>
+
+<!-- ===================== TRUST BAND ===================== -->
+<section class="border-t border-[#E7EBEF] bg-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-10 grid sm:grid-cols-3 gap-6">
+    <div class="flex items-center gap-3"><div class="w-11 h-11 rounded-xl bg-[#FDECEF] text-[#DC183C] grid place-items-center shrink-0"><i data-lucide="truck" class="w-5 h-5"></i></div><div><p class="font-jakarta font-bold text-sm">SA Wide Shipping</p><p class="text-sm text-[#6A7581]">Reliable delivery to your door, anywhere in South Africa.</p></div></div>
+    <div class="flex items-center gap-3"><div class="w-11 h-11 rounded-xl bg-[#E4F5EE] text-[#29A37A] grid place-items-center shrink-0"><i data-lucide="shield-check" class="w-5 h-5"></i></div><div><p class="font-jakarta font-bold text-sm">Secure Transactions</p><p class="text-sm text-[#6A7581]">Powered by PayFast. Your financial security is our top priority.</p></div></div>
+    <div class="flex items-center gap-3"><div class="w-11 h-11 rounded-xl bg-[#FFF1E0] text-[#AE6B0A] grid place-items-center shrink-0"><i data-lucide="award" class="w-5 h-5"></i></div><div><p class="font-jakarta font-bold text-sm">Premium Quality</p><p class="text-sm text-[#6A7581]">Carefully sourced materials that reflect the professional SME brand.</p></div></div>
+  </div>
+</section>
 
 <footer class="bg-[#0C1F31] text-white">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 py-12">
     <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
       <div class="col-span-2 md:col-span-1">
         <a href="public-home.html" class="flex items-center gap-2.5"><span class="w-9 h-9 rounded-lg bg-white grid place-items-center"><img src="assets/logo-icon.png" alt="SME South Africa" class="w-7 h-7" /></span><span class="font-jakarta font-extrabold text-[17px]">SME South Africa</span></a>
-        <p class="text-sm text-white/55 mt-4 max-w-xs leading-relaxed">South Africa's largest SME community — connecting founders with funding, mentorship, events, and the tools to scale.</p>
+        <p class="text-sm text-white/55 mt-4 max-w-xs leading-relaxed">South Africa's leading SME community — empowering entrepreneurs to build, grow, and thrive.</p>
       </div>
-      <div><p class="text-[11px] font-bold uppercase tracking-widest text-white/40">Platform</p><ul class="mt-4 space-y-2.5 text-sm text-white/70"><li><a href="member-hub.html" class="hover:text-white">Community</a></li><li><a href="#" class="hover:text-white">Events</a></li><li><a href="public-funding.html" class="hover:text-white">Funding</a></li><li><a href="public-solutions.html" class="hover:text-white">Solutions</a></li><li><a href="public-shop.html" class="hover:text-white">Shop</a></li></ul></div>
-      <div><p class="text-[11px] font-bold uppercase tracking-widest text-white/40">Learn</p><ul class="mt-4 space-y-2.5 text-sm text-white/70"><li><a href="public-articles.html" class="hover:text-white">Articles</a></li><li><a href="public-resources.html" class="hover:text-white">Resources</a></li><li><a href="public-resources.html" class="hover:text-white">Guides</a></li><li><a href="#" class="hover:text-white">Podcast</a></li></ul></div>
-      <div><p class="text-[11px] font-bold uppercase tracking-widest text-white/40">Company</p><ul class="mt-4 space-y-2.5 text-sm text-white/70"><li><a href="#" class="hover:text-white">About</a></li><li><a href="#" class="hover:text-white">Contact</a></li><li><a href="#" class="hover:text-white">Careers</a></li><li><a href="#" class="hover:text-white">Partners</a></li></ul></div>
+      <div><p class="text-[11px] font-bold uppercase tracking-widest text-white/40">Platform</p><ul class="mt-4 space-y-2.5 text-sm text-white/70"><li><a href="member-hub.html" class="hover:text-white">Community</a></li><li><a href="events.html" class="hover:text-white">Events</a></li><li><a href="public-funding.html" class="hover:text-white">Funding</a></li><li><a href="public-resources.html" class="hover:text-white">Resources</a></li></ul></div>
+      <div><p class="text-[11px] font-bold uppercase tracking-widest text-white/40">Company</p><ul class="mt-4 space-y-2.5 text-sm text-white/70"><li><a href="public-about.html" class="hover:text-white">About</a></li><li><a href="public-contact.html" class="hover:text-white">Contact</a></li><li><a href="public-advertise.html" class="hover:text-white">Advertise</a></li></ul></div>
+      <div><p class="text-[11px] font-bold uppercase tracking-widest text-white/40">Legal</p><ul class="mt-4 space-y-2.5 text-sm text-white/70"><li><a href="public-privacy.html" class="hover:text-white">Privacy Policy</a></li><li><a href="public-terms.html" class="hover:text-white">Terms of Service</a></li><li><a href="public-refunds.html" class="hover:text-white">Refunds Policy</a></li><li><a href="public-popia.html" class="hover:text-white">POPIA</a></li></ul></div>
     </div>
     <div class="flex flex-col sm:flex-row items-center justify-between gap-4 pt-8 mt-10 border-t border-white/10 text-sm text-white/50">
       <p>© 2026 SME South Africa. All rights reserved.</p>
-      <div class="flex items-center gap-5"><a href="#" class="hover:text-white">Privacy Policy</a><a href="#" class="hover:text-white">Terms of Service</a><a href="#" class="hover:text-white">Cookie Policy</a></div>
+      <p class="text-white/40">Proprietary &amp; confidential.</p>
     </div>
   </div>
 </footer>
@@ -108,55 +139,48 @@
   function showToast(msg){ const el=document.getElementById('toast'); el.classList.remove('hidden'); el.innerHTML=`<div class="bg-[#0C1F31] text-white rounded-full pl-3 pr-5 py-2.5 shadow-2xl flex items-center gap-2 text-sm font-semibold" style="border-left:4px solid #29A37A"><i data-lucide="check-circle" class="w-4 h-4" style="color:#29A37A"></i><span>${esc(msg)}</span></div>`; lucide.createIcons(); setTimeout(()=>{el.classList.add('hidden');el.innerHTML='';},2200); }
 
   let cart = 0;
-  const CATS = ['All','Caps','Hoodies','T-shirts','Totes','Notebooks'];
-  const ICON = { Caps:'crown', Hoodies:'shirt', 'T-shirts':'shirt', Totes:'shopping-bag', Notebooks:'notebook' };
-  const TINT = { Caps:['#FDECEF','#DC183C'], Hoodies:['#0C1F31','#FF9900'], 'T-shirts':['#FFF1E0','#AE6B0A'], Totes:['#E4F5EE','#29A37A'], Notebooks:['#FDECEF','#DC183C'] };
+  const CATS = ['All','Apparel','Accessories','Stationery','Drinkware'];
+  // tint = [bg, icon] for the product image placeholder; badge: {t,bg,fg}
   const PRODUCTS = [
-    { cat:'Caps',      name:'Founder Cap — Red',        price:249 },
-    { cat:'Caps',      name:'Dad Cap — Navy',           price:249 },
-    { cat:'Hoodies',   name:'Build Grow Thrive Hoodie', price:649 },
-    { cat:'Hoodies',   name:'Premium Zip Hoodie — Navy',price:799 },
-    { cat:'T-shirts',  name:'Classic Logo Tee — White', price:299 },
-    { cat:'T-shirts',  name:'"Ask · Win · Share" Tee',  price:329 },
-    { cat:'Totes',     name:'Canvas Tote — Natural',    price:179 },
-    { cat:'Totes',     name:'Heavy Tote — Black',       price:199 },
-    { cat:'Notebooks', name:'Founder Notebook — A5',    price:159 },
-    { cat:'Notebooks', name:'Hardcover Journal — Navy', price:219 },
-    { cat:'T-shirts',  name:'Proudly SA Founder Tee',   price:329 },
-    { cat:'Caps',      name:'Trucker Cap — Orange',     price:259 }
+    { name:'SME SA Signature Hoodie',     cat:'Apparel',     price:650, icon:'shirt',        badge:{t:'Bestseller', bg:'#0C1F31', fg:'#fff'} },
+    { name:"Entrepreneur 'Hustle' Cap",   cat:'Apparel',     price:295, icon:'hard-hat',     badge:{t:'New',        bg:'#29A37A', fg:'#fff'} },
+    { name:'Strategic Planning Notebook', cat:'Stationery',  price:220, icon:'notebook',     badge:null },
+    { name:'Matte Black Logo Mug',        cat:'Drinkware',   price:185, icon:'coffee',       badge:null },
+    { name:'Stainless Steel Water Bottle',cat:'Drinkware',   price:350, icon:'cup-soda',     badge:{t:'Sale',       bg:'#FF9900', fg:'#0C1F31'} },
+    { name:'Premium Cotton Tote',         cat:'Accessories', price:150, icon:'shopping-bag', badge:{t:'Bestseller', bg:'#0C1F31', fg:'#fff'} }
   ];
 
   let activeCat='All';
-  function renderCats(){ document.getElementById('cat-bar').innerHTML = CATS.map(c=>`<button onclick="setCat('${c}')" class="chip shrink-0 px-3.5 h-9 rounded-full border border-[#E7EBEF] bg-white text-sm font-semibold text-slate-600 ${c===activeCat?'active':''}">${esc(c)}</button>`).join(''); }
+  function renderCats(){ document.getElementById('cat-bar').innerHTML = CATS.map(c=>`<button onclick="setCat('${c}')" class="fpill shrink-0 px-4 h-9 rounded-full border border-[#E7EBEF] bg-white text-sm font-bold text-slate-600 ${c===activeCat?'active':''}">${esc(c)}</button>`).join(''); }
   function setCat(c){ activeCat=c; renderCats(); renderGrid(); }
   function renderGrid(){
     const list = activeCat==='All' ? PRODUCTS : PRODUCTS.filter(p=>p.cat===activeCat);
-    document.getElementById('count').textContent = `${list.length} product${list.length===1?'':'s'}`;
-    document.getElementById('grid').innerHTML = list.map((p,i)=>{ const t=TINT[p.cat]; return `
+    document.getElementById('grid').innerHTML = list.map((p,i)=>`
       <div class="bg-white rounded-2xl border border-[#E7EBEF] overflow-hidden card-lift reveal" style="animation-delay:${i*40}ms">
-        <div class="aspect-square grid place-items-center relative" style="background:${t[0]}">
-          <i data-lucide="${ICON[p.cat]}" class="w-16 h-16" style="color:${t[1]}"></i>
-          <span class="absolute top-3 left-3 px-2.5 py-1 rounded-full text-[10px] font-bold bg-white/80 text-[#121A21]">${esc(p.cat)}</span>
+        <div class="relative aspect-square grid place-items-center" style="background:linear-gradient(160deg,#F4F6F8,#E9edf1)">
+          <i data-lucide="${p.icon}" class="w-16 h-16 text-[#0C1F31]/35"></i>
+          ${p.badge?`<span class="absolute top-3 left-3 px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wide" style="background:${p.badge.bg};color:${p.badge.fg}">${esc(p.badge.t)}</span>`:''}
         </div>
         <div class="p-4">
-          <h3 class="font-jakarta font-bold leading-snug">${esc(p.name)}</h3>
+          <p class="text-[10px] font-bold uppercase tracking-widest text-[#6A7581]">${esc(p.cat)}</p>
+          <h3 class="font-jakarta font-bold leading-snug mt-1">${esc(p.name)}</h3>
           <div class="flex items-center justify-between mt-3">
-            <span class="font-mono font-bold text-[#121A21]">R${p.price}</span>
-            <button onclick="addToCart('${esc(p.name).replace(/'/g,"&#39;")}')" class="inline-flex items-center gap-1.5 px-3 h-9 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white text-sm font-bold transition"><i data-lucide="plus" class="w-4 h-4"></i> Add</button>
+            <span class="font-mono font-bold text-[#121A21]">R ${p.price}</span>
+            <button onclick="addToCart('${esc(p.name).replace(/'/g,"&#39;")}')" aria-label="Add to cart" class="w-9 h-9 rounded-full bg-[#0C1F31] hover:bg-[#1b3247] text-white grid place-items-center transition"><i data-lucide="plus" class="w-4 h-4"></i></button>
           </div>
         </div>
-      </div>`; }).join('');
+      </div>`).join('');
     lucide.createIcons();
   }
   function addToCart(name){ cart++; document.getElementById('cartCount').textContent = cart; showToast('Added to cart: ' + name); }
-  function openCart(){ if(cart===0){ showToast('Your cart is empty — add some merch.'); return; } showToast('Checkout opens in WooCommerce (secure).'); }
+  function openCart(){ showToast(cart===0 ? 'Your cart is empty — add some merch.' : 'Checkout opens in WooCommerce (secure).'); }
 
   const BRIEFS = { shop: {
     title:'Merch Shop', sub:'WooCommerce · branded merch only',
-    purpose:'Sells <b>physical branded merchandise only</b> — caps, hoodies, tees, totes, notebooks. Builds belonging and a small revenue line. <b>No digital downloads here</b> — those live in MemberPress (Resources). Cart &amp; checkout hand off to WooCommerce secure pages; we never rebuild card/checkout UI.',
-    data:'WooCommerce Product: <code>{ id, name, category, price_zar, variations{size,colour}, stock, image }</code>. Order data falls under POPIA scope and is included in the member data export.',
-    logic:'Add-to-cart → WooCommerce cart session (shared WP user record with BuddyBoss + MemberPress — one login). Checkout, payment and delivery tracking all live in WooCommerce. Order history surfaces under My Orders in the member account.',
-    components:'Category filter · product grid · cart counter · WooCommerce checkout handoff.',
+    purpose:'Sells <b>physical branded merchandise only</b> — apparel, accessories, stationery, drinkware. No digital downloads here (those live in MemberPress / Resources). Builds belonging + a small revenue line. Cart &amp; checkout hand off to WooCommerce secure pages; never rebuild card/checkout UI.',
+    data:'WooCommerce Product: <code>{ id, name, category, price_zar, badge, image, stock }</code>. Order data is POPIA-scoped and included in the member data export.',
+    logic:'Add-to-cart → WooCommerce cart (shared WP user record with BuddyBoss + MemberPress — one login). Checkout, payment (PayFast) and delivery tracking live in WooCommerce. Categories filter client-side; badges are product flags.',
+    components:'Hero (thumbnails) · category filter pills · product grid (badge, price, add) · trust band · WooCommerce handoff.',
     api:'WC REST: GET /wp-json/wc/v3/products?category={cat} · POST /wp-json/wc/store/cart/add-item'
   } };
   function toggleDevMode(){ const on=document.body.classList.toggle('dev-on'); const b=document.getElementById('devToggle'); if(b)b.classList.toggle('on',on); if(on)showToast('Dev Mode on — tap any ⓘ for implementation notes.'); lucide.createIcons(); }
