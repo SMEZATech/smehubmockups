@@ -2,17 +2,19 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>The SME Brief — Newsletter — SME South Africa</title>
-  <meta name="description" content="Weekly insights on funding, growth and the tools to scale — straight to your inbox." />
+  <title>Newsletters — SME South Africa</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <script src="https://cdn.tailwindcss.com"></script><script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
   <script>tailwind.config={theme:{extend:{fontFamily:{jakarta:['Plus Jakarta Sans','sans-serif'],inter:['Inter','system-ui','sans-serif']}}}};</script>
   <style>
     html,body{font-family:'Inter',system-ui,sans-serif;} .font-jakarta{font-family:'Plus Jakarta Sans',sans-serif;letter-spacing:.005em;}
-    .hero-bg{background:linear-gradient(115deg,#0C1F31 0%,#0C1F31 50%,#2b1626 80%,#5e1a2c 115%);}
+    .hero-bg{background:linear-gradient(115deg,#0C1F31 0%,#0C1F31 55%,#2b1626 85%,#5e1a2c 120%);}
     .dot-pattern{background-image:radial-gradient(rgba(255,255,255,.07) 1px,transparent 1.5px);background-size:22px 22px;}
-    .card-lift{transition:box-shadow .2s,transform .2s;} .card-lift:hover{box-shadow:0 10px 24px -10px rgba(10,44,61,.18);transform:translateY(-2px);}
+    .field{width:100%;background:#fff;border:1px solid #E7EBEF;border-radius:.75rem;height:3rem;padding:0 1rem;font-size:.9rem;outline:none;transition:border-color .15s,box-shadow .15s;} .field:focus{border-color:#DC183C;box-shadow:0 0 0 3px rgba(220,24,60,.12);}
+    .issue-row{transition:all .25s cubic-bezier(.4,0,.2,1);border-left:3px solid transparent;}
+    .issue-row:hover{background:#fff;border-left-color:#DC183C;box-shadow:0 10px 25px -5px rgba(12,31,49,.08);transform:translateX(6px) translateY(-2px);}
+    .sticky-subscribe{position:sticky;top:88px;}
     .dev-badge{display:none;} body.dev-on .dev-badge{display:inline-flex;} #devToggle.on{background:#DC183C;color:#fff;border-color:#DC183C;}
     .ov{position:fixed;inset:0;z-index:60;} .ov-bg{position:absolute;inset:0;background:rgba(12,31,49,.45);backdrop-filter:blur(2px);opacity:0;transition:opacity .3s;} .ov.open .ov-bg{opacity:1;}
     .drawer{position:absolute;right:0;top:0;height:100%;width:100%;max-width:440px;background:#fff;box-shadow:-12px 0 40px rgba(12,31,49,.25);overflow-y:auto;transform:translateX(100%);transition:transform .3s cubic-bezier(.2,.7,.2,1);} .ov.open .drawer{transform:translateX(0);}
@@ -35,66 +37,183 @@
   </div>
 </div></header>
 
-<!-- HERO: subscribe -->
+<!-- HERO -->
 <section class="hero-bg text-white relative overflow-hidden"><div class="absolute inset-0 dot-pattern opacity-70 pointer-events-none"></div>
-  <div class="absolute top-0 right-0 w-2/3 h-full opacity-50 pointer-events-none" style="background:radial-gradient(55% 55% at 85% 40%, rgba(220,24,60,.25), transparent 70%)"></div>
-  <div class="max-w-3xl mx-auto px-4 sm:px-6 py-16 sm:py-20 relative text-center">
-    <span class="inline-flex items-center gap-2 px-3 h-7 rounded-full bg-white/10 border border-white/15 text-[11px] font-bold uppercase tracking-widest"><i data-lucide="mail" class="w-3.5 h-3.5 text-[#FF9900]"></i> The SME Brief
-      <button onclick="openBrief()" class="dev-badge ml-1 w-4 h-4 rounded-full bg-[#FF9900] text-[#0C1F31] items-center justify-center text-[9px] font-bold">i</button>
-    </span>
-    <h1 class="font-jakarta font-extrabold text-4xl sm:text-5xl mt-5 leading-tight">Weekly 5-minute business advice</h1>
-    <p class="mt-4 text-white/70 max-w-xl mx-auto">Funding tips, growth strategies and founder stories — straight to your inbox, every Thursday.</p>
-    <form onsubmit="subscribe(event)" class="mt-7 flex gap-2 max-w-md mx-auto">
-      <input type="email" required placeholder="you@business.co.za" class="flex-1 bg-white/10 border border-white/20 rounded-full px-5 h-12 text-sm text-white outline-none focus:border-[#FF9900] focus:bg-white/15 transition placeholder:text-white/50" />
-      <button class="px-6 h-12 rounded-full bg-[#DC183C] hover:bg-[#B0142F] font-bold transition whitespace-nowrap">Subscribe</button>
-    </form>
-    <p class="text-xs text-white/40 mt-2">Join 45,000+ founders. No spam, ever. Unsubscribe anytime.</p>
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 py-16 relative text-center">
+    <p class="text-[12px] font-bold uppercase tracking-widest text-white/50">Newsletters <button onclick="openBrief()" class="dev-badge align-middle ml-1 w-5 h-5 rounded-full bg-[#FF9900] text-[#0C1F31] items-center justify-center text-[10px] font-bold">i</button></p>
+    <h1 class="font-jakarta font-extrabold text-3xl sm:text-5xl mt-2 leading-tight">The SME <span class="text-[#DC183C]">dispatch</span></h1>
+    <p class="mt-4 text-white/70 max-w-2xl mx-auto text-lg">The smartest South African founders read our weekly breakdowns on funding, tech, and scaling strategies. Browse the archive or join 100K+ members today.</p>
+    <div class="mt-7 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm text-white/55 font-semibold">
+      <span class="flex items-center gap-2"><i data-lucide="users" class="w-4 h-4 text-[#FF9900]"></i> 100K+ readers</span>
+      <span class="flex items-center gap-2"><i data-lucide="mail" class="w-4 h-4 text-[#FF9900]"></i> 4 editions</span>
+      <span class="flex items-center gap-2"><i data-lucide="shield-check" class="w-4 h-4 text-[#FF9900]"></i> Zero spam</span>
+    </div>
   </div>
 </section>
 
-<!-- value strip -->
-<section class="max-w-7xl mx-auto px-4 sm:px-6 py-12 grid sm:grid-cols-3 gap-6">
-  <div class="flex items-center gap-3"><div class="w-11 h-11 rounded-xl bg-[#FDECEF] text-[#DC183C] grid place-items-center shrink-0"><i data-lucide="banknote" class="w-5 h-5"></i></div><div><p class="font-jakarta font-bold text-sm">Funding alerts</p><p class="text-sm text-[#6A7581]">New grants and loans, first.</p></div></div>
-  <div class="flex items-center gap-3"><div class="w-11 h-11 rounded-xl bg-[#FFF1E0] text-[#AE6B0A] grid place-items-center shrink-0"><i data-lucide="trending-up" class="w-5 h-5"></i></div><div><p class="font-jakarta font-bold text-sm">Growth playbooks</p><p class="text-sm text-[#6A7581]">Tactics you can use this week.</p></div></div>
-  <div class="flex items-center gap-3"><div class="w-11 h-11 rounded-xl bg-[#E4F5EE] text-[#29A37A] grid place-items-center shrink-0"><i data-lucide="users" class="w-5 h-5"></i></div><div><p class="font-jakarta font-bold text-sm">Founder stories</p><p class="text-sm text-[#6A7581]">Real lessons from SA builders.</p></div></div>
-</section>
+<!-- MAIN SPLIT -->
+<main class="max-w-7xl mx-auto px-4 sm:px-6 py-12">
+  <div class="flex flex-col lg:flex-row gap-10">
 
-<!-- archive -->
-<main class="max-w-7xl mx-auto px-4 sm:px-6 pb-14">
-  <h2 class="font-jakarta font-extrabold text-2xl sm:text-3xl mb-6">Latest issues</h2>
-  <div id="issues" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+    <!-- LEFT: Sticky subscribe widget -->
+    <div class="w-full lg:w-1/3 order-2 lg:order-1">
+      <div class="sticky-subscribe">
+        <div class="bg-white p-7 rounded-2xl border border-[#E7EBEF] shadow-sm relative overflow-hidden">
+          <div class="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-[#DC183C] to-[#FF9900]"></div>
+          <div class="w-12 h-12 bg-[#FDECEF] rounded-xl grid place-items-center text-[#DC183C] mb-4"><i data-lucide="mail-open" class="w-5 h-5"></i></div>
+          <h3 class="font-jakarta font-extrabold text-2xl mb-2">Get it in your inbox</h3>
+          <p class="text-[#6A7581] text-sm mb-6">Don't miss the next issue. We send high-value insights, zero spam.</p>
+
+          <form class="space-y-4" onsubmit="formSubmit(event)">
+            <input type="email" placeholder="you@business.co.za" required class="field" />
+
+            <div class="space-y-3 mt-4 border-t border-[#E7EBEF] pt-4">
+              <label class="flex items-center gap-3 cursor-pointer group">
+                <input type="checkbox" checked class="w-4 h-4 accent-[#DC183C]" />
+                <span class="text-sm font-bold text-[#121A21] group-hover:text-[#DC183C] transition">The SME Weekly <span class="text-[10px] bg-slate-100 text-[#6A7581] px-2 py-0.5 rounded ml-1 font-medium">Tue</span></span>
+              </label>
+              <label class="flex items-center gap-3 cursor-pointer group">
+                <input type="checkbox" checked class="w-4 h-4 accent-[#DC183C]" />
+                <span class="text-sm font-bold text-[#121A21] group-hover:text-[#DC183C] transition">Funding Alerts <span class="text-[10px] bg-slate-100 text-[#6A7581] px-2 py-0.5 rounded ml-1 font-medium">ASAP</span></span>
+              </label>
+              <label class="flex items-center gap-3 cursor-pointer group">
+                <input type="checkbox" class="w-4 h-4 accent-[#DC183C]" />
+                <span class="text-sm font-bold text-[#121A21] group-hover:text-[#DC183C] transition">SME Solutions <span class="text-[10px] bg-slate-100 text-[#6A7581] px-2 py-0.5 rounded ml-1 font-medium">Thu</span></span>
+              </label>
+              <label class="flex items-center gap-3 cursor-pointer group">
+                <input type="checkbox" class="w-4 h-4 accent-[#DC183C]" />
+                <span class="text-sm font-bold text-[#121A21] group-hover:text-[#DC183C] transition">SME Events <span class="text-[10px] bg-slate-100 text-[#6A7581] px-2 py-0.5 rounded ml-1 font-medium">Fri</span></span>
+              </label>
+            </div>
+
+            <button type="submit" class="w-full h-12 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold transition mt-2">Subscribe now</button>
+          </form>
+          <p class="text-center text-[10px] text-[#6A7581] mt-4 uppercase tracking-widest font-bold flex items-center justify-center gap-1.5"><i data-lucide="lock" class="w-3 h-3 text-[#29A37A]"></i> No spam. Unsubscribe anytime.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT: Archive with search + filter -->
+    <div class="w-full lg:w-2/3 order-1 lg:order-2">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 border-b border-[#E7EBEF] pb-6">
+        <h2 class="font-jakarta font-extrabold text-2xl sm:text-3xl whitespace-nowrap">Recent dispatches</h2>
+        <div class="flex flex-col sm:flex-row w-full sm:w-auto gap-3">
+          <div class="relative flex-grow sm:min-w-[230px]">
+            <i data-lucide="search" class="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-[#6A7581]"></i>
+            <input type="text" placeholder="Search past issues…" class="field pl-10 !h-11" />
+          </div>
+          <select class="bg-white border border-[#E7EBEF] text-sm font-bold text-[#121A21] h-11 px-4 rounded-xl outline-none focus:border-[#DC183C] cursor-pointer hover:bg-slate-50 transition">
+            <option>All editions</option>
+            <option>The Weekly</option>
+            <option>Funding Alerts</option>
+            <option>SME Solutions</option>
+            <option>SME Events</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="space-y-4">
+
+        <!-- Issue 1 -->
+        <a href="newsletter-issue.html" class="issue-row block bg-white sm:bg-transparent p-5 rounded-2xl sm:rounded-xl group border border-[#E7EBEF] sm:border-transparent">
+          <div class="flex flex-col sm:flex-row sm:items-start gap-4">
+            <div class="w-full sm:w-32 h-44 sm:h-24 order-1 sm:order-3 rounded-lg overflow-hidden flex-shrink-0">
+              <img src="assets/article-3.jpg" alt="" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+            </div>
+            <div class="sm:w-28 flex-shrink-0 text-xs font-bold text-[#6A7581] uppercase tracking-widest pt-1 order-2 sm:order-1">12 Jun 2026</div>
+            <div class="flex-grow order-3 sm:order-2">
+              <div class="flex items-center gap-2 mb-2">
+                <span class="bg-[#0C1F31] text-white text-[10px] font-bold px-2.5 py-1 rounded-md uppercase tracking-wider">The Weekly</span>
+                <span class="text-xs text-[#6A7581] font-medium">Issue #142</span>
+              </div>
+              <h3 class="font-jakarta font-bold text-xl text-[#121A21] group-hover:text-[#DC183C] transition mb-2 leading-snug">The R0 marketing stack that actually converts</h3>
+              <p class="text-sm text-[#6A7581] mb-3 line-clamp-2">The tools, templates, and tactics SA founders use to grow without a marketing budget — plus the channels that quietly waste your time.</p>
+              <span class="text-xs font-bold text-[#DC183C] uppercase tracking-wider flex items-center gap-1">Read issue <i data-lucide="arrow-right" class="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform"></i></span>
+            </div>
+          </div>
+        </a>
+
+        <!-- Issue 2 (Funding Alert) -->
+        <a href="newsletter-issue.html" class="issue-row block bg-white sm:bg-transparent p-5 rounded-2xl sm:rounded-xl group border border-[#E7EBEF] sm:border-transparent">
+          <div class="flex flex-col sm:flex-row sm:items-start gap-4">
+            <div class="w-full sm:w-32 h-44 sm:h-24 order-1 sm:order-3 rounded-lg overflow-hidden flex-shrink-0 bg-[#0C1F31] grid place-items-center relative">
+              <i data-lucide="zap" class="w-9 h-9 text-[#FF9900] group-hover:scale-125 transition-transform duration-500"></i>
+            </div>
+            <div class="sm:w-28 flex-shrink-0 text-xs font-bold text-[#6A7581] uppercase tracking-widest pt-1 order-2 sm:order-1">04 Jun 2026</div>
+            <div class="flex-grow order-3 sm:order-2">
+              <div class="flex items-center gap-2 mb-2">
+                <span class="bg-[#29A37A] text-white text-[10px] font-bold px-2.5 py-1 rounded-md uppercase tracking-wider flex items-center gap-1"><i data-lucide="zap" class="w-3 h-3 text-[#FF9900]"></i> Funding Alert</span>
+              </div>
+              <h3 class="font-jakarta font-bold text-xl text-[#121A21] group-hover:text-[#DC183C] transition mb-2 leading-snug">New R50M Green Tech Fund opens</h3>
+              <p class="text-sm text-[#6A7581] mb-3 line-clamp-2">A major new grant has just opened for SMEs in the renewable energy and sustainability sectors. Here are the eligibility requirements.</p>
+              <span class="text-xs font-bold text-[#DC183C] uppercase tracking-wider flex items-center gap-1">Read issue <i data-lucide="arrow-right" class="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform"></i></span>
+            </div>
+          </div>
+        </a>
+
+        <!-- Issue 3 -->
+        <a href="newsletter-issue.html" class="issue-row block bg-white sm:bg-transparent p-5 rounded-2xl sm:rounded-xl group border border-[#E7EBEF] sm:border-transparent">
+          <div class="flex flex-col sm:flex-row sm:items-start gap-4">
+            <div class="w-full sm:w-32 h-44 sm:h-24 order-1 sm:order-3 rounded-lg overflow-hidden flex-shrink-0">
+              <img src="assets/article-5.jpg" alt="" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+            </div>
+            <div class="sm:w-28 flex-shrink-0 text-xs font-bold text-[#6A7581] uppercase tracking-widest pt-1 order-2 sm:order-1">29 May 2026</div>
+            <div class="flex-grow order-3 sm:order-2">
+              <div class="flex items-center gap-2 mb-2">
+                <span class="bg-[#AE6B0A] text-white text-[10px] font-bold px-2.5 py-1 rounded-md uppercase tracking-wider">Solutions</span>
+                <span class="text-xs text-[#6A7581] font-medium">Issue #141</span>
+              </div>
+              <h3 class="font-jakarta font-bold text-xl text-[#121A21] group-hover:text-[#DC183C] transition mb-2 leading-snug">5 tools to close the year strong</h3>
+              <p class="text-sm text-[#6A7581] mb-3 line-clamp-2">Software and systems that help small teams tighten cash flow, automate admin, and head into the new financial year lean.</p>
+              <span class="text-xs font-bold text-[#DC183C] uppercase tracking-wider flex items-center gap-1">Read issue <i data-lucide="arrow-right" class="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform"></i></span>
+            </div>
+          </div>
+        </a>
+
+        <!-- Issue 4 -->
+        <a href="newsletter-issue.html" class="issue-row block bg-white sm:bg-transparent p-5 rounded-2xl sm:rounded-xl group border border-[#E7EBEF] sm:border-transparent">
+          <div class="flex flex-col sm:flex-row sm:items-start gap-4">
+            <div class="w-full sm:w-32 h-44 sm:h-24 order-1 sm:order-3 rounded-lg overflow-hidden flex-shrink-0">
+              <img src="assets/article-7.jpg" alt="" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+            </div>
+            <div class="sm:w-28 flex-shrink-0 text-xs font-bold text-[#6A7581] uppercase tracking-widest pt-1 order-2 sm:order-1">22 May 2026</div>
+            <div class="flex-grow order-3 sm:order-2">
+              <div class="flex items-center gap-2 mb-2">
+                <span class="bg-[#0C1F31] text-white text-[10px] font-bold px-2.5 py-1 rounded-md uppercase tracking-wider">Events</span>
+                <span class="text-xs text-[#6A7581] font-medium">Issue #140</span>
+              </div>
+              <h3 class="font-jakarta font-bold text-xl text-[#121A21] group-hover:text-[#DC183C] transition mb-2 leading-snug">Affordable workspaces for entrepreneurs</h3>
+              <p class="text-sm text-[#6A7581] mb-3 line-clamp-2">A round-up of co-working spaces, hubs, and incubators across SA that won't blow your runway — and what to look for before signing.</p>
+              <span class="text-xs font-bold text-[#DC183C] uppercase tracking-wider flex items-center gap-1">Read issue <i data-lucide="arrow-right" class="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform"></i></span>
+            </div>
+          </div>
+        </a>
+
+      </div>
+
+      <!-- Pagination -->
+      <div class="mt-12 flex justify-center gap-2">
+        <button class="w-10 h-10 rounded-xl border border-[#E7EBEF] flex items-center justify-center text-[#6A7581] hover:bg-slate-50 hover:text-[#121A21] transition"><i data-lucide="chevron-left" class="w-4 h-4"></i></button>
+        <button class="w-10 h-10 rounded-xl bg-[#DC183C] text-white font-bold flex items-center justify-center">1</button>
+        <button class="w-10 h-10 rounded-xl border border-[#E7EBEF] flex items-center justify-center text-[#121A21] hover:bg-slate-50 transition font-bold">2</button>
+        <button class="w-10 h-10 rounded-xl border border-[#E7EBEF] flex items-center justify-center text-[#121A21] hover:bg-slate-50 transition font-bold">3</button>
+        <button class="w-10 h-10 rounded-xl border border-[#E7EBEF] flex items-center justify-center text-[#6A7581] hover:bg-slate-50 hover:text-[#121A21] transition"><i data-lucide="chevron-right" class="w-4 h-4"></i></button>
+      </div>
+    </div>
+  </div>
 </main>
 
 <footer class="bg-[#0C1F31] text-white"><div class="max-w-7xl mx-auto px-4 sm:px-6 py-10 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm">
   <a href="public-home.html" class="flex items-center gap-2.5"><span class="w-8 h-8 rounded-lg bg-white grid place-items-center"><img src="assets/logo-icon.png" class="w-6 h-6" alt="" /></span><span class="font-jakarta font-extrabold">SME South Africa</span></a>
-  <div class="flex flex-wrap items-center gap-x-5 gap-y-2 text-white/60"><a href="public-about.html" class="hover:text-white">About</a><a href="public-contact.html" class="hover:text-white">Contact</a><a href="public-advertise.html" class="hover:text-white">Advertise</a><a href="public-privacy.html" class="hover:text-white">Privacy</a><a href="public-terms.html" class="hover:text-white">Terms</a><a href="public-popia.html" class="hover:text-white">POPIA</a></div>
+  <div class="flex flex-wrap items-center gap-x-5 gap-y-2 text-white/60"><a href="public-about.html" class="hover:text-white">About</a><a href="public-contact.html" class="hover:text-white">Contact</a><a href="public-advertise.html" class="hover:text-white">Advertise</a><a href="public-privacy.html" class="hover:text-white">Privacy</a><a href="public-terms.html" class="hover:text-white">Terms</a><a href="public-refunds.html" class="hover:text-white">Refunds</a><a href="public-popia.html" class="hover:text-white">POPIA</a></div>
   <p class="text-white/40">© 2026 SME South Africa</p>
 </div></footer>
-
 <div id="overlay-root"></div><div id="toast" class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-50"></div>
 <script>
   function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
   function showToast(m){const el=document.getElementById('toast');el.classList.remove('hidden');el.innerHTML=`<div class="bg-[#0C1F31] text-white rounded-full pl-3 pr-5 py-2.5 shadow-2xl flex items-center gap-2 text-sm font-semibold" style="border-left:4px solid #29A37A"><i data-lucide="check-circle" class="w-4 h-4" style="color:#29A37A"></i><span>${esc(m)}</span></div>`;lucide.createIcons();setTimeout(()=>{el.classList.add('hidden');el.innerHTML='';},2400);}
-  function subscribe(e){e.preventDefault();e.target.reset();showToast('Subscribed — check your inbox to confirm.');}
-  const ISSUES=[
-    {img:'assets/article-3.jpg',no:'#142',date:'12 Jun 2026',title:'The R0 marketing stack that actually converts',excerpt:'Five free tools SA founders are using to land their first 100 customers.'},
-    {img:'assets/article-5.jpg',no:'#141',date:'5 Jun 2026',title:'How to read a funder’s term sheet',excerpt:'The five clauses that matter most — and the ones that quietly cost you.'},
-    {img:'assets/article-7.jpg',no:'#140',date:'29 May 2026',title:'Hiring without breaking the bank',excerpt:'Interns, contractors and the first full-timer — when to make each move.'},
-    {img:'assets/article-2.jpg',no:'#139',date:'22 May 2026',title:'Township economy: where the growth is',excerpt:'Three sectors quietly outpacing the formal market this year.'},
-    {img:'assets/article-6.jpg',no:'#138',date:'15 May 2026',title:'Cash flow forecasting in 30 minutes',excerpt:'A simple model that keeps you ahead of the lean months.'},
-    {img:'assets/article-4.jpg',no:'#137',date:'8 May 2026',title:'Pricing for profit, not just sales',excerpt:'Why undercutting the competition caps your growth — and what to do instead.'}
-  ];
-  document.getElementById('issues').innerHTML=ISSUES.map((s,i)=>`
-    <a href="#" onclick="showToast('Opening issue ${s.no}…');return false;" class="group bg-white rounded-2xl border border-[#E7EBEF] overflow-hidden card-lift block">
-      <div class="aspect-[16/9] overflow-hidden relative"><img src="${s.img}" alt="${esc(s.title)}" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition duration-300" /><span class="absolute top-3 left-3 px-2.5 py-1 rounded-full text-[10px] font-bold bg-white/90 text-[#DC183C]">Issue ${s.no}</span></div>
-      <div class="p-5">
-        <p class="text-xs text-[#6A7581]">${esc(s.date)} · 5 min read</p>
-        <h3 class="font-jakarta font-bold text-lg leading-snug mt-1 group-hover:text-[#DC183C] transition">${esc(s.title)}</h3>
-        <p class="text-sm text-[#6A7581] mt-2 line-clamp-2">${esc(s.excerpt)}</p>
-        <span class="inline-flex items-center gap-1 text-sm font-bold text-[#DC183C] mt-3 group-hover:gap-2 transition-all">Read issue <i data-lucide="arrow-right" class="w-4 h-4"></i></span>
-      </div>
-    </a>`).join('');
-  const BRIEF={title:'Newsletter — The SME Brief',sub:'Kit (ConvertKit) · staggered sends',purpose:'Captures email subscribers (the platform’s owned audience) and archives past issues for SEO + re-engagement. Top-of-funnel and retention in one.',data:'Subscriber: <code>{ email, status, tags[], subscribed_at }</code>. Issue: <code>{ no, title, excerpt, body, sent_at, cover }</code>.',logic:'Subscribe → Kit (ConvertKit) with double opt-in. <b>All sends are staggered — never a simultaneous bulk blast</b> (deliverability + WP Engine load). Archive pages are public + indexable.',components:'Hero subscribe · value strip · issue archive grid.',api:'POST /v1/newsletter/subscribe (→ Kit) · GET /v1/newsletter/issues'};
+  function formSubmit(e){e.preventDefault();e.target.reset();showToast('Subscribed — check your inbox to confirm.');}
+  const BRIEF={title:'Newsletter Archive',sub:'WordPress page + Kit (ConvertKit)',purpose:'Public, indexable archive of every issue plus a subscribe widget. Standalone WP page at /newsletter; issue cards open the single-issue reading view.',data:'Subscribe form: <code>{email, editions[]}</code> → Kit. Issues are CMS posts: <code>{issue_no, edition, date, title, dek, hero, body}</code>.',logic:'Subscribe posts to Kit; sends are staggered per edition (never bulk-blasted). Search + edition filter query the archive index. The whole archive is public and indexable.',components:'Header · hero · sticky subscribe widget · search + filter · archive list · pagination · footer.',api:'POST /v1/newsletter/subscribe · GET /v1/newsletter/issues'};
   function toggleDevMode(){const on=document.body.classList.toggle('dev-on');const b=document.getElementById('devToggle');if(b)b.classList.toggle('on',on);if(on)showToast('Dev Mode on — tap any ⓘ for implementation notes.');lucide.createIcons();}
   function closeOverlay(id){const el=document.getElementById(id);if(!el)return;el.classList.remove('open');setTimeout(()=>{if(el&&el.parentNode)el.remove();},300);}
   function openBrief(){const b=BRIEF;const sec=(i,l,h)=>`<div class="px-6 py-4 border-t border-slate-100"><p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] flex items-center gap-1.5 mb-2"><i data-lucide="${i}" class="w-3.5 h-3.5"></i>${l}</p><div class="text-sm text-slate-600 leading-relaxed">${h}</div></div>`;document.getElementById('overlay-root').innerHTML=`<div class="ov" id="ov"><div class="ov-bg" onclick="closeOverlay('ov')"></div><div class="drawer"><div class="sticky top-0 z-10 bg-[#0C1F31] text-white px-6 py-5 flex items-start justify-between"><div><p class="text-[10px] font-bold uppercase tracking-widest text-[#FF9900] mb-1">Dev Brief</p><h3 class="font-jakarta font-extrabold text-lg leading-tight">${b.title}</h3><p class="text-xs text-white/60 mt-1">${b.sub}</p></div><button onclick="closeOverlay('ov')" class="text-white/60 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button></div>${sec('target','Purpose',b.purpose)}${sec('database','Data model',b.data)}${sec('git-branch','Logic',b.logic)}${sec('boxes','Components',b.components)}${sec('plug','API',`<code class="block bg-slate-900 text-emerald-300 text-xs font-mono px-3 py-2 rounded-lg overflow-x-auto">${b.api}</code>`)}</div></div>`;requestAnimationFrame(()=>{const o=document.getElementById('ov');if(o)o.classList.add('open');});lucide.createIcons();}

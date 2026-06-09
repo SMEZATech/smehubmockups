@@ -2,17 +2,18 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Advertise With Us — SME South Africa</title>
+  <title>Advertise — SME South Africa</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <script src="https://cdn.tailwindcss.com"></script><script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
   <script>tailwind.config={theme:{extend:{fontFamily:{jakarta:['Plus Jakarta Sans','sans-serif'],inter:['Inter','system-ui','sans-serif']}}}};</script>
   <style>
     html,body{font-family:'Inter',system-ui,sans-serif;} .font-jakarta{font-family:'Plus Jakarta Sans',sans-serif;letter-spacing:.005em;}
-    .no-scrollbar::-webkit-scrollbar{display:none;} .no-scrollbar{-ms-overflow-style:none;scrollbar-width:none;}
-    .field{width:100%;background:#fff;border:1px solid #E7EBEF;border-radius:.6rem;height:2.85rem;padding:0 .9rem;font-size:.9rem;outline:none;transition:border-color .15s,box-shadow .15s;} .field:focus{border-color:#DC183C;box-shadow:0 0 0 3px rgba(220,24,60,.12);}
-    .card-lift{transition:box-shadow .2s,transform .2s;} .card-lift:hover{box-shadow:0 10px 24px -10px rgba(10,44,61,.18);transform:translateY(-2px);}
-    .uline{position:relative;} .uline::after{content:"";position:absolute;left:50%;bottom:-6px;transform:translateX(-50%);width:34px;height:3px;border-radius:2px;background:#DC183C;}
+    .hero-bg{background:linear-gradient(115deg,#0C1F31 0%,#0C1F31 50%,#2b1626 80%,#5e1a2c 115%);}
+    .dot-pattern{background-image:radial-gradient(rgba(255,255,255,.07) 1px,transparent 1.5px);background-size:22px 22px;}
+    .field{width:100%;background:#fff;border:1px solid #E7EBEF;border-radius:.75rem;height:3rem;padding:0 1rem;font-size:.9rem;outline:none;transition:border-color .15s,box-shadow .15s;} .field:focus{border-color:#DC183C;box-shadow:0 0 0 3px rgba(220,24,60,.12);}
+    select.field{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='none' stroke='%236A7581' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 1rem center;padding-right:2.5rem;}
+    .card-lift{transition:transform .25s cubic-bezier(.2,.7,.2,1),box-shadow .25s,border-color .25s;} .card-lift:hover{transform:translateY(-6px);box-shadow:0 22px 50px -18px rgba(12,31,49,.28);border-color:#DC183C;}
     .dev-badge{display:none;} body.dev-on .dev-badge{display:inline-flex;} #devToggle.on{background:#DC183C;color:#fff;border-color:#DC183C;}
     .ov{position:fixed;inset:0;z-index:60;} .ov-bg{position:absolute;inset:0;background:rgba(12,31,49,.45);backdrop-filter:blur(2px);opacity:0;transition:opacity .3s;} .ov.open .ov-bg{opacity:1;}
     .drawer{position:absolute;right:0;top:0;height:100%;width:100%;max-width:440px;background:#fff;box-shadow:-12px 0 40px rgba(12,31,49,.25);overflow-y:auto;transform:translateX(100%);transition:transform .3s cubic-bezier(.2,.7,.2,1);} .ov.open .drawer{transform:translateX(0);}
@@ -36,85 +37,139 @@
 </div></header>
 
 <!-- HERO -->
-<section style="background:linear-gradient(180deg,#FBEEF0,#FCFCFC)">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-12">
-    <div class="grid lg:grid-cols-2 gap-6 items-center bg-white/60 rounded-3xl border border-white p-8 sm:p-12">
-      <div>
-        <h1 class="font-jakarta font-extrabold text-3xl sm:text-4xl text-[#0C1F31] leading-tight">Reach a Thriving Market of <span class="text-[#DC183C]">South African SMEs</span>
-          <button onclick="openBrief()" class="dev-badge align-middle ml-1 w-6 h-6 rounded-full bg-[#DC183C] text-white items-center justify-center text-[11px] font-bold">i</button>
-        </h1>
-        <p class="text-[#475569] mt-4 max-w-md">Expand your reach and connect with potential customers on SME South Africa.</p>
-        <a href="public-contact.html" class="mt-6 inline-flex items-center gap-2 px-6 h-12 rounded-lg bg-[#B0142F] hover:bg-[#8f1026] text-white font-bold transition">Contact us</a>
+<section class="hero-bg text-white relative overflow-hidden"><div class="absolute inset-0 dot-pattern opacity-70 pointer-events-none"></div>
+  <div class="absolute -top-24 -right-24 w-[28rem] h-[28rem] rounded-full bg-[#DC183C]/20 blur-3xl pointer-events-none"></div>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-16 sm:py-24 relative grid lg:grid-cols-2 gap-12 items-center">
+    <div>
+      <p class="inline-flex items-center gap-2 text-[12px] font-bold uppercase tracking-widest text-white/60 bg-white/5 border border-white/10 rounded-full px-3 py-1.5">Advertise with us <button onclick="openBrief()" class="dev-badge align-middle w-5 h-5 rounded-full bg-[#FF9900] text-[#0C1F31] items-center justify-center text-[10px] font-bold">i</button></p>
+      <h1 class="font-jakarta font-extrabold text-4xl sm:text-5xl lg:text-[3.5rem] leading-[1.05] mt-5">Reach a Thriving Market of <span class="text-[#DC183C]">South African SMEs</span></h1>
+      <p class="mt-5 text-lg text-white/70 max-w-xl">Expand your reach and connect with potential customers on SME South Africa.</p>
+      <div class="mt-8 flex flex-wrap items-center gap-3">
+        <a href="#lead" class="inline-flex items-center gap-2 px-6 h-12 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold transition">Request media kit <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
+        <a href="public-contact.html" class="inline-flex items-center gap-2 px-6 h-12 rounded-full bg-white/10 hover:bg-white/20 border border-white/15 text-white font-bold transition">Contact us</a>
       </div>
-      <div class="grid place-items-center"><img src="assets/article-3.jpg" alt="SME South Africa across devices" class="rounded-2xl shadow-xl object-cover aspect-[4/3] w-full" /></div>
+      <div class="mt-8 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-white/55">
+        <span class="flex items-center gap-2"><i data-lucide="users" class="w-4 h-4 text-[#FF9900]"></i>200K+ monthly visitors</span>
+        <span class="flex items-center gap-2"><i data-lucide="trending-up" class="w-4 h-4 text-[#29A37A]"></i>Decision-maker audience</span>
+      </div>
+    </div>
+    <div class="relative">
+      <div class="absolute -inset-3 bg-gradient-to-tr from-[#DC183C]/30 to-[#FF9900]/20 blur-2xl rounded-[2rem]"></div>
+      <img src="assets/hero-entrepreneurs.jpg" alt="South African entrepreneurs" class="relative w-full rounded-[1.5rem] border border-white/10 shadow-2xl object-cover aspect-[4/3]" />
+      <div class="absolute -bottom-5 -left-5 bg-white text-[#121A21] rounded-2xl shadow-2xl px-5 py-3.5 hidden sm:flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-[#E4F5EE] text-[#29A37A] grid place-items-center"><i data-lucide="line-chart" class="w-5 h-5"></i></div>
+        <div><p class="text-[11px] text-[#6A7581] font-semibold uppercase tracking-wide">Avg. campaign lift</p><p class="font-jakarta font-extrabold text-lg leading-none">+38% reach</p></div>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- PARTNER LOGOS -->
-<section style="background:#FBEEF0" class="border-y border-[#E7EBEF]">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-6 flex items-center gap-3 overflow-x-auto no-scrollbar">
-    <p class="text-[11px] font-bold uppercase tracking-widest text-[#6A7581] shrink-0 mr-2">Trusted by</p>
-    <!-- logo placeholders -->
-    <div class="flex items-center gap-3">
-      <span class="shrink-0 px-6 h-12 rounded-xl bg-white border border-[#E7EBEF] grid place-items-center font-jakarta font-extrabold text-slate-500">PwC</span>
-      <span class="shrink-0 px-6 h-12 rounded-xl bg-white border border-[#E7EBEF] grid place-items-center font-jakarta font-extrabold text-slate-500">MTN</span>
-      <span class="shrink-0 px-6 h-12 rounded-xl bg-white border border-[#E7EBEF] grid place-items-center font-jakarta font-extrabold text-slate-500">PayFast</span>
-      <span class="shrink-0 px-6 h-12 rounded-xl bg-white border border-[#E7EBEF] grid place-items-center font-jakarta font-extrabold text-slate-500">Sage</span>
-      <span class="shrink-0 px-6 h-12 rounded-xl bg-white border border-[#E7EBEF] grid place-items-center font-jakarta font-extrabold text-slate-500">Nedbank</span>
-      <span class="shrink-0 px-6 h-12 rounded-xl bg-white border border-[#E7EBEF] grid place-items-center font-jakarta font-extrabold text-slate-500">Standard Bank</span>
+<!-- TRUSTED BY -->
+<section class="bg-white border-b border-[#E7EBEF]">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-10">
+    <p class="text-center text-[12px] font-bold uppercase tracking-widest text-[#6A7581]">Trusted by South Africa's leading brands</p>
+    <div class="mt-6 flex flex-wrap items-center justify-center gap-3 sm:gap-4">
+      <span class="px-6 py-3 rounded-full bg-[#FCFCFC] border border-[#E7EBEF] font-jakarta font-extrabold text-[#121A21] text-lg shadow-sm">PwC</span>
+      <span class="px-6 py-3 rounded-full bg-[#FCFCFC] border border-[#E7EBEF] font-jakarta font-extrabold text-[#121A21] text-lg shadow-sm">MTN</span>
+      <span class="px-6 py-3 rounded-full bg-[#FCFCFC] border border-[#E7EBEF] font-jakarta font-extrabold text-[#121A21] text-lg shadow-sm">PayFast</span>
+      <span class="px-6 py-3 rounded-full bg-[#FCFCFC] border border-[#E7EBEF] font-jakarta font-extrabold text-[#121A21] text-lg shadow-sm">Sage</span>
+      <span class="px-6 py-3 rounded-full bg-[#FCFCFC] border border-[#E7EBEF] font-jakarta font-extrabold text-[#121A21] text-lg shadow-sm">Nedbank</span>
+      <span class="px-6 py-3 rounded-full bg-[#FCFCFC] border border-[#E7EBEF] font-jakarta font-extrabold text-[#121A21] text-lg shadow-sm">Standard Bank</span>
     </div>
   </div>
 </section>
 
-<!-- 3 STEPS -->
-<section class="max-w-7xl mx-auto px-4 sm:px-6 py-14">
-  <div class="grid sm:grid-cols-3 gap-6">
-    <div class="text-center"><img src="assets/article-5.jpg" class="rounded-2xl object-cover aspect-[16/10] w-full" alt="Choose your package" /><h3 class="font-jakarta font-bold text-lg text-[#0C1F31] mt-5 uline inline-block">Choose Your Package</h3><p class="text-sm text-[#6A7581] mt-4">Affordable advertising solutions for every business.</p></div>
-    <div class="text-center"><img src="assets/article-6.jpg" class="rounded-2xl object-cover aspect-[16/10] w-full" alt="Craft your message" /><h3 class="font-jakarta font-bold text-lg text-[#0C1F31] mt-5 uline inline-block">Craft Your Message</h3><p class="text-sm text-[#6A7581] mt-4">Craft targeted ads with engaging and persuasive messaging.</p></div>
-    <div class="text-center"><img src="assets/article-7.jpg" class="rounded-2xl object-cover aspect-[16/10] w-full" alt="Track and analyze" /><h3 class="font-jakarta font-bold text-lg text-[#0C1F31] mt-5 uline inline-block">Track and Analyze</h3><p class="text-sm text-[#6A7581] mt-4">Track, analyze, and optimize for better results.</p></div>
+<!-- HOW IT WORKS -->
+<section class="max-w-7xl mx-auto px-4 sm:px-6 py-16 sm:py-24">
+  <div class="text-center max-w-2xl mx-auto">
+    <p class="text-[12px] font-bold uppercase tracking-widest text-[#DC183C]">How it works</p>
+    <h2 class="font-jakarta font-extrabold text-3xl sm:text-4xl mt-2">Launch a campaign in three steps</h2>
+    <p class="mt-3 text-[#6A7581] text-lg">From package to performance, we make advertising with us effortless.</p>
+  </div>
+  <div class="mt-12 grid md:grid-cols-3 gap-6">
+    <article class="card-lift bg-white rounded-2xl border border-[#E7EBEF] overflow-hidden">
+      <div class="relative h-44 overflow-hidden"><img src="assets/article-5.jpg" alt="" class="w-full h-full object-cover" /><span class="absolute top-4 left-4 w-9 h-9 rounded-full bg-[#DC183C] text-white grid place-items-center font-jakarta font-extrabold">1</span></div>
+      <div class="p-6"><h3 class="font-jakarta font-extrabold text-xl">Choose Your Package</h3><p class="mt-2 text-[#6A7581] text-sm leading-relaxed">Pick the format and reach that fit your goals — sponsored content, newsletter, display or social.</p></div>
+    </article>
+    <article class="card-lift bg-white rounded-2xl border border-[#E7EBEF] overflow-hidden">
+      <div class="relative h-44 overflow-hidden"><img src="assets/article-6.jpg" alt="" class="w-full h-full object-cover" /><span class="absolute top-4 left-4 w-9 h-9 rounded-full bg-[#DC183C] text-white grid place-items-center font-jakarta font-extrabold">2</span></div>
+      <div class="p-6"><h3 class="font-jakarta font-extrabold text-xl">Craft Your Message</h3><p class="mt-2 text-[#6A7581] text-sm leading-relaxed">Our team helps shape creative that speaks directly to South African business owners.</p></div>
+    </article>
+    <article class="card-lift bg-white rounded-2xl border border-[#E7EBEF] overflow-hidden">
+      <div class="relative h-44 overflow-hidden"><img src="assets/article-7.jpg" alt="" class="w-full h-full object-cover" /><span class="absolute top-4 left-4 w-9 h-9 rounded-full bg-[#DC183C] text-white grid place-items-center font-jakarta font-extrabold">3</span></div>
+      <div class="p-6"><h3 class="font-jakarta font-extrabold text-xl">Track and Analyze</h3><p class="mt-2 text-[#6A7581] text-sm leading-relaxed">Get transparent reporting on impressions, clicks and leads so you can optimise every rand.</p></div>
+    </article>
   </div>
 </section>
 
-<!-- REACH + STATS -->
-<section style="background:linear-gradient(180deg,#FBEEF0,#FCFCFC)" class="border-y border-[#E7EBEF]">
-  <div class="max-w-5xl mx-auto px-4 sm:px-6 py-14 text-center">
-    <h2 class="font-jakarta font-bold text-2xl sm:text-3xl text-[#0C1F31]">Engaging Entrepreneurs Across Every Platform</h2>
-    <div class="grid place-items-center my-8"><img src="assets/hero-entrepreneurs.jpg" alt="SME South Africa across devices" class="rounded-2xl shadow-xl object-cover aspect-[16/9] max-w-2xl w-full" /></div>
-    <div class="bg-white rounded-2xl border border-[#E7EBEF] shadow-sm grid grid-cols-2 sm:grid-cols-4 divide-x divide-[#E7EBEF] max-w-3xl mx-auto">
-      <div class="p-5"><p class="font-jakarta font-extrabold text-2xl sm:text-3xl text-[#0C1F31]">90+K</p><p class="text-xs text-[#6A7581] mt-1">Social Followers</p></div>
-      <div class="p-5"><p class="font-jakarta font-extrabold text-2xl sm:text-3xl text-[#0C1F31]">200+K</p><p class="text-xs text-[#6A7581] mt-1">Monthly Visitors</p></div>
-      <div class="p-5"><p class="font-jakarta font-extrabold text-2xl sm:text-3xl text-[#0C1F31]">60+K</p><p class="text-xs text-[#6A7581] mt-1">Newsletter Subscribers</p></div>
-      <div class="p-5"><p class="font-jakarta font-extrabold text-2xl sm:text-3xl text-[#0C1F31]">100+K</p><p class="text-xs text-[#6A7581] mt-1">Downloads</p></div>
+<!-- AUDIENCE STATS -->
+<section class="hero-bg text-white relative overflow-hidden"><div class="absolute inset-0 dot-pattern opacity-60 pointer-events-none"></div>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-16 relative">
+    <div class="text-center max-w-2xl mx-auto"><h2 class="font-jakarta font-extrabold text-3xl sm:text-4xl">An audience that means business</h2><p class="mt-3 text-white/65 text-lg">Engaged founders, owners and decision-makers across South Africa.</p></div>
+    <div class="mt-12 grid grid-cols-2 lg:grid-cols-4 gap-5">
+      <div class="bg-white/5 border border-white/10 rounded-2xl p-7 text-center"><p class="font-jakarta font-extrabold text-4xl sm:text-5xl text-[#FF9900]">90<span class="text-3xl">+K</span></p><p class="mt-2 text-white/70 text-sm font-semibold">Social Followers</p></div>
+      <div class="bg-white/5 border border-white/10 rounded-2xl p-7 text-center"><p class="font-jakarta font-extrabold text-4xl sm:text-5xl text-[#FF9900]">200<span class="text-3xl">+K</span></p><p class="mt-2 text-white/70 text-sm font-semibold">Monthly Visitors</p></div>
+      <div class="bg-white/5 border border-white/10 rounded-2xl p-7 text-center"><p class="font-jakarta font-extrabold text-4xl sm:text-5xl text-[#FF9900]">60<span class="text-3xl">+K</span></p><p class="mt-2 text-white/70 text-sm font-semibold">Newsletter Subscribers</p></div>
+      <div class="bg-white/5 border border-white/10 rounded-2xl p-7 text-center"><p class="font-jakarta font-extrabold text-4xl sm:text-5xl text-[#FF9900]">100<span class="text-3xl">+K</span></p><p class="mt-2 text-white/70 text-sm font-semibold">Downloads</p></div>
     </div>
   </div>
 </section>
 
-<!-- LET'S WORK TOGETHER + FORM -->
-<section class="max-w-7xl mx-auto px-4 sm:px-6 py-14 grid lg:grid-cols-2 gap-10">
+<!-- LET'S WORK TOGETHER -->
+<section class="max-w-7xl mx-auto px-4 sm:px-6 py-16 sm:py-24 grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
   <div>
-    <i data-lucide="send" class="w-7 h-7 text-[#0C1F31]"></i>
-    <h2 class="font-jakarta font-extrabold text-2xl text-[#0C1F31] uppercase mt-3">Let's Work Together</h2>
-    <ul class="mt-5 space-y-3 text-sm text-[#475569]">
-      <li class="flex gap-2.5"><i data-lucide="check-circle-2" class="w-5 h-5 text-[#29A37A] shrink-0"></i><span><b class="text-[#121A21]">Targeted Reach:</b> Connect with a highly engaged audience of small and medium-sized businesses actively seeking solutions for their growth.</span></li>
-      <li class="flex gap-2.5"><i data-lucide="check-circle-2" class="w-5 h-5 text-[#29A37A] shrink-0"></i><span><b class="text-[#121A21]">Brand Awareness:</b> Increase brand visibility and establish yourself as a trusted resource for South African SMEs.</span></li>
-      <li class="flex gap-2.5"><i data-lucide="check-circle-2" class="w-5 h-5 text-[#29A37A] shrink-0"></i><span><b class="text-[#121A21]">Lead Generation:</b> Generate qualified leads and drive valuable conversions through targeted advertising campaigns.</span></li>
-      <li class="flex gap-2.5"><i data-lucide="check-circle-2" class="w-5 h-5 text-[#29A37A] shrink-0"></i><span><b class="text-[#121A21]">Cost-Effective Marketing:</b> Reach your target audience efficiently with our competitive advertising packages.</span></li>
-      <li class="flex gap-2.5"><i data-lucide="check-circle-2" class="w-5 h-5 text-[#29A37A] shrink-0"></i><span><b class="text-[#121A21]">Measurable Results:</b> Track the success of your campaigns and optimize your investments with our detailed analytics reporting.</span></li>
-    </ul>
-    <p class="text-sm text-[#475569] mt-5">Join us in empowering the success of South African SMEs! Start advertising today and connect with your ideal customers.</p>
+    <p class="text-[12px] font-bold uppercase tracking-widest text-[#DC183C]">Why partner with us</p>
+    <h2 class="font-jakarta font-extrabold text-3xl sm:text-4xl mt-2">Let's work together</h2>
+    <p class="mt-3 text-[#6A7581] text-lg max-w-md">Five reasons leading brands choose SME South Africa to grow their pipeline.</p>
+    <a href="#lead" class="mt-8 inline-flex items-center gap-2 px-6 h-12 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold transition">Start your campaign <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
   </div>
-  <form onsubmit="formSubmit(event)" class="bg-[#F7F9FB] rounded-2xl border border-[#E7EBEF] p-6 space-y-3">
-    <div class="grid grid-cols-2 gap-3"><input required class="field" placeholder="First name" /><input required class="field" placeholder="Last Name" /></div>
-    <input type="email" required class="field" placeholder="Email address" />
-    <div class="flex gap-2"><span class="inline-flex items-center gap-1.5 px-3 rounded-lg border border-[#E7EBEF] bg-white text-sm font-semibold shrink-0">🇿🇦 +27</span><input required type="tel" class="field" placeholder="Phone Number" /></div>
-    <input class="field" placeholder="Company Name" />
-    <select class="field"><option>— Select Advertising solution —</option><option>Sponsored articles</option><option>Newsletter placements</option><option>Display banners</option><option>Event sponsorship</option><option>Social media</option></select>
-    <select class="field"><option>— Select Budget —</option><option>Under R10,000</option><option>R10,000 – R50,000</option><option>R50,000 – R100,000</option><option>R100,000+</option></select>
-    <textarea rows="3" class="field" style="height:auto;padding:.7rem .9rem" placeholder="How can we help you?"></textarea>
-    <p class="text-[11px] text-[#6A7581] italic">We are committed to your privacy and will not share information with 3rd parties. Read our full <a href="public-privacy.html" class="text-[#DC183C] font-semibold not-italic hover:underline">Privacy Policy</a>.</p>
-    <button class="h-11 px-6 rounded-lg bg-[#0C1F31] hover:bg-[#1b3247] text-white font-bold text-sm uppercase tracking-wide transition">Advertise With Us</button>
-  </form>
+  <ul class="space-y-5">
+    <li class="flex gap-4"><i data-lucide="check-circle-2" class="w-6 h-6 text-[#29A37A] shrink-0 mt-0.5"></i><p class="text-[#121A21]"><span class="font-jakarta font-extrabold">Targeted Reach.</span> <span class="text-[#6A7581]">Put your brand in front of a high-intent audience of South African business owners.</span></p></li>
+    <li class="flex gap-4"><i data-lucide="check-circle-2" class="w-6 h-6 text-[#29A37A] shrink-0 mt-0.5"></i><p class="text-[#121A21]"><span class="font-jakarta font-extrabold">Brand Awareness.</span> <span class="text-[#6A7581]">Build trust and recognition through a respected, independent SME platform.</span></p></li>
+    <li class="flex gap-4"><i data-lucide="check-circle-2" class="w-6 h-6 text-[#29A37A] shrink-0 mt-0.5"></i><p class="text-[#121A21]"><span class="font-jakarta font-extrabold">Lead Generation.</span> <span class="text-[#6A7581]">Drive qualified enquiries and sign-ups straight into your sales pipeline.</span></p></li>
+    <li class="flex gap-4"><i data-lucide="check-circle-2" class="w-6 h-6 text-[#29A37A] shrink-0 mt-0.5"></i><p class="text-[#121A21]"><span class="font-jakarta font-extrabold">Cost-Effective Marketing.</span> <span class="text-[#6A7581]">Flexible packages that deliver strong returns at every budget level.</span></p></li>
+    <li class="flex gap-4"><i data-lucide="check-circle-2" class="w-6 h-6 text-[#29A37A] shrink-0 mt-0.5"></i><p class="text-[#121A21]"><span class="font-jakarta font-extrabold">Measurable Results.</span> <span class="text-[#6A7581]">Transparent reporting so you always know exactly how your spend performs.</span></p></li>
+  </ul>
+</section>
+
+<!-- LEAD FORM -->
+<section id="lead" class="bg-white border-t border-[#E7EBEF]">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-16 sm:py-24 grid lg:grid-cols-5 gap-12 items-start">
+    <div class="lg:col-span-2">
+      <p class="text-[12px] font-bold uppercase tracking-widest text-[#DC183C]">Get started</p>
+      <h2 class="font-jakarta font-extrabold text-3xl sm:text-4xl mt-2">Let's grow your brand together</h2>
+      <p class="mt-4 text-[#6A7581] text-lg">Tell us a little about your goals and our partnerships team will send a tailored media kit within one business day.</p>
+      <div class="mt-8 space-y-4 text-sm">
+        <div class="flex items-center gap-3"><div class="w-11 h-11 rounded-xl bg-[#FDECEF] text-[#DC183C] grid place-items-center"><i data-lucide="mail" class="w-5 h-5"></i></div><div><p class="text-[#6A7581]">Partnerships</p><p class="font-semibold">advertise@smesouthafrica.co.za</p></div></div>
+        <div class="flex items-center gap-3"><div class="w-11 h-11 rounded-xl bg-[#E4F5EE] text-[#29A37A] grid place-items-center"><i data-lucide="clock" class="w-5 h-5"></i></div><div><p class="text-[#6A7581]">Response time</p><p class="font-semibold">Within 1 business day</p></div></div>
+      </div>
+    </div>
+    <form onsubmit="formSubmit(event)" class="lg:col-span-3 bg-[#FCFCFC] rounded-2xl border border-[#E7EBEF] p-6 sm:p-8 space-y-4">
+      <div class="grid sm:grid-cols-2 gap-4">
+        <div><label class="block text-sm font-semibold mb-1.5">First name</label><input required class="field" placeholder="Thabo" /></div>
+        <div><label class="block text-sm font-semibold mb-1.5">Last name</label><input required class="field" placeholder="Mokoena" /></div>
+      </div>
+      <div><label class="block text-sm font-semibold mb-1.5">Email address</label><input type="email" required class="field" placeholder="you@business.co.za" /></div>
+      <div><label class="block text-sm font-semibold mb-1.5">Phone</label>
+        <div class="flex">
+          <span class="inline-flex items-center px-3 h-12 rounded-l-[.75rem] border border-r-0 border-[#E7EBEF] bg-white text-sm font-semibold text-[#121A21] whitespace-nowrap">🇿🇦 +27</span>
+          <input type="tel" class="field rounded-l-none" placeholder="82 123 4567" />
+        </div>
+      </div>
+      <div><label class="block text-sm font-semibold mb-1.5">Company name</label><input class="field" placeholder="Your company" /></div>
+      <div class="grid sm:grid-cols-2 gap-4">
+        <div><label class="block text-sm font-semibold mb-1.5">Advertising solution</label>
+          <select required class="field"><option value="" disabled selected>Select Advertising solution</option><option>Sponsored articles</option><option>Newsletter placements</option><option>Display banners</option><option>Event sponsorship</option><option>Social media</option></select>
+        </div>
+        <div><label class="block text-sm font-semibold mb-1.5">Budget</label>
+          <select required class="field"><option value="" disabled selected>Select Budget</option><option>Under R10,000</option><option>R10,000 – R50,000</option><option>R50,000 – R100,000</option><option>R100,000+</option></select>
+        </div>
+      </div>
+      <div><label class="block text-sm font-semibold mb-1.5">Message</label><textarea rows="4" class="field" style="height:auto;padding:.75rem 1rem" placeholder="Tell us about your campaign goals…"></textarea></div>
+      <button class="w-full h-12 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold uppercase tracking-wide transition flex items-center justify-center gap-2">Advertise with us <i data-lucide="megaphone" class="w-4 h-4"></i></button>
+      <p class="text-xs italic text-[#6A7581] text-center">By submitting, you agree to our <a href="public-privacy.html" class="text-[#DC183C] font-semibold not-italic hover:underline">Privacy Policy</a>. We'll only use your details to respond to your enquiry.</p>
+    </form>
+  </div>
 </section>
 
 <footer class="bg-[#0C1F31] text-white"><div class="max-w-7xl mx-auto px-4 sm:px-6 py-10 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm">
@@ -122,13 +177,12 @@
   <div class="flex flex-wrap items-center gap-x-5 gap-y-2 text-white/60"><a href="public-about.html" class="hover:text-white">About</a><a href="public-contact.html" class="hover:text-white">Contact</a><a href="public-advertise.html" class="hover:text-white">Advertise</a><a href="public-privacy.html" class="hover:text-white">Privacy</a><a href="public-terms.html" class="hover:text-white">Terms</a><a href="public-refunds.html" class="hover:text-white">Refunds</a><a href="public-popia.html" class="hover:text-white">POPIA</a></div>
   <p class="text-white/40">© 2026 SME South Africa</p>
 </div></footer>
-
 <div id="overlay-root"></div><div id="toast" class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-50"></div>
 <script>
   function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
   function showToast(m){const el=document.getElementById('toast');el.classList.remove('hidden');el.innerHTML=`<div class="bg-[#0C1F31] text-white rounded-full pl-3 pr-5 py-2.5 shadow-2xl flex items-center gap-2 text-sm font-semibold" style="border-left:4px solid #29A37A"><i data-lucide="check-circle" class="w-4 h-4" style="color:#29A37A"></i><span>${esc(m)}</span></div>`;lucide.createIcons();setTimeout(()=>{el.classList.add('hidden');el.innerHTML='';},2400);}
-  function formSubmit(e){e.preventDefault();e.target.reset();showToast('Thanks — your advertising enquiry is in.');}
-  const BRIEF={title:'Advertise Page',sub:'WordPress page + lead form',purpose:'Sells advertising/partnership inventory to brands targeting SMEs, mirroring the live SME design. Standalone WP page at /advertise.',data:'Stats + partner logos + ad steps (content-managed). Lead form: <code>{first,last,email,phone,company,solution,budget,message}</code> → CRM.',logic:'Form posts to CRM; triggers a media-kit / sales follow-up. Privacy note links to /privacy. Public + indexable.',components:'Hero (+Contact) · partner logos · 3 steps · stats band · benefits · lead form.',api:'POST /v1/advertise'};
+  function formSubmit(e){e.preventDefault();e.target.reset();showToast('Thanks — your media kit is on the way.');}
+  const BRIEF={title:'Advertise Page',sub:'WordPress page + lead form → CRM',purpose:'High-converting sales page that pitches advertising / partnership packages and captures qualified leads. Standalone WP page at /advertise.',data:'Lead form: <code>{firstName,lastName,email,phone,company,solution,budget,message}</code> → CRM (pipeline: Advertising). Logos, stats &amp; steps are content-managed.',logic:'Form posts to a CRM/Kit handler, tags the lead by chosen solution + budget and fires a media-kit auto-responder. Public + indexable.',components:'Header · hero · trusted-by strip · how-it-works · audience stats · benefits · lead form · footer.',api:'POST /v1/leads/advertising'};
   function toggleDevMode(){const on=document.body.classList.toggle('dev-on');const b=document.getElementById('devToggle');if(b)b.classList.toggle('on',on);if(on)showToast('Dev Mode on — tap any ⓘ for implementation notes.');lucide.createIcons();}
   function closeOverlay(id){const el=document.getElementById(id);if(!el)return;el.classList.remove('open');setTimeout(()=>{if(el&&el.parentNode)el.remove();},300);}
   function openBrief(){const b=BRIEF;const sec=(i,l,h)=>`<div class="px-6 py-4 border-t border-slate-100"><p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] flex items-center gap-1.5 mb-2"><i data-lucide="${i}" class="w-3.5 h-3.5"></i>${l}</p><div class="text-sm text-slate-600 leading-relaxed">${h}</div></div>`;document.getElementById('overlay-root').innerHTML=`<div class="ov" id="ov"><div class="ov-bg" onclick="closeOverlay('ov')"></div><div class="drawer"><div class="sticky top-0 z-10 bg-[#0C1F31] text-white px-6 py-5 flex items-start justify-between"><div><p class="text-[10px] font-bold uppercase tracking-widest text-[#FF9900] mb-1">Dev Brief</p><h3 class="font-jakarta font-extrabold text-lg leading-tight">${b.title}</h3><p class="text-xs text-white/60 mt-1">${b.sub}</p></div><button onclick="closeOverlay('ov')" class="text-white/60 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button></div>${sec('target','Purpose',b.purpose)}${sec('database','Data model',b.data)}${sec('git-branch','Logic',b.logic)}${sec('boxes','Components',b.components)}${sec('plug','API',`<code class="block bg-slate-900 text-emerald-300 text-xs font-mono px-3 py-2 rounded-lg overflow-x-auto">${b.api}</code>`)}</div></div>`;requestAnimationFrame(()=>{const o=document.getElementById('ov');if(o)o.classList.add('open');});lucide.createIcons();}

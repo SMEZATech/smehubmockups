@@ -3,17 +3,19 @@
 <head>
   <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>About Us — SME South Africa</title>
-  <meta name="description" content="About SME South Africa — the definitive membership platform for South African business owners." />
   <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <script src="https://cdn.tailwindcss.com"></script><script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
   <script>tailwind.config={theme:{extend:{fontFamily:{jakarta:['Plus Jakarta Sans','sans-serif'],inter:['Inter','system-ui','sans-serif']}}}};</script>
   <style>
     html,body{font-family:'Inter',system-ui,sans-serif;} .font-jakarta{font-family:'Plus Jakarta Sans',sans-serif;letter-spacing:.005em;}
-    .card-lift{transition:box-shadow .2s,transform .2s;} .card-lift:hover{box-shadow:0 10px 24px -10px rgba(10,44,61,.18);transform:translateY(-2px);}
+    .hero-bg{background:linear-gradient(115deg,#0C1F31 0%,#0C1F31 50%,#2b1626 80%,#5e1a2c 115%);}
+    .dot-pattern{background-image:radial-gradient(rgba(255,255,255,.07) 1px,transparent 1.5px);background-size:22px 22px;}
     .dev-badge{display:none;} body.dev-on .dev-badge{display:inline-flex;} #devToggle.on{background:#DC183C;color:#fff;border-color:#DC183C;}
     .ov{position:fixed;inset:0;z-index:60;} .ov-bg{position:absolute;inset:0;background:rgba(12,31,49,.45);backdrop-filter:blur(2px);opacity:0;transition:opacity .3s;} .ov.open .ov-bg{opacity:1;}
     .drawer{position:absolute;right:0;top:0;height:100%;width:100%;max-width:440px;background:#fff;box-shadow:-12px 0 40px rgba(12,31,49,.25);overflow-y:auto;transform:translateX(100%);transition:transform .3s cubic-bezier(.2,.7,.2,1);} .ov.open .drawer{transform:translateX(0);}
+    .card-lift{transition:transform .28s cubic-bezier(.2,.7,.2,1),box-shadow .28s,border-color .28s;} .card-lift:hover{transform:translateY(-6px);box-shadow:0 22px 48px -18px rgba(12,31,49,.28);border-color:#DC183C;}
+    .grad-text{background:linear-gradient(100deg,#DC183C,#FF9900);-webkit-background-clip:text;background-clip:text;color:transparent;}
   </style>
 </head>
 <body class="bg-[#FCFCFC] text-[#121A21] antialiased">
@@ -33,51 +35,150 @@
   </div>
 </div></header>
 
-<!-- HERO: About SME South Africa (text + image) -->
-<section style="background:linear-gradient(180deg,#FBEEF0,#FCFCFC)">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-12 sm:py-16">
-    <div class="grid lg:grid-cols-2 gap-6 lg:gap-10 items-stretch bg-white/60 rounded-3xl overflow-hidden border border-white">
-      <div class="p-8 sm:p-12 flex flex-col justify-center">
-        <h1 class="font-jakarta font-extrabold text-3xl sm:text-4xl text-[#0C1F31]">About SME South Africa
-          <button onclick="openBrief()" class="dev-badge align-middle ml-1 w-6 h-6 rounded-full bg-[#DC183C] text-white items-center justify-center text-[11px] font-bold">i</button>
-        </h1>
-        <p class="text-[#475569] leading-relaxed mt-4">We are the definitive membership platform for South African business owners to access the community, capital, and tools they need to scale. We provide expert guidance, premium digital resources, and direct access to small business financing to take your enterprise to the next level.</p>
+<!-- HERO -->
+<section class="hero-bg text-white relative overflow-hidden">
+  <div class="absolute inset-0 dot-pattern opacity-70 pointer-events-none"></div>
+  <div class="absolute -top-32 -right-24 w-96 h-96 rounded-full bg-[#DC183C]/20 blur-3xl pointer-events-none"></div>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-20 sm:py-28 relative grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+    <div>
+      <p class="inline-flex items-center gap-2 text-[12px] font-bold uppercase tracking-widest text-white/60">
+        <span class="w-1.5 h-1.5 rounded-full bg-[#FF9900]"></span>About SME South Africa
+        <button onclick="openBrief()" class="dev-badge align-middle ml-1 w-5 h-5 rounded-full bg-[#FF9900] text-[#0C1F31] items-center justify-center text-[10px] font-bold">i</button>
+      </p>
+      <h1 class="font-jakarta font-extrabold text-4xl sm:text-5xl lg:text-[3.4rem] leading-[1.06] mt-5">
+        The definitive membership platform for <span class="grad-text">South African business owners</span>.
+      </h1>
+      <p class="mt-6 text-lg text-white/75 leading-relaxed max-w-xl">
+        We give entrepreneurs access to the community, capital, and tools they need to scale — expert guidance, premium digital resources, and direct access to small business financing, all in one place.
+      </p>
+      <div class="mt-9 flex flex-wrap gap-3">
+        <a href="public-auth.html#join" class="inline-flex items-center gap-2 px-6 h-12 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold transition">Join for Free <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
+        <a href="#products" class="inline-flex items-center gap-2 px-6 h-12 rounded-full bg-white/10 hover:bg-white/15 ring-1 ring-white/15 text-white font-bold transition">Explore the platform</a>
       </div>
-      <img src="assets/hero-entrepreneurs.jpg" alt="SME South Africa at work" class="w-full h-full object-cover min-h-[16rem]" />
+    </div>
+    <div class="relative">
+      <div class="absolute -inset-3 rounded-3xl bg-gradient-to-tr from-[#DC183C]/30 to-[#FF9900]/30 blur-2xl"></div>
+      <div class="relative rounded-3xl overflow-hidden ring-1 ring-white/15 shadow-2xl">
+        <img src="assets/hero-entrepreneurs.jpg" alt="South African entrepreneurs" class="w-full h-[360px] sm:h-[420px] object-cover" />
+        <div class="absolute inset-0 bg-gradient-to-t from-[#0C1F31]/60 via-transparent to-transparent"></div>
+      </div>
+      <div class="absolute -bottom-5 -left-5 bg-white text-[#121A21] rounded-2xl shadow-xl px-5 py-4 flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-[#E4F5EE] text-[#29A37A] grid place-items-center"><i data-lucide="users" class="w-5 h-5"></i></div>
+        <div><p class="font-jakarta font-extrabold text-xl leading-none">100K+</p><p class="text-xs text-[#6A7581] mt-0.5">monthly community</p></div>
+      </div>
     </div>
   </div>
 </section>
 
 <!-- STORY -->
-<section class="max-w-4xl mx-auto px-4 sm:px-6 py-14">
-  <h2 class="font-jakarta font-extrabold text-2xl sm:text-3xl text-[#0C1F31]">Your Premier Membership Hub for Business Growth</h2>
-  <div class="mt-5 space-y-4 text-[#475569] leading-relaxed">
-    <p>We are the definitive membership platform for South African business owners to access the community, capital, and tools they need to scale. We provide expert guidance, premium digital resources, and direct access to small business financing.</p>
-    <p>SME South Africa is a unified digital ecosystem designed exclusively to empower local entrepreneurs. We understand the unique landscape of South African business. Our platform equips you with the exact resources, networking opportunities, and funding pathways necessary to navigate every growth stage.</p>
-    <p>Our journey began in 2014 when digital media entrepreneur <span class="text-[#DC183C] font-semibold">Velly Bosega</span> acquired the brand, ushering in a bold, digital-first era. Over the past decade, we've evolved from a standalone publication into a vibrant, interactive membership community, attracting over <span class="font-semibold text-[#121A21]">100,000 visitors</span> every month.</p>
+<section class="max-w-7xl mx-auto px-4 sm:px-6 py-20 sm:py-24 grid lg:grid-cols-12 gap-12 items-start">
+  <div class="lg:col-span-5">
+    <p class="text-[12px] font-bold uppercase tracking-widest text-[#AE6B0A]">Our Story</p>
+    <h2 class="font-jakarta font-extrabold text-3xl sm:text-4xl leading-tight mt-3">Your Premier Membership Hub for Business Growth</h2>
+    <div class="mt-6 h-1 w-20 rounded-full bg-gradient-to-r from-[#DC183C] to-[#FF9900]"></div>
+  </div>
+  <div class="lg:col-span-7 space-y-5 text-[1.05rem] text-[#384450] leading-relaxed">
+    <p>Our journey began in <span class="font-semibold text-[#121A21]">2014</span> when digital media entrepreneur <span class="font-semibold text-[#121A21]">Velly Bosega</span> acquired the brand, ushering in a bold, digital-first era. Over the past decade, we've evolved from a standalone publication into a vibrant, interactive membership community, attracting <span class="font-semibold text-[#121A21]">over 100,000 visitors every month</span>.</p>
+    <p>Today, SME South Africa is a single, unified digital ecosystem for South African entrepreneurs — bringing together insight, funding, business solutions, and downloadable resources under one roof, so every founder has a clear path from idea to scale.</p>
   </div>
 </section>
 
-<!-- OUR PRODUCTS -->
-<section style="background:linear-gradient(180deg,#FBEEF0,#FCFCFC)" class="border-y border-[#E7EBEF]">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-14">
-    <h2 class="font-jakarta font-extrabold text-2xl sm:text-3xl text-center text-[#0C1F31] mb-10">Our Products</h2>
-    <div id="products" class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5"></div>
+<!-- IMPACT -->
+<section class="bg-[#0C1F31] text-white relative overflow-hidden">
+  <div class="absolute inset-0 dot-pattern opacity-60 pointer-events-none"></div>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-16 relative">
+    <p class="text-center text-[12px] font-bold uppercase tracking-widest text-white/50">Our Impact</p>
+    <div class="mt-8 grid grid-cols-2 lg:grid-cols-4 gap-y-10 gap-x-6 text-center">
+      <div><p class="font-jakarta font-extrabold text-4xl sm:text-5xl grad-text">100K+</p><p class="mt-2 text-sm text-white/70">Members</p></div>
+      <div><p class="font-jakarta font-extrabold text-4xl sm:text-5xl grad-text">R100M+</p><p class="mt-2 text-sm text-white/70">Loans Facilitated</p></div>
+      <div><p class="font-jakarta font-extrabold text-4xl sm:text-5xl grad-text">500+</p><p class="mt-2 text-sm text-white/70">Events Hosted</p></div>
+      <div><p class="font-jakarta font-extrabold text-4xl sm:text-5xl grad-text">50K+</p><p class="mt-2 text-sm text-white/70">Downloads</p></div>
+    </div>
   </div>
 </section>
 
-<!-- OUR TEAM -->
-<section class="max-w-7xl mx-auto px-4 sm:px-6 py-14">
-  <h2 class="font-jakarta font-extrabold text-2xl sm:text-3xl text-center text-[#0C1F31] mb-10">Our Team</h2>
-  <div id="team" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-5"></div>
+<!-- PRODUCTS -->
+<section id="products" class="max-w-7xl mx-auto px-4 sm:px-6 py-20 sm:py-24">
+  <div class="max-w-2xl">
+    <p class="text-[12px] font-bold uppercase tracking-widest text-[#DC183C]">What We Offer</p>
+    <h2 class="font-jakarta font-extrabold text-3xl sm:text-4xl leading-tight mt-3">One platform, four ways to grow</h2>
+    <p class="mt-4 text-[#6A7581] text-lg">Everything a South African founder needs to learn, fund, build, and run a business — designed to work together.</p>
+  </div>
+  <div class="mt-12 grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+    <a href="public-articles.html" class="card-lift group bg-white rounded-2xl border border-[#E7EBEF] p-6 block">
+      <div class="w-12 h-12 rounded-xl bg-[#FDECEF] text-[#DC183C] grid place-items-center"><i data-lucide="newspaper" class="w-6 h-6"></i></div>
+      <h3 class="font-jakarta font-extrabold text-xl mt-5">Insights</h3>
+      <p class="mt-2 text-sm text-[#6A7581] leading-relaxed">Expert articles, interviews, and how-to guides to help you make sharper business decisions.</p>
+      <span class="mt-4 inline-flex items-center gap-1.5 text-sm font-bold text-[#DC183C]">Read Insights <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition"></i></span>
+    </a>
+    <a href="public-funding.html" class="card-lift group bg-white rounded-2xl border border-[#E7EBEF] p-6 block">
+      <div class="w-12 h-12 rounded-xl bg-[#E4F5EE] text-[#29A37A] grid place-items-center"><i data-lucide="landmark" class="w-6 h-6"></i></div>
+      <h3 class="font-jakarta font-extrabold text-xl mt-5">Funding</h3>
+      <p class="mt-2 text-sm text-[#6A7581] leading-relaxed">Direct access to small business financing — apply, compare, and get matched to capital.</p>
+      <span class="mt-4 inline-flex items-center gap-1.5 text-sm font-bold text-[#DC183C]">Explore Funding <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition"></i></span>
+    </a>
+    <a href="public-solutions.html" class="card-lift group bg-white rounded-2xl border border-[#E7EBEF] p-6 block">
+      <div class="w-12 h-12 rounded-xl bg-[#FFF1E0] text-[#AE6B0A] grid place-items-center"><i data-lucide="layout-grid" class="w-6 h-6"></i></div>
+      <h3 class="font-jakarta font-extrabold text-xl mt-5">Solutions</h3>
+      <p class="mt-2 text-sm text-[#6A7581] leading-relaxed">Vetted tools and services — from accounting to compliance — to run your business better.</p>
+      <span class="mt-4 inline-flex items-center gap-1.5 text-sm font-bold text-[#DC183C]">Browse Solutions <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition"></i></span>
+    </a>
+    <a href="public-resources.html" class="card-lift group bg-white rounded-2xl border border-[#E7EBEF] p-6 block">
+      <div class="w-12 h-12 rounded-xl bg-[#FDECEF] text-[#DC183C] grid place-items-center"><i data-lucide="folder-down" class="w-6 h-6"></i></div>
+      <h3 class="font-jakarta font-extrabold text-xl mt-5">Resources</h3>
+      <p class="mt-2 text-sm text-[#6A7581] leading-relaxed">Premium templates, toolkits, and downloadable guides ready to put to work today.</p>
+      <span class="mt-4 inline-flex items-center gap-1.5 text-sm font-bold text-[#DC183C]">Get Resources <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition"></i></span>
+    </a>
+  </div>
 </section>
 
-<!-- CTA -->
-<section class="max-w-7xl mx-auto px-4 sm:px-6 pb-16">
-  <div class="rounded-3xl text-white p-10 text-center relative overflow-hidden" style="background:linear-gradient(115deg,#0C1F31 0%,#0C1F31 55%,#2b1626 85%,#5e1a2c 120%)">
-    <h2 class="font-jakarta font-extrabold text-2xl sm:text-3xl">Become part of the community</h2>
-    <p class="text-white/70 mt-2">Free to start — no credit card required.</p>
-    <a href="public-auth.html#join" class="mt-6 inline-flex items-center gap-2 px-7 h-12 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold transition">Join for Free <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
+<!-- TEAM -->
+<section class="bg-white border-y border-[#E7EBEF]">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-20 sm:py-24">
+    <div class="text-center max-w-2xl mx-auto">
+      <p class="text-[12px] font-bold uppercase tracking-widest text-[#AE6B0A]">Our Team</p>
+      <h2 class="font-jakarta font-extrabold text-3xl sm:text-4xl leading-tight mt-3">The people building the platform</h2>
+      <p class="mt-4 text-[#6A7581] text-lg">A digital-first team obsessed with helping South African founders win.</p>
+    </div>
+    <div class="mt-14 grid sm:grid-cols-2 lg:grid-cols-3 gap-5" id="team-grid"></div>
+  </div>
+</section>
+
+<!-- VALUES -->
+<section class="max-w-7xl mx-auto px-4 sm:px-6 py-20 sm:py-24">
+  <div class="text-center max-w-2xl mx-auto">
+    <p class="text-[12px] font-bold uppercase tracking-widest text-[#DC183C]">What We Stand For</p>
+    <h2 class="font-jakarta font-extrabold text-3xl sm:text-4xl leading-tight mt-3">Our values</h2>
+  </div>
+  <div class="mt-12 grid md:grid-cols-3 gap-5">
+    <div class="card-lift bg-white rounded-2xl border border-[#E7EBEF] p-7">
+      <div class="w-12 h-12 rounded-xl bg-[#FDECEF] text-[#DC183C] grid place-items-center"><i data-lucide="heart-handshake" class="w-6 h-6"></i></div>
+      <h3 class="font-jakarta font-extrabold text-xl mt-5">Community first</h3>
+      <p class="mt-2 text-sm text-[#6A7581] leading-relaxed">We grow when our members grow. Every decision starts with the founder on the other side of the screen.</p>
+    </div>
+    <div class="card-lift bg-white rounded-2xl border border-[#E7EBEF] p-7">
+      <div class="w-12 h-12 rounded-xl bg-[#E4F5EE] text-[#29A37A] grid place-items-center"><i data-lucide="shield-check" class="w-6 h-6"></i></div>
+      <h3 class="font-jakarta font-extrabold text-xl mt-5">Trust &amp; transparency</h3>
+      <p class="mt-2 text-sm text-[#6A7581] leading-relaxed">We handle your data with care and full POPIA compliance — clear, honest, and accountable, always.</p>
+    </div>
+    <div class="card-lift bg-white rounded-2xl border border-[#E7EBEF] p-7">
+      <div class="w-12 h-12 rounded-xl bg-[#FFF1E0] text-[#AE6B0A] grid place-items-center"><i data-lucide="flag" class="w-6 h-6"></i></div>
+      <h3 class="font-jakarta font-extrabold text-xl mt-5">Proudly South African</h3>
+      <p class="mt-2 text-sm text-[#6A7581] leading-relaxed">Built here, for here. We champion local entrepreneurs and the economy they're working to build.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CLOSING CTA -->
+<section class="max-w-7xl mx-auto px-4 sm:px-6 pb-24">
+  <div class="hero-bg rounded-3xl text-white relative overflow-hidden px-6 sm:px-12 py-16 text-center">
+    <div class="absolute inset-0 dot-pattern opacity-70 pointer-events-none"></div>
+    <div class="absolute -bottom-24 -left-16 w-80 h-80 rounded-full bg-[#FF9900]/15 blur-3xl pointer-events-none"></div>
+    <div class="relative max-w-2xl mx-auto">
+      <h2 class="font-jakarta font-extrabold text-3xl sm:text-4xl leading-tight">Ready to scale your business?</h2>
+      <p class="mt-4 text-white/75 text-lg">Join over 100,000 South African entrepreneurs accessing community, capital, and tools — free to start.</p>
+      <a href="public-auth.html#join" class="mt-8 inline-flex items-center gap-2 px-7 h-12 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold transition">Join for Free <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
+    </div>
   </div>
 </section>
 
@@ -86,45 +187,44 @@
   <div class="flex flex-wrap items-center gap-x-5 gap-y-2 text-white/60"><a href="public-about.html" class="hover:text-white">About</a><a href="public-contact.html" class="hover:text-white">Contact</a><a href="public-advertise.html" class="hover:text-white">Advertise</a><a href="public-privacy.html" class="hover:text-white">Privacy</a><a href="public-terms.html" class="hover:text-white">Terms</a><a href="public-refunds.html" class="hover:text-white">Refunds</a><a href="public-popia.html" class="hover:text-white">POPIA</a></div>
   <p class="text-white/40">© 2026 SME South Africa</p>
 </div></footer>
-
 <div id="overlay-root"></div><div id="toast" class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-50"></div>
 <script>
   function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
   function showToast(m){const el=document.getElementById('toast');el.classList.remove('hidden');el.innerHTML=`<div class="bg-[#0C1F31] text-white rounded-full pl-3 pr-5 py-2.5 shadow-2xl flex items-center gap-2 text-sm font-semibold" style="border-left:4px solid #29A37A"><i data-lucide="check-circle" class="w-4 h-4" style="color:#29A37A"></i><span>${esc(m)}</span></div>`;lucide.createIcons();setTimeout(()=>{el.classList.add('hidden');el.innerHTML='';},2400);}
 
-  const PRODUCTS = [
-    { name:'Insights',  icon:'lightbulb',  desc:'Industry insights & practical advice for South African entrepreneurs.', href:'public-articles.html' },
-    { name:'Funding',   icon:'banknote',   desc:'Curated selection of funding options tailored to your business needs.', href:'public-funding.html' },
-    { name:'Solutions', icon:'layout-grid',desc:'Unbiased reviews to help you find the right solutions for your business.', href:'public-solutions.html' },
-    { name:'Resources', icon:'folder-open',desc:'Resources to streamline your business operations.', href:'public-resources.html' }
+  // ----- TEAM DATA -----
+  const TEAM=[
+    {name:'Velly Bosega',role:'Founder & CEO',i:'VB'},
+    {name:'Tshepho Joel',role:'Platform Manager',i:'TJ'},
+    {name:'Gcina Madonsela',role:'Business Development Executive',i:'GM'},
+    {name:'Maryna Steyn',role:'Editor',i:'MS'},
+    {name:'Lungile Msomi',role:'Digital Content Specialist & Editor (Startup.Africa)',i:'LM'},
+    {name:'Karabo Kgophane',role:'Social Media & Digital Community Manager',i:'KK',link:'public-author.html'},
+    {name:'Omega Fumba',role:'Content Manager',i:'OF'}
   ];
-  document.getElementById('products').innerHTML = PRODUCTS.map(p=>`
-    <a href="${p.href}" class="group bg-white rounded-2xl border border-[#DC183C]/25 hover:border-[#DC183C] overflow-hidden card-lift block">
-      <div class="h-28 grid place-items-center bg-[#FBEEF0]"><i data-lucide="${p.icon}" class="w-12 h-12 text-[#DC183C]"></i></div>
-      <div class="p-5 text-center"><h3 class="font-jakarta font-bold text-[#0C1F31] group-hover:text-[#DC183C] transition">${esc(p.name)}</h3><p class="text-sm text-[#6A7581] mt-2 leading-snug">${esc(p.desc)}</p></div>
-    </a>`).join('');
+  function renderTeam(){
+    const grid=document.getElementById('team-grid');
+    grid.innerHTML=TEAM.map(m=>{
+      const nameHtml=m.link?`<a href="${m.link}" class="hover:text-[#DC183C] transition">${esc(m.name)}</a>`:esc(m.name);
+      return `<div class="card-lift bg-[#FCFCFC] rounded-2xl border border-[#E7EBEF] p-6 flex items-center gap-4">
+        <div class="shrink-0 w-14 h-14 rounded-2xl grid place-items-center text-white font-jakarta font-extrabold text-lg" style="background:linear-gradient(135deg,#DC183C,#FF9900)">${esc(m.i)}</div>
+        <div class="min-w-0 flex-1">
+          <h3 class="font-jakarta font-extrabold text-[1.05rem] leading-tight">${nameHtml}</h3>
+          <p class="text-sm text-[#6A7581] mt-0.5 leading-snug">${esc(m.role)}</p>
+        </div>
+        <a href="#" onclick="event.preventDefault()" aria-label="LinkedIn" class="shrink-0 w-9 h-9 rounded-lg border border-[#E7EBEF] text-[#6A7581] hover:text-[#DC183C] hover:border-[#DC183C] grid place-items-center transition"><svg viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4" aria-hidden="true"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.42v1.56h.05c.47-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.07 2.07 0 1 1 0-4.14 2.07 2.07 0 0 1 0 4.14zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.8 0 0 .78 0 1.73v20.54C0 23.22.8 24 1.77 24h20.45C23.2 24 24 23.22 24 22.27V1.73C24 .78 23.2 0 22.22 0z"/></svg></a>
+      </div>`;
+    }).join('');
+    lucide.createIcons();
+  }
 
-  const TEAM = [
-    { i:'VB', n:'Velly Bosega',    r:'Founder & CEO' },
-    { i:'TJ', n:'Tshepho Joel',    r:'Platform Manager' },
-    { i:'GM', n:'Gcina Madonsela', r:'Business Development Executive' },
-    { i:'MS', n:'Maryna Steyn',    r:'Editor' },
-    { i:'LM', n:'Lungile Msomi',   r:'Digital Content Specialist & Editor (Startup.Africa)' },
-    { i:'KK', n:'Karabo Kgophane', r:'Social Media & Digital Community Manager', href:'public-author.html' },
-    { i:'OF', n:'Omega Fumba',     r:'Content Manager' }
-  ];
-  document.getElementById('team').innerHTML = TEAM.map(t=>`
-    <div class="bg-white rounded-2xl border border-[#E7EBEF] p-6 text-center card-lift">
-      <div class="w-20 h-20 rounded-full bg-gradient-to-br from-[#DC183C] to-[#FF9900] grid place-items-center font-jakarta font-extrabold text-white text-xl mx-auto">${t.i}</div>
-      <p class="font-jakarta font-bold text-[#0C1F31] mt-4">${t.href?`<a href="${t.href}" class="hover:text-[#DC183C]">${esc(t.n)}</a>`:esc(t.n)}</p>
-      <p class="text-xs text-[#AE6B0A] mt-1 leading-snug">${esc(t.r)}</p>
-      <a href="#" class="inline-grid place-items-center w-8 h-8 rounded-full text-[#0C1F31] hover:bg-[#FDECEF] hover:text-[#DC183C] mt-2 transition" aria-label="LinkedIn"><i data-lucide="linkedin" class="w-4 h-4"></i></a>
-    </div>`).join('');
-
-  const BRIEF={title:'About Page',sub:'WordPress page · public',purpose:'Company story, products and team — builds trust and E-E-A-T. Standalone WP page at /about, matching the live SME South Africa layout.',data:'Content-managed (WP). Team = a repeatable block { name, role, photo, linkedin }. Products link to the four pillars.',logic:'Public + indexable (Yoast/RankMath + Organization schema). Team photos served from media library; mockup uses monogram avatars.',components:'Hero · story · Our Products (4) · Our Team grid · CTA.',api:'GET /wp-json/wp/v2/pages?slug=about · GET /v1/team'};
+  // ----- DEV BRIEF -----
+  const BRIEF={title:'About Page',sub:'WordPress page + team block + schema',purpose:'Tells the SME South Africa story, surfaces the four products, and introduces the team. Standalone WP page at /about — public and indexable.',data:'Team block: <code>{name,role,avatar/initials,linkedin}</code> managed via a repeatable WP field group (ACF). Stats and product cards are content-managed.',logic:'Static marketing content; the team grid renders from a data array so members can be added or reordered without touching layout. Karabo links to her author archive.',components:'Header · hero · story · impact stats · products grid · team grid · values · closing CTA · footer.',api:'Emit <code>Organization</code> + <code>Person</code> JSON-LD schema for E-E-A-T; the team block feeds author trust signals.'};
   function toggleDevMode(){const on=document.body.classList.toggle('dev-on');const b=document.getElementById('devToggle');if(b)b.classList.toggle('on',on);if(on)showToast('Dev Mode on — tap any ⓘ for implementation notes.');lucide.createIcons();}
   function closeOverlay(id){const el=document.getElementById(id);if(!el)return;el.classList.remove('open');setTimeout(()=>{if(el&&el.parentNode)el.remove();},300);}
-  function openBrief(){const b=BRIEF;const sec=(i,l,h)=>`<div class="px-6 py-4 border-t border-slate-100"><p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] flex items-center gap-1.5 mb-2"><i data-lucide="${i}" class="w-3.5 h-3.5"></i>${l}</p><div class="text-sm text-slate-600 leading-relaxed">${h}</div></div>`;document.getElementById('overlay-root').innerHTML=`<div class="ov" id="ov"><div class="ov-bg" onclick="closeOverlay('ov')"></div><div class="drawer"><div class="sticky top-0 z-10 bg-[#0C1F31] text-white px-6 py-5 flex items-start justify-between"><div><p class="text-[10px] font-bold uppercase tracking-widest text-[#FF9900] mb-1">Dev Brief</p><h3 class="font-jakarta font-extrabold text-lg leading-tight">${b.title}</h3><p class="text-xs text-white/60 mt-1">${b.sub}</p></div><button onclick="closeOverlay('ov')" class="text-white/60 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button></div>${sec('target','Purpose',b.purpose)}${sec('database','Data model',b.data)}${sec('git-branch','Logic',b.logic)}${sec('boxes','Components',b.components)}${sec('plug','API',`<code class="block bg-slate-900 text-emerald-300 text-xs font-mono px-3 py-2 rounded-lg overflow-x-auto">${b.api}</code>`)}</div></div>`;requestAnimationFrame(()=>{const o=document.getElementById('ov');if(o)o.classList.add('open');});lucide.createIcons();}
+  function openBrief(){const b=BRIEF;const sec=(i,l,h)=>`<div class="px-6 py-4 border-t border-slate-100"><p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] flex items-center gap-1.5 mb-2"><i data-lucide="${i}" class="w-3.5 h-3.5"></i>${l}</p><div class="text-sm text-slate-600 leading-relaxed">${h}</div></div>`;document.getElementById('overlay-root').innerHTML=`<div class="ov" id="ov"><div class="ov-bg" onclick="closeOverlay('ov')"></div><div class="drawer"><div class="sticky top-0 z-10 bg-[#0C1F31] text-white px-6 py-5 flex items-start justify-between"><div><p class="text-[10px] font-bold uppercase tracking-widest text-[#FF9900] mb-1">Dev Brief</p><h3 class="font-jakarta font-extrabold text-lg leading-tight">${b.title}</h3><p class="text-xs text-white/60 mt-1">${b.sub}</p></div><button onclick="closeOverlay('ov')" class="text-white/60 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button></div>${sec('target','Purpose',b.purpose)}${sec('database','Data model',b.data)}${sec('git-branch','Logic',b.logic)}${sec('boxes','Components',b.components)}${sec('plug','SEO / Schema',b.api)}</div></div>`;requestAnimationFrame(()=>{const o=document.getElementById('ov');if(o)o.classList.add('open');});lucide.createIcons();}
+
+  renderTeam();
   lucide.createIcons();
 </script>
 </body>
