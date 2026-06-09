@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Checkout — SME South Africa</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script><script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  <script>tailwind.config={theme:{extend:{fontFamily:{jakarta:['Plus Jakarta Sans','sans-serif'],inter:['Inter','system-ui','sans-serif']}}}};</script>
+  <style>
+    html,body{font-family:'Inter',system-ui,sans-serif;} .font-jakarta{font-family:'Plus Jakarta Sans',sans-serif;letter-spacing:.005em;}
+    .field{width:100%;background:#fff;border:1px solid #E7EBEF;border-radius:.75rem;height:3rem;padding:0 1rem;font-size:.9rem;outline:none;transition:border-color .15s,box-shadow .15s;} .field:focus{border-color:#DC183C;box-shadow:0 0 0 3px rgba(220,24,60,.12);}
+    select.field{appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%236A7581' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 1rem center;padding-right:2.5rem;}
+    .dev-badge{display:none;} body.dev-on .dev-badge{display:inline-flex;} #devToggle.on{background:#DC183C;color:#fff;border-color:#DC183C;}
+    .ov{position:fixed;inset:0;z-index:60;} .ov-bg{position:absolute;inset:0;background:rgba(12,31,49,.45);backdrop-filter:blur(2px);opacity:0;transition:opacity .3s;} .ov.open .ov-bg{opacity:1;}
+    .drawer{position:absolute;right:0;top:0;height:100%;width:100%;max-width:440px;background:#fff;box-shadow:-12px 0 40px rgba(12,31,49,.25);overflow-y:auto;transform:translateX(100%);transition:transform .3s cubic-bezier(.2,.7,.2,1);} .ov.open .drawer{transform:translateX(0);}
+    .step-pane{display:none;} .step-pane.active{display:block;animation:fadeUp .4s cubic-bezier(.2,.7,.2,1) backwards;}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+    @keyframes pop{0%{transform:scale(.6);opacity:0;}60%{transform:scale(1.08);}100%{transform:scale(1);opacity:1;}}
+    .pop{animation:pop .5s cubic-bezier(.2,.7,.2,1) backwards;}
+    .qty-btn{width:2rem;height:2rem;display:grid;place-items:center;border-radius:.5rem;border:1px solid #E7EBEF;background:#fff;color:#121A21;transition:all .15s;} .qty-btn:hover{border-color:#0C1F31;background:#0C1F31;color:#fff;}
+  </style>
+</head>
+<body class="bg-[#FCFCFC] text-[#121A21] antialiased">
+<header class="bg-white border-b border-[#E7EBEF] sticky top-0 z-40"><div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center gap-4">
+  <a href="public-home.html" class="flex items-center gap-2.5 shrink-0"><img src="assets/logo-icon.png" alt="SME South Africa" class="w-9 h-9" /><span class="font-jakarta font-extrabold text-[17px] tracking-tight">SME <span class="text-[#DC183C]">South Africa</span></span></a>
+  <nav class="hidden lg:flex items-center gap-1 ml-4">
+    <a href="public-articles.html" class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition">Articles</a>
+    <a href="public-resources.html" class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition">Resources</a>
+    <a href="public-funding.html" class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition">Funding</a>
+    <a href="public-solutions.html" class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition">Solutions</a>
+    <a href="public-shop.html" class="px-3 py-2 rounded-lg text-sm font-semibold text-[#DC183C] bg-[#FDECEF]">Shop</a>
+  </nav>
+  <div class="flex items-center gap-1 sm:gap-2 ml-auto">
+    <button id="devToggle" onclick="toggleDevMode()" class="hidden sm:flex items-center gap-1.5 px-3 h-9 rounded-full border border-slate-200 text-slate-500 hover:border-[#DC183C] hover:text-[#DC183C] transition text-[11px] font-bold uppercase tracking-wider"><i data-lucide="code-2" class="w-3.5 h-3.5"></i><span>Dev</span></button>
+    <a href="public-shop.html" class="hidden sm:inline-flex items-center gap-1.5 px-3 h-9 rounded-full text-sm font-bold text-[#121A21] hover:bg-slate-100 transition"><i data-lucide="arrow-left" class="w-4 h-4"></i> Shop</a>
+    <a href="public-auth.html#join" class="inline-flex items-center px-4 h-9 rounded-full text-sm font-bold text-white bg-[#DC183C] hover:bg-[#B0142F] transition">Join Free</a>
+  </div>
+</div></header>
+
+<!-- ===================== STEPPER ===================== -->
+<section class="bg-white border-b border-[#E7EBEF]">
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 py-5">
+    <div class="flex items-center justify-between">
+      <div>
+        <p class="text-[12px] font-bold uppercase tracking-widest text-[#DC183C] flex items-center gap-1.5">Checkout
+          <button onclick="openBrief()" class="dev-badge align-middle w-5 h-5 rounded-full bg-[#FF9900] text-[#0C1F31] items-center justify-center text-[10px] font-bold">i</button>
+        </p>
+        <h1 class="font-jakarta font-extrabold text-2xl mt-0.5" id="stepTitle">Your cart</h1>
+      </div>
+      <a href="public-shop.html" class="hidden sm:inline-flex items-center gap-1.5 text-sm font-semibold text-[#6A7581] hover:text-[#121A21] transition"><i data-lucide="arrow-left" class="w-4 h-4"></i> Continue shopping</a>
+    </div>
+    <!-- step rail -->
+    <ol id="stepper" class="mt-6 flex items-center gap-2 sm:gap-3"></ol>
+  </div>
+</section>
+
+<main class="max-w-5xl mx-auto px-4 sm:px-6 py-8 sm:py-10">
+
+  <!-- ===================== STEP 1 — CART ===================== -->
+  <section class="step-pane active" data-pane="0">
+    <div class="grid lg:grid-cols-3 gap-6">
+      <div class="lg:col-span-2 space-y-4" id="cartList"></div>
+      <!-- order summary (sticky) -->
+      <aside class="lg:sticky lg:top-24 h-max">
+        <div class="bg-white rounded-2xl border border-[#E7EBEF] p-5">
+          <h3 class="font-jakarta font-extrabold text-lg">Order summary</h3>
+          <div class="mt-4 space-y-2.5 text-sm">
+            <div class="flex items-center justify-between"><span class="text-[#6A7581]">Subtotal</span><span class="font-semibold" id="sumSubtotal">R0</span></div>
+            <div class="flex items-center justify-between"><span class="text-[#6A7581]">Delivery</span><span class="font-semibold" id="sumDelivery">R0</span></div>
+            <p class="text-[12px] text-[#6A7581] flex items-center gap-1.5" id="sumFreeNote"><i data-lucide="truck" class="w-3.5 h-3.5 text-[#29A37A]"></i><span></span></p>
+          </div>
+          <div class="border-t border-[#E7EBEF] my-4"></div>
+          <div class="flex items-center justify-between"><span class="font-jakarta font-bold">Total</span><span class="font-jakarta font-extrabold text-xl" id="sumTotal">R0</span></div>
+          <button onclick="go(1)" id="toShipBtn" class="mt-5 w-full h-12 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold transition flex items-center justify-center gap-2">Continue to shipping <i data-lucide="arrow-right" class="w-4 h-4"></i></button>
+          <p class="mt-3 text-[11px] text-center text-[#6A7581] flex items-center justify-center gap-1.5"><i data-lucide="lock" class="w-3 h-3"></i> Secure checkout via PayFast</p>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ===================== STEP 2 — SHIPPING ===================== -->
+  <section class="step-pane" data-pane="1">
+    <div class="grid lg:grid-cols-3 gap-6">
+      <form onsubmit="event.preventDefault();go(2)" class="lg:col-span-2 bg-white rounded-2xl border border-[#E7EBEF] p-6 space-y-4">
+        <h3 class="font-jakarta font-extrabold text-lg">Delivery details</h3>
+        <div><label class="block text-sm font-semibold mb-1.5">Full name</label><input required class="field" placeholder="Thabo Nkosi" /></div>
+        <div class="grid sm:grid-cols-2 gap-4">
+          <div><label class="block text-sm font-semibold mb-1.5">Email</label><input type="email" required class="field" placeholder="you@business.co.za" /></div>
+          <div><label class="block text-sm font-semibold mb-1.5">Phone</label>
+            <div class="flex">
+              <span class="inline-flex items-center gap-1 px-3 h-12 rounded-l-xl border border-r-0 border-[#E7EBEF] bg-[#FCFCFC] text-sm font-semibold whitespace-nowrap">🇿🇦 +27</span>
+              <input required class="field rounded-l-none" placeholder="82 123 4567" />
+            </div>
+          </div>
+        </div>
+        <div><label class="block text-sm font-semibold mb-1.5">Street address</label><input required class="field" placeholder="12 Sandton Drive" /></div>
+        <div class="grid sm:grid-cols-2 gap-4">
+          <div><label class="block text-sm font-semibold mb-1.5">Suburb</label><input required class="field" placeholder="Sandton" /></div>
+          <div><label class="block text-sm font-semibold mb-1.5">City</label><input required class="field" placeholder="Johannesburg" /></div>
+        </div>
+        <div class="grid sm:grid-cols-2 gap-4">
+          <div><label class="block text-sm font-semibold mb-1.5">Province</label>
+            <select required class="field">
+              <option value="" disabled selected>Select province</option>
+              <option>Gauteng</option><option>Western Cape</option><option>KwaZulu-Natal</option><option>Eastern Cape</option><option>Free State</option><option>Limpopo</option><option>Mpumalanga</option><option>North West</option><option>Northern Cape</option>
+            </select>
+          </div>
+          <div><label class="block text-sm font-semibold mb-1.5">Postal code</label><input required class="field" placeholder="2196" inputmode="numeric" /></div>
+        </div>
+        <div class="pt-2">
+          <label class="block text-sm font-semibold mb-2">Delivery method</label>
+          <div class="space-y-3">
+            <label class="flex items-center gap-3 p-4 rounded-xl border border-[#E7EBEF] cursor-pointer has-[:checked]:border-[#DC183C] has-[:checked]:bg-[#FDECEF]/40">
+              <input type="radio" name="ship" value="0" checked onchange="setShip(0)" class="accent-[#DC183C] w-4 h-4" />
+              <span class="flex-1"><span class="font-semibold text-sm">Standard delivery</span><span class="block text-[12px] text-[#6A7581]">3–5 business days</span></span>
+              <span class="font-semibold text-sm" id="stdPrice">Free</span>
+            </label>
+            <label class="flex items-center gap-3 p-4 rounded-xl border border-[#E7EBEF] cursor-pointer has-[:checked]:border-[#DC183C] has-[:checked]:bg-[#FDECEF]/40">
+              <input type="radio" name="ship" value="60" onchange="setShip(60)" class="accent-[#DC183C] w-4 h-4" />
+              <span class="flex-1"><span class="font-semibold text-sm">Express delivery</span><span class="block text-[12px] text-[#6A7581]">1–2 business days</span></span>
+              <span class="font-semibold text-sm">+R60</span>
+            </label>
+          </div>
+        </div>
+        <div class="flex items-center gap-3 pt-2">
+          <button type="button" onclick="go(0)" class="h-12 px-6 rounded-full border border-[#E7EBEF] font-bold text-[#121A21] hover:bg-slate-100 transition flex items-center gap-2"><i data-lucide="arrow-left" class="w-4 h-4"></i> Back</button>
+          <button class="flex-1 h-12 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold transition flex items-center justify-center gap-2">Continue to payment <i data-lucide="arrow-right" class="w-4 h-4"></i></button>
+        </div>
+      </form>
+      <aside class="lg:sticky lg:top-24 h-max"><div id="recapShip"></div></aside>
+    </div>
+  </section>
+
+  <!-- ===================== STEP 3 — PAYMENT ===================== -->
+  <section class="step-pane" data-pane="2">
+    <div class="grid lg:grid-cols-3 gap-6">
+      <form onsubmit="event.preventDefault();go(3)" class="lg:col-span-2 bg-white rounded-2xl border border-[#E7EBEF] p-6 space-y-4">
+        <h3 class="font-jakarta font-extrabold text-lg">Payment</h3>
+        <div class="rounded-xl border border-[#FF9900]/40 bg-[#FFF1E0] p-4 flex items-start gap-3">
+          <i data-lucide="shield-alert" class="w-5 h-5 text-[#AE6B0A] shrink-0 mt-0.5"></i>
+          <p class="text-[13px] text-[#121A21] leading-relaxed"><span class="font-bold">Mockup only.</span> In production this step hands off to <span class="font-semibold">PayFast / WooCommerce</span> secure checkout. SME South Africa never builds or stores real card fields — the form below is illustrative.</p>
+        </div>
+        <div><label class="block text-sm font-semibold mb-1.5">Card number</label>
+          <div class="relative"><input class="field pr-11" placeholder="4242 4242 4242 4242" inputmode="numeric" /><i data-lucide="credit-card" class="w-5 h-5 text-[#6A7581] absolute right-3.5 top-1/2 -translate-y-1/2"></i></div>
+        </div>
+        <div><label class="block text-sm font-semibold mb-1.5">Name on card</label><input class="field" placeholder="T NKOSI" /></div>
+        <div class="grid grid-cols-2 gap-4">
+          <div><label class="block text-sm font-semibold mb-1.5">Expiry</label><input class="field" placeholder="MM/YY" inputmode="numeric" /></div>
+          <div><label class="block text-sm font-semibold mb-1.5">CVV</label><input class="field" placeholder="123" inputmode="numeric" /></div>
+        </div>
+        <div class="flex items-center gap-3 pt-2">
+          <button type="button" onclick="go(1)" class="h-12 px-6 rounded-full border border-[#E7EBEF] font-bold text-[#121A21] hover:bg-slate-100 transition flex items-center gap-2"><i data-lucide="arrow-left" class="w-4 h-4"></i> Back</button>
+          <button class="flex-1 h-12 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold transition flex items-center justify-center gap-2"><i data-lucide="lock" class="w-4 h-4"></i> Place order</button>
+        </div>
+        <p class="text-[11px] text-center text-[#6A7581] flex items-center justify-center gap-1.5"><i data-lucide="shield-check" class="w-3.5 h-3.5 text-[#29A37A]"></i> Encrypted &amp; processed by PayFast — PCI-DSS compliant.</p>
+      </form>
+      <aside class="lg:sticky lg:top-24 h-max"><div id="recapPay"></div></aside>
+    </div>
+  </section>
+
+  <!-- ===================== STEP 4 — CONFIRMATION ===================== -->
+  <section class="step-pane" data-pane="3">
+    <div class="max-w-xl mx-auto bg-white rounded-2xl border border-[#E7EBEF] p-8 sm:p-10 text-center">
+      <div class="w-20 h-20 mx-auto rounded-full bg-[#E4F5EE] grid place-items-center pop"><i data-lucide="check" class="w-10 h-10 text-[#29A37A]" style="stroke-width:3"></i></div>
+      <h2 class="font-jakarta font-extrabold text-3xl mt-6">Order confirmed</h2>
+      <p class="mt-2 text-[#6A7581]">Thank you — your SME merch is on its way.</p>
+      <div class="mt-6 inline-flex flex-col items-center gap-1 px-6 py-4 rounded-xl bg-[#FCFCFC] border border-[#E7EBEF]">
+        <span class="text-[11px] font-bold uppercase tracking-widest text-[#6A7581]">Order number</span>
+        <span class="font-jakarta font-extrabold text-xl tracking-wide" id="orderNo">#SME-2026-04821</span>
+      </div>
+      <div class="mt-8 text-left space-y-4">
+        <p class="text-[11px] font-bold uppercase tracking-widest text-[#DC183C]">What happens next</p>
+        <div class="flex items-start gap-3"><div class="w-9 h-9 rounded-xl bg-[#FDECEF] text-[#DC183C] grid place-items-center shrink-0"><i data-lucide="mail" class="w-4.5 h-4.5"></i></div><div><p class="font-semibold text-sm">Confirmation email</p><p class="text-sm text-[#6A7581]">A receipt and order summary are on their way to your inbox.</p></div></div>
+        <div class="flex items-start gap-3"><div class="w-9 h-9 rounded-xl bg-[#E4F5EE] text-[#29A37A] grid place-items-center shrink-0"><i data-lucide="truck" class="w-4.5 h-4.5"></i></div><div><p class="font-semibold text-sm">Tracking link</p><p class="text-sm text-[#6A7581]">We'll text and email a tracking link the moment your order ships.</p></div></div>
+      </div>
+      <a href="public-shop.html" class="mt-8 inline-flex items-center justify-center gap-2 w-full h-12 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold transition">Continue shopping <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
+    </div>
+  </section>
+
+</main>
+
+<footer class="bg-[#0C1F31] text-white"><div class="max-w-7xl mx-auto px-4 sm:px-6 py-10 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm">
+  <a href="public-home.html" class="flex items-center gap-2.5"><span class="w-8 h-8 rounded-lg bg-white grid place-items-center"><img src="assets/logo-icon.png" class="w-6 h-6" alt="" /></span><span class="font-jakarta font-extrabold">SME South Africa</span></a>
+  <div class="flex flex-wrap items-center gap-x-5 gap-y-2 text-white/60"><a href="public-about.html" class="hover:text-white">About</a><a href="public-contact.html" class="hover:text-white">Contact</a><a href="public-advertise.html" class="hover:text-white">Advertise</a><a href="public-privacy.html" class="hover:text-white">Privacy</a><a href="public-terms.html" class="hover:text-white">Terms</a><a href="public-refunds.html" class="hover:text-white">Refunds</a><a href="public-popia.html" class="hover:text-white">POPIA</a></div>
+  <p class="text-white/40">© 2026 SME South Africa</p>
+</div></footer>
+
+<div id="overlay-root"></div><div id="toast" class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-50"></div>
+<script>
+  function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+  function showToast(m){const el=document.getElementById('toast');el.classList.remove('hidden');el.innerHTML=`<div class="bg-[#0C1F31] text-white rounded-full pl-3 pr-5 py-2.5 shadow-2xl flex items-center gap-2 text-sm font-semibold" style="border-left:4px solid #29A37A"><i data-lucide="check-circle" class="w-4 h-4" style="color:#29A37A"></i><span>${esc(m)}</span></div>`;lucide.createIcons();setTimeout(()=>{el.classList.add('hidden');el.innerHTML='';},2400);}
+
+  // ---------- checkout state ----------
+  const STEPS = ['Cart','Shipping','Payment','Confirmation'];
+  const STEP_TITLES = ['Your cart','Delivery details','Payment','Order confirmed'];
+  let step = 0, shipMethod = 0;
+  let ITEMS = [
+    { name:'SME SA Signature Hoodie', cat:'Apparel',     price:650, icon:'shirt',        qty:1 },
+    { name:"Entrepreneur 'Hustle' Cap", cat:'Apparel',   price:295, icon:'hard-hat',     qty:1 },
+    { name:'Premium Cotton Tote',     cat:'Accessories',  price:150, icon:'shopping-bag', qty:1 }
+  ];
+
+  function subtotal(){ return ITEMS.reduce((s,i)=>s+i.price*i.qty,0); }
+  function baseDelivery(){ return subtotal()>=750 ? 0 : 75; }
+  function delivery(){ return baseDelivery() + (shipMethod||0); }
+  function total(){ return subtotal()+delivery(); }
+  const R = n => 'R' + n.toLocaleString('en-ZA');
+
+  // ---------- stepper rail ----------
+  function renderStepper(){
+    document.getElementById('stepper').innerHTML = STEPS.map((s,i)=>{
+      const done=i<step, active=i===step;
+      const circle = done
+        ? `<span class="w-7 h-7 rounded-full grid place-items-center bg-[#29A37A] text-white"><i data-lucide="check" class="w-4 h-4"></i></span>`
+        : `<span class="w-7 h-7 rounded-full grid place-items-center text-[12px] font-bold ${active?'bg-[#DC183C] text-white':'bg-slate-100 text-[#6A7581]'}">${i+1}</span>`;
+      const label = `<span class="hidden sm:inline text-[13px] font-bold ${active?'text-[#121A21]':done?'text-[#29A37A]':'text-[#6A7581]'}">${s}</span>`;
+      const bar = i<STEPS.length-1 ? `<span class="flex-1 h-[3px] rounded-full ${i<step?'bg-[#29A37A]':'bg-[#E7EBEF]'}"></span>` : '';
+      return `<li class="flex items-center gap-2 ${i<STEPS.length-1?'flex-1':''}">${circle}${label}${bar}</li>`;
+    }).join('');
+    lucide.createIcons();
+  }
+
+  // ---------- cart (step 1) ----------
+  function renderCart(){
+    const el = document.getElementById('cartList');
+    if(!ITEMS.length){
+      el.innerHTML = `<div class="bg-white rounded-2xl border border-[#E7EBEF] p-10 text-center"><div class="w-14 h-14 mx-auto rounded-full bg-slate-100 grid place-items-center"><i data-lucide="shopping-bag" class="w-6 h-6 text-[#6A7581]"></i></div><p class="font-jakarta font-bold mt-4">Your cart is empty</p><p class="text-sm text-[#6A7581] mt-1">Add some merch to get started.</p><a href="public-shop.html" class="mt-5 inline-flex items-center gap-2 px-5 h-11 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold transition">Browse the shop <i data-lucide="arrow-right" class="w-4 h-4"></i></a></div>`;
+      lucide.createIcons(); return;
+    }
+    el.innerHTML = ITEMS.map((it,i)=>`
+      <div class="bg-white rounded-2xl border border-[#E7EBEF] p-4 flex items-center gap-4">
+        <div class="w-20 h-20 rounded-xl grid place-items-center shrink-0" style="background:linear-gradient(160deg,#F4F6F8,#E9edf1)"><i data-lucide="${it.icon}" class="w-9 h-9 text-[#0C1F31]/40"></i></div>
+        <div class="min-w-0 flex-1">
+          <p class="text-[10px] font-bold uppercase tracking-widest text-[#6A7581]">${esc(it.cat)}</p>
+          <h4 class="font-jakarta font-bold leading-snug truncate">${esc(it.name)}</h4>
+          <p class="text-sm text-[#6A7581] mt-0.5">${R(it.price)} each</p>
+        </div>
+        <div class="flex flex-col items-end gap-2 shrink-0">
+          <button onclick="removeItem(${i})" aria-label="Remove" class="text-[#6A7581] hover:text-[#DC183C] transition"><i data-lucide="x" class="w-4 h-4"></i></button>
+          <div class="flex items-center gap-2">
+            <button onclick="bump(${i},-1)" class="qty-btn" aria-label="Decrease"><i data-lucide="minus" class="w-3.5 h-3.5"></i></button>
+            <span class="w-6 text-center font-semibold text-sm">${it.qty}</span>
+            <button onclick="bump(${i},1)" class="qty-btn" aria-label="Increase"><i data-lucide="plus" class="w-3.5 h-3.5"></i></button>
+          </div>
+          <span class="font-jakarta font-extrabold text-sm">${R(it.price*it.qty)}</span>
+        </div>
+      </div>`).join('');
+    lucide.createIcons();
+  }
+  function bump(i,d){ ITEMS[i].qty = Math.max(1, ITEMS[i].qty + d); renderCart(); renderSummary(); }
+  function removeItem(i){ ITEMS.splice(i,1); renderCart(); renderSummary(); renderStepper(); }
+
+  function renderSummary(){
+    const sub=subtotal();
+    document.getElementById('sumSubtotal').textContent = R(sub);
+    document.getElementById('sumDelivery').textContent = baseDelivery()===0 ? 'Free' : R(baseDelivery());
+    document.getElementById('sumTotal').textContent = R(sub + baseDelivery());
+    const note=document.getElementById('sumFreeNote').querySelector('span');
+    note.textContent = sub>=750 ? 'You qualify for free delivery!' : `Add ${R(750-sub)} more for free delivery.`;
+    const btn=document.getElementById('toShipBtn');
+    btn.disabled = !ITEMS.length; btn.classList.toggle('opacity-40', !ITEMS.length); btn.classList.toggle('pointer-events-none', !ITEMS.length);
+  }
+
+  // ---------- recap card (steps 2 & 3) ----------
+  function setShip(v){ shipMethod=v; renderRecaps(); document.getElementById('stdPrice').textContent = baseDelivery()===0 ? 'Free' : R(baseDelivery()); }
+  function recapHTML(){
+    const rows = ITEMS.map(it=>`<div class="flex items-center justify-between text-sm"><span class="text-[#6A7581] truncate pr-2">${esc(it.name)} ×${it.qty}</span><span class="font-semibold whitespace-nowrap">${R(it.price*it.qty)}</span></div>`).join('');
+    return `<div class="bg-white rounded-2xl border border-[#E7EBEF] p-5">
+      <h3 class="font-jakarta font-extrabold text-lg">Order summary</h3>
+      <div class="mt-4 space-y-2">${rows}</div>
+      <div class="border-t border-[#E7EBEF] my-4"></div>
+      <div class="space-y-2.5 text-sm">
+        <div class="flex items-center justify-between"><span class="text-[#6A7581]">Subtotal</span><span class="font-semibold">${R(subtotal())}</span></div>
+        <div class="flex items-center justify-between"><span class="text-[#6A7581]">Delivery</span><span class="font-semibold">${delivery()===0?'Free':R(delivery())}</span></div>
+      </div>
+      <div class="border-t border-[#E7EBEF] my-4"></div>
+      <div class="flex items-center justify-between"><span class="font-jakarta font-bold">Total</span><span class="font-jakarta font-extrabold text-xl">${R(total())}</span></div>
+      <p class="mt-4 text-[11px] text-center text-[#6A7581] flex items-center justify-center gap-1.5"><i data-lucide="lock" class="w-3 h-3"></i> Secure checkout via PayFast</p>
+    </div>`;
+  }
+  function renderRecaps(){ document.getElementById('recapShip').innerHTML=recapHTML(); document.getElementById('recapPay').innerHTML=recapHTML(); lucide.createIcons(); }
+
+  // ---------- navigation ----------
+  function go(n){
+    if(n>step && step===0 && !ITEMS.length) return;
+    step = Math.max(0, Math.min(STEPS.length-1, n));
+    document.querySelectorAll('.step-pane').forEach(p=>p.classList.toggle('active', +p.dataset.pane===step));
+    document.getElementById('stepTitle').textContent = STEP_TITLES[step];
+    renderStepper();
+    if(step===1||step===2) renderRecaps();
+    if(step===3){ document.getElementById('orderNo').textContent = '#SME-2026-' + String(Math.floor(10000+Math.random()*89999)); showToast('Order placed — confirmation on its way.'); }
+    window.scrollTo({top:0,behavior:'smooth'});
+  }
+
+  // ---------- dev brief / chrome helpers ----------
+  const BRIEF={title:'Checkout Flow',sub:'WooCommerce cart + PayFast handoff',
+    purpose:'Multi-step checkout for the merch shop. In production this is <b>WooCommerce</b>: the cart, shipping, payment and confirmation are WooCommerce + PayFast secure pages — this mockup illustrates the flow only.',
+    data:'WooCommerce Order: <code>{ id, line_items[], shipping_address, delivery_method, total_zar, status }</code>. Order data is <b>POPIA-scoped</b> and included in the member data export. One WP user record is shared across WooCommerce, MemberPress and BuddyBoss — a single login.',
+    logic:'Cart totals recompute client-side (free delivery ≥ R750; express +R60). Payment is handed off to <b>PayFast</b> — we never build or store real card fields. On success WooCommerce issues the order number + emails a receipt and tracking link.',
+    components:'Stepper rail · cart (qty / remove) · sticky order summary · shipping form · mock payment (handoff note) · confirmation.',
+    api:'WC Store API: POST /wp-json/wc/store/checkout · PayFast ITN callback · GET /wp-json/wc/v3/orders/{id}'};
+  function toggleDevMode(){const on=document.body.classList.toggle('dev-on');const b=document.getElementById('devToggle');if(b)b.classList.toggle('on',on);if(on)showToast('Dev Mode on — tap any ⓘ for implementation notes.');lucide.createIcons();}
+  function closeOverlay(id){const el=document.getElementById(id);if(!el)return;el.classList.remove('open');setTimeout(()=>{if(el&&el.parentNode)el.remove();},300);}
+  function openBrief(){const b=BRIEF;const sec=(i,l,h)=>`<div class="px-6 py-4 border-t border-slate-100"><p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] flex items-center gap-1.5 mb-2"><i data-lucide="${i}" class="w-3.5 h-3.5"></i>${l}</p><div class="text-sm text-slate-600 leading-relaxed">${h}</div></div>`;document.getElementById('overlay-root').innerHTML=`<div class="ov" id="ov"><div class="ov-bg" onclick="closeOverlay('ov')"></div><div class="drawer"><div class="sticky top-0 z-10 bg-[#0C1F31] text-white px-6 py-5 flex items-start justify-between"><div><p class="text-[10px] font-bold uppercase tracking-widest text-[#FF9900] mb-1">Dev Brief</p><h3 class="font-jakarta font-extrabold text-lg leading-tight">${b.title}</h3><p class="text-xs text-white/60 mt-1">${b.sub}</p></div><button onclick="closeOverlay('ov')" class="text-white/60 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button></div>${sec('target','Purpose',b.purpose)}${sec('database','Data model',b.data)}${sec('git-branch','Logic',b.logic)}${sec('boxes','Components',b.components)}${sec('plug','API',`<code class="block bg-slate-900 text-emerald-300 text-xs font-mono px-3 py-2 rounded-lg overflow-x-auto">${b.api}</code>`)}</div></div>`;requestAnimationFrame(()=>{const o=document.getElementById('ov');if(o)o.classList.add('open');});lucide.createIcons();}
+
+  // ---------- init ----------
+  renderStepper(); renderCart(); renderSummary(); lucide.createIcons();
+</script>
+</body>
+</html>

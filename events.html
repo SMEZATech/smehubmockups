@@ -1,22 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>Events &amp; Webinars — SME South Africa</title>
-  <meta name="description" content="Upcoming events, webinars and the past event library for South Africa's SME community." />
+  <meta name="description" id="meta-desc" content="Explore upcoming and past SME South Africa events and webinars. Learn, network, and grow your business." />
+  <meta property="og:type" content="website" id="og-type" />
+  <meta property="og:title" content="Events &amp; Webinars — SME South Africa" id="og-title" />
+  <meta property="og:description" content="Learn, network, and grow your business." id="og-desc" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <script type="application/ld+json" id="ld-json">{}</script>
   <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <script src="https://cdn.tailwindcss.com"></script><script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
   <script>tailwind.config={theme:{extend:{fontFamily:{jakarta:['Plus Jakarta Sans','sans-serif'],inter:['Inter','system-ui','sans-serif']}}}};</script>
   <style>
     html,body{font-family:'Inter',system-ui,sans-serif;} .font-jakarta{font-family:'Plus Jakarta Sans',sans-serif;letter-spacing:.005em;}
+    *{ -webkit-tap-highlight-color: transparent; }
     .hero-bg{background:linear-gradient(115deg,#0C1F31 0%,#0C1F31 50%,#2b1626 80%,#5e1a2c 115%);}
     .dot-pattern{background-image:radial-gradient(rgba(255,255,255,.07) 1px,transparent 1.5px);background-size:22px 22px;}
-    .card-lift{transition:box-shadow .2s,transform .2s;} .card-lift:hover{box-shadow:0 10px 24px -10px rgba(10,44,61,.18);transform:translateY(-2px);}
-    .seg.active{background:#0C1F31;color:#fff;}
+    .no-scrollbar::-webkit-scrollbar{ display:none; } .no-scrollbar{ -ms-overflow-style:none; scrollbar-width:none; }
+    a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible,[tabindex]:focus-visible{ outline:3px solid rgba(220,24,60,.40); outline-offset:2px; border-radius:8px; }
+    .grain{ position:relative; }
+    .grain::after{ content:""; position:absolute; inset:0; pointer-events:none; opacity:.06; mix-blend-mode:overlay; background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>"); }
+    .hero-vignette{ background:radial-gradient(120% 120% at 70% 0%, rgba(12,31,49,0) 30%, rgba(9,22,33,.85) 100%); }
+    @keyframes fadeUp{ from{opacity:0; transform:translateY(16px)} to{opacity:1; transform:none} }
+    .reveal{ opacity:0; animation:fadeUp .65s cubic-bezier(.2,.7,.2,1) forwards; }
+    @keyframes overlayIn{ from{opacity:0} to{opacity:1} }
+    @keyframes popIn{ from{opacity:0; transform:translateY(8px) scale(.98)} to{opacity:1; transform:none} }
+    @keyframes sheetUp{ from{transform:translateY(100%)} to{transform:none} }
+    @keyframes spin{ to{ transform:rotate(360deg) } } .spin{ animation:spin .8s linear infinite; }
+    @keyframes successPop{ 0%{transform:scale(.6);opacity:0} 60%{transform:scale(1.08)} 100%{transform:scale(1);opacity:1} }
+    @keyframes ringDraw{ to{ stroke-dashoffset:0 } }
+    .scrim{ animation:overlayIn .2s ease forwards; }
+    .sheet{ animation:sheetUp .42s cubic-bezier(.2,.8,.2,1) forwards; }
+    @media (min-width:640px){ .sheet{ animation:popIn .3s cubic-bezier(.2,.7,.2,1) forwards; } }
+    .confetti-piece{ position:absolute; top:-12px; width:9px; height:14px; border-radius:1px; animation:confettiFall linear forwards; }
+    @keyframes confettiFall{ to{ transform:translateY(105vh) rotate(640deg); opacity:.9 } }
+    .custom-scrollbar::-webkit-scrollbar{ width:8px; } .custom-scrollbar::-webkit-scrollbar-thumb{ background:#E7EBEF; border-radius:8px; }
     .dev-badge{display:none;} body.dev-on .dev-badge{display:inline-flex;} #devToggle.on{background:#DC183C;color:#fff;border-color:#DC183C;}
-    .ov{position:fixed;inset:0;z-index:60;} .ov-bg{position:absolute;inset:0;background:rgba(12,31,49,.45);backdrop-filter:blur(2px);opacity:0;transition:opacity .3s;} .ov.open .ov-bg{opacity:1;}
+    .ov{position:fixed;inset:0;z-index:80;} .ov-bg{position:absolute;inset:0;background:rgba(12,31,49,.45);backdrop-filter:blur(2px);opacity:0;transition:opacity .3s;} .ov.open .ov-bg{opacity:1;}
     .drawer{position:absolute;right:0;top:0;height:100%;width:100%;max-width:440px;background:#fff;box-shadow:-12px 0 40px rgba(12,31,49,.25);overflow-y:auto;transform:translateX(100%);transition:transform .3s cubic-bezier(.2,.7,.2,1);} .ov.open .drawer{transform:translateX(0);}
+    #print-portal{ display:none; }
+    @media print{
+      @page{ size:auto; margin:10mm; }
+      html,body{ background:#fff !important; }
+      body > *:not(#print-portal){ display:none !important; }
+      #print-portal{ display:block !important; }
+      #print-portal #ticketCard{ box-shadow:none !important; max-width:640px !important; margin:0 auto !important; }
+      #print-portal, #print-portal *{ -webkit-print-color-adjust:exact !important; print-color-adjust:exact !important; color-adjust:exact !important; }
+      #print-portal .grain::after, #print-portal .hero-vignette{ display:none !important; }
+      #print-portal #ticketCard{ break-inside:avoid; page-break-inside:avoid; }
+      .no-print{ display:none !important; }
+    }
   </style>
 </head>
 <body class="bg-[#FCFCFC] text-[#121A21] antialiased">
@@ -36,93 +72,1050 @@
   </div>
 </div></header>
 
-<section class="hero-bg text-white relative overflow-hidden"><div class="absolute inset-0 dot-pattern opacity-70 pointer-events-none"></div>
-  <div class="absolute top-0 right-0 w-2/3 h-full opacity-50 pointer-events-none" style="background:radial-gradient(55% 55% at 85% 40%, rgba(220,24,60,.25), transparent 70%)"></div>
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-14 relative grid lg:grid-cols-2 gap-10 items-center">
-    <div>
-      <p class="text-[12px] font-bold uppercase tracking-widest text-white/50">Events &amp; Webinars
-        <button onclick="openBrief()" class="dev-badge align-middle ml-1 w-5 h-5 rounded-full bg-[#FF9900] text-[#0C1F31] items-center justify-center text-[10px] font-bold">i</button>
-      </p>
-      <h1 class="font-jakarta font-extrabold text-4xl sm:text-5xl mt-1 leading-tight">Learn from operators who've done it</h1>
-      <p class="mt-4 text-white/70 max-w-md">Live sessions, workshops and summits to accelerate your growth — plus a full replay library.</p>
-    </div>
-    <div class="bg-white text-[#121A21] rounded-3xl shadow-2xl overflow-hidden">
-      <div class="bg-[#DC183C] text-white px-5 py-2 text-[11px] font-bold uppercase tracking-widest flex items-center gap-2"><i data-lucide="star" class="w-3.5 h-3.5"></i> Flagship event</div>
-      <div class="p-6">
-        <span class="inline-block px-2.5 py-1 rounded-full text-[11px] font-bold bg-[#FFF1E0] text-[#AE6B0A]">Summit</span>
-        <h2 class="font-jakarta font-extrabold text-2xl mt-3">Funding Summit 2026</h2>
-        <div class="mt-3 space-y-1.5 text-sm text-[#475569]">
-          <p class="flex items-center gap-2"><i data-lucide="calendar" class="w-4 h-4 text-[#DC183C]"></i> 14 August 2026</p>
-          <p class="flex items-center gap-2"><i data-lucide="map-pin" class="w-4 h-4 text-[#DC183C]"></i> Sandton Convention Centre, Johannesburg</p>
-          <p class="flex items-center gap-2"><i data-lucide="users" class="w-4 h-4 text-[#DC183C]"></i> 1,200 founders · 30+ funders</p>
-        </div>
-        <button onclick="showToast('Registration opens in the event system.')" class="mt-5 w-full h-12 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold transition">Register now</button>
-      </div>
-    </div>
-  </div>
-</section>
-
-<main class="max-w-7xl mx-auto px-4 sm:px-6 py-12">
-  <div class="flex items-center justify-between gap-4 mb-8">
-    <h2 class="font-jakarta font-extrabold text-2xl sm:text-3xl">Browse events</h2>
-    <div class="flex items-center gap-1 bg-slate-100 rounded-full p-1">
-      <button id="seg-up" onclick="setView('up')" class="seg active px-5 h-9 rounded-full text-sm font-bold transition">Upcoming</button>
-      <button id="seg-past" onclick="setView('past')" class="seg px-5 h-9 rounded-full text-sm font-bold text-slate-500 transition">Past</button>
-    </div>
-  </div>
-  <div id="grid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
-</main>
+<div id="app"></div>
+<div id="overlay-root"></div>
+<div id="toast" class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-[90]"></div>
 
 <footer class="bg-[#0C1F31] text-white"><div class="max-w-7xl mx-auto px-4 sm:px-6 py-10 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm">
   <a href="public-home.html" class="flex items-center gap-2.5"><span class="w-8 h-8 rounded-lg bg-white grid place-items-center"><img src="assets/logo-icon.png" class="w-6 h-6" alt="" /></span><span class="font-jakarta font-extrabold">SME South Africa</span></a>
-  <div class="flex flex-wrap items-center gap-x-5 gap-y-2 text-white/60"><a href="public-about.html" class="hover:text-white">About</a><a href="public-contact.html" class="hover:text-white">Contact</a><a href="public-advertise.html" class="hover:text-white">Advertise</a><a href="public-privacy.html" class="hover:text-white">Privacy</a><a href="public-terms.html" class="hover:text-white">Terms</a><a href="public-popia.html" class="hover:text-white">POPIA</a></div>
+  <div class="flex flex-wrap items-center gap-x-5 gap-y-2 text-white/60"><a href="public-about.html" class="hover:text-white">About</a><a href="public-contact.html" class="hover:text-white">Contact</a><a href="public-advertise.html" class="hover:text-white">Advertise</a><a href="public-privacy.html" class="hover:text-white">Privacy</a><a href="public-terms.html" class="hover:text-white">Terms</a><a href="public-refunds.html" class="hover:text-white">Refunds</a><a href="public-popia.html" class="hover:text-white">POPIA</a></div>
   <p class="text-white/40">© 2026 SME South Africa</p>
 </div></footer>
 
-<div id="overlay-root"></div><div id="toast" class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-50"></div>
-<script>
-  function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
-  function showToast(m){const el=document.getElementById('toast');el.classList.remove('hidden');el.innerHTML=`<div class="bg-[#0C1F31] text-white rounded-full pl-3 pr-5 py-2.5 shadow-2xl flex items-center gap-2 text-sm font-semibold" style="border-left:4px solid #DC183C"><i data-lucide="check-circle" class="w-4 h-4" style="color:#DC183C"></i><span>${esc(m)}</span></div>`;lucide.createIcons();setTimeout(()=>{el.classList.add('hidden');el.innerHTML='';},2200);}
-  const TINT={Summit:['#FFF1E0','#AE6B0A'],Webinar:['#FDECEF','#DC183C'],Workshop:['#E4F5EE','#29A37A'],Forum:['#FDECEF','#DC183C']};
-  const EVENTS={
-    up:[
-      {type:'Webinar', title:'Mastering Cash Flow', loc:'Online · 13:00', mo:'JUN', dd:'22'},
-      {type:'Workshop',title:'Pitch Perfect: Investor Readiness', loc:'Cape Town', mo:'JUL', dd:'05'},
-      {type:'Webinar', title:'Marketing on a Shoestring', loc:'Online · 13:00', mo:'JUL', dd:'18'},
-      {type:'Webinar', title:'Tax & Compliance Clinic', loc:'Online · 11:00', mo:'AUG', dd:'02'},
-      {type:'Summit',  title:'Funding Summit 2026', loc:'Sandton, JHB', mo:'AUG', dd:'14'},
-      {type:'Forum',   title:'Township Economy Forum', loc:'Soweto', mo:'AUG', dd:'29'}
-    ],
-    past:[
-      {type:'Webinar', title:'Hiring Your First Team', loc:'Replay · 48 min', mo:'MAY', dd:'20'},
-      {type:'Forum',   title:'Township Economy Forum 2025', loc:'Replay · 1h 12m', mo:'APR', dd:'30'},
-      {type:'Webinar', title:'AI for Small Business', loc:'Replay · 52 min', mo:'APR', dd:'15'}
-    ]
-  };
-  let view='up';
-  function setView(v){ view=v; document.getElementById('seg-up').classList.toggle('active',v==='up'); document.getElementById('seg-up').classList.toggle('text-slate-500',v!=='up'); document.getElementById('seg-past').classList.toggle('active',v==='past'); document.getElementById('seg-past').classList.toggle('text-slate-500',v!=='past'); render(); }
-  function render(){
-    const list=EVENTS[view];
-    document.getElementById('grid').innerHTML=list.map(e=>{const t=TINT[e.type]||['#F1F5F9','#475569'];const past=view==='past';return `
-      <div class="bg-white rounded-2xl border border-[#E7EBEF] overflow-hidden card-lift flex">
-        <div class="w-20 shrink-0 grid place-content-center text-center border-r border-[#E7EBEF] ${past?'bg-slate-50':'bg-[#FDECEF]'}">
-          <p class="text-[11px] font-bold uppercase ${past?'text-slate-400':'text-[#DC183C]'}">${e.mo}</p>
-          <p class="font-jakarta font-extrabold text-2xl ${past?'text-slate-500':'text-[#0C1F31]'}">${e.dd}</p>
+  <script>
+    // === Standard chrome helpers (Dev Mode + Brief) ==============================
+    function showToast(m){const el=document.getElementById('toast');el.classList.remove('hidden');el.innerHTML=`<div class="bg-[#0C1F31] text-white rounded-full pl-3 pr-5 py-2.5 shadow-2xl flex items-center gap-2 text-sm font-semibold" style="border-left:4px solid #29A37A"><i data-lucide="check-circle" class="w-4 h-4" style="color:#29A37A"></i><span>${esc(m)}</span></div>`;lucide.createIcons();setTimeout(()=>{el.classList.add('hidden');el.innerHTML='';},2400);}
+    const BRIEF={title:'Events & Webinars',sub:'WordPress + event/ticketing system',purpose:'Public events hub. Lists upcoming and past events (in-person, webinars, video snippets) with full detail pages, paid ticketing for in-person summits, free webinar registration, and a members-only replay/gallery vault. Standalone WP page at /events.',data:'Event: <code>{id,type,status,category,title,description,logistics{startMs,endMs},venue,sponsors[],speakerIds[],agenda[],topics[],tickets{tiers[]},vault{recording,gallery[]}}</code>. Speakers are a normalised collection referenced by id. Orders capture <code>{ref,attendees[],tickets[],total}</code>.',logic:'Status (Upcoming / LIVE NOW / Past) is computed from start/end times, not stored. Directory filters by status, type, category and free-text search. In-person → paid checkout (tiers, booking fee, QR e-ticket). Webinars → free member registration + countdown. Past replays & galleries gated behind member sign-in. Public + indexable; per-event JSON-LD Event schema.',components:'Hero · feed/library tabs · filter bar · event cards · event detail (topics, speaker cards, agenda, venue map, sponsors, ticket sidebar) · webinar register · speaker profiles · share/calendar/sponsor overlays · 4-step checkout with e-ticket.',api:'GET /v1/events · GET /v1/events/{id} · GET /v1/speakers/{id} · POST /v1/events/{id}/register · POST /v1/orders'};
+    function toggleDevMode(){const on=document.body.classList.toggle('dev-on');const b=document.getElementById('devToggle');if(b)b.classList.toggle('on',on);if(on)showToast('Dev Mode on — tap any ⓘ for implementation notes.');lucide.createIcons();}
+    function closeBrief(id){const el=document.getElementById(id);if(!el)return;el.classList.remove('open');setTimeout(()=>{if(el&&el.parentNode)el.remove();},300);}
+    function openBrief(){const b=BRIEF;const sec=(i,l,h)=>`<div class="px-6 py-4 border-t border-slate-100"><p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] flex items-center gap-1.5 mb-2"><i data-lucide="${i}" class="w-3.5 h-3.5"></i>${l}</p><div class="text-sm text-slate-600 leading-relaxed">${h}</div></div>`;const host=document.createElement('div');host.id='briefHost';document.body.appendChild(host);host.innerHTML=`<div class="ov" id="ovBrief"><div class="ov-bg" onclick="closeBrief('ovBrief')"></div><div class="drawer"><div class="sticky top-0 z-10 bg-[#0C1F31] text-white px-6 py-5 flex items-start justify-between"><div><p class="text-[10px] font-bold uppercase tracking-widest text-[#FF9900] mb-1">Dev Brief</p><h3 class="font-jakarta font-extrabold text-lg leading-tight">${b.title}</h3><p class="text-xs text-white/60 mt-1">${b.sub}</p></div><button onclick="closeBrief('ovBrief')" class="text-white/60 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button></div>${sec('target','Purpose',b.purpose)}${sec('database','Data model',b.data)}${sec('git-branch','Logic',b.logic)}${sec('boxes','Components',b.components)}${sec('plug','API',`<code class="block bg-slate-900 text-emerald-300 text-xs font-mono px-3 py-2 rounded-lg overflow-x-auto">${b.api}</code>`)}</div></div>`;requestAnimationFrame(()=>{const o=document.getElementById('ovBrief');if(o)o.classList.add('open');});lucide.createIcons();}
+
+    // === Image fallback placeholders (inline SVG, never break) ====================
+    const PLACEHOLDER_AVATAR = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHdpZHRoPScyNDAnIGhlaWdodD0nMjQwJyB2aWV3Qm94PScwIDAgMjQwIDI0MCc+PHJlY3Qgd2lkdGg9JzI0MCcgaGVpZ2h0PScyNDAnIGZpbGw9JyNFN0VERjAnLz48Y2lyY2xlIGN4PScxMjAnIGN5PSc5Nicgcj0nNDInIGZpbGw9JyM5RkIzQkQnLz48cGF0aCBkPSdNNDYgMjE2YzAtNDEgMzMtNjggNzQtNjhzNzQgMjcgNzQgNjh6JyBmaWxsPScjOUZCM0JEJy8+PC9zdmc+';
+    const PLACEHOLDER_IMAGE = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHdpZHRoPSc2NDAnIGhlaWdodD0nNDAwJyB2aWV3Qm94PScwIDAgNjQwIDQwMCc+PHJlY3Qgd2lkdGg9JzY0MCcgaGVpZ2h0PSc0MDAnIGZpbGw9JyMwQzFGMzEnLz48ZyBmaWxsPSdub25lJyBzdHJva2U9JyM0NzY0NzInIHN0cm9rZS13aWR0aD0nNicgc3Ryb2tlLWxpbmVjYXA9J3JvdW5kJyBzdHJva2UtbGluZWpvaW49J3JvdW5kJz48cmVjdCB4PScyNTAnIHk9JzEzOCcgd2lkdGg9JzE0MCcgaGVpZ2h0PScxMDAnIHJ4PScxMCcvPjxjaXJjbGUgY3g9JzI5MicgY3k9JzE3NCcgcj0nMTMnLz48cGF0aCBkPSdNMjYyIDIzMGwzOC0zOCAzMCAzMCAyNi0yNiAyOCAyOCcvPjwvZz48dGV4dCB4PSczMjAnIHk9JzI5MicgZm9udC1mYW1pbHk9J0FyaWFsLEhlbHZldGljYSxzYW5zLXNlcmlmJyBmb250LXNpemU9JzI0JyBmb250LXdlaWdodD0nNzAwJyBmaWxsPScjNkU4Qjk4JyB0ZXh0LWFuY2hvcj0nbWlkZGxlJz5JbWFnZSB1bmF2YWlsYWJsZTwvdGV4dD48L3N2Zz4=';
+    const PLACEHOLDER_LOGO = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHdpZHRoPScyMDAnIGhlaWdodD0nODAnIHZpZXdCb3g9JzAgMCAyMDAgODAnPjxyZWN0IHdpZHRoPScyMDAnIGhlaWdodD0nODAnIHJ4PSc4JyBmaWxsPScjRjFGNUY4Jy8+PHRleHQgeD0nMTAwJyB5PSc0OCcgZm9udC1mYW1pbHk9J0FyaWFsLEhlbHZldGljYSxzYW5zLXNlcmlmJyBmb250LXNpemU9JzIwJyBmb250LXdlaWdodD0nNzAwJyBmaWxsPScjOUFBQUI0JyB0ZXh0LWFuY2hvcj0nbWlkZGxlJyBsZXR0ZXItc3BhY2luZz0nMic+TE9HTzwvdGV4dD48L3N2Zz4=';
+    const OE_AV = `onerror="this.onerror=null;this.src='${PLACEHOLDER_AVATAR}'"`;
+    const OE_IM = `onerror="this.onerror=null;this.src='${PLACEHOLDER_IMAGE}'"`;
+    const OE_LO = `onerror="this.onerror=null;this.src='${PLACEHOLDER_LOGO}'"`;
+
+    // === SPEAKERS (single source of truth) ========================================
+    const SPEAKERS = {
+      s1:{ id:'s1', name:'Darlene Menzies', role:'CEO', company:'Finfind', img:'https://i.pravatar.cc/480?img=47', linkedin:'#', bio:'Serial entrepreneur and founder of Finfind, SA’s leading access-to-finance platform connecting SMEs with over 200 lenders.' },
+      s2:{ id:'s2', name:'Elton Singh', role:'Head of Business Development', company:'TenderCapital', img:'https://i.pravatar.cc/480?img=12', linkedin:'#', bio:'Has structured over R1.2bn in alternative and working-capital finance for high-growth small businesses across the continent.' },
+      s3:{ id:'s3', name:'Jameel Khan', role:'Co-founder & Tax Specialist', company:'Lodirile Advisory', img:'https://i.pravatar.cc/480?img=33', linkedin:'#', bio:'Demystifies valuations and tax compliance for founders, turning complex financials into investor-ready stories.' },
+      s4:{ id:'s4', name:'Nomsa Dlamini', role:'Investment Principal', company:'Khula Ventures', img:'https://i.pravatar.cc/480?img=45', linkedin:'#', bio:'Leads early-stage deal flow at Khula Ventures, with a focus on township economy and B2B SaaS founders.' },
+      s5:{ id:'s5', name:'Thabo Molefe', role:'Founder & CEO', company:'GridPay Africa', img:'https://i.pravatar.cc/480?img=15', linkedin:'#', bio:'Scaled GridPay from a Soweto pilot to four markets, raising a Series A in 2024. Speaks candidly about the funding grind.' },
+      s6:{ id:'s6', name:'Aisha Patel', role:'Angel Investor', company:'Jozi Angels', img:'https://i.pravatar.cc/480?img=44', linkedin:'#', bio:'Has angel-invested in 30+ African startups and chairs the Jozi Angels syndicate. Passionate about first-cheque founders.' },
+      s7:{ id:'s7', name:'Mpho Raseroka', role:'Founder', company:'Lodirile Consulting', img:'https://i.pravatar.cc/480?img=32', linkedin:'#', bio:'20+ years in HR management and organisational design, helping SMEs build teams that scale.' },
+      s8:{ id:'s8', name:'Vusi Ndlovu', role:'VP Sales', company:'TechGrowth', img:'https://i.pravatar.cc/480?img=68', linkedin:'#', bio:'15+ years leading high-performance sales teams across Africa and Europe, specialising in enterprise SaaS.' },
+      s9:{ id:'s9', name:'Lerato Kganyago', role:'Revenue Ops Lead', company:'Series‑B Collective', img:'https://i.pravatar.cc/480?img=49', linkedin:'#', bio:'Builds robust revenue architectures and scalable sales processes for fast-growing startups.' },
+      s10:{ id:'s10', name:'Sarah Jenkins', role:'Strategy Consultant', company:'NorthBeam', img:'https://i.pravatar.cc/480?img=31', linkedin:'#', bio:'Helps high-growth startups map actionable quarterly goals and align teams around them.' },
+      s11:{ id:'s11', name:'David Osei', role:'Growth Marketer', company:'Loop Labs', img:'https://i.pravatar.cc/480?img=53', linkedin:'#', bio:'Specialises in aligning marketing and sales goals into predictable growth sprints.' }
+    };
+    const sp = (id)=> SPEAKERS[id];
+
+    // === EVENTS ===================================================================
+    const MOCK_EVENTS = [
+      { id:1, featured:true, type:'IN-PERSON', status:'Upcoming', category:'Funding Summit',
+        title:'Annual SME Funding Gala 2026',
+        description:'An exclusive day of masterclasses, candid founder panels and direct networking with the VCs, angels and lenders actually writing cheques. Built for growth-focused SMEs ready to raise and scale.',
+        hero_image:'https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&q=80&w=1600',
+        logistics:{},
+        venue:{ name:'Focus Rooms', address:'Heaton Lane Longlake 20, Modderfontein, Sandton, 1609', directions:'Secure basement parking available.' },
+        sponsors:[
+          { name:'RESA', logo:'https://placehold.co/150x60/ffffff/0C1F31?text=RESA' },
+          { name:'RAIZCORP', logo:'https://placehold.co/150x60/ffffff/0C1F31?text=RAIZCORP' },
+          { name:'TenderCapital', logo:'https://placehold.co/150x60/ffffff/0C1F31?text=TenderCapital' },
+          { name:'Alt Finance', logo:'https://placehold.co/150x60/ffffff/0C1F31?text=Alt+Finance' }
+        ],
+        speakerIds:['s1','s2','s3','s4','s5','s6'],
+        agenda:[
+          { time:'08:30', title:'Registration & Welcome Coffee', type:'break' },
+          { time:'09:30', title:'Opening Keynote: The State of SME Funding in SA', type:'keynote', speakerIds:['s1'] },
+          { time:'10:30', title:'Panel: Debt vs Equity — Choosing the Right Capital', type:'panel', moderatorId:'s3', speakerIds:['s2','s4','s6'] },
+          { time:'12:00', title:'Networking Lunch', type:'break' },
+          { time:'13:00', title:'Masterclass: Building an Investor-Ready Valuation', type:'talk', speakerIds:['s3'] },
+          { time:'14:30', title:'Panel: Scaling Across African Markets', type:'panel', moderatorId:'s1', speakerIds:['s5','s4','s2'] },
+          { time:'16:00', title:'Fireside Chat: Lessons from Funded Founders', type:'fireside', speakerIds:['s5','s6'] },
+          { time:'17:00', title:'Closing Remarks & Cocktail Networking', type:'break' }
+        ],
+        topics:[
+          { icon:'trending-up', title:'Venture Capital & Angel Investment', description:'Understand what investors look for and how to position your SME for funding.' },
+          { icon:'landmark', title:'Alternative & Debt Financing', description:'Explore non-dilutive options including grants, revenue-based finance and tender capital.' },
+          { icon:'calculator', title:'Business Valuation', description:'Learn how to value your business and negotiate fair terms with confidence.' },
+          { icon:'users', title:'Investor Networking', description:'Connect directly with VCs, angels and institutional capital providers.' },
+          { icon:'file-text', title:'Pitch & Due Diligence Readiness', description:'Get your financials, documents and pitch deck investor-ready.' },
+          { icon:'globe', title:'Scaling Globally', description:'Strategies for taking your growth-focused SME into international markets.' }
+        ],
+        tickets:{ currency:'R', bookingFeePct:2.5, tiers:[
+          { id:'standard', name:'Standard', price:1450, blurb:'Full-day access · lunch · cocktails', remaining:84, max:10 }
+        ]}
+      },
+      { id:2, featured:false, type:'ONLINE', status:'Past', category:'Tax & Accounting',
+        title:'The Importance of Good Record-Keeping in Business',
+        description:'A free masterclass on how meticulous record-keeping protects your business, supports growth and gives you confidence — whether you’re preparing for tax season or chasing funding.',
+        logistics:{}, venue:{ platform:'Zoom Replay', link:'#' },
+        vault:{ recording_url:'https://images.unsplash.com/photo-1588196749597-9ff0464ac4ab?auto=format&fit=crop&q=80&w=1200', video_embed:'https://www.youtube.com/embed/rJ67YiHpQnk', gallery:[] },
+        sponsors:[{ name:'Standard Bank', logo:'https://placehold.co/120x40/ffffff/0C1F31?text=Standard+Bank' }],
+        hostId:'s7', speakerId:'s3' },
+      { id:3, featured:false, type:'IN-PERSON', status:'Past', category:'Networking',
+        title:'SME Funding Summit — Previous Edition',
+        description:'Our previous flagship event connecting founders directly with institutional capital providers.',
+        logistics:{},
+        vault:{ gallery:[
+          'https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&q=80&w=1200',
+          'https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&q=80&w=800',
+          'https://images.unsplash.com/photo-1559136555-9303baea8ebd?auto=format&fit=crop&q=80&w=800',
+          'https://images.unsplash.com/photo-1505373877841-8d25f7d46678?auto=format&fit=crop&q=80&w=1200'
+        ]} },
+      { id:4, featured:true, type:'ONLINE', status:'LIVE NOW', category:'Business Planning',
+        title:'Mastering B2B Sales Cycles — Live Session',
+        description:'Shorten your B2B sales cycles, close enterprise deals and build a predictable revenue engine. Practical CRM tactics, negotiation strategy and how to spot decision-makers early.',
+        logistics:{}, venue:{ platform:'Zoom', link:'https://zoom.us/j/123456789' },
+        sponsors:[{ name:'Salesforce', logo:'https://placehold.co/120x40/ffffff/0C1F31?text=Salesforce' }],
+        hostId:'s8', speakerId:'s9' },
+      { id:5, featured:false, type:'ONLINE', status:'Upcoming', category:'Business Planning',
+        title:'Q3 Goal Setting Workshop',
+        description:'Prepare your SME for the next quarter with actionable KPIs, cross-department alignment and resource-allocation frameworks. Includes a live workshop of your own targets.',
+        logistics:{}, venue:{ platform:'Zoom', link:'https://zoom.us/j/987654321' },
+        sponsors:[], hostId:'s10', speakerId:'s11' },
+      { id:6, featured:true, type:'ONLINE', status:'Upcoming', category:'Business Planning',
+        title:'Mastering B2B Sales Cycles — Encore',
+        description:'Back by demand: the predictable-revenue playbook. CRM tactics, negotiation strategy and identifying key decision-makers early in the cycle.',
+        logistics:{}, venue:{ platform:'Zoom', link:'https://zoom.us/j/123456789' },
+        sponsors:[{ name:'Salesforce', logo:'https://placehold.co/120x40/ffffff/0C1F31?text=Salesforce' }],
+        hostId:'s8', speakerId:'s9' },
+      { id:7, featured:false, type:'VIDEO', status:'Past', category:'Funding Summit',
+        title:'Panel: Debt vs Equity Financing',
+        description:'A 20-minute deep-dive snippet from the previous SME Funding Summit, featuring institutional lenders on when founders should choose debt over equity.',
+        logistics:{ display_time:'Snippet' },
+        vault:{ recording_url:'https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=1200&q=80', video_embed:'https://www.youtube.com/embed/fTQlWfMkc1Y' } }
+    ];
+    const byId = (id)=> MOCK_EVENTS.find(e=> e.id === Number(id));
+
+    // === Date formatting & demo seeding ===========================================
+    const MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+    const MONTHS_SHORT = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
+    const fmtDate = (d)=> `${d.getDate()} ${MONTHS[d.getMonth()]} ${d.getFullYear()}`;
+    const fmtTime = (d)=> `${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;
+    const atTime = (base,h,m)=>{ const d=new Date(base); d.setHours(h,m,0,0); return d; };
+    function applyTimes(ev, start, end){
+      ev.logistics.startMs = start.getTime();
+      ev.logistics.endMs = end ? end.getTime() : null;
+      ev.logistics.display_date = fmtDate(start);
+      ev.logistics.display_time = end ? `${fmtTime(start)} – ${fmtTime(end)} SAST` : 'Recording available';
+      ev.logistics.day_split = String(start.getDate());
+      ev.logistics.month_split = MONTHS_SHORT[start.getMonth()];
+    }
+    function seedDemoDates(){
+      const now = new Date();
+      const plus = (days)=>{ const d=new Date(now); d.setDate(d.getDate()+days); return d; };
+      let d;
+      d=plus(25); applyTimes(byId(1), atTime(d,8,30), atTime(d,17,0));
+      applyTimes(byId(4), new Date(now.getTime()-30*60000), new Date(now.getTime()+90*60000));
+      d=plus(14); applyTimes(byId(6), atTime(d,14,0), atTime(d,16,0));
+      d=plus(63); applyTimes(byId(5), atTime(d,14,0), atTime(d,15,30));
+      d=plus(-32); { const ev=byId(2); ev.logistics.startMs=atTime(d,12,0).getTime(); ev.logistics.endMs=atTime(d,13,30).getTime(); ev.logistics.display_date=fmtDate(d); ev.logistics.display_time='Recording available'; ev.logistics.day_split=String(d.getDate()); ev.logistics.month_split=MONTHS_SHORT[d.getMonth()]; }
+      d=plus(-75); { const ev=byId(3); ev.logistics.startMs=atTime(d,9,0).getTime(); ev.logistics.display_date=fmtDate(d); ev.logistics.display_time='Concluded'; }
+      d=plus(-75); { const ev=byId(7); ev.logistics.startMs=atTime(d,9,0).getTime(); ev.logistics.display_date=fmtDate(d); ev.logistics.display_time='Snippet'; }
+    }
+    function computeStatus(ev){
+      const s = ev.logistics.startMs ?? null;
+      const e = ev.logistics.endMs ?? (s ? s + 2*3600000 : null);
+      const now = Date.now();
+      if(s == null) return ev.status || 'Past';
+      if(now < s) return 'Upcoming';
+      if(now >= s && now <= e) return 'LIVE NOW';
+      return 'Past';
+    }
+
+    // === Utilities ================================================================
+    const esc = (s)=> String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+    const money = (n, cur='R')=> cur + Number(n).toLocaleString('en-US');
+    const initials = (name)=> name.split(/\s+/).filter(Boolean).map(p=>p[0]).slice(0,2).join('').toUpperCase();
+    function track(name, props){ (window.dataLayer = window.dataLayer || []).push(Object.assign({ event:name }, props||{})); try{ console.debug('%c[track]','color:#DC183C;font-weight:bold', name, props||{}); }catch(e){} }
+    const toICS = (ms)=> new Date(ms).toISOString().replace(/[-:]/g,'').replace(/\.\d{3}/,'');
+    function googleCalUrl(ev){
+      const t = encodeURIComponent(ev.title);
+      const details = encodeURIComponent(ev.description);
+      const loc = encodeURIComponent((ev.venue && ev.venue.address) || (ev.venue && ev.venue.platform) || 'Online');
+      let dates = '';
+      if(ev.logistics.startMs){ const end = ev.logistics.endMs || (ev.logistics.startMs + 2*3600000); dates = `&dates=${toICS(ev.logistics.startMs)}/${toICS(end)}`; }
+      return `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${t}&details=${details}&location=${loc}${dates}`;
+    }
+    function downloadICS(ev){
+      const end = ev.logistics.endMs || (ev.logistics.startMs ? ev.logistics.startMs + 2*3600000 : Date.now());
+      const loc = (ev.venue && ev.venue.address) || (ev.venue && ev.venue.platform) || 'Online';
+      const ics = ['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//SME South Africa//Events//EN','BEGIN:VEVENT',
+        `UID:sme-${ev.id}-${Date.now()}@smesouthafrica.co.za`, `DTSTAMP:${toICS(Date.now())}`,
+        ev.logistics.startMs ? `DTSTART:${toICS(ev.logistics.startMs)}` : '', `DTEND:${toICS(end)}`,
+        `SUMMARY:${ev.title.replace(/,/g,'\\,')}`, `DESCRIPTION:${ev.description.replace(/,/g,'\\,').replace(/\n/g,' ')}`,
+        `LOCATION:${String(loc).replace(/,/g,'\\,')}`, 'END:VEVENT','END:VCALENDAR'].filter(Boolean).join('\r\n');
+      const blob = new Blob([ics], { type:'text/calendar;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a'); a.href = url; a.download = `${ev.title.replace(/[^a-z0-9]+/gi,'-').toLowerCase()}.ics`;
+      document.body.appendChild(a); a.click(); document.body.removeChild(a);
+      setTimeout(()=>URL.revokeObjectURL(url), 1500);
+      track('add_to_calendar', { method:'ics', event_id:ev.id });
+    }
+    const linkFor = (ev)=> `${location.origin}${location.pathname}#/event/${ev.id}`;
+    function makeQR(text, size=176){
+      const N = 25; let h = 2166136261;
+      for(let i=0;i<text.length;i++){ h ^= text.charCodeAt(i); h = Math.imul(h, 16777619) >>> 0; }
+      const rnd = ()=>{ h = (Math.imul(h,1103515245) + 12345) >>> 0; return (h >>> 16) / 65536; };
+      const cell = size / N;
+      const finders = [[0,0],[0,N-7],[N-7,0]];
+      const inFinder = (r,c)=> finders.some(([br,bc])=> r>=br && r<br+7 && c>=bc && c<bc+7);
+      const finderOn = (r,c)=>{ const f = finders.find(([br,bc])=> r>=br && r<br+7 && c>=bc && c<bc+7); const rr=r-f[0], cc=c-f[1]; const border=(rr===0||rr===6||cc===0||cc===6); const center=(rr>=2&&rr<=4&&cc>=2&&cc<=4); return border||center; };
+      let rects = '';
+      for(let r=0;r<N;r++){ for(let c=0;c<N;c++){ const on = inFinder(r,c) ? finderOn(r,c) : (rnd() > 0.52); if(on) rects += `<rect x="${(c*cell).toFixed(2)}" y="${(r*cell).toFixed(2)}" width="${cell.toFixed(2)}" height="${cell.toFixed(2)}"/>`; } }
+      return `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 ${size} ${size}" shape-rendering="crispEdges" role="img" aria-label="Ticket QR code"><rect width="${size}" height="${size}" fill="#ffffff"/><g fill="#0C1F31">${rects}</g></svg>`;
+    }
+    function setHTML(el, html){
+      const a = document.activeElement; const id = a && a.id; let ss=null, se=null;
+      if(id && (a.tagName==='INPUT' || a.tagName==='TEXTAREA')){ ss=a.selectionStart; se=a.selectionEnd; }
+      el.innerHTML = html;
+      if(window.lucide) window.lucide.createIcons();
+      if(id){ const n=document.getElementById(id); if(n){ n.focus(); if(ss!=null && n.setSelectionRange){ try{ n.setSelectionRange(ss,se); }catch(e){} } } }
+    }
+    function sessionsFor(id){
+      const out = [];
+      MOCK_EVENTS.forEach(ev=>{
+        if(ev.hostId === id) out.push({ ev, title:ev.title, kind:'Host' });
+        if(ev.speakerId === id) out.push({ ev, title:ev.title, kind:'Speaker' });
+        (ev.agenda||[]).forEach(it=>{
+          const ids = [].concat(it.speakerIds||[], it.moderatorId? [it.moderatorId]:[]);
+          if(ids.includes(id)) out.push({ ev, title:it.title, kind: it.moderatorId===id ? 'Moderator' : (it.type? it.type.charAt(0).toUpperCase()+it.type.slice(1) : 'Speaker'), time:it.time });
+        });
+      });
+      return out;
+    }
+
+    // === SEO ======================================================================
+    function setSEO(){
+      let title = 'Events & Webinars — SME South Africa';
+      let desc = 'Explore upcoming and past SME South Africa events and webinars.';
+      let ld = { '@context':'https://schema.org', '@type':'ItemList', name:'SME South Africa Events' };
+      if(state.view === 'event'){
+        const ev = byId(state.params.id);
+        if(ev){
+          title = `${ev.title} — SME South Africa`;
+          desc = ev.description.slice(0,155);
+          ld = {
+            '@context':'https://schema.org', '@type':'Event', name:ev.title, description:ev.description,
+            eventAttendanceMode: ev.type==='IN-PERSON' ? 'https://schema.org/OfflineEventAttendanceMode' : 'https://schema.org/OnlineEventAttendanceMode',
+            eventStatus:'https://schema.org/EventScheduled',
+            startDate: ev.logistics.startMs ? new Date(ev.logistics.startMs).toISOString() : undefined,
+            endDate: ev.logistics.endMs ? new Date(ev.logistics.endMs).toISOString() : undefined,
+            location: ev.type==='IN-PERSON'
+              ? { '@type':'Place', name: ev.venue.name, address: ev.venue.address }
+              : { '@type':'VirtualLocation', url: (ev.venue && ev.venue.link) || location.href },
+            organizer:{ '@type':'Organization', name:'SME South Africa', url:'https://smesouthafrica.co.za' },
+            performer: (ev.speakerIds||[]).map(i=>({ '@type':'Person', name: sp(i).name })),
+            image: ev.hero_image || (ev.vault && ev.vault.recording_url) || undefined,
+            offers: ev.tickets ? ev.tickets.tiers.map(t=>({ '@type':'Offer', name:t.name, price:t.price, priceCurrency:'ZAR', availability: t.remaining>0 ? 'https://schema.org/InStock' : 'https://schema.org/SoldOut' })) : undefined
+          };
+        }
+      } else if(state.view === 'speaker'){
+        const s = sp(state.params.id);
+        if(s){ title = `${s.name} — Speaker — SME South Africa`; desc = s.bio.slice(0,155);
+          ld = { '@context':'https://schema.org', '@type':'Person', name:s.name, jobTitle:s.role, worksFor:{ '@type':'Organization', name:s.company }, description:s.bio, image:s.img }; }
+      }
+      document.title = title;
+      const setMeta = (id,val)=>{ const el=document.getElementById(id); if(el) el.setAttribute('content', val); };
+      setMeta('meta-desc', desc); setMeta('og-title', title); setMeta('og-desc', desc);
+      setMeta('og-type', state.view==='event' ? 'event' : 'website');
+      const ldEl = document.getElementById('ld-json'); if(ldEl) ldEl.textContent = JSON.stringify(ld);
+    }
+
+    // === State + Router ===========================================================
+    let state = { view:'directory', params:{}, mainTab:'feed', statusFilter:'All', typeFilter:'All', categoryFilter:'All', sort:'soonest', search:'', isLoggedIn:false, registered:{} };
+    let countdownInterval; let activeOverlayClose = null;
+    function setState(patch){ Object.assign(state, patch); renderApp(); }
+    function navigate(hash){ if(location.hash === hash){ route(); } else { location.hash = hash; } }
+    function route(){
+      const h = location.hash || '#/';
+      const mEvent = h.match(/^#\/event\/(\d+)/);
+      const mSpeaker = h.match(/^#\/speaker\/([a-z0-9]+)/i);
+      if(mEvent && byId(mEvent[1])){ state.view='event'; state.params={ id:Number(mEvent[1]) }; track('view_event',{ event_id:Number(mEvent[1]) }); }
+      else if(mSpeaker && sp(mSpeaker[1])){ state.view='speaker'; state.params={ id:mSpeaker[1] }; track('view_speaker',{ speaker_id:mSpeaker[1] }); }
+      else { state.view='directory'; state.params={}; }
+      window.scrollTo(0,0); renderApp(); setSEO();
+    }
+
+    // === Shared UI ================================================================
+    function statusChip(status){
+      if(status==='LIVE NOW') return `<span class="px-3 py-1.5 rounded-full text-[11px] font-bold bg-[#FDECEF] text-[#DC183C] inline-flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-[#DC183C] animate-pulse"></span> LIVE NOW</span>`;
+      if(status==='Upcoming') return `<span class="px-3 py-1.5 rounded-full text-[11px] font-bold bg-[#FFF1E0] text-[#AE6B0A]">Upcoming</span>`;
+      return `<span class="px-3 py-1.5 rounded-full text-[11px] font-bold bg-slate-100 text-slate-600">Past</span>`;
+    }
+    function subHeader(){
+      if(state.view === 'directory') return '';
+      const member = state.isLoggedIn
+        ? `<div class="flex items-center gap-2 pl-1"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=160" ${OE_AV} alt="Member" class="w-8 h-8 rounded-full object-cover ring-2 ring-[#0C1F31]/10" /><span class="hidden sm:block text-sm font-semibold text-slate-700">Tshepho Joel</span></div>`
+        : `<button onclick="setState({isLoggedIn:true})" class="text-sm font-bold text-[#0C1F31] hover:text-[#DC183C] transition-colors">Sign in to your member area</button>`;
+      return `<div class="bg-white border-b border-[#E7EBEF]"><div class="max-w-[1200px] mx-auto px-4 sm:px-6 h-14 flex items-center justify-between gap-3">
+        <button onclick="navigate('#/')" class="inline-flex items-center gap-2 text-sm font-bold text-slate-600 hover:text-[#DC183C] transition-colors"><i data-lucide="arrow-left" class="w-4 h-4"></i> All events</button>
+        <div class="flex items-center gap-4">
+          <button onclick="setState({isLoggedIn: !state.isLoggedIn})" title="Toggle member simulation" class="hidden md:flex items-center gap-1.5 text-[11px] font-bold text-slate-400 hover:text-slate-700 transition-colors"><i data-lucide="${state.isLoggedIn?'toggle-right':'toggle-left'}" class="w-5 h-5 ${state.isLoggedIn?'text-[#29A37A]':''}"></i> Simulate member</button>
+          ${member}
         </div>
-        <div class="p-4 min-w-0 flex-1">
-          <span class="inline-block px-2 py-0.5 rounded-full text-[10px] font-bold" style="background:${t[0]};color:${t[1]}">${esc(e.type)}</span>
-          <h3 class="font-jakarta font-bold leading-snug mt-2">${esc(e.title)}</h3>
-          <p class="text-xs text-[#6A7581] mt-1 flex items-center gap-1.5"><i data-lucide="${past?'play-circle':'map-pin'}" class="w-3.5 h-3.5"></i> ${esc(e.loc)}</p>
-          <button onclick="showToast('${past?'Opening replay…':'Registration opens in the event system.'}')" class="mt-3 text-sm font-bold ${past?'text-[#0C1F31]':'text-[#DC183C]'} hover:underline">${past?'Watch replay →':'Register →'}</button>
+      </div></div>`;
+    }
+
+    // === Directory ================================================================
+    function getFilteredEvents(){
+      return MOCK_EVENTS.map(ev=> ({ ev, status:computeStatus(ev) }))
+        .filter(({ev,status})=>{
+          if(ev.type==='VIDEO') return false;
+          if(state.statusFilter!=='All' && status!==state.statusFilter) return false;
+          if(state.typeFilter!=='All' && ev.type!==state.typeFilter) return false;
+          if(state.categoryFilter!=='All' && ev.category!==state.categoryFilter) return false;
+          if(state.search && !(`${ev.title} ${ev.description} ${ev.category}`.toLowerCase().includes(state.search.toLowerCase()))) return false;
+          return true;
+        })
+        .sort((a,b)=>{
+          const rank = s=> s==='LIVE NOW'?0 : s==='Upcoming'?1 : 2;
+          if(rank(a.status)!==rank(b.status)) return rank(a.status)-rank(b.status);
+          const am=a.ev.logistics.startMs||0, bm=b.ev.logistics.startMs||0;
+          return state.sort==='latest' ? bm-am : am-bm;
+        });
+    }
+    function cardMeta(ev, status){
+      if(status==='Past') return ev.type==='ONLINE' ? 'Recording available' : 'Event concluded';
+      if(status==='LIVE NOW') return 'Happening now';
+      if(ev.logistics.startMs){
+        const d=new Date(ev.logistics.startMs); const h=d.getHours(); const m=String(d.getMinutes()).padStart(2,'0');
+        const h12=(h%12)||12; const period=h>=12?'pm':'am';
+        return `${ev.logistics.display_date} at ${h12}:${m} ${period}`;
+      }
+      return ev.logistics.display_date || '';
+    }
+    function chip(label, active, onclick){ return `<button onclick="${onclick}" class="shrink-0 px-4 py-2 rounded-full text-sm font-semibold border transition-colors ${active?'bg-[#DC183C] text-white border-[#DC183C]':'bg-white text-slate-600 border-[#E7EBEF] hover:bg-slate-50'}">${label}</button>`; }
+    function emptyState(){
+      return `<div class="reveal bg-white border border-dashed border-[#E7EBEF] rounded-2xl py-16 px-6 text-center">
+        <div class="w-16 h-16 mx-auto rounded-full bg-slate-100 grid place-items-center mb-5"><i data-lucide="calendar-x" class="w-7 h-7 text-slate-400"></i></div>
+        <h3 class="font-jakarta text-2xl font-extrabold text-[#0C1F31] mb-2">No events match your filters</h3>
+        <p class="text-slate-500 max-w-sm mx-auto mb-6">Try widening your search or clearing the filters to see everything we have on.</p>
+        <button onclick="setState({statusFilter:'All',typeFilter:'All',categoryFilter:'All',search:'',mainTab:'feed'})" class="bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold px-6 py-3 rounded-xl transition-colors">Clear all filters</button>
+      </div>`;
+    }
+    function renderDirectory(){
+      const list = getFilteredEvents();
+      let grid;
+      if(state.mainTab==='feed'){
+        grid = list.length ? `<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 md:gap-8">
+          ${list.map(({ev,status}, i)=>`
+            <article class="reveal bg-white rounded-2xl shadow-sm border border-[#E7EBEF] overflow-hidden relative flex flex-col hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group" style="animation-delay:${i*70}ms">
+              ${ev.featured ? '<div class="absolute top-0 left-0 bg-[#DC183C] text-white text-[10px] font-extrabold uppercase tracking-wider px-3 py-1.5 rounded-br-xl z-10">FEATURED</div>' : ''}
+              <div class="p-6 md:p-7 flex-1 flex flex-col mt-4">
+                <div class="flex justify-between items-center mb-4">
+                  <span class="text-slate-500 font-bold text-xs tracking-widest">${ev.type}</span>
+                  ${statusChip(status)}
+                </div>
+                <h3 class="text-xl font-jakarta font-extrabold text-[#0C1F31] leading-tight mb-3 group-hover:text-[#DC183C] transition-colors">${ev.title}</h3>
+                <p class="text-slate-500 text-sm leading-relaxed line-clamp-3 mb-6 flex-1">${ev.description}</p>
+                <div class="mt-auto">
+                  <p class="font-extrabold text-[#121A21] text-sm mb-4">${cardMeta(ev,status)}</p>
+                  <button onclick="navigate('#/event/${ev.id}')" class="w-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold py-3.5 rounded-xl transition-colors shadow-sm">${status==='LIVE NOW'?'Join Now':'View Details'}</button>
+                </div>
+              </div>
+            </article>`).join('')}
+        </div>` : emptyState();
+      } else {
+        const lib = MOCK_EVENTS.map(e=>({ev:e,status:computeStatus(e)})).filter(({ev,status})=> status==='Past' && ev.vault && ev.type!=='ONLINE');
+        grid = lib.length ? `<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 md:gap-8">
+          ${lib.map(({ev},i)=>{ const isVideo = ev.type==='VIDEO'; const img = isVideo ? ev.vault.recording_url : ev.vault.gallery[0]; return `
+            <article onclick="navigate('#/event/${ev.id}')" class="reveal bg-white rounded-2xl shadow-sm border border-[#E7EBEF] overflow-hidden cursor-pointer hover:shadow-xl hover:-translate-y-1 transition-all group" style="animation-delay:${i*70}ms">
+              <div class="h-56 bg-[#0C1F31] relative overflow-hidden">
+                <img src="${img}" ${OE_IM} alt="" class="w-full h-full object-cover ${!state.isLoggedIn?'opacity-30 blur-[3px]':'opacity-60'} group-hover:scale-105 transition-all duration-500" />
+                ${!state.isLoggedIn ? `<div class="absolute inset-0 grid place-items-center bg-[#0C1F31]/40"><div class="text-center"><div class="w-12 h-12 mx-auto bg-white/20 backdrop-blur rounded-full grid place-items-center border border-white/30 shadow-lg mb-2"><i data-lucide="lock" class="text-white w-5 h-5"></i></div><span class="text-white font-jakarta text-[10px] uppercase tracking-widest font-bold">Members Only</span></div></div>` : `<i data-lucide="${isVideo?'play-circle':'image'}" class="absolute inset-0 m-auto text-white/90 ${isVideo?'w-16 h-16':'w-12 h-12'} drop-shadow-lg"></i>`}
+              </div>
+              <div class="p-6"><span class="text-[#DC183C] font-extrabold text-[10px] tracking-widest mb-2 block">${isVideo?'Event Snippet':'Photo Gallery'}</span><h3 class="text-lg font-extrabold text-[#0C1F31] mb-1 leading-tight">${ev.title}</h3><p class="text-sm text-slate-500 font-medium">From ${ev.logistics.display_date}</p></div>
+            </article>`;}).join('')}
+        </div>` : emptyState();
+      }
+      return `${subHeader()}
+      <section class="hero-bg text-white relative overflow-hidden"><div class="absolute inset-0 dot-pattern opacity-70 pointer-events-none"></div>
+        <div class="max-w-[1200px] mx-auto px-4 sm:px-6 py-14 relative">
+          <p class="text-[12px] font-bold uppercase tracking-widest text-white/50">Events &amp; Webinars <button onclick="openBrief()" class="dev-badge align-middle ml-1 w-5 h-5 rounded-full bg-[#FF9900] text-[#0C1F31] items-center justify-center text-[10px] font-bold">i</button></p>
+          <h1 class="font-jakarta font-extrabold text-3xl sm:text-5xl mt-1 tracking-tight">Learn, network &amp; grow</h1>
+          <p class="mt-3 text-white/70 max-w-2xl text-lg">Explore our upcoming and past events. Join in-person summits, live webinars and on-demand replays built for South African SMEs.</p>
         </div>
-      </div>`;}).join('');
-    lucide.createIcons();
-  }
-  const BRIEF={title:'Events & Webinars',sub:'Event directory + replay library',purpose:'Lists upcoming events/webinars and a past replay library. Drives registrations and keeps members engaged between sessions. Flagship event (Funding Summit) is featured.',data:'Event: <code>{ id, title, type, starts_at, location, mode, capacity, register_url, replay_url, status }</code>. Upcoming vs past by date.',logic:'Toggle filters by status. Registration & ticketing handled by the event/WordPress system; replays link to video. Past events show duration + replay.',components:'Hero · featured event · upcoming/past toggle · event cards (date chip, type, register/replay).',api:'GET /v1/events?status=upcoming · POST /v1/events/{id}/register'};
-  function toggleDevMode(){const on=document.body.classList.toggle('dev-on');const b=document.getElementById('devToggle');if(b)b.classList.toggle('on',on);if(on)showToast('Dev Mode on — tap any ⓘ for implementation notes.');lucide.createIcons();}
-  function closeOverlay(id){const el=document.getElementById(id);if(!el)return;el.classList.remove('open');setTimeout(()=>{if(el&&el.parentNode)el.remove();},300);}
-  function openBrief(){const b=BRIEF;const sec=(i,l,h)=>`<div class="px-6 py-4 border-t border-slate-100"><p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] flex items-center gap-1.5 mb-2"><i data-lucide="${i}" class="w-3.5 h-3.5"></i>${l}</p><div class="text-sm text-slate-600 leading-relaxed">${h}</div></div>`;document.getElementById('overlay-root').innerHTML=`<div class="ov" id="ov"><div class="ov-bg" onclick="closeOverlay('ov')"></div><div class="drawer"><div class="sticky top-0 z-10 bg-[#0C1F31] text-white px-6 py-5 flex items-start justify-between"><div><p class="text-[10px] font-bold uppercase tracking-widest text-[#FF9900] mb-1">Dev Brief</p><h3 class="font-jakarta font-extrabold text-lg leading-tight">${b.title}</h3><p class="text-xs text-white/60 mt-1">${b.sub}</p></div><button onclick="closeOverlay('ov')" class="text-white/60 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button></div>${sec('target','Purpose',b.purpose)}${sec('database','Data model',b.data)}${sec('git-branch','Logic',b.logic)}${sec('boxes','Components',b.components)}${sec('plug','API',`<code class="block bg-slate-900 text-emerald-300 text-xs font-mono px-3 py-2 rounded-lg overflow-x-auto">${b.api}</code>`)}</div></div>`;requestAnimationFrame(()=>{const o=document.getElementById('ov');if(o)o.classList.add('open');});lucide.createIcons();}
-  render(); lucide.createIcons();
-</script>
+      </section>
+      <main class="max-w-[1200px] mx-auto px-4 sm:px-6 py-8 md:py-12">
+        <div class="reveal flex gap-3 mb-6">
+          <button onclick="setState({mainTab:'feed'})" class="px-5 py-2.5 rounded-lg font-bold text-sm shadow-sm transition-colors ${state.mainTab==='feed'?'bg-[#0C1F31] text-white':'bg-white text-slate-700 border border-[#E7EBEF]'}">Event Feed</button>
+          <button onclick="setState({mainTab:'library'})" class="px-5 py-2.5 rounded-lg font-bold text-sm shadow-sm transition-colors ${state.mainTab==='library'?'bg-[#0C1F31] text-white':'bg-white text-slate-700 border border-[#E7EBEF]'}">Event Library</button>
+        </div>
+        ${state.mainTab==='feed' ? `
+        <div class="reveal bg-white rounded-2xl shadow-sm border border-[#E7EBEF] p-4 sm:p-5 mb-8" style="animation-delay:120ms">
+          <div class="flex flex-col lg:flex-row lg:items-center gap-4">
+            <div class="flex items-center gap-2 overflow-x-auto no-scrollbar -mx-1 px-1">
+              <span class="shrink-0 text-xs font-bold text-slate-400 uppercase tracking-wide pr-1">Status</span>
+              ${['All','Upcoming','Past'].map(s=>chip(s, state.statusFilter===s, `setState({statusFilter:'${s}'})`)).join('')}
+            </div>
+            <div class="hidden lg:block w-px h-7 bg-[#E7EBEF]"></div>
+            <div class="flex items-center gap-2 overflow-x-auto no-scrollbar -mx-1 px-1">
+              <span class="shrink-0 text-xs font-bold text-slate-400 uppercase tracking-wide pr-1">Type</span>
+              ${['All','ONLINE','IN-PERSON'].map(t=>chip(t, state.typeFilter===t, `setState({typeFilter:'${t}'})`)).join('')}
+            </div>
+            <div class="hidden lg:block w-px h-7 bg-[#E7EBEF]"></div>
+            <div class="flex items-center gap-2 lg:ml-auto">
+              <div class="relative flex-1 lg:flex-initial lg:w-56"><i data-lucide="search" class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 w-4 h-4"></i><input id="searchInput" type="text" placeholder="Search events…" value="${esc(state.search)}" oninput="state.search=this.value; renderApp();" class="w-full pl-9 pr-3 py-2.5 rounded-lg border border-[#E7EBEF] text-sm bg-slate-50 outline-none focus:border-[#DC183C]" /></div>
+              <button onclick="setState({statusFilter:'All',typeFilter:'All',categoryFilter:'All',search:''})" aria-label="Reset filters" class="shrink-0 w-11 h-11 grid place-items-center rounded-lg text-slate-500 bg-white border border-[#E7EBEF] hover:bg-slate-50"><i data-lucide="rotate-ccw" class="w-4 h-4"></i></button>
+            </div>
+          </div>
+        </div>` : ''}
+        ${grid}
+      </main>`;
+    }
+
+    // === Event Detail (router) ====================================================
+    function renderEventDetail(){
+      const ev = byId(state.params.id); if(!ev) return renderDirectory();
+      const status = computeStatus(ev);
+      if(ev.type==='ONLINE') return renderWebinar(ev, status);
+      if(ev.type==='VIDEO') return renderVideoSnippet(ev);
+      return status==='Past' ? renderPastInPerson(ev) : renderUpcomingInPerson(ev, status);
+    }
+    function personCard(id){
+      const s = sp(id);
+      return `<button onclick="navigate('#/speaker/${id}')" class="text-left bg-white p-5 rounded-2xl shadow-sm border border-[#E7EBEF] hover:shadow-lg hover:-translate-y-1 transition-all group w-full flex flex-col items-center text-center">
+        <div class="w-24 h-24 rounded-full mb-4 grid place-items-center bg-[#FFF1E0] text-[#0C1F31] font-jakarta font-bold text-3xl tracking-tight ring-4 ring-slate-50 group-hover:bg-[#DC183C] group-hover:text-white transition-colors">${initials(s.name)}</div>
+        <h3 class="text-lg font-bold text-[#0C1F31] leading-tight group-hover:text-[#DC183C] transition-colors">${esc(s.name)}</h3>
+        <p class="text-xs text-slate-500 font-medium mt-1">${esc(s.role)}</p>
+        <p class="text-[11px] text-slate-400 font-semibold uppercase tracking-wide mt-0.5">${esc(s.company)}</p>
+      </button>`;
+    }
+    function agendaRow(item, i){
+      if(item.type==='break'){
+        const t = item.title.toLowerCase();
+        const icon = t.includes('lunch')?'utensils-crossed' : (t.includes('cocktail')||t.includes('network'))?'martini' : 'coffee';
+        return `<div class="reveal flex items-center gap-4 py-3 px-4 rounded-xl bg-slate-50/80 border border-[#E7EBEF]" style="animation-delay:${i*60}ms"><span class="font-jakarta font-bold text-slate-400 w-14 shrink-0 text-sm">${item.time}</span><i data-lucide="${icon}" class="w-4 h-4 text-slate-400"></i><span class="text-slate-500 font-semibold text-sm">${item.title}</span></div>`;
+      }
+      const ids = item.speakerIds || []; const isPanel = item.type==='panel';
+      const linkName = (id)=>`<button onclick="navigate('#/speaker/${id}')" class="text-[#DC183C] font-semibold hover:underline">${esc(sp(id).name)}</button>`;
+      const namesHtml = ids.length>1 ? ids.slice(0,-1).map(linkName).join(', ') + ' &amp; ' + linkName(ids[ids.length-1]) : (ids[0] ? linkName(ids[0]) : '');
+      return `<div class="reveal flex gap-6 bg-white p-5 rounded-xl border border-[#E7EBEF] shadow-sm hover:shadow-md transition-shadow" style="animation-delay:${i*60}ms">
+        <div class="font-jakarta font-bold text-[#DC183C] w-16 shrink-0 text-base">${item.time}</div>
+        <div class="min-w-0 flex-1">
+          <div class="flex flex-wrap items-center gap-2 mb-1">
+            <h4 class="font-bold text-[#121A21] leading-snug">${item.title}</h4>
+            ${isPanel ? `<span class="text-[10px] font-extrabold uppercase tracking-wider px-2 py-0.5 rounded bg-[#DC183C] text-white">Panel</span>`:''}
+          </div>
+          ${ids.length ? `<p class="text-sm text-slate-500 mt-1">${isPanel?'Panelists':'Speaker'}: ${namesHtml}</p>${isPanel && item.moderatorId ? `<p class="text-xs text-slate-400 mt-0.5">Moderated by ${linkName(item.moderatorId)}</p>`:''}`:''}
+        </div>
+      </div>`;
+    }
+    function ticketSidebar(ev){
+      const t = ev.tickets; const from = Math.min(...t.tiers.map(x=>x.price));
+      return `<div class="bg-white rounded-2xl shadow-[0_20px_50px_-20px_rgba(12,31,49,.35)] border border-[#E7EBEF] overflow-hidden sticky top-24">
+        <div class="hero-bg grain p-6 text-white relative overflow-hidden">
+          <div class="hero-vignette absolute inset-0 opacity-40"></div>
+          <div class="relative">
+            <p class="text-white/60 text-[11px] font-bold uppercase tracking-widest mb-1">Tickets from</p>
+            <p class="font-jakarta text-4xl font-extrabold leading-none">${money(from)}</p>
+          </div>
+        </div>
+        <div class="p-6 space-y-4">
+          <div class="flex gap-3"><i data-lucide="calendar" class="text-[#DC183C] shrink-0 w-5 h-5"></i><div><p class="font-bold text-[#121A21] text-sm">${ev.logistics.display_date}</p><p class="text-slate-500 text-sm">${ev.logistics.display_time}</p></div></div>
+          <div class="flex gap-3"><i data-lucide="map-pin" class="text-[#DC183C] shrink-0 w-5 h-5"></i><div><p class="font-bold text-[#121A21] text-sm">${ev.venue.name}</p><p class="text-slate-500 text-sm">${ev.venue.address}</p></div></div>
+          <hr class="border-[#E7EBEF]" />
+          <button onclick="openCheckout()" class="w-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-jakarta text-lg font-bold py-4 rounded-xl transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2"><i data-lucide="ticket" class="w-5 h-5"></i> Get Tickets</button>
+          <div class="flex gap-2">
+            <button onclick="openCalendar(byId(${ev.id}))" class="flex-1 bg-white border border-[#E7EBEF] hover:bg-slate-50 text-slate-700 text-xs font-bold uppercase tracking-wide py-3 rounded-lg flex items-center justify-center gap-1.5"><i data-lucide="calendar-plus" class="w-4 h-4 text-[#DC183C]"></i> Calendar</button>
+            <button onclick="openShare(byId(${ev.id}))" class="flex-1 bg-white border border-[#E7EBEF] hover:bg-slate-50 text-slate-700 text-xs font-bold uppercase tracking-wide py-3 rounded-lg flex items-center justify-center gap-1.5"><i data-lucide="share-2" class="w-4 h-4 text-[#DC183C]"></i> Share</button>
+          </div>
+        </div>
+      </div>`;
+    }
+    function renderUpcomingInPerson(ev, status){
+      return `${subHeader()}<main class="max-w-[1200px] mx-auto px-4 sm:px-6 py-6 md:py-10 pb-28 lg:pb-12">
+        <div class="reveal w-full aspect-video md:aspect-[21/9] rounded-3xl overflow-hidden relative shadow-2xl mb-6 lg:mb-12 bg-black">
+          <img src="${ev.hero_image}" ${OE_IM} alt="" class="w-full h-full absolute inset-0 object-cover opacity-80" />
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end p-6 sm:p-10 md:p-12">
+            <h1 class="text-3xl sm:text-5xl md:text-6xl font-jakarta font-extrabold leading-tight text-white max-w-3xl drop-shadow-lg">${ev.title}</h1>
+          </div>
+        </div>
+        <div class="lg:hidden reveal mb-8 bg-white rounded-2xl shadow-lg border border-[#E7EBEF] overflow-hidden">
+          <div class="hero-bg grain p-5 text-white relative overflow-hidden">
+            <div class="hero-vignette absolute inset-0 opacity-40"></div>
+            <div class="relative flex items-end justify-between gap-3">
+              <div>
+                <p class="text-white/60 text-[10px] font-bold uppercase tracking-widest mb-1">Tickets from</p>
+                <p class="font-jakarta text-3xl font-extrabold leading-none">${money(Math.min(...ev.tickets.tiers.map(x=>x.price)))}</p>
+              </div>
+              <button onclick="openCheckout()" class="bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold uppercase tracking-wide text-sm px-5 py-3 rounded-xl shadow flex items-center gap-2 shrink-0"><i data-lucide="ticket" class="w-4 h-4"></i> Get Tickets</button>
+            </div>
+          </div>
+          <div class="px-5 py-3 flex gap-2">
+            <button onclick="openCalendar(byId(${ev.id}))" class="flex-1 bg-white border border-[#E7EBEF] hover:bg-slate-50 text-slate-700 text-xs font-bold uppercase tracking-wide py-2.5 rounded-lg flex items-center justify-center gap-1.5"><i data-lucide="calendar-plus" class="w-4 h-4 text-[#DC183C]"></i> Calendar</button>
+            <button onclick="openShare(byId(${ev.id}))" class="flex-1 bg-white border border-[#E7EBEF] hover:bg-slate-50 text-slate-700 text-xs font-bold uppercase tracking-wide py-2.5 rounded-lg flex items-center justify-center gap-1.5"><i data-lucide="share-2" class="w-4 h-4 text-[#DC183C]"></i> Share</button>
+          </div>
+        </div>
+        <div class="flex flex-col lg:flex-row gap-10 lg:gap-16">
+          <div class="lg:w-2/3 space-y-14">
+            <p class="reveal text-lg text-slate-700 leading-relaxed font-medium">${ev.description}</p>
+            ${ev.topics?.length ? `<section>
+              <div class="reveal flex justify-between items-end border-b-2 border-[#0C1F31] pb-3 mb-7"><h2 class="font-jakarta text-2xl sm:text-3xl font-bold text-[#0C1F31]">Event Topics</h2><span class="text-[10px] font-bold text-[#DC183C] uppercase tracking-[0.2em] hidden sm:block">What you'll learn</span></div>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+                ${ev.topics.map((tp,i)=>`<div class="reveal bg-white p-5 sm:p-6 rounded-2xl border border-[#E7EBEF] shadow-sm flex gap-4 hover:shadow-md transition-shadow group" style="animation-delay:${i*60}ms"><div class="w-12 h-12 rounded-xl bg-[#FFF1E0] grid place-items-center shrink-0 text-[#DC183C] group-hover:bg-[#DC183C] group-hover:text-white transition-colors"><i data-lucide="${tp.icon}" class="w-6 h-6"></i></div><div><h4 class="font-bold text-[#0C1F31] leading-tight mb-1">${tp.title}</h4><p class="text-sm text-slate-500 leading-relaxed">${tp.description}</p></div></div>`).join('')}
+              </div>
+            </section>`:''}
+            <section>
+              <div class="reveal flex justify-between items-end border-b-2 border-[#0C1F31] pb-3 mb-7"><h2 class="font-jakarta text-2xl sm:text-3xl font-bold text-[#0C1F31]">Speakers</h2><span class="text-[10px] font-bold text-[#DC183C] uppercase tracking-[0.2em] hidden sm:block">Investors · Founders · VCs</span></div>
+              <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 sm:gap-6">${ev.speakerIds.map((id,i)=>`<div class="reveal" style="animation-delay:${i*60}ms">${personCard(id)}</div>`).join('')}</div>
+            </section>
+            <section>
+              <div class="reveal flex justify-between items-end border-b-2 border-[#0C1F31] pb-3 mb-7"><h2 class="font-jakarta text-2xl sm:text-3xl font-bold text-[#0C1F31]">Agenda</h2><span class="text-[10px] font-bold text-[#DC183C] uppercase tracking-[0.2em] hidden sm:block">Full-day programme</span></div>
+              <div class="space-y-3">${ev.agenda.map((it,i)=>agendaRow(it,i)).join('')}</div>
+            </section>
+            <section>
+              <h2 class="reveal font-jakarta text-2xl sm:text-3xl font-bold text-[#0C1F31] border-b-2 border-[#DC183C] pb-3 mb-6 inline-block">Venue &amp; Location</h2>
+              <div class="reveal mb-4"><h4 class="font-bold text-lg text-[#121A21]">${ev.venue.name}</h4><p class="text-slate-500">${ev.venue.address}</p><p class="text-sm text-slate-400 mt-1">${ev.venue.directions||''}</p></div>
+              <div class="reveal w-full h-72 bg-slate-200 relative border border-[#E7EBEF] rounded-2xl overflow-hidden grain">
+                <img src="https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&q=80&w=1600" ${OE_IM} alt="Map" class="w-full h-full object-cover opacity-60 sepia-[.2]" />
+                <div class="absolute top-4 left-4 bg-white p-3 shadow-lg rounded-xl border border-[#E7EBEF]"><p class="font-bold text-sm text-[#121A21]">${ev.venue.name}</p><p class="text-xs text-slate-500 w-48 truncate">${ev.venue.address}</p></div>
+                <i data-lucide="map-pin" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[#DC183C] w-12 h-12 drop-shadow" fill="currentColor"></i>
+                <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(ev.venue.address)}" target="_blank" rel="noreferrer" class="absolute bottom-4 right-4 bg-white text-[#0C1F31] text-xs font-bold px-4 py-2.5 rounded-lg shadow hover:bg-slate-50 inline-flex items-center gap-1.5"><i data-lucide="navigation" class="w-4 h-4"></i> Directions</a>
+              </div>
+            </section>
+            <section>
+              <h2 class="reveal font-jakarta text-2xl sm:text-3xl font-bold text-[#0C1F31] border-b-2 border-[#DC183C] pb-3 mb-7 inline-block">Sponsors &amp; Partners</h2>
+              <div class="reveal flex flex-wrap items-center gap-6 sm:gap-10 mb-8">${ev.sponsors.map(s=>`<img src="${s.logo}" ${OE_LO} alt="${esc(s.name)}" class="h-10 sm:h-14 grayscale hover:grayscale-0 transition-all opacity-80 hover:opacity-100 object-contain" />`).join('')}</div>
+              <button onclick="openSponsor()" class="bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold uppercase text-xs py-3 px-6 rounded-lg transition-colors">Become a Sponsor</button>
+            </section>
+          </div>
+          <aside class="hidden lg:block lg:w-1/3">${ticketSidebar(ev)}</aside>
+        </div>
+      </main>
+      <div class="lg:hidden fixed bottom-0 inset-x-0 z-30 bg-white/95 backdrop-blur border-t border-[#E7EBEF] px-4 py-3 flex items-center justify-between" style="box-shadow:0 -10px 30px -14px rgba(0,0,0,.25); padding-bottom:max(0.75rem, env(safe-area-inset-bottom));">
+        <div><p class="text-[10px] text-slate-400 font-bold uppercase tracking-wide leading-none">Tickets from</p><p class="font-jakarta text-2xl font-bold text-[#0C1F31] leading-none mt-0.5">${money(Math.min(...ev.tickets.tiers.map(x=>x.price)))}</p></div>
+        <button onclick="openCheckout()" class="bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold uppercase tracking-wide px-7 py-3.5 rounded-xl shadow flex items-center gap-2"><i data-lucide="ticket" class="w-5 h-5"></i> Get Tickets</button>
+      </div>`;
+    }
+    function renderPastInPerson(ev){
+      return `${subHeader()}<main class="max-w-[1200px] mx-auto px-4 sm:px-6 py-10 md:py-14">
+        <div class="reveal text-center mb-10">
+          <span class="text-[#DC183C] font-bold text-xs tracking-[0.2em] uppercase">Past Event Gallery</span>
+          <h1 class="font-jakarta text-3xl sm:text-5xl font-extrabold text-[#0C1F31] tracking-tight mt-2">${ev.title}</h1>
+          <p class="text-slate-500 mt-2 font-medium">${ev.logistics.display_date}</p>
+        </div>
+        ${!state.isLoggedIn ? `
+          <div class="reveal relative rounded-3xl overflow-hidden bg-[#0C1F31] border border-[#E7EBEF] shadow-xl">
+            <div class="grid grid-cols-2 gap-2 opacity-40 blur-md scale-105 pointer-events-none">${ev.vault.gallery.map(u=>`<div class="aspect-[4/3] bg-slate-800"><img src="${u}" ${OE_IM} class="w-full h-full object-cover" alt="" /></div>`).join('')}</div>
+            <div class="absolute inset-0 bg-white/70 backdrop-blur-sm grid place-items-center p-8 text-center">
+              <div>
+                <div class="w-20 h-20 mx-auto bg-white rounded-full shadow-lg grid place-items-center mb-6 border border-[#E7EBEF]"><i data-lucide="lock" class="text-[#0C1F31] w-9 h-9"></i></div>
+                <h3 class="font-jakarta text-3xl sm:text-4xl font-extrabold text-[#0C1F31] mb-3">Members Only</h3>
+                <p class="text-slate-700 font-medium mb-8 max-w-md mx-auto text-lg">Sign in to your free SME South Africa account to unlock the photo gallery.</p>
+                <div class="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
+                  <button onclick="setState({isLoggedIn:true})" class="flex-1 bg-[#0C1F31] hover:bg-[#091621] text-white font-bold uppercase text-sm py-4 rounded-xl shadow-md transition-all hover:-translate-y-0.5">Sign In</button>
+                  <button onclick="setState({isLoggedIn:true})" class="flex-1 bg-white hover:bg-slate-50 text-[#0C1F31] border-2 border-[#0C1F31] font-bold uppercase text-sm py-4 rounded-xl transition-all hover:-translate-y-0.5">Create Free Account</button>
+                </div>
+              </div>
+            </div>
+          </div>` : `
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-8">${ev.vault.gallery.map((u,i)=>`<div class="reveal aspect-[4/3] rounded-2xl overflow-hidden shadow-lg border border-[#E7EBEF] group" style="animation-delay:${i*70}ms"><img src="${u}" ${OE_IM} alt="Gallery ${i+1}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" /></div>`).join('')}</div>
+          <div class="reveal mt-8 flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between bg-white p-5 rounded-xl border border-[#E7EBEF] shadow-sm">
+            <div class="flex items-center gap-2 text-slate-500 text-sm font-medium"><i data-lucide="calendar" class="w-4 h-4 text-[#DC183C]"></i> Captured on ${esc(ev.logistics.display_date)}</div>
+            <button onclick="openShare(byId(${ev.id}))" class="bg-slate-50 hover:bg-slate-100 text-xs font-bold uppercase tracking-wider py-2.5 px-5 rounded-lg flex items-center justify-center gap-2 text-slate-700 border border-[#E7EBEF] shadow-sm self-start sm:self-auto">Share Gallery <i data-lucide="share-2" class="text-[#0C1F31] w-4 h-4"></i></button>
+          </div>`}
+      </main>`;
+    }
+    function memberGate(ev, what){
+      return `<div class="relative w-full h-full grid place-items-center">
+        <img src="${ev.vault.recording_url}" ${OE_IM} class="absolute inset-0 w-full h-full object-cover opacity-40 blur-[4px]" alt="" />
+        <div class="absolute inset-0 bg-[#0C1F31]/60"></div>
+        <div class="relative text-center px-6 max-w-md">
+          <div class="w-16 h-16 mx-auto bg-white/10 backdrop-blur rounded-full grid place-items-center mb-4 border border-white/20"><i data-lucide="lock" class="text-white w-8 h-8"></i></div>
+          <h3 class="text-3xl font-jakarta font-bold text-white mb-2">Members Only</h3>
+          <p class="text-white/80 text-sm mb-7">Sign in or create a free account to unlock this ${what}.</p>
+          <div class="flex flex-col sm:flex-row gap-3">
+            <button onclick="setState({isLoggedIn:true})" class="flex-1 bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold uppercase tracking-wide py-3.5 rounded-lg text-sm">Sign In</button>
+            <button onclick="setState({isLoggedIn:true})" class="flex-1 bg-white/10 hover:bg-white/20 border border-white/30 text-white font-bold uppercase tracking-wide py-3.5 rounded-lg text-sm">Free Account</button>
+          </div>
+        </div>
+      </div>`;
+    }
+    function renderVideoSnippet(ev){
+      return `${subHeader()}<main class="max-w-[900px] mx-auto px-4 sm:px-6 py-12 md:py-16">
+        <div class="reveal mb-8">
+          <span class="inline-block px-3 py-1 bg-slate-200 rounded-full text-xs font-bold tracking-widest uppercase text-slate-700 mb-5">Event Snippet</span>
+          <h1 class="text-3xl sm:text-5xl font-jakarta font-extrabold text-[#0C1F31] leading-tight mb-4">${ev.title}</h1>
+          <p class="text-lg text-slate-600 leading-relaxed">${ev.description}</p>
+        </div>
+        <div class="reveal w-full aspect-video bg-[#0C1F31] rounded-2xl overflow-hidden shadow-2xl border border-[#E7EBEF] relative">${state.isLoggedIn ? `<iframe width="100%" height="100%" src="${ev.vault.video_embed}" title="Replay" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>` : memberGate(ev,'recording')}</div>
+        ${state.isLoggedIn ? `<div class="reveal mt-6 flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between bg-white p-5 rounded-xl border border-[#E7EBEF] shadow-sm">
+          <div class="flex items-center gap-2 text-slate-500 text-sm font-medium"><i data-lucide="calendar" class="w-4 h-4 text-[#DC183C]"></i> Recorded on ${esc(ev.logistics.display_date)}</div>
+          <button onclick="openShare(byId(${ev.id}))" class="bg-slate-50 hover:bg-slate-100 text-xs font-bold uppercase tracking-wider py-2.5 px-5 rounded-lg flex items-center justify-center gap-2 text-slate-700 border border-[#E7EBEF] shadow-sm self-start sm:self-auto">Share <i data-lucide="share-2" class="text-[#0C1F31] w-4 h-4"></i></button>
+        </div>`:''}
+      </main>`;
+    }
+    function renderWebinar(ev, status){
+      const isPast = status==='Past', isLive = status==='LIVE NOW';
+      const host = sp(ev.hostId), speaker = ev.speakerId ? sp(ev.speakerId) : null;
+      const registered = !!state.registered[ev.id];
+      const badge = isLive ? `<span class="w-2 h-2 rounded-full bg-[#DC183C]"></span> Streaming Live` : isPast ? 'Recorded Webinar' : 'Upcoming Online Event';
+      let media;
+      if(isPast){ media = state.isLoggedIn ? `<iframe width="100%" height="100%" src="${ev.vault.video_embed}" title="Replay" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>` : memberGate(ev,'recording'); }
+      else { media = `<img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&q=80&w=1200" ${OE_IM} alt="" class="w-full h-full object-cover opacity-50" /><div class="absolute inset-0 hero-vignette"></div><div class="absolute inset-0 grid place-items-center text-center p-6"><div><div class="w-20 h-20 mx-auto bg-black/40 backdrop-blur rounded-full grid place-items-center mb-4 border border-white/20 shadow-2xl"><i data-lucide="youtube" class="text-[#DC183C] w-10 h-10"></i></div><h4 class="text-2xl font-jakarta font-bold text-white mb-2">${isLive?'Live Broadcast':'YouTube Live Stream'}</h4>${isLive ? `<p class="text-white text-sm bg-[#DC183C]/90 px-4 py-1.5 rounded-full inline-block animate-pulse font-semibold">Broadcast is live now</p>` : `<p class="text-slate-200 text-sm max-w-sm mx-auto font-medium">The stream appears here automatically when the event begins.</p>`}</div></div>`; }
+      const personBlock = (label, s)=> `<button onclick="navigate('#/speaker/${s.id}')" class="text-left bg-white p-6 rounded-2xl shadow-sm border border-[#E7EBEF] hover:shadow-lg transition-all w-full group"><h4 class="font-jakarta font-bold text-[#0C1F31] text-base mb-4">${label}</h4><div class="flex gap-4"><div class="w-16 h-16 shrink-0 rounded-full grid place-items-center bg-[#FFF1E0] text-[#0C1F31] font-jakarta font-bold text-xl ring-2 ring-slate-100 group-hover:bg-[#DC183C] group-hover:text-white transition-colors">${initials(s.name)}</div><div><h5 class="font-bold text-[#121A21] group-hover:text-[#DC183C] transition-colors">${esc(s.name)}</h5><p class="text-sm text-[#DC183C] font-medium mb-1.5">${esc(s.role)}</p><p class="text-xs text-slate-500 leading-relaxed line-clamp-3">${esc(s.bio)}</p></div></div></button>`;
+      let cta;
+      if(!state.isLoggedIn){ cta = `<div class="bg-white rounded-2xl shadow-xl border border-[#E7EBEF] overflow-hidden"><div class="bg-[#0C1F31] px-6 py-4"><span class="text-sm font-jakarta font-bold uppercase tracking-wide text-white flex items-center gap-2"><i data-lucide="lock" class="w-4 h-4"></i> Member Access</span></div><div class="p-6"><p class="text-slate-600 text-sm font-medium mb-5">${isPast?'Sign in to unlock this recording and our full event library.':'Sign in or create a free account to register for this event.'}</p><div class="space-y-3"><button onclick="setState({isLoggedIn:true})" class="w-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold uppercase tracking-wide py-3.5 rounded-lg text-sm shadow-md">Sign In</button><button onclick="setState({isLoggedIn:true})" class="w-full bg-white hover:bg-slate-50 text-[#0C1F31] border-2 border-[#0C1F31] font-bold uppercase tracking-wide py-3.5 rounded-lg text-sm">Create Free Account</button></div></div></div>`; }
+      else if(isPast){ cta = `<div class="bg-white rounded-2xl shadow-xl border border-[#E7EBEF] overflow-hidden"><div class="bg-[#29A37A] px-6 py-4 text-white flex justify-between items-center"><h3 class="text-lg font-jakarta font-bold">Access Granted</h3><i data-lucide="check-circle-2" class="w-6 h-6"></i></div><div class="p-6 text-center"><i data-lucide="play-circle" class="text-[#0C1F31] mx-auto mb-3 w-12 h-12"></i><p class="text-slate-700 font-bold mb-1">You're all set</p><p class="text-slate-500 text-sm mb-5">Enjoy the full recording above.</p><button onclick="openShare(byId(${ev.id}))" class="w-full bg-slate-50 hover:bg-slate-100 text-xs font-bold uppercase tracking-wide py-3.5 rounded-lg flex items-center justify-center gap-2 text-slate-700 border border-[#E7EBEF]">Share Replay <i data-lucide="share-2" class="w-4 h-4 text-[#0C1F31]"></i></button></div></div>`; }
+      else if(!registered){ cta = `<div class="bg-white rounded-2xl shadow-xl border border-[#E7EBEF] overflow-hidden"><div class="bg-[#0C1F31] px-6 py-4"><span class="text-sm font-jakarta font-bold uppercase tracking-wide text-white">${isLive?'Join the Live Session':'Event Registration'}</span></div><div class="p-6"><p class="text-slate-600 text-sm font-medium mb-5">Welcome back! Confirm your details to register.</p><div class="space-y-3 mb-5"><input id="reg-name" type="text" value="Tshepho Joel" class="w-full border border-[#E7EBEF] rounded-lg px-4 py-3 text-sm outline-none focus:border-[#DC183C] bg-slate-50" /><input id="reg-email" type="email" value="tshepho@smesouthafrica.co.za" class="w-full border border-[#E7EBEF] rounded-lg px-4 py-3 text-sm outline-none focus:border-[#DC183C] bg-slate-50" /></div><button onclick="registerWebinar(${ev.id})" class="w-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold uppercase tracking-wide py-3.5 rounded-lg text-sm shadow-md">${isLive?'Register & Join':'Register Now'}</button></div></div>`; }
+      else { cta = `<div class="bg-white rounded-2xl shadow-xl border border-[#E7EBEF] overflow-hidden"><div class="bg-[#29A37A] px-6 py-4 text-white flex justify-between items-center"><h3 class="text-lg font-jakarta font-bold">You're In!</h3><i data-lucide="check-circle-2" class="w-6 h-6"></i></div><div class="p-6">${isLive ? `<div class="bg-[#FDECEF] rounded-xl p-5 mb-5 border border-[#DC183C]/15"><div class="flex items-center gap-2 text-[#DC183C] font-bold text-xs tracking-widest uppercase mb-4 animate-pulse"><span class="w-2.5 h-2.5 bg-[#DC183C] rounded-full"></span> Streaming Live</div><a href="${ev.venue.link}" target="_blank" rel="noreferrer" class="flex items-center justify-center gap-2 w-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold uppercase tracking-wide py-4 rounded-xl text-sm shadow-md"><i data-lucide="video" class="w-5 h-5"></i> Join Zoom Meeting</a></div>` : `<div class="bg-slate-50 rounded-xl p-5 mb-5 border border-[#E7EBEF]"><div class="flex items-center gap-2 text-slate-500 font-bold text-xs uppercase tracking-widest mb-1"><i data-lucide="clock" class="w-4 h-4 text-slate-400"></i> Event starting in</div><div id="countdown-display" class="text-[#0C1F31] font-jakarta font-bold text-3xl tracking-wide">Calculating…</div><div class="h-px w-full bg-[#E7EBEF] my-4"></div><p class="text-slate-600 text-sm font-medium">The join link activates when the event is about to start.</p></div>`}<div class="flex gap-2"><button onclick="openCalendar(byId(${ev.id}))" class="flex-1 bg-white hover:bg-slate-50 text-xs font-bold uppercase tracking-wide py-3.5 rounded-lg flex items-center justify-center gap-1.5 text-slate-700 border border-[#E7EBEF]"><i data-lucide="calendar-plus" class="w-4 h-4 text-[#DC183C]"></i> Calendar</button><button onclick="openShare(byId(${ev.id}))" class="flex-1 bg-white hover:bg-slate-50 text-xs font-bold uppercase tracking-wide py-3.5 rounded-lg flex items-center justify-center gap-1.5 text-slate-700 border border-[#E7EBEF]">Invite <i data-lucide="share-2" class="w-4 h-4 text-[#DC183C]"></i></button></div></div></div>`; }
+      return `${subHeader()}<main class="max-w-[1000px] mx-auto px-4 sm:px-6 py-8 md:py-14"><div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12"><div class="lg:col-span-7 space-y-8 order-2 lg:order-1"><div class="reveal"><span class="inline-flex items-center gap-2 px-3 py-1 ${isPast?'bg-slate-200 text-slate-700':'bg-[#FDECEF] text-[#DC183C]'} rounded-full text-xs font-bold tracking-widest uppercase mb-5">${badge}</span><h1 class="text-3xl sm:text-5xl font-jakarta font-extrabold text-[#0C1F31] leading-tight mb-4">${ev.title}</h1><p class="text-lg text-slate-600 leading-relaxed">${ev.description}</p><div class="mt-7 relative w-full aspect-video rounded-2xl overflow-hidden shadow-xl border border-[#E7EBEF] bg-[#0C1F31]">${media}</div></div><div class="grid grid-cols-1 sm:grid-cols-2 gap-5 reveal">${personBlock('Host', host)}${speaker?personBlock('Speaker', speaker):''}</div>${ev.sponsors&&ev.sponsors.length?`<div class="reveal"><p class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-3">Sponsored by</p><div class="flex gap-4">${ev.sponsors.map(s=>`<img src="${s.logo}" ${OE_LO} alt="${esc(s.name)}" class="h-10 opacity-70 hover:opacity-100 grayscale hover:grayscale-0 transition" />`).join('')}</div></div>`:''}</div><div class="lg:col-span-5 order-1 lg:order-2"><div class="lg:sticky lg:top-24 space-y-4"><div class="flex items-center gap-4 reveal"><div class="bg-white border border-[#E7EBEF] rounded-xl overflow-hidden shadow-sm flex flex-col w-12 text-center shrink-0"><div class="bg-slate-100 text-[9px] font-bold text-slate-500 py-0.5 uppercase">${ev.logistics.month_split||''}</div><div class="font-jakarta text-lg font-bold text-[#121A21] py-1">${ev.logistics.day_split||''}</div></div><div><h3 class="font-semibold text-[#121A21]">${ev.logistics.display_date}</h3><p class="text-slate-500 text-sm">${ev.logistics.display_time}</p></div></div><div class="flex items-center gap-4 reveal"><div class="w-12 h-12 bg-white border border-[#E7EBEF] rounded-xl shadow-sm grid place-items-center shrink-0 text-slate-600"><i data-lucide="video" class="w-5 h-5"></i></div><div><p class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Location</p><h3 class="font-semibold text-[#121A21]">${ev.venue.platform}</h3></div></div><div class="pt-2 reveal">${cta}</div></div></div></div></main>`;
+    }
+    function registerWebinar(id){ state.registered[id]=true; track('webinar_register',{event_id:id}); renderApp(); }
+
+    // === Speaker Profile (inner page) =============================================
+    function renderSpeakerProfile(){
+      const s = sp(state.params.id); if(!s) return renderDirectory();
+      const sessions = sessionsFor(s.id);
+      return `${subHeader()}<main class="max-w-[820px] mx-auto px-4 sm:px-6 py-10 md:py-16">
+        <div class="reveal">
+          <p class="text-[#DC183C] font-bold text-xs tracking-[0.2em] uppercase mb-3">Speaker</p>
+          <h1 class="text-5xl sm:text-7xl font-jakarta font-extrabold text-[#0C1F31] leading-[0.92] mb-3">${esc(s.name)}</h1>
+          <p class="text-lg sm:text-xl text-slate-600 font-semibold mb-7">${esc(s.role)} <span class="text-slate-300 mx-1">·</span> ${esc(s.company)}</p>
+          <a href="${s.linkedin}" target="_blank" rel="noreferrer" class="inline-flex items-center gap-2 bg-[#0A66C2] hover:bg-[#0a5aab] text-white font-bold text-sm px-5 py-3 rounded-xl transition-colors mb-8"><svg viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4" aria-hidden="true"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.42v1.56h.05c.47-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.07 2.07 0 1 1 0-4.14 2.07 2.07 0 0 1 0 4.14zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.8 0 0 .78 0 1.73v20.54C0 23.22.8 24 1.77 24h20.45C23.2 24 24 23.22 24 22.27V1.73C24 .78 23.2 0 22.22 0z"/></svg> View LinkedIn</a>
+          <div class="border-l-4 border-[#DC183C] pl-5"><p class="text-lg leading-relaxed text-slate-700">${esc(s.bio)}</p></div>
+        </div>
+        ${sessions.length ? `<section class="mt-14 reveal" style="animation-delay:120ms">
+          <div class="flex justify-between items-end border-b-2 border-[#0C1F31] pb-3 mb-7"><h2 class="font-jakarta text-2xl sm:text-3xl font-bold text-[#0C1F31]">Speaking At</h2><span class="text-[10px] font-bold text-[#DC183C] uppercase tracking-[0.2em] hidden sm:block">${sessions.length} session${sessions.length>1?'s':''}</span></div>
+          <div class="space-y-3">${sessions.map((s,i)=>`<button onclick="navigate('#/event/${s.ev.id}')" class="reveal w-full text-left bg-white p-5 rounded-xl border border-[#E7EBEF] shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all flex items-start gap-5" style="animation-delay:${i*60}ms"><div class="shrink-0 w-12 text-center bg-slate-50 rounded-lg py-2 border border-[#E7EBEF]"><div class="text-[9px] font-bold text-slate-400 uppercase">${s.ev.logistics.month_split||''}</div><div class="font-jakarta font-bold text-[#0C1F31]">${s.ev.logistics.day_split||''}</div></div><div class="min-w-0 flex-1"><div class="flex flex-wrap items-center gap-2 mb-1"><span class="text-[10px] font-extrabold uppercase tracking-wider px-2 py-0.5 rounded bg-[#FFF1E0] text-[#AE6B0A]">${s.kind}</span></div><p class="font-bold text-[#0C1F31] leading-snug">${esc(s.title)}</p><p class="text-xs text-slate-500 mt-1">${esc(s.ev.title)} · ${esc(s.ev.logistics.display_date||'')}</p></div><i data-lucide="chevron-right" class="w-5 h-5 text-slate-300 mt-3 shrink-0"></i></button>`).join('')}</div>
+        </section>`:''}
+      </main>`;
+    }
+
+    // === Overlays: Share / Sponsor / Video / Calendar =============================
+    function closeOverlay(){ const r=document.getElementById('overlay-root'); if(r){ r.innerHTML=''; } document.body.style.overflow=''; activeOverlayClose=null; }
+    function mountOverlay(html, onClose){ const r=document.getElementById('overlay-root'); document.body.style.overflow='hidden'; setHTML(r, html); activeOverlayClose = onClose || closeOverlay; }
+    function openShare(ev){
+      const url = linkFor(ev);
+      track('open_share',{ event_id:ev.id });
+      mountOverlay(`<div class="fixed inset-0 z-[60] flex items-end sm:items-center justify-center bg-black/60 scrim p-0 sm:p-4 backdrop-blur-sm" onclick="if(event.target===this) activeOverlayClose && activeOverlayClose()"><div role="dialog" aria-modal="true" class="bg-white w-full sm:max-w-md sm:rounded-2xl rounded-t-3xl overflow-hidden shadow-2xl sheet">
+        <div class="px-6 py-5 border-b border-[#E7EBEF] flex justify-between items-center bg-slate-50"><h3 class="font-jakarta text-xl font-bold text-[#0C1F31]">Share Event</h3><button onclick="activeOverlayClose && activeOverlayClose()" aria-label="Close" class="w-9 h-9 grid place-items-center rounded-full text-slate-400 hover:text-slate-700 bg-white border border-[#E7EBEF]"><i data-lucide="x" class="w-4 h-4"></i></button></div>
+        <div class="p-6">
+          <div class="flex items-start gap-4 mb-6"><div class="w-12 h-12 bg-slate-100 rounded-lg grid place-items-center shrink-0 border border-[#E7EBEF] text-[#0C1F31]"><i data-lucide="calendar" class="w-5 h-5"></i></div><div><h4 class="font-bold text-sm text-[#121A21] leading-tight mb-1 line-clamp-2">${esc(ev.title)}</h4><p class="text-xs font-medium text-slate-500">${esc(ev.logistics.display_date||'')}</p></div></div>
+          <label class="text-xs font-bold uppercase tracking-wider text-slate-500 mb-2 block">Share link</label>
+          <div class="flex bg-slate-50 border border-[#E7EBEF] rounded-lg overflow-hidden mb-5">
+            <input id="shareLink" type="text" readonly value="${esc(url)}" class="w-full bg-transparent text-sm text-slate-600 px-4 py-3 outline-none" />
+            <button onclick="(function(){const i=document.getElementById('shareLink'); i.select(); document.execCommand('copy'); const b=document.getElementById('copyBtn'); b.innerHTML='<i data-lucide=&quot;check-circle-2&quot; class=&quot;w-3.5 h-3.5&quot;></i> Copied'; b.className='px-4 py-3 font-bold text-xs uppercase tracking-wider border-l border-[#E7EBEF] bg-[#29A37A] text-white flex items-center gap-2'; if(window.lucide) lucide.createIcons();})()" id="copyBtn" class="px-4 py-3 font-bold text-xs uppercase tracking-wider border-l border-[#E7EBEF] bg-white text-[#0C1F31] hover:bg-slate-100 flex items-center gap-2"><i data-lucide="copy" class="w-3.5 h-3.5"></i> Copy</button>
+          </div>
+          <div class="grid grid-cols-3 gap-3">
+            <a href="https://twitter.com/intent/tweet?text=${encodeURIComponent('Join me at '+ev.title)}&url=${encodeURIComponent(url)}" target="_blank" rel="noreferrer" class="flex flex-col items-center justify-center gap-2 py-3 rounded-xl border border-[#E7EBEF] hover:bg-slate-50 hover:border-blue-400 transition-colors text-slate-600 hover:text-blue-500"><svg viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg><span class="text-[10px] font-bold uppercase tracking-wider">Twitter</span></a>
+            <a href="https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}" target="_blank" rel="noreferrer" class="flex flex-col items-center justify-center gap-2 py-3 rounded-xl border border-[#E7EBEF] hover:bg-slate-50 hover:border-blue-700 transition-colors text-slate-600 hover:text-blue-700"><svg viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6" aria-hidden="true"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.42v1.56h.05c.47-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.07 2.07 0 1 1 0-4.14 2.07 2.07 0 0 1 0 4.14zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.8 0 0 .78 0 1.73v20.54C0 23.22.8 24 1.77 24h20.45C23.2 24 24 23.22 24 22.27V1.73C24 .78 23.2 0 22.22 0z"/></svg><span class="text-[10px] font-bold uppercase tracking-wider">LinkedIn</span></a>
+            <a href="https://wa.me/?text=${encodeURIComponent(ev.title+' '+url)}" target="_blank" rel="noreferrer" class="flex flex-col items-center justify-center gap-2 py-3 rounded-xl border border-[#E7EBEF] hover:bg-slate-50 hover:border-emerald-500 transition-colors text-slate-600 hover:text-emerald-600"><i data-lucide="message-circle" class="w-6 h-6"></i><span class="text-[10px] font-bold uppercase tracking-wider">WhatsApp</span></a>
+          </div>
+        </div>
+      </div></div>`);
+    }
+    function openCalendar(ev){
+      track('open_calendar',{ event_id:ev.id });
+      mountOverlay(`<div class="fixed inset-0 z-[60] flex items-end sm:items-center justify-center bg-black/60 scrim p-0 sm:p-4 backdrop-blur-sm" onclick="if(event.target===this) activeOverlayClose && activeOverlayClose()"><div role="dialog" aria-modal="true" class="bg-white w-full sm:max-w-sm sm:rounded-2xl rounded-t-3xl overflow-hidden shadow-2xl sheet">
+        <div class="px-6 py-5 border-b border-[#E7EBEF] flex justify-between items-center bg-slate-50"><h3 class="font-jakarta text-xl font-bold text-[#0C1F31]">Add to Calendar</h3><button onclick="activeOverlayClose && activeOverlayClose()" aria-label="Close" class="w-9 h-9 grid place-items-center rounded-full text-slate-400 hover:text-slate-700 bg-white border border-[#E7EBEF]"><i data-lucide="x" class="w-4 h-4"></i></button></div>
+        <div class="p-5 space-y-3">
+          <a href="${googleCalUrl(ev)}" target="_blank" rel="noreferrer" onclick="track('add_to_calendar',{method:'google',event_id:${ev.id}})" class="flex items-center gap-3 p-4 border border-[#E7EBEF] rounded-xl hover:bg-slate-50 transition-colors"><div class="w-10 h-10 bg-white border border-[#E7EBEF] rounded-lg grid place-items-center"><i data-lucide="calendar" class="w-5 h-5 text-[#0C1F31]"></i></div><div class="flex-1 min-w-0"><p class="font-bold text-[#0C1F31]">Google Calendar</p><p class="text-xs text-slate-500">Opens in a new tab</p></div><i data-lucide="external-link" class="w-4 h-4 text-slate-400"></i></a>
+          <button onclick="downloadICS(byId(${ev.id})); activeOverlayClose && activeOverlayClose();" class="w-full flex items-center gap-3 p-4 border border-[#E7EBEF] rounded-xl hover:bg-slate-50 transition-colors text-left"><div class="w-10 h-10 bg-white border border-[#E7EBEF] rounded-lg grid place-items-center"><i data-lucide="download" class="w-5 h-5 text-[#0C1F31]"></i></div><div class="flex-1 min-w-0"><p class="font-bold text-[#0C1F31]">Apple / Outlook (.ics)</p><p class="text-xs text-slate-500">Downloads a calendar file</p></div></button>
+        </div>
+      </div></div>`);
+    }
+    function openVideo(url){
+      mountOverlay(`<div class="fixed inset-0 z-[60] flex items-center justify-center bg-black/85 scrim p-4" onclick="if(event.target===this) activeOverlayClose && activeOverlayClose()"><div role="dialog" aria-modal="true" class="w-full max-w-4xl aspect-video bg-black rounded-2xl overflow-hidden shadow-2xl sheet relative"><button onclick="activeOverlayClose && activeOverlayClose()" aria-label="Close" class="absolute top-3 right-3 z-10 w-10 h-10 grid place-items-center rounded-full bg-black/60 text-white hover:bg-black/80"><i data-lucide="x" class="w-5 h-5"></i></button><iframe class="w-full h-full" src="${url}" frameborder="0" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe></div></div>`);
+    }
+    function openSponsor(){
+      track('open_sponsor_form');
+      mountOverlay(`<div class="fixed inset-0 z-[60] flex items-end sm:items-center justify-center bg-black/60 scrim p-0 sm:p-4 backdrop-blur-sm" onclick="if(event.target===this) activeOverlayClose && activeOverlayClose()"><div role="dialog" aria-modal="true" class="bg-white w-full sm:max-w-xl sm:rounded-2xl rounded-t-3xl overflow-hidden shadow-2xl sheet flex flex-col max-h-[92vh]">
+        <div class="hero-bg text-center p-7 relative shrink-0 grain"><button onclick="activeOverlayClose && activeOverlayClose()" aria-label="Close" class="absolute top-4 right-4 text-white/70 hover:text-white"><i data-lucide="x" class="w-6 h-6"></i></button><span class="bg-[#DC183C] text-white text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded inline-block mb-2">Corporate Inquiries</span><h2 class="font-jakarta text-3xl sm:text-4xl font-extrabold text-white tracking-wide">Partner With Us</h2><p class="text-slate-300 text-sm mt-2">Submit your details and our team will be in touch.</p></div>
+        <form onsubmit="event.preventDefault(); track('submit_sponsor_form'); if(activeOverlayClose) activeOverlayClose(); showToast('Thanks — our partnerships team will be in touch.');" class="p-6 sm:p-7 overflow-y-auto no-scrollbar space-y-4">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4"><div><label class="text-xs font-bold text-[#DC183C] uppercase tracking-wide">First name</label><input id="sp-first" required class="w-full border border-[#E7EBEF] rounded-lg p-3 mt-1 outline-none focus:border-[#0C1F31] bg-[#FAFAFA]" /></div><div><label class="text-xs font-bold text-[#DC183C] uppercase tracking-wide">Last name</label><input id="sp-last" required class="w-full border border-[#E7EBEF] rounded-lg p-3 mt-1 outline-none focus:border-[#0C1F31] bg-[#FAFAFA]" /></div></div>
+          <div><label class="text-xs font-bold text-[#DC183C] uppercase tracking-wide">Email</label><input id="sp-email" type="email" required class="w-full border border-[#E7EBEF] rounded-lg p-3 mt-1 outline-none focus:border-[#0C1F31] bg-[#FAFAFA]" /></div>
+          <div><label class="text-xs font-bold text-[#DC183C] uppercase tracking-wide">Phone</label><input id="sp-phone" type="tel" placeholder="071 123 4567" required class="w-full border border-[#E7EBEF] rounded-lg p-3 mt-1 outline-none focus:border-[#0C1F31] bg-[#FAFAFA]" /></div>
+          <div><label class="text-xs font-bold text-[#DC183C] uppercase tracking-wide">Company</label><input id="sp-co" required class="w-full border border-[#E7EBEF] rounded-lg p-3 mt-1 outline-none focus:border-[#0C1F31] bg-[#FAFAFA]" /></div>
+          <div><label class="text-xs font-bold text-[#DC183C] uppercase tracking-wide">Tell us about your business</label><textarea id="sp-msg" rows="3" class="w-full border border-[#E7EBEF] rounded-lg p-3 mt-1 outline-none focus:border-[#0C1F31] bg-[#FAFAFA]"></textarea></div>
+          <button type="submit" class="w-full bg-[#0C1F31] hover:bg-[#091621] text-white font-bold py-4 rounded-lg uppercase tracking-wider transition-colors mt-2">Submit Inquiry</button>
+        </form>
+      </div></div>`);
+    }
+    // ===== CHECKOUT MODULE ========================================================
+    const Checkout = {
+      ev:null, step:1, qty:{}, lead:{}, attendees:[], card:{}, errors:{}, processing:false, order:null,
+
+      open(ev){
+        this.ev = ev; this.step = 1; this.qty = {};
+        ev.tickets.tiers.forEach(t=> this.qty[t.id] = 0);
+        this.lead = { name: state.isLoggedIn?'Tshepho Joel':'', email: state.isLoggedIn?'tshepho@smesouthafrica.co.za':'', phone:'', company:'', dietary:'' };
+        this.attendees = []; this.card = { number:'', name:'', expiry:'', cvc:'' };
+        this.errors = {}; this.processing = false; this.order = null;
+        document.body.style.overflow = 'hidden';
+        activeOverlayClose = ()=> this.close();
+        track('begin_checkout', { event_id:ev.id });
+        this.render();
+      },
+      close(){ const r=document.getElementById('overlay-root'); if(r) r.innerHTML=''; document.body.style.overflow=''; activeOverlayClose = null; },
+
+      count(){ return Object.values(this.qty).reduce((a,b)=>a+b,0); },
+      subtotal(){ return this.ev.tickets.tiers.reduce((s,t)=> s + (this.qty[t.id]||0)*t.price, 0); },
+      fee(){ return Math.round(this.subtotal() * (this.ev.tickets.bookingFeePct/100) * 100) / 100; },
+      total(){ return this.subtotal() + this.fee(); },
+
+      setQty(tierId, n){
+        const tier = this.ev.tickets.tiers.find(t=>t.id===tierId);
+        const max = Math.min(tier.remaining, tier.max);
+        this.qty[tierId] = Math.max(0, Math.min(n, max));
+        const needed = Math.max(0, this.count() - 1);
+        while(this.attendees.length < needed) this.attendees.push({ name:'' });
+        while(this.attendees.length > needed) this.attendees.pop();
+        this.render();
+      },
+
+      validate(step){
+        const e = {};
+        if(step===1 && this.count()===0) e.tickets = 'Please select at least 1 ticket';
+        if(step===2){
+          if(!this.lead.name.trim()) e.name='Required';
+          if(!/^\S+@\S+\.\S+$/.test(this.lead.email||'')) e.email='Please enter a valid email';
+          if(!(this.lead.phone||'').trim()) e.phone='Required';
+          this.attendees.forEach((a,i)=>{ if(!a.name.trim()) e['att'+i]='Required'; });
+        }
+        if(step===3){
+          const digits = (this.card.number||'').replace(/\s/g,'');
+          if(digits.length<13||digits.length>19) e.cardNumber='Enter a valid card number';
+          if(!(this.card.name||'').trim()) e.cardName='Required';
+          if(!/^\d{2}\/\d{2}$/.test(this.card.expiry||'')) e.expiry='MM/YY';
+          if(!/^\d{3,4}$/.test(this.card.cvc||'')) e.cvc='3–4 digits';
+        }
+        this.errors = e; return Object.keys(e).length===0;
+      },
+
+      next(){
+        if(!this.validate(this.step)){ this.render(); return; }
+        if(this.step < 3){ this.step++; track('checkout_step',{ event_id:this.ev.id, step:this.step }); this.render(); }
+        else this.pay();
+      },
+      back(){ if(this.step>1){ this.step--; this.render(); } },
+
+      pay(){
+        this.processing = true; this.render();
+        setTimeout(()=>{
+          const tickets = this.ev.tickets.tiers.filter(t=>this.qty[t.id]>0).map(t=>({ name:t.name, qty:this.qty[t.id], unit:t.price, subtotal:t.price*this.qty[t.id] }));
+          this.order = { ref:'SME-'+new Date().getFullYear()+'-'+String(Math.floor(Math.random()*9000+1000)), paidAt:Date.now(), attendees:[this.lead.name, ...this.attendees.map(a=>a.name)], tickets, subtotal:this.subtotal(), fee:this.fee(), total:this.total() };
+          track('purchase',{ event_id:this.ev.id, value:this.order.total, currency:'ZAR', tickets:this.count(), order_ref:this.order.ref });
+          this.processing = false; this.step = 4; this.render(); this.fireConfetti();
+        }, 1400);
+      },
+
+      fireConfetti(){
+        const root = document.getElementById('overlay-root'); if(!root) return;
+        const colors = ['#DC183C','#0C1F31','#FF9900','#AE6B0A','#29A37A'];
+        const layer = document.createElement('div');
+        layer.style.cssText = 'position:fixed; inset:0; pointer-events:none; z-index:1200; overflow:hidden';
+        for(let i=0;i<80;i++){
+          const c = document.createElement('span');
+          c.className = 'confetti-piece';
+          c.style.left = (Math.random()*100)+'vw';
+          c.style.background = colors[Math.floor(Math.random()*colors.length)];
+          c.style.animationDuration = (1.6 + Math.random()*1.8)+'s';
+          c.style.animationDelay = (Math.random()*0.4)+'s';
+          c.style.transform = 'rotate('+(Math.random()*360)+'deg)';
+          layer.appendChild(c);
+        }
+        root.appendChild(layer);
+        setTimeout(()=> layer.remove(), 3800);
+      },
+
+      onCardInput(el){
+        const digits = el.value.replace(/\D/g,'').slice(0,19);
+        const formatted = digits.replace(/(\d{4})/g,'$1 ').trim();
+        this.card.number = formatted; el.value = formatted;
+      },
+      printTicket(){
+        const original = document.getElementById('ticketCard');
+        if(!original){ window.print(); return; }
+        const existing = document.getElementById('print-portal'); if(existing) existing.remove();
+        const portal = document.createElement('div'); portal.id = 'print-portal';
+        portal.appendChild(original.cloneNode(true));
+        document.body.appendChild(portal);
+        track('print_ticket', { event_id: this.ev.id, order_ref: this.order && this.order.ref });
+        try{ window.print(); } finally { setTimeout(()=>{ const p=document.getElementById('print-portal'); if(p) p.remove(); }, 1000); }
+      },
+      onExpiryInput(el){
+        let d = el.value.replace(/\D/g,'').slice(0,4);
+        if(d.length>=3) d = d.slice(0,2)+'/'+d.slice(2);
+        this.card.expiry = d; el.value = d;
+      },
+      cardBrand(){
+        const d = (this.card.number||'').replace(/\s/g,'');
+        if(/^4/.test(d)) return 'Visa';
+        if(/^5[1-5]/.test(d) || /^2[2-7]/.test(d)) return 'Mastercard';
+        if(/^3[47]/.test(d)) return 'Amex';
+        return '';
+      },
+
+      render(){
+        const root = document.getElementById('overlay-root'); if(!root) return;
+        setHTML(root, this.step===4 ? this.renderThankYou() : this.renderShell());
+      },
+
+      renderShell(){
+        const labels = ['Tickets','Details','Payment'];
+        const stepper = `<div class="flex items-center justify-between px-5 sm:px-7 py-4 border-b border-[#E7EBEF] bg-white shrink-0">
+          <div class="flex items-center gap-1.5 sm:gap-3 overflow-x-auto no-scrollbar">
+            ${[1,2,3].map(n=>{ const done=this.step>n, active=this.step===n; return `
+              <div class="flex items-center gap-2 shrink-0">
+                <span class="w-7 h-7 rounded-full grid place-items-center font-bold text-xs ${done?'bg-[#29A37A] text-white':active?'bg-[#DC183C] text-white':'bg-slate-200 text-slate-500'}">${done?'<i data-lucide="check" class="w-3.5 h-3.5"></i>':n}</span>
+                <span class="hidden sm:inline font-bold uppercase text-[11px] tracking-wider ${active||done?'text-[#0C1F31]':'text-slate-400'}">${labels[n-1]}</span>
+              </div>
+              ${n<3 ? `<div class="w-4 sm:w-8 h-px ${done?'bg-[#29A37A]':'bg-slate-200'} shrink-0"></div>` : ''}
+            `; }).join('')}
+          </div>
+          <button onclick="Checkout.close()" aria-label="Close checkout" class="shrink-0 w-9 h-9 grid place-items-center rounded-full text-slate-400 hover:text-slate-700 bg-white border border-[#E7EBEF] ml-3"><i data-lucide="x" class="w-4 h-4"></i></button>
+        </div>`;
+
+        let body, ctaLabel;
+        if(this.step===1){ body = this.renderStepTickets(); ctaLabel = 'Continue'; }
+        else if(this.step===2){ body = this.renderStepDetails(); ctaLabel = 'Continue to payment'; }
+        else { body = this.renderStepPayment(); ctaLabel = 'Pay '+money(this.total()); }
+
+        const showBack = this.step>1 && !this.processing;
+        const showTotal = this.count()>0;
+
+        const footer = `<div class="border-t border-[#E7EBEF] bg-slate-50 px-5 sm:px-7 py-4 flex items-center gap-3 shrink-0" style="padding-bottom:max(1rem, env(safe-area-inset-bottom));">
+          ${showBack ? `<button onclick="Checkout.back()" class="text-sm font-bold text-slate-600 hover:text-[#0C1F31] uppercase tracking-wide px-2 py-2.5">← Back</button>` : ''}
+          ${showTotal ? `<div class="hidden sm:block min-w-0"><p class="text-[10px] font-bold text-slate-400 uppercase tracking-wide leading-none">Total</p><p class="font-jakarta text-xl font-bold text-[#0C1F31] leading-none mt-1">${money(this.total())}</p></div>`:''}
+          <button onclick="${this.processing?'':'Checkout.next()'}" class="ml-auto bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold uppercase tracking-wide text-sm px-5 sm:px-7 py-3.5 rounded-xl flex items-center gap-2 ${this.processing?'opacity-90 cursor-wait':''}">${this.processing ? `<svg class="spin w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><circle cx="12" cy="12" r="9" opacity=".3"/><path d="M12 3a9 9 0 0 1 9 9" stroke-linecap="round"/></svg> Processing…` : `${ctaLabel} <i data-lucide="arrow-right" class="w-4 h-4"></i>`}</button>
+        </div>`;
+
+        return `<div class="fixed inset-0 z-[70] bg-black/60 scrim flex items-end sm:items-center justify-center sm:p-4 backdrop-blur-sm" onclick="if(event.target===this) Checkout.close()">
+          <div role="dialog" aria-modal="true" aria-labelledby="checkout-title" class="bg-white w-full sm:max-w-2xl sm:rounded-2xl rounded-t-3xl overflow-hidden shadow-2xl sheet flex flex-col" style="max-height:95vh">
+            ${stepper}
+            <div class="flex-1 overflow-y-auto custom-scrollbar p-5 sm:p-7">${body}</div>
+            ${footer}
+          </div>
+        </div>`;
+      },
+
+      renderStepTickets(){
+        const tiers = this.ev.tickets.tiers;
+        return `<div class="space-y-5">
+          <div>
+            <h2 id="checkout-title" class="font-jakarta text-2xl sm:text-3xl font-extrabold text-[#0C1F31] mb-1">Select Tickets</h2>
+            <p class="text-sm text-slate-500">${esc(this.ev.title)} · ${esc(this.ev.logistics.display_date)}</p>
+          </div>
+          <div class="space-y-3">${tiers.map(tier=>{
+            const q = this.qty[tier.id]||0;
+            const max = Math.min(tier.remaining, tier.max);
+            const sold = tier.remaining<=0;
+            const low = tier.remaining<=10 && !sold;
+            const selected = q>0;
+            return `<div class="border-2 ${selected?'border-[#DC183C] bg-[#DC183C]/[0.04]':'border-[#E7EBEF] bg-white'} rounded-2xl p-4 sm:p-5 transition-colors">
+              <div class="flex flex-col sm:flex-row sm:items-start gap-4">
+                <div class="flex-1 min-w-0">
+                  <div class="flex flex-wrap items-center gap-2 mb-1">
+                    <h3 class="font-jakarta font-bold text-lg text-[#0C1F31]">${esc(tier.name)}</h3>
+                    ${tier.badge ? `<span class="text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-[#FFF1E0] text-[#AE6B0A]">${esc(tier.badge)}</span>`:''}
+                  </div>
+                  <p class="text-sm text-slate-500">${esc(tier.blurb)}</p>
+                  <p class="font-jakarta text-2xl font-extrabold text-[#DC183C] mt-2">${money(tier.price)}</p>
+                  ${low ? `<p class="text-[11px] font-bold text-[#DC183C] mt-1 flex items-center gap-1"><i data-lucide="flame" class="w-3.5 h-3.5"></i> Only ${tier.remaining} left</p>` : sold ? `<p class="text-[11px] font-bold text-slate-400 mt-1">Sold out</p>` : ''}
+                </div>
+                <div class="flex items-center gap-3 shrink-0 self-end sm:self-center">
+                  ${sold ? `<span class="text-xs font-bold text-slate-400 uppercase tracking-wide">Unavailable</span>` : `
+                    <button onclick="Checkout.setQty('${tier.id}',${q-1})" aria-label="Decrease quantity" ${q<=0?'disabled':''} class="w-10 h-10 rounded-full border-2 border-[#E7EBEF] hover:border-[#DC183C] hover:text-[#DC183C] grid place-items-center transition-colors disabled:opacity-30 disabled:hover:border-[#E7EBEF] disabled:hover:text-current"><i data-lucide="minus" class="w-4 h-4"></i></button>
+                    <span class="font-jakarta font-bold text-xl w-7 text-center text-[#0C1F31]">${q}</span>
+                    <button onclick="Checkout.setQty('${tier.id}',${q+1})" aria-label="Increase quantity" ${q>=max?'disabled':''} class="w-10 h-10 rounded-full border-2 border-[#E7EBEF] hover:border-[#DC183C] hover:text-[#DC183C] grid place-items-center transition-colors disabled:opacity-30 disabled:hover:border-[#E7EBEF] disabled:hover:text-current"><i data-lucide="plus" class="w-4 h-4"></i></button>
+                  `}
+                </div>
+              </div>
+            </div>`;
+          }).join('')}</div>
+          ${this.errors.tickets ? `<p class="text-sm text-[#DC183C] font-semibold">${this.errors.tickets}</p>` : ''}
+          ${this.count()>0 ? `<div class="bg-slate-50 rounded-xl p-4 space-y-2 border border-[#E7EBEF]">
+            <div class="flex justify-between text-sm"><span class="text-slate-500">Subtotal</span><span class="font-bold">${money(this.subtotal())}</span></div>
+            <div class="flex justify-between text-sm"><span class="text-slate-500">Booking fee (${this.ev.tickets.bookingFeePct}%)</span><span class="font-bold">${money(this.fee())}</span></div>
+            <div class="flex justify-between pt-2 border-t border-[#E7EBEF]"><span class="font-bold text-[#0C1F31]">Total</span><span class="font-jakarta font-extrabold text-xl text-[#0C1F31]">${money(this.total())}</span></div>
+          </div>` : ''}
+        </div>`;
+      },
+
+      renderStepDetails(){
+        const errSpan = (k)=> this.errors[k] ? `<p class="text-xs text-[#DC183C] font-semibold mt-1">${this.errors[k]}</p>` : '';
+        const inp = 'w-full border border-[#E7EBEF] rounded-lg px-4 py-3 text-sm outline-none focus:border-[#DC183C] bg-slate-50';
+        const lbl = 'text-xs font-bold uppercase tracking-wide text-slate-500 mb-1 block';
+        const totalQty = this.count();
+        return `<div class="space-y-6">
+          <div>
+            <h2 id="checkout-title" class="font-jakarta text-2xl sm:text-3xl font-extrabold text-[#0C1F31] mb-1">Your Details</h2>
+            <p class="text-sm text-slate-500">Booking ${totalQty} ticket${totalQty>1?'s':''} for ${esc(this.ev.title)}</p>
+          </div>
+          <div>
+            <h3 class="font-jakarta font-bold text-base text-[#0C1F31] mb-3">Lead booker</h3>
+            <div class="space-y-3">
+              <div><label class="${lbl}">Full name</label><input id="co-name" type="text" value="${esc(this.lead.name)}" oninput="Checkout.lead.name=this.value" class="${inp}" />${errSpan('name')}</div>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div><label class="${lbl}">Email</label><input id="co-email" type="email" value="${esc(this.lead.email)}" oninput="Checkout.lead.email=this.value" class="${inp}" />${errSpan('email')}</div>
+                <div><label class="${lbl}">Phone</label><input id="co-phone" type="tel" value="${esc(this.lead.phone)}" oninput="Checkout.lead.phone=this.value" class="${inp}" placeholder="071 234 5678" />${errSpan('phone')}</div>
+              </div>
+              <div><label class="${lbl}">Company <span class="text-slate-400 font-normal normal-case">(optional)</span></label><input id="co-co" type="text" value="${esc(this.lead.company)}" oninput="Checkout.lead.company=this.value" class="${inp}" /></div>
+              <div><label class="${lbl}">Dietary requirements</label><select id="co-diet" onchange="Checkout.lead.dietary=this.value" class="${inp}">
+                <option value="" ${this.lead.dietary===''?'selected':''}>None</option>
+                <option value="vegetarian" ${this.lead.dietary==='vegetarian'?'selected':''}>Vegetarian</option>
+                <option value="vegan" ${this.lead.dietary==='vegan'?'selected':''}>Vegan</option>
+                <option value="halaal" ${this.lead.dietary==='halaal'?'selected':''}>Halaal</option>
+                <option value="kosher" ${this.lead.dietary==='kosher'?'selected':''}>Kosher</option>
+                <option value="gluten-free" ${this.lead.dietary==='gluten-free'?'selected':''}>Gluten-free</option>
+              </select></div>
+            </div>
+          </div>
+          ${totalQty>1 ? `<div>
+            <h3 class="font-jakarta font-bold text-base text-[#0C1F31] mb-3">Additional attendees</h3>
+            <div class="space-y-3">${this.attendees.map((a,i)=>`<div><label class="${lbl}">Attendee ${i+2} full name</label><input id="co-att${i}" type="text" value="${esc(a.name)}" oninput="Checkout.attendees[${i}].name=this.value" class="${inp}" />${errSpan('att'+i)}</div>`).join('')}</div>
+          </div>` : ''}
+        </div>`;
+      },
+
+      renderStepPayment(){
+        const errSpan = (k)=> this.errors[k] ? `<p class="text-xs text-[#DC183C] font-semibold mt-1">${this.errors[k]}</p>` : '';
+        const inp = 'w-full border border-[#E7EBEF] rounded-lg px-4 py-3 text-sm outline-none focus:border-[#DC183C] bg-slate-50';
+        const lbl = 'text-xs font-bold uppercase tracking-wide text-slate-500 mb-1 block';
+        const tickets = this.ev.tickets.tiers.filter(t=>this.qty[t.id]>0);
+        const brand = this.cardBrand();
+        return `<div class="space-y-6">
+          <div>
+            <h2 id="checkout-title" class="font-jakarta text-2xl sm:text-3xl font-extrabold text-[#0C1F31] mb-1">Payment</h2>
+            <p class="text-sm text-slate-500">Final step — review and pay.</p>
+          </div>
+          <div class="bg-slate-50 rounded-xl p-4 sm:p-5 border border-[#E7EBEF]">
+            <h3 class="font-jakarta font-bold text-sm text-[#0C1F31] mb-3">Order summary</h3>
+            <div class="space-y-2 text-sm">
+              ${tickets.map(t=>`<div class="flex justify-between"><span class="text-slate-600">${esc(t.name)} × ${this.qty[t.id]}</span><span class="font-semibold">${money(t.price*this.qty[t.id])}</span></div>`).join('')}
+              <div class="flex justify-between text-slate-500 pt-2 border-t border-[#E7EBEF]"><span>Booking fee</span><span>${money(this.fee())}</span></div>
+              <div class="flex justify-between pt-2 border-t border-[#E7EBEF]"><span class="font-bold text-[#0C1F31]">Total</span><span class="font-jakarta font-extrabold text-xl text-[#0C1F31]">${money(this.total())}</span></div>
+            </div>
+          </div>
+          <div>
+            <h3 class="font-jakarta font-bold text-base text-[#0C1F31] mb-3">Card details</h3>
+            <div class="space-y-3">
+              <div>
+                <label class="${lbl}">Card number</label>
+                <div class="relative">
+                  <input id="co-card" type="text" inputmode="numeric" autocomplete="cc-number" placeholder="4242 4242 4242 4242" value="${esc(this.card.number)}" oninput="Checkout.onCardInput(this)" class="${inp} pr-20" />
+                  <span class="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-2">${brand ? `<span class="text-[10px] font-bold uppercase tracking-wider text-[#0C1F31] bg-slate-200 px-2 py-0.5 rounded">${brand}</span>`:''}<i data-lucide="credit-card" class="w-5 h-5 text-slate-400"></i></span>
+                </div>
+                ${errSpan('cardNumber')}
+              </div>
+              <div><label class="${lbl}">Name on card</label><input id="co-cardname" type="text" autocomplete="cc-name" value="${esc(this.card.name)}" oninput="Checkout.card.name=this.value" class="${inp}" />${errSpan('cardName')}</div>
+              <div class="grid grid-cols-2 gap-3">
+                <div><label class="${lbl}">Expiry (MM/YY)</label><input id="co-exp" type="text" inputmode="numeric" autocomplete="cc-exp" placeholder="08/27" value="${esc(this.card.expiry)}" oninput="Checkout.onExpiryInput(this)" maxlength="5" class="${inp}" />${errSpan('expiry')}</div>
+                <div><label class="${lbl}">CVC</label><input id="co-cvc" type="text" inputmode="numeric" autocomplete="cc-csc" placeholder="123" value="${esc(this.card.cvc)}" oninput="Checkout.card.cvc=this.value.replace(/\\D/g,'').slice(0,4)" maxlength="4" class="${inp}" />${errSpan('cvc')}</div>
+              </div>
+            </div>
+            <p class="text-[11px] text-slate-400 mt-3 flex items-center gap-1.5"><i data-lucide="shield-check" class="w-3.5 h-3.5"></i> Payments are simulated for this demo — no card is charged.</p>
+          </div>
+        </div>`;
+      },
+
+      renderThankYou(){
+        const ev = this.ev, o = this.order;
+        const qrText = `${linkFor(ev)}?order=${o.ref}`;
+        const ticketLine = o.tickets.map(t=>`${t.name} × ${t.qty}`).join(', ');
+        const cityShort = ev.venue.address ? ev.venue.address.split(',').slice(-3,-1).join(',').trim() : '';
+        return `<div class="fixed inset-0 z-[70] bg-black/60 scrim flex items-end sm:items-center justify-center sm:p-4 backdrop-blur-sm overflow-y-auto" onclick="if(event.target===this) Checkout.close()">
+          <div role="dialog" aria-modal="true" class="bg-white w-full sm:max-w-2xl sm:rounded-2xl rounded-t-3xl overflow-hidden shadow-2xl sheet my-auto" style="max-height:95vh">
+            <div class="overflow-y-auto custom-scrollbar p-6 sm:p-8 text-center" style="max-height:95vh">
+              <div class="no-print">
+                <div class="w-20 h-20 mx-auto bg-[#29A37A]/15 rounded-full grid place-items-center mb-5" style="animation: successPop .6s cubic-bezier(.2,.7,.2,1)">
+                  <svg class="w-12 h-12 text-[#29A37A]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7" stroke-dasharray="30" stroke-dashoffset="30" style="animation: ringDraw .5s .3s ease forwards"/></svg>
+                </div>
+                <p class="text-[#DC183C] font-bold text-xs tracking-[0.2em] uppercase mb-2">Order Confirmed</p>
+                <h2 class="font-jakarta text-3xl sm:text-4xl font-extrabold text-[#0C1F31] mb-2">You're going!</h2>
+                <p class="text-slate-500 text-sm mb-6 max-w-md mx-auto">A confirmation has been sent to <span class="font-semibold text-[#0C1F31]">${esc(this.lead.email)}</span>. Save or print your ticket below.</p>
+              </div>
+
+              <div id="ticketCard" class="bg-white rounded-2xl overflow-hidden shadow-2xl border border-[#E7EBEF] text-left mx-auto" style="max-width:560px">
+                <div class="flex flex-col sm:flex-row">
+                  <div class="hero-bg grain text-white p-6 sm:p-7 sm:w-2/3 relative overflow-hidden">
+                    <div class="hero-vignette absolute inset-0 opacity-30"></div>
+                    <div class="relative">
+                      <div class="flex items-center justify-between mb-5">
+                        <span class="bg-[#DC183C] text-white font-jakarta font-bold px-2.5 py-1 text-[10px] uppercase tracking-widest rounded">SME</span>
+                        <span class="text-[10px] font-bold text-white/50 uppercase tracking-widest">e-Ticket</span>
+                      </div>
+                      <h3 class="font-jakarta text-xl sm:text-2xl font-extrabold leading-tight mb-4">${esc(ev.title)}</h3>
+                      <div class="space-y-1.5 text-sm text-white/85 mb-5">
+                        <div class="flex items-center gap-2"><i data-lucide="calendar" class="w-4 h-4 text-[#FF9900] shrink-0"></i> ${esc(ev.logistics.display_date)}</div>
+                        <div class="flex items-center gap-2"><i data-lucide="clock" class="w-4 h-4 text-[#FF9900] shrink-0"></i> ${esc(ev.logistics.display_time)}</div>
+                        <div class="flex items-start gap-2"><i data-lucide="map-pin" class="w-4 h-4 text-[#FF9900] shrink-0 mt-0.5"></i> <span>${esc(ev.venue.name)}${cityShort?', '+esc(cityShort):''}</span></div>
+                      </div>
+                      <div class="border-t border-white/10 pt-4 grid grid-cols-2 gap-3 text-xs">
+                        <div><p class="text-white/50 font-bold uppercase tracking-wider mb-0.5">Attendee</p><p class="font-bold text-sm">${esc(this.lead.name)}</p></div>
+                        <div><p class="text-white/50 font-bold uppercase tracking-wider mb-0.5">Ticket${o.tickets.length>1?'s':''}</p><p class="font-bold text-sm">${esc(ticketLine)}</p></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="sm:hidden border-t-2 border-dashed border-[#0C1F31]/20 relative"><div class="absolute -left-2 -top-2 w-4 h-4 bg-[#FCFCFC] rounded-full border border-[#E7EBEF]"></div><div class="absolute -right-2 -top-2 w-4 h-4 bg-[#FCFCFC] rounded-full border border-[#E7EBEF]"></div></div>
+                  <div class="hidden sm:block border-l-2 border-dashed border-[#0C1F31]/20 relative"><div class="absolute -top-2 -left-2 w-4 h-4 bg-[#FCFCFC] rounded-full border border-[#E7EBEF]"></div><div class="absolute -bottom-2 -left-2 w-4 h-4 bg-[#FCFCFC] rounded-full border border-[#E7EBEF]"></div></div>
+                  <div class="bg-white p-6 sm:p-7 sm:w-1/3 flex flex-col items-center justify-center text-center">
+                    <div class="bg-white p-2 rounded-lg border border-[#E7EBEF] mb-3">${makeQR(qrText, 140)}</div>
+                    <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Order ref</p>
+                    <p class="font-jakarta text-lg font-extrabold text-[#0C1F31] tracking-wide">${esc(o.ref)}</p>
+                    <p class="text-[10px] text-slate-400 mt-2">${esc(money(o.total))}</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="no-print mt-7">
+                <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-3">
+                  <a href="${googleCalUrl(ev)}" target="_blank" rel="noreferrer" onclick="track('add_to_calendar',{method:'google',event_id:${ev.id}})" class="bg-white border border-[#E7EBEF] hover:bg-slate-50 text-slate-700 text-xs font-bold uppercase tracking-wide py-3 rounded-lg flex items-center justify-center gap-2"><i data-lucide="calendar" class="w-4 h-4 text-[#DC183C]"></i> Google Cal</a>
+                  <button onclick="downloadICS(Checkout.ev)" class="bg-white border border-[#E7EBEF] hover:bg-slate-50 text-slate-700 text-xs font-bold uppercase tracking-wide py-3 rounded-lg flex items-center justify-center gap-2"><i data-lucide="download" class="w-4 h-4 text-[#DC183C]"></i> .ics File</button>
+                  <button onclick="Checkout.printTicket()" class="col-span-2 sm:col-span-1 bg-white border border-[#E7EBEF] hover:bg-slate-50 text-slate-700 text-xs font-bold uppercase tracking-wide py-3 rounded-lg flex items-center justify-center gap-2"><i data-lucide="printer" class="w-4 h-4 text-[#DC183C]"></i> Print / PDF</button>
+                </div>
+                <button onclick="Checkout.close()" class="w-full bg-[#0C1F31] hover:bg-[#091621] text-white font-bold uppercase tracking-wide py-4 rounded-xl text-sm">Done</button>
+              </div>
+            </div>
+          </div>
+        </div>`;
+      }
+    };
+
+    function openCheckout(){
+      const ev = byId(state.params.id);
+      if(!ev || !ev.tickets) return;
+      Checkout.open(ev);
+    }
+
+    // === App + bootstrap ==========================================================
+    function initCountdown(){
+      clearInterval(countdownInterval);
+      const update = ()=>{
+        const el = document.getElementById('countdown-display'); if(!el) return clearInterval(countdownInterval);
+        const ev = byId(state.params.id); if(!ev || !ev.logistics.startMs) return;
+        const diff = ev.logistics.startMs - Date.now();
+        if(diff <= 0){ el.innerText = 'Starting Soon'; return; }
+        const days = Math.floor(diff/86400000), hrs = Math.floor(diff/3600000)%24, mins = Math.floor(diff/60000)%60, secs = Math.floor(diff/1000)%60;
+        el.innerText = days>0 ? `${days}d ${hrs}h` : hrs>0 ? `${hrs}h ${mins}m` : `${mins}m ${secs}s`;
+      };
+      update();
+      countdownInterval = setInterval(update, 1000);
+    }
+    function renderApp(){
+      const app = document.getElementById('app');
+      let html = '';
+      if(state.view==='directory') html += renderDirectory();
+      else if(state.view==='event') html += renderEventDetail();
+      else if(state.view==='speaker') html += renderSpeakerProfile();
+      setHTML(app, html);
+      initCountdown();
+    }
+    document.addEventListener('DOMContentLoaded', ()=>{
+      seedDemoDates();
+      window.addEventListener('hashchange', route);
+      window.addEventListener('keydown', (e)=>{ if(e.key==='Escape'){ if(activeOverlayClose){ activeOverlayClose(); } else { closeBrief('ovBrief'); } } });
+      route();
+    });
+  </script>
 </body>
 </html>

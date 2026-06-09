@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Issue #142 — The R0 marketing stack that actually converts — SME South Africa</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script><script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  <script>tailwind.config={theme:{extend:{fontFamily:{jakarta:['Plus Jakarta Sans','sans-serif'],inter:['Inter','system-ui','sans-serif']}}}};</script>
+  <style>
+    html,body{font-family:'Inter',system-ui,sans-serif;} .font-jakarta{font-family:'Plus Jakarta Sans',sans-serif;letter-spacing:.005em;}
+    .hero-bg{background:linear-gradient(115deg,#0C1F31 0%,#0C1F31 55%,#2b1626 85%,#5e1a2c 120%);}
+    .dot-pattern{background-image:radial-gradient(rgba(255,255,255,.07) 1px,transparent 1.5px);background-size:22px 22px;}
+    .field{width:100%;background:#fff;border:1px solid #E7EBEF;border-radius:.75rem;height:3rem;padding:0 1rem;font-size:.9rem;outline:none;transition:border-color .15s,box-shadow .15s;} .field:focus{border-color:#DC183C;box-shadow:0 0 0 3px rgba(220,24,60,.12);}
+    .reading p{margin-bottom:1.4rem;line-height:1.8;font-size:1.075rem;color:#121A21;}
+    .reading h2{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.6rem;color:#121A21;margin-top:2.5rem;margin-bottom:1rem;}
+    .reading a{color:#DC183C;font-weight:600;text-decoration:underline;text-underline-offset:3px;}
+    .reading a:hover{color:#B0142F;}
+    .reading ul{margin:0 0 1.4rem 0;padding-left:0;list-style:none;}
+    .reading ul li{position:relative;padding-left:1.75rem;margin-bottom:.75rem;line-height:1.7;color:#121A21;}
+    .reading ul li::before{content:"";position:absolute;left:0;top:.55rem;width:.5rem;height:.5rem;border-radius:50%;background:#DC183C;}
+    .pull-quote{border-left:4px solid #DC183C;background:#FDECEF;padding:1.25rem 1.5rem;margin:2rem 0;border-radius:0 .75rem .75rem 0;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;font-size:1.2rem;line-height:1.55;color:#121A21;}
+    .dev-badge{display:none;} body.dev-on .dev-badge{display:inline-flex;} #devToggle.on{background:#DC183C;color:#fff;border-color:#DC183C;}
+    .ov{position:fixed;inset:0;z-index:60;} .ov-bg{position:absolute;inset:0;background:rgba(12,31,49,.45);backdrop-filter:blur(2px);opacity:0;transition:opacity .3s;} .ov.open .ov-bg{opacity:1;}
+    .drawer{position:absolute;right:0;top:0;height:100%;width:100%;max-width:440px;background:#fff;box-shadow:-12px 0 40px rgba(12,31,49,.25);overflow-y:auto;transform:translateX(100%);transition:transform .3s cubic-bezier(.2,.7,.2,1);} .ov.open .drawer{transform:translateX(0);}
+  </style>
+</head>
+<body class="bg-[#FCFCFC] text-[#121A21] antialiased">
+<header class="bg-white border-b border-[#E7EBEF] sticky top-0 z-40"><div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center gap-4">
+  <a href="public-home.html" class="flex items-center gap-2.5 shrink-0"><img src="assets/logo-icon.png" alt="SME South Africa" class="w-9 h-9" /><span class="font-jakarta font-extrabold text-[17px] tracking-tight">SME <span class="text-[#DC183C]">South Africa</span></span></a>
+  <nav class="hidden lg:flex items-center gap-1 ml-4">
+    <a href="public-articles.html" class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition">Articles</a>
+    <a href="public-resources.html" class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition">Resources</a>
+    <a href="public-funding.html" class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition">Funding</a>
+    <a href="public-solutions.html" class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition">Solutions</a>
+    <a href="public-shop.html" class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition">Shop</a>
+  </nav>
+  <div class="flex items-center gap-1 sm:gap-2 ml-auto">
+    <button id="devToggle" onclick="toggleDevMode()" class="hidden sm:flex items-center gap-1.5 px-3 h-9 rounded-full border border-slate-200 text-slate-500 hover:border-[#DC183C] hover:text-[#DC183C] transition text-[11px] font-bold uppercase tracking-wider"><i data-lucide="code-2" class="w-3.5 h-3.5"></i><span>Dev</span></button>
+    <a href="public-auth.html" class="hidden sm:inline-flex items-center px-3 h-9 rounded-full text-sm font-bold text-[#121A21] hover:bg-slate-100 transition">Sign in</a>
+    <a href="public-auth.html#join" class="inline-flex items-center px-4 h-9 rounded-full text-sm font-bold text-white bg-[#DC183C] hover:bg-[#B0142F] transition">Join Free</a>
+  </div>
+</div></header>
+
+<!-- ISSUE HEADER -->
+<section class="hero-bg text-white relative overflow-hidden"><div class="absolute inset-0 dot-pattern opacity-70 pointer-events-none"></div>
+  <div class="max-w-[760px] mx-auto px-4 sm:px-6 py-12 relative">
+    <a href="newsletter.html" class="inline-flex items-center gap-2 text-xs font-bold text-white/60 hover:text-white uppercase tracking-widest mb-8 group"><i data-lucide="arrow-left" class="w-4 h-4 group-hover:-translate-x-1 transition-transform"></i> All issues</a>
+    <div class="flex items-center gap-2.5 mb-5">
+      <span class="bg-white/10 text-white text-[10px] font-bold px-3 py-1 rounded-md uppercase tracking-widest">The SME Weekly</span>
+      <span class="text-xs font-bold text-white/55 uppercase tracking-widest">Issue #142 · 12 Jun 2026</span>
+      <button onclick="openBrief()" class="dev-badge align-middle w-5 h-5 rounded-full bg-[#FF9900] text-[#0C1F31] items-center justify-center text-[10px] font-bold">i</button>
+    </div>
+    <h1 class="font-jakarta font-extrabold text-3xl sm:text-4xl leading-tight">The R0 marketing stack that actually converts</h1>
+    <div class="mt-6 flex flex-col sm:flex-row sm:items-center justify-between border-t border-white/10 pt-5 gap-4">
+      <div class="flex items-center gap-3">
+        <img src="https://ui-avatars.com/api/?name=Karabo+Kgophane&background=DC183C&color=fff&bold=true" class="w-10 h-10 rounded-full" alt="" />
+        <div>
+          <p class="text-sm font-bold leading-none mb-1">By <a href="public-author.html" class="text-white hover:text-[#FF9900] underline underline-offset-2">Karabo Kgophane</a></p>
+          <p class="text-xs text-white/55">Read time: 5 minutes</p>
+        </div>
+      </div>
+      <div class="flex gap-2.5">
+        <button class="w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 grid place-items-center text-white transition"><svg viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4" aria-hidden="true"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.42v1.56h.05c.47-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.07 2.07 0 1 1 0-4.14 2.07 2.07 0 0 1 0 4.14zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.8 0 0 .78 0 1.73v20.54C0 23.22.8 24 1.77 24h20.45C23.2 24 24 23.22 24 22.27V1.73C24 .78 23.2 0 22.22 0z"/></svg></button>
+        <button class="w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 grid place-items-center text-white transition"><svg viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></button>
+        <button class="w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 grid place-items-center text-white transition"><i data-lucide="mail" class="w-4 h-4"></i></button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HERO IMAGE -->
+<div class="max-w-[760px] mx-auto px-4 sm:px-6 -mt-6 relative z-10">
+  <img src="assets/article-3.jpg" alt="" class="w-full h-56 sm:h-80 object-cover rounded-2xl border border-[#E7EBEF] shadow-lg" />
+</div>
+
+<!-- BODY -->
+<main class="max-w-[760px] mx-auto px-4 sm:px-6 pt-10 pb-4">
+  <div class="reading">
+    <p>Hello Founders,</p>
+    <p>The biggest myth in small-business marketing is that you need money to start. You don't. What you need is a tight system: a clear message, two or three channels you actually maintain, and a way to capture the people who show interest before they forget you exist.</p>
+    <p>This week we're breaking down the exact zero-rand stack we see working for SA founders right now — the tools, the order to set them up in, and the channels that quietly waste your time.</p>
+
+    <h2>Start with the message, not the tool</h2>
+    <p>Most founders jump straight to "which app should I use?" That's backwards. Before you touch a single tool, you need one sentence that explains who you help and what changes for them. If you can't say it plainly, no amount of automation will save the funnel.</p>
+    <p>Write it down. Test it on five customers. Only then start wiring up channels.</p>
+
+    <div class="pull-quote">"A free tool you actually use beats a paid one you set up once and forget. Consistency is the whole strategy."</div>
+
+    <h2>The free stack, in order</h2>
+    <p>Here's the sequence we'd build today, every piece on a free tier:</p>
+    <ul>
+      <li><strong>One owned channel</strong> — an email list. Social can disappear overnight; your list can't. Kit's free tier covers your first 10 000 subscribers.</li>
+      <li><strong>One content channel</strong> — pick the single platform where your buyers already spend time, and post there twice a week. Not five platforms once a month.</li>
+      <li><strong>One capture point</strong> — a simple landing page with a single call to action, so interest turns into an email address.</li>
+      <li><strong>One feedback loop</strong> — a recurring way to ask customers what nearly stopped them from buying.</li>
+    </ul>
+
+    <h2>The channels quietly wasting your time</h2>
+    <p>Be honest about reach. Posting daily to an audience of twelve, chasing every new app, and redesigning your logo for the third time are all comfortable ways to feel busy without moving revenue. Cut them and put the hours into the four pieces above.</p>
+
+    <!-- INLINE CTA -->
+    <div class="my-10 bg-white border border-[#E7EBEF] rounded-2xl p-6 flex flex-col sm:flex-row sm:items-center gap-5">
+      <div class="w-12 h-12 rounded-xl bg-[#FFF1E0] text-[#AE6B0A] grid place-items-center shrink-0"><i data-lucide="compass" class="w-6 h-6"></i></div>
+      <div class="flex-grow">
+        <p class="font-jakarta font-extrabold text-lg leading-snug">Need the budget to go with the stack?</p>
+        <p class="text-sm text-[#6A7581] mt-1">Browse open grants in our <a href="public-funding.html" class="text-[#DC183C] font-semibold underline underline-offset-2">Funding</a> directory, then grab the templates in <a href="public-resources.html" class="text-[#DC183C] font-semibold underline underline-offset-2">Resources</a> to set the whole thing up this week.</p>
+      </div>
+      <a href="public-funding.html" class="shrink-0 inline-flex items-center justify-center gap-2 h-11 px-5 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white text-sm font-bold transition whitespace-nowrap">See funding <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
+    </div>
+
+    <p>Build the system, keep it small, and run it every single week. That's the whole game.</p>
+    <p><em>— Karabo &amp; the SME South Africa team</em></p>
+  </div>
+</main>
+
+<!-- SUBSCRIBE BAND -->
+<section class="max-w-[760px] mx-auto px-4 sm:px-6 pb-16">
+  <div class="bg-[#0C1F31] text-white rounded-2xl p-8 text-center relative overflow-hidden">
+    <div class="absolute inset-0 dot-pattern opacity-40 pointer-events-none"></div>
+    <div class="relative">
+      <div class="w-12 h-12 bg-white/10 rounded-xl grid place-items-center text-[#FF9900] mx-auto mb-4"><i data-lucide="mail-open" class="w-5 h-5"></i></div>
+      <h3 class="font-jakarta font-extrabold text-2xl mb-2">Enjoyed this dispatch?</h3>
+      <p class="text-white/65 text-sm mb-6 max-w-md mx-auto">Get actionable business advice and funding alerts delivered straight to your inbox. Zero spam.</p>
+      <form class="flex flex-col sm:flex-row gap-3 max-w-md mx-auto" onsubmit="formSubmit(event)">
+        <input type="email" placeholder="you@business.co.za" required class="field flex-grow" />
+        <button type="submit" class="h-12 px-6 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold transition whitespace-nowrap">Subscribe</button>
+      </form>
+    </div>
+  </div>
+  <div class="mt-8 text-center">
+    <a href="newsletter.html" class="inline-flex items-center gap-2 text-sm font-bold text-[#DC183C] hover:text-[#B0142F]"><i data-lucide="arrow-left" class="w-4 h-4"></i> All issues</a>
+  </div>
+</section>
+
+<footer class="bg-[#0C1F31] text-white"><div class="max-w-7xl mx-auto px-4 sm:px-6 py-10 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm">
+  <a href="public-home.html" class="flex items-center gap-2.5"><span class="w-8 h-8 rounded-lg bg-white grid place-items-center"><img src="assets/logo-icon.png" class="w-6 h-6" alt="" /></span><span class="font-jakarta font-extrabold">SME South Africa</span></a>
+  <div class="flex flex-wrap items-center gap-x-5 gap-y-2 text-white/60"><a href="public-about.html" class="hover:text-white">About</a><a href="public-contact.html" class="hover:text-white">Contact</a><a href="public-advertise.html" class="hover:text-white">Advertise</a><a href="public-privacy.html" class="hover:text-white">Privacy</a><a href="public-terms.html" class="hover:text-white">Terms</a><a href="public-refunds.html" class="hover:text-white">Refunds</a><a href="public-popia.html" class="hover:text-white">POPIA</a></div>
+  <p class="text-white/40">© 2026 SME South Africa</p>
+</div></footer>
+<div id="overlay-root"></div><div id="toast" class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-50"></div>
+<script>
+  function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+  function showToast(m){const el=document.getElementById('toast');el.classList.remove('hidden');el.innerHTML=`<div class="bg-[#0C1F31] text-white rounded-full pl-3 pr-5 py-2.5 shadow-2xl flex items-center gap-2 text-sm font-semibold" style="border-left:4px solid #29A37A"><i data-lucide="check-circle" class="w-4 h-4" style="color:#29A37A"></i><span>${esc(m)}</span></div>`;lucide.createIcons();setTimeout(()=>{el.classList.add('hidden');el.innerHTML='';},2400);}
+  function formSubmit(e){e.preventDefault();e.target.reset();showToast('Subscribed — check your inbox to confirm.');}
+  const BRIEF={title:'Newsletter Issue',sub:'WordPress post + Kit (ConvertKit)',purpose:'A single newsletter issue rendered as a public, indexable reading page — the same HTML email archived on the web. Reached from the archive at /newsletter.',data:'Issue post: <code>{issue_no, edition, date, title, author→public-author, hero, body_html}</code>. Subscribe band: <code>{email, editions[]}</code> → Kit.',logic:'Issues are sent via Kit and staggered per edition (never bulk-blasted); the web archive copy is public and indexable. Subscribe band posts to Kit and confirms via double opt-in.',components:'Header · issue header (badge · date · title · byline · share) · hero image · rich body (h2 · pull-quote · list · inline CTA) · subscribe band · footer.',api:'GET /v1/newsletter/issues/142 · POST /v1/newsletter/subscribe'};
+  function toggleDevMode(){const on=document.body.classList.toggle('dev-on');const b=document.getElementById('devToggle');if(b)b.classList.toggle('on',on);if(on)showToast('Dev Mode on — tap any ⓘ for implementation notes.');lucide.createIcons();}
+  function closeOverlay(id){const el=document.getElementById(id);if(!el)return;el.classList.remove('open');setTimeout(()=>{if(el&&el.parentNode)el.remove();},300);}
+  function openBrief(){const b=BRIEF;const sec=(i,l,h)=>`<div class="px-6 py-4 border-t border-slate-100"><p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] flex items-center gap-1.5 mb-2"><i data-lucide="${i}" class="w-3.5 h-3.5"></i>${l}</p><div class="text-sm text-slate-600 leading-relaxed">${h}</div></div>`;document.getElementById('overlay-root').innerHTML=`<div class="ov" id="ov"><div class="ov-bg" onclick="closeOverlay('ov')"></div><div class="drawer"><div class="sticky top-0 z-10 bg-[#0C1F31] text-white px-6 py-5 flex items-start justify-between"><div><p class="text-[10px] font-bold uppercase tracking-widest text-[#FF9900] mb-1">Dev Brief</p><h3 class="font-jakarta font-extrabold text-lg leading-tight">${b.title}</h3><p class="text-xs text-white/60 mt-1">${b.sub}</p></div><button onclick="closeOverlay('ov')" class="text-white/60 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button></div>${sec('target','Purpose',b.purpose)}${sec('database','Data model',b.data)}${sec('git-branch','Logic',b.logic)}${sec('boxes','Components',b.components)}${sec('plug','API',`<code class="block bg-slate-900 text-emerald-300 text-xs font-mono px-3 py-2 rounded-lg overflow-x-auto">${b.api}</code>`)}</div></div>`;requestAnimationFrame(()=>{const o=document.getElementById('ov');if(o)o.classList.add('open');});lucide.createIcons();}
+  lucide.createIcons();
+</script>
+</body>
+</html>
