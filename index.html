@@ -139,32 +139,44 @@
   function esc(s){ return String(s).replace(/'/g,"\\'"); }
 
   function buildNav(){
-    let live=0, total=0;
-    document.getElementById('nav').innerHTML = NAV.map(sec=>`
-      <div>
+    let total=0; const finalised=[];
+    NAV.forEach(sec=> sec.items.forEach(it=>{ total++; if(isLive(it.file)) finalised.push({ ...it, group:sec.group, accent:sec.accent }); }));
+    let html='';
+    // ---- Pinned: finalised first ----
+    if(finalised.length){
+      html += `<div>
+        <div class="flex items-center justify-between px-2 mb-2">
+          <p class="text-[10px] font-bold uppercase tracking-widest text-[#29A37A] flex items-center gap-1.5"><i data-lucide="check-circle-2" class="w-3 h-3"></i> Finalised</p>
+          <span class="text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded-full bg-[#29A37A]/15 text-[#29A37A]">Ready</span>
+        </div>
+        <div class="space-y-0.5">
+          ${finalised.map(it=>`<button onclick="load('${it.file}','${it.group}','${esc(it.label)}','${it.accent}')" data-file="${it.file}" class="nav-item w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-semibold text-white/80 hover:bg-white/5 hover:text-white transition text-left">
+               <i data-lucide="${it.icon}" class="w-4 h-4 shrink-0"></i><span class="truncate">${it.label}</span>
+               <span class="ni-dot ml-auto w-1.5 h-1.5 rounded-full bg-[#29A37A] opacity-0"></span>
+             </button>`).join('')}
+        </div>
+      </div>`;
+    }
+    // ---- Remaining (greyed) grouped below ----
+    NAV.forEach(sec=>{
+      const pending = sec.items.filter(it=>!isLive(it.file));
+      if(!pending.length) return;
+      html += `<div>
         <div class="flex items-center justify-between px-2 mb-2">
           <p class="text-[10px] font-bold uppercase tracking-widest text-white/40">${sec.group}</p>
           <span class="text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded-full" style="background:${sec.accent}22;color:${sec.accent}">${sec.tag}</span>
         </div>
         <div class="space-y-0.5">
-          ${sec.items.map(it=>{
-            total++;
-            if(isLive(it.file)){
-              live++;
-              return `<button onclick="load('${it.file}','${sec.group}','${esc(it.label)}','${sec.accent}')" data-file="${it.file}" class="nav-item w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-semibold text-white/70 hover:bg-white/5 hover:text-white transition text-left">
-                   <i data-lucide="${it.icon}" class="w-4 h-4 shrink-0"></i><span class="truncate">${it.label}</span>
-                   <span class="ni-dot ml-auto w-1.5 h-1.5 rounded-full bg-[#DC183C] opacity-0"></span>
-                 </button>`;
-            }
-            return `<div title="Coming soon — not yet finalised" class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-semibold text-white/25 cursor-not-allowed select-none">
-                   <i data-lucide="${it.icon}" class="w-4 h-4 shrink-0"></i><span class="truncate">${it.label}</span>
-                   <span class="ml-auto text-[8px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded-full bg-white/5 text-white/30 flex items-center gap-1 shrink-0"><i data-lucide="lock" class="w-2.5 h-2.5"></i> Soon</span>
-                 </div>`;
-          }).join('')}
+          ${pending.map(it=>`<div title="Coming soon — not yet finalised" class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-semibold text-white/25 cursor-not-allowed select-none">
+               <i data-lucide="${it.icon}" class="w-4 h-4 shrink-0"></i><span class="truncate">${it.label}</span>
+               <span class="ml-auto text-[8px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded-full bg-white/5 text-white/30 flex items-center gap-1 shrink-0"><i data-lucide="lock" class="w-2.5 h-2.5"></i> Soon</span>
+             </div>`).join('')}
         </div>
-      </div>`).join('');
+      </div>`;
+    });
+    document.getElementById('nav').innerHTML = html;
     lucide.createIcons();
-    const el=document.getElementById('liveCount'); if(el) el.textContent = live+' of '+total+' finalised';
+    const el=document.getElementById('liveCount'); if(el) el.textContent = finalised.length+' of '+total+' finalised';
   }
 
   function load(file, group, label, accent){

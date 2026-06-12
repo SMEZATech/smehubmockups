@@ -18,6 +18,7 @@ window.MOCKUP_STATUS = {
   "public-popia.html":     "finalised",
   "brand_ci.html":         "finalised",
   "public-icons.html":     "finalised",
+  "events.html":           "finalised",
 
   // ---- Not yet finalised (greyed / coming soon) ----
   "public-articles.html":     "under-review",
@@ -33,7 +34,6 @@ window.MOCKUP_STATUS = {
   "single-group.html":        "under-review",
   "forums.html":              "under-review",
   "member-account.html":      "under-review",
-  "events.html":              "under-review",
   "newsletter.html":          "under-review",
   "newsletter-issue.html":    "under-review",
   "podcast.html":             "under-work"
