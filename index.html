@@ -4,12 +4,13 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SME South Africa — Mockup Hub</title>
-  <meta name="description" content="One link to every SME South Africa mockup — public marketing site and member community hub, side by side." />
+  <meta name="description" content="SME South Africa mockups — finalised work, ready for review." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  <script src="status.js"></script>
   <script>
     tailwind.config = { theme: { extend: { fontFamily: {
       jakarta: ['Plus Jakarta Sans', 'sans-serif'], inter: ['Inter', 'system-ui', 'sans-serif'], mono:['monospace']
@@ -43,7 +44,13 @@
         <p class="text-[11px] text-white/50 font-mono">Mockup Hub</p>
       </div>
     </div>
-    <nav id="nav" class="flex-1 overflow-y-auto no-scrollbar px-3 py-4 space-y-6"></nav>
+    <div class="px-4 pt-3 pb-1 shrink-0">
+      <div class="flex items-center gap-2 text-[10px] text-white/45 bg-white/5 border border-white/10 rounded-lg px-3 py-2">
+        <i data-lucide="eye" class="w-3.5 h-3.5 text-[#29A37A]"></i>
+        <span>Finalised work — <span id="liveCount" class="text-white/70 font-semibold">…</span></span>
+      </div>
+    </div>
+    <nav id="nav" class="flex-1 overflow-y-auto no-scrollbar px-3 py-3 space-y-6"></nav>
     <div class="px-5 py-4 border-t border-white/10 text-[11px] text-white/40 shrink-0">
       <p class="text-white/70 font-semibold">© 2026 Tshepho Joel</p>
       <p class="mt-0.5">All rights reserved. Proprietary &amp; confidential.</p>
@@ -86,19 +93,20 @@
 </div>
 
 <script>
-  const LIVE = 'https://shine-better-web.lovable.app';
+  const STATUS = window.MOCKUP_STATUS || {};
+  const isLive = f => STATUS[f] === 'finalised';
   const NAV = [
     { group:'Public site', tag:'Logged-out', accent:'#FF9900', items:[
-      { label:'Home',      file:'public-home.html',      icon:'home' },
-      { label:'Articles',    file:'public-articles.html',  icon:'newspaper' },
+      { label:'Home',           file:'public-home.html',      icon:'home' },
+      { label:'Articles',       file:'public-articles.html',  icon:'newspaper' },
       { label:'Author page',    file:'public-author.html',    icon:'feather' },
       { label:'Single article', file:'public-article.html',   icon:'file-text' },
       { label:'Resources',      file:'public-resources.html', icon:'folder-open' },
-      { label:'Funding',   file:'public-funding.html',   icon:'banknote' },
-      { label:'Solutions', file:'public-solutions.html', icon:'layout-grid' },
-      { label:'Shop',          file:'public-shop.html',      icon:'shopping-bag' },
-      { label:'Checkout',      file:'public-checkout.html',  icon:'credit-card' },
-      { label:'Login / Sign up', file:'public-auth.html',      icon:'log-in' }
+      { label:'Funding',        file:'public-funding.html',   icon:'banknote' },
+      { label:'Solutions',      file:'public-solutions.html', icon:'layout-grid' },
+      { label:'Shop',           file:'public-shop.html',      icon:'shopping-bag' },
+      { label:'Checkout',       file:'public-checkout.html',  icon:'credit-card' },
+      { label:'Login / Sign up',file:'public-auth.html',      icon:'log-in' }
     ]},
     { group:'Site pages', tag:'Info', accent:'#6A7581', items:[
       { label:'About',     file:'public-about.html',     icon:'building-2' },
@@ -117,18 +125,21 @@
       { label:'Account & settings', file:'member-account.html', icon:'settings' }
     ]},
     { group:'Content modules', tag:'In repo', accent:'#FF9900', items:[
-      { label:'Events',              file:'events.html',                               icon:'calendar' },
-      { label:'Newsletter',          file:'newsletter.html',                           icon:'mail' },
-      { label:'Newsletter issue',    file:'newsletter-issue.html',                     icon:'mail-open' },
-      { label:'Podcast',             file:'podcast.html',                              icon:'mic-2' }
+      { label:'Events',           file:'events.html',           icon:'calendar' },
+      { label:'Newsletter',       file:'newsletter.html',       icon:'mail' },
+      { label:'Newsletter issue', file:'newsletter-issue.html', icon:'mail-open' },
+      { label:'Podcast',          file:'podcast.html',          icon:'mic-2' }
     ]},
     { group:'Reference', tag:'Brand', accent:'#6A7581', items:[
-      { label:'Brand CI 2026',  file:'brand_ci.html',     icon:'palette' },
-      { label:'Icon library',   file:'public-icons.html', icon:'shapes' }
+      { label:'Brand CI 2026', file:'brand_ci.html',     icon:'palette' },
+      { label:'Icon library',  file:'public-icons.html', icon:'shapes' }
     ]}
   ];
 
+  function esc(s){ return String(s).replace(/'/g,"\\'"); }
+
   function buildNav(){
+    let live=0, total=0;
     document.getElementById('nav').innerHTML = NAV.map(sec=>`
       <div>
         <div class="flex items-center justify-between px-2 mb-2">
@@ -136,22 +147,28 @@
           <span class="text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded-full" style="background:${sec.accent}22;color:${sec.accent}">${sec.tag}</span>
         </div>
         <div class="space-y-0.5">
-          ${sec.items.map(it=> sec.external
-            ? `<a href="${it.url}" target="_blank" rel="noopener" class="nav-item group flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-semibold text-white/70 hover:bg-white/5 hover:text-white transition">
-                 <i data-lucide="${it.icon}" class="w-4 h-4 shrink-0"></i><span class="truncate">${it.label}</span>
-                 <i data-lucide="external-link" class="w-3.5 h-3.5 ml-auto text-white/30 group-hover:text-white/60"></i>
-               </a>`
-            : `<button onclick="load('${it.file}','${sec.group}','${it.label}','${sec.accent}')" data-file="${it.file}" class="nav-item w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-semibold text-white/70 hover:bg-white/5 hover:text-white transition text-left">
-                 <i data-lucide="${it.icon}" class="w-4 h-4 shrink-0"></i><span class="truncate">${it.label}</span>
-                 <span class="ni-dot ml-auto w-1.5 h-1.5 rounded-full bg-[#DC183C] opacity-0"></span>
-               </button>`
-          ).join('')}
+          ${sec.items.map(it=>{
+            total++;
+            if(isLive(it.file)){
+              live++;
+              return `<button onclick="load('${it.file}','${sec.group}','${esc(it.label)}','${sec.accent}')" data-file="${it.file}" class="nav-item w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-semibold text-white/70 hover:bg-white/5 hover:text-white transition text-left">
+                   <i data-lucide="${it.icon}" class="w-4 h-4 shrink-0"></i><span class="truncate">${it.label}</span>
+                   <span class="ni-dot ml-auto w-1.5 h-1.5 rounded-full bg-[#DC183C] opacity-0"></span>
+                 </button>`;
+            }
+            return `<div title="Coming soon — not yet finalised" class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-semibold text-white/25 cursor-not-allowed select-none">
+                   <i data-lucide="${it.icon}" class="w-4 h-4 shrink-0"></i><span class="truncate">${it.label}</span>
+                   <span class="ml-auto text-[8px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded-full bg-white/5 text-white/30 flex items-center gap-1 shrink-0"><i data-lucide="lock" class="w-2.5 h-2.5"></i> Soon</span>
+                 </div>`;
+          }).join('')}
         </div>
       </div>`).join('');
     lucide.createIcons();
+    const el=document.getElementById('liveCount'); if(el) el.textContent = live+' of '+total+' finalised';
   }
 
   function load(file, group, label, accent){
+    if(!isLive(file)) return; // gate: only finalised mockups open
     document.getElementById('frame').src = file;
     document.getElementById('curGroup').textContent = group;
     document.getElementById('curGroup').style.color = accent || '#AE6B0A';
@@ -173,14 +190,17 @@
   function openSidebar(){ document.getElementById('sidebar').classList.add('open'); document.getElementById('backdrop').classList.remove('hidden'); }
   function closeSidebar(){ document.getElementById('sidebar').classList.remove('open'); document.getElementById('backdrop').classList.add('hidden'); }
 
-  // Init — restore from hash if present
+  // Init — restore from hash only if that mockup is finalised, else first finalised.
   buildNav();
   (function initLoad(){
     const hash = location.hash.slice(1);
     let found = null, grp = null, acc = null;
-    NAV.forEach(sec=>{ if(sec.external) return; sec.items.forEach(it=>{ if(it.file===hash){ found=it; grp=sec.group; acc=sec.accent; } }); });
-    if(found) load(found.file, grp, found.label, acc);
-    else load('public-home.html','Public site','Home','#FF9900');
+    NAV.forEach(sec=> sec.items.forEach(it=>{ if(it.file===hash && isLive(it.file)){ found=it; grp=sec.group; acc=sec.accent; } }));
+    if(found){ load(found.file, grp, found.label, acc); return; }
+    // default: first finalised item
+    for(const sec of NAV){ for(const it of sec.items){ if(isLive(it.file)){ load(it.file, sec.group, it.label, sec.accent); return; } } }
+    // nothing finalised — clear the frame
+    document.getElementById('frame').removeAttribute('src');
   })();
   lucide.createIcons();
 </script>
