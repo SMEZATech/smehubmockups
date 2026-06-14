@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Your Guide to AI Prompting — SME South Africa</title>
+  <meta name="description" content="Learn the four core pillars of AI prompting with practical examples for business leaders. Free to download for SME South Africa members." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script><script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  <script>tailwind.config={theme:{extend:{fontFamily:{jakarta:['Plus Jakarta Sans','sans-serif'],inter:['Inter','system-ui','sans-serif']}}}};</script>
+  <style>
+    html,body{font-family:'Inter',system-ui,sans-serif;} .font-jakarta{font-family:'Plus Jakarta Sans',sans-serif;letter-spacing:.005em;}
+    .hero-bg{background:linear-gradient(115deg,#0C1F31 0%,#0C1F31 50%,#2b1626 80%,#5e1a2c 115%);}
+    .dot-pattern{background-image:radial-gradient(rgba(255,255,255,.07) 1px,transparent 1.5px);background-size:22px 22px;}
+    .card-lift{transition:box-shadow .2s,transform .2s;} .card-lift:hover{box-shadow:0 10px 24px -10px rgba(10,44,61,0.18);transform:translateY(-2px);}
+    .dev-badge{display:none;} body.dev-on .dev-badge{display:inline-flex;} #devToggle.on{background:#DC183C;color:#fff;border-color:#DC183C;}
+    .ov{position:fixed;inset:0;z-index:60;} .ov-bg{position:absolute;inset:0;background:rgba(12,31,49,.45);backdrop-filter:blur(2px);opacity:0;transition:opacity .3s;} .ov.open .ov-bg{opacity:1;}
+    .drawer{position:absolute;right:0;top:0;height:100%;width:100%;max-width:440px;background:#fff;box-shadow:-12px 0 40px rgba(12,31,49,.25);overflow-y:auto;transform:translateX(100%);transition:transform .3s cubic-bezier(.2,.7,.2,1);} .ov.open .drawer{transform:translateX(0);}
+    /* preview toggle */
+    .seg{background:#F1F5F9;border:1px solid #E7EBEF;border-radius:9999px;padding:3px;display:inline-flex;}
+    .seg button{border:0;background:transparent;font-size:.8rem;font-weight:700;color:#6A7581;padding:.35rem .9rem;border-radius:9999px;cursor:pointer;transition:all .15s;}
+    .seg button.on{background:#0C1F31;color:#fff;box-shadow:0 1px 3px rgba(12,31,49,.25);}
+  </style>
+</head>
+<body class="bg-[#FCFCFC] text-[#121A21] antialiased">
+<header class="bg-white border-b border-[#E7EBEF] sticky top-0 z-40"><div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center gap-4">
+  <a href="public-home.html" class="flex items-center gap-2.5 shrink-0"><img src="assets/logo-icon.png" alt="SME South Africa" class="w-9 h-9" /><span class="font-jakarta font-extrabold text-[17px] tracking-tight">SME <span class="text-[#DC183C]">South Africa</span></span></a>
+  <nav class="hidden lg:flex items-center gap-1 ml-4">
+    <a href="public-articles.html" class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition">Articles</a>
+    <a href="public-resources.html" class="px-3 py-2 rounded-lg text-sm font-semibold text-[#DC183C] bg-[#FDECEF]">Resources</a>
+    <a href="public-funding.html" class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition">Funding</a>
+    <a href="public-solutions.html" class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition">Solutions</a>
+    <a href="public-shop.html" class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition">Shop</a>
+  </nav>
+  <div class="flex items-center gap-1 sm:gap-2 ml-auto">
+    <button id="devToggle" onclick="toggleDevMode()" class="hidden sm:flex items-center gap-1.5 px-3 h-9 rounded-full border border-slate-200 text-slate-500 hover:border-[#DC183C] hover:text-[#DC183C] transition text-[11px] font-bold uppercase tracking-wider"><i data-lucide="code-2" class="w-3.5 h-3.5"></i><span>Dev</span></button>
+    <a href="public-auth.html" class="hidden sm:inline-flex items-center px-3 h-9 rounded-full text-sm font-bold text-[#121A21] hover:bg-slate-100 transition">Sign in</a>
+    <a href="public-auth.html#join" class="inline-flex items-center px-4 h-9 rounded-full text-sm font-bold text-white bg-[#DC183C] hover:bg-[#B0142F] transition">Join Free</a>
+  </div>
+</div></header>
+
+<!-- ===================== PREVIEW STATE TOGGLE (mockup helper) ===================== -->
+<div class="bg-[#0C1F31] text-white">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 py-2.5 flex items-center justify-center sm:justify-end gap-3 text-xs">
+    <span class="text-white/60 font-semibold uppercase tracking-wider">Preview as</span>
+    <div class="seg">
+      <button id="seg-out" class="on" onclick="setState('out')">Logged out</button>
+      <button id="seg-in" onclick="setState('in')">Member</button>
+    </div>
+  </div>
+</div>
+
+<main class="max-w-6xl mx-auto px-4 sm:px-6 py-8">
+  <nav class="flex items-center gap-1.5 text-xs font-semibold text-slate-500 mb-6"><a href="public-home.html" class="hover:text-[#121A21]">Home</a><i data-lucide="chevron-right" class="w-3.5 h-3.5"></i><a href="public-resources.html" class="hover:text-[#121A21]">Resources</a><i data-lucide="chevron-right" class="w-3.5 h-3.5"></i><a href="public-resource-category.html?type=ebooks" class="hover:text-[#121A21]">eBooks</a><i data-lucide="chevron-right" class="w-3.5 h-3.5"></i><span class="text-[#121A21]">Your Guide to AI Prompting</span></nav>
+
+  <!-- ===================== DETAIL HERO ===================== -->
+  <div class="grid lg:grid-cols-[340px_1fr] gap-8 lg:gap-12 items-start">
+    <!-- Cover -->
+    <div class="rounded-2xl overflow-hidden border border-[#E7EBEF] bg-white">
+      <img src="assets/article-3.jpg" alt="Your Guide to AI Prompting cover" class="w-full aspect-[3/4] object-cover" />
+    </div>
+    <!-- Details -->
+    <div>
+      <div class="flex items-start gap-2">
+        <span class="inline-flex px-2.5 py-1 rounded-full text-[11px] font-bold bg-[#FDECEF] text-[#DC183C]">EBOOK</span>
+        <button onclick="openBrief('resource')" class="dev-badge w-6 h-6 rounded-full bg-[#DC183C] text-white items-center justify-center text-[11px] font-bold">i</button>
+      </div>
+      <h1 class="font-jakarta font-extrabold text-3xl sm:text-4xl tracking-tight mt-3">Your Guide to AI Prompting</h1>
+      <p class="text-lg text-slate-600 mt-3 max-w-xl">Learn the four core pillars of AI prompting with practical examples for business leaders — so you get useful answers, faster.</p>
+
+      <!-- meta -->
+      <div class="flex flex-wrap items-center gap-x-6 gap-y-2 mt-5 text-sm text-slate-600">
+        <span class="flex items-center gap-1.5"><i data-lucide="file-text" class="w-4 h-4 text-slate-400"></i> 28 pages</span>
+        <span class="flex items-center gap-1.5"><i data-lucide="file" class="w-4 h-4 text-slate-400"></i> PDF</span>
+        <span class="flex items-center gap-1.5"><i data-lucide="download" class="w-4 h-4 text-slate-400"></i> 3,120 downloads</span>
+      </div>
+
+      <!-- ===================== GATED DOWNLOAD PANEL ===================== -->
+      <!-- Logged OUT -->
+      <div id="panel-out" class="mt-7 rounded-2xl border border-[#E7EBEF] bg-white p-6">
+        <div class="flex items-center gap-3">
+          <div class="w-11 h-11 rounded-xl bg-[#FDECEF] text-[#DC183C] grid place-items-center shrink-0"><i data-lucide="lock" class="w-5 h-5"></i></div>
+          <div>
+            <h2 class="font-jakarta font-extrabold text-lg leading-tight">Sign in or join free to download</h2>
+            <p class="text-sm text-slate-600 mt-0.5">This resource is free for SME South Africa members.</p>
+          </div>
+        </div>
+        <div class="flex flex-col sm:flex-row gap-3 mt-5">
+          <a href="public-auth.html#join" class="flex-1 h-12 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold transition flex items-center justify-center gap-2"><i data-lucide="user-plus" class="w-4 h-4"></i> Join Free to Unlock</a>
+          <a href="public-auth.html" class="flex-1 h-12 rounded-full border border-[#E7EBEF] hover:bg-slate-100 text-[#121A21] font-bold transition flex items-center justify-center gap-2">Sign in</a>
+        </div>
+        <p class="text-xs text-slate-500 mt-3 flex items-center gap-1.5"><i data-lucide="badge-check" class="w-3.5 h-3.5 text-[#29A37A]"></i> Free membership — no card required.</p>
+      </div>
+      <!-- Logged IN (member) -->
+      <div id="panel-in" class="hidden mt-7 rounded-2xl border border-[#29A37A]/30 bg-[#E4F5EE] p-6">
+        <div class="flex items-center gap-3">
+          <div class="w-11 h-11 rounded-xl bg-[#29A37A] text-white grid place-items-center shrink-0"><i data-lucide="check" class="w-5 h-5"></i></div>
+          <div>
+            <h2 class="font-jakarta font-extrabold text-lg leading-tight">You have access</h2>
+            <p class="text-sm text-[#1f7a5b] mt-0.5">Your free membership unlocks this download.</p>
+          </div>
+        </div>
+        <button onclick="showToast('Your download will start shortly.')" class="mt-5 w-full h-12 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold transition flex items-center justify-center gap-2"><i data-lucide="download" class="w-4 h-4"></i> Download (PDF)</button>
+        <p class="text-xs text-[#1f7a5b] mt-3 flex items-center gap-1.5"><i data-lucide="shield-check" class="w-3.5 h-3.5"></i> Served securely from our CDN — 4.2 MB.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== WHAT'S INSIDE ===================== -->
+  <section class="mt-14 max-w-3xl">
+    <h2 class="font-jakarta font-extrabold text-2xl">What's inside</h2>
+    <ul class="mt-5 space-y-3">
+      <li class="flex items-start gap-3"><span class="w-6 h-6 rounded-full bg-[#E4F5EE] text-[#29A37A] grid place-items-center shrink-0 mt-0.5"><i data-lucide="check" class="w-3.5 h-3.5"></i></span><span class="text-slate-700">The four pillars of an effective prompt — context, task, format and constraints.</span></li>
+      <li class="flex items-start gap-3"><span class="w-6 h-6 rounded-full bg-[#E4F5EE] text-[#29A37A] grid place-items-center shrink-0 mt-0.5"><i data-lucide="check" class="w-3.5 h-3.5"></i></span><span class="text-slate-700">Copy-and-paste prompt templates for marketing, ops and customer service.</span></li>
+      <li class="flex items-start gap-3"><span class="w-6 h-6 rounded-full bg-[#E4F5EE] text-[#29A37A] grid place-items-center shrink-0 mt-0.5"><i data-lucide="check" class="w-3.5 h-3.5"></i></span><span class="text-slate-700">Worked before-and-after examples drawn from real SA small businesses.</span></li>
+      <li class="flex items-start gap-3"><span class="w-6 h-6 rounded-full bg-[#E4F5EE] text-[#29A37A] grid place-items-center shrink-0 mt-0.5"><i data-lucide="check" class="w-3.5 h-3.5"></i></span><span class="text-slate-700">A one-page cheat sheet you can keep next to your keyboard.</span></li>
+      <li class="flex items-start gap-3"><span class="w-6 h-6 rounded-full bg-[#E4F5EE] text-[#29A37A] grid place-items-center shrink-0 mt-0.5"><i data-lucide="check" class="w-3.5 h-3.5"></i></span><span class="text-slate-700">Common mistakes to avoid and how to get unstuck when answers go wrong.</span></li>
+    </ul>
+  </section>
+
+  <!-- ===================== RELATED ===================== -->
+  <section class="mt-16">
+    <h2 class="font-jakarta font-extrabold text-2xl mb-6">Related resources</h2>
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <a href="public-resource.html" class="group bg-white rounded-2xl border border-[#E7EBEF] p-5 card-lift block flex flex-col">
+        <span class="inline-flex w-max px-2.5 py-1 rounded-full text-[11px] font-bold bg-[#FDECEF] text-[#DC183C]">Ebook</span>
+        <h3 class="font-jakarta font-bold text-lg leading-snug mt-3 group-hover:text-[#DC183C] transition">Pitching to Funders That Say Yes</h3>
+        <p class="text-sm text-slate-600 mt-2 flex-1">Structure a deck that survives the first five minutes.</p>
+        <span class="mt-4 inline-flex items-center gap-2 text-sm font-bold text-[#DC183C]"><i data-lucide="lock" class="w-4 h-4"></i> Unlock</span>
+      </a>
+      <a href="public-resource.html" class="group bg-white rounded-2xl border border-[#E7EBEF] p-5 card-lift block flex flex-col">
+        <span class="inline-flex w-max px-2.5 py-1 rounded-full text-[11px] font-bold bg-[#E4F5EE] text-[#29A37A]">Template</span>
+        <h3 class="font-jakarta font-bold text-lg leading-snug mt-3 group-hover:text-[#DC183C] transition">Marketing Calendar Template</h3>
+        <p class="text-sm text-slate-600 mt-2 flex-1">Plan a year of campaigns on a single tab.</p>
+        <span class="mt-4 inline-flex items-center gap-2 text-sm font-bold text-[#29A37A]"><i data-lucide="download" class="w-4 h-4"></i> Download Free</span>
+      </a>
+      <a href="public-resource.html" class="group bg-white rounded-2xl border border-[#E7EBEF] p-5 card-lift block flex flex-col">
+        <span class="inline-flex w-max px-2.5 py-1 rounded-full text-[11px] font-bold bg-[#FFF1E0] text-[#AE6B0A]">Guide</span>
+        <h3 class="font-jakarta font-bold text-lg leading-snug mt-3 group-hover:text-[#DC183C] transition">Selling on WhatsApp & Social</h3>
+        <p class="text-sm text-slate-600 mt-2 flex-1">Turn followers and chats into paying customers.</p>
+        <span class="mt-4 inline-flex items-center gap-2 text-sm font-bold text-[#29A37A]"><i data-lucide="download" class="w-4 h-4"></i> Download Free</span>
+      </a>
+    </div>
+  </section>
+</main>
+
+<footer class="bg-[#0C1F31] text-white mt-16"><div class="max-w-7xl mx-auto px-4 sm:px-6 py-10 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm">
+  <a href="public-home.html" class="flex items-center gap-2.5"><span class="w-8 h-8 rounded-lg bg-white grid place-items-center"><img src="assets/logo-icon.png" class="w-6 h-6" alt="" /></span><span class="font-jakarta font-extrabold">SME South Africa</span></a>
+  <div class="flex flex-wrap items-center gap-x-5 gap-y-2 text-white/60"><a href="public-about.html" class="hover:text-white">About</a><a href="public-contact.html" class="hover:text-white">Contact</a><a href="public-advertise.html" class="hover:text-white">Advertise</a><a href="public-privacy.html" class="hover:text-white">Privacy</a><a href="public-terms.html" class="hover:text-white">Terms</a><a href="public-refunds.html" class="hover:text-white">Refunds</a><a href="public-popia.html" class="hover:text-white">POPIA</a></div>
+  <p class="text-white/40">© 2026 SME South Africa</p>
+</div></footer>
+
+<div id="overlay-root"></div><div id="toast" class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-50"></div>
+<script>
+  function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+  function showToast(m){const el=document.getElementById('toast');el.classList.remove('hidden');el.innerHTML=`<div class="bg-[#0C1F31] text-white rounded-full pl-3 pr-5 py-2.5 shadow-2xl flex items-center gap-2 text-sm font-semibold" style="border-left:4px solid #29A37A"><i data-lucide="check-circle" class="w-4 h-4" style="color:#29A37A"></i><span>${esc(m)}</span></div>`;lucide.createIcons();setTimeout(()=>{el.classList.add('hidden');el.innerHTML='';},2400);}
+
+  // Preview state: 'out' (default) | 'in'
+  function setState(s){
+    const out = s==='out';
+    document.getElementById('panel-out').classList.toggle('hidden', !out);
+    document.getElementById('panel-in').classList.toggle('hidden', out);
+    document.getElementById('seg-out').classList.toggle('on', out);
+    document.getElementById('seg-in').classList.toggle('on', !out);
+    lucide.createIcons();
+  }
+
+  const BRIEFS = { resource: {
+    title:'Resource Detail', sub:'Single resource — gated download',
+    purpose:'The conversion point of the resource funnel. Works for both logged-out visitors (prompt to join free) and members (instant download). Free membership is the gate.',
+    data:'Resource: <code>{ id, title, type, excerpt, body, cover, file_url, pages, format, downloads, gated, related[] }</code>. User session resolves the access state.',
+    logic:'MemberPress checks membership on render. Logged-out → join/sign-in CTAs. Member → signed, time-limited download URL. The PDF is served from a CDN (not WP Engine) to protect origin CPU. Downloads counter increments server-side.',
+    components:'Breadcrumb · cover + details hero · gated panel (2 states) · What’s inside · related grid.',
+    api:'GET /v1/resources/{id} · POST /v1/resources/{id}/download → 302 CDN URL'
+  } };
+  function toggleDevMode(){const on=document.body.classList.toggle('dev-on');const b=document.getElementById('devToggle');if(b)b.classList.toggle('on',on);if(on)showToast('Dev Mode on — tap any ⓘ for implementation notes.');lucide.createIcons();}
+  function closeOverlay(id){const el=document.getElementById(id);if(!el)return;el.classList.remove('open');setTimeout(()=>{if(el&&el.parentNode)el.remove();},300);}
+  function openBrief(id){const b=BRIEFS[id];if(!b)return;const sec=(i,l,h)=>`<div class="px-6 py-4 border-t border-slate-100"><p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] flex items-center gap-1.5 mb-2"><i data-lucide="${i}" class="w-3.5 h-3.5"></i>${l}</p><div class="text-sm text-slate-600 leading-relaxed">${h}</div></div>`;document.getElementById('overlay-root').innerHTML=`<div class="ov" id="ov"><div class="ov-bg" onclick="closeOverlay('ov')"></div><div class="drawer"><div class="sticky top-0 z-10 bg-[#0C1F31] text-white px-6 py-5 flex items-start justify-between"><div><p class="text-[10px] font-bold uppercase tracking-widest text-[#FF9900] mb-1">Dev Brief</p><h3 class="font-jakarta font-extrabold text-lg leading-tight">${b.title}</h3><p class="text-xs text-white/60 mt-1">${b.sub}</p></div><button onclick="closeOverlay('ov')" class="text-white/60 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button></div>${sec('target','Purpose',b.purpose)}${sec('database','Data model',b.data)}${sec('git-branch','Logic',b.logic)}${sec('boxes','Components',b.components)}${sec('plug','API',`<code class="block bg-slate-900 text-emerald-300 text-xs font-mono px-3 py-2 rounded-lg overflow-x-auto">${b.api}</code>`)}</div></div>`;requestAnimationFrame(()=>{const o=document.getElementById('ov');if(o)o.classList.add('open');});lucide.createIcons();}
+
+  setState('out'); lucide.createIcons();
+</script>
+</body>
+</html>

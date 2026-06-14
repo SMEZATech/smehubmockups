@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Resource Category — SME South Africa</title>
+  <meta name="description" content="Browse SME South Africa resources by type — ebooks, templates, guides, reports and surveys." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script><script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  <script>tailwind.config={theme:{extend:{fontFamily:{jakarta:['Plus Jakarta Sans','sans-serif'],inter:['Inter','system-ui','sans-serif']}}}};</script>
+  <style>
+    html,body{font-family:'Inter',system-ui,sans-serif;} .font-jakarta{font-family:'Plus Jakarta Sans',sans-serif;letter-spacing:.005em;}
+    .hero-bg{background:linear-gradient(115deg,#0C1F31 0%,#0C1F31 50%,#2b1626 80%,#5e1a2c 115%);}
+    .dot-pattern{background-image:radial-gradient(rgba(255,255,255,.07) 1px,transparent 1.5px);background-size:22px 22px;}
+    .card-lift{transition:box-shadow .2s,transform .2s;} .card-lift:hover{box-shadow:0 10px 24px -10px rgba(10,44,61,0.18);transform:translateY(-2px);}
+    .chip{transition:background-color .15s,color .15s,border-color .15s;cursor:pointer;} .chip.active{background:#fff;color:#0C1F31;border-color:#fff;}
+    .no-scrollbar::-webkit-scrollbar{display:none;} .no-scrollbar{-ms-overflow-style:none;scrollbar-width:none;}
+    .field{width:100%;background:#fff;border:1px solid #E7EBEF;border-radius:.75rem;height:2.75rem;padding:0 1rem 0 2.5rem;font-size:.9rem;outline:none;transition:border-color .15s,box-shadow .15s;} .field:focus{border-color:#DC183C;box-shadow:0 0 0 3px rgba(220,24,60,.12);}
+    .dev-badge{display:none;} body.dev-on .dev-badge{display:inline-flex;} #devToggle.on{background:#DC183C;color:#fff;border-color:#DC183C;}
+    .ov{position:fixed;inset:0;z-index:60;} .ov-bg{position:absolute;inset:0;background:rgba(12,31,49,.45);backdrop-filter:blur(2px);opacity:0;transition:opacity .3s;} .ov.open .ov-bg{opacity:1;}
+    .drawer{position:absolute;right:0;top:0;height:100%;width:100%;max-width:440px;background:#fff;box-shadow:-12px 0 40px rgba(12,31,49,.25);overflow-y:auto;transform:translateX(100%);transition:transform .3s cubic-bezier(.2,.7,.2,1);} .ov.open .drawer{transform:translateX(0);}
+  </style>
+</head>
+<body class="bg-[#FCFCFC] text-[#121A21] antialiased">
+<header class="bg-white border-b border-[#E7EBEF] sticky top-0 z-40"><div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center gap-4">
+  <a href="public-home.html" class="flex items-center gap-2.5 shrink-0"><img src="assets/logo-icon.png" alt="SME South Africa" class="w-9 h-9" /><span class="font-jakarta font-extrabold text-[17px] tracking-tight">SME <span class="text-[#DC183C]">South Africa</span></span></a>
+  <nav class="hidden lg:flex items-center gap-1 ml-4">
+    <a href="public-articles.html" class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition">Articles</a>
+    <a href="public-resources.html" class="px-3 py-2 rounded-lg text-sm font-semibold text-[#DC183C] bg-[#FDECEF]">Resources</a>
+    <a href="public-funding.html" class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition">Funding</a>
+    <a href="public-solutions.html" class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition">Solutions</a>
+    <a href="public-shop.html" class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition">Shop</a>
+  </nav>
+  <div class="flex items-center gap-1 sm:gap-2 ml-auto">
+    <button id="devToggle" onclick="toggleDevMode()" class="hidden sm:flex items-center gap-1.5 px-3 h-9 rounded-full border border-slate-200 text-slate-500 hover:border-[#DC183C] hover:text-[#DC183C] transition text-[11px] font-bold uppercase tracking-wider"><i data-lucide="code-2" class="w-3.5 h-3.5"></i><span>Dev</span></button>
+    <a href="public-auth.html" class="hidden sm:inline-flex items-center px-3 h-9 rounded-full text-sm font-bold text-[#121A21] hover:bg-slate-100 transition">Sign in</a>
+    <a href="public-auth.html#join" class="inline-flex items-center px-4 h-9 rounded-full text-sm font-bold text-white bg-[#DC183C] hover:bg-[#B0142F] transition">Join Free</a>
+  </div>
+</div></header>
+
+<!-- ===================== ARCHIVE HERO ===================== -->
+<section class="hero-bg text-white relative overflow-hidden"><div class="absolute inset-0 dot-pattern opacity-70 pointer-events-none"></div>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-12 relative">
+    <nav class="flex items-center gap-1.5 text-xs font-semibold text-white/55 mb-4"><a href="public-home.html" class="hover:text-white">Home</a><i data-lucide="chevron-right" class="w-3.5 h-3.5"></i><a href="public-resources.html" class="hover:text-white">Resources</a><i data-lucide="chevron-right" class="w-3.5 h-3.5"></i><span id="bc-type" class="text-white/80">eBooks</span></nav>
+    <h1 id="hero-title" class="font-jakarta font-extrabold text-3xl sm:text-5xl tracking-tight">eBooks <button onclick="openBrief('cat')" class="dev-badge align-middle ml-1 w-6 h-6 rounded-full bg-[#FF9900] text-[#0C1F31] items-center justify-center text-[11px] font-bold">i</button></h1>
+    <p id="hero-sub" class="mt-4 text-white/70 max-w-2xl text-lg">In-depth reads on the topics that move your business forward.</p>
+    <!-- Type switcher chips -->
+    <div id="type-bar" class="flex items-center gap-2 overflow-x-auto no-scrollbar -mx-1 px-1 mt-7"></div>
+  </div>
+</section>
+
+<main class="max-w-7xl mx-auto px-4 sm:px-6 py-10">
+  <div class="flex flex-col sm:flex-row sm:items-center gap-4 mb-7">
+    <div class="relative flex-1 max-w-sm">
+      <i data-lucide="search" class="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"></i>
+      <input id="search" oninput="renderGrid()" class="field" placeholder="Search resources…" />
+    </div>
+    <div class="flex items-center gap-3 sm:ml-auto">
+      <span id="count" class="text-sm text-slate-500"></span>
+      <select id="sort" onchange="renderGrid()" class="text-sm font-semibold text-slate-600 border border-[#E7EBEF] rounded-full px-4 h-9 bg-white outline-none">
+        <option value="popular">Most downloaded</option>
+        <option value="az">A → Z</option>
+      </select>
+    </div>
+  </div>
+  <div id="grid" class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6"></div>
+</main>
+
+<footer class="bg-[#0C1F31] text-white"><div class="max-w-7xl mx-auto px-4 sm:px-6 py-10 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm">
+  <a href="public-home.html" class="flex items-center gap-2.5"><span class="w-8 h-8 rounded-lg bg-white grid place-items-center"><img src="assets/logo-icon.png" class="w-6 h-6" alt="" /></span><span class="font-jakarta font-extrabold">SME South Africa</span></a>
+  <div class="flex flex-wrap items-center gap-x-5 gap-y-2 text-white/60"><a href="public-about.html" class="hover:text-white">About</a><a href="public-contact.html" class="hover:text-white">Contact</a><a href="public-advertise.html" class="hover:text-white">Advertise</a><a href="public-privacy.html" class="hover:text-white">Privacy</a><a href="public-terms.html" class="hover:text-white">Terms</a><a href="public-refunds.html" class="hover:text-white">Refunds</a><a href="public-popia.html" class="hover:text-white">POPIA</a></div>
+  <p class="text-white/40">© 2026 SME South Africa</p>
+</div></footer>
+
+<div id="overlay-root"></div><div id="toast" class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-50"></div>
+<script>
+  function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+  function showToast(m){const el=document.getElementById('toast');el.classList.remove('hidden');el.innerHTML=`<div class="bg-[#0C1F31] text-white rounded-full pl-3 pr-5 py-2.5 shadow-2xl flex items-center gap-2 text-sm font-semibold" style="border-left:4px solid #29A37A"><i data-lucide="check-circle" class="w-4 h-4" style="color:#29A37A"></i><span>${esc(m)}</span></div>`;lucide.createIcons();setTimeout(()=>{el.classList.add('hidden');el.innerHTML='';},2400);}
+
+  // Type config: key -> { label, sub, icon, tint:[bg,text] }
+  const TYPES = {
+    ebooks:    { label:'eBooks',             sub:'In-depth reads on the topics that move your business forward.',  icon:'book-open',         tint:['#FDECEF','#DC183C'] },
+    templates: { label:'Templates',          sub:'Ready-to-use docs, plans and spreadsheets — just fill in and go.', icon:'file-spreadsheet', tint:['#E4F5EE','#29A37A'] },
+    guides:    { label:'Guides',             sub:'Step-by-step how-tos for every stage of starting and scaling.',  icon:'compass',          tint:['#FFF1E0','#AE6B0A'] },
+    reports:   { label:'Reports & Surveys',  sub:'Data and insight on the South African small-business landscape.', icon:'bar-chart-3',     tint:['#FDECEF','#DC183C'] }
+  };
+  const ORDER = ['ebooks','templates','guides','reports'];
+
+  // 8 resources per type
+  const DATA = {
+    ebooks: [
+      {t:'Your Guide to AI Prompting', d:'The four core pillars of prompting for business leaders.', g:true,  dl:3120},
+      {t:'Pitching to Funders That Say Yes', d:'Structure a deck that survives the first five minutes.', g:true, dl:2480},
+      {t:'The Bootstrapper’s Handbook', d:'Grow on revenue without giving away equity.', g:false, dl:4015},
+      {t:'Pricing Your Product or Service', d:'Frameworks to price for profit, not just to compete.', g:false, dl:1890},
+      {t:'Building a Brand on a Budget', d:'Look established before you are — for under R5,000.', g:true,  dl:1340},
+      {t:'Hiring Your First Five People', d:'What to delegate first without losing the culture.', g:false, dl:2210},
+      {t:'Selling on WhatsApp & Social', d:'Turn followers and chats into paying customers.', g:false, dl:3670},
+      {t:'Surviving a Cash Flow Crunch', d:'The moves that keep the lights on when money is tight.', g:true,  dl:1560}
+    ],
+    templates: [
+      {t:'One-Page Business Plan', d:'A founder-friendly plan you can fill in this afternoon.', g:false, dl:5240},
+      {t:'Cash Flow Forecast (12 Months)', d:'See your runway month by month.', g:false, dl:4680},
+      {t:'Invoice & Quote Pack', d:'SARS-friendly invoices and quotes, ready to brand.', g:false, dl:3920},
+      {t:'Pitch Deck Template', d:'Ten slides investors actually want to see.', g:true,  dl:2110},
+      {t:'Employment Contract Template', d:'A compliant starting point for your first hires.', g:true,  dl:1780},
+      {t:'Marketing Calendar', d:'Plan a year of campaigns on one tab.', g:false, dl:2440},
+      {t:'Expense Tracker', d:'Categorise spend and stay tax-ready all year.', g:false, dl:3010},
+      {t:'Sales Pipeline Tracker', d:'Track leads from first contact to close.', g:true,  dl:1620}
+    ],
+    guides: [
+      {t:'Registering Your Business with CIPC', d:'Every step, document and fee to register.', g:false, dl:6120},
+      {t:'POPIA Compliance for Small Teams', d:'A practical checklist to get data handling right.', g:false, dl:2890},
+      {t:'Getting Tax Compliant with SARS', d:'Registrations, returns and deadlines explained.', g:false, dl:3450},
+      {t:'Applying for Government Grants', d:'Where to look and how to put a strong application together.', g:true, dl:2230},
+      {t:'Opening a Business Bank Account', d:'What each bank needs and how to compare them.', g:false, dl:1980},
+      {t:'Writing a Funding-Ready Plan', d:'Turn your idea into a document funders trust.', g:true,  dl:1710},
+      {t:'B-BBEE for Small Business', d:'Understand your level and how to improve it.', g:false, dl:2050},
+      {t:'Setting Up Online Payments', d:'Compare gateways and go live with confidence.', g:false, dl:1640}
+    ],
+    reports: [
+      {t:'State of SA Small Business 2026', d:'Confidence, funding access and hiring intentions.', g:true,  dl:2780},
+      {t:'Township Economy Opportunity Map', d:'Where formal and informal markets converge.', g:true,  dl:1920},
+      {t:'SME Funding Landscape Report', d:'Who is lending, granting and investing right now.', g:true,  dl:2340},
+      {t:'Women in Business Survey', d:'The funding gap and the networks closing it.', g:false, dl:1560},
+      {t:'Digital Adoption Among SMEs', d:'How small firms are using tech to grow.', g:false, dl:1280},
+      {t:'Cost of Doing Business Index', d:'What is squeezing margins across sectors.', g:true,  dl:1410},
+      {t:'Youth Entrepreneurship Report', d:'Trends, barriers and support for under-35 founders.', g:false, dl:1190},
+      {t:'Skills & Hiring Outlook 2026', d:'The roles SMEs are struggling to fill.', g:false, dl:1020}
+    ]
+  };
+
+  function getType(){ const p=new URLSearchParams(location.search).get('type'); const h=location.hash.replace('#',''); const k=(h||p||'ebooks').toLowerCase(); return TYPES[k]?k:'ebooks'; }
+  let active = getType();
+
+  function fmt(n){ return n>=1000 ? (n/1000).toFixed(1).replace('.0','')+'k' : ''+n; }
+
+  function renderHero(){
+    const c = TYPES[active];
+    document.getElementById('bc-type').textContent = c.label;
+    document.getElementById('hero-title').childNodes[0].nodeValue = c.label + ' ';
+    document.getElementById('hero-sub').textContent = c.sub;
+    document.getElementById('type-bar').innerHTML = ORDER.map(k=>`<button onclick="setType('${k}')" class="chip shrink-0 px-4 h-9 rounded-full border border-white/25 text-sm font-semibold text-white/80 ${k===active?'active':''}">${esc(TYPES[k].label)}</button>`).join('');
+    lucide.createIcons();
+  }
+  function setType(k){ active=k; history.replaceState(null,'',`?type=${k}`); renderHero(); renderGrid(); }
+
+  function renderGrid(){
+    const c = TYPES[active];
+    const q = (document.getElementById('search').value||'').toLowerCase();
+    let list = DATA[active].filter(r => !q || r.t.toLowerCase().includes(q) || r.d.toLowerCase().includes(q));
+    if(document.getElementById('sort').value==='az') list = list.slice().sort((a,b)=>a.t.localeCompare(b.t));
+    else list = list.slice().sort((a,b)=>b.dl-a.dl);
+    document.getElementById('count').textContent = `${list.length} resource${list.length===1?'':'s'}`;
+    document.getElementById('grid').innerHTML = list.map(r=>`
+      <a href="public-resource.html" class="group bg-white rounded-2xl border border-[#E7EBEF] p-5 card-lift block flex flex-col">
+        <div class="w-12 h-12 rounded-xl grid place-items-center mb-4" style="background:${c.tint[0]};color:${c.tint[1]}"><i data-lucide="${c.icon}" class="w-6 h-6"></i></div>
+        <h3 class="font-jakarta font-bold text-base leading-snug group-hover:text-[#DC183C] transition">${esc(r.t)}</h3>
+        <p class="text-sm text-slate-600 mt-2 flex-1">${esc(r.d)}</p>
+        <div class="flex items-center justify-between mt-4 pt-4 border-t border-[#E7EBEF]">
+          <span class="text-xs text-slate-500 flex items-center gap-1"><i data-lucide="download" class="w-3.5 h-3.5"></i> ${fmt(r.dl)}</span>
+          <span class="inline-flex items-center gap-1.5 text-sm font-bold ${r.g?'text-[#DC183C]':'text-[#29A37A]'}"><i data-lucide="${r.g?'lock':'download'}" class="w-4 h-4"></i> ${r.g?'Unlock':'Download Free'}</span>
+        </div>
+      </a>`).join('');
+    lucide.createIcons();
+  }
+
+  const BRIEFS = { cat: {
+    title:'Resource Category', sub:'One templated page for all 4 types',
+    purpose:'A single template renders any resource type (ebooks / templates / guides / reports). The type chips swap the view client-side and rewrite the URL so each type is shareable and indexable.',
+    data:'Reads <code>?type=</code> (or #hash). Resource CPT: <code>{ id, title, type, excerpt, cover, file_url, gated, downloads }</code>. Type is a taxonomy term.',
+    logic:'On WordPress this is the <code>type</code> taxonomy archive. Switcher = AJAX filter or real archive links. Gated downloads are protected by MemberPress; free ones serve immediately.',
+    components:'Archive hero · type switcher chips · search · sort · resource grid.',
+    api:'GET /v1/resources?type={type}&q={q}&sort={popular|az}'
+  } };
+  function toggleDevMode(){const on=document.body.classList.toggle('dev-on');const b=document.getElementById('devToggle');if(b)b.classList.toggle('on',on);if(on)showToast('Dev Mode on — tap any ⓘ for implementation notes.');lucide.createIcons();}
+  function closeOverlay(id){const el=document.getElementById(id);if(!el)return;el.classList.remove('open');setTimeout(()=>{if(el&&el.parentNode)el.remove();},300);}
+  function openBrief(id){const b=BRIEFS[id];if(!b)return;const sec=(i,l,h)=>`<div class="px-6 py-4 border-t border-slate-100"><p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] flex items-center gap-1.5 mb-2"><i data-lucide="${i}" class="w-3.5 h-3.5"></i>${l}</p><div class="text-sm text-slate-600 leading-relaxed">${h}</div></div>`;document.getElementById('overlay-root').innerHTML=`<div class="ov" id="ov"><div class="ov-bg" onclick="closeOverlay('ov')"></div><div class="drawer"><div class="sticky top-0 z-10 bg-[#0C1F31] text-white px-6 py-5 flex items-start justify-between"><div><p class="text-[10px] font-bold uppercase tracking-widest text-[#FF9900] mb-1">Dev Brief</p><h3 class="font-jakarta font-extrabold text-lg leading-tight">${b.title}</h3><p class="text-xs text-white/60 mt-1">${b.sub}</p></div><button onclick="closeOverlay('ov')" class="text-white/60 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button></div>${sec('target','Purpose',b.purpose)}${sec('database','Data model',b.data)}${sec('git-branch','Logic',b.logic)}${sec('boxes','Components',b.components)}${sec('plug','API',`<code class="block bg-slate-900 text-emerald-300 text-xs font-mono px-3 py-2 rounded-lg overflow-x-auto">${b.api}</code>`)}</div></div>`;requestAnimationFrame(()=>{const o=document.getElementById('ov');if(o)o.classList.add('open');});lucide.createIcons();}
+
+  renderHero(); renderGrid(); lucide.createIcons();
+</script>
+</body>
+</html>
