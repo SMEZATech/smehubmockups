@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Inventory Finance — SME South Africa</title>
+  <meta name="description" content="Don't let limited cash flow hold your business back — inventory finance is a smarter way to access working capital. Apply for R10,000 – R5,000,000." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script><script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  <script>tailwind.config={theme:{extend:{fontFamily:{jakarta:['Plus Jakarta Sans','sans-serif'],inter:['Inter','system-ui','sans-serif']}}}};</script>
+  <style>
+    html,body{font-family:'Inter',system-ui,sans-serif;} .font-jakarta{font-family:'Plus Jakarta Sans',sans-serif;letter-spacing:.005em;}
+    html{scroll-behavior:smooth;}
+    .hero-bg{background:linear-gradient(115deg,#0C1F31 0%,#0C1F31 50%,#2b1626 80%,#5e1a2c 115%);}
+    .dot-pattern{background-image:radial-gradient(rgba(255,255,255,.07) 1px,transparent 1.5px);background-size:22px 22px;}
+    .card-lift{transition:box-shadow .2s,transform .2s;} .card-lift:hover{box-shadow:0 14px 30px -12px rgba(10,44,61,.22);transform:translateY(-3px);}
+    .field{width:100%;background:#fff;border:1px solid #E7EBEF;border-radius:.75rem;height:3rem;padding:0 1rem;font-size:.9rem;outline:none;transition:border-color .15s,box-shadow .15s;} .field:focus{border-color:#DC183C;box-shadow:0 0 0 3px rgba(220,24,60,.12);}
+    /* Section anchors clear the sticky header */
+    .doc h2{scroll-margin-top:6rem;}
+    /* TOC scroll-spy (article pattern) */
+    .toc-link{display:block;font-size:.85rem;color:#6A7581;padding:.4rem .75rem;border-left:2px solid transparent;transition:all .15s;line-height:1.35;}
+    .toc-link:hover{color:#121A21;}
+    .toc-link.active{color:#DC183C;font-weight:700;border-left-color:#DC183C;background:#FDECEF;border-radius:0 .4rem .4rem 0;}
+    .dev-badge{display:none;} body.dev-on .dev-badge{display:inline-flex;} #devToggle.on{background:#DC183C;color:#fff;border-color:#DC183C;}
+    .ov{position:fixed;inset:0;z-index:60;} .ov-bg{position:absolute;inset:0;background:rgba(12,31,49,.45);backdrop-filter:blur(2px);opacity:0;transition:opacity .3s;} .ov.open .ov-bg{opacity:1;}
+    .drawer{position:absolute;right:0;top:0;height:100%;width:100%;max-width:440px;background:#fff;box-shadow:-12px 0 40px rgba(12,31,49,.25);overflow-y:auto;transform:translateX(100%);transition:transform .3s cubic-bezier(.2,.7,.2,1);} .ov.open .drawer{transform:translateX(0);}
+  </style>
+</head>
+<body class="bg-[#FCFCFC] text-[#121A21] antialiased">
+<header class="bg-white border-b border-[#E7EBEF] sticky top-0 z-40"><div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center gap-4">
+  <a href="public-home.html" class="flex items-center gap-2.5 shrink-0"><img src="assets/logo-icon.png" alt="SME South Africa" class="w-9 h-9" /><span class="font-jakarta font-extrabold text-[17px] tracking-tight">SME <span class="text-[#DC183C]">South Africa</span></span></a>
+  <nav class="hidden lg:flex items-center gap-1 ml-4">
+    <a href="public-articles.html" class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition">Articles</a>
+    <a href="public-resources.html" class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition">Resources</a>
+    <a href="public-funding.html" class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition">Funding</a>
+    <a href="public-solutions.html" class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition">Solutions</a>
+    <a href="public-shop.html" class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition">Shop</a>
+  </nav>
+  <div class="flex items-center gap-1 sm:gap-2 ml-auto">
+    <button id="devToggle" onclick="toggleDevMode()" class="hidden sm:flex items-center gap-1.5 px-3 h-9 rounded-full border border-slate-200 text-slate-500 hover:border-[#DC183C] hover:text-[#DC183C] transition text-[11px] font-bold uppercase tracking-wider"><i data-lucide="code-2" class="w-3.5 h-3.5"></i><span>Dev</span></button>
+    <a href="public-auth.html" class="hidden sm:inline-flex items-center px-3 h-9 rounded-full text-sm font-bold text-[#121A21] hover:bg-slate-100 transition">Sign in</a>
+    <a href="public-auth.html#join" class="inline-flex items-center px-4 h-9 rounded-full text-sm font-bold text-white bg-[#DC183C] hover:bg-[#B0142F] transition">Join Free</a>
+  </div>
+</div></header>
+
+<!-- ===================== 1. HERO ===================== -->
+<section class="hero-bg text-white relative overflow-hidden"><div class="absolute inset-0 dot-pattern opacity-70 pointer-events-none"></div>
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 pt-12 pb-16 relative text-center">
+    <p class="text-xs text-white/50 mb-4"><a href="public-home.html" class="hover:text-white/80">Home</a> <span class="mx-1">›</span> <a href="public-funding.html" class="hover:text-white/80">Funding</a> <span class="mx-1">›</span> <span class="text-white/80">Inventory Finance</span></p>
+    <h1 class="font-jakarta font-extrabold text-4xl sm:text-5xl tracking-tight leading-tight">Inventory Finance
+      <button onclick="openBrief('loan')" class="dev-badge align-middle ml-1 w-6 h-6 rounded-full bg-[#FF9900] text-[#0C1F31] items-center justify-center text-[11px] font-bold">i</button>
+    </h1>
+    <p class="mt-5 text-white/70 max-w-2xl mx-auto text-lg">Don't let limited cash flow hold your business back — inventory finance is a smarter way to access working capital.</p>
+    <div class="mt-8 flex flex-col items-center gap-4">
+      <a href="public-funding.html#apply" class="inline-flex items-center gap-2 px-7 h-12 rounded-full bg-[#DC183C] hover:bg-[#B0142F] font-bold transition">Get Started <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
+      <span class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 border border-white/15 text-xs font-semibold text-white/80"><i data-lucide="banknote" class="w-3.5 h-3.5"></i> R10,000 – R5,000,000 · no commitment</span>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 2. KEY FEATURES BANNER ===================== -->
+<section class="max-w-6xl mx-auto px-4 sm:px-6 -mt-10 relative z-10">
+  <div class="grid sm:grid-cols-3 gap-5">
+    <div class="bg-white rounded-2xl border border-[#E7EBEF] p-6 card-lift">
+      <div class="w-12 h-12 rounded-xl bg-[#FDECEF] text-[#DC183C] grid place-items-center"><i data-lucide="refresh-cw" class="w-6 h-6"></i></div>
+      <h3 class="font-jakarta font-bold text-lg mt-4">Completely Flexible</h3>
+      <p class="text-sm text-[#6A7581] mt-1.5 leading-relaxed">Repay anytime with no early-repayment fees. Funding that flexes with your trading cycle.</p>
+    </div>
+    <div class="bg-white rounded-2xl border border-[#E7EBEF] p-6 card-lift">
+      <div class="w-12 h-12 rounded-xl bg-[#E4F5EE] text-[#29A37A] grid place-items-center"><i data-lucide="badge-check" class="w-6 h-6"></i></div>
+      <h3 class="font-jakarta font-bold text-lg mt-4">Trusted by SMEs</h3>
+      <p class="text-sm text-[#6A7581] mt-1.5 leading-relaxed">Fast funding in hours, not weeks, with minimal documentation required to apply.</p>
+    </div>
+    <div class="bg-white rounded-2xl border border-[#E7EBEF] p-6 card-lift">
+      <div class="w-12 h-12 rounded-xl bg-[#FFF1E0] text-[#AE6B0A] grid place-items-center"><i data-lucide="shield-check" class="w-6 h-6"></i></div>
+      <h3 class="font-jakarta font-bold text-lg mt-4">Your Information is Secure</h3>
+      <p class="text-sm text-[#6A7581] mt-1.5 leading-relaxed">Bank-grade security and POPIA-compliant handling protect your data end to end.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 3. FUNDING AMOUNT STRIP ===================== -->
+<section class="max-w-6xl mx-auto px-4 sm:px-6 mt-14">
+  <div class="rounded-3xl bg-[#FDECEF] border border-[#F4C9D2] px-6 sm:px-10 py-8 flex flex-col md:flex-row items-center gap-6 text-center md:text-left">
+    <div class="w-14 h-14 rounded-2xl bg-white grid place-items-center shadow-sm shrink-0"><i data-lucide="banknote" class="w-7 h-7 text-[#DC183C]"></i></div>
+    <div class="flex-1">
+      <p class="font-jakarta font-extrabold text-xl sm:text-2xl text-[#0C1F31] tracking-tight">Apply today with absolutely no commitment</p>
+      <p class="text-[#6A7581] mt-1">Get access to <span class="font-bold text-[#DC183C]">R10,000 – R5,000,000</span> to fund the stock your business needs.</p>
+    </div>
+    <a href="public-funding.html#apply" class="inline-flex items-center gap-2 px-6 h-12 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold transition shrink-0">Apply Now <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
+  </div>
+</section>
+
+<!-- ===================== 4. MAIN — two-column ===================== -->
+<div class="max-w-6xl mx-auto px-4 sm:px-6 py-16 grid lg:grid-cols-3 gap-10">
+  <!-- LEFT: main content -->
+  <div class="lg:col-span-2 doc">
+    <h2 class="font-jakarta font-extrabold text-2xl sm:text-3xl tracking-tight">Inventory Finance: What You Need to Know</h2>
+
+    <!-- Key Takeaways -->
+    <div class="mt-6 rounded-2xl border border-[#E4F5EE] bg-[#E4F5EE] p-6">
+      <p class="text-[11px] font-bold uppercase tracking-widest text-[#29A37A] flex items-center gap-1.5 mb-3"><i data-lucide="sparkles" class="w-3.5 h-3.5"></i> Key Takeaways</p>
+      <ul class="space-y-2.5 text-sm text-[#0C1F31]">
+        <li class="flex gap-2.5"><i data-lucide="check" class="w-4 h-4 text-[#29A37A] shrink-0 mt-0.5"></i><span>Inventory finance unlocks working capital using the stock you already buy and sell.</span></li>
+        <li class="flex gap-2.5"><i data-lucide="check" class="w-4 h-4 text-[#29A37A] shrink-0 mt-0.5"></i><span>It smooths seasonal demand and lets you buy in bulk without draining cash reserves.</span></li>
+        <li class="flex gap-2.5"><i data-lucide="check" class="w-4 h-4 text-[#29A37A] shrink-0 mt-0.5"></i><span>Funding of R10k–R5m can be approved in as little as 24 hours with minimal paperwork.</span></li>
+      </ul>
+    </div>
+
+    <!-- In-page TOC -->
+    <div class="mt-6 rounded-2xl border border-[#E7EBEF] bg-white p-5">
+      <p class="text-[11px] font-bold uppercase tracking-widest text-[#DC183C] flex items-center gap-1.5 mb-3"><i data-lucide="list" class="w-3.5 h-3.5"></i> On This Page</p>
+      <nav id="toc" class="-ml-px"></nav>
+    </div>
+
+    <!-- WHAT -->
+    <h2 id="what" class="font-jakarta font-extrabold text-2xl tracking-tight mt-12">What is Inventory Finance?</h2>
+    <p class="text-[#374151] leading-[1.8] mt-3">Inventory finance is a form of short-term, asset-backed funding that lets your business borrow against the stock it holds or intends to purchase. Instead of tying up your own cash in shelves of product, you use the inventory itself as security — freeing up working capital to keep the business moving while your stock sells through.</p>
+    <p class="text-[#374151] leading-[1.8] mt-3">For retailers, wholesalers and manufacturers, it's one of the most practical ways to bridge the gap between paying suppliers and getting paid by customers. You buy what you need to meet demand, sell it, and repay as the cash comes in.</p>
+    <ul class="mt-5 space-y-2.5">
+      <li class="flex gap-2.5 text-[#374151]"><i data-lucide="check-circle-2" class="w-5 h-5 text-[#29A37A] shrink-0 mt-0.5"></i><span><span class="font-semibold text-[#121A21]">Bridge the cash-flow gap</span> between buying stock and selling it.</span></li>
+      <li class="flex gap-2.5 text-[#374151]"><i data-lucide="check-circle-2" class="w-5 h-5 text-[#29A37A] shrink-0 mt-0.5"></i><span><span class="font-semibold text-[#121A21]">Fuel growth</span> by saying yes to bigger orders and new product lines.</span></li>
+      <li class="flex gap-2.5 text-[#374151]"><i data-lucide="check-circle-2" class="w-5 h-5 text-[#29A37A] shrink-0 mt-0.5"></i><span><span class="font-semibold text-[#121A21]">Maintain liquidity</span> so day-to-day operations never stall.</span></li>
+    </ul>
+
+    <!-- BENEFITS -->
+    <h2 id="benefits" class="font-jakarta font-extrabold text-2xl tracking-tight mt-12">Benefits of Inventory Finance</h2>
+    <p class="text-[#374151] leading-[1.8] mt-3">Used well, inventory finance does more than plug a gap — it becomes a growth engine. Here's where it makes the biggest difference.</p>
+
+    <div class="mt-6 space-y-6">
+      <div class="rounded-2xl border border-[#E7EBEF] bg-white p-6">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-[#FDECEF] text-[#DC183C] grid place-items-center shrink-0"><i data-lucide="git-compare-arrows" class="w-5 h-5"></i></div>
+          <h3 class="font-jakarta font-bold text-lg">Bridge the Cash Flow Gap</h3>
+        </div>
+        <p class="text-sm text-[#6A7581] mt-3 leading-relaxed">Suppliers want paying long before your customers settle up. Inventory finance covers that timing mismatch so you're never forced to choose between restocking and paying the bills.</p>
+        <ul class="mt-4 space-y-2 text-sm text-[#374151]">
+          <li class="flex gap-2"><i data-lucide="check" class="w-4 h-4 text-[#29A37A] shrink-0 mt-0.5"></i><span>Pay suppliers on time and protect your buying terms.</span></li>
+          <li class="flex gap-2"><i data-lucide="check" class="w-4 h-4 text-[#29A37A] shrink-0 mt-0.5"></i><span>Keep shelves stocked through slow-paying months.</span></li>
+          <li class="flex gap-2"><i data-lucide="check" class="w-4 h-4 text-[#29A37A] shrink-0 mt-0.5"></i><span>Avoid expensive emergency borrowing.</span></li>
+        </ul>
+      </div>
+
+      <div class="rounded-2xl border border-[#E7EBEF] bg-white p-6">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-[#E4F5EE] text-[#29A37A] grid place-items-center shrink-0"><i data-lucide="trending-up" class="w-5 h-5"></i></div>
+          <h3 class="font-jakarta font-bold text-lg">Fuel Growth</h3>
+        </div>
+        <p class="text-sm text-[#6A7581] mt-3 leading-relaxed">Bigger opportunities often need bigger stock orders. With inventory finance you can buy in volume, negotiate better unit prices and take on the orders that move your business to the next level.</p>
+        <ul class="mt-4 space-y-2 text-sm text-[#374151]">
+          <li class="flex gap-2"><i data-lucide="check" class="w-4 h-4 text-[#29A37A] shrink-0 mt-0.5"></i><span>Buy in bulk and unlock supplier discounts.</span></li>
+          <li class="flex gap-2"><i data-lucide="check" class="w-4 h-4 text-[#29A37A] shrink-0 mt-0.5"></i><span>Launch new product lines without dipping into reserves.</span></li>
+          <li class="flex gap-2"><i data-lucide="check" class="w-4 h-4 text-[#29A37A] shrink-0 mt-0.5"></i><span>Scale up for peak seasons with confidence.</span></li>
+        </ul>
+      </div>
+
+      <div class="rounded-2xl border border-[#E7EBEF] bg-white p-6">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-[#FFF1E0] text-[#AE6B0A] grid place-items-center shrink-0"><i data-lucide="droplets" class="w-5 h-5"></i></div>
+          <h3 class="font-jakarta font-bold text-lg">Maintain Liquidity</h3>
+        </div>
+        <p class="text-sm text-[#6A7581] mt-3 leading-relaxed">Cash tied up in stock is cash you can't use elsewhere. By financing inventory, you keep funds available for payroll, marketing and the unexpected — the things that keep a business resilient.</p>
+        <ul class="mt-4 space-y-2 text-sm text-[#374151]">
+          <li class="flex gap-2"><i data-lucide="check" class="w-4 h-4 text-[#29A37A] shrink-0 mt-0.5"></i><span>Keep a healthy cash buffer at all times.</span></li>
+          <li class="flex gap-2"><i data-lucide="check" class="w-4 h-4 text-[#29A37A] shrink-0 mt-0.5"></i><span>Cover operating costs without stress.</span></li>
+          <li class="flex gap-2"><i data-lucide="check" class="w-4 h-4 text-[#29A37A] shrink-0 mt-0.5"></i><span>React quickly to opportunities and emergencies.</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- QUALIFY -->
+    <h2 id="qualify" class="font-jakarta font-extrabold text-2xl tracking-tight mt-12">How to Qualify</h2>
+    <p class="text-[#374151] leading-[1.8] mt-3">Qualifying is straightforward. Have these three things ready and your application can be assessed in minutes.</p>
+    <div class="mt-6 space-y-4">
+      <div class="flex items-start gap-4 rounded-2xl border border-[#E7EBEF] bg-white p-5">
+        <div class="w-11 h-11 rounded-xl bg-[#FDECEF] text-[#DC183C] grid place-items-center shrink-0"><i data-lucide="file-spreadsheet" class="w-5 h-5"></i></div>
+        <div>
+          <h3 class="font-jakarta font-bold">Financial statements</h3>
+          <p class="text-sm text-[#6A7581] mt-1 leading-relaxed">Recent management accounts or bank statements (typically the last 6–12 months) to confirm turnover.</p>
+        </div>
+      </div>
+      <div class="flex items-start gap-4 rounded-2xl border border-[#E7EBEF] bg-white p-5">
+        <div class="w-11 h-11 rounded-xl bg-[#E4F5EE] text-[#29A37A] grid place-items-center shrink-0"><i data-lucide="boxes" class="w-5 h-5"></i></div>
+        <div>
+          <h3 class="font-jakarta font-bold">Inventory management records</h3>
+          <p class="text-sm text-[#6A7581] mt-1 leading-relaxed">A clear view of the stock you hold and turn over, so the value being financed can be confirmed.</p>
+        </div>
+      </div>
+      <div class="flex items-start gap-4 rounded-2xl border border-[#E7EBEF] bg-white p-5">
+        <div class="w-11 h-11 rounded-xl bg-[#FFF1E0] text-[#AE6B0A] grid place-items-center shrink-0"><i data-lucide="scale" class="w-5 h-5"></i></div>
+        <div>
+          <h3 class="font-jakarta font-bold">Credit history</h3>
+          <p class="text-sm text-[#6A7581] mt-1 leading-relaxed">A reasonable business and personal credit record. A few blemishes won't always disqualify you.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- FAQS -->
+    <h2 id="faqs" class="font-jakarta font-extrabold text-2xl tracking-tight mt-12">Frequently Asked Questions</h2>
+    <div id="faq" class="mt-6 space-y-3"></div>
+  </div>
+
+  <!-- RIGHT: sticky sidebar -->
+  <aside class="lg:col-span-1">
+    <div class="lg:sticky lg:top-24 space-y-6">
+      <!-- Apply widget -->
+      <div class="rounded-2xl bg-[#0C1F31] text-white p-6 relative overflow-hidden">
+        <div class="absolute inset-0 dot-pattern opacity-40 pointer-events-none"></div>
+        <div class="relative">
+          <p class="text-[11px] font-bold uppercase tracking-widest text-[#FF9900]">Get funded</p>
+          <h3 class="font-jakarta font-extrabold text-xl mt-1 leading-tight">Apply for Inventory Finance</h3>
+          <ul class="mt-5 space-y-3 text-sm">
+            <li class="flex items-center justify-between gap-3 border-b border-white/10 pb-3"><span class="flex items-center gap-2 text-white/70"><i data-lucide="banknote" class="w-4 h-4 text-[#FF9900]"></i> Amount</span><span class="font-semibold">R10k – R5m</span></li>
+            <li class="flex items-center justify-between gap-3 border-b border-white/10 pb-3"><span class="flex items-center gap-2 text-white/70"><i data-lucide="calendar-clock" class="w-4 h-4 text-[#FF9900]"></i> Term</span><span class="font-semibold">Flexible</span></li>
+            <li class="flex items-center justify-between gap-3 border-b border-white/10 pb-3"><span class="flex items-center gap-2 text-white/70"><i data-lucide="zap" class="w-4 h-4 text-[#FF9900]"></i> Time to funds</span><span class="font-semibold">24 hours</span></li>
+            <li class="flex items-center justify-between gap-3"><span class="flex items-center gap-2 text-white/70"><i data-lucide="percent" class="w-4 h-4 text-[#FF9900]"></i> Cost</span><span class="font-semibold">Competitive rates</span></li>
+          </ul>
+          <a href="public-funding.html#apply" class="mt-6 inline-flex w-full items-center justify-center gap-2 h-12 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold transition">Start application <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
+          <p class="text-center text-[11px] text-white/50 mt-3">No commitment · Secure · No upfront fees</p>
+        </div>
+      </div>
+
+      <!-- Other loan options -->
+      <div class="rounded-2xl border border-[#E7EBEF] bg-white p-5">
+        <p class="text-[11px] font-bold uppercase tracking-widest text-[#DC183C] flex items-center gap-1.5 mb-3"><i data-lucide="layout-grid" class="w-3.5 h-3.5"></i> Other loan options</p>
+        <div id="otherOptions" class="space-y-1"></div>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<!-- ===================== 5. FINAL CTA ===================== -->
+<section class="bg-[#0C1F31] text-white relative overflow-hidden">
+  <div class="absolute inset-0 dot-pattern opacity-50 pointer-events-none"></div>
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 py-16 sm:py-20 text-center relative">
+    <h2 class="font-jakarta font-extrabold text-3xl sm:text-4xl tracking-tight">Ready to unlock your inventory's value?</h2>
+    <p class="mt-4 text-white/70 text-lg max-w-xl mx-auto">Apply with no commitment and get a decision in hours, not weeks.</p>
+    <a href="public-funding.html#apply" class="mt-8 inline-flex items-center gap-2 px-8 h-14 rounded-full bg-[#DC183C] hover:bg-[#B0142F] font-bold text-lg transition">Start your application <i data-lucide="arrow-right" class="w-5 h-5"></i></a>
+    <p class="mt-4 text-sm text-white/50">R10,000 – R5,000,000 · Takes 5 minutes · Secure</p>
+  </div>
+</section>
+
+<footer class="bg-[#0C1F31] text-white border-t border-white/10"><div class="max-w-7xl mx-auto px-4 sm:px-6 py-10 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm">
+  <a href="public-home.html" class="flex items-center gap-2.5"><span class="w-8 h-8 rounded-lg bg-white grid place-items-center"><img src="assets/logo-icon.png" class="w-6 h-6" alt="" /></span><span class="font-jakarta font-extrabold">SME South Africa</span></a>
+  <div class="flex flex-wrap items-center gap-x-5 gap-y-2 text-white/60"><a href="public-about.html" class="hover:text-white">About</a><a href="public-contact.html" class="hover:text-white">Contact</a><a href="public-advertise.html" class="hover:text-white">Advertise</a><a href="public-privacy.html" class="hover:text-white">Privacy</a><a href="public-terms.html" class="hover:text-white">Terms</a><a href="public-refunds.html" class="hover:text-white">Refunds</a><a href="public-popia.html" class="hover:text-white">POPIA</a></div>
+  <p class="text-white/40">© 2026 SME South Africa</p>
+</div></footer>
+
+<div id="overlay-root"></div><div id="toast" class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-50"></div>
+<script>
+  function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+  function showToast(m){const el=document.getElementById('toast');el.classList.remove('hidden');el.innerHTML=`<div class="bg-[#0C1F31] text-white rounded-full pl-3 pr-5 py-2.5 shadow-2xl flex items-center gap-2 text-sm font-semibold" style="border-left:4px solid #29A37A"><i data-lucide="check-circle" class="w-4 h-4" style="color:#29A37A"></i><span>${esc(m)}</span></div>`;lucide.createIcons();setTimeout(()=>{el.classList.add('hidden');el.innerHTML='';},2400);}
+
+  /* ---------- Other loan options list ---------- */
+  const OTHER=[
+    {icon:'truck',name:'Asset Finance'},
+    {icon:'milestone',name:'Bridging Finance'},
+    {icon:'file-text',name:'Invoice Finance'},
+    {icon:'layers',name:'Mezzanine Funding'},
+    {icon:'clipboard-check',name:'Purchase Order Funding'},
+    {icon:'hand-coins',name:'Unsecured Business Loan'},
+    {icon:'wallet',name:'Working Capital Loans'}
+  ];
+  document.getElementById('otherOptions').innerHTML=OTHER.map(o=>`
+    <a href="public-loan-option.html" class="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-slate-50 transition group">
+      <span class="w-8 h-8 rounded-lg bg-[#FDECEF] text-[#DC183C] grid place-items-center shrink-0"><i data-lucide="${o.icon}" class="w-4 h-4"></i></span>
+      <span class="text-sm font-semibold text-[#121A21] flex-1">${esc(o.name)}</span>
+      <i data-lucide="chevron-right" class="w-4 h-4 text-slate-300 group-hover:text-[#DC183C] group-hover:translate-x-0.5 transition"></i>
+    </a>`).join('');
+
+  /* ---------- FAQ accordion (funding pattern) ---------- */
+  const FAQS=[
+    ['Which businesses is inventory finance for?','It suits any stock-holding business — retailers, wholesalers, distributors and manufacturers — that buys inventory to sell and experiences a gap between paying suppliers and getting paid by customers.'],
+    ['What are the risks?','As with any borrowing, you take on repayment obligations and the financed stock typically serves as security. The main risk is funding inventory that sells slowly, so it works best for products with reliable demand. We help you size funding to your turnover.'],
+    ['What does it cost?','Pricing is based on the amount, term and your business profile, charged from competitive rates with no upfront fees. You repay flexibly and there are no early-repayment penalties.'],
+    ['How fast is funding?','Most applications take under 5 minutes to complete, and approved funding can pay out within 24 hours once your documents are verified.']
+  ];
+  function renderFaq(){
+    document.getElementById('faq').innerHTML=FAQS.map((f,i)=>`
+      <div class="bg-white rounded-2xl border border-[#E7EBEF] overflow-hidden">
+        <button onclick="toggleFaq(${i})" class="w-full flex items-center justify-between gap-4 px-5 py-4 text-left font-jakarta font-bold">
+          <span>${esc(f[0])}</span><i data-lucide="chevron-down" id="fi${i}" class="w-5 h-5 text-slate-400 transition-transform shrink-0"></i>
+        </button>
+        <div id="fb${i}" class="hidden px-5 pb-4 text-sm text-[#6A7581] leading-relaxed">${esc(f[1])}</div>
+      </div>`).join('');
+  }
+  function toggleFaq(i){
+    const b=document.getElementById('fb'+i),ic=document.getElementById('fi'+i);
+    const open=!b.classList.contains('hidden');
+    b.classList.toggle('hidden');ic.style.transform=open?'':'rotate(180deg)';
+  }
+
+  /* ---------- In-page TOC + scroll-spy (article pattern) ---------- */
+  const heads=[...document.querySelectorAll('.doc h2[id]')];
+  document.getElementById('toc').innerHTML=heads.map(h=>`<a href="#${h.id}" class="toc-link" data-id="${h.id}">${esc(h.textContent.trim())}</a>`).join('');
+  const links=[...document.querySelectorAll('#toc .toc-link')];
+  links.forEach(l=>l.addEventListener('click',e=>{e.preventDefault();const t=document.getElementById(l.dataset.id);if(t)t.scrollIntoView({behavior:'smooth',block:'start'});}));
+  const spy=new IntersectionObserver(entries=>{
+    entries.forEach(en=>{if(en.isIntersecting){const id=en.target.id;links.forEach(l=>l.classList.toggle('active',l.dataset.id===id));}});
+  },{rootMargin:'-20% 0px -70% 0px',threshold:0});
+  heads.forEach(h=>spy.observe(h));
+
+  /* ---------- Dev brief ---------- */
+  const BRIEFS={
+    loan:{
+      title:'Loan Option',sub:'WordPress custom post type · public, indexable',
+      purpose:'The template for a single funding product (one per loan option, e.g. Inventory Finance). A marketing + SEO surface that explains the product and drives visitors into the central funding application. Reached from the funding page&rsquo;s option &ldquo;Learn More&rdquo; links. Standalone CPT URL at /sme-funding/{slug}.',
+      data:'LoanOption CPT: <code>{ name, slug, icon, intro, takeaways[], body{what,benefits[],qualify[]}, faqs[], facts{amount,term,time,cost} }</code>. The &ldquo;Other loan options&rdquo; list pulls all other published LoanOption posts. The application itself is the separate gated funding CPT.',
+      logic:'Every CTA (hero Get Started · amount strip · sidebar Start application · final CTA) links to <code>public-funding.html#apply</code>, which deep-opens the shared funding application popup. The in-page TOC + scroll-spy are built client-side from <code>h2[id]</code> via IntersectionObserver; the FAQ is a client-side accordion. Page is public + indexable (Article/FAQ schema); the application is noindex.',
+      components:'Hero (single CTA + amount pill) · key-features banner · funding-amount strip · key takeaways · in-page TOC · What/Benefits/Qualify/FAQ sections · sticky apply widget · other-options list · final CTA band.',
+      api:'GET /v1/funding/options/{slug} · GET /v1/funding/options · POST /v1/funding/applications'
+    }
+  };
+  function toggleDevMode(){const on=document.body.classList.toggle('dev-on');const b=document.getElementById('devToggle');if(b)b.classList.toggle('on',on);if(on)showToast('Dev Mode on — tap any ⓘ for implementation notes.');lucide.createIcons();}
+  function closeOverlay(id){const el=document.getElementById(id);if(!el)return;el.classList.remove('open');setTimeout(()=>{if(el&&el.parentNode)el.remove();},300);}
+  function openBrief(id){const b=BRIEFS[id];if(!b)return;const sec=(i,l,h)=>`<div class="px-6 py-4 border-t border-slate-100"><p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] flex items-center gap-1.5 mb-2"><i data-lucide="${i}" class="w-3.5 h-3.5"></i>${l}</p><div class="text-sm text-slate-600 leading-relaxed">${h}</div></div>`;document.getElementById('overlay-root').innerHTML=`<div class="ov" id="ov"><div class="ov-bg" onclick="closeOverlay('ov')"></div><div class="drawer"><div class="sticky top-0 z-10 bg-[#0C1F31] text-white px-6 py-5 flex items-start justify-between"><div><p class="text-[10px] font-bold uppercase tracking-widest text-[#FF9900] mb-1">Dev Brief</p><h3 class="font-jakarta font-extrabold text-lg leading-tight">${b.title}</h3><p class="text-xs text-white/60 mt-1">${b.sub}</p></div><button onclick="closeOverlay('ov')" class="text-white/60 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button></div>${sec('target','Purpose',b.purpose)}${sec('database','Data model',b.data)}${sec('git-branch','Logic',b.logic)}${sec('boxes','Components',b.components)}${sec('plug','API',`<code class="block bg-slate-900 text-emerald-300 text-xs font-mono px-3 py-2 rounded-lg overflow-x-auto">${b.api}</code>`)}</div></div>`;requestAnimationFrame(()=>{const o=document.getElementById('ov');if(o)o.classList.add('open');});lucide.createIcons();}
+
+  renderFaq();lucide.createIcons();
+</script>
+</body>
+</html>
