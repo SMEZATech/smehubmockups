@@ -31,6 +31,7 @@ window.MOCKUP_STATUS = {
   "public-resource-category.html":"under-review",
   "public-resource.html":         "under-review",
   "public-funding.html":          "under-review",
+  "public-funding-category.html": "under-review",
   "public-solutions.html":        "under-review",
   "public-solution-category.html":"under-review",
   "public-shop.html":         "under-review",
