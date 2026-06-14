@@ -11,12 +11,17 @@
   <style>
     html,body{font-family:'Inter',system-ui,sans-serif;} .font-jakarta{font-family:'Plus Jakarta Sans',sans-serif;letter-spacing:.005em;}
     .card-lift{transition:box-shadow .2s,transform .2s;} .card-lift:hover{box-shadow:0 10px 24px -10px rgba(10,44,61,.18);transform:translateY(-2px);}
-    .article h2{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.4rem;color:#121A21;margin:1.8rem 0 .6rem;}
+    .article h2{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.4rem;color:#121A21;margin:1.9rem 0 .6rem;scroll-margin-top:6rem;}
     .article p{color:#374151;line-height:1.8;font-size:1.02rem;margin-bottom:1rem;} .article ul{list-style:disc;padding-left:1.3rem;margin-bottom:1rem;color:#374151;line-height:1.8;}
     .article a{color:#DC183C;font-weight:600;} .article a:hover{text-decoration:underline;}
+    .dropcap::first-letter{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;color:#DC183C;float:left;font-size:3.2rem;line-height:.82;padding:.35rem .6rem 0 0;}
+    .toc-link{display:block;font-size:.85rem;color:#6A7581;padding:.4rem .75rem;border-left:2px solid transparent;transition:all .15s;line-height:1.35;}
+    .toc-link:hover{color:#121A21;}
+    .toc-link.active{color:#DC183C;font-weight:700;border-left-color:#DC183C;background:#FDECEF;border-radius:0 .4rem .4rem 0;}
     .dev-badge{display:none;} body.dev-on .dev-badge{display:inline-flex;} #devToggle.on{background:#DC183C;color:#fff;border-color:#DC183C;}
     .ov{position:fixed;inset:0;z-index:60;} .ov-bg{position:absolute;inset:0;background:rgba(12,31,49,.45);backdrop-filter:blur(2px);opacity:0;transition:opacity .3s;} .ov.open .ov-bg{opacity:1;}
     .drawer{position:absolute;right:0;top:0;height:100%;width:100%;max-width:440px;background:#fff;box-shadow:-12px 0 40px rgba(12,31,49,.25);overflow-y:auto;transform:translateX(100%);transition:transform .3s cubic-bezier(.2,.7,.2,1);} .ov.open .drawer{transform:translateX(0);}
+    html{scroll-behavior:smooth;}
   </style>
 </head>
 <body class="bg-[#FCFCFC] text-[#121A21] antialiased">
@@ -36,77 +41,139 @@
   </div>
 </div></header>
 
-<article class="max-w-3xl mx-auto px-4 sm:px-6 py-10">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 pt-10">
   <!-- meta -->
   <p class="text-xs text-[#6A7581] mb-4"><a href="public-articles.html" class="hover:text-[#DC183C]">Articles</a> <span class="mx-1">/</span> <span>Starting Up</span></p>
   <span class="inline-block px-2.5 py-1 rounded-full text-[11px] font-bold bg-[#FFF1E0] text-[#AE6B0A]">Starting Up</span>
-  <h1 class="font-jakarta font-extrabold text-3xl sm:text-[2.6rem] leading-[1.1] tracking-tight mt-3">Kasi Money Starts With How You Earn
+  <h1 class="font-jakarta font-extrabold text-3xl sm:text-[2.6rem] leading-[1.1] tracking-tight mt-3 max-w-3xl">Kasi Money Starts With How You Earn
     <button onclick="openBrief()" class="dev-badge align-middle ml-1 w-6 h-6 rounded-full bg-[#DC183C] text-white items-center justify-center text-[11px] font-bold">i</button>
   </h1>
-  <div class="flex items-center gap-3 mt-5">
-    <a href="public-author.html" class="w-10 h-10 rounded-full bg-gradient-to-br from-[#DC183C] to-[#FF9900] grid place-items-center text-white text-sm font-bold">KK</a>
-    <div class="text-sm"><a href="public-author.html" class="font-bold hover:text-[#DC183C]">Karabo Kgophane</a><p class="text-[#6A7581]">20 Jan 2026 · 5 min read</p></div>
-    <div class="ml-auto flex items-center gap-1.5">
-      <button onclick="showToast('Link copied.')" class="w-9 h-9 rounded-full border border-[#E7EBEF] grid place-items-center text-slate-500 hover:text-[#DC183C] hover:border-[#DC183C] transition" aria-label="Share"><i data-lucide="share-2" class="w-4 h-4"></i></button>
-      <button onclick="showToast('Saved to your reading list.')" class="w-9 h-9 rounded-full border border-[#E7EBEF] grid place-items-center text-slate-500 hover:text-[#DC183C] hover:border-[#DC183C] transition" aria-label="Save"><i data-lucide="bookmark" class="w-4 h-4"></i></button>
+
+  <!-- AUTHOR BAR -->
+  <div class="flex flex-col sm:flex-row sm:items-center gap-4 mt-6 pb-6 border-b border-[#E7EBEF]">
+    <div class="flex items-center gap-3">
+      <a href="public-author.html" class="w-11 h-11 rounded-full bg-gradient-to-br from-[#DC183C] to-[#FF9900] grid place-items-center text-white text-sm font-bold shrink-0">KK</a>
+      <div class="text-sm leading-tight">
+        <a href="public-author.html" class="font-bold hover:text-[#DC183C]">Karabo Kgophane</a>
+        <p class="text-[#6A7581]">Editor-in-Chief, SME South Africa</p>
+      </div>
+    </div>
+    <div class="sm:ml-auto flex items-center gap-3">
+      <span class="flex items-center gap-1.5 text-sm text-[#6A7581]"><i data-lucide="clock" class="w-4 h-4"></i> 5 min read</span>
+      <span class="w-px h-5 bg-[#E7EBEF] hidden sm:block"></span>
+      <div class="flex items-center gap-1.5">
+        <button onclick="copyLink()" class="w-9 h-9 rounded-full border border-[#E7EBEF] grid place-items-center text-slate-500 hover:text-[#DC183C] hover:border-[#DC183C] transition" aria-label="Copy link"><i data-lucide="copy" class="w-4 h-4"></i></button>
+        <a href="#" onclick="event.preventDefault();showToast('Shared to X.')" class="w-9 h-9 rounded-full border border-[#E7EBEF] grid place-items-center text-slate-500 hover:text-[#DC183C] hover:border-[#DC183C] transition" aria-label="Share on X">
+          <svg viewBox="0 0 24 24" class="w-4 h-4" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24h-6.66l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+        </a>
+        <a href="#" onclick="event.preventDefault();showToast('Shared to LinkedIn.')" class="w-9 h-9 rounded-full border border-[#E7EBEF] grid place-items-center text-slate-500 hover:text-[#DC183C] hover:border-[#DC183C] transition" aria-label="Share on LinkedIn">
+          <svg viewBox="0 0 24 24" class="w-4 h-4" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0z"/></svg>
+        </a>
+        <a href="#" onclick="event.preventDefault();showToast('Shared to Facebook.')" class="w-9 h-9 rounded-full border border-[#E7EBEF] grid place-items-center text-slate-500 hover:text-[#DC183C] hover:border-[#DC183C] transition" aria-label="Share on Facebook">
+          <svg viewBox="0 0 24 24" class="w-4 h-4" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+        </a>
+        <button onclick="copyLink()" class="w-9 h-9 rounded-full border border-[#E7EBEF] grid place-items-center text-slate-500 hover:text-[#DC183C] hover:border-[#DC183C] transition" aria-label="Share"><i data-lucide="share-2" class="w-4 h-4"></i></button>
+      </div>
     </div>
   </div>
 
-  <img src="assets/article-1.jpg" alt="Kasi Money Starts With How You Earn" class="w-full rounded-2xl object-cover aspect-[16/9] mt-6 shadow-sm" />
+  <img src="assets/article-1.jpg" alt="Kasi Money Starts With How You Earn" class="w-full rounded-2xl object-cover aspect-[16/9] mt-8 shadow-sm" />
+</div>
 
-  <div class="article mt-8">
-    <p class="text-lg text-[#121A21] font-semibold">Wealth in the township economy doesn't start with how you spend — it starts with how you earn. Here's how SA founders are rethinking income from the ground up.</p>
-    <p>For too long, financial advice aimed at small business owners has focused on cutting costs. But for founders building in the kasi economy, the bigger lever is income design: how predictable, diversified and scalable your earning is.</p>
-    <h2>Build more than one income stream</h2>
-    <p>Relying on a single product or client is the fastest way to a cash-flow crisis. The most resilient SMEs layer complementary streams — a core product, a service add-on, and a recurring element that smooths the lean months.</p>
-    <ul><li>Core offering: the thing customers already pay you for</li><li>Service layer: installation, delivery, or support</li><li>Recurring layer: subscriptions, maintenance, or memberships</li></ul>
-    <h2>Price for value, not just to compete</h2>
-    <p>Undercutting the shop next door feels safe, but it caps your growth. Price against the value and convenience you deliver, and communicate it clearly. Customers in every market pay more for trust and reliability.</p>
-    <blockquote class="border-l-4 border-[#DC183C] pl-4 my-6 text-xl font-jakarta font-semibold text-[#0C1F31] italic">"Don't compete on price you can't sustain — compete on the value only you provide."</blockquote>
-    <h2>Reinvest before you spend</h2>
+<!-- BODY: 2-col grid -->
+<div class="max-w-6xl mx-auto px-4 sm:px-6 py-10 grid lg:grid-cols-3 gap-10">
+  <article class="lg:col-span-2 article">
+    <p class="dropcap text-lg text-[#121A21] font-semibold">Wealth in the township economy doesn't start with how you spend — it starts with how you earn. Here's how South African founders are rethinking income from the ground up to build something that lasts.</p>
+
+    <h2 id="income-design">Income design beats cost-cutting</h2>
+    <p>For too long, financial advice aimed at small business owners has focused on trimming costs. But for founders building in the kasi economy, the bigger lever is income design: how predictable, diversified and scalable your earning is. You can only cut a budget so far — there is no ceiling on what you can earn.</p>
+
+    <h2 id="multiple-streams">Build more than one income stream</h2>
+    <p>Relying on a single product or client is the fastest way to a cash-flow crisis. The most resilient SMEs layer complementary streams so that a slow month in one is cushioned by another.</p>
+    <ul>
+      <li>Core offering: the thing customers already pay you for</li>
+      <li>Service layer: installation, delivery, or support</li>
+      <li>Recurring layer: subscriptions, maintenance, or memberships</li>
+    </ul>
+
+    <h2 id="price-for-value">Price for value, not just to compete</h2>
+    <p>Undercutting the shop next door feels safe, but it caps your growth. Price against the value and convenience you deliver, and communicate it clearly. Customers in every market — including the township market — pay more for trust and reliability.</p>
+    <blockquote class="border-l-4 border-[#DC183C] pl-4 my-6 text-xl font-jakarta font-semibold text-[#0C1F31] italic">"Don't compete on a price you can't sustain — compete on the value only you provide."</blockquote>
+
+    <h2 id="reinvest">Reinvest before you spend</h2>
     <p>When the money comes in, the temptation is to spend. The founders who scale treat a fixed share of every rand as reinvestment — into stock, tools, or skills that raise tomorrow's earning power.</p>
     <p>Ready to put this into practice? Explore our <a href="public-funding.html">funding options</a> and <a href="public-resources.html">free templates</a> to map your income plan.</p>
-  </div>
 
-  <!-- author bio -->
-  <div class="mt-10 bg-white rounded-2xl border border-[#E7EBEF] p-6 flex flex-col sm:flex-row gap-5 items-start">
-    <a href="public-author.html" class="w-16 h-16 rounded-full bg-gradient-to-br from-[#DC183C] to-[#FF9900] grid place-items-center text-white text-xl font-extrabold shrink-0">KK</a>
-    <div>
-      <p class="text-[10px] font-bold uppercase tracking-widest text-[#AE6B0A]">Written by</p>
-      <a href="public-author.html" class="font-jakarta font-bold text-lg hover:text-[#DC183C]">Karabo Kgophane</a>
-      <p class="text-sm text-[#6A7581] mt-1">Social Media &amp; Digital Community Manager at SME South Africa. Writes about earning, growth and the township economy.</p>
-      <a href="public-author.html" class="inline-flex items-center gap-1 text-sm font-bold text-[#DC183C] mt-2 hover:gap-2 transition-all">View all articles <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
+    <!-- author bio -->
+    <div class="mt-10 bg-white rounded-2xl border border-[#E7EBEF] p-6 flex flex-col sm:flex-row gap-5 items-start">
+      <a href="public-author.html" class="w-16 h-16 rounded-full bg-gradient-to-br from-[#DC183C] to-[#FF9900] grid place-items-center text-white text-xl font-extrabold shrink-0">KK</a>
+      <div>
+        <p class="text-[10px] font-bold uppercase tracking-widest text-[#AE6B0A]">Written by</p>
+        <a href="public-author.html" class="font-jakarta font-bold text-lg hover:text-[#DC183C]">Karabo Kgophane</a>
+        <p class="text-sm text-[#6A7581] mt-1">Editor-in-Chief at SME South Africa. Writes about earning, growth and the township economy.</p>
+        <a href="public-author.html" class="inline-flex items-center gap-1 text-sm font-bold text-[#DC183C] mt-2 hover:gap-2 transition-all">View all articles <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
+      </div>
     </div>
-  </div>
-</article>
+  </article>
+
+  <!-- STICKY SIDEBAR -->
+  <aside class="lg:col-span-1">
+    <div class="lg:sticky lg:top-24 space-y-6">
+      <div class="bg-white rounded-2xl border border-[#E7EBEF] p-5">
+        <p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] flex items-center gap-1.5 mb-3"><i data-lucide="list" class="w-3.5 h-3.5"></i> In This Article</p>
+        <nav id="toc" class="-ml-px"></nav>
+      </div>
+      <div class="rounded-2xl p-6 text-white" style="background:#0C1F31">
+        <div class="w-11 h-11 rounded-xl bg-white/10 grid place-items-center mb-3"><i data-lucide="banknote" class="w-5 h-5 text-[#FF9900]"></i></div>
+        <h3 class="font-jakarta font-extrabold text-lg">Access Funding</h3>
+        <p class="text-sm text-white/70 mt-1.5 leading-relaxed">Apply to get matched with verified funders.</p>
+        <a href="public-funding.html" class="mt-4 inline-flex w-full items-center justify-center gap-2 h-11 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold text-sm transition">Apply Now <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
+      </div>
+    </div>
+  </aside>
+</div>
 
 <!-- related -->
-<section class="max-w-5xl mx-auto px-4 sm:px-6 pb-16">
+<section class="max-w-6xl mx-auto px-4 sm:px-6 pb-16">
   <h2 class="font-jakarta font-extrabold text-2xl mb-6">Related articles</h2>
   <div id="related" class="grid sm:grid-cols-3 gap-6"></div>
 </section>
 
 <footer class="bg-[#0C1F31] text-white"><div class="max-w-7xl mx-auto px-4 sm:px-6 py-10 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm">
   <a href="public-home.html" class="flex items-center gap-2.5"><span class="w-8 h-8 rounded-lg bg-white grid place-items-center"><img src="assets/logo-icon.png" class="w-6 h-6" alt="" /></span><span class="font-jakarta font-extrabold">SME South Africa</span></a>
-  <div class="flex flex-wrap items-center gap-x-5 gap-y-2 text-white/60"><a href="public-about.html" class="hover:text-white">About</a><a href="public-contact.html" class="hover:text-white">Contact</a><a href="public-advertise.html" class="hover:text-white">Advertise</a><a href="public-privacy.html" class="hover:text-white">Privacy</a><a href="public-terms.html" class="hover:text-white">Terms</a><a href="public-popia.html" class="hover:text-white">POPIA</a></div>
+  <div class="flex flex-wrap items-center gap-x-5 gap-y-2 text-white/60"><a href="public-about.html" class="hover:text-white">About</a><a href="public-contact.html" class="hover:text-white">Contact</a><a href="public-advertise.html" class="hover:text-white">Advertise</a><a href="public-privacy.html" class="hover:text-white">Privacy</a><a href="public-terms.html" class="hover:text-white">Terms</a><a href="public-refunds.html" class="hover:text-white">Refunds</a><a href="public-popia.html" class="hover:text-white">POPIA</a></div>
   <p class="text-white/40">© 2026 SME South Africa</p>
 </div></footer>
 
 <div id="overlay-root"></div><div id="toast" class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-50"></div>
 <script>
   function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
-  function showToast(m){const el=document.getElementById('toast');el.classList.remove('hidden');el.innerHTML=`<div class="bg-[#0C1F31] text-white rounded-full pl-3 pr-5 py-2.5 shadow-2xl flex items-center gap-2 text-sm font-semibold" style="border-left:4px solid #DC183C"><i data-lucide="check-circle" class="w-4 h-4" style="color:#DC183C"></i><span>${esc(m)}</span></div>`;lucide.createIcons();setTimeout(()=>{el.classList.add('hidden');el.innerHTML='';},2200);}
+  function showToast(m){const el=document.getElementById('toast');el.classList.remove('hidden');el.innerHTML=`<div class="bg-[#0C1F31] text-white rounded-full pl-3 pr-5 py-2.5 shadow-2xl flex items-center gap-2 text-sm font-semibold" style="border-left:4px solid #29A37A"><i data-lucide="check-circle" class="w-4 h-4" style="color:#29A37A"></i><span>${esc(m)}</span></div>`;lucide.createIcons();setTimeout(()=>{el.classList.add('hidden');el.innerHTML='';},2400);}
+  function copyLink(){if(navigator.clipboard)navigator.clipboard.writeText(location.href).catch(()=>{});showToast('Link copied.');}
+
+  // Build TOC from h2[id]
+  const heads=[...document.querySelectorAll('.article h2[id]')];
+  document.getElementById('toc').innerHTML=heads.map(h=>`<a href="#${h.id}" class="toc-link" data-id="${h.id}">${esc(h.textContent.trim())}</a>`).join('');
+  const links=[...document.querySelectorAll('#toc .toc-link')];
+  links.forEach(l=>l.addEventListener('click',e=>{e.preventDefault();const t=document.getElementById(l.dataset.id);if(t)t.scrollIntoView({behavior:'smooth',block:'start'});}));
+  // Scroll-spy
+  const spy=new IntersectionObserver(entries=>{
+    entries.forEach(en=>{if(en.isIntersecting){const id=en.target.id;links.forEach(l=>l.classList.toggle('active',l.dataset.id===id));}});
+  },{rootMargin:'-20% 0px -70% 0px',threshold:0});
+  heads.forEach(h=>spy.observe(h));
+
   const REL=[
-    {img:'assets/article-2.jpg',cat:'Guides',title:'Tips For Increasing Scooter Delivery Profits'},
-    {img:'assets/article-3.jpg',cat:'SME Resources',title:'Free AI Tools To Use in Your Business'},
-    {img:'assets/article-4.jpg',cat:'Guides',title:'Tips on Increasing e-hailing Profits in South Africa'}
+    {img:'assets/article-2.jpg',cat:'Finance',title:'How to Read a Cash-Flow Statement Without an Accountant'},
+    {img:'assets/article-3.jpg',cat:'Marketing',title:'Free AI Tools Every Small Business Should Be Using'},
+    {img:'assets/article-4.jpg',cat:'Operations',title:'Tips on Increasing E-hailing Profits in South Africa'}
   ];
   document.getElementById('related').innerHTML = REL.map(a=>`
     <a href="public-article.html" class="group bg-white rounded-2xl border border-[#E7EBEF] overflow-hidden card-lift block">
       <div class="aspect-[16/10] overflow-hidden"><img src="${a.img}" class="w-full h-full object-cover group-hover:scale-105 transition duration-300" alt="${esc(a.title)}" /></div>
       <div class="p-4"><span class="text-[10px] font-bold uppercase tracking-widest text-[#AE6B0A]">${esc(a.cat)}</span><h3 class="font-jakarta font-bold leading-snug mt-1 group-hover:text-[#DC183C] transition">${esc(a.title)}</h3></div>
     </a>`).join('');
-  const BRIEF={title:'Single Article',sub:'WordPress post · public, indexable',purpose:'The article reading experience — the core content surface for SEO and top-of-funnel acquisition. Standalone post URL with author, share/save, body and related posts.',data:'Post: <code>{ id, title, category, body, hero, author_id, published_at, read_minutes }</code>. Related = same category, newest.',logic:'Public + indexable (Yoast/RankMath + Article schema). Save requires login (MemberPress). Author links to the author page. Body is rich content from the CMS.',components:'Breadcrumb · category · title · author + share/save · hero · article body · author bio · related posts.',api:'GET /v1/articles/{slug} · GET /v1/articles?related={id}'};
+
+  const BRIEF={title:'Single Article',sub:'WordPress post · public, indexable',purpose:'The article reading experience — the core content surface for SEO and top-of-funnel acquisition. Standalone post URL with author bar, share, scroll-spy TOC, body and related posts.',data:'Post: <code>{ id, title, category, body, hero, author{name,role,id}, published_at, read_minutes }</code>. TOC is derived from the post body H2s. Related = same category, newest.',logic:'Public + indexable (Yoast/RankMath + Article schema). TOC + scroll-spy built client-side from <code>h2[id]</code> via IntersectionObserver. Share uses native share / clipboard. Funding CTA links to /funding.',components:'Breadcrumb · category · title · author bar + share · hero · article body (drop cap) · sticky TOC + funding widget · author bio · related posts.',api:'GET /v1/articles/{slug} · GET /v1/articles?related={id}'};
   function toggleDevMode(){const on=document.body.classList.toggle('dev-on');const b=document.getElementById('devToggle');if(b)b.classList.toggle('on',on);if(on)showToast('Dev Mode on — tap any ⓘ for implementation notes.');lucide.createIcons();}
   function closeOverlay(id){const el=document.getElementById(id);if(!el)return;el.classList.remove('open');setTimeout(()=>{if(el&&el.parentNode)el.remove();},300);}
   function openBrief(){const b=BRIEF;const sec=(i,l,h)=>`<div class="px-6 py-4 border-t border-slate-100"><p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] flex items-center gap-1.5 mb-2"><i data-lucide="${i}" class="w-3.5 h-3.5"></i>${l}</p><div class="text-sm text-slate-600 leading-relaxed">${h}</div></div>`;document.getElementById('overlay-root').innerHTML=`<div class="ov" id="ov"><div class="ov-bg" onclick="closeOverlay('ov')"></div><div class="drawer"><div class="sticky top-0 z-10 bg-[#0C1F31] text-white px-6 py-5 flex items-start justify-between"><div><p class="text-[10px] font-bold uppercase tracking-widest text-[#FF9900] mb-1">Dev Brief</p><h3 class="font-jakarta font-extrabold text-lg leading-tight">${b.title}</h3><p class="text-xs text-white/60 mt-1">${b.sub}</p></div><button onclick="closeOverlay('ov')" class="text-white/60 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button></div>${sec('target','Purpose',b.purpose)}${sec('database','Data model',b.data)}${sec('git-branch','Logic',b.logic)}${sec('boxes','Components',b.components)}${sec('plug','API',`<code class="block bg-slate-900 text-emerald-300 text-xs font-mono px-3 py-2 rounded-lg overflow-x-auto">${b.api}</code>`)}</div></div>`;requestAnimationFrame(()=>{const o=document.getElementById('ov');if(o)o.classList.add('open');});lucide.createIcons();}

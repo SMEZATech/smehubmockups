@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Browse by Category — SME South Africa</title>
+  <meta name="description" content="Find insights by topic — from starting up to scaling up." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script><script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  <script>tailwind.config={theme:{extend:{fontFamily:{jakarta:['Plus Jakarta Sans','sans-serif'],inter:['Inter','system-ui','sans-serif']}}}};</script>
+  <style>
+    html,body{font-family:'Inter',system-ui,sans-serif;} .font-jakarta{font-family:'Plus Jakarta Sans',sans-serif;letter-spacing:.005em;}
+    .hero-bg{background:linear-gradient(115deg,#0C1F31 0%,#0C1F31 50%,#2b1626 80%,#5e1a2c 115%);}
+    .dot-pattern{background-image:radial-gradient(rgba(255,255,255,.07) 1px,transparent 1.5px);background-size:22px 22px;}
+    .card-lift{transition:box-shadow .2s,transform .2s,border-color .2s;} .card-lift:hover{box-shadow:0 16px 34px -14px rgba(10,44,61,.24);transform:translateY(-3px);border-color:#DC183C;}
+    .subchip{transition:all .15s;} .subchip:hover{background:#FDECEF;color:#DC183C;border-color:#DC183C;}
+    .dev-badge{display:none;} body.dev-on .dev-badge{display:inline-flex;} #devToggle.on{background:#DC183C;color:#fff;border-color:#DC183C;}
+    .ov{position:fixed;inset:0;z-index:60;} .ov-bg{position:absolute;inset:0;background:rgba(12,31,49,.45);backdrop-filter:blur(2px);opacity:0;transition:opacity .3s;} .ov.open .ov-bg{opacity:1;}
+    .drawer{position:absolute;right:0;top:0;height:100%;width:100%;max-width:440px;background:#fff;box-shadow:-12px 0 40px rgba(12,31,49,.25);overflow-y:auto;transform:translateX(100%);transition:transform .3s cubic-bezier(.2,.7,.2,1);} .ov.open .drawer{transform:translateX(0);}
+  </style>
+</head>
+<body class="bg-[#FCFCFC] text-[#121A21] antialiased">
+<header class="bg-white border-b border-[#E7EBEF] sticky top-0 z-40"><div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center gap-4">
+  <a href="public-home.html" class="flex items-center gap-2.5 shrink-0"><img src="assets/logo-icon.png" alt="SME South Africa" class="w-9 h-9" /><span class="font-jakarta font-extrabold text-[17px] tracking-tight">SME <span class="text-[#DC183C]">South Africa</span></span></a>
+  <nav class="hidden lg:flex items-center gap-1 ml-4">
+    <a href="public-articles.html" class="px-3 py-2 rounded-lg text-sm font-semibold text-[#DC183C] bg-[#FDECEF]">Articles</a>
+    <a href="public-resources.html" class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition">Resources</a>
+    <a href="public-funding.html" class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition">Funding</a>
+    <a href="public-solutions.html" class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition">Solutions</a>
+    <a href="public-shop.html" class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition">Shop</a>
+  </nav>
+  <div class="flex items-center gap-1 sm:gap-2 ml-auto">
+    <button id="devToggle" onclick="toggleDevMode()" class="hidden sm:flex items-center gap-1.5 px-3 h-9 rounded-full border border-slate-200 text-slate-500 hover:border-[#DC183C] hover:text-[#DC183C] transition text-[11px] font-bold uppercase tracking-wider"><i data-lucide="code-2" class="w-3.5 h-3.5"></i><span>Dev</span></button>
+    <a href="public-auth.html" class="hidden sm:inline-flex items-center px-3 h-9 rounded-full text-sm font-bold text-[#121A21] hover:bg-slate-100 transition">Sign in</a>
+    <a href="public-auth.html#join" class="inline-flex items-center px-4 h-9 rounded-full text-sm font-bold text-white bg-[#DC183C] hover:bg-[#B0142F] transition">Join Free</a>
+  </div>
+</div></header>
+
+<!-- ARCHIVE HERO -->
+<section class="hero-bg text-white relative overflow-hidden"><div class="absolute inset-0 dot-pattern opacity-70 pointer-events-none"></div>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-14 relative">
+    <p class="text-xs text-white/50 mb-3"><a href="public-home.html" class="hover:text-white/80">Home</a> <span class="mx-1">›</span> <a href="public-articles.html" class="hover:text-white/80">Articles</a> <span class="mx-1">›</span> Categories</p>
+    <h1 class="font-jakarta font-extrabold text-4xl sm:text-5xl tracking-tight">Browse by Category
+      <button onclick="openBrief()" class="dev-badge align-middle ml-1 w-6 h-6 rounded-full bg-[#FF9900] text-[#0C1F31] items-center justify-center text-[11px] font-bold">i</button>
+    </h1>
+    <p class="mt-4 text-white/70 max-w-2xl text-lg">Find insights by topic — from starting up to scaling up.</p>
+  </div>
+</section>
+
+<main class="max-w-7xl mx-auto px-4 sm:px-6 py-12">
+  <div id="catGrid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+</main>
+
+<footer class="bg-[#0C1F31] text-white"><div class="max-w-7xl mx-auto px-4 sm:px-6 py-10 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm">
+  <a href="public-home.html" class="flex items-center gap-2.5"><span class="w-8 h-8 rounded-lg bg-white grid place-items-center"><img src="assets/logo-icon.png" class="w-6 h-6" alt="" /></span><span class="font-jakarta font-extrabold">SME South Africa</span></a>
+  <div class="flex flex-wrap items-center gap-x-5 gap-y-2 text-white/60"><a href="public-about.html" class="hover:text-white">About</a><a href="public-contact.html" class="hover:text-white">Contact</a><a href="public-advertise.html" class="hover:text-white">Advertise</a><a href="public-privacy.html" class="hover:text-white">Privacy</a><a href="public-terms.html" class="hover:text-white">Terms</a><a href="public-refunds.html" class="hover:text-white">Refunds</a><a href="public-popia.html" class="hover:text-white">POPIA</a></div>
+  <p class="text-white/40">© 2026 SME South Africa</p>
+</div></footer>
+
+<div id="overlay-root"></div><div id="toast" class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-50"></div>
+<script>
+  function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+  function showToast(m){const el=document.getElementById('toast');el.classList.remove('hidden');el.innerHTML=`<div class="bg-[#0C1F31] text-white rounded-full pl-3 pr-5 py-2.5 shadow-2xl flex items-center gap-2 text-sm font-semibold" style="border-left:4px solid #29A37A"><i data-lucide="check-circle" class="w-4 h-4" style="color:#29A37A"></i><span>${esc(m)}</span></div>`;lucide.createIcons();setTimeout(()=>{el.classList.add('hidden');el.innerHTML='';},2400);}
+
+  const CATEGORIES=[
+    {icon:'rocket',  tint:'bg-[#FDECEF] text-[#DC183C]', name:'Starting Up',         desc:'From first idea to your first paying customer.',          subs:['Idea Validation','Registration (CIPC)','Business Plans','First Customers']},
+    {icon:'banknote',tint:'bg-[#E4F5EE] text-[#29A37A]', name:'Funding & Finance',    desc:'Raise capital and keep the cash flowing.',               subs:['Grants','Loans','Investors','Cash Flow','Tax']},
+    {icon:'megaphone',tint:'bg-[#FFF1E0] text-[#AE6B0A]',name:'Marketing & Sales',    desc:'Win attention and turn it into revenue.',                subs:['Social Media','Branding','SEO','Sales']},
+    {icon:'settings',tint:'bg-[#FDECEF] text-[#DC183C]', name:'Operations',          desc:'Run a tighter, more compliant business.',               subs:['Compliance','HR & Payroll','Tools','Logistics']},
+    {icon:'users',   tint:'bg-[#E4F5EE] text-[#29A37A]', name:'Leadership',          desc:'Build the team and habits that scale with you.',         subs:['Hiring','Culture','Productivity']},
+    {icon:'lightbulb',tint:'bg-[#FFF1E0] text-[#AE6B0A]',name:'Industry Spotlights', desc:'Sector-specific playbooks and success stories.',         subs:['Agriculture','Retail','Tech','Food & Beverage']}
+  ];
+
+  document.getElementById('catGrid').innerHTML = CATEGORIES.map(c=>`
+    <div class="bg-white rounded-2xl border border-[#E7EBEF] p-6 card-lift flex flex-col">
+      <div class="w-12 h-12 rounded-xl ${c.tint} grid place-items-center mb-4"><i data-lucide="${c.icon}" class="w-6 h-6"></i></div>
+      <h2 class="font-jakarta font-extrabold text-xl">${esc(c.name)}</h2>
+      <p class="text-sm text-[#6A7581] mt-1.5 leading-relaxed">${esc(c.desc)}</p>
+      <div class="flex flex-wrap gap-2 mt-4">
+        ${c.subs.map(s=>`<a href="public-articles.html" class="subchip px-3 py-1.5 rounded-full text-xs font-semibold bg-[#FCFCFC] border border-[#E7EBEF] text-[#121A21]">${esc(s)}</a>`).join('')}
+      </div>
+      <a href="public-articles.html" class="inline-flex items-center gap-1 text-sm font-bold text-[#DC183C] mt-5 pt-4 border-t border-[#E7EBEF] hover:gap-2 transition-all">View all <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
+    </div>`).join('');
+
+  const BRIEF={title:'Article Categories',sub:'WordPress taxonomy index · public, indexable',purpose:'A topic directory for the SME Insights archive — lets readers and search engines browse the content taxonomy (main categories + subcategories) and jump into a filtered archive.',data:'Taxonomy: <code>category { name, description, icon, subcategories[] }</code>. Categories: Starting Up; Funding &amp; Finance; Marketing &amp; Sales; Operations; Leadership; Industry Spotlights. Each has 3–5 child terms (e.g. Funding → Grants · Loans · Investors · Cash Flow · Tax).',logic:'Public + indexable (taxonomy/term pages). Each card + subchip links into the article archive filtered by that term: <code>/articles?category=…</code>. Managed via the CMS category taxonomy.',components:'Header · archive hero · category card grid (icon tile · name · desc · subcategory chips · view-all) · footer.',api:'GET /v1/taxonomies/categories · GET /v1/articles?category={term}'};
+  function toggleDevMode(){const on=document.body.classList.toggle('dev-on');const b=document.getElementById('devToggle');if(b)b.classList.toggle('on',on);if(on)showToast('Dev Mode on — tap any ⓘ for implementation notes.');lucide.createIcons();}
+  function closeOverlay(id){const el=document.getElementById(id);if(!el)return;el.classList.remove('open');setTimeout(()=>{if(el&&el.parentNode)el.remove();},300);}
+  function openBrief(){const b=BRIEF;const sec=(i,l,h)=>`<div class="px-6 py-4 border-t border-slate-100"><p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] flex items-center gap-1.5 mb-2"><i data-lucide="${i}" class="w-3.5 h-3.5"></i>${l}</p><div class="text-sm text-slate-600 leading-relaxed">${h}</div></div>`;document.getElementById('overlay-root').innerHTML=`<div class="ov" id="ov"><div class="ov-bg" onclick="closeOverlay('ov')"></div><div class="drawer"><div class="sticky top-0 z-10 bg-[#0C1F31] text-white px-6 py-5 flex items-start justify-between"><div><p class="text-[10px] font-bold uppercase tracking-widest text-[#FF9900] mb-1">Dev Brief</p><h3 class="font-jakarta font-extrabold text-lg leading-tight">${b.title}</h3><p class="text-xs text-white/60 mt-1">${b.sub}</p></div><button onclick="closeOverlay('ov')" class="text-white/60 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button></div>${sec('target','Purpose',b.purpose)}${sec('database','Data model',b.data)}${sec('git-branch','Logic',b.logic)}${sec('boxes','Components',b.components)}${sec('plug','API',`<code class="block bg-slate-900 text-emerald-300 text-xs font-mono px-3 py-2 rounded-lg overflow-x-auto">${b.api}</code>`)}</div></div>`;requestAnimationFrame(()=>{const o=document.getElementById('ov');if(o)o.classList.add('open');});lucide.createIcons();}
+
+  lucide.createIcons();
+</script>
+</body>
+</html>

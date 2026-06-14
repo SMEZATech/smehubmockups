@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI App &amp; Website Builders — Reviews | SME South Africa</title>
+  <meta name="description" content="Compare the top vetted AI app & website builders for South African SMEs — unbiased reviews to help you choose." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  <script>
+    tailwind.config = { theme: { extend: { fontFamily: {
+      jakarta: ['Plus Jakarta Sans', 'sans-serif'], inter: ['Inter', 'system-ui', 'sans-serif']
+    } } } };
+  </script>
+  <style>
+    html, body { font-family: 'Inter', system-ui, sans-serif; }
+    .font-jakarta { font-family: 'Plus Jakarta Sans', sans-serif; letter-spacing: 0.005em; }
+    .hero-bg { background:linear-gradient(115deg,#0C1F31 0%,#0C1F31 50%,#2b1626 80%,#5e1a2c 115%); }
+    .dot-pattern { background-image:radial-gradient(rgba(255,255,255,.07) 1px,transparent 1.5px); background-size:22px 22px; }
+    .field { width:100%; background:#fff; border:1px solid #E7EBEF; border-radius:.75rem; height:3rem; padding:0 1rem; font-size:.9rem; outline:none; transition:border-color .15s,box-shadow .15s; } .field:focus { border-color:#DC183C; box-shadow:0 0 0 3px rgba(220,24,60,.12); }
+    @keyframes fadeUp { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
+    .reveal { animation: fadeUp .5s cubic-bezier(.2,.7,.2,1) backwards; }
+    .card-lift { transition: box-shadow .2s, transform .2s; }
+    .card-lift:hover { box-shadow: 0 10px 24px -10px rgba(10,44,61,0.18); transform: translateY(-2px); }
+    .dev-badge { display:none; } body.dev-on .dev-badge { display:inline-flex; }
+    #devToggle.on { background:#DC183C; color:#fff; border-color:#DC183C; }
+    .ov { position:fixed; inset:0; z-index:60; }
+    .ov-bg { position:absolute; inset:0; background:rgba(12,31,49,.45); backdrop-filter:blur(2px); opacity:0; transition:opacity .3s; }
+    .ov.open .ov-bg { opacity:1; }
+    .drawer { position:absolute; right:0; top:0; height:100%; width:100%; max-width:440px; background:#fff; box-shadow:-12px 0 40px rgba(12,31,49,.25); overflow-y:auto; transform:translateX(100%); transition:transform .3s cubic-bezier(.2,.7,.2,1); }
+    .ov.open .drawer { transform:translateX(0); }
+  </style>
+</head>
+<body class="bg-[#FCFCFC] text-[#121A21] antialiased">
+
+
+<header class="bg-white border-b border-[#E7EBEF] sticky top-0 z-40">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center gap-4">
+    <a href="public-home.html" class="flex items-center gap-2.5 shrink-0">
+      <img src="assets/logo-icon.png" alt="SME South Africa" class="w-9 h-9" />
+      <span class="font-jakarta font-extrabold text-[17px] tracking-tight">SME <span class="text-[#DC183C]">South Africa</span></span>
+    </a>
+    <nav class="hidden lg:flex items-center gap-1 ml-4">
+      <a href="public-articles.html"  class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition">Articles</a>
+      <a href="public-resources.html" class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition">Resources</a>
+      <a href="public-funding.html"   class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition">Funding</a>
+      <a href="public-solutions.html" class="px-3 py-2 rounded-lg text-sm font-semibold text-[#DC183C] bg-[#FDECEF]">Solutions</a>
+      <a href="public-shop.html"      class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition">Shop</a>
+    </nav>
+    <div class="flex items-center gap-1 sm:gap-2 ml-auto">
+      <button id="devToggle" onclick="toggleDevMode()" class="hidden sm:flex items-center gap-1.5 px-3 h-9 rounded-full border border-slate-200 text-slate-500 hover:border-[#DC183C] hover:text-[#DC183C] transition text-[11px] font-bold uppercase tracking-wider" title="Toggle implementation notes"><i data-lucide="code-2" class="w-3.5 h-3.5"></i><span>Dev</span></button>
+      <a href="public-shop.html" aria-label="Cart" class="relative w-10 h-10 grid place-items-center rounded-full hover:bg-slate-100 text-slate-600"><i data-lucide="shopping-bag" class="w-5 h-5"></i><span class="absolute top-1.5 right-1.5 bg-[#DC183C] text-white text-[10px] font-bold rounded-full w-4 h-4 grid place-items-center">0</span></a>
+      <a href="member-hub.html" class="hidden sm:inline-flex items-center px-3 h-9 rounded-full text-sm font-bold text-[#121A21] hover:bg-slate-100 transition">Sign in</a>
+      <a href="member-hub.html" class="inline-flex items-center px-4 h-9 rounded-full text-sm font-bold text-white bg-[#DC183C] hover:bg-[#B0142F] transition">Join Free</a>
+    </div>
+  </div>
+</header>
+
+<!-- ===================== HERO ===================== -->
+<section class="hero-bg text-white relative overflow-hidden">
+  <div class="absolute inset-0 dot-pattern opacity-70 pointer-events-none"></div>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-12 sm:py-16 relative">
+    <nav class="flex items-center gap-1.5 text-xs text-white/55 mb-5">
+      <a href="public-home.html" class="hover:text-white">Home</a><i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
+      <a href="public-solutions.html" class="hover:text-white">Solutions</a><i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
+      <span id="bc-cat" class="text-white/85 font-semibold">AI App &amp; Website Builders</span>
+    </nav>
+    <div class="flex items-center gap-2">
+      <h1 id="hero-title" class="font-jakarta font-extrabold text-3xl sm:text-5xl tracking-tight">AI App &amp; Website Builders</h1>
+      <button onclick="openBrief('category')" class="dev-badge w-6 h-6 rounded-full bg-[#FF9900] text-[#121A21] items-center justify-center text-[11px] font-bold" title="Implementation notes">i</button>
+    </div>
+    <p class="mt-4 text-lg text-white/75 max-w-2xl">Compare the top vetted tools for South African SMEs — unbiased reviews to help you choose.</p>
+    <div class="mt-6 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-white/70">
+      <span class="flex items-center gap-2"><i data-lucide="shield-check" class="w-4 h-4 text-[#29A37A]"></i> Independently vetted</span>
+      <span class="flex items-center gap-2"><i data-lucide="star" class="w-4 h-4 text-[#FF9900]"></i> Rated by SA founders</span>
+      <span class="flex items-center gap-2"><i data-lucide="badge-dollar-sign" class="w-4 h-4 text-[#FF9900]"></i> ZAR pricing</span>
+    </div>
+  </div>
+</section>
+
+<main class="max-w-7xl mx-auto px-4 sm:px-6">
+
+  <!-- Intro + How we review -->
+  <section class="py-10 grid lg:grid-cols-3 gap-6">
+    <div class="lg:col-span-2">
+      <h2 class="font-jakarta font-extrabold text-2xl">The best tools to build a site or app — without a developer</h2>
+      <p class="mt-3 text-slate-600 leading-relaxed">AI builders let SMEs launch a professional website, online store or simple app in days, not months. We compared the leading platforms on ease of use, South African payment support, pricing in rand, and the quality of their AI generation — so you can pick with confidence.</p>
+    </div>
+    <div class="rounded-2xl bg-[#E4F5EE] border border-[#29A37A]/20 p-5">
+      <p class="text-[11px] font-bold uppercase tracking-widest text-[#29A37A] flex items-center gap-1.5"><i data-lucide="check-circle" class="w-4 h-4"></i> How we review</p>
+      <p class="mt-2 text-sm text-[#121A21]/80 leading-relaxed">Rankings are editorial and independent. Scores combine hands-on testing, verified member reviews, and value-for-money. Some links are partner links — they never affect rank.</p>
+    </div>
+  </section>
+
+  <!-- ===================== RANKED LIST ===================== -->
+  <section class="pb-4">
+    <div class="flex items-center justify-between mb-5">
+      <h2 class="font-jakarta font-extrabold text-xl">Top rated <span id="rank-count" class="text-slate-400 font-semibold text-base"></span></h2>
+      <span class="text-xs text-slate-500 flex items-center gap-1.5"><i data-lucide="arrow-up-down" class="w-3.5 h-3.5"></i> Sorted by rating</span>
+    </div>
+    <div id="rank-list" class="space-y-4"></div>
+  </section>
+
+  <!-- ===================== COMPARISON TABLE ===================== -->
+  <section class="py-12">
+    <h2 class="font-jakarta font-extrabold text-xl mb-5">At a glance</h2>
+    <div class="overflow-x-auto rounded-2xl border border-[#E7EBEF] bg-white">
+      <table class="w-full text-sm min-w-[640px]">
+        <thead>
+          <tr class="text-left text-[11px] font-bold uppercase tracking-widest text-slate-500 border-b border-[#E7EBEF]">
+            <th class="px-5 py-4">Provider</th><th class="px-5 py-4">Rating</th><th class="px-5 py-4">From</th><th class="px-5 py-4">Best for</th><th class="px-5 py-4"></th>
+          </tr>
+        </thead>
+        <tbody id="cmp-body" class="divide-y divide-[#E7EBEF]"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ===================== BOTTOM LEAD CTA ===================== -->
+  <section class="py-12">
+    <div class="rounded-3xl hero-bg text-white relative overflow-hidden">
+      <div class="absolute inset-0 dot-pattern opacity-70 pointer-events-none"></div>
+      <div class="relative grid lg:grid-cols-2 gap-8 p-8 sm:p-12 items-center">
+        <div>
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 text-[#FF9900] text-[11px] font-bold uppercase tracking-widest"><i data-lucide="sparkles" class="w-3.5 h-3.5"></i> Free &amp; unbiased</span>
+          <h2 class="font-jakarta font-extrabold text-3xl sm:text-4xl mt-4 leading-tight">Get matched with the right tool — <span class="text-[#FF9900]">free</span></h2>
+          <p class="mt-4 text-white/75 max-w-md">Skip the research. Tell us about your business and we'll recommend the best-fit builders and pull quotes for you.</p>
+        </div>
+        <form onsubmit="leadSubmit(event)" class="bg-white text-[#121A21] rounded-2xl p-6 sm:p-7 shadow-2xl">
+          <h3 class="font-jakarta font-extrabold text-lg">Request quotes</h3>
+          <p class="text-sm text-slate-500 mt-1 mb-4">No obligation. Under a minute.</p>
+          <div class="space-y-3.5">
+            <div><label class="block text-xs font-semibold mb-1.5 text-slate-600">Business name</label><input required class="field" placeholder="Your business" /></div>
+            <div><label class="block text-xs font-semibold mb-1.5 text-slate-600">Email</label><input type="email" required class="field" placeholder="you@business.co.za" /></div>
+            <div><label class="block text-xs font-semibold mb-1.5 text-slate-600">Monthly budget</label>
+              <select class="field" style="-webkit-appearance:none;appearance:none;background-image:url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2216%22 height=%2216%22 fill=%22none%22 stroke=%22%236A7581%22 stroke-width=%222%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22><path d=%22M6 9l6 6 6-6%22/></svg>');background-repeat:no-repeat;background-position:right 1rem center;padding-right:2.5rem">
+                <option value="" disabled selected>Select a range…</option>
+                <option>Under R250/mo</option><option>R250 – R750/mo</option><option>R750 – R2,000/mo</option><option>R2,000+/mo</option>
+              </select>
+            </div>
+          </div>
+          <button class="mt-5 w-full h-12 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold transition flex items-center justify-center gap-2">Get Matched <i data-lucide="arrow-right" class="w-4 h-4"></i></button>
+          <p class="text-[11px] text-slate-400 text-center mt-3">By submitting you agree to be contacted about relevant solutions.</p>
+        </form>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="bg-[#0C1F31] text-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-12">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+      <div class="col-span-2 md:col-span-1">
+        <a href="public-home.html" class="flex items-center gap-2.5"><span class="w-9 h-9 rounded-lg bg-white grid place-items-center"><img src="assets/logo-icon.png" alt="SME South Africa" class="w-7 h-7" /></span><span class="font-jakarta font-extrabold text-[17px]">SME South Africa</span></a>
+        <p class="text-sm text-white/55 mt-4 max-w-xs leading-relaxed">South Africa's largest SME community — connecting founders with funding, mentorship, events, and the tools to scale.</p>
+      </div>
+      <div><p class="text-[11px] font-bold uppercase tracking-widest text-white/40">Platform</p><ul class="mt-4 space-y-2.5 text-sm text-white/70"><li><a href="member-hub.html" class="hover:text-white">Community</a></li><li><a href="#" class="hover:text-white">Events</a></li><li><a href="public-funding.html" class="hover:text-white">Funding</a></li><li><a href="public-solutions.html" class="hover:text-white">Solutions</a></li><li><a href="public-shop.html" class="hover:text-white">Shop</a></li></ul></div>
+      <div><p class="text-[11px] font-bold uppercase tracking-widest text-white/40">Learn</p><ul class="mt-4 space-y-2.5 text-sm text-white/70"><li><a href="public-articles.html" class="hover:text-white">Articles</a></li><li><a href="public-resources.html" class="hover:text-white">Resources</a></li><li><a href="public-resources.html" class="hover:text-white">Guides</a></li><li><a href="#" class="hover:text-white">Podcast</a></li></ul></div>
+      <div><p class="text-[11px] font-bold uppercase tracking-widest text-white/40">Company</p><ul class="mt-4 space-y-2.5 text-sm text-white/70"><li><a href="public-about.html" class="hover:text-white">About</a></li><li><a href="public-contact.html" class="hover:text-white">Contact</a></li><li><a href="#" class="hover:text-white">Careers</a></li><li><a href="#" class="hover:text-white">Partners</a></li></ul></div>
+    </div>
+    <div class="flex flex-col sm:flex-row items-center justify-between gap-4 pt-8 mt-10 border-t border-white/10 text-sm text-white/50">
+      <p>© 2026 SME South Africa. All rights reserved.</p>
+      <div class="flex items-center gap-5"><a href="public-privacy.html" class="hover:text-white">Privacy Policy</a><a href="public-terms.html" class="hover:text-white">Terms of Service</a><a href="#" class="hover:text-white">Cookie Policy</a></div>
+    </div>
+  </div>
+</footer>
+
+<div id="overlay-root"></div>
+<div id="toast" class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-50"></div>
+
+<script>
+  function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c])); }
+  function showToast(msg){ const el=document.getElementById('toast'); el.classList.remove('hidden'); el.innerHTML=`<div class="bg-[#0C1F31] text-white rounded-full pl-3 pr-5 py-2.5 shadow-2xl flex items-center gap-2 text-sm font-semibold" style="border-left:4px solid #FF9900"><i data-lucide="check-circle" class="w-4 h-4" style="color:#FF9900"></i><span>${esc(msg)}</span></div>`; lucide.createIcons(); setTimeout(()=>{el.classList.add('hidden');el.innerHTML='';},2400); }
+
+  // ?cat= just relabels the page heading / breadcrumb. Reviews below are an example set for "AI App & Website Builders".
+  (function(){ const p=new URLSearchParams(location.search).get('cat'); if(p){ const t=esc(p); document.getElementById('hero-title').textContent=p; document.getElementById('bc-cat').textContent=p; document.title=p+' — Reviews | SME South Africa'; } })();
+
+  const STAR_GOLD='#FF9900';
+  function stars(score){
+    let full=Math.floor(score), half=(score-full)>=0.5, html='';
+    for(let i=0;i<5;i++){ const f=i<full; const h=(i===full&&half);
+      html+=`<i data-lucide="star" class="w-4 h-4" style="${f||h?`color:${STAR_GOLD};fill:${STAR_GOLD}`:'color:#CBD2DA'}${h?';clip-path:inset(0 50% 0 0)':''}"></i>`; }
+    return `<span class="inline-flex items-center gap-0.5 align-middle">${html}</span>`;
+  }
+
+  // logo: styled monogram (placeholder brand mark)
+  function logoMark(name, c){ const initials=name.split(/\s|&/).filter(Boolean).slice(0,2).map(w=>w[0]).join('').toUpperCase();
+    return `<div class="w-14 h-14 rounded-2xl grid place-items-center shrink-0 font-jakarta font-extrabold text-lg" style="background:${c[0]};color:${c[1]}">${esc(initials)}</div>`; }
+
+  const PAL=[['#FDECEF','#DC183C'],['#FFF1E0','#AE6B0A'],['#E4F5EE','#29A37A'],['#0C1F31','#FF9900'],['#FDECEF','#B0142F'],['#FFF1E0','#AE6B0A']];
+
+  const SOLUTIONS = [
+    { name:'BuildAI Studio', rating:4.8, reviews:412, summary:'Best overall — describe your business and it generates a full site + store in minutes.', best:'All-rounders', from:299, features:['AI page generation','Payfast & Yoco','SEO built-in','Free .co.za domain'] },
+    { name:'SiteForge', rating:4.6, reviews:318, summary:'Powerful drag-and-drop with the deepest design control for brand-led businesses.', best:'Design control', from:349, features:['Drag & drop','Custom code','Multi-language','Booking module'] },
+    { name:'LaunchKit', rating:4.5, reviews:276, summary:'Fastest path to a simple app — turn a spreadsheet into a working mobile app.', best:'Simple apps', from:399, features:['No-code app','PWA export','Push notifications','Airtable sync'] },
+    { name:'ShopSpark', rating:4.3, reviews:198, summary:'E-commerce first — strong inventory, shipping and SA courier integrations.', best:'Online stores', from:449, features:['Inventory','Courier Guy & Pudo','Abandoned cart','POS sync'] },
+    { name:'PagePilot', rating:4.1, reviews:154, summary:'Great free tier and the gentlest learning curve for first-time founders.', best:'Beginners', from:0, features:['Generous free plan','Templates','AI copywriter','1-click publish'] },
+    { name:'CanvasCloud', rating:3.9, reviews:121, summary:'Flexible all-in-one workspace; good value if you want site + CRM together.', best:'Site + CRM', from:259, features:['Built-in CRM','Forms','Email capture','Analytics'] }
+  ];
+
+  function priceLabel(v){ return v===0 ? 'Free' : 'R'+v+'/mo'; }
+
+  function renderRanks(){
+    document.getElementById('rank-count').textContent = '· '+SOLUTIONS.length+' compared';
+    document.getElementById('rank-list').innerHTML = SOLUTIONS.map((s,i)=>{ const c=PAL[i%PAL.length]; return `
+      <div class="bg-white rounded-2xl border border-[#E7EBEF] p-5 sm:p-6 card-lift reveal" style="animation-delay:${i*40}ms">
+        <div class="flex flex-col sm:flex-row sm:items-center gap-4">
+          <div class="flex items-center gap-4 sm:w-auto">
+            <div class="relative">
+              ${logoMark(s.name,c)}
+              <span class="absolute -top-2 -left-2 w-7 h-7 rounded-full bg-[#DC183C] text-white text-xs font-bold grid place-items-center shadow">#${i+1}</span>
+            </div>
+            <div class="min-w-0">
+              <h3 class="font-jakarta font-extrabold text-lg leading-tight">${esc(s.name)}</h3>
+              <div class="flex items-center gap-2 mt-0.5">${stars(s.rating)}<span class="text-sm font-bold">${s.rating.toFixed(1)}</span><span class="text-xs text-slate-400">(${s.reviews})</span></div>
+            </div>
+          </div>
+          <div class="sm:ml-auto sm:text-right">
+            <p class="text-xs text-slate-500">Pricing from</p>
+            <p class="font-jakarta font-extrabold text-xl">${priceLabel(s.from)}</p>
+          </div>
+        </div>
+        <p class="text-sm text-slate-600 mt-4">${esc(s.summary)}</p>
+        <div class="flex flex-wrap gap-2 mt-4">
+          ${s.features.map(f=>`<span class="inline-flex items-center gap-1.5 text-xs font-semibold text-[#121A21] bg-[#FCFCFC] border border-[#E7EBEF] rounded-full px-3 py-1"><i data-lucide="check" class="w-3.5 h-3.5 text-[#29A37A]"></i>${esc(f)}</span>`).join('')}
+        </div>
+        <div class="flex flex-col sm:flex-row gap-3 mt-5">
+          <button onclick="quote('${esc(s.name)}')" class="flex-1 h-11 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold transition flex items-center justify-center gap-2">Get Quote <i data-lucide="arrow-right" class="w-4 h-4"></i></button>
+          <button onclick="showToast('Opening ${esc(s.name)} (partner link)…')" class="flex-1 h-11 rounded-full border border-[#E7EBEF] hover:border-[#121A21] font-bold transition flex items-center justify-center gap-2">Visit Site <i data-lucide="external-link" class="w-4 h-4"></i></button>
+        </div>
+      </div>`; }).join('');
+    lucide.createIcons();
+  }
+
+  function renderCmp(){
+    document.getElementById('cmp-body').innerHTML = SOLUTIONS.map((s,i)=>`
+      <tr class="hover:bg-[#FCFCFC]">
+        <td class="px-5 py-4 font-jakarta font-bold whitespace-nowrap"><span class="text-[#DC183C]">#${i+1}</span> ${esc(s.name)}</td>
+        <td class="px-5 py-4 whitespace-nowrap"><span class="inline-flex items-center gap-1.5"><i data-lucide="star" class="w-3.5 h-3.5" style="color:${STAR_GOLD};fill:${STAR_GOLD}"></i><span class="font-bold">${s.rating.toFixed(1)}</span></span></td>
+        <td class="px-5 py-4 font-semibold whitespace-nowrap">${priceLabel(s.from)}</td>
+        <td class="px-5 py-4 text-slate-600 whitespace-nowrap">${esc(s.best)}</td>
+        <td class="px-5 py-4 text-right"><button onclick="quote('${esc(s.name)}')" class="text-[#DC183C] font-bold hover:underline whitespace-nowrap">Get Quote →</button></td>
+      </tr>`).join('');
+    lucide.createIcons();
+  }
+
+  function quote(name){ showToast('Quote requested for '+name+' — we’ll be in touch.'); }
+  function leadSubmit(e){ e.preventDefault(); e.target.reset(); showToast('Got it — we’ll match you with quotes shortly.'); }
+
+  const BRIEFS = { category: {
+    title:'Solution Category / Reviews', sub:'Affiliate review CPT + lead capture',
+    purpose:'A ranked, editorial review page for one solution category (e.g. AI App & Website Builders). Drives affiliate clicks (Visit Site) and qualified leads (Get Quote). One of many auto-generated category pages.',
+    data:'Category: <code>{ slug, name, intro }</code>. Review (CPT): <code>{ id, category, vendor, logo, rating, review_count, summary, best_for, pricing_from, features[], affiliate_url, quote_enabled }</code>. Lead: <code>{ business, email, budget, category, vendor? }</code>.',
+    logic:'JetEngine CPT "Solution Review" related to a Category taxonomy; rank = editorial score (manual order or rating sort). Visit Site = tracked affiliate redirect; Get Quote = lead form → CRM, attributed to vendor. <code>?cat=</code> selects the category; reviews are queried by taxonomy term.',
+    components:'Header · hero + breadcrumb · intro + how-we-review · ranked review list · comparison table · lead CTA · footer.',
+    api:'GET /v1/solutions/{cat}/reviews?sort=rating · GET /go/{vendor} (affiliate redirect) · POST /v1/solutions/{vendor}/quote'
+  } };
+  function toggleDevMode(){ const on=document.body.classList.toggle('dev-on'); const b=document.getElementById('devToggle'); if(b)b.classList.toggle('on',on); if(on)showToast('Dev Mode on — tap any ⓘ for implementation notes.'); lucide.createIcons(); }
+  function closeOverlay(id){ const el=document.getElementById(id); if(!el)return; el.classList.remove('open'); setTimeout(()=>{ if(el&&el.parentNode) el.remove(); },300); }
+  function openBrief(id){ const b=BRIEFS[id]; if(!b)return;
+    const sec=(icon,label,html)=>`<div class="px-6 py-4 border-t border-slate-100"><p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] flex items-center gap-1.5 mb-2"><i data-lucide="${icon}" class="w-3.5 h-3.5"></i>${label}</p><div class="text-sm text-slate-600 leading-relaxed">${html}</div></div>`;
+    document.getElementById('overlay-root').innerHTML=`<div class="ov" id="ov-brief"><div class="ov-bg" onclick="closeOverlay('ov-brief')"></div><div class="drawer"><div class="sticky top-0 z-10 bg-[#0C1F31] text-white px-6 py-5 flex items-start justify-between"><div class="min-w-0"><p class="text-[10px] font-bold uppercase tracking-widest text-[#FF9900] mb-1">Dev Brief</p><h3 class="font-jakarta font-extrabold text-lg leading-tight">${b.title}</h3><p class="text-xs text-white/60 mt-1">${b.sub}</p></div><button onclick="closeOverlay('ov-brief')" aria-label="Close" class="text-white/60 hover:text-white shrink-0 ml-3"><i data-lucide="x" class="w-5 h-5"></i></button></div>${sec('target','Purpose',b.purpose)}${sec('database','Data model',b.data)}${sec('git-branch','Logic',b.logic)}${sec('boxes','Components',b.components)}${sec('plug','API',`<code class="block bg-slate-900 text-emerald-300 text-xs font-mono px-3 py-2 rounded-lg overflow-x-auto">${b.api}</code>`)}<div class="px-6 py-4 border-t border-slate-100"><p class="text-[11px] text-slate-400 flex items-center gap-1.5"><i data-lucide="info" class="w-3.5 h-3.5"></i> Spec lives beside the feature — toggle Dev Mode off for the clean view.</p></div></div></div>`;
+    requestAnimationFrame(()=>{ const o=document.getElementById('ov-brief'); if(o)o.classList.add('open'); }); lucide.createIcons();
+  }
+
+  renderRanks(); renderCmp(); lucide.createIcons();
+</script>
+</body>
+</html>

@@ -1,195 +1,172 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SME South Africa — Articles</title>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SME Insights — SME South Africa</title>
   <meta name="description" content="Insights, guides, and expert advice for South African entrepreneurs and small business owners." />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
-  <script>
-    tailwind.config = { theme: { extend: { fontFamily: {
-      jakarta: ['Plus Jakarta Sans', 'sans-serif'], inter: ['Inter', 'system-ui', 'sans-serif'], mono: ['monospace']
-    } } } };
-  </script>
+  <script src="https://cdn.tailwindcss.com"></script><script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  <script>tailwind.config={theme:{extend:{fontFamily:{jakarta:['Plus Jakarta Sans','sans-serif'],inter:['Inter','system-ui','sans-serif']}}}};</script>
   <style>
-    html, body { font-family: 'Inter', system-ui, sans-serif; }
-    .font-jakarta { font-family: 'Plus Jakarta Sans', sans-serif; letter-spacing: 0.005em; }
-    .font-mono { font-family: monospace; }
-    .no-scrollbar::-webkit-scrollbar { display:none; } .no-scrollbar { -ms-overflow-style:none; scrollbar-width:none; }
-    @keyframes fadeUp { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
-    .reveal { animation: fadeUp .5s cubic-bezier(.2,.7,.2,1) backwards; }
-    .card-lift { transition: box-shadow .2s, transform .2s; }
-    .card-lift:hover { box-shadow: 0 10px 24px -10px rgba(10,44,61,0.18); transform: translateY(-2px); }
-    .chip { transition: background-color .15s, color .15s, border-color .15s; cursor:pointer; }
-    .chip.active { background:#0C1F31; color:#fff; border-color:#0C1F31; }
-    .dev-badge { display:none; } body.dev-on .dev-badge { display:inline-flex; }
-    #devToggle.on { background:#DC183C; color:#fff; border-color:#DC183C; }
-    .ov { position:fixed; inset:0; z-index:60; }
-    .ov-bg { position:absolute; inset:0; background:rgba(12,31,49,.45); backdrop-filter:blur(2px); opacity:0; transition:opacity .3s; }
-    .ov.open .ov-bg { opacity:1; }
-    .drawer { position:absolute; right:0; top:0; height:100%; width:100%; max-width:440px; background:#fff; box-shadow:-12px 0 40px rgba(12,31,49,.25); overflow-y:auto; transform:translateX(100%); transition:transform .3s cubic-bezier(.2,.7,.2,1); }
-    .ov.open .drawer { transform:translateX(0); }
+    html,body{font-family:'Inter',system-ui,sans-serif;} .font-jakarta{font-family:'Plus Jakarta Sans',sans-serif;letter-spacing:.005em;}
+    .hero-bg{background:linear-gradient(115deg,#0C1F31 0%,#0C1F31 50%,#2b1626 80%,#5e1a2c 115%);}
+    .dot-pattern{background-image:radial-gradient(rgba(255,255,255,.07) 1px,transparent 1.5px);background-size:22px 22px;}
+    .card-lift{transition:box-shadow .2s,transform .2s;} .card-lift:hover{box-shadow:0 14px 30px -12px rgba(10,44,61,.22);transform:translateY(-3px);}
+    .field{width:100%;background:#fff;border:1px solid #E7EBEF;border-radius:.75rem;height:3rem;padding:0 1rem 0 2.75rem;font-size:.9rem;outline:none;transition:border-color .15s,box-shadow .15s;} .field:focus{border-color:#DC183C;box-shadow:0 0 0 3px rgba(220,24,60,.12);}
+    .chip{transition:all .15s;} .chip:hover{border-color:#DC183C;color:#DC183C;}
+    .line-clamp-2{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+    .dev-badge{display:none;} body.dev-on .dev-badge{display:inline-flex;} #devToggle.on{background:#DC183C;color:#fff;border-color:#DC183C;}
+    .ov{position:fixed;inset:0;z-index:60;} .ov-bg{position:absolute;inset:0;background:rgba(12,31,49,.45);backdrop-filter:blur(2px);opacity:0;transition:opacity .3s;} .ov.open .ov-bg{opacity:1;}
+    .drawer{position:absolute;right:0;top:0;height:100%;width:100%;max-width:440px;background:#fff;box-shadow:-12px 0 40px rgba(12,31,49,.25);overflow-y:auto;transform:translateX(100%);transition:transform .3s cubic-bezier(.2,.7,.2,1);} .ov.open .drawer{transform:translateX(0);}
   </style>
 </head>
 <body class="bg-[#FCFCFC] text-[#121A21] antialiased">
-
-
-<header class="bg-white border-b border-[#E7EBEF] sticky top-0 z-40">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center gap-4">
-    <a href="public-home.html" class="flex items-center gap-2.5 shrink-0">
-      <img src="assets/logo-icon.png" alt="SME South Africa" class="w-9 h-9" />
-      <span class="font-jakarta font-extrabold text-[17px] tracking-tight">SME <span class="text-[#DC183C]">South Africa</span></span>
-    </a>
-    <nav class="hidden lg:flex items-center gap-1 ml-4">
-      <a href="public-articles.html"  class="px-3 py-2 rounded-lg text-sm font-semibold text-[#DC183C] bg-[#FDECEF]">Articles</a>
-      <a href="public-resources.html" class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition">Resources</a>
-      <a href="public-funding.html"   class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition">Funding</a>
-      <a href="public-solutions.html" class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition">Solutions</a>
-      <a href="public-shop.html"      class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition">Shop</a>
-    </nav>
-    <div class="flex items-center gap-1 sm:gap-2 ml-auto">
-      <button id="devToggle" onclick="toggleDevMode()" class="hidden sm:flex items-center gap-1.5 px-3 h-9 rounded-full border border-slate-200 text-slate-500 hover:border-[#DC183C] hover:text-[#DC183C] transition text-[11px] font-bold uppercase tracking-wider" title="Toggle implementation notes"><i data-lucide="code-2" class="w-3.5 h-3.5"></i><span>Dev</span></button>
-      <a href="public-shop.html" aria-label="Cart" class="relative w-10 h-10 grid place-items-center rounded-full hover:bg-slate-100 text-slate-600"><i data-lucide="shopping-bag" class="w-5 h-5"></i><span class="absolute top-1.5 right-1.5 bg-[#DC183C] text-white text-[10px] font-bold rounded-full w-4 h-4 grid place-items-center">0</span></a>
-      <a href="member-hub.html" class="hidden sm:inline-flex items-center px-3 h-9 rounded-full text-sm font-bold text-[#121A21] hover:bg-slate-100 transition">Sign in</a>
-      <a href="member-hub.html" class="inline-flex items-center px-4 h-9 rounded-full text-sm font-bold text-white bg-[#DC183C] hover:bg-[#B0142F] transition">Join Free</a>
-    </div>
+<header class="bg-white border-b border-[#E7EBEF] sticky top-0 z-40"><div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center gap-4">
+  <a href="public-home.html" class="flex items-center gap-2.5 shrink-0"><img src="assets/logo-icon.png" alt="SME South Africa" class="w-9 h-9" /><span class="font-jakarta font-extrabold text-[17px] tracking-tight">SME <span class="text-[#DC183C]">South Africa</span></span></a>
+  <nav class="hidden lg:flex items-center gap-1 ml-4">
+    <a href="public-articles.html" class="px-3 py-2 rounded-lg text-sm font-semibold text-[#DC183C] bg-[#FDECEF]">Articles</a>
+    <a href="public-resources.html" class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition">Resources</a>
+    <a href="public-funding.html" class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition">Funding</a>
+    <a href="public-solutions.html" class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition">Solutions</a>
+    <a href="public-shop.html" class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition">Shop</a>
+  </nav>
+  <div class="flex items-center gap-1 sm:gap-2 ml-auto">
+    <button id="devToggle" onclick="toggleDevMode()" class="hidden sm:flex items-center gap-1.5 px-3 h-9 rounded-full border border-slate-200 text-slate-500 hover:border-[#DC183C] hover:text-[#DC183C] transition text-[11px] font-bold uppercase tracking-wider"><i data-lucide="code-2" class="w-3.5 h-3.5"></i><span>Dev</span></button>
+    <a href="public-auth.html" class="hidden sm:inline-flex items-center px-3 h-9 rounded-full text-sm font-bold text-[#121A21] hover:bg-slate-100 transition">Sign in</a>
+    <a href="public-auth.html#join" class="inline-flex items-center px-4 h-9 rounded-full text-sm font-bold text-white bg-[#DC183C] hover:bg-[#B0142F] transition">Join Free</a>
   </div>
-</header>
+</div></header>
 
-<!-- ===================== PAGE HEAD ===================== -->
-<section class="bg-white border-b border-[#E7EBEF]">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-12">
-    <div class="flex items-start gap-2">
-      <h1 class="font-jakarta font-extrabold text-4xl sm:text-5xl tracking-tight">SME Articles</h1>
-      <button onclick="openBrief('articles')" class="dev-badge w-6 h-6 rounded-full bg-[#DC183C] text-white items-center justify-center text-[11px] font-bold mt-2" title="Implementation notes">i</button>
-    </div>
-    <p class="text-lg text-slate-600 mt-3 max-w-2xl">Insights, guides, and expert advice for South African entrepreneurs and small business owners.</p>
+<!-- ARCHIVE HERO -->
+<section class="hero-bg text-white relative overflow-hidden"><div class="absolute inset-0 dot-pattern opacity-70 pointer-events-none"></div>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 pt-12 pb-28 relative">
+    <p class="text-xs text-white/50 mb-3"><a href="public-home.html" class="hover:text-white/80">Home</a> <span class="mx-1">›</span> All Articles</p>
+    <h1 class="font-jakarta font-extrabold text-4xl sm:text-5xl tracking-tight">SME Insights
+      <button onclick="openBrief()" class="dev-badge align-middle ml-1 w-6 h-6 rounded-full bg-[#FF9900] text-[#0C1F31] items-center justify-center text-[11px] font-bold">i</button>
+    </h1>
+    <p class="mt-4 text-white/70 max-w-2xl text-lg">Insights, guides, and expert advice for South African entrepreneurs and small business owners.</p>
+    <a href="public-article-categories.html" class="inline-flex items-center gap-1.5 mt-5 text-sm font-bold text-white/90 hover:text-white"><i data-lucide="layout-grid" class="w-4 h-4"></i> Browse by category <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
   </div>
 </section>
 
-<main class="max-w-7xl mx-auto px-4 sm:px-6 py-10">
-  <!-- Featured -->
-  <a href="public-article.html" class="grid md:grid-cols-2 gap-0 rounded-2xl border border-[#E7EBEF] overflow-hidden bg-white card-lift mb-10 reveal">
-    <div class="relative h-56 md:h-auto min-h-[14rem] overflow-hidden">
-      <img src="assets/article-1.jpg" alt="Funding readiness is a two-sided coin" class="w-full h-full object-cover" />
-      <span class="absolute top-3 left-3 px-3 py-1 rounded-full text-[11px] font-bold bg-[#E4F5EE] text-[#29A37A]">Agriculture &amp; Farming</span>
-    </div>
-    <div class="p-7 sm:p-9 flex flex-col justify-center">
-      <span class="text-[11px] font-bold uppercase tracking-widest text-[#AE6B0A]">Featured</span>
-      <h2 class="font-jakarta font-extrabold text-2xl sm:text-3xl leading-snug mt-2">Funding readiness is a two-sided coin</h2>
-      <p class="text-slate-600 mt-3">Why getting funded is as much about how funders see you as it is about your numbers — and how to close that gap.</p>
-      <div class="flex items-center gap-2.5 mt-5">
-        <div class="w-9 h-9 rounded-full bg-gradient-to-br from-[#DC183C] to-[#FF9900] grid place-items-center font-jakarta font-bold text-white text-xs">TM</div>
-        <div><p class="text-sm font-bold">Thabo Molefe</p><p class="text-xs text-slate-500">14 May 2026 · 4 min read</p></div>
+<main class="max-w-7xl mx-auto px-4 sm:px-6">
+  <!-- FEATURED CARD overlapping hero -->
+  <a href="public-article.html" class="group block bg-white rounded-3xl border border-[#E7EBEF] overflow-hidden shadow-xl -mt-16 relative card-lift">
+    <div class="grid md:grid-cols-2">
+      <div class="relative aspect-[16/11] md:aspect-auto overflow-hidden">
+        <img src="assets/article-1.jpg" alt="Funding Readiness is a Two-sided Coin" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" />
+        <span class="absolute top-4 left-4 px-3 py-1 rounded-full text-[11px] font-bold bg-[#FF9900] text-[#0C1F31] shadow">FEATURED</span>
+      </div>
+      <div class="p-7 sm:p-9 flex flex-col justify-center">
+        <span class="inline-block self-start px-2.5 py-1 rounded-full text-[11px] font-bold bg-[#FDECEF] text-[#DC183C]">AGRICULTURE &amp; FARMING</span>
+        <h2 class="font-jakarta font-extrabold text-2xl sm:text-[2rem] leading-tight mt-3 group-hover:text-[#DC183C] transition">Funding Readiness is a Two-sided Coin</h2>
+        <p class="text-[#6A7581] mt-3 leading-relaxed">Securing capital isn't only about a polished pitch — funders are reading your numbers, your governance and your readiness to deploy. Here's how SA agri-founders get both sides right.</p>
+        <div class="flex items-center gap-3 mt-6">
+          <span class="w-10 h-10 rounded-full bg-gradient-to-br from-[#DC183C] to-[#FF9900] grid place-items-center text-white text-sm font-bold">MS</span>
+          <div class="text-sm"><p class="font-bold">Maryna Steyn</p><p class="text-[#6A7581]">5 Dec 2025 · 4 min read</p></div>
+        </div>
       </div>
     </div>
   </a>
 
-  <!-- Filter + sort bar -->
-  <div class="flex flex-col lg:flex-row lg:items-center gap-4 mb-7">
-    <div id="cat-bar" class="flex items-center gap-2 overflow-x-auto no-scrollbar -mx-1 px-1 flex-1"></div>
-    <div class="flex items-center gap-3 shrink-0">
-      <span id="count" class="text-sm text-slate-500"></span>
-      <div class="flex items-center gap-1.5 text-sm font-semibold text-slate-600 border border-[#E7EBEF] rounded-full px-3 h-9 bg-white"><i data-lucide="arrow-down-up" class="w-4 h-4"></i> Newest first</div>
+  <!-- SEARCH + SORT -->
+  <div class="flex flex-col sm:flex-row gap-3 mt-10">
+    <div class="relative flex-1">
+      <i data-lucide="search" class="w-4 h-4 text-[#6A7581] absolute left-3.5 top-1/2 -translate-y-1/2"></i>
+      <input id="search" oninput="render()" class="field" placeholder="Search articles by title, topic, or category…" />
+    </div>
+    <div class="relative shrink-0">
+      <i data-lucide="arrow-down-up" class="w-4 h-4 text-[#6A7581] absolute left-3.5 top-1/2 -translate-y-1/2"></i>
+      <select id="sort" onchange="render()" class="appearance-none bg-white border border-[#E7EBEF] rounded-xl h-12 pl-10 pr-9 text-sm font-semibold outline-none focus:border-[#DC183C] cursor-pointer">
+        <option value="newest">Newest first</option>
+        <option value="oldest">Oldest first</option>
+        <option value="reading">Quickest read</option>
+      </select>
+      <i data-lucide="chevron-down" class="w-4 h-4 text-[#6A7581] absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none"></i>
     </div>
   </div>
 
-  <div id="grid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+  <!-- CATEGORY CHIPS -->
+  <div id="chips" class="flex flex-wrap gap-2 mt-5"></div>
 
-  <!-- Pagination -->
-  <div class="flex items-center justify-center gap-1.5 mt-12">
-    <button class="px-3 h-9 rounded-lg border border-[#E7EBEF] text-sm font-semibold text-slate-500 hover:bg-slate-100">Previous</button>
-    <button class="w-9 h-9 rounded-lg bg-[#0C1F31] text-white text-sm font-bold">1</button>
-    <button class="w-9 h-9 rounded-lg border border-[#E7EBEF] text-sm font-semibold text-slate-600 hover:bg-slate-100">2</button>
-    <button class="w-9 h-9 rounded-lg border border-[#E7EBEF] text-sm font-semibold text-slate-600 hover:bg-slate-100">3</button>
-    <button class="px-3 h-9 rounded-lg border border-[#E7EBEF] text-sm font-semibold text-slate-600 hover:bg-slate-100">Next</button>
-  </div>
+  <!-- GRID -->
+  <div id="grid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-8"></div>
+  <div id="empty" class="hidden text-center py-16 text-[#6A7581]"><i data-lucide="search-x" class="w-8 h-8 mx-auto mb-3"></i><p class="font-semibold">No articles match your search.</p></div>
 </main>
 
-<footer class="bg-[#0C1F31] text-white mt-10">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-12">
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
-      <div class="col-span-2 md:col-span-1">
-        <a href="public-home.html" class="flex items-center gap-2.5"><span class="w-9 h-9 rounded-lg bg-white grid place-items-center"><img src="assets/logo-icon.png" alt="SME South Africa" class="w-7 h-7" /></span><span class="font-jakarta font-extrabold text-[17px]">SME South Africa</span></a>
-        <p class="text-sm text-white/55 mt-4 max-w-xs leading-relaxed">South Africa's largest SME community — connecting founders with funding, mentorship, events, and the tools to scale.</p>
-      </div>
-      <div><p class="text-[11px] font-bold uppercase tracking-widest text-white/40">Platform</p><ul class="mt-4 space-y-2.5 text-sm text-white/70"><li><a href="member-hub.html" class="hover:text-white">Community</a></li><li><a href="#" class="hover:text-white">Events</a></li><li><a href="public-funding.html" class="hover:text-white">Funding</a></li><li><a href="public-solutions.html" class="hover:text-white">Solutions</a></li><li><a href="public-shop.html" class="hover:text-white">Shop</a></li></ul></div>
-      <div><p class="text-[11px] font-bold uppercase tracking-widest text-white/40">Learn</p><ul class="mt-4 space-y-2.5 text-sm text-white/70"><li><a href="public-articles.html" class="hover:text-white">Articles</a></li><li><a href="public-resources.html" class="hover:text-white">Resources</a></li><li><a href="public-resources.html" class="hover:text-white">Guides</a></li><li><a href="#" class="hover:text-white">Podcast</a></li></ul></div>
-      <div><p class="text-[11px] font-bold uppercase tracking-widest text-white/40">Company</p><ul class="mt-4 space-y-2.5 text-sm text-white/70"><li><a href="#" class="hover:text-white">About</a></li><li><a href="#" class="hover:text-white">Contact</a></li><li><a href="#" class="hover:text-white">Careers</a></li><li><a href="#" class="hover:text-white">Partners</a></li></ul></div>
-    </div>
-    <div class="flex flex-col sm:flex-row items-center justify-between gap-4 pt-8 mt-10 border-t border-white/10 text-sm text-white/50">
-      <p>© 2026 SME South Africa. All rights reserved.</p>
-      <div class="flex items-center gap-5"><a href="#" class="hover:text-white">Privacy Policy</a><a href="#" class="hover:text-white">Terms of Service</a><a href="#" class="hover:text-white">Cookie Policy</a></div>
-    </div>
-  </div>
-</footer>
+<div class="h-16"></div>
 
-<div id="overlay-root"></div>
-<div id="toast" class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-50"></div>
+<footer class="bg-[#0C1F31] text-white"><div class="max-w-7xl mx-auto px-4 sm:px-6 py-10 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm">
+  <a href="public-home.html" class="flex items-center gap-2.5"><span class="w-8 h-8 rounded-lg bg-white grid place-items-center"><img src="assets/logo-icon.png" class="w-6 h-6" alt="" /></span><span class="font-jakarta font-extrabold">SME South Africa</span></a>
+  <div class="flex flex-wrap items-center gap-x-5 gap-y-2 text-white/60"><a href="public-about.html" class="hover:text-white">About</a><a href="public-contact.html" class="hover:text-white">Contact</a><a href="public-advertise.html" class="hover:text-white">Advertise</a><a href="public-privacy.html" class="hover:text-white">Privacy</a><a href="public-terms.html" class="hover:text-white">Terms</a><a href="public-refunds.html" class="hover:text-white">Refunds</a><a href="public-popia.html" class="hover:text-white">POPIA</a></div>
+  <p class="text-white/40">© 2026 SME South Africa</p>
+</div></footer>
 
+<div id="overlay-root"></div><div id="toast" class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-50"></div>
 <script>
-  function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c])); }
-  function monogram(initials, size=44){ const fs=Math.max(10,Math.floor(size*0.38)); return `<div class="rounded-full bg-gradient-to-br from-[#DC183C] to-[#FF9900] grid place-items-center font-jakarta font-bold text-white shrink-0" style="width:${size}px;height:${size}px;font-size:${fs}px">${esc(initials)}</div>`; }
-  function showToast(msg){ const el=document.getElementById('toast'); el.classList.remove('hidden'); el.innerHTML=`<div class="bg-[#0C1F31] text-white rounded-full pl-3 pr-5 py-2.5 shadow-2xl flex items-center gap-2 text-sm font-semibold" style="border-left:4px solid #DC183C"><i data-lucide="check-circle" class="w-4 h-4" style="color:#DC183C"></i><span>${esc(msg)}</span></div>`; lucide.createIcons(); setTimeout(()=>{el.classList.add('hidden');el.innerHTML='';},2400); }
+  function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+  function showToast(m){const el=document.getElementById('toast');el.classList.remove('hidden');el.innerHTML=`<div class="bg-[#0C1F31] text-white rounded-full pl-3 pr-5 py-2.5 shadow-2xl flex items-center gap-2 text-sm font-semibold" style="border-left:4px solid #29A37A"><i data-lucide="check-circle" class="w-4 h-4" style="color:#29A37A"></i><span>${esc(m)}</span></div>`;lucide.createIcons();setTimeout(()=>{el.classList.add('hidden');el.innerHTML='';},2400);}
 
-  const CATS = ['All','Agriculture & Farming','Finance','Leadership','Marketing','Operations','Starting Up'];
-  const TINT = { 'Agriculture & Farming':['#E4F5EE','#29A37A'], 'Finance':['#FDECEF','#DC183C'], 'Leadership':['#FFF1E0','#AE6B0A'], 'Marketing':['#FDECEF','#DC183C'], 'Operations':['#E4F5EE','#29A37A'], 'Starting Up':['#FFF1E0','#AE6B0A'] };
-  const ARTICLES = [
-    { img:'assets/article-1.jpg', cat:'Operations',            init:'PN', author:'Pumla Ndlovu',  date:'11 May 2026', read:'6 min', head:'A compliance checklist every SA startup should run quarterly', desc:'CIPC, SARS, UIF and POPIA — the recurring obligations founders forget until it costs them.' },
-    { img:'assets/article-2.jpg', cat:'Marketing',             init:'KD', author:'Kabelo Dube',    date:'09 May 2026', read:'5 min', head:'Social media for agribusiness, without an agency', desc:'How small farming operations build a following and sell direct on a zero-rand budget.' },
-    { img:'assets/article-3.jpg', cat:'Starting Up',           init:'ZM', author:'Zinhle Maseko',  date:'06 May 2026', read:'7 min', head:'Bootstrapping: how to grow without giving away equity', desc:'Practical levers for funding growth from revenue when the bank says no.' },
-    { img:'assets/article-4.jpg', cat:'Marketing',             init:'RV', author:'Riaan van Wyk',  date:'02 May 2026', read:'4 min', head:'Budget marketing that actually moves the needle', desc:'Five channels that work for under R5,000 a month — with real SA examples.' },
-    { img:'assets/article-5.jpg', cat:'Leadership',            init:'TM', author:'Thandi Mbatha',  date:'28 Apr 2026', read:'6 min', head:'Hiring your first five people without losing the culture', desc:'What to delegate first, and how to keep the mission intact as you scale the team.' },
-    { img:'assets/article-6.jpg', cat:'Leadership',            init:'GS', author:'Gugu Sithole',   date:'24 Apr 2026', read:'5 min', head:'Finding a co-founder you won’t fall out with', desc:'The conversations to have before you split equity — and the vesting clause that saves friendships.' },
-    { img:'assets/article-7.jpg', cat:'Finance',               init:'AB', author:'Aisha Bashir',   date:'20 Apr 2026', read:'8 min', head:'Unlocking the township economy', desc:'Where the real growth is, and how formal businesses are tapping into informal markets.' },
-    { img:'assets/article-8.jpg', cat:'Starting Up',           init:'LK', author:'Lerato Khumalo', date:'16 Apr 2026', read:'5 min', head:'Women entrepreneurs: the funding gap and how to close it', desc:'Grants, networks and lenders actively backing women-led businesses in South Africa.' },
-    { img:'assets/article-2.jpg', cat:'Agriculture & Farming', init:'SP', author:'Sipho Pillay',   date:'12 Apr 2026', read:'6 min', head:'From subsistence to supply contract: scaling a small farm', desc:'The certifications, cold chain and offtake agreements that turn a plot into a business.' }
+  const CATS=['All','Agriculture & Farming','Finance','Leadership','Marketing','Operations','Starting Up'];
+  let activeCat='All';
+  const ARTICLES=[
+    {img:'assets/article-2.jpg',cat:'Finance',title:'How to Read a Cash-Flow Statement Without an Accountant',excerpt:'A plain-language walkthrough of the one report that tells you whether your business can survive next month.',author:'Thabo Nkosi',init:'TN',date:'2 Dec 2025',ts:20251202,read:5},
+    {img:'assets/article-3.jpg',cat:'Marketing',title:'Free AI Tools Every Small Business Should Be Using',excerpt:'From copywriting to customer support, these no-cost tools punch far above their weight for lean teams.',author:'Lerato Dlamini',init:'LD',date:'28 Nov 2025',ts:20251128,read:6},
+    {img:'assets/article-4.jpg',cat:'Operations',title:'Tips on Increasing E-hailing Profits in South Africa',excerpt:'Fuel, maintenance and dead-time eat your margin. Here is how top drivers keep more of every fare.',author:'Sipho Maseko',init:'SM',date:'24 Nov 2025',ts:20251124,read:4},
+    {img:'assets/article-5.jpg',cat:'Starting Up',title:'Registering Your Business With CIPC: A 2026 Checklist',excerpt:'Everything you need before, during and after registration — with the costs and timelines that actually apply.',author:'Naledi Mokoena',init:'NM',date:'19 Nov 2025',ts:20251119,read:7},
+    {img:'assets/article-6.jpg',cat:'Leadership',title:'Hiring Your First Employee Without the Overwhelm',excerpt:'Contracts, payroll, UIF and culture — a founder-friendly guide to bringing on number one the right way.',author:'Maryna Steyn',init:'MS',date:'14 Nov 2025',ts:20251114,read:6},
+    {img:'assets/article-7.jpg',cat:'Agriculture & Farming',title:'Smallholder to Supplier: Getting Into Retail Supply Chains',excerpt:'What buyers at major chains look for, and how emerging agri-businesses meet the bar on volume and compliance.',author:'Karabo Kgophane',init:'KK',date:'9 Nov 2025',ts:20251109,read:8},
+    {img:'assets/article-8.jpg',cat:'Marketing',title:'Building a Brand on Zero Budget',excerpt:'Identity, voice and consistency cost nothing but discipline. A practical brand playbook for bootstrapped SMEs.',author:'Lerato Dlamini',init:'LD',date:'4 Nov 2025',ts:20251104,read:5},
+    {img:'assets/article-1.jpg',cat:'Finance',title:'Pricing for Profit, Not Just to Compete',excerpt:'Undercutting the shop next door caps your growth. Learn to price against the value only you provide.',author:'Thabo Nkosi',init:'TN',date:'30 Oct 2025',ts:20251030,read:4},
+    {img:'assets/article-3.jpg',cat:'Starting Up',title:'Validating Your Idea Before You Spend a Cent',excerpt:'Five low-cost experiments that tell you whether real customers will pay — before you build anything.',author:'Naledi Mokoena',init:'NM',date:'25 Oct 2025',ts:20251025,read:6}
   ];
 
-  let activeCat = 'All';
-  function renderCats(){
-    document.getElementById('cat-bar').innerHTML = CATS.map(c=>`<button onclick="setCat('${c.replace(/'/g,"\\'")}')" class="chip shrink-0 px-3.5 h-9 rounded-full border border-[#E7EBEF] bg-white text-sm font-semibold text-slate-600 ${c===activeCat?'active':''}">${esc(c)}</button>`).join('');
+  function renderChips(){
+    document.getElementById('chips').innerHTML = CATS.map(c=>{
+      const on=c===activeCat;
+      return `<button onclick="setCat('${esc(c)}')" class="chip px-4 h-9 rounded-full text-sm font-semibold border ${on?'bg-[#DC183C] text-white border-[#DC183C]':'bg-white text-[#121A21] border-[#E7EBEF]'}">${esc(c)}</button>`;
+    }).join('');
   }
-  function setCat(c){ activeCat=c; renderCats(); renderGrid(); }
-  function renderGrid(){
-    const list = activeCat==='All' ? ARTICLES : ARTICLES.filter(a=>a.cat===activeCat);
-    document.getElementById('count').textContent = `${activeCat==='All'?19:list.length} article${list.length===1?'':'s'}`;
-    document.getElementById('grid').innerHTML = list.map((a,i)=>{ const t=TINT[a.cat]||['#F1F5F9','#475569']; return `
-      <a href="public-article.html" class="group bg-white rounded-2xl border border-[#E7EBEF] overflow-hidden card-lift reveal block" style="animation-delay:${i*50}ms">
+  function setCat(c){activeCat=c;renderChips();render();}
+
+  function render(){
+    const q=(document.getElementById('search').value||'').toLowerCase().trim();
+    const sort=document.getElementById('sort').value;
+    let list=ARTICLES.filter(a=>{
+      const catOk=activeCat==='All'||a.cat===activeCat;
+      const qOk=!q||(a.title+' '+a.excerpt+' '+a.cat+' '+a.author).toLowerCase().includes(q);
+      return catOk&&qOk;
+    });
+    if(sort==='newest')list.sort((a,b)=>b.ts-a.ts);
+    else if(sort==='oldest')list.sort((a,b)=>a.ts-b.ts);
+    else if(sort==='reading')list.sort((a,b)=>a.read-b.read);
+    const grid=document.getElementById('grid');
+    document.getElementById('empty').classList.toggle('hidden',list.length>0);
+    grid.innerHTML=list.map(a=>`
+      <a href="public-article.html" class="group bg-white rounded-2xl border border-[#E7EBEF] overflow-hidden card-lift flex flex-col">
         <div class="relative aspect-[16/10] overflow-hidden">
-          <img src="${a.img}" alt="${esc(a.head)}" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition duration-300" />
-          <span class="absolute top-3 left-3 px-2.5 py-1 rounded-full text-[11px] font-bold" style="background:${t[0]};color:${t[1]}">${esc(a.cat)}</span>
+          <img src="${a.img}" alt="${esc(a.title)}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" />
+          <span class="absolute top-3 left-3 px-2.5 py-1 rounded-full text-[10px] font-bold bg-[#FDECEF] text-[#DC183C] shadow-sm">${esc(a.cat)}</span>
         </div>
-        <div class="p-5">
-          <h3 class="font-jakarta font-bold text-lg leading-snug group-hover:text-[#DC183C] transition">${esc(a.head)}</h3>
-          <p class="text-sm text-slate-600 mt-2 line-clamp-2">${esc(a.desc)}</p>
-          <div class="flex items-center gap-2.5 mt-4">${monogram(a.init,30)}<div class="min-w-0"><p class="text-sm font-bold truncate">${esc(a.author)}</p><p class="text-xs text-slate-500">${esc(a.date)} · ${esc(a.read)}</p></div></div>
+        <div class="p-5 flex flex-col flex-1">
+          <h3 class="font-jakarta font-bold text-lg leading-snug group-hover:text-[#DC183C] transition">${esc(a.title)}</h3>
+          <p class="text-sm text-[#6A7581] mt-2 leading-relaxed line-clamp-2">${esc(a.excerpt)}</p>
+          <div class="flex items-center gap-2.5 mt-4 pt-4 border-t border-[#E7EBEF]">
+            <span class="w-8 h-8 rounded-full bg-gradient-to-br from-[#DC183C] to-[#FF9900] grid place-items-center text-white text-[11px] font-bold">${esc(a.init)}</span>
+            <div class="text-xs"><p class="font-semibold text-[#121A21]">${esc(a.author)}</p><p class="text-[#6A7581]">${esc(a.date)} · ${a.read} min read</p></div>
+          </div>
         </div>
-      </a>`; }).join('');
+      </a>`).join('');
     lucide.createIcons();
   }
 
-  const BRIEFS = { articles: {
-    title:'Articles Archive', sub:'Public, SEO-indexed content hub',
-    purpose:'Top-of-funnel content marketing. Free, indexable articles pull organic search traffic and warm visitors toward joining. Category filtering keeps long archives navigable.',
-    data:'Article: <code>{ id, title, excerpt, body, category, author{name,initials}, published_at, read_minutes, hero }</code>. Categories are a fixed taxonomy.',
-    logic:'Client filters by category; server paginates (issue real ?page= for SEO, not infinite scroll). Featured = editor-flagged or most-recent. Yoast/RankMath handles meta + sitemap. Public &mdash; do NOT noindex (unlike funding apps).',
-    components:'Page head · featured card · category chips · sort · article grid · pagination.',
-    api:'GET /v1/articles?category={cat}&page={n}&sort=newest'
-  } };
-  function toggleDevMode(){ const on=document.body.classList.toggle('dev-on'); const b=document.getElementById('devToggle'); if(b)b.classList.toggle('on',on); if(on)showToast('Dev Mode on — tap any ⓘ for implementation notes.'); lucide.createIcons(); }
-  function closeOverlay(id){ const el=document.getElementById(id); if(!el)return; el.classList.remove('open'); setTimeout(()=>{ if(el&&el.parentNode) el.remove(); },300); }
-  function openBrief(id){ const b=BRIEFS[id]; if(!b)return;
-    const sec=(icon,label,html)=>`<div class="px-6 py-4 border-t border-slate-100"><p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] flex items-center gap-1.5 mb-2"><i data-lucide="${icon}" class="w-3.5 h-3.5"></i>${label}</p><div class="text-sm text-slate-600 leading-relaxed">${html}</div></div>`;
-    document.getElementById('overlay-root').innerHTML=`<div class="ov" id="ov-brief"><div class="ov-bg" onclick="closeOverlay('ov-brief')"></div><div class="drawer"><div class="sticky top-0 z-10 bg-[#0C1F31] text-white px-6 py-5 flex items-start justify-between"><div class="min-w-0"><p class="text-[10px] font-bold uppercase tracking-widest text-[#FF9900] mb-1">Dev Brief</p><h3 class="font-jakarta font-extrabold text-lg leading-tight">${b.title}</h3><p class="text-xs text-white/60 mt-1">${b.sub}</p></div><button onclick="closeOverlay('ov-brief')" aria-label="Close" class="text-white/60 hover:text-white shrink-0 ml-3"><i data-lucide="x" class="w-5 h-5"></i></button></div>${sec('target','Purpose',b.purpose)}${sec('database','Data model',b.data)}${sec('git-branch','Logic',b.logic)}${sec('boxes','Components',b.components)}${sec('plug','API',`<code class="block bg-slate-900 text-emerald-300 text-xs font-mono px-3 py-2 rounded-lg overflow-x-auto">${b.api}</code>`)}<div class="px-6 py-4 border-t border-slate-100"><p class="text-[11px] text-slate-400 flex items-center gap-1.5"><i data-lucide="info" class="w-3.5 h-3.5"></i> Spec lives beside the feature — toggle Dev Mode off for the clean view.</p></div></div></div>`;
-    requestAnimationFrame(()=>{ const o=document.getElementById('ov-brief'); if(o)o.classList.add('open'); }); lucide.createIcons();
-  }
+  const BRIEF={title:'Article Archive',sub:'WordPress archive · public, indexable',purpose:'The SME Insights hub — the top-of-funnel SEO surface listing all posts with a featured story, search, category filter and sort. Standalone archive at /articles.',data:'Posts: <code>{ id, title, category, excerpt, hero, author{name,initials}, published_at, read_minutes, featured }</code>. Categories are a CMS taxonomy.',logic:'Featured = the post flagged <code>featured</code> (else newest). Search filters title/excerpt/category/author client-side; category chips and sort re-query. Public + indexable (archive + Article schema).',components:'Header · archive hero · featured card · search + sort · category chips · article grid · footer.',api:'GET /v1/articles?category=&q=&sort=&page= · GET /v1/articles?featured=1'};
+  function toggleDevMode(){const on=document.body.classList.toggle('dev-on');const b=document.getElementById('devToggle');if(b)b.classList.toggle('on',on);if(on)showToast('Dev Mode on — tap any ⓘ for implementation notes.');lucide.createIcons();}
+  function closeOverlay(id){const el=document.getElementById(id);if(!el)return;el.classList.remove('open');setTimeout(()=>{if(el&&el.parentNode)el.remove();},300);}
+  function openBrief(){const b=BRIEF;const sec=(i,l,h)=>`<div class="px-6 py-4 border-t border-slate-100"><p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] flex items-center gap-1.5 mb-2"><i data-lucide="${i}" class="w-3.5 h-3.5"></i>${l}</p><div class="text-sm text-slate-600 leading-relaxed">${h}</div></div>`;document.getElementById('overlay-root').innerHTML=`<div class="ov" id="ov"><div class="ov-bg" onclick="closeOverlay('ov')"></div><div class="drawer"><div class="sticky top-0 z-10 bg-[#0C1F31] text-white px-6 py-5 flex items-start justify-between"><div><p class="text-[10px] font-bold uppercase tracking-widest text-[#FF9900] mb-1">Dev Brief</p><h3 class="font-jakarta font-extrabold text-lg leading-tight">${b.title}</h3><p class="text-xs text-white/60 mt-1">${b.sub}</p></div><button onclick="closeOverlay('ov')" class="text-white/60 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button></div>${sec('target','Purpose',b.purpose)}${sec('database','Data model',b.data)}${sec('git-branch','Logic',b.logic)}${sec('boxes','Components',b.components)}${sec('plug','API',`<code class="block bg-slate-900 text-emerald-300 text-xs font-mono px-3 py-2 rounded-lg overflow-x-auto">${b.api}</code>`)}</div></div>`;requestAnimationFrame(()=>{const o=document.getElementById('ov');if(o)o.classList.add('open');});lucide.createIcons();}
 
-  renderCats(); renderGrid(); lucide.createIcons();
+  renderChips();render();lucide.createIcons();
 </script>
 </body>
 </html>
