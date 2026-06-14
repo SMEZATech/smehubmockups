@@ -38,3 +38,4 @@ window.MOCKUP_STATUS = {
   "newsletter-issue.html":    "under-review",
   "podcast.html":             "under-work"
 };
+window.MOCKUP_STATUS_PUBLISHED = "2026-06-09T08:00:00Z";
