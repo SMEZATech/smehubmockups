@@ -14,6 +14,7 @@
     .dot-pattern{background-image:radial-gradient(rgba(255,255,255,.07) 1px,transparent 1.5px);background-size:22px 22px;}
     .card-lift{transition:box-shadow .2s,transform .2s;} .card-lift:hover{box-shadow:0 10px 24px -10px rgba(10,44,61,0.18);transform:translateY(-2px);}
     .chip{transition:background-color .15s,color .15s,border-color .15s;cursor:pointer;} .chip.active{background:#fff;color:#0C1F31;border-color:#fff;}
+    .chip.active-red{background:#DC183C;color:#fff;border-color:#DC183C;}
     .no-scrollbar::-webkit-scrollbar{display:none;} .no-scrollbar{-ms-overflow-style:none;scrollbar-width:none;}
     .field{width:100%;background:#fff;border:1px solid #E7EBEF;border-radius:.75rem;height:2.75rem;padding:0 1rem 0 2.5rem;font-size:.9rem;outline:none;transition:border-color .15s,box-shadow .15s;} .field:focus{border-color:#DC183C;box-shadow:0 0 0 3px rgba(220,24,60,.12);}
     .dev-badge{display:none;} body.dev-on .dev-badge{display:inline-flex;} #devToggle.on{background:#DC183C;color:#fff;border-color:#DC183C;}
@@ -46,6 +47,11 @@
     <p id="hero-sub" class="mt-4 text-white/70 max-w-2xl text-lg">In-depth reads on the topics that move your business forward.</p>
     <!-- Type switcher chips -->
     <div id="type-bar" class="flex items-center gap-2 overflow-x-auto no-scrollbar -mx-1 px-1 mt-7"></div>
+    <!-- Category (topic) filter chips -->
+    <div class="mt-3">
+      <span class="block text-[11px] font-bold uppercase tracking-wider text-white/45 mb-2">Filter by topic</span>
+      <div id="cat-bar" class="flex items-center gap-2 overflow-x-auto no-scrollbar -mx-1 px-1"></div>
+    </div>
   </div>
 </section>
 
@@ -58,7 +64,7 @@
     <div class="flex items-center gap-3 sm:ml-auto">
       <span id="count" class="text-sm text-slate-500"></span>
       <select id="sort" onchange="renderGrid()" class="text-sm font-semibold text-slate-600 border border-[#E7EBEF] rounded-full px-4 h-9 bg-white outline-none">
-        <option value="popular">Most downloaded</option>
+        <option value="default">Newest</option>
         <option value="az">A → Z</option>
       </select>
     </div>
@@ -86,54 +92,57 @@
   };
   const ORDER = ['ebooks','templates','guides','reports'];
 
-  // 8 resources per type
+  // Categories (topics) — chip filter
+  const CATS = ['Marketing','Finance','Operations','Sales','Compliance','HR & People','Technology'];
+
+  // 8 resources per type — each tagged with a category
   const DATA = {
     ebooks: [
-      {t:'Your Guide to AI Prompting', d:'The four core pillars of prompting for business leaders.', g:true,  dl:3120},
-      {t:'Pitching to Funders That Say Yes', d:'Structure a deck that survives the first five minutes.', g:true, dl:2480},
-      {t:'The Bootstrapper’s Handbook', d:'Grow on revenue without giving away equity.', g:false, dl:4015},
-      {t:'Pricing Your Product or Service', d:'Frameworks to price for profit, not just to compete.', g:false, dl:1890},
-      {t:'Building a Brand on a Budget', d:'Look established before you are — for under R5,000.', g:true,  dl:1340},
-      {t:'Hiring Your First Five People', d:'What to delegate first without losing the culture.', g:false, dl:2210},
-      {t:'Selling on WhatsApp & Social', d:'Turn followers and chats into paying customers.', g:false, dl:3670},
-      {t:'Surviving a Cash Flow Crunch', d:'The moves that keep the lights on when money is tight.', g:true,  dl:1560}
+      {t:'Your Guide to AI Prompting', d:'The four core pillars of prompting for business leaders.', g:true,  c:'Technology'},
+      {t:'Pitching to Funders That Say Yes', d:'Structure a deck that survives the first five minutes.', g:true, c:'Finance'},
+      {t:'The Bootstrapper’s Handbook', d:'Grow on revenue without giving away equity.', g:false, c:'Finance'},
+      {t:'Pricing Your Product or Service', d:'Frameworks to price for profit, not just to compete.', g:false, c:'Sales'},
+      {t:'Building a Brand on a Budget', d:'Look established before you are — for under R5,000.', g:true,  c:'Marketing'},
+      {t:'Hiring Your First Five People', d:'What to delegate first without losing the culture.', g:false, c:'HR & People'},
+      {t:'Selling on WhatsApp & Social', d:'Turn followers and chats into paying customers.', g:false, c:'Marketing'},
+      {t:'Surviving a Cash Flow Crunch', d:'The moves that keep the lights on when money is tight.', g:true,  c:'Finance'}
     ],
     templates: [
-      {t:'One-Page Business Plan', d:'A founder-friendly plan you can fill in this afternoon.', g:false, dl:5240},
-      {t:'Cash Flow Forecast (12 Months)', d:'See your runway month by month.', g:false, dl:4680},
-      {t:'Invoice & Quote Pack', d:'SARS-friendly invoices and quotes, ready to brand.', g:false, dl:3920},
-      {t:'Pitch Deck Template', d:'Ten slides investors actually want to see.', g:true,  dl:2110},
-      {t:'Employment Contract Template', d:'A compliant starting point for your first hires.', g:true,  dl:1780},
-      {t:'Marketing Calendar', d:'Plan a year of campaigns on one tab.', g:false, dl:2440},
-      {t:'Expense Tracker', d:'Categorise spend and stay tax-ready all year.', g:false, dl:3010},
-      {t:'Sales Pipeline Tracker', d:'Track leads from first contact to close.', g:true,  dl:1620}
+      {t:'One-Page Business Plan', d:'A founder-friendly plan you can fill in this afternoon.', g:false, c:'Operations'},
+      {t:'Cash Flow Forecast (12 Months)', d:'See your runway month by month.', g:false, c:'Finance'},
+      {t:'Invoice & Quote Pack', d:'SARS-friendly invoices and quotes, ready to brand.', g:false, c:'Finance'},
+      {t:'Pitch Deck Template', d:'Ten slides investors actually want to see.', g:true,  c:'Finance'},
+      {t:'Employment Contract Template', d:'A compliant starting point for your first hires.', g:true,  c:'HR & People'},
+      {t:'Marketing Calendar', d:'Plan a year of campaigns on one tab.', g:false, c:'Marketing'},
+      {t:'Expense Tracker', d:'Categorise spend and stay tax-ready all year.', g:false, c:'Finance'},
+      {t:'Sales Pipeline Tracker', d:'Track leads from first contact to close.', g:true,  c:'Sales'}
     ],
     guides: [
-      {t:'Registering Your Business with CIPC', d:'Every step, document and fee to register.', g:false, dl:6120},
-      {t:'POPIA Compliance for Small Teams', d:'A practical checklist to get data handling right.', g:false, dl:2890},
-      {t:'Getting Tax Compliant with SARS', d:'Registrations, returns and deadlines explained.', g:false, dl:3450},
-      {t:'Applying for Government Grants', d:'Where to look and how to put a strong application together.', g:true, dl:2230},
-      {t:'Opening a Business Bank Account', d:'What each bank needs and how to compare them.', g:false, dl:1980},
-      {t:'Writing a Funding-Ready Plan', d:'Turn your idea into a document funders trust.', g:true,  dl:1710},
-      {t:'B-BBEE for Small Business', d:'Understand your level and how to improve it.', g:false, dl:2050},
-      {t:'Setting Up Online Payments', d:'Compare gateways and go live with confidence.', g:false, dl:1640}
+      {t:'Registering Your Business with CIPC', d:'Every step, document and fee to register.', g:false, c:'Compliance'},
+      {t:'POPIA Compliance for Small Teams', d:'A practical checklist to get data handling right.', g:false, c:'Compliance'},
+      {t:'Getting Tax Compliant with SARS', d:'Registrations, returns and deadlines explained.', g:false, c:'Finance'},
+      {t:'Applying for Government Grants', d:'Where to look and how to put a strong application together.', g:true, c:'Finance'},
+      {t:'Opening a Business Bank Account', d:'What each bank needs and how to compare them.', g:false, c:'Finance'},
+      {t:'Writing a Funding-Ready Plan', d:'Turn your idea into a document funders trust.', g:true,  c:'Finance'},
+      {t:'B-BBEE for Small Business', d:'Understand your level and how to improve it.', g:false, c:'Compliance'},
+      {t:'Setting Up Online Payments', d:'Compare gateways and go live with confidence.', g:false, c:'Technology'}
     ],
     reports: [
-      {t:'State of SA Small Business 2026', d:'Confidence, funding access and hiring intentions.', g:true,  dl:2780},
-      {t:'Township Economy Opportunity Map', d:'Where formal and informal markets converge.', g:true,  dl:1920},
-      {t:'SME Funding Landscape Report', d:'Who is lending, granting and investing right now.', g:true,  dl:2340},
-      {t:'Women in Business Survey', d:'The funding gap and the networks closing it.', g:false, dl:1560},
-      {t:'Digital Adoption Among SMEs', d:'How small firms are using tech to grow.', g:false, dl:1280},
-      {t:'Cost of Doing Business Index', d:'What is squeezing margins across sectors.', g:true,  dl:1410},
-      {t:'Youth Entrepreneurship Report', d:'Trends, barriers and support for under-35 founders.', g:false, dl:1190},
-      {t:'Skills & Hiring Outlook 2026', d:'The roles SMEs are struggling to fill.', g:false, dl:1020}
+      {t:'State of SA Small Business 2026', d:'Confidence, funding access and hiring intentions.', g:true,  c:'Operations'},
+      {t:'Township Economy Opportunity Map', d:'Where formal and informal markets converge.', g:true,  c:'Marketing'},
+      {t:'SME Funding Landscape Report', d:'Who is lending, granting and investing right now.', g:true,  c:'Finance'},
+      {t:'Women in Business Survey', d:'The funding gap and the networks closing it.', g:false, c:'HR & People'},
+      {t:'Digital Adoption Among SMEs', d:'How small firms are using tech to grow.', g:false, c:'Technology'},
+      {t:'Cost of Doing Business Index', d:'What is squeezing margins across sectors.', g:true,  c:'Operations'},
+      {t:'Youth Entrepreneurship Report', d:'Trends, barriers and support for under-35 founders.', g:false, c:'HR & People'},
+      {t:'Skills & Hiring Outlook 2026', d:'The roles SMEs are struggling to fill.', g:false, c:'HR & People'}
     ]
   };
 
   function getType(){ const p=new URLSearchParams(location.search).get('type'); const h=location.hash.replace('#',''); const k=(h||p||'ebooks').toLowerCase(); return TYPES[k]?k:'ebooks'; }
   let active = getType();
+  let activeCat = 'all';   // 'all' or a CATS value
 
-  function fmt(n){ return n>=1000 ? (n/1000).toFixed(1).replace('.0','')+'k' : ''+n; }
 
   function renderHero(){
     const c = TYPES[active];
@@ -141,25 +150,34 @@
     document.getElementById('hero-title').childNodes[0].nodeValue = c.label + ' ';
     document.getElementById('hero-sub').textContent = c.sub;
     document.getElementById('type-bar').innerHTML = ORDER.map(k=>`<button onclick="setType('${k}')" class="chip shrink-0 px-4 h-9 rounded-full border border-white/25 text-sm font-semibold text-white/80 ${k===active?'active':''}">${esc(TYPES[k].label)}</button>`).join('');
+    const catKeys = ['all', ...CATS];
+    document.getElementById('cat-bar').innerHTML = catKeys.map(k=>`<button onclick="setCat('${esc(k).replace(/'/g,"\\'")}')" class="chip shrink-0 px-4 h-9 rounded-full border border-white/25 text-sm font-semibold text-white/80 ${k===activeCat?'active-red':''}">${k==='all'?'All':esc(k)}</button>`).join('');
     lucide.createIcons();
   }
   function setType(k){ active=k; history.replaceState(null,'',`?type=${k}`); renderHero(); renderGrid(); }
+  function setCat(k){ activeCat=k; renderHero(); renderGrid(); }
 
   function renderGrid(){
     const c = TYPES[active];
     const q = (document.getElementById('search').value||'').toLowerCase();
-    let list = DATA[active].filter(r => !q || r.t.toLowerCase().includes(q) || r.d.toLowerCase().includes(q));
+    // Combine: matches selected TYPE (via active list) AND selected CATEGORY AND search query
+    let list = DATA[active].filter(r =>
+      (activeCat==='all' || r.c===activeCat) &&
+      (!q || r.t.toLowerCase().includes(q) || r.d.toLowerCase().includes(q))
+    );
     if(document.getElementById('sort').value==='az') list = list.slice().sort((a,b)=>a.t.localeCompare(b.t));
-    else list = list.slice().sort((a,b)=>b.dl-a.dl);
     document.getElementById('count').textContent = `${list.length} resource${list.length===1?'':'s'}`;
     document.getElementById('grid').innerHTML = list.map(r=>`
-      <a href="public-resource.html" class="group bg-white rounded-2xl border border-[#E7EBEF] p-5 card-lift block flex flex-col">
-        <div class="w-12 h-12 rounded-xl grid place-items-center mb-4" style="background:${c.tint[0]};color:${c.tint[1]}"><i data-lucide="${c.icon}" class="w-6 h-6"></i></div>
-        <h3 class="font-jakarta font-bold text-base leading-snug group-hover:text-[#DC183C] transition">${esc(r.t)}</h3>
-        <p class="text-sm text-slate-600 mt-2 flex-1">${esc(r.d)}</p>
-        <div class="flex items-center justify-between mt-4 pt-4 border-t border-[#E7EBEF]">
-          <span class="text-xs text-slate-500 flex items-center gap-1"><i data-lucide="download" class="w-3.5 h-3.5"></i> ${fmt(r.dl)}</span>
-          <span class="inline-flex items-center gap-1.5 text-sm font-bold ${r.g?'text-[#DC183C]':'text-[#29A37A]'}"><i data-lucide="${r.g?'lock':'download'}" class="w-4 h-4"></i> ${r.g?'Unlock':'Download Free'}</span>
+      <a href="public-resource.html" data-category="${esc(r.c)}" class="group bg-white rounded-2xl border border-[#E7EBEF] overflow-hidden card-lift block flex flex-col">
+        <div class="aspect-[16/9] w-full grid place-items-center" style="background:${c.tint[0]};color:${c.tint[1]}"><i data-lucide="${c.icon}" class="w-9 h-9"></i></div>
+        <div class="p-5 flex flex-col flex-1">
+          <div class="flex items-center gap-2 text-[11px] font-bold">
+            <span class="inline-flex px-2 py-0.5 rounded-full" style="background:${c.tint[0]};color:${c.tint[1]}">${esc(c.label)}</span>
+            <span class="inline-flex px-2 py-0.5 rounded-full bg-slate-100 text-slate-500">${esc(r.c)}</span>
+          </div>
+          <h3 class="font-jakarta font-bold text-base leading-snug mt-3 group-hover:text-[#DC183C] transition">${esc(r.t)}</h3>
+          <p class="text-sm text-slate-600 mt-2 flex-1">${esc(r.d)}</p>
+          <span class="mt-4 pt-4 border-t border-[#E7EBEF] inline-flex items-center gap-1.5 text-sm font-bold text-[#DC183C]"><i data-lucide="download" class="w-4 h-4"></i> Download Now</span>
         </div>
       </a>`).join('');
     lucide.createIcons();
@@ -167,11 +185,11 @@
 
   const BRIEFS = { cat: {
     title:'Resource Category', sub:'One templated page for all 4 types',
-    purpose:'A single template renders any resource type (ebooks / templates / guides / reports). The type chips swap the view client-side and rewrite the URL so each type is shareable and indexable.',
-    data:'Reads <code>?type=</code> (or #hash). Resource CPT: <code>{ id, title, type, excerpt, cover, file_url, gated, downloads }</code>. Type is a taxonomy term.',
-    logic:'On WordPress this is the <code>type</code> taxonomy archive. Switcher = AJAX filter or real archive links. Gated downloads are protected by MemberPress; free ones serve immediately.',
-    components:'Archive hero · type switcher chips · search · sort · resource grid.',
-    api:'GET /v1/resources?type={type}&q={q}&sort={popular|az}'
+    purpose:'A single template renders any resource type (ebooks / templates / guides / reports). The type chips swap the view client-side and rewrite the URL so each type is shareable and indexable. A second chip row filters by topic/category.',
+    data:'Reads <code>?type=</code> (or #hash). Resource CPT: <code>{ id, title, type, category, excerpt, cover, file_url, gated }</code>. Type and category are both taxonomy terms.',
+    logic:'On WordPress this is the <code>type</code> taxonomy archive. Type + category filters combine (card visible only if it matches both). Gated downloads are protected by MemberPress; free ones serve immediately. CTA label is consistent across every type (Download Now).',
+    components:'Archive hero · type switcher chips · category chips · search · sort · resource grid.',
+    api:'GET /v1/resources?type={type}&category={cat}&q={q}&sort={newest|az}'
   } };
   function toggleDevMode(){const on=document.body.classList.toggle('dev-on');const b=document.getElementById('devToggle');if(b)b.classList.toggle('on',on);if(on)showToast('Dev Mode on — tap any ⓘ for implementation notes.');lucide.createIcons();}
   function closeOverlay(id){const el=document.getElementById(id);if(!el)return;el.classList.remove('open');setTimeout(()=>{if(el&&el.parentNode)el.remove();},300);}
