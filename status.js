@@ -23,6 +23,8 @@ window.MOCKUP_STATUS = {
   // ---- Not yet finalised (greyed / coming soon) ----
   "public-articles.html":         "under-review",
   "public-article-categories.html":"under-review",
+  "public-category.html":         "under-review",
+  "public-subcategory.html":      "under-review",
   "public-author.html":           "under-review",
   "public-article.html":          "under-review",
   "public-resources.html":        "under-review",

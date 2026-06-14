@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Starting a Business — SME South Africa</title>
+  <meta name="description" content="Everything you need to launch — ideas, planning, compliance, funding and your first customers." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script><script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  <script>tailwind.config={theme:{extend:{fontFamily:{jakarta:['Plus Jakarta Sans','sans-serif'],inter:['Inter','system-ui','sans-serif']}}}};</script>
+  <style>
+    html,body{font-family:'Inter',system-ui,sans-serif;} .font-jakarta{font-family:'Plus Jakarta Sans',sans-serif;letter-spacing:.005em;}
+    .hero-bg{background:linear-gradient(115deg,#0C1F31 0%,#0C1F31 50%,#2b1626 80%,#5e1a2c 115%);}
+    .dot-pattern{background-image:radial-gradient(rgba(255,255,255,.07) 1px,transparent 1.5px);background-size:22px 22px;}
+    .card-lift{transition:box-shadow .2s,transform .2s;} .card-lift:hover{box-shadow:0 14px 30px -12px rgba(10,44,61,.22);transform:translateY(-3px);}
+    .field{width:100%;background:#fff;border:1px solid #E7EBEF;border-radius:.75rem;height:3rem;padding:0 1rem 0 2.75rem;font-size:.9rem;outline:none;transition:border-color .15s,box-shadow .15s;} .field:focus{border-color:#DC183C;box-shadow:0 0 0 3px rgba(220,24,60,.12);}
+    .chip{transition:all .15s;} .chip:hover{border-color:#DC183C;color:#DC183C;}
+    .line-clamp-2{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+    .dev-badge{display:none;} body.dev-on .dev-badge{display:inline-flex;} #devToggle.on{background:#DC183C;color:#fff;border-color:#DC183C;}
+    .ov{position:fixed;inset:0;z-index:60;} .ov-bg{position:absolute;inset:0;background:rgba(12,31,49,.45);backdrop-filter:blur(2px);opacity:0;transition:opacity .3s;} .ov.open .ov-bg{opacity:1;}
+    .drawer{position:absolute;right:0;top:0;height:100%;width:100%;max-width:440px;background:#fff;box-shadow:-12px 0 40px rgba(12,31,49,.25);overflow-y:auto;transform:translateX(100%);transition:transform .3s cubic-bezier(.2,.7,.2,1);} .ov.open .drawer{transform:translateX(0);}
+  </style>
+</head>
+<body class="bg-[#FCFCFC] text-[#121A21] antialiased">
+<header class="bg-white border-b border-[#E7EBEF] sticky top-0 z-40"><div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center gap-4">
+  <a href="public-home.html" class="flex items-center gap-2.5 shrink-0"><img src="assets/logo-icon.png" alt="SME South Africa" class="w-9 h-9" /><span class="font-jakarta font-extrabold text-[17px] tracking-tight">SME <span class="text-[#DC183C]">South Africa</span></span></a>
+  <nav class="hidden lg:flex items-center gap-1 ml-4">
+    <a href="public-articles.html" class="px-3 py-2 rounded-lg text-sm font-semibold text-[#DC183C] bg-[#FDECEF]">Articles</a>
+    <a href="public-resources.html" class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition">Resources</a>
+    <a href="public-funding.html" class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition">Funding</a>
+    <a href="public-solutions.html" class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition">Solutions</a>
+    <a href="public-shop.html" class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition">Shop</a>
+  </nav>
+  <div class="flex items-center gap-1 sm:gap-2 ml-auto">
+    <button id="devToggle" onclick="toggleDevMode()" class="hidden sm:flex items-center gap-1.5 px-3 h-9 rounded-full border border-slate-200 text-slate-500 hover:border-[#DC183C] hover:text-[#DC183C] transition text-[11px] font-bold uppercase tracking-wider"><i data-lucide="code-2" class="w-3.5 h-3.5"></i><span>Dev</span></button>
+    <a href="public-auth.html" class="hidden sm:inline-flex items-center px-3 h-9 rounded-full text-sm font-bold text-[#121A21] hover:bg-slate-100 transition">Sign in</a>
+    <a href="public-auth.html#join" class="inline-flex items-center px-4 h-9 rounded-full text-sm font-bold text-white bg-[#DC183C] hover:bg-[#B0142F] transition">Join Free</a>
+  </div>
+</div></header>
+
+<!-- ARCHIVE HERO -->
+<section class="hero-bg text-white relative overflow-hidden"><div class="absolute inset-0 dot-pattern opacity-70 pointer-events-none"></div>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 pt-12 pb-28 relative">
+    <p class="text-xs text-white/50 mb-3"><a href="public-home.html" class="hover:text-white/80">Home</a> <span class="mx-1">›</span> <a href="public-articles.html" class="hover:text-white/80">Articles</a> <span class="mx-1">›</span> Starting a Business</p>
+    <h1 class="font-jakarta font-extrabold text-4xl sm:text-5xl tracking-tight">Starting a Business
+      <button onclick="openBrief()" class="dev-badge align-middle ml-1 w-6 h-6 rounded-full bg-[#FF9900] text-[#0C1F31] items-center justify-center text-[11px] font-bold">i</button>
+    </h1>
+    <p class="mt-4 text-white/70 max-w-2xl text-lg">Everything you need to launch — ideas, planning, compliance, funding and your first customers.</p>
+    <a href="public-article-categories.html" class="inline-flex items-center gap-1.5 mt-5 text-sm font-bold text-white/90 hover:text-white"><i data-lucide="layout-grid" class="w-4 h-4"></i> Browse all categories <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
+  </div>
+</section>
+
+<main class="max-w-7xl mx-auto px-4 sm:px-6">
+  <!-- FEATURED CARD overlapping hero -->
+  <a href="public-article.html" class="group block bg-white rounded-3xl border border-[#E7EBEF] overflow-hidden shadow-xl -mt-16 relative card-lift">
+    <div class="grid md:grid-cols-2">
+      <div class="relative aspect-[16/11] md:aspect-auto overflow-hidden">
+        <img src="assets/article-1.jpg" alt="Starting an Internet Café Business in the Digital Era" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" />
+        <span class="absolute top-4 left-4 px-3 py-1 rounded-full text-[11px] font-bold bg-[#FF9900] text-[#0C1F31] shadow">FEATURED</span>
+      </div>
+      <div class="p-7 sm:p-9 flex flex-col justify-center">
+        <span class="inline-block self-start px-2.5 py-1 rounded-full text-[11px] font-bold bg-[#FDECEF] text-[#DC183C]">BUSINESS IDEAS</span>
+        <h2 class="font-jakarta font-extrabold text-2xl sm:text-[2rem] leading-tight mt-3 group-hover:text-[#DC183C] transition">Starting an Internet Café Business in the Digital Era</h2>
+        <p class="text-[#6A7581] mt-3 leading-relaxed">Connectivity is still a paid-for commodity in much of South Africa. Here's how to turn a well-placed café into a print-and-data hub that earns its rent every month.</p>
+        <div class="flex items-center gap-3 mt-6">
+          <span class="w-10 h-10 rounded-full bg-gradient-to-br from-[#DC183C] to-[#FF9900] grid place-items-center text-white text-sm font-bold">LM</span>
+          <div class="text-sm"><p class="font-bold">Lungile Msomi</p><p class="text-[#6A7581]">11 Jun 2026 · 6 min read</p></div>
+        </div>
+      </div>
+    </div>
+  </a>
+
+  <!-- SUBCATEGORY QUICK-JUMP PILLS -->
+  <div class="mt-10">
+    <p class="text-[11px] font-bold uppercase tracking-widest text-[#6A7581] mb-3">Jump to a topic</p>
+    <div id="subPills" class="flex flex-wrap gap-2"></div>
+  </div>
+</main>
+
+<!-- PER-SUBCATEGORY SECTIONS -->
+<div id="sections" class="max-w-7xl mx-auto px-4 sm:px-6"></div>
+
+<!-- MORE CATEGORIES NOTE -->
+<div class="max-w-7xl mx-auto px-4 sm:px-6">
+  <div class="bg-white rounded-2xl border border-[#E7EBEF] p-7 sm:p-9 mt-14 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-5">
+    <div>
+      <h2 class="font-jakarta font-extrabold text-xl">More in Starting a Business</h2>
+      <p class="text-sm text-[#6A7581] mt-1.5 leading-relaxed max-w-2xl">Entrepreneurship, Franchising, Insurance, Manufacturing, Property Development and Side Hustle — explore every sub-topic in this category.</p>
+      <div class="flex flex-wrap gap-2 mt-4">
+        <a href="public-subcategory.html" class="chip px-3 py-1.5 rounded-full text-xs font-semibold bg-[#FCFCFC] border border-[#E7EBEF] text-[#121A21]">Entrepreneurship</a>
+        <a href="public-subcategory.html" class="chip px-3 py-1.5 rounded-full text-xs font-semibold bg-[#FCFCFC] border border-[#E7EBEF] text-[#121A21]">Franchising</a>
+        <a href="public-subcategory.html" class="chip px-3 py-1.5 rounded-full text-xs font-semibold bg-[#FCFCFC] border border-[#E7EBEF] text-[#121A21]">Insurance</a>
+        <a href="public-subcategory.html" class="chip px-3 py-1.5 rounded-full text-xs font-semibold bg-[#FCFCFC] border border-[#E7EBEF] text-[#121A21]">Manufacturing</a>
+        <a href="public-subcategory.html" class="chip px-3 py-1.5 rounded-full text-xs font-semibold bg-[#FCFCFC] border border-[#E7EBEF] text-[#121A21]">Property Development</a>
+        <a href="public-subcategory.html" class="chip px-3 py-1.5 rounded-full text-xs font-semibold bg-[#FCFCFC] border border-[#E7EBEF] text-[#121A21]">Side Hustle</a>
+      </div>
+    </div>
+    <a href="public-article-categories.html" class="shrink-0 inline-flex items-center gap-2 px-5 h-11 rounded-full bg-[#0C1F31] text-white text-sm font-bold hover:bg-[#142b40] transition">All categories <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
+  </div>
+</div>
+
+<div class="h-16"></div>
+
+<footer class="bg-[#0C1F31] text-white"><div class="max-w-7xl mx-auto px-4 sm:px-6 py-10 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm">
+  <a href="public-home.html" class="flex items-center gap-2.5"><span class="w-8 h-8 rounded-lg bg-white grid place-items-center"><img src="assets/logo-icon.png" class="w-6 h-6" alt="" /></span><span class="font-jakarta font-extrabold">SME South Africa</span></a>
+  <div class="flex flex-wrap items-center gap-x-5 gap-y-2 text-white/60"><a href="public-about.html" class="hover:text-white">About</a><a href="public-contact.html" class="hover:text-white">Contact</a><a href="public-advertise.html" class="hover:text-white">Advertise</a><a href="public-privacy.html" class="hover:text-white">Privacy</a><a href="public-terms.html" class="hover:text-white">Terms</a><a href="public-refunds.html" class="hover:text-white">Refunds</a><a href="public-popia.html" class="hover:text-white">POPIA</a></div>
+  <p class="text-white/40">© 2026 SME South Africa</p>
+</div></footer>
+
+<div id="overlay-root"></div><div id="toast" class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-50"></div>
+<script>
+  function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+  function showToast(m){const el=document.getElementById('toast');el.classList.remove('hidden');el.innerHTML=`<div class="bg-[#0C1F31] text-white rounded-full pl-3 pr-5 py-2.5 shadow-2xl flex items-center gap-2 text-sm font-semibold" style="border-left:4px solid #29A37A"><i data-lucide="check-circle" class="w-4 h-4" style="color:#29A37A"></i><span>${esc(m)}</span></div>`;lucide.createIcons();setTimeout(()=>{el.classList.add('hidden');el.innerHTML='';},2400);}
+
+  // All 10 subcategories of "Starting a Business"
+  const SUBCATS=['Agriculture & Farming','Business Compliance','Business Ideas','Business Planning','Entrepreneurship','Franchising','Insurance','Manufacturing','Property Development','Side Hustle'];
+
+  // Quick-jump pills (all 10) → subcategory archive
+  document.getElementById('subPills').innerHTML = SUBCATS.map(s=>
+    `<a href="public-subcategory.html" class="chip px-4 h-9 inline-flex items-center rounded-full text-sm font-semibold border bg-white text-[#121A21] border-[#E7EBEF]">${esc(s)}</a>`
+  ).join('');
+
+  // Article card component (copied byte-for-byte from public-articles.html grid card)
+  function card(a){
+    return `
+      <a href="public-article.html" class="group bg-white rounded-2xl border border-[#E7EBEF] overflow-hidden card-lift flex flex-col">
+        <div class="relative aspect-[16/10] overflow-hidden">
+          <img src="${a.img}" alt="${esc(a.title)}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" />
+          <span class="absolute top-3 left-3 px-2.5 py-1 rounded-full text-[10px] font-bold bg-[#FDECEF] text-[#DC183C] shadow-sm">${esc(a.cat)}</span>
+        </div>
+        <div class="p-5 flex flex-col flex-1">
+          <h3 class="font-jakarta font-bold text-lg leading-snug group-hover:text-[#DC183C] transition">${esc(a.title)}</h3>
+          <p class="text-sm text-[#6A7581] mt-2 leading-relaxed line-clamp-2">${esc(a.excerpt)}</p>
+          <div class="flex items-center gap-2.5 mt-4 pt-4 border-t border-[#E7EBEF]">
+            <span class="w-8 h-8 rounded-full bg-gradient-to-br from-[#DC183C] to-[#FF9900] grid place-items-center text-white text-[11px] font-bold">${esc(a.init)}</span>
+            <div class="text-xs"><p class="font-semibold text-[#121A21]">${esc(a.author)}</p><p class="text-[#6A7581]">${esc(a.date)} · ${a.read} min read</p></div>
+          </div>
+        </div>
+      </a>`;
+  }
+
+  // One section per subcategory, each a 4-card grid
+  const SECTIONS=[
+    {name:'Agriculture & Farming', cards:[
+      {img:'assets/article-1.jpg',cat:'Agriculture & Farming',title:'Agro-processor Scale-Up Programme Open For Applications',excerpt:'A new round of support for agri-processors looking to grow capacity, jobs and market access.',author:'Lungile Msomi',init:'LM',date:'22 May 2026',read:5},
+      {img:'assets/article-2.jpg',cat:'Agriculture & Farming',title:'Peanut Production in South Africa',excerpt:'From soil prep to off-take agreements — what it takes to run a profitable groundnut operation.',author:'Karabo Kgophane',init:'KK',date:'14 May 2026',read:7},
+      {img:'assets/article-3.jpg',cat:'Agriculture & Farming',title:'Vital Skills for Farming and Agribusiness',excerpt:'The mix of technical, financial and people skills every modern farmer needs to stay viable.',author:'Naledi Mokoena',init:'NM',date:'30 Jan 2026',read:6},
+      {img:'assets/article-4.jpg',cat:'Agriculture & Farming',title:'Urban Backyard Farming',excerpt:'Turn a small township yard into a productive plot that feeds your family and your income.',author:'Sipho Maseko',init:'SM',date:'10 Sep 2025',read:4}
+    ]},
+    {name:'Business Compliance', cards:[
+      {img:'assets/article-5.jpg',cat:'Business Compliance',title:'Registering Your Business With CIPC: A 2026 Checklist',excerpt:'Everything you need before, during and after registration — costs and timelines that actually apply.',author:'Naledi Mokoena',init:'NM',date:'7 Jun 2026',read:7},
+      {img:'assets/article-6.jpg',cat:'Business Compliance',title:'Staying Tax Compliant From Day One',excerpt:'SARS registration, provisional tax and VAT thresholds explained for first-time business owners.',author:'Thabo Nkosi',init:'TN',date:'29 May 2026',read:6},
+      {img:'assets/article-7.jpg',cat:'Business Compliance',title:'B-BBEE Basics for Small Businesses',excerpt:'How the affidavit route works for EMEs and QSEs, and why your level still matters to buyers.',author:'Lerato Dlamini',init:'LD',date:'18 May 2026',read:5},
+      {img:'assets/article-8.jpg',cat:'Business Compliance',title:'POPIA: What Every SME Must Have in Place',excerpt:'A plain-language compliance checklist so customer data never becomes a liability.',author:'Maryna Steyn',init:'MS',date:'2 May 2026',read:6}
+    ]},
+    {name:'Business Ideas', cards:[
+      {img:'assets/article-2.jpg',cat:'Business Ideas',title:'Starting an Internet Café Business in the Digital Era',excerpt:'Turn a well-placed café into a print-and-data hub that earns its rent every month.',author:'Lungile Msomi',init:'LM',date:'11 Jun 2026',read:6},
+      {img:'assets/article-3.jpg',cat:'Business Ideas',title:'Low-Capital Businesses You Can Start This Year',excerpt:'Ten viable ideas you can launch for under R10,000 — with realistic income expectations.',author:'Sipho Maseko',init:'SM',date:'3 Jun 2026',read:5},
+      {img:'assets/article-4.jpg',cat:'Business Ideas',title:'Spotting a Gap in Your Local Market',excerpt:'Simple field research techniques to find the unmet need worth building a business around.',author:'Lerato Dlamini',init:'LD',date:'25 May 2026',read:4},
+      {img:'assets/article-5.jpg',cat:'Business Ideas',title:'Turning a Hobby Into a Registered Business',excerpt:'When passion projects start paying — the moment to formalise and how to do it right.',author:'Naledi Mokoena',init:'NM',date:'16 May 2026',read:5}
+    ]},
+    {name:'Business Planning', cards:[
+      {img:'assets/article-6.jpg',cat:'Business Planning',title:'Writing a Business Plan Funders Take Seriously',excerpt:'The sections lenders actually read, and the numbers they check first.',author:'Maryna Steyn',init:'MS',date:'9 Jun 2026',read:7},
+      {img:'assets/article-7.jpg',cat:'Business Planning',title:'Building Your First Financial Model',excerpt:'A simple, founder-friendly template for revenue, costs and break-even.',author:'Thabo Nkosi',init:'TN',date:'28 May 2026',read:6},
+      {img:'assets/article-8.jpg',cat:'Business Planning',title:'Setting Goals You Can Actually Measure',excerpt:'Turn a vague vision into quarterly targets your whole team can rally behind.',author:'Karabo Kgophane',init:'KK',date:'19 May 2026',read:4},
+      {img:'assets/article-1.jpg',cat:'Business Planning',title:'Choosing the Right Business Structure',excerpt:'Sole prop, partnership or Pty Ltd — the trade-offs in tax, liability and growth.',author:'Lerato Dlamini',init:'LD',date:'6 May 2026',read:5}
+    ]}
+  ];
+
+  document.getElementById('sections').innerHTML = SECTIONS.map(sec=>`
+    <section class="mt-14">
+      <div class="flex items-end justify-between gap-4 mb-6">
+        <h2 class="font-jakarta font-extrabold text-2xl sm:text-3xl tracking-tight">${esc(sec.name)}</h2>
+        <a href="public-subcategory.html" class="shrink-0 inline-flex items-center gap-1 text-sm font-bold text-[#DC183C] hover:gap-2 transition-all">See all <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
+      </div>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        ${sec.cards.map(card).join('')}
+      </div>
+    </section>
+  `).join('');
+
+  const BRIEF={title:'Category Archive — Starting a Business',sub:'WordPress category archive · public, indexable',purpose:'A parent-category landing page for the SME Insights archive. Surfaces a featured post, all child subcategories, and a preview row per subcategory so readers can scan the whole topic and drill into a single subcategory archive.',data:'Taxonomy: <code>category { name, description, featured_post, subcategories[] }</code> → each subcategory has <code>posts[]</code>. Parent: Starting a Business → 10 children (Agriculture &amp; Farming, Business Compliance, Business Ideas, Business Planning, Entrepreneurship, Franchising, Insurance, Manufacturing, Property Development, Side Hustle).',logic:'Featured = the post flagged for the category (else newest). Each subcategory section shows the 4 newest posts under that child term; “See all” links to the subcategory archive. Public + indexable (term archive + Article schema).',components:'Header · archive hero · featured card · subcategory quick-jump pills · per-subcategory preview rows · more-categories block · footer.',api:'GET /v1/categories/{slug} · GET /v1/articles?category={parent}&subcategory={child}&per_page=4'};
+  function toggleDevMode(){const on=document.body.classList.toggle('dev-on');const b=document.getElementById('devToggle');if(b)b.classList.toggle('on',on);if(on)showToast('Dev Mode on — tap any ⓘ for implementation notes.');lucide.createIcons();}
+  function closeOverlay(id){const el=document.getElementById(id);if(!el)return;el.classList.remove('open');setTimeout(()=>{if(el&&el.parentNode)el.remove();},300);}
+  function openBrief(){const b=BRIEF;const sec=(i,l,h)=>`<div class="px-6 py-4 border-t border-slate-100"><p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] flex items-center gap-1.5 mb-2"><i data-lucide="${i}" class="w-3.5 h-3.5"></i>${l}</p><div class="text-sm text-slate-600 leading-relaxed">${h}</div></div>`;document.getElementById('overlay-root').innerHTML=`<div class="ov" id="ov"><div class="ov-bg" onclick="closeOverlay('ov')"></div><div class="drawer"><div class="sticky top-0 z-10 bg-[#0C1F31] text-white px-6 py-5 flex items-start justify-between"><div><p class="text-[10px] font-bold uppercase tracking-widest text-[#FF9900] mb-1">Dev Brief</p><h3 class="font-jakarta font-extrabold text-lg leading-tight">${b.title}</h3><p class="text-xs text-white/60 mt-1">${b.sub}</p></div><button onclick="closeOverlay('ov')" class="text-white/60 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button></div>${sec('target','Purpose',b.purpose)}${sec('database','Data model',b.data)}${sec('git-branch','Logic',b.logic)}${sec('boxes','Components',b.components)}${sec('plug','API',`<code class="block bg-slate-900 text-emerald-300 text-xs font-mono px-3 py-2 rounded-lg overflow-x-auto">${b.api}</code>`)}</div></div>`;requestAnimationFrame(()=>{const o=document.getElementById('ov');if(o)o.classList.add('open');});lucide.createIcons();}
+
+  lucide.createIcons();
+</script>
+</body>
+</html>
