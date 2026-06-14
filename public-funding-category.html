@@ -17,6 +17,10 @@
     .dev-badge{display:none;} body.dev-on .dev-badge{display:inline-flex;} #devToggle.on{background:#DC183C;color:#fff;border-color:#DC183C;}
     .ov{position:fixed;inset:0;z-index:60;} .ov-bg{position:absolute;inset:0;background:rgba(12,31,49,.45);backdrop-filter:blur(2px);opacity:0;transition:opacity .3s;} .ov.open .ov-bg{opacity:1;}
     .drawer{position:absolute;right:0;top:0;height:100%;width:100%;max-width:440px;background:#fff;box-shadow:-12px 0 40px rgba(12,31,49,.25);overflow-y:auto;transform:translateX(100%);transition:transform .3s cubic-bezier(.2,.7,.2,1);} .ov.open .drawer{transform:translateX(0);}
+    .guides-track{scrollbar-width:thin;scrollbar-color:#F2C98A transparent;-webkit-overflow-scrolling:touch;scroll-behavior:smooth;}
+    .guides-track::-webkit-scrollbar{height:6px;} .guides-track::-webkit-scrollbar-track{background:transparent;} .guides-track::-webkit-scrollbar-thumb{background:#F2C98A;border-radius:9999px;}
+    .guides-fade{background:linear-gradient(to left,#FFF1E0 0%,rgba(255,241,224,0) 100%);} .guides-fade.hidden-fade{opacity:0;}
+    .guide-arrow{transition:opacity .2s,background .2s,color .2s;} .guide-arrow:disabled{opacity:.35;cursor:default;}
   </style>
 </head>
 <body class="bg-[#FCFCFC] text-[#121A21] antialiased">
@@ -106,12 +110,19 @@
   <div class="max-w-7xl mx-auto px-4 sm:px-6 py-14">
     <div class="flex items-center gap-3">
       <span class="w-11 h-11 rounded-xl bg-[#FF9900] text-[#0C1F31] grid place-items-center shrink-0"><i data-lucide="library" class="w-6 h-6"></i></span>
-      <div>
+      <div class="flex-1">
         <h2 class="font-jakarta font-extrabold text-2xl sm:text-3xl tracking-tight">Funding Guides</h2>
         <p class="text-sm text-[#6A7581] mt-1">In-depth, evergreen guides to every major funding route for South African SMEs.</p>
       </div>
+      <div class="hidden sm:flex items-center gap-2 self-start shrink-0">
+        <button id="guidesPrev" type="button" aria-label="Previous guides" class="guide-arrow w-10 h-10 rounded-full bg-white border border-[#F2D9AE] text-[#0C1F31] grid place-items-center hover:bg-[#FF9900] hover:text-[#0C1F31] shadow-sm"><i data-lucide="chevron-left" class="w-5 h-5"></i></button>
+        <button id="guidesNext" type="button" aria-label="Next guides" class="guide-arrow w-10 h-10 rounded-full bg-white border border-[#F2D9AE] text-[#0C1F31] grid place-items-center hover:bg-[#FF9900] hover:text-[#0C1F31] shadow-sm"><i data-lucide="chevron-right" class="w-5 h-5"></i></button>
+      </div>
     </div>
-    <div id="guidesGrid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 mt-8"></div>
+    <div class="relative mt-8">
+      <div id="guidesGrid" class="guides-track flex gap-5 overflow-x-auto snap-x snap-mandatory pb-3 -mx-1 px-1"></div>
+      <div id="guidesFade" class="guides-fade pointer-events-none absolute top-0 right-0 bottom-3 w-16 hidden sm:block"></div>
+    </div>
   </div>
 </section>
 
@@ -177,7 +188,7 @@
 
   function guideCard(title){
     return `
-      <a href="public-article.html" class="group bg-white rounded-2xl border border-[#E7EBEF] p-5 flex items-start gap-4 card-lift">
+      <a href="public-article.html" class="group snap-start shrink-0 w-[78%] sm:w-[300px] bg-white rounded-2xl border border-[#E7EBEF] p-5 flex items-start gap-4 card-lift">
         <span class="w-11 h-11 rounded-xl bg-[#FDECEF] text-[#DC183C] grid place-items-center shrink-0"><i data-lucide="book-open" class="w-5 h-5"></i></span>
         <div class="flex flex-col">
           <h3 class="font-jakarta font-bold text-base leading-snug group-hover:text-[#DC183C] transition">${esc(title)}</h3>
@@ -189,6 +200,31 @@
   document.getElementById('latestGrid').innerHTML = LATEST.map(articleCard).join('');
   document.getElementById('insightsGrid').innerHTML = INSIGHTS.map(articleCard).join('');
   document.getElementById('guidesGrid').innerHTML = GUIDES.map(guideCard).join('');
+
+  // Funding Guides horizontal carousel controls
+  (function(){
+    const track=document.getElementById('guidesGrid');
+    const prev=document.getElementById('guidesPrev');
+    const next=document.getElementById('guidesNext');
+    const fade=document.getElementById('guidesFade');
+    if(!track||!prev||!next)return;
+    function step(){
+      const card=track.querySelector('a');
+      const gap=20; // gap-5
+      return card?card.getBoundingClientRect().width+gap:320;
+    }
+    function update(){
+      const max=track.scrollWidth-track.clientWidth-1;
+      prev.disabled=track.scrollLeft<=2;
+      next.disabled=track.scrollLeft>=max;
+      if(fade)fade.classList.toggle('hidden-fade',track.scrollLeft>=max);
+    }
+    prev.addEventListener('click',()=>track.scrollBy({left:-step(),behavior:'smooth'}));
+    next.addEventListener('click',()=>track.scrollBy({left:step(),behavior:'smooth'}));
+    track.addEventListener('scroll',update,{passive:true});
+    window.addEventListener('resize',update);
+    update();
+  })();
 
   const BRIEF={title:'Funding Articles — Category Archive',sub:'WordPress category archive · public, indexable',purpose:'The special Funding category hub. Unlike an ordinary category archive it leads with the latest funding article as a hero, drives the primary conversion (a funding application), and surfaces an evergreen Funding Guides library. Replaces the live /funding-articles/ archive.',data:'Category: <code>funding { posts[], guides[] }</code>. Post: <code>{ title, excerpt, hero, author{name,initials}, published_at, read_minutes, featured }</code>. Guides are an evergreen subset/taxonomy of funding posts.',logic:'Featured = the newest funding post (flagged <code>featured</code>). The primary CTA routes to the funding application funnel (<code>public-funding.html#apply</code>); secondary closing CTA repeats it. Latest/Insights/Guides render from the same category feed. Public + indexable (term archive + Article schema).',components:'Header · archive hero (Home › Funding › Articles) · featured latest card · application CTA band · Latest in Funding grid · Funding Insights grid · Funding Guides library · closing CTA · footer.',api:'GET /v1/categories/funding?q=&sort=&page= · GET /v1/categories/funding/guides · POST /v1/funding/applications'};
   function toggleDevMode(){const on=document.body.classList.toggle('dev-on');const b=document.getElementById('devToggle');if(b)b.classList.toggle('on',on);if(on)showToast('Dev Mode on — tap any ⓘ for implementation notes.');lucide.createIcons();}

@@ -177,7 +177,7 @@
           </div>
           <h3 class="font-jakarta font-bold text-base leading-snug mt-3 group-hover:text-[#DC183C] transition">${esc(r.t)}</h3>
           <p class="text-sm text-slate-600 mt-2 flex-1">${esc(r.d)}</p>
-          <span class="mt-4 pt-4 border-t border-[#E7EBEF] inline-flex items-center gap-1.5 text-sm font-bold text-[#29A37A]"><i data-lucide="download" class="w-4 h-4"></i> Download Free</span>
+          <span class="mt-4 pt-4 border-t border-[#E7EBEF] inline-flex items-center gap-1.5 text-sm font-bold text-[#DC183C]"><i data-lucide="download" class="w-4 h-4"></i> Download Now</span>
         </div>
       </a>`).join('');
     lucide.createIcons();
@@ -187,7 +187,7 @@
     title:'Resource Category', sub:'One templated page for all 4 types',
     purpose:'A single template renders any resource type (ebooks / templates / guides / reports). The type chips swap the view client-side and rewrite the URL so each type is shareable and indexable. A second chip row filters by topic/category.',
     data:'Reads <code>?type=</code> (or #hash). Resource CPT: <code>{ id, title, type, category, excerpt, cover, file_url, gated }</code>. Type and category are both taxonomy terms.',
-    logic:'On WordPress this is the <code>type</code> taxonomy archive. Type + category filters combine (card visible only if it matches both). Gated downloads are protected by MemberPress; free ones serve immediately. CTA label is consistent across every type (Download Free).',
+    logic:'On WordPress this is the <code>type</code> taxonomy archive. Type + category filters combine (card visible only if it matches both). Gated downloads are protected by MemberPress; free ones serve immediately. CTA label is consistent across every type (Download Now).',
     components:'Archive hero · type switcher chips · category chips · search · sort · resource grid.',
     api:'GET /v1/resources?type={type}&category={cat}&q={q}&sort={newest|az}'
   } };

@@ -13,7 +13,8 @@
     .hero-bg{background:linear-gradient(115deg,#0C1F31 0%,#0C1F31 50%,#2b1626 80%,#5e1a2c 115%);}
     .dot-pattern{background-image:radial-gradient(rgba(255,255,255,.07) 1px,transparent 1.5px);background-size:22px 22px;}
     .card-lift{transition:box-shadow .2s,transform .2s,border-color .2s;} .card-lift:hover{box-shadow:0 16px 34px -14px rgba(10,44,61,.24);transform:translateY(-3px);border-color:#DC183C;}
-    .subchip{transition:all .15s;} .subchip:hover{background:#FDECEF;color:#DC183C;border-color:#DC183C;}
+    .subchip{transition:all .15s;} .subchip:not(.chip-active):hover{background:#FDECEF;color:#B0142F;border-color:#DC183C;}
+    .chip-active{background:#DC183C !important;color:#fff !important;border-color:#DC183C !important;}
     .dev-badge{display:none;} body.dev-on .dev-badge{display:inline-flex;} #devToggle.on{background:#DC183C;color:#fff;border-color:#DC183C;}
     .ov{position:fixed;inset:0;z-index:60;} .ov-bg{position:absolute;inset:0;background:rgba(12,31,49,.45);backdrop-filter:blur(2px);opacity:0;transition:opacity .3s;} .ov.open .ov-bg{opacity:1;}
     .drawer{position:absolute;right:0;top:0;height:100%;width:100%;max-width:440px;background:#fff;box-shadow:-12px 0 40px rgba(12,31,49,.25);overflow-y:auto;transform:translateX(100%);transition:transform .3s cubic-bezier(.2,.7,.2,1);} .ov.open .drawer{transform:translateX(0);}

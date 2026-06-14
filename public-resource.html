@@ -84,7 +84,7 @@
           </div>
         </div>
         <div class="flex flex-col sm:flex-row gap-3 mt-5">
-          <a href="public-auth.html#join" class="flex-1 h-12 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold transition flex items-center justify-center gap-2"><i data-lucide="user-plus" class="w-4 h-4"></i> Join Free to Unlock</a>
+          <a href="public-auth.html#join" class="flex-1 h-12 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold transition flex items-center justify-center gap-2"><i data-lucide="download" class="w-4 h-4"></i> Download Now</a>
           <a href="public-auth.html" class="flex-1 h-12 rounded-full border border-[#E7EBEF] hover:bg-slate-100 text-[#121A21] font-bold transition flex items-center justify-center gap-2">Sign in</a>
         </div>
         <p class="text-xs text-slate-500 mt-3 flex items-center gap-1.5"><i data-lucide="badge-check" class="w-3.5 h-3.5 text-[#29A37A]"></i> Free membership — no card required.</p>
@@ -98,8 +98,7 @@
             <p class="text-sm text-[#1f7a5b] mt-0.5">Your free membership unlocks this download.</p>
           </div>
         </div>
-        <button onclick="showToast('Your download will start shortly.')" class="mt-5 w-full h-12 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold transition flex items-center justify-center gap-2"><i data-lucide="download" class="w-4 h-4"></i> Download Free</button>
-        <p class="text-xs text-[#1f7a5b] mt-3 flex items-center gap-1.5"><i data-lucide="shield-check" class="w-3.5 h-3.5"></i> Served securely from our CDN — 4.2 MB.</p>
+        <button onclick="showToast('Your download will start shortly.')" class="mt-5 w-full h-12 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold transition flex items-center justify-center gap-2"><i data-lucide="download" class="w-4 h-4"></i> Download Now</button>
       </div>
     </div>
   </div>
@@ -124,19 +123,19 @@
         <span class="inline-flex w-max px-2.5 py-1 rounded-full text-[11px] font-bold bg-[#FDECEF] text-[#DC183C]">Ebook</span>
         <h3 class="font-jakarta font-bold text-lg leading-snug mt-3 group-hover:text-[#DC183C] transition">Pitching to Funders That Say Yes</h3>
         <p class="text-sm text-slate-600 mt-2 flex-1">Structure a deck that survives the first five minutes.</p>
-        <span class="mt-4 inline-flex items-center gap-2 text-sm font-bold text-[#29A37A]"><i data-lucide="download" class="w-4 h-4"></i> Download Free</span>
+        <span class="mt-4 inline-flex items-center gap-2 text-sm font-bold text-[#DC183C]"><i data-lucide="download" class="w-4 h-4"></i> Download Now</span>
       </a>
       <a href="public-resource.html" class="group bg-white rounded-2xl border border-[#E7EBEF] p-5 card-lift block flex flex-col">
         <span class="inline-flex w-max px-2.5 py-1 rounded-full text-[11px] font-bold bg-[#E4F5EE] text-[#29A37A]">Template</span>
         <h3 class="font-jakarta font-bold text-lg leading-snug mt-3 group-hover:text-[#DC183C] transition">Marketing Calendar Template</h3>
         <p class="text-sm text-slate-600 mt-2 flex-1">Plan a year of campaigns on a single tab.</p>
-        <span class="mt-4 inline-flex items-center gap-2 text-sm font-bold text-[#29A37A]"><i data-lucide="download" class="w-4 h-4"></i> Download Free</span>
+        <span class="mt-4 inline-flex items-center gap-2 text-sm font-bold text-[#DC183C]"><i data-lucide="download" class="w-4 h-4"></i> Download Now</span>
       </a>
       <a href="public-resource.html" class="group bg-white rounded-2xl border border-[#E7EBEF] p-5 card-lift block flex flex-col">
         <span class="inline-flex w-max px-2.5 py-1 rounded-full text-[11px] font-bold bg-[#FFF1E0] text-[#AE6B0A]">Guide</span>
         <h3 class="font-jakarta font-bold text-lg leading-snug mt-3 group-hover:text-[#DC183C] transition">Selling on WhatsApp & Social</h3>
         <p class="text-sm text-slate-600 mt-2 flex-1">Turn followers and chats into paying customers.</p>
-        <span class="mt-4 inline-flex items-center gap-2 text-sm font-bold text-[#29A37A]"><i data-lucide="download" class="w-4 h-4"></i> Download Free</span>
+        <span class="mt-4 inline-flex items-center gap-2 text-sm font-bold text-[#DC183C]"><i data-lucide="download" class="w-4 h-4"></i> Download Now</span>
       </a>
     </div>
   </section>
@@ -167,7 +166,7 @@
     title:'Resource Detail', sub:'Single resource — gated download',
     purpose:'The conversion point of the resource funnel. Works for both logged-out visitors (prompt to join free) and members (instant download). Free membership is the gate.',
     data:'Resource: <code>{ id, title, type, excerpt, body, cover, file_url, format, gated, related[] }</code>. User session resolves the access state.',
-    logic:'MemberPress checks membership on render. Logged-out → join/sign-in CTAs. Member → signed, time-limited download URL. The PDF is served from a CDN (not WP Engine) to protect origin CPU. CTA label is consistent across all resource types (Download Free / Join Free to Unlock).',
+    logic:'MemberPress checks membership on render. Logged-out → join/sign-in CTAs. Member → signed, time-limited download URL. The PDF is served from a CDN (not WP Engine) to protect origin CPU. CTA label is consistently "Download Now" across all states and resource types.',
     components:'Breadcrumb · cover + details hero · gated panel (2 states) · What’s inside · related grid.',
     api:'GET /v1/resources/{id} · POST /v1/resources/{id}/download → 302 CDN URL'
   } };
