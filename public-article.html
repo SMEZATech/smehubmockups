@@ -18,6 +18,16 @@
     .toc-link{display:block;font-size:.85rem;color:#6A7581;padding:.4rem .75rem;border-left:2px solid transparent;transition:all .15s;line-height:1.35;}
     .toc-link:hover{color:#121A21;}
     .toc-link.active{color:#DC183C;font-weight:700;border-left-color:#DC183C;background:#FDECEF;border-radius:0 .4rem .4rem 0;}
+    /* Mobile slide-out table of contents */
+    .article h2{scroll-margin-top:5rem;}
+    .toc-tab{position:fixed;left:0;top:50%;transform:translateY(-50%);z-index:45;display:flex;align-items:center;justify-content:center;width:24px;height:60px;background:rgba(12,31,49,.38);color:#fff;border:1px solid rgba(255,255,255,.18);border-left:none;border-radius:0 .7rem .7rem 0;-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);opacity:.4;transition:opacity .2s;}
+    .toc-tab:hover,.toc-tab:focus-visible{opacity:.95;}
+    .toc-tab.hide{opacity:0;pointer-events:none;}
+    .toc-backdrop{position:fixed;inset:0;background:rgba(12,31,49,.45);z-index:48;opacity:0;pointer-events:none;transition:opacity .25s;}
+    .toc-backdrop.open{opacity:1;pointer-events:auto;}
+    .toc-drawer{position:fixed;top:0;left:0;height:100%;width:82%;max-width:300px;background:#fff;z-index:49;transform:translateX(-100%);transition:transform .3s cubic-bezier(.4,0,.2,1);box-shadow:0 10px 40px rgba(0,0,0,.25);display:flex;flex-direction:column;}
+    .toc-drawer.open{transform:translateX(0);}
+    @media(min-width:1024px){.toc-tab,.toc-backdrop,.toc-drawer{display:none!important;}}
     .dev-badge{display:none;} body.dev-on .dev-badge{display:inline-flex;} #devToggle.on{background:#DC183C;color:#fff;border-color:#DC183C;}
     .ov{position:fixed;inset:0;z-index:60;} .ov-bg{position:absolute;inset:0;background:rgba(12,31,49,.45);backdrop-filter:blur(2px);opacity:0;transition:opacity .3s;} .ov.open .ov-bg{opacity:1;}
     .drawer{position:absolute;right:0;top:0;height:100%;width:100%;max-width:440px;background:#fff;box-shadow:-12px 0 40px rgba(12,31,49,.25);overflow-y:auto;transform:translateX(100%);transition:transform .3s cubic-bezier(.2,.7,.2,1);} .ov.open .drawer{transform:translateX(0);}
@@ -118,7 +128,7 @@
   <!-- STICKY SIDEBAR -->
   <aside class="lg:col-span-1">
     <div class="lg:sticky lg:top-24 space-y-6">
-      <div class="bg-white rounded-2xl border border-[#E7EBEF] p-5">
+      <div class="hidden lg:block bg-white rounded-2xl border border-[#E7EBEF] p-5">
         <p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] flex items-center gap-1.5 mb-3"><i data-lucide="list" class="w-3.5 h-3.5"></i> In This Article</p>
         <nav id="toc" class="-ml-px"></nav>
       </div>
@@ -147,6 +157,17 @@
   <p class="text-white/40">© 2026 SME South Africa</p>
 </div></footer>
 
+<!-- MOBILE TABLE OF CONTENTS (slide-out from left) -->
+<button id="tocTab" onclick="openTOC()" aria-label="Open table of contents" class="toc-tab"><i data-lucide="chevron-right" class="w-4 h-4"></i></button>
+<div id="tocBackdrop" class="toc-backdrop" onclick="closeTOC()"></div>
+<aside id="tocDrawer" class="toc-drawer" aria-hidden="true" aria-label="Table of contents">
+  <div class="flex items-center justify-between px-5 py-4 border-b border-[#E7EBEF] shrink-0">
+    <p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] flex items-center gap-1.5"><i data-lucide="list" class="w-3.5 h-3.5"></i> In This Article</p>
+    <button onclick="closeTOC()" aria-label="Close table of contents" class="w-8 h-8 rounded-full grid place-items-center text-slate-500 hover:text-[#DC183C] hover:bg-[#FDECEF] transition"><i data-lucide="chevron-left" class="w-4 h-4"></i></button>
+  </div>
+  <nav id="tocMobile" class="p-3 overflow-y-auto"></nav>
+</aside>
+
 <div id="overlay-root"></div><div id="toast" class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-50"></div>
 <script>
   function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
@@ -154,16 +175,23 @@
   function copyLink(){if(navigator.clipboard)navigator.clipboard.writeText(location.href).catch(()=>{});showToast('Link copied.');}
   function subscribeBrief(e){e.preventDefault();e.target.reset();showToast('Subscribed to the SME Brief.');}
 
-  // Build TOC from h2[id]
+  // Build TOC from h2[id] — desktop sidebar + mobile slide-out drawer
   const heads=[...document.querySelectorAll('.article h2[id]')];
-  document.getElementById('toc').innerHTML=heads.map(h=>`<a href="#${h.id}" class="toc-link" data-id="${h.id}">${esc(h.textContent.trim())}</a>`).join('');
-  const links=[...document.querySelectorAll('#toc .toc-link')];
-  links.forEach(l=>l.addEventListener('click',e=>{e.preventDefault();const t=document.getElementById(l.dataset.id);if(t)t.scrollIntoView({behavior:'smooth',block:'start'});}));
-  // Scroll-spy
+  const tocHTML=heads.map(h=>`<a href="#${h.id}" class="toc-link" data-id="${h.id}">${esc(h.textContent.trim())}</a>`).join('');
+  document.getElementById('toc').innerHTML=tocHTML;
+  const tm=document.getElementById('tocMobile');if(tm)tm.innerHTML=tocHTML;
+  const links=[...document.querySelectorAll('.toc-link')];
+  links.forEach(l=>l.addEventListener('click',e=>{e.preventDefault();const t=document.getElementById(l.dataset.id);if(t)t.scrollIntoView({behavior:'smooth',block:'start'});closeTOC();}));
+  // Scroll-spy (highlights the active section in both navs)
   const spy=new IntersectionObserver(entries=>{
     entries.forEach(en=>{if(en.isIntersecting){const id=en.target.id;links.forEach(l=>l.classList.toggle('active',l.dataset.id===id));}});
   },{rootMargin:'-20% 0px -70% 0px',threshold:0});
   heads.forEach(h=>spy.observe(h));
+  // Mobile TOC drawer controls
+  function openTOC(){const d=document.getElementById('tocDrawer'),b=document.getElementById('tocBackdrop'),t=document.getElementById('tocTab');d&&d.classList.add('open');b&&b.classList.add('open');t&&t.classList.add('hide');d&&d.setAttribute('aria-hidden','false');document.body.style.overflow='hidden';}
+  function closeTOC(){const d=document.getElementById('tocDrawer'),b=document.getElementById('tocBackdrop'),t=document.getElementById('tocTab');d&&d.classList.remove('open');b&&b.classList.remove('open');t&&t.classList.remove('hide');d&&d.setAttribute('aria-hidden','true');document.body.style.overflow='';}
+  window.openTOC=openTOC;window.closeTOC=closeTOC;
+  document.addEventListener('keydown',e=>{if(e.key==='Escape')closeTOC();});
 
   const REL=[
     {img:'assets/article-2.jpg',cat:'Finance',title:'How to Read a Cash-Flow Statement Without an Accountant'},
