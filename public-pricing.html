@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Membership & Pricing — SME South Africa</title>
+  <meta name="description" content="Compare Free and Premium membership. Unlock priority funding matching, private networking, live webinars and exclusive partner deals from R99/month." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script><script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  <script>tailwind.config={theme:{extend:{fontFamily:{jakarta:['Plus Jakarta Sans','sans-serif'],inter:['Inter','system-ui','sans-serif']}}}};</script>
+  <style>
+    html,body{font-family:'Inter',system-ui,sans-serif;} .font-jakarta{font-family:'Plus Jakarta Sans',sans-serif;letter-spacing:.005em;}
+    .hero-bg{background:linear-gradient(115deg,#0C1F31 0%,#0C1F31 50%,#2b1626 80%,#5e1a2c 115%);}
+    .dot-pattern{background-image:radial-gradient(rgba(255,255,255,.07) 1px,transparent 1.5px);background-size:22px 22px;}
+    .card-lift{transition:box-shadow .2s,transform .2s;} .card-lift:hover{box-shadow:0 14px 30px -12px rgba(10,44,61,.22);transform:translateY(-3px);}
+    .field{width:100%;background:#fff;border:1px solid #E7EBEF;border-radius:.75rem;height:3rem;padding:0 1rem;font-size:.9rem;outline:none;transition:border-color .15s,box-shadow .15s;} .field:focus{border-color:#DC183C;box-shadow:0 0 0 3px rgba(220,24,60,.12);}
+    .dev-badge{display:none;} body.dev-on .dev-badge{display:inline-flex;} #devToggle.on{background:#DC183C;color:#fff;border-color:#DC183C;}
+    .ov{position:fixed;inset:0;z-index:60;} .ov-bg{position:absolute;inset:0;background:rgba(12,31,49,.45);backdrop-filter:blur(2px);opacity:0;transition:opacity .3s;} .ov.open .ov-bg{opacity:1;}
+    .drawer{position:absolute;right:0;top:0;height:100%;width:100%;max-width:440px;background:#fff;box-shadow:-12px 0 40px rgba(12,31,49,.25);overflow-y:auto;transform:translateX(100%);transition:transform .3s cubic-bezier(.2,.7,.2,1);} .ov.open .drawer{transform:translateX(0);}
+    /* Billing toggle */
+    .bill-pill{transition:all .2s;} .bill-pill.active{background:#fff;color:#121A21;box-shadow:0 1px 4px rgba(12,31,49,.18);} .bill-pill:not(.active){color:rgba(255,255,255,.7);}
+    /* FAQ */
+    .faq-body{max-height:0;overflow:hidden;transition:max-height .28s ease;} .faq-item.open .faq-body{max-height:320px;} .faq-item.open .faq-chev{transform:rotate(180deg);} .faq-chev{transition:transform .28s ease;}
+  </style>
+</head>
+<body class="bg-[#FCFCFC] text-[#121A21] antialiased">
+<header class="bg-white border-b border-[#E7EBEF] sticky top-0 z-40"><div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center gap-4">
+  <a href="public-home.html" class="flex items-center gap-2.5 shrink-0"><img src="assets/logo-icon.png" alt="SME South Africa" class="w-9 h-9" /><span class="font-jakarta font-extrabold text-[17px] tracking-tight">SME <span class="text-[#DC183C]">South Africa</span></span></a>
+  <nav class="hidden lg:flex items-center gap-1 ml-4">
+    <a href="public-articles.html" class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition">Articles</a>
+    <a href="public-resources.html" class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition">Resources</a>
+    <a href="public-funding.html" class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition">Funding</a>
+    <a href="public-solutions.html" class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition">Solutions</a>
+    <a href="public-shop.html" class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition">Shop</a>
+  </nav>
+  <div class="flex items-center gap-1 sm:gap-2 ml-auto">
+    <button id="devToggle" onclick="toggleDevMode()" class="hidden sm:flex items-center gap-1.5 px-3 h-9 rounded-full border border-slate-200 text-slate-500 hover:border-[#DC183C] hover:text-[#DC183C] transition text-[11px] font-bold uppercase tracking-wider"><i data-lucide="code-2" class="w-3.5 h-3.5"></i><span>Dev</span></button>
+    <a href="public-auth.html" class="hidden sm:inline-flex items-center px-3 h-9 rounded-full text-sm font-bold text-[#121A21] hover:bg-slate-100 transition">Sign in</a>
+    <a href="public-auth.html#join" class="inline-flex items-center px-4 h-9 rounded-full text-sm font-bold text-white bg-[#DC183C] hover:bg-[#B0142F] transition">Join Free</a>
+  </div>
+</div></header>
+
+<!-- HERO -->
+<section class="hero-bg text-white relative overflow-hidden"><div class="absolute inset-0 dot-pattern opacity-70 pointer-events-none"></div>
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 py-16 sm:py-20 relative text-center">
+    <h1 class="font-jakarta font-extrabold text-3xl sm:text-5xl leading-tight">Unlock the Full Power of the SME Hub <button onclick="openBrief()" class="dev-badge align-middle ml-1 w-6 h-6 rounded-full bg-[#FF9900] text-[#0C1F31] items-center justify-center text-[11px] font-bold">i</button></h1>
+    <p class="mt-4 text-white/70 text-base sm:text-lg max-w-2xl mx-auto">You've got the basics. Now get the connections, tools and discounts reserved for our top members.</p>
+    <p class="mt-6 inline-flex items-center gap-2 text-sm text-white/60"><i data-lucide="users" class="w-4 h-4 text-[#FF9900]"></i>Trusted by 50,000+ South African entrepreneurs.</p>
+  </div>
+</section>
+
+<!-- PRICING CARDS -->
+<section class="max-w-5xl mx-auto px-4 sm:px-6 -mt-10 relative z-10">
+  <!-- Billing toggle -->
+  <div class="flex flex-col items-center gap-3 mb-8">
+    <div class="inline-flex items-center bg-[#0C1F31] rounded-full p-1 text-sm font-bold">
+      <button id="billMonthly" onclick="setBilling('monthly')" class="bill-pill active rounded-full px-5 py-2">Monthly</button>
+      <button id="billAnnual" onclick="setBilling('annual')" class="bill-pill rounded-full px-5 py-2">Annual</button>
+    </div>
+    <span class="inline-flex items-center gap-1.5 text-xs font-bold text-[#AE6B0A] bg-[#FFF1E0] px-3 py-1 rounded-full"><i data-lucide="sparkles" class="w-3.5 h-3.5"></i>Pay annually and save 2 months</span>
+  </div>
+
+  <div class="grid md:grid-cols-2 gap-6 items-stretch">
+    <!-- FREE -->
+    <div class="bg-white rounded-2xl border border-[#E7EBEF] p-7 flex flex-col card-lift">
+      <div class="flex items-center gap-2.5"><div class="w-11 h-11 rounded-xl bg-slate-100 text-slate-500 grid place-items-center"><i data-lucide="user" class="w-5 h-5"></i></div><h2 class="font-jakarta font-extrabold text-xl">Free</h2></div>
+      <div class="mt-5 flex items-end gap-1.5"><span class="font-jakarta font-extrabold text-4xl">R0</span><span class="text-[#6A7581] text-sm mb-1.5">forever</span></div>
+      <p class="mt-1 text-sm text-[#6A7581]">Everything you need to get started.</p>
+      <ul class="mt-6 space-y-3 text-sm flex-1">
+        <li class="flex items-start gap-2.5"><i data-lucide="check" class="w-5 h-5 text-[#29A37A] shrink-0"></i>Read articles, guides &amp; resources</li>
+        <li class="flex items-start gap-2.5"><i data-lucide="check" class="w-5 h-5 text-[#29A37A] shrink-0"></i>Browse the community</li>
+        <li class="flex items-start gap-2.5"><i data-lucide="check" class="w-5 h-5 text-[#29A37A] shrink-0"></i>Apply for funding</li>
+        <li class="flex items-start gap-2.5"><i data-lucide="check" class="w-5 h-5 text-[#29A37A] shrink-0"></i>Basic profile</li>
+      </ul>
+      <a href="public-auth.html#join" class="mt-7 h-12 rounded-full border-2 border-[#0C1F31] text-[#0C1F31] hover:bg-[#0C1F31] hover:text-white font-bold transition flex items-center justify-center gap-2">Create free account</a>
+    </div>
+
+    <!-- PREMIUM -->
+    <div class="relative bg-white rounded-2xl border-2 border-[#DC183C] p-7 flex flex-col card-lift shadow-xl shadow-[#DC183C]/5">
+      <span class="absolute -top-3 right-6 inline-flex items-center gap-1.5 bg-[#FF9900] text-[#0C1F31] text-[11px] font-extrabold uppercase tracking-wider px-3 py-1 rounded-full shadow"><i data-lucide="star" class="w-3.5 h-3.5"></i>Most popular</span>
+      <div class="flex items-center gap-2.5"><div class="w-11 h-11 rounded-xl bg-[#FDECEF] text-[#DC183C] grid place-items-center"><i data-lucide="crown" class="w-5 h-5"></i></div><h2 class="font-jakarta font-extrabold text-xl">Premium</h2></div>
+      <div class="mt-5 flex items-end gap-1.5">
+        <span class="font-jakarta font-extrabold text-4xl">R<span id="priceAmount">99</span></span>
+        <span id="pricePeriod" class="text-[#6A7581] text-sm mb-1.5">/month</span>
+      </div>
+      <p id="priceNote" class="mt-1 text-sm text-[#6A7581]">Billed monthly. Cancel anytime.</p>
+      <ul class="mt-6 space-y-3 text-sm flex-1">
+        <li class="flex items-start gap-2.5 font-semibold text-[#121A21]"><i data-lucide="check-check" class="w-5 h-5 text-[#DC183C] shrink-0"></i>Everything in Free, plus:</li>
+        <li class="flex items-start gap-2.5"><i data-lucide="check" class="w-5 h-5 text-[#DC183C] shrink-0"></i>Priority funding matching</li>
+        <li class="flex items-start gap-2.5"><i data-lucide="check" class="w-5 h-5 text-[#DC183C] shrink-0"></i>Private messaging &amp; connection requests</li>
+        <li class="flex items-start gap-2.5"><i data-lucide="check" class="w-5 h-5 text-[#DC183C] shrink-0"></i>Community forum posting</li>
+        <li class="flex items-start gap-2.5"><i data-lucide="check" class="w-5 h-5 text-[#DC183C] shrink-0"></i>50% off live events</li>
+        <li class="flex items-start gap-2.5"><i data-lucide="check" class="w-5 h-5 text-[#DC183C] shrink-0"></i>Monthly live webinars</li>
+        <li class="flex items-start gap-2.5"><i data-lucide="check" class="w-5 h-5 text-[#DC183C] shrink-0"></i>Rich media posts</li>
+        <li class="flex items-start gap-2.5"><i data-lucide="check" class="w-5 h-5 text-[#DC183C] shrink-0"></i>Exclusive partner deals &amp; discounts</li>
+        <li class="flex items-start gap-2.5"><i data-lucide="check" class="w-5 h-5 text-[#DC183C] shrink-0"></i>Downloadable templates</li>
+      </ul>
+      <a href="public-auth.html#join" class="mt-7 h-12 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold transition flex items-center justify-center gap-2">Upgrade to Premium <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
+      <p class="mt-3 text-center text-xs text-[#6A7581]">Cancel anytime. No hidden fees.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURE COMPARISON TABLE -->
+<section class="max-w-5xl mx-auto px-4 sm:px-6 py-16 sm:py-20">
+  <div class="text-center mb-10">
+    <h2 class="font-jakarta font-extrabold text-2xl sm:text-3xl">Compare plans feature by feature</h2>
+    <p class="mt-2 text-[#6A7581] text-sm max-w-xl mx-auto">See exactly what unlocks when you go Premium.</p>
+  </div>
+  <div class="bg-white rounded-2xl border border-[#E7EBEF] overflow-hidden">
+    <table class="w-full text-sm">
+      <thead>
+        <tr class="bg-[#0C1F31] text-white">
+          <th class="text-left font-jakarta font-bold px-4 sm:px-6 py-4">Feature</th>
+          <th class="font-jakarta font-bold px-3 py-4 w-24 sm:w-32">Free</th>
+          <th class="font-jakarta font-bold px-3 py-4 w-24 sm:w-32"><span class="inline-flex items-center gap-1.5"><i data-lucide="crown" class="w-4 h-4 text-[#FF9900]"></i>Premium</span></th>
+        </tr>
+      </thead>
+      <tbody id="compareBody"></tbody>
+    </table>
+  </div>
+  <div class="mt-6 text-center">
+    <a href="public-auth.html#join" class="inline-flex items-center gap-2 h-11 px-6 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold transition">Upgrade to Premium <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
+  </div>
+</section>
+
+<!-- WHAT YOU GET WITH PREMIUM -->
+<section class="bg-white border-y border-[#E7EBEF]">
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 py-16 sm:py-20">
+    <div class="text-center mb-10">
+      <h2 class="font-jakarta font-extrabold text-2xl sm:text-3xl">What you get with Premium</h2>
+      <p class="mt-2 text-[#6A7581] text-sm max-w-xl mx-auto">The tools that turn a profile into real momentum.</p>
+    </div>
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+      <div class="rounded-2xl border border-[#E7EBEF] p-6 card-lift">
+        <div class="w-12 h-12 rounded-xl bg-[#FDECEF] text-[#DC183C] grid place-items-center mb-4"><i data-lucide="target" class="w-6 h-6"></i></div>
+        <h3 class="font-jakarta font-bold text-base">Priority funding matching</h3>
+        <p class="mt-1.5 text-sm text-[#6A7581]">Get matched to relevant funders first, with your application pushed to the front of the queue.</p>
+      </div>
+      <div class="rounded-2xl border border-[#E7EBEF] p-6 card-lift">
+        <div class="w-12 h-12 rounded-xl bg-[#E4F5EE] text-[#29A37A] grid place-items-center mb-4"><i data-lucide="badge-percent" class="w-6 h-6"></i></div>
+        <h3 class="font-jakarta font-bold text-base">Member-only deals</h3>
+        <p class="mt-1.5 text-sm text-[#6A7581]">Exclusive partner discounts on software, services and events worth more than your membership.</p>
+      </div>
+      <div class="rounded-2xl border border-[#E7EBEF] p-6 card-lift">
+        <div class="w-12 h-12 rounded-xl bg-[#FFF1E0] text-[#AE6B0A] grid place-items-center mb-4"><i data-lucide="video" class="w-6 h-6"></i></div>
+        <h3 class="font-jakarta font-bold text-base">Live webinars</h3>
+        <p class="mt-1.5 text-sm text-[#6A7581]">Monthly sessions with experts and operators, plus on-demand replays you can revisit anytime.</p>
+      </div>
+      <div class="rounded-2xl border border-[#E7EBEF] p-6 card-lift">
+        <div class="w-12 h-12 rounded-xl bg-[#FDECEF] text-[#DC183C] grid place-items-center mb-4"><i data-lucide="network" class="w-6 h-6"></i></div>
+        <h3 class="font-jakarta font-bold text-base">Private network</h3>
+        <p class="mt-1.5 text-sm text-[#6A7581]">Message members, send connection requests and post in the forum to build real relationships.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIAL / TRUST BAND -->
+<section class="max-w-5xl mx-auto px-4 sm:px-6 py-16 sm:py-20">
+  <div class="grid md:grid-cols-2 gap-6">
+    <div class="rounded-2xl bg-[#0C1F31] text-white p-7 relative overflow-hidden">
+      <div class="absolute inset-0 dot-pattern opacity-30 pointer-events-none"></div>
+      <i data-lucide="quote" class="w-8 h-8 text-[#FF9900] relative"></i>
+      <p class="mt-4 text-white/90 leading-relaxed relative">"Premium paid for itself in the first month. The funding match alone connected me to a grant I'd never have found on my own."</p>
+      <div class="mt-5 flex items-center gap-3 relative">
+        <div class="w-10 h-10 rounded-full bg-[#DC183C] grid place-items-center font-jakarta font-bold text-sm">TM</div>
+        <div><p class="font-semibold text-sm">Thandi M.</p><p class="text-xs text-white/50">Founder, Cape Town</p></div>
+      </div>
+    </div>
+    <div class="rounded-2xl bg-white border border-[#E7EBEF] p-7">
+      <i data-lucide="quote" class="w-8 h-8 text-[#DC183C]"></i>
+      <p class="mt-4 text-[#121A21] leading-relaxed">"The private network and webinars changed how I run my business. I've made partnerships I genuinely couldn't have made anywhere else."</p>
+      <div class="mt-5 flex items-center gap-3">
+        <div class="w-10 h-10 rounded-full bg-[#29A37A] text-white grid place-items-center font-jakarta font-bold text-sm">SK</div>
+        <div><p class="font-semibold text-sm">Sipho K.</p><p class="text-xs text-[#6A7581]">Retail SME, Durban</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="bg-white border-y border-[#E7EBEF]">
+  <div class="max-w-3xl mx-auto px-4 sm:px-6 py-16 sm:py-20">
+    <div class="text-center mb-10">
+      <h2 class="font-jakarta font-extrabold text-2xl sm:text-3xl">Frequently asked questions</h2>
+    </div>
+    <div id="faqList" class="space-y-3"></div>
+  </div>
+</section>
+
+<!-- FINAL CTA BAND -->
+<section class="hero-bg text-white relative overflow-hidden">
+  <div class="absolute inset-0 dot-pattern opacity-70 pointer-events-none"></div>
+  <div class="max-w-3xl mx-auto px-4 sm:px-6 py-16 sm:py-20 relative text-center">
+    <h2 class="font-jakarta font-extrabold text-2xl sm:text-4xl">Ready to unlock the full hub?</h2>
+    <p class="mt-3 text-white/70 max-w-xl mx-auto">Join 50,000+ South African entrepreneurs. Start free, upgrade when you're ready.</p>
+    <div class="mt-7 flex flex-col sm:flex-row items-center justify-center gap-3">
+      <a href="public-auth.html#join" class="h-12 px-7 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold transition inline-flex items-center justify-center gap-2">Upgrade to Premium <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
+      <a href="public-auth.html#join" class="h-12 px-7 rounded-full border border-white/30 text-white hover:bg-white/10 font-bold transition inline-flex items-center justify-center">Create free account</a>
+    </div>
+    <p class="mt-5 text-xs text-white/50">Cancel anytime. No hidden fees.</p>
+  </div>
+</section>
+
+<footer class="bg-[#0C1F31] text-white"><div class="max-w-7xl mx-auto px-4 sm:px-6 py-10 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm">
+  <a href="public-home.html" class="flex items-center gap-2.5"><span class="w-8 h-8 rounded-lg bg-white grid place-items-center"><img src="assets/logo-icon.png" class="w-6 h-6" alt="" /></span><span class="font-jakarta font-extrabold">SME South Africa</span></a>
+  <div class="flex flex-wrap items-center gap-x-5 gap-y-2 text-white/60"><a href="public-about.html" class="hover:text-white">About</a><a href="public-contact.html" class="hover:text-white">Contact</a><a href="public-advertise.html" class="hover:text-white">Advertise</a><a href="public-privacy.html" class="hover:text-white">Privacy</a><a href="public-terms.html" class="hover:text-white">Terms</a><a href="public-refunds.html" class="hover:text-white">Refunds</a><a href="public-popia.html" class="hover:text-white">POPIA</a></div>
+  <p class="text-white/40">© 2026 SME South Africa</p>
+</div></footer>
+<div id="overlay-root"></div><div id="toast" class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-50"></div>
+<script>
+  function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+  function showToast(m){const el=document.getElementById('toast');el.classList.remove('hidden');el.innerHTML=`<div class="bg-[#0C1F31] text-white rounded-full pl-3 pr-5 py-2.5 shadow-2xl flex items-center gap-2 text-sm font-semibold" style="border-left:4px solid #29A37A"><i data-lucide="check-circle" class="w-4 h-4" style="color:#29A37A"></i><span>${esc(m)}</span></div>`;lucide.createIcons();setTimeout(()=>{el.classList.add('hidden');el.innerHTML='';},2400);}
+
+  /* ---- Billing toggle ---- */
+  function setBilling(mode){
+    const monthly=mode==='monthly';
+    document.getElementById('billMonthly').classList.toggle('active',monthly);
+    document.getElementById('billAnnual').classList.toggle('active',!monthly);
+    const amt=document.getElementById('priceAmount'),per=document.getElementById('pricePeriod'),note=document.getElementById('priceNote');
+    if(monthly){amt.textContent='99';per.textContent='/month';note.textContent='Billed monthly. Cancel anytime.';}
+    else{amt.textContent='990';per.textContent='/year';note.innerHTML='Billed annually — <span class="font-bold text-[#AE6B0A]">save 2 months</span>. Cancel anytime.';}
+  }
+
+  /* ---- Comparison table ---- */
+  const COMPARE=[
+    {group:'Community & Networking',rows:[
+      ['Browse the community',true,true],
+      ['Private messaging & connection requests',false,true],
+      ['Community forum posting',false,true],
+      ['Rich media posts',false,true],
+    ]},
+    {group:'Content & Events',rows:[
+      ['Read articles, guides & resources',true,true],
+      ['Monthly live webinars',false,true],
+      ['50% off live events',false,true],
+    ]},
+    {group:'Funding',rows:[
+      ['Apply for funding',true,true],
+      ['Priority funding matching',false,true],
+    ]},
+    {group:'Resources & Deals',rows:[
+      ['Basic profile',true,true],
+      ['Downloadable templates',false,true],
+      ['Exclusive partner deals & discounts',false,true],
+    ]},
+  ];
+  function cell(on){return on
+    ? '<td class="px-3 py-3.5 text-center"><i data-lucide="check" class="w-5 h-5 text-[#29A37A] inline"></i></td>'
+    : '<td class="px-3 py-3.5 text-center"><i data-lucide="minus" class="w-5 h-5 text-slate-300 inline"></i></td>';}
+  (function renderCompare(){
+    let html='';
+    COMPARE.forEach(g=>{
+      html+=`<tr class="bg-[#FCFCFC]"><td colspan="3" class="px-4 sm:px-6 pt-5 pb-2 font-jakarta font-extrabold text-xs uppercase tracking-wider text-[#DC183C]">${esc(g.group)}</td></tr>`;
+      g.rows.forEach(r=>{
+        html+=`<tr class="border-t border-[#E7EBEF]"><td class="px-4 sm:px-6 py-3.5 text-[#121A21]">${esc(r[0])}</td>${cell(r[1])}${cell(r[2])}</tr>`;
+      });
+    });
+    document.getElementById('compareBody').innerHTML=html;
+  })();
+
+  /* ---- FAQ ---- */
+  const FAQ=[
+    ['What’s included in the free plan?','The free plan gives you full access to read articles, guides and resources, browse the community, apply for funding and set up a basic profile — free forever, no card required.'],
+    ['Can I cancel anytime?','Yes. Premium has no lock-in contract. Cancel anytime from your account settings and you’ll keep Premium access until the end of your current billing period.'],
+    ['How does billing work?','Premium is R99/month billed monthly, or R990/year billed annually (saving you two months). Your subscription renews automatically until you cancel.'],
+    ['What payment methods do you accept?','We accept major South African debit and credit cards, plus instant EFT through our secure payment partner. All payments are processed securely in ZAR.'],
+    ['Do you offer an annual plan?','Yes — switch the toggle above to Annual. Paying annually costs R990/year, which works out to two months free compared to paying monthly.'],
+    ['Is there a student or startup discount?','We run periodic discounts for students and early-stage startups. Reach out to our team via the contact page and we’ll let you know what’s currently available.'],
+  ];
+  (function renderFaq(){
+    document.getElementById('faqList').innerHTML=FAQ.map((f,i)=>`
+      <div class="faq-item border border-[#E7EBEF] rounded-xl overflow-hidden bg-white">
+        <button onclick="toggleFaq(${i})" class="w-full flex items-center justify-between gap-3 text-left px-5 py-4 font-semibold hover:bg-[#FCFCFC] transition">
+          <span>${esc(f[0])}</span>
+          <i data-lucide="chevron-down" class="faq-chev w-5 h-5 text-[#6A7581] shrink-0"></i>
+        </button>
+        <div class="faq-body"><p class="px-5 pb-5 text-sm text-[#6A7581] leading-relaxed">${esc(f[1])}</p></div>
+      </div>`).join('');
+  })();
+  function toggleFaq(i){
+    const items=document.querySelectorAll('.faq-item');
+    const it=items[i];const wasOpen=it.classList.contains('open');
+    items.forEach(x=>x.classList.remove('open'));
+    if(!wasOpen)it.classList.add('open');
+  }
+
+  /* ---- Dev mode ---- */
+  const BRIEF={title:'Membership & Pricing',sub:'WordPress page + billing integration',purpose:'Replaces the legacy /premium/, /join/ and /plans/membership/ pages with a single Free-vs-Premium comparison, pricing toggle and FAQ. Drives free sign-ups and Premium upgrades.',data:'Plans: <code>{id,name,price_monthly,price_annual,features[]}</code>. Subscription: <code>{user_id,plan,billing_cycle,status,renews_at}</code>.',logic:'Monthly/annual toggle updates the Premium price client-side (R99/mo or R990/yr). CTAs route to public-auth.html#join; on auth the selected cycle is carried into checkout. Public + indexable.',components:'Header · hero · pricing cards + billing toggle · feature comparison table · Premium highlights · testimonials · FAQ accordion · final CTA · footer.',api:'GET /v1/plans · POST /v1/subscriptions'};
+  function toggleDevMode(){const on=document.body.classList.toggle('dev-on');const b=document.getElementById('devToggle');if(b)b.classList.toggle('on',on);if(on)showToast('Dev Mode on — tap any ⓘ for implementation notes.');lucide.createIcons();}
+  function closeOverlay(id){const el=document.getElementById(id);if(!el)return;el.classList.remove('open');setTimeout(()=>{if(el&&el.parentNode)el.remove();},300);}
+  function openBrief(){const b=BRIEF;const sec=(i,l,h)=>`<div class="px-6 py-4 border-t border-slate-100"><p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] flex items-center gap-1.5 mb-2"><i data-lucide="${i}" class="w-3.5 h-3.5"></i>${l}</p><div class="text-sm text-slate-600 leading-relaxed">${h}</div></div>`;document.getElementById('overlay-root').innerHTML=`<div class="ov" id="ov"><div class="ov-bg" onclick="closeOverlay('ov')"></div><div class="drawer"><div class="sticky top-0 z-10 bg-[#0C1F31] text-white px-6 py-5 flex items-start justify-between"><div><p class="text-[10px] font-bold uppercase tracking-widest text-[#FF9900] mb-1">Dev Brief</p><h3 class="font-jakarta font-extrabold text-lg leading-tight">${b.title}</h3><p class="text-xs text-white/60 mt-1">${b.sub}</p></div><button onclick="closeOverlay('ov')" class="text-white/60 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button></div>${sec('target','Purpose',b.purpose)}${sec('database','Data model',b.data)}${sec('git-branch','Logic',b.logic)}${sec('boxes','Components',b.components)}${sec('plug','API',`<code class="block bg-slate-900 text-emerald-300 text-xs font-mono px-3 py-2 rounded-lg overflow-x-auto">${b.api}</code>`)}</div></div>`;requestAnimationFrame(()=>{const o=document.getElementById('ov');if(o)o.classList.add('open');});lucide.createIcons();}
+  lucide.createIcons();
+</script>
+</body>
+</html>

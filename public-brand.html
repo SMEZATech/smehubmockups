@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Yoco — Brand Profile (2026) | SME South Africa</title>
+  <meta name="description" content="A profile of Yoco, the mobile card-payment platform for South African SMEs — features, pricing in rand, pros &amp; cons, and FAQs." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  <script>
+    tailwind.config = { theme: { extend: { fontFamily: {
+      jakarta: ['Plus Jakarta Sans', 'sans-serif'], inter: ['Inter', 'system-ui', 'sans-serif']
+    } } } };
+  </script>
+  <style>
+    html, body { font-family: 'Inter', system-ui, sans-serif; }
+    html { scroll-behavior:smooth; }
+    .font-jakarta { font-family: 'Plus Jakarta Sans', sans-serif; letter-spacing: 0.005em; }
+    .hero-bg { background:linear-gradient(115deg,#0C1F31 0%,#0C1F31 50%,#2b1626 80%,#5e1a2c 115%); }
+    .dot-pattern { background-image:radial-gradient(rgba(255,255,255,.07) 1px,transparent 1.5px); background-size:22px 22px; }
+    .card-lift { transition: box-shadow .2s, transform .2s; }
+    .card-lift:hover { box-shadow: 0 10px 24px -10px rgba(10,44,61,0.18); transform: translateY(-2px); }
+    /* profile body */
+    .rv h2 { font-family:'Plus Jakarta Sans',sans-serif; font-weight:800; font-size:1.5rem; color:#121A21; margin:0 0 .6rem; scroll-margin-top:6rem; }
+    .rv h3 { font-family:'Plus Jakarta Sans',sans-serif; font-weight:700; font-size:1.05rem; color:#121A21; margin:1.3rem 0 .35rem; }
+    .rv p { color:#374151; line-height:1.8; font-size:1.02rem; margin-bottom:1rem; }
+    .rv section { scroll-margin-top:6rem; }
+    .dropcap::first-letter { font-family:'Plus Jakarta Sans',sans-serif; font-weight:800; color:#DC183C; float:left; font-size:3.2rem; line-height:.82; padding:.35rem .6rem 0 0; }
+    .toc-link { display:flex; align-items:center; gap:.5rem; font-size:.85rem; color:#6A7581; padding:.4rem .75rem; border-left:2px solid transparent; transition:all .15s; line-height:1.35; }
+    .toc-link:hover { color:#121A21; }
+    .toc-link.active { color:#DC183C; font-weight:700; border-left-color:#DC183C; background:#FDECEF; border-radius:0 .4rem .4rem 0; }
+    .dev-badge { display:none; } body.dev-on .dev-badge { display:inline-flex; }
+    #devToggle.on { background:#DC183C; color:#fff; border-color:#DC183C; }
+    .ov { position:fixed; inset:0; z-index:60; }
+    .ov-bg { position:absolute; inset:0; background:rgba(12,31,49,.45); backdrop-filter:blur(2px); opacity:0; transition:opacity .3s; }
+    .ov.open .ov-bg { opacity:1; }
+    .drawer { position:absolute; right:0; top:0; height:100%; width:100%; max-width:440px; background:#fff; box-shadow:-12px 0 40px rgba(12,31,49,.25); overflow-y:auto; transform:translateX(100%); transition:transform .3s cubic-bezier(.2,.7,.2,1); }
+    .ov.open .drawer { transform:translateX(0); }
+    .faq-body { max-height:0; overflow:hidden; transition:max-height .3s ease; }
+  </style>
+</head>
+<body class="bg-[#FCFCFC] text-[#121A21] antialiased">
+
+
+<header class="bg-white border-b border-[#E7EBEF] sticky top-0 z-40">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center gap-4">
+    <a href="public-home.html" class="flex items-center gap-2.5 shrink-0">
+      <img src="assets/logo-icon.png" alt="SME South Africa" class="w-9 h-9" />
+      <span class="font-jakarta font-extrabold text-[17px] tracking-tight">SME <span class="text-[#DC183C]">South Africa</span></span>
+    </a>
+    <nav class="hidden lg:flex items-center gap-1 ml-4">
+      <a href="public-articles.html"  class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition">Articles</a>
+      <a href="public-resources.html" class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition">Resources</a>
+      <a href="public-funding.html"   class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition">Funding</a>
+      <a href="public-solutions.html" class="px-3 py-2 rounded-lg text-sm font-semibold text-[#DC183C] bg-[#FDECEF]">Solutions</a>
+      <a href="public-shop.html"      class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition">Shop</a>
+    </nav>
+    <div class="flex items-center gap-1 sm:gap-2 ml-auto">
+      <button id="devToggle" onclick="toggleDevMode()" class="hidden sm:flex items-center gap-1.5 px-3 h-9 rounded-full border border-slate-200 text-slate-500 hover:border-[#DC183C] hover:text-[#DC183C] transition text-[11px] font-bold uppercase tracking-wider" title="Toggle implementation notes"><i data-lucide="code-2" class="w-3.5 h-3.5"></i><span>Dev</span></button>
+      <a href="public-shop.html" aria-label="Cart" class="relative w-10 h-10 grid place-items-center rounded-full hover:bg-slate-100 text-slate-600"><i data-lucide="shopping-bag" class="w-5 h-5"></i><span class="absolute top-1.5 right-1.5 bg-[#DC183C] text-white text-[10px] font-bold rounded-full w-4 h-4 grid place-items-center">0</span></a>
+      <a href="public-auth.html" class="hidden sm:inline-flex items-center px-3 h-9 rounded-full text-sm font-bold text-[#121A21] hover:bg-slate-100 transition">Sign in</a>
+      <a href="public-auth.html#join" class="inline-flex items-center px-4 h-9 rounded-full text-sm font-bold text-white bg-[#DC183C] hover:bg-[#B0142F] transition">Join Free</a>
+    </div>
+  </div>
+</header>
+
+<!-- ===================== HERO / BRAND HEADER ===================== -->
+<section class="hero-bg text-white relative overflow-hidden">
+  <div class="absolute inset-0 dot-pattern opacity-70 pointer-events-none"></div>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-12 sm:py-14 relative">
+    <nav class="flex flex-wrap items-center gap-1.5 text-xs text-white/55 mb-5">
+      <a href="public-home.html" class="hover:text-white">Home</a><i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
+      <a href="public-brands.html" class="hover:text-white">Brands</a><i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
+      <a href="public-brands.html" class="hover:text-white">Payments</a><i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
+      <span class="text-white/85 font-semibold">Yoco</span>
+    </nav>
+    <div class="flex flex-col sm:flex-row sm:items-end gap-5">
+      <div class="w-20 h-20 rounded-2xl bg-[#E4F5EE] text-[#29A37A] grid place-items-center font-jakarta font-extrabold text-3xl shrink-0">Yo</div>
+      <div>
+        <div class="flex items-center gap-2">
+          <h1 class="font-jakarta font-extrabold text-3xl sm:text-5xl tracking-tight">Yoco</h1>
+          <span class="inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider text-white bg-white/10 border border-white/20 rounded-full px-3 py-1"><i data-lucide="tag" class="w-3 h-3 text-[#FF9900]"></i> Payments</span>
+          <button onclick="openBrief('brand')" class="dev-badge w-6 h-6 rounded-full bg-[#FF9900] text-[#121A21] items-center justify-center text-[11px] font-bold" title="Implementation notes">i</button>
+        </div>
+        <div class="mt-3 flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-white/75">
+          <span class="inline-flex items-center gap-1.5" id="hero-stars"></span>
+          <span class="text-white/55">Member rating <span class="font-bold text-white">4.7 / 5</span></span>
+          <span class="flex items-center gap-1.5 text-white/55"><i data-lucide="calendar-check" class="w-4 h-4 text-[#FF9900]"></i> Updated on 12 June 2026</span>
+          <span class="flex items-center gap-1.5 text-white/55"><i data-lucide="shield-check" class="w-4 h-4 text-[#29A37A]"></i> Vetted provider</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== BODY: 2-COL ===================== -->
+<div class="max-w-7xl mx-auto px-4 sm:px-6 py-10 grid lg:grid-cols-3 gap-10">
+
+  <!-- LEFT STICKY SIDEBAR -->
+  <aside class="lg:col-span-1 order-2 lg:order-1">
+    <div class="lg:sticky lg:top-24 space-y-6">
+      <!-- TOC -->
+      <div class="bg-white rounded-2xl border border-[#E7EBEF] p-5">
+        <p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] flex items-center gap-1.5 mb-3"><i data-lucide="list" class="w-3.5 h-3.5"></i> On this page</p>
+        <nav id="toc" class="-ml-px"></nav>
+      </div>
+      <!-- Quick-facts card -->
+      <div class="bg-white rounded-2xl border border-[#E7EBEF] p-5">
+        <div class="flex items-center gap-3">
+          <div class="w-12 h-12 rounded-xl bg-[#E4F5EE] text-[#29A37A] grid place-items-center font-jakarta font-extrabold text-lg shrink-0">Yo</div>
+          <div><h3 class="font-jakarta font-extrabold leading-tight">Yoco</h3><p class="text-xs text-slate-500">Card payments</p></div>
+        </div>
+        <dl class="mt-4 space-y-3 text-sm">
+          <div class="flex items-center justify-between"><dt class="text-slate-500">Founded</dt><dd class="font-semibold">2015</dd></div>
+          <div class="flex items-center justify-between"><dt class="text-slate-500">Category</dt><dd class="font-semibold text-right">Payments</dd></div>
+          <div class="flex items-center justify-between"><dt class="text-slate-500">Best for</dt><dd class="font-semibold text-right">Card payments</dd></div>
+          <div class="flex items-center justify-between"><dt class="text-slate-500">Free shipping</dt><dd class="inline-flex items-center gap-1 font-semibold text-[#29A37A]"><i data-lucide="check" class="w-4 h-4"></i> Yes</dd></div>
+        </dl>
+        <button onclick="showToast('Opening Yoco (partner link)…')" class="mt-5 w-full h-11 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold transition flex items-center justify-center gap-2">Visit Site <i data-lucide="external-link" class="w-4 h-4"></i></button>
+        <a href="#get-quote" class="mt-2.5 w-full h-11 rounded-full border border-[#E7EBEF] hover:border-[#121A21] font-bold transition flex items-center justify-center gap-2">Get a Quote <i data-lucide="arrow-down" class="w-4 h-4"></i></a>
+      </div>
+    </div>
+  </aside>
+
+  <!-- RIGHT CONTENT -->
+  <main class="lg:col-span-2 order-1 lg:order-2 rv">
+
+    <!-- AT-A-GLANCE -->
+    <div class="bg-white rounded-2xl border border-[#E7EBEF] p-6 mb-8">
+      <div class="flex flex-col sm:flex-row sm:items-center gap-5">
+        <div class="text-center shrink-0 sm:border-r sm:border-[#E7EBEF] sm:pr-6">
+          <div class="font-jakarta font-extrabold text-4xl text-[#DC183C] leading-none">4.7</div>
+          <div class="mt-1" id="verdict-stars"></div>
+          <p class="text-[11px] text-slate-400 mt-1">2,140 reviews</p>
+        </div>
+        <div>
+          <p class="text-[10px] font-bold uppercase tracking-widest text-[#29A37A] flex items-center gap-1.5"><i data-lucide="badge-check" class="w-4 h-4"></i> At a glance</p>
+          <p class="text-slate-700 leading-relaxed mt-1.5 text-[15px]">Yoco is the go-to card-payment platform for South African small businesses. Affordable card machines, transparent pay-per-use pricing with no monthly rental, and a simple app make it easy for any trader to start accepting cards in minutes — backed by next-day settlement and a cash-advance product.</p>
+        </div>
+      </div>
+      <div class="flex flex-wrap gap-2 mt-5">
+        <span class="inline-flex items-center gap-1.5 text-xs font-semibold bg-[#FCFCFC] border border-[#E7EBEF] rounded-full px-3 py-1"><i data-lucide="credit-card" class="w-3.5 h-3.5 text-[#FF9900]"></i> No rental</span>
+        <span class="inline-flex items-center gap-1.5 text-xs font-semibold bg-[#FCFCFC] border border-[#E7EBEF] rounded-full px-3 py-1"><i data-lucide="zap" class="w-3.5 h-3.5 text-[#FF9900]"></i> Quick setup</span>
+        <span class="inline-flex items-center gap-1.5 text-xs font-semibold bg-[#FCFCFC] border border-[#E7EBEF] rounded-full px-3 py-1"><i data-lucide="smartphone" class="w-3.5 h-3.5 text-[#FF9900]"></i> Yoco app</span>
+        <span class="inline-flex items-center gap-1.5 text-xs font-semibold bg-[#FCFCFC] border border-[#E7EBEF] rounded-full px-3 py-1"><i data-lucide="banknote" class="w-3.5 h-3.5 text-[#FF9900]"></i> Yoco Capital</span>
+      </div>
+    </div>
+
+    <!-- INTRODUCTION -->
+    <section id="introduction" class="mb-10">
+      <h2>Introduction</h2>
+      <p class="dropcap">Yoco is a mobile card-payment platform built specifically for South African small businesses. Founded in 2015, it set out to remove the barriers that kept traders, restaurants and salons from accepting cards — high monthly rentals, lengthy bank approvals, and complex contracts. Instead, Yoco offers affordable card machines on a pay-per-use model, so you only pay when you make a sale.</p>
+      <p>For this profile we looked at how Yoco fits a typical SA small-business workflow: buying a once-off machine, taking card and tap payments, tracking sales in the app, and accessing working capital. Below we break down the features, pricing in rand, and the honest pros and cons so you can decide whether it fits your business.</p>
+    </section>
+
+    <!-- MAIN FEATURES -->
+    <section id="features" class="mb-10">
+      <h2>Main Features</h2>
+      <h3>Card machines — Go, Neo, Khumo &amp; Khumo Print</h3>
+      <p>Yoco offers a range of card machines for every counter. The Go is the entry-level reader that pairs with your phone, the Neo is a standalone all-in-one, while Khumo and Khumo Print add a larger screen, built-in connectivity and an on-device receipt printer for busier shops.</p>
+      <h3>Yoco Capital — cash advance</h3>
+      <p>Once you have a trading history with Yoco, you can apply for Yoco Capital, a cash advance repaid automatically as a small percentage of your daily card sales — useful working capital without a traditional loan application.</p>
+      <h3>Yoco app — sales &amp; insights</h3>
+      <p>The free Yoco app turns every sale into data: track turnover, see your best-selling items, manage refunds, and view settlement reports from your phone. It doubles as a lightweight point-of-sale for small teams.</p>
+      <h3>Yoco Link — payment links</h3>
+      <p>Send a secure payment link by WhatsApp, email or social media and get paid remotely — handy for deposits, invoices and online orders without a full e-commerce store.</p>
+      <h3>Gateway &amp; integrations</h3>
+      <p>Yoco's online gateway and integrations let you accept payments on your website or connect to point-of-sale and accounting tools, so card, online and in-person sales all flow into one place.</p>
+    </section>
+
+    <!-- PRICING -->
+    <section id="pricing" class="mb-10">
+      <h2>Pricing</h2>
+      <p>Yoco charges a once-off price for the machine, then a per-transaction fee on card sales — there is no monthly rental. The figures below are indicative ZAR pricing; always confirm current rates on the provider's site.</p>
+      <div class="overflow-x-auto mt-4 rounded-2xl border border-[#E7EBEF]">
+        <table class="w-full text-sm">
+          <thead class="bg-[#FCFCFC] text-left text-slate-500">
+            <tr>
+              <th class="font-semibold px-4 py-3">Item</th>
+              <th class="font-semibold px-4 py-3">One-time price</th>
+              <th class="font-semibold px-4 py-3">Best for</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-[#E7EBEF]">
+            <tr><td class="px-4 py-3 font-semibold">Yoco Go</td><td class="px-4 py-3">R349</td><td class="px-4 py-3 text-slate-600">Pop-ups &amp; on-the-go</td></tr>
+            <tr><td class="px-4 py-3 font-semibold">Yoco Neo</td><td class="px-4 py-3">R899</td><td class="px-4 py-3 text-slate-600">Standalone counter</td></tr>
+            <tr><td class="px-4 py-3 font-semibold">Yoco Khumo</td><td class="px-4 py-3">R1,499</td><td class="px-4 py-3 text-slate-600">Busy stores</td></tr>
+            <tr><td class="px-4 py-3 font-semibold">Yoco Khumo Print</td><td class="px-4 py-3">R1,999</td><td class="px-4 py-3 text-slate-600">Printed receipts</td></tr>
+            <tr class="bg-[#FDECEF]/40"><td class="px-4 py-3 font-semibold">Transaction fee</td><td class="px-4 py-3 font-bold text-[#DC183C]">from 2.95% ex VAT</td><td class="px-4 py-3 text-slate-600">Per card sale, no rental</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="text-xs text-slate-400 mt-3">Rates drop as your turnover grows. No monthly fees, no lock-in contract.</p>
+    </section>
+
+    <!-- PROS & CONS -->
+    <section id="pros-cons" class="mb-10">
+      <h2>Pros &amp; Cons</h2>
+      <div class="grid sm:grid-cols-2 gap-4 mt-2">
+        <div class="bg-[#E4F5EE] border border-[#29A37A]/20 rounded-2xl p-5">
+          <p class="text-[11px] font-bold uppercase tracking-widest text-[#29A37A] flex items-center gap-1.5 mb-3"><i data-lucide="thumbs-up" class="w-4 h-4"></i> Pros</p>
+          <ul class="space-y-2.5 text-sm text-[#121A21]/85">
+            <li class="flex items-start gap-2"><i data-lucide="check" class="w-4 h-4 text-[#29A37A] mt-0.5 shrink-0"></i> No monthly rental — pay only per sale</li>
+            <li class="flex items-start gap-2"><i data-lucide="check" class="w-4 h-4 text-[#29A37A] mt-0.5 shrink-0"></i> Affordable machines from R349</li>
+            <li class="flex items-start gap-2"><i data-lucide="check" class="w-4 h-4 text-[#29A37A] mt-0.5 shrink-0"></i> Fast sign-up and next-day settlement</li>
+            <li class="flex items-start gap-2"><i data-lucide="check" class="w-4 h-4 text-[#29A37A] mt-0.5 shrink-0"></i> Yoco Capital cash advance &amp; free app</li>
+          </ul>
+        </div>
+        <div class="bg-[#FDECEF] border border-[#DC183C]/20 rounded-2xl p-5">
+          <p class="text-[11px] font-bold uppercase tracking-widest text-[#DC183C] flex items-center gap-1.5 mb-3"><i data-lucide="thumbs-down" class="w-4 h-4"></i> Cons</p>
+          <ul class="space-y-2.5 text-sm text-[#121A21]/85">
+            <li class="flex items-start gap-2"><i data-lucide="x" class="w-4 h-4 text-[#DC183C] mt-0.5 shrink-0"></i> Per-transaction fees add up at high volume</li>
+            <li class="flex items-start gap-2"><i data-lucide="x" class="w-4 h-4 text-[#DC183C] mt-0.5 shrink-0"></i> Machines need a charge and connectivity</li>
+            <li class="flex items-start gap-2"><i data-lucide="x" class="w-4 h-4 text-[#DC183C] mt-0.5 shrink-0"></i> Standard rate only drops with turnover</li>
+            <li class="flex items-start gap-2"><i data-lucide="x" class="w-4 h-4 text-[#DC183C] mt-0.5 shrink-0"></i> Limited advanced POS features vs full systems</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQs -->
+    <section id="faqs" class="mb-10">
+      <h2>FAQs</h2>
+      <div id="faq-list" class="mt-2 space-y-3"></div>
+    </section>
+
+    <!-- GET A QUOTE (GATED) -->
+    <section id="get-quote" class="mb-10">
+      <h2>Get a Quote / Compare</h2>
+      <div class="rounded-2xl hero-bg text-white relative overflow-hidden mt-2">
+        <div class="absolute inset-0 dot-pattern opacity-70 pointer-events-none"></div>
+        <div class="relative p-7 sm:p-9 text-center">
+          <div class="w-14 h-14 rounded-2xl bg-white/10 grid place-items-center mx-auto mb-4"><i data-lucide="lock" class="w-7 h-7 text-[#FF9900]"></i></div>
+          <h3 class="font-jakarta font-extrabold text-2xl">Sign in or sign up to compare quotes</h3>
+          <p class="text-white/75 mt-2 max-w-lg mx-auto">To get a quote for Yoco and compare it against other vetted payment providers, you must sign in or sign up. It's free to join the SME Hub.</p>
+          <div class="flex flex-col sm:flex-row gap-3 justify-center mt-6">
+            <a href="public-auth.html" class="inline-flex items-center justify-center gap-2 px-6 h-12 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold transition">Sign in to get a quote <i data-lucide="log-in" class="w-4 h-4"></i></a>
+            <a href="public-auth.html#join" class="inline-flex items-center justify-center gap-2 px-6 h-12 rounded-full bg-white/10 hover:bg-white/20 border border-white/25 text-white font-bold transition">Create SME Hub Account <i data-lucide="user-plus" class="w-4 h-4"></i></a>
+          </div>
+          <p class="text-[11px] text-white/45 mt-4">No obligation · Quotes pulled from vetted SA-relevant providers</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SIMILAR BRANDS -->
+    <section class="mb-10">
+      <div class="bg-white rounded-2xl border border-[#E7EBEF] p-6">
+        <p class="text-[10px] font-bold uppercase tracking-widest text-[#AE6B0A] flex items-center gap-1.5 mb-3"><i data-lucide="shuffle" class="w-3.5 h-3.5"></i> Similar brands</p>
+        <div id="similar" class="space-y-2"></div>
+        <a href="public-brands.html" class="inline-flex items-center gap-1 text-sm font-bold text-[#DC183C] mt-4 hover:gap-2 transition-all">Browse the full directory <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
+      </div>
+    </section>
+
+    <!-- NEWSLETTER / BACK TO DIRECTORY -->
+    <section>
+      <div class="rounded-2xl border border-[#E7EBEF] bg-[#FDECEF] p-6 sm:p-8">
+        <div class="flex flex-col sm:flex-row sm:items-center gap-5">
+          <div class="w-12 h-12 rounded-xl bg-white grid place-items-center shadow-sm shrink-0"><i data-lucide="mail" class="w-6 h-6 text-[#DC183C]"></i></div>
+          <div class="flex-1">
+            <h3 class="font-jakarta font-extrabold text-xl text-[#0C1F31]">SME Solutions Newsletter</h3>
+            <p class="text-sm text-[#6A7581] mt-1">New brand profiles, price drops and tool recommendations for SA founders — once a week.</p>
+          </div>
+        </div>
+        <form onsubmit="subscribeBrief(event)" class="mt-5 flex flex-col sm:flex-row gap-2.5">
+          <input type="email" required placeholder="you@business.co.za" class="flex-1 bg-white border border-[#E7EBEF] rounded-full h-12 px-4 text-sm outline-none focus:border-[#DC183C] focus:ring-2 focus:ring-[#DC183C]/15 transition" />
+          <button type="submit" class="inline-flex items-center justify-center gap-2 h-12 px-6 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold text-sm transition">Subscribe <i data-lucide="arrow-right" class="w-4 h-4"></i></button>
+        </form>
+        <div class="mt-5 pt-5 border-t border-[#DC183C]/15 text-center">
+          <a href="public-brands.html" class="inline-flex items-center gap-1.5 text-sm font-bold text-[#0C1F31] hover:gap-2.5 transition-all"><i data-lucide="arrow-left" class="w-4 h-4"></i> Back to the Brands Directory</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<footer class="bg-[#0C1F31] text-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-12">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+      <div class="col-span-2 md:col-span-1">
+        <a href="public-home.html" class="flex items-center gap-2.5"><span class="w-9 h-9 rounded-lg bg-white grid place-items-center"><img src="assets/logo-icon.png" alt="SME South Africa" class="w-7 h-7" /></span><span class="font-jakarta font-extrabold text-[17px]">SME South Africa</span></a>
+        <p class="text-sm text-white/55 mt-4 max-w-xs leading-relaxed">South Africa's largest SME community — connecting founders with funding, mentorship, events, and the tools to scale.</p>
+      </div>
+      <div><p class="text-[11px] font-bold uppercase tracking-widest text-white/40">Platform</p><ul class="mt-4 space-y-2.5 text-sm text-white/70"><li><a href="member-hub.html" class="hover:text-white">Community</a></li><li><a href="#" class="hover:text-white">Events</a></li><li><a href="public-funding.html" class="hover:text-white">Funding</a></li><li><a href="public-solutions.html" class="hover:text-white">Solutions</a></li><li><a href="public-shop.html" class="hover:text-white">Shop</a></li></ul></div>
+      <div><p class="text-[11px] font-bold uppercase tracking-widest text-white/40">Learn</p><ul class="mt-4 space-y-2.5 text-sm text-white/70"><li><a href="public-articles.html" class="hover:text-white">Articles</a></li><li><a href="public-resources.html" class="hover:text-white">Resources</a></li><li><a href="public-resources.html" class="hover:text-white">Guides</a></li><li><a href="#" class="hover:text-white">Podcast</a></li></ul></div>
+      <div><p class="text-[11px] font-bold uppercase tracking-widest text-white/40">Company</p><ul class="mt-4 space-y-2.5 text-sm text-white/70"><li><a href="public-about.html" class="hover:text-white">About</a></li><li><a href="public-contact.html" class="hover:text-white">Contact</a></li><li><a href="#" class="hover:text-white">Careers</a></li><li><a href="#" class="hover:text-white">Partners</a></li></ul></div>
+    </div>
+    <div class="flex flex-col sm:flex-row items-center justify-between gap-4 pt-8 mt-10 border-t border-white/10 text-sm text-white/50">
+      <p>© 2026 SME South Africa. All rights reserved.</p>
+      <div class="flex items-center gap-5"><a href="public-privacy.html" class="hover:text-white">Privacy Policy</a><a href="public-terms.html" class="hover:text-white">Terms of Service</a><a href="#" class="hover:text-white">Cookie Policy</a></div>
+    </div>
+  </div>
+</footer>
+
+<div id="overlay-root"></div>
+<div id="toast" class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-50"></div>
+
+<script>
+  function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c])); }
+  function showToast(msg){ const el=document.getElementById('toast'); el.classList.remove('hidden'); el.innerHTML=`<div class="bg-[#0C1F31] text-white rounded-full pl-3 pr-5 py-2.5 shadow-2xl flex items-center gap-2 text-sm font-semibold" style="border-left:4px solid #29A37A"><i data-lucide="check-circle" class="w-4 h-4" style="color:#29A37A"></i><span>${esc(msg)}</span></div>`; lucide.createIcons(); setTimeout(()=>{el.classList.add('hidden');el.innerHTML='';},2400); }
+  function subscribeBrief(e){ e.preventDefault(); e.target.reset(); showToast('Subscribed to the SME Solutions Newsletter.'); }
+
+  const STAR_GOLD='#FF9900';
+  function stars(score, cls){
+    let full=Math.floor(score), half=(score-full)>=0.5, html='';
+    for(let i=0;i<5;i++){ const f=i<full; const h=(i===full&&half);
+      html+=`<i data-lucide="star" class="${cls||'w-4 h-4'}" style="${f||h?`color:${STAR_GOLD};fill:${STAR_GOLD}`:'color:#CBD2DA'}${h?';clip-path:inset(0 50% 0 0)':''}"></i>`; }
+    return html;
+  }
+  document.getElementById('hero-stars').innerHTML = stars(4.7) + '<span class="font-bold text-white ml-1">4.7</span>';
+  document.getElementById('verdict-stars').innerHTML = `<span class="inline-flex gap-0.5">${stars(4.7)}</span>`;
+
+  // ---- TOC + scroll-spy (built from sections with id, reusing the review/article pattern) ----
+  const TOC=[ ['introduction','Introduction','book-open'], ['features','Main Features','layers'], ['pricing','Pricing','tag'], ['pros-cons','Pros & Cons','scale'], ['faqs','FAQs','help-circle'], ['get-quote','Get a Quote','git-compare'] ];
+  document.getElementById('toc').innerHTML = TOC.map(([id,label,icon])=>`<a href="#${id}" class="toc-link" data-id="${id}"><i data-lucide="${icon}" class="w-3.5 h-3.5"></i>${esc(label)}</a>`).join('');
+  const links=[...document.querySelectorAll('#toc .toc-link')];
+  links.forEach(l=>l.addEventListener('click',e=>{e.preventDefault();const t=document.getElementById(l.dataset.id);if(t)t.scrollIntoView({behavior:'smooth',block:'start'});}));
+  const spy=new IntersectionObserver(entries=>{
+    entries.forEach(en=>{ if(en.isIntersecting){ const id=en.target.id; links.forEach(l=>l.classList.toggle('active', l.dataset.id===id)); } });
+  },{rootMargin:'-15% 0px -75% 0px',threshold:0});
+  TOC.forEach(([id])=>{ const s=document.getElementById(id); if(s)spy.observe(s); });
+
+  // ---- FAQs accordion ----
+  const FAQS=[
+    ['Is Yoco secure and PCI-compliant?','Yes. Yoco is a registered payment provider and processes card payments through PCI-DSS compliant systems, with EMV chip-and-PIN and contactless security on every machine.'],
+    ['What happens if my card machine is lost or stolen?','Report it to Yoco support immediately to deactivate the device. Your funds are held safely in your Yoco account and are not affected by the loss of the physical machine.'],
+    ['Which payment methods does Yoco accept?','Yoco accepts Visa and Mastercard, tap-to-pay contactless cards, and mobile wallets like Apple Pay, Samsung Pay and Google Pay, plus payment links for remote sales.'],
+    ['How long do settlements take?','Card sales typically settle into your linked bank account the next business day. Settlement timing can vary slightly depending on your bank and public holidays.'],
+    ['Can I issue refunds through Yoco?','Yes. You can refund a transaction directly from the Yoco app or machine, and the amount is returned to the customer\'s card according to standard card-scheme timelines.']
+  ];
+  document.getElementById('faq-list').innerHTML = FAQS.map(([q,a],i)=>`
+    <div class="bg-white rounded-2xl border border-[#E7EBEF] overflow-hidden">
+      <button onclick="toggleFaq(${i})" class="w-full flex items-center justify-between gap-3 text-left px-5 py-4 font-jakarta font-bold">
+        <span>${esc(q)}</span>
+        <i data-lucide="chevron-down" class="w-5 h-5 text-slate-400 shrink-0 transition-transform" id="faq-ic-${i}"></i>
+      </button>
+      <div class="faq-body" id="faq-body-${i}"><p class="px-5 pb-4 text-sm text-slate-600 leading-relaxed">${esc(a)}</p></div>
+    </div>`).join('');
+  function toggleFaq(i){
+    const body=document.getElementById('faq-body-'+i), ic=document.getElementById('faq-ic-'+i);
+    const open = body.style.maxHeight && body.style.maxHeight!=='0px';
+    if(open){ body.style.maxHeight='0px'; ic.style.transform='rotate(0deg)'; }
+    else { body.style.maxHeight = body.scrollHeight+'px'; ic.style.transform='rotate(180deg)'; }
+  }
+
+  // ---- Similar brands ----
+  const SIMILAR=[ ['Shopify POS','Sell in store & online','SP'], ['Old Mutual SMEgo','Invoicing & SME banking','OS'], ['1-Grid','Hosting & domains','1G'] ];
+  document.getElementById('similar').innerHTML = SIMILAR.map(([name,best,mono])=>`
+    <a href="public-brands.html" class="flex items-center gap-3 rounded-xl border border-[#E7EBEF] hover:border-[#121A21] p-3 transition card-lift">
+      <div class="w-10 h-10 rounded-xl bg-[#FCFCFC] border border-[#E7EBEF] grid place-items-center font-jakarta font-extrabold text-sm shrink-0">${esc(mono)}</div>
+      <div class="min-w-0"><p class="font-jakarta font-bold leading-tight">${esc(name)}</p><p class="text-xs text-slate-500">${esc(best)}</p></div>
+      <i data-lucide="arrow-right" class="w-4 h-4 text-slate-400 ml-auto shrink-0"></i>
+    </a>`).join('');
+
+  // ---- Dev brief ----
+  const BRIEFS = { brand: {
+    title:'Brand Profile', sub:'Single-provider directory entry',
+    purpose:'The detail page for one directory brand (e.g. Yoco), reached from the Brands Directory. A curated provider profile — intro, features, pricing, pros/cons, FAQs, gated quote/compare — distinct from the editorial Solutions review. Public + indexable for SEO; quote compare is member-gated.',
+    data:'Brand (CPT): <code>{ id, name, slug, category, logo, rating, review_count, updated_at, founded, best_for, free_shipping, intro, features[], pricing_rows[], pros[], cons[], faqs[], website, similar[] }</code>. Lead (gated): <code>{ brand, member_id }</code>.',
+    logic:'JetEngine "Brand" CPT related to a "Brand Category" taxonomy. TOC + scroll-spy built client-side from section[id] via IntersectionObserver (same pattern as the review/article pages). FAQs are an accordion. Get a Quote is gated: logged-out users see Sign in / Create Account CTAs (→ /auth); members get the live quote/compare flow. Visit Site = tracked outbound redirect.',
+    components:'Header · hero (monogram, category, rating, updated date, breadcrumb) · sticky TOC + quick-facts card · at-a-glance · Introduction · Main Features · Pricing table · Pros &amp; Cons · FAQs accordion · gated Get a Quote · similar brands · newsletter + back-to-directory · footer.',
+    api:'GET /v1/brands/{slug} · GET /go/brand/{slug} (outbound redirect) · POST /v1/brands/{slug}/quote (auth required)'
+  } };
+  function toggleDevMode(){ const on=document.body.classList.toggle('dev-on'); const b=document.getElementById('devToggle'); if(b)b.classList.toggle('on',on); if(on)showToast('Dev Mode on — tap any ⓘ for implementation notes.'); lucide.createIcons(); }
+  function closeOverlay(id){ const el=document.getElementById(id); if(!el)return; el.classList.remove('open'); setTimeout(()=>{ if(el&&el.parentNode) el.remove(); },300); }
+  function openBrief(id){ const b=BRIEFS[id]; if(!b)return;
+    const sec=(icon,label,html)=>`<div class="px-6 py-4 border-t border-slate-100"><p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] flex items-center gap-1.5 mb-2"><i data-lucide="${icon}" class="w-3.5 h-3.5"></i>${label}</p><div class="text-sm text-slate-600 leading-relaxed">${html}</div></div>`;
+    document.getElementById('overlay-root').innerHTML=`<div class="ov" id="ov-brief"><div class="ov-bg" onclick="closeOverlay('ov-brief')"></div><div class="drawer"><div class="sticky top-0 z-10 bg-[#0C1F31] text-white px-6 py-5 flex items-start justify-between"><div class="min-w-0"><p class="text-[10px] font-bold uppercase tracking-widest text-[#FF9900] mb-1">Dev Brief</p><h3 class="font-jakarta font-extrabold text-lg leading-tight">${b.title}</h3><p class="text-xs text-white/60 mt-1">${b.sub}</p></div><button onclick="closeOverlay('ov-brief')" aria-label="Close" class="text-white/60 hover:text-white shrink-0 ml-3"><i data-lucide="x" class="w-5 h-5"></i></button></div>${sec('target','Purpose',b.purpose)}${sec('database','Data model',b.data)}${sec('git-branch','Logic',b.logic)}${sec('boxes','Components',b.components)}${sec('plug','API',`<code class="block bg-slate-900 text-emerald-300 text-xs font-mono px-3 py-2 rounded-lg overflow-x-auto">${b.api}</code>`)}<div class="px-6 py-4 border-t border-slate-100"><p class="text-[11px] text-slate-400 flex items-center gap-1.5"><i data-lucide="info" class="w-3.5 h-3.5"></i> Spec lives beside the feature — toggle Dev Mode off for the clean view.</p></div></div></div>`;
+    requestAnimationFrame(()=>{ const o=document.getElementById('ov-brief'); if(o)o.classList.add('open'); }); lucide.createIcons();
+  }
+
+  lucide.createIcons();
+</script>
+</body>
+</html>

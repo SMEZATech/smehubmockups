@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Founder Focus — SME South Africa</title>
+  <meta name="description" content="Real stories from the founders building South Africa's small-business economy — the wins, the setbacks and the lessons." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script><script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  <script>tailwind.config={theme:{extend:{fontFamily:{jakarta:['Plus Jakarta Sans','sans-serif'],inter:['Inter','system-ui','sans-serif']}}}};</script>
+  <style>
+    html,body{font-family:'Inter',system-ui,sans-serif;} .font-jakarta{font-family:'Plus Jakarta Sans',sans-serif;letter-spacing:.005em;}
+    .hero-bg{background:linear-gradient(115deg,#0C1F31 0%,#0C1F31 50%,#2b1626 80%,#5e1a2c 115%);}
+    .dot-pattern{background-image:radial-gradient(rgba(255,255,255,.07) 1px,transparent 1.5px);background-size:22px 22px;}
+    .card-lift{transition:box-shadow .2s,transform .2s;} .card-lift:hover{box-shadow:0 14px 30px -12px rgba(10,44,61,.22);transform:translateY(-3px);}
+    .field{width:100%;background:#fff;border:1px solid #E7EBEF;border-radius:.75rem;height:3rem;padding:0 1rem;font-size:.9rem;outline:none;transition:border-color .15s,box-shadow .15s;} .field:focus{border-color:#DC183C;box-shadow:0 0 0 3px rgba(220,24,60,.12);}
+    .chip{transition:all .15s;} .chip:not(.chip-active):hover{background:#FDECEF;color:#B0142F;border-color:#DC183C;}
+    .chip-active{background:#DC183C !important;color:#fff !important;border-color:#DC183C !important;}
+    .line-clamp-2{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+    .dev-badge{display:none;} body.dev-on .dev-badge{display:inline-flex;} #devToggle.on{background:#DC183C;color:#fff;border-color:#DC183C;}
+    .ov{position:fixed;inset:0;z-index:60;} .ov-bg{position:absolute;inset:0;background:rgba(12,31,49,.45);backdrop-filter:blur(2px);opacity:0;transition:opacity .3s;} .ov.open .ov-bg{opacity:1;}
+    .drawer{position:absolute;right:0;top:0;height:100%;width:100%;max-width:440px;background:#fff;box-shadow:-12px 0 40px rgba(12,31,49,.25);overflow-y:auto;transform:translateX(100%);transition:transform .3s cubic-bezier(.2,.7,.2,1);} .ov.open .drawer{transform:translateX(0);}
+  </style>
+</head>
+<body class="bg-[#FCFCFC] text-[#121A21] antialiased">
+<header class="bg-white border-b border-[#E7EBEF] sticky top-0 z-40"><div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center gap-4">
+  <a href="public-home.html" class="flex items-center gap-2.5 shrink-0"><img src="assets/logo-icon.png" alt="SME South Africa" class="w-9 h-9" /><span class="font-jakarta font-extrabold text-[17px] tracking-tight">SME <span class="text-[#DC183C]">South Africa</span></span></a>
+  <nav class="hidden lg:flex items-center gap-1 ml-4">
+    <a href="public-articles.html" class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition">Articles</a>
+    <a href="public-resources.html" class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition">Resources</a>
+    <a href="public-funding.html" class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition">Funding</a>
+    <a href="public-solutions.html" class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition">Solutions</a>
+    <a href="public-shop.html" class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition">Shop</a>
+  </nav>
+  <div class="flex items-center gap-1 sm:gap-2 ml-auto">
+    <button id="devToggle" onclick="toggleDevMode()" class="hidden sm:flex items-center gap-1.5 px-3 h-9 rounded-full border border-slate-200 text-slate-500 hover:border-[#DC183C] hover:text-[#DC183C] transition text-[11px] font-bold uppercase tracking-wider"><i data-lucide="code-2" class="w-3.5 h-3.5"></i><span>Dev</span></button>
+    <a href="public-auth.html" class="hidden sm:inline-flex items-center px-3 h-9 rounded-full text-sm font-bold text-[#121A21] hover:bg-slate-100 transition">Sign in</a>
+    <a href="public-auth.html#join" class="inline-flex items-center px-4 h-9 rounded-full text-sm font-bold text-white bg-[#DC183C] hover:bg-[#B0142F] transition">Join Free</a>
+  </div>
+</div></header>
+
+<!-- HERO -->
+<section class="hero-bg text-white relative overflow-hidden"><div class="absolute inset-0 dot-pattern opacity-70 pointer-events-none"></div>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 pt-12 pb-14 relative">
+    <p class="text-xs text-white/50 mb-3"><a href="public-home.html" class="hover:text-white/80">Home</a> <span class="mx-1">›</span> Founder Focus</p>
+    <h1 class="font-jakarta font-extrabold text-4xl sm:text-5xl tracking-tight">Founder Focus
+      <button onclick="openBrief()" class="dev-badge align-middle ml-1 w-6 h-6 rounded-full bg-[#FF9900] text-[#0C1F31] items-center justify-center text-[11px] font-bold">i</button>
+    </h1>
+    <p class="mt-4 text-white/70 max-w-2xl text-lg">Real stories from the founders building South Africa's small-business economy — the wins, the setbacks and the lessons.</p>
+  </div>
+</section>
+
+<main class="max-w-7xl mx-auto px-4 sm:px-6 pt-12">
+  <!-- FEATURED FOUNDER STORY -->
+  <a href="public-article.html" class="group block bg-white rounded-3xl border border-[#E7EBEF] overflow-hidden shadow-xl relative card-lift">
+    <div class="grid md:grid-cols-2">
+      <div class="relative aspect-[16/11] md:aspect-auto overflow-hidden">
+        <img src="assets/article-1.jpg" alt="Naledi Khumalo, Founder of Kasi Fresh" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" />
+        <span class="absolute top-4 left-4 px-3 py-1 rounded-full text-[11px] font-bold bg-[#FF9900] text-[#0C1F31] shadow">FEATURED STORY</span>
+      </div>
+      <div class="p-7 sm:p-9 flex flex-col justify-center">
+        <p class="text-sm font-bold text-[#DC183C]">Naledi Khumalo <span class="text-[#6A7581] font-semibold">· Founder, Kasi Fresh</span></p>
+        <h2 class="font-jakarta font-extrabold text-2xl sm:text-[2rem] leading-tight mt-2 group-hover:text-[#DC183C] transition">How a R500 stokvel became a township grocery chain</h2>
+        <p class="text-[#6A7581] mt-3 leading-relaxed">It started with neighbours pooling R500 a month to buy in bulk. Six years later, Kasi Fresh runs nine community stores and supplies 40 spaza shops across Soweto — without a cent of bank debt. Naledi shares how trust, route economics and relentless reinvestment built the chain.</p>
+        <span class="inline-flex items-center gap-1.5 self-start mt-6 text-sm font-bold text-[#DC183C] group-hover:gap-2.5 transition-all">Read story <i data-lucide="arrow-right" class="w-4 h-4"></i></span>
+        <div class="flex flex-wrap items-center gap-x-5 gap-y-1.5 mt-6 pt-6 border-t border-[#E7EBEF] text-xs text-[#6A7581]">
+          <span class="inline-flex items-center gap-1.5"><i data-lucide="user" class="w-3.5 h-3.5 text-[#DC183C]"></i> Naledi Khumalo</span>
+          <span class="inline-flex items-center gap-1.5"><i data-lucide="tag" class="w-3.5 h-3.5 text-[#DC183C]"></i> Retail</span>
+          <span class="inline-flex items-center gap-1.5"><i data-lucide="clock" class="w-3.5 h-3.5 text-[#DC183C]"></i> 8 min read</span>
+        </div>
+      </div>
+    </div>
+  </a>
+
+  <!-- SECTOR FILTER CHIPS -->
+  <div class="flex items-center gap-2 mt-12 mb-1">
+    <i data-lucide="filter" class="w-4 h-4 text-[#6A7581]"></i>
+    <p class="text-sm font-bold text-[#121A21]">Browse by sector</p>
+  </div>
+  <div id="chips" class="flex flex-wrap gap-2 mt-3"></div>
+
+  <!-- GRID -->
+  <div id="grid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-8"></div>
+  <div id="empty" class="hidden text-center py-16 text-[#6A7581]"><i data-lucide="search-x" class="w-8 h-8 mx-auto mb-3"></i><p class="font-semibold">No founder stories in this sector yet.</p></div>
+</main>
+
+<!-- SHARE YOUR STORY CTA BAND -->
+<section class="max-w-7xl mx-auto px-4 sm:px-6 mt-16">
+  <div class="hero-bg rounded-3xl text-white relative overflow-hidden">
+    <div class="absolute inset-0 dot-pattern opacity-70 pointer-events-none"></div>
+    <div class="relative px-7 sm:px-12 py-12 flex flex-col md:flex-row md:items-center gap-6 md:gap-10">
+      <div class="md:flex-1">
+        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-bold bg-[#FF9900] text-[#0C1F31]"><i data-lucide="megaphone" class="w-3.5 h-3.5"></i> SHARE YOUR STORY</span>
+        <h2 class="font-jakarta font-extrabold text-2xl sm:text-3xl mt-4 leading-tight">Built something worth talking about?</h2>
+        <p class="text-white/70 mt-3 max-w-xl leading-relaxed">We feature one founder a week. If you're building a South African small business and want your journey told — the real version — we want to hear from you.</p>
+      </div>
+      <div class="shrink-0">
+        <a href="public-contact.html" class="inline-flex items-center justify-center gap-2 h-12 px-7 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold transition">Pitch your story <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- NEWSLETTER SUBSCRIBE STRIP -->
+<section class="max-w-7xl mx-auto px-4 sm:px-6 mt-8">
+  <div class="bg-white rounded-3xl border border-[#E7EBEF] px-7 sm:px-12 py-10 flex flex-col md:flex-row md:items-center gap-6 md:gap-10">
+    <div class="md:flex-1">
+      <div class="flex items-center gap-2.5">
+        <span class="w-11 h-11 rounded-xl bg-[#FDECEF] text-[#DC183C] grid place-items-center shrink-0"><i data-lucide="mail" class="w-5 h-5"></i></span>
+        <h2 class="font-jakarta font-extrabold text-xl sm:text-2xl">Get a new founder story every week</h2>
+      </div>
+      <p class="text-[#6A7581] mt-3 leading-relaxed">One inspiring South African founder, straight to your inbox. No spam — unsubscribe anytime.</p>
+    </div>
+    <form onsubmit="subscribe(event)" class="shrink-0 w-full md:w-auto flex flex-col sm:flex-row gap-3">
+      <input type="email" required class="field sm:w-72" placeholder="you@business.co.za" />
+      <button class="h-12 px-6 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold transition inline-flex items-center justify-center gap-2 whitespace-nowrap">Subscribe <i data-lucide="send" class="w-4 h-4"></i></button>
+    </form>
+  </div>
+</section>
+
+<div class="h-16"></div>
+
+<footer class="bg-[#0C1F31] text-white"><div class="max-w-7xl mx-auto px-4 sm:px-6 py-10 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm">
+  <a href="public-home.html" class="flex items-center gap-2.5"><span class="w-8 h-8 rounded-lg bg-white grid place-items-center"><img src="assets/logo-icon.png" class="w-6 h-6" alt="" /></span><span class="font-jakarta font-extrabold">SME South Africa</span></a>
+  <div class="flex flex-wrap items-center gap-x-5 gap-y-2 text-white/60"><a href="public-about.html" class="hover:text-white">About</a><a href="public-contact.html" class="hover:text-white">Contact</a><a href="public-advertise.html" class="hover:text-white">Advertise</a><a href="public-privacy.html" class="hover:text-white">Privacy</a><a href="public-terms.html" class="hover:text-white">Terms</a><a href="public-refunds.html" class="hover:text-white">Refunds</a><a href="public-popia.html" class="hover:text-white">POPIA</a></div>
+  <p class="text-white/40">© 2026 SME South Africa</p>
+</div></footer>
+
+<div id="overlay-root"></div><div id="toast" class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-50"></div>
+<script>
+  function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+  function showToast(m){const el=document.getElementById('toast');el.classList.remove('hidden');el.innerHTML=`<div class="bg-[#0C1F31] text-white rounded-full pl-3 pr-5 py-2.5 shadow-2xl flex items-center gap-2 text-sm font-semibold" style="border-left:4px solid #29A37A"><i data-lucide="check-circle" class="w-4 h-4" style="color:#29A37A"></i><span>${esc(m)}</span></div>`;lucide.createIcons();setTimeout(()=>{el.classList.add('hidden');el.innerHTML='';},2400);}
+  function subscribe(e){e.preventDefault();e.target.reset();showToast('Subscribed — your first founder story is on the way.');}
+
+  const SECTORS=['All','Retail','Tech','Agriculture','Manufacturing','Services','Fintech'];
+  let activeSector='All';
+  const STORIES=[
+    {img:'assets/article-2.jpg',sector:'Fintech',title:'The taxi-rank app turning cash fares into digital income',hook:'How Bongani built a payments rail for an industry the banks ignored.',founder:'Bongani Maluleke',company:'RankPay',init:'BM',read:7},
+    {img:'assets/article-3.jpg',sector:'Tech',title:'From a Khayelitsha bedroom to a 30-person software studio',hook:'No degree, no funding — just a laptop, a bootcamp and stubborn ambition.',founder:'Aphiwe Ngcobo',company:'Lumio Labs',init:'AN',read:6},
+    {img:'assets/article-4.jpg',sector:'Agriculture',title:'She turned two hectares of spinach into a R12m supply business',hook:'The compliance playbook that got Thandi onto retail shelves.',founder:'Thandi Mahlangu',company:'GreenRoots Produce',init:'TM',read:8},
+    {img:'assets/article-5.jpg',sector:'Manufacturing',title:'Making school shoes locally when everyone said import them',hook:'Why Pieter bet on a factory in Mthatha — and how the maths works.',founder:'Pieter van Wyk',company:'Stride Footwear',init:'PV',read:6},
+    {img:'assets/article-6.jpg',sector:'Services',title:'Building a cleaning empire one apartment block at a time',hook:'Lerato turned a one-woman gig into 80 jobs across three cities.',founder:'Lerato Sithole',company:'SparkleCo',init:'LS',read:5},
+    {img:'assets/article-7.jpg',sector:'Retail',title:'The sneaker reseller who out-hustled the big chains online',hook:'How Junaid built a six-figure store from a WhatsApp catalogue.',founder:'Junaid Adams',company:'SoleHub SA',init:'JA',read:5},
+    {img:'assets/article-8.jpg',sector:'Tech',title:'Solving load-shedding for spaza shops with solar-as-a-service',hook:'Rentable power kits that pay for themselves in eight months.',founder:'Kabelo Tau',company:'SunStock',init:'KT',read:7},
+    {img:'assets/article-1.jpg',sector:'Services',title:'The plumber who franchised his way across the Cape',hook:'Standardised vans, training and a brand — Sandile scaled a trade.',founder:'Sandile Khoza',company:'FlowFix Plumbing',init:'SK',read:6},
+    {img:'assets/article-3.jpg',sector:'Fintech',title:'Helping stokvels invest together, safely and transparently',hook:'Zinhle digitised a R50bn savings culture without losing its soul.',founder:'Zinhle Dube',company:'Mali Collective',init:'ZD',read:8}
+  ];
+
+  function renderChips(){
+    document.getElementById('chips').innerHTML = SECTORS.map(s=>{
+      const on=s===activeSector;
+      return `<button onclick="setSector('${esc(s)}')" class="chip px-4 h-9 rounded-full text-sm font-semibold border ${on?'chip-active bg-[#DC183C] text-white border-[#DC183C]':'bg-white text-[#121A21] border-[#E7EBEF]'}">${esc(s)}</button>`;
+    }).join('');
+  }
+  function setSector(s){activeSector=s;renderChips();render();}
+
+  function render(){
+    let list=STORIES.filter(s=>activeSector==='All'||s.sector===activeSector);
+    const grid=document.getElementById('grid');
+    document.getElementById('empty').classList.toggle('hidden',list.length>0);
+    grid.innerHTML=list.map(s=>`
+      <a href="public-article.html" class="group bg-white rounded-2xl border border-[#E7EBEF] overflow-hidden card-lift flex flex-col">
+        <div class="relative aspect-[16/10] overflow-hidden">
+          <img src="${s.img}" alt="${esc(s.founder)}, ${esc(s.company)}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" />
+          <span class="absolute top-3 left-3 px-2.5 py-1 rounded-full text-[10px] font-bold bg-[#FDECEF] text-[#DC183C] shadow-sm">${esc(s.sector)}</span>
+        </div>
+        <div class="p-5 flex flex-col flex-1">
+          <h3 class="font-jakarta font-bold text-lg leading-snug group-hover:text-[#DC183C] transition line-clamp-2 min-h-[3.25rem]">${esc(s.title)}</h3>
+          <p class="text-sm text-[#6A7581] mt-2 leading-relaxed line-clamp-2">${esc(s.hook)}</p>
+          <div class="flex items-center gap-2.5 mt-auto pt-4 border-t border-[#E7EBEF]">
+            <span class="w-8 h-8 rounded-full bg-gradient-to-br from-[#DC183C] to-[#FF9900] grid place-items-center text-white text-[11px] font-bold">${esc(s.init)}</span>
+            <div class="text-xs"><p class="font-semibold text-[#121A21]">${esc(s.founder)}</p><p class="text-[#6A7581]">${esc(s.company)} · ${s.read} min read</p></div>
+          </div>
+        </div>
+      </a>`).join('');
+    lucide.createIcons();
+  }
+
+  const BRIEF={title:'Founder Focus',sub:'WordPress archive · public, indexable',purpose:'The Founder Focus content pillar — an editorial archive of founder stories and interviews. A featured story, sector filter and story grid. Standalone archive at /founder-focus.',data:'Stories: <code>{ id, title, hook, hero, sector, founder{name,company,initials}, read_minutes, featured }</code>. Sectors are a CMS taxonomy.',logic:'Featured = the story flagged <code>featured</code> (else newest). Sector chips filter the grid client-side. Share CTA → /contact; newsletter strip posts to Kit. Public + indexable (archive + Article schema).',components:'Header · hero · featured story · sector chips · story grid · share CTA band · newsletter strip · footer.',api:'GET /v1/founder-stories?sector=&page= · GET /v1/founder-stories?featured=1 · POST /v1/subscribe'};
+  function toggleDevMode(){const on=document.body.classList.toggle('dev-on');const b=document.getElementById('devToggle');if(b)b.classList.toggle('on',on);if(on)showToast('Dev Mode on — tap any ⓘ for implementation notes.');lucide.createIcons();}
+  function closeOverlay(id){const el=document.getElementById(id);if(!el)return;el.classList.remove('open');setTimeout(()=>{if(el&&el.parentNode)el.remove();},300);}
+  function openBrief(){const b=BRIEF;const sec=(i,l,h)=>`<div class="px-6 py-4 border-t border-slate-100"><p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] flex items-center gap-1.5 mb-2"><i data-lucide="${i}" class="w-3.5 h-3.5"></i>${l}</p><div class="text-sm text-slate-600 leading-relaxed">${h}</div></div>`;document.getElementById('overlay-root').innerHTML=`<div class="ov" id="ov"><div class="ov-bg" onclick="closeOverlay('ov')"></div><div class="drawer"><div class="sticky top-0 z-10 bg-[#0C1F31] text-white px-6 py-5 flex items-start justify-between"><div><p class="text-[10px] font-bold uppercase tracking-widest text-[#FF9900] mb-1">Dev Brief</p><h3 class="font-jakarta font-extrabold text-lg leading-tight">${b.title}</h3><p class="text-xs text-white/60 mt-1">${b.sub}</p></div><button onclick="closeOverlay('ov')" class="text-white/60 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button></div>${sec('target','Purpose',b.purpose)}${sec('database','Data model',b.data)}${sec('git-branch','Logic',b.logic)}${sec('boxes','Components',b.components)}${sec('plug','API',`<code class="block bg-slate-900 text-emerald-300 text-xs font-mono px-3 py-2 rounded-lg overflow-x-auto">${b.api}</code>`)}</div></div>`;requestAnimationFrame(()=>{const o=document.getElementById('ov');if(o)o.classList.add('open');});lucide.createIcons();}
+
+  renderChips();render();lucide.createIcons();
+</script>
+</body>
+</html>

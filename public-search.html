@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Search — SME South Africa</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script><script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  <script>tailwind.config={theme:{extend:{fontFamily:{jakarta:['Plus Jakarta Sans','sans-serif'],inter:['Inter','system-ui','sans-serif']}}}};</script>
+  <style>
+    html,body{font-family:'Inter',system-ui,sans-serif;} .font-jakarta{font-family:'Plus Jakarta Sans',sans-serif;letter-spacing:.005em;}
+    .hero-bg{background:linear-gradient(115deg,#0C1F31 0%,#0C1F31 55%,#2b1626 85%,#5e1a2c 120%);}
+    .dot-pattern{background-image:radial-gradient(rgba(255,255,255,.07) 1px,transparent 1.5px);background-size:22px 22px;}
+    .field{width:100%;background:#fff;border:1px solid #E7EBEF;border-radius:.75rem;height:3rem;padding:0 1rem;font-size:.9rem;outline:none;transition:border-color .15s,box-shadow .15s;} .field:focus{border-color:#DC183C;box-shadow:0 0 0 3px rgba(220,24,60,.12);}
+    .card-lift{transition:transform .15s,box-shadow .15s,border-color .15s;} .card-lift:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(12,31,49,.08);border-color:#DC183C;}
+    .tab.active{background:#DC183C;color:#fff;border-color:#DC183C;}
+    mark{background:#FFF1E0;color:#AE6B0A;padding:0 .1em;border-radius:.2em;font-weight:600;}
+    .dev-badge{display:none;} body.dev-on .dev-badge{display:inline-flex;} #devToggle.on{background:#DC183C;color:#fff;border-color:#DC183C;}
+    .ov{position:fixed;inset:0;z-index:60;} .ov-bg{position:absolute;inset:0;background:rgba(12,31,49,.45);backdrop-filter:blur(2px);opacity:0;transition:opacity .3s;} .ov.open .ov-bg{opacity:1;}
+    .drawer{position:absolute;right:0;top:0;height:100%;width:100%;max-width:440px;background:#fff;box-shadow:-12px 0 40px rgba(12,31,49,.25);overflow-y:auto;transform:translateX(100%);transition:transform .3s cubic-bezier(.2,.7,.2,1);} .ov.open .drawer{transform:translateX(0);}
+  </style>
+</head>
+<body class="bg-[#FCFCFC] text-[#121A21] antialiased">
+<header class="bg-white border-b border-[#E7EBEF] sticky top-0 z-40"><div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center gap-4">
+  <a href="public-home.html" class="flex items-center gap-2.5 shrink-0"><img src="assets/logo-icon.png" alt="SME South Africa" class="w-9 h-9" /><span class="font-jakarta font-extrabold text-[17px] tracking-tight">SME <span class="text-[#DC183C]">South Africa</span></span></a>
+  <nav class="hidden lg:flex items-center gap-1 ml-4">
+    <a href="public-articles.html" class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition">Articles</a>
+    <a href="public-resources.html" class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition">Resources</a>
+    <a href="public-funding.html" class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition">Funding</a>
+    <a href="public-solutions.html" class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition">Solutions</a>
+    <a href="public-shop.html" class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition">Shop</a>
+  </nav>
+  <div class="flex items-center gap-1 sm:gap-2 ml-auto">
+    <button id="devToggle" onclick="toggleDevMode()" class="hidden sm:flex items-center gap-1.5 px-3 h-9 rounded-full border border-slate-200 text-slate-500 hover:border-[#DC183C] hover:text-[#DC183C] transition text-[11px] font-bold uppercase tracking-wider"><i data-lucide="code-2" class="w-3.5 h-3.5"></i><span>Dev</span></button>
+    <a href="public-auth.html" class="hidden sm:inline-flex items-center px-3 h-9 rounded-full text-sm font-bold text-[#121A21] hover:bg-slate-100 transition">Sign in</a>
+    <a href="public-auth.html#join" class="inline-flex items-center px-4 h-9 rounded-full text-sm font-bold text-white bg-[#DC183C] hover:bg-[#B0142F] transition">Join Free</a>
+  </div>
+</div></header>
+
+<section class="hero-bg text-white relative overflow-hidden"><div class="absolute inset-0 dot-pattern opacity-70 pointer-events-none"></div>
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 py-12 relative">
+    <h1 class="font-jakarta font-extrabold text-3xl sm:text-4xl mb-5">Search <button onclick="openBrief()" class="dev-badge align-middle ml-1 w-5 h-5 rounded-full bg-[#FF9900] text-[#0C1F31] items-center justify-center text-[10px] font-bold">i</button></h1>
+    <form onsubmit="event.preventDefault();" class="relative">
+      <i data-lucide="search" class="w-5 h-5 absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none"></i>
+      <input id="q" value="business funding" oninput="applyFilters()" class="field !h-14 !pl-12 !pr-4 text-base shadow-lg" placeholder="Search articles, guides, resources, brands, funding…" />
+    </form>
+  </div>
+</section>
+
+<main class="max-w-4xl mx-auto px-4 sm:px-6 py-10">
+  <!-- RESULT COUNT + FILTER TABS -->
+  <p id="count" class="text-sm text-[#6A7581] mb-4">About 42 results for <span class="font-semibold text-[#121A21]">"business funding"</span></p>
+  <div id="tabs" class="flex flex-wrap items-center gap-2 mb-8">
+    <button class="tab active px-4 h-9 rounded-full border border-[#E7EBEF] bg-white text-sm font-semibold text-slate-600 hover:border-[#DC183C] hover:text-[#DC183C] transition" data-filter="all" onclick="setTab(this,'all')">All</button>
+    <button class="tab px-4 h-9 rounded-full border border-[#E7EBEF] bg-white text-sm font-semibold text-slate-600 hover:border-[#DC183C] hover:text-[#DC183C] transition" data-filter="article" onclick="setTab(this,'article')">Articles</button>
+    <button class="tab px-4 h-9 rounded-full border border-[#E7EBEF] bg-white text-sm font-semibold text-slate-600 hover:border-[#DC183C] hover:text-[#DC183C] transition" data-filter="guide" onclick="setTab(this,'guide')">Guides</button>
+    <button class="tab px-4 h-9 rounded-full border border-[#E7EBEF] bg-white text-sm font-semibold text-slate-600 hover:border-[#DC183C] hover:text-[#DC183C] transition" data-filter="resource" onclick="setTab(this,'resource')">Resources</button>
+    <button class="tab px-4 h-9 rounded-full border border-[#E7EBEF] bg-white text-sm font-semibold text-slate-600 hover:border-[#DC183C] hover:text-[#DC183C] transition" data-filter="brand" onclick="setTab(this,'brand')">Brands</button>
+    <button class="tab px-4 h-9 rounded-full border border-[#E7EBEF] bg-white text-sm font-semibold text-slate-600 hover:border-[#DC183C] hover:text-[#DC183C] transition" data-filter="funding" onclick="setTab(this,'funding')">Funding</button>
+  </div>
+
+  <!-- RESULTS -->
+  <div id="results" class="space-y-4">
+    <a href="public-funding.html" class="result card-lift block bg-white border border-[#E7EBEF] rounded-2xl p-5" data-type="funding" data-text="business funding guide options grants loans south africa sefa idc nyda how to apply">
+      <span class="inline-flex items-center gap-1 text-[11px] font-bold uppercase tracking-wider text-[#AE6B0A] bg-[#FFF1E0] rounded-full px-2.5 py-1 mb-2"><i data-lucide="banknote" class="w-3 h-3"></i>Funding</span>
+      <h3 class="font-jakarta font-extrabold text-lg leading-snug result-title hover:text-[#DC183C] transition">Find business funding: grants, loans &amp; investors</h3>
+      <p class="text-sm text-slate-600 mt-1 result-snippet">Browse vetted business funding options across South Africa — from SEFA and IDC loans to NYDA grants and angel investors.</p>
+      <p class="text-xs text-[#6A7581] mt-2 flex items-center gap-1"><i data-lucide="link" class="w-3 h-3"></i>smesouthafrica.co.za › funding</p>
+    </a>
+
+    <a href="public-article.html" class="result card-lift block bg-white border border-[#E7EBEF] rounded-2xl p-5" data-type="article" data-text="how to raise business funding without giving up equity bootstrapping revenue based finance">
+      <span class="inline-flex items-center gap-1 text-[11px] font-bold uppercase tracking-wider text-[#DC183C] bg-[#FDECEF] rounded-full px-2.5 py-1 mb-2"><i data-lucide="newspaper" class="w-3 h-3"></i>Article</span>
+      <h3 class="font-jakarta font-extrabold text-lg leading-snug result-title hover:text-[#DC183C] transition">How to raise business funding without giving up equity</h3>
+      <p class="text-sm text-slate-600 mt-1 result-snippet">Five ways founders access business funding while keeping ownership — revenue-based finance, grants, and smarter bootstrapping.</p>
+      <p class="text-xs text-[#6A7581] mt-2 flex items-center gap-1"><i data-lucide="link" class="w-3 h-3"></i>smesouthafrica.co.za › articles › raise-funding</p>
+    </a>
+
+    <a href="public-guide.html" class="result card-lift block bg-white border border-[#E7EBEF] rounded-2xl p-5" data-type="guide" data-text="the complete business funding readiness guide checklist documents financial statements pitch deck">
+      <span class="inline-flex items-center gap-1 text-[11px] font-bold uppercase tracking-wider text-[#29A37A] bg-[#E4F5EE] rounded-full px-2.5 py-1 mb-2"><i data-lucide="book-open" class="w-3 h-3"></i>Guide</span>
+      <h3 class="font-jakarta font-extrabold text-lg leading-snug result-title hover:text-[#DC183C] transition">The complete business funding readiness guide</h3>
+      <p class="text-sm text-slate-600 mt-1 result-snippet">A step-by-step guide to getting your business funding application ready — the documents, financials and pitch deck funders expect.</p>
+      <p class="text-xs text-[#6A7581] mt-2 flex items-center gap-1"><i data-lucide="link" class="w-3 h-3"></i>smesouthafrica.co.za › guides › funding-readiness</p>
+    </a>
+
+    <a href="public-resource.html" class="result card-lift block bg-white border border-[#E7EBEF] rounded-2xl p-5" data-type="resource" data-text="business funding application template download spreadsheet cash flow forecast model free">
+      <span class="inline-flex items-center gap-1 text-[11px] font-bold uppercase tracking-wider text-[#0C1F31] bg-slate-100 rounded-full px-2.5 py-1 mb-2"><i data-lucide="folder" class="w-3 h-3"></i>Resource</span>
+      <h3 class="font-jakarta font-extrabold text-lg leading-snug result-title hover:text-[#DC183C] transition">Business funding application template (free download)</h3>
+      <p class="text-sm text-slate-600 mt-1 result-snippet">A ready-to-use spreadsheet template and cash-flow forecast model to strengthen your business funding application.</p>
+      <p class="text-xs text-[#6A7581] mt-2 flex items-center gap-1"><i data-lucide="link" class="w-3 h-3"></i>smesouthafrica.co.za › resources › funding-template</p>
+    </a>
+
+    <a href="public-brand.html" class="result card-lift block bg-white border border-[#E7EBEF] rounded-2xl p-5" data-type="brand" data-text="lula business funding fintech working capital loans review fast cash advance">
+      <span class="inline-flex items-center gap-1 text-[11px] font-bold uppercase tracking-wider text-[#AE6B0A] bg-[#FFF1E0] rounded-full px-2.5 py-1 mb-2"><i data-lucide="store" class="w-3 h-3"></i>Brand</span>
+      <h3 class="font-jakarta font-extrabold text-lg leading-snug result-title hover:text-[#DC183C] transition">Lula — fast business funding &amp; working capital</h3>
+      <p class="text-sm text-slate-600 mt-1 result-snippet">Profile and reviews of Lula, a fintech offering quick business funding and working-capital advances to South African SMEs.</p>
+      <p class="text-xs text-[#6A7581] mt-2 flex items-center gap-1"><i data-lucide="link" class="w-3 h-3"></i>smesouthafrica.co.za › brands › lula</p>
+    </a>
+
+    <a href="public-article.html" class="result card-lift block bg-white border border-[#E7EBEF] rounded-2xl p-5" data-type="article" data-text="government business funding schemes south africa 2026 dtic seda grants explained">
+      <span class="inline-flex items-center gap-1 text-[11px] font-bold uppercase tracking-wider text-[#DC183C] bg-[#FDECEF] rounded-full px-2.5 py-1 mb-2"><i data-lucide="newspaper" class="w-3 h-3"></i>Article</span>
+      <h3 class="font-jakarta font-extrabold text-lg leading-snug result-title hover:text-[#DC183C] transition">Government business funding schemes explained (2026)</h3>
+      <p class="text-sm text-slate-600 mt-1 result-snippet">A plain-language breakdown of dtic, SEDA and provincial business funding schemes — who qualifies and how to apply.</p>
+      <p class="text-xs text-[#6A7581] mt-2 flex items-center gap-1"><i data-lucide="link" class="w-3 h-3"></i>smesouthafrica.co.za › articles › government-schemes</p>
+    </a>
+
+    <a href="public-guide.html" class="result card-lift block bg-white border border-[#E7EBEF] rounded-2xl p-5" data-type="guide" data-text="writing a business plan that wins funding template investors lenders structure">
+      <span class="inline-flex items-center gap-1 text-[11px] font-bold uppercase tracking-wider text-[#29A37A] bg-[#E4F5EE] rounded-full px-2.5 py-1 mb-2"><i data-lucide="book-open" class="w-3 h-3"></i>Guide</span>
+      <h3 class="font-jakarta font-extrabold text-lg leading-snug result-title hover:text-[#DC183C] transition">Writing a business plan that wins funding</h3>
+      <p class="text-sm text-slate-600 mt-1 result-snippet">How to structure a business plan that lenders and investors actually fund — with the sections funders look for first.</p>
+      <p class="text-xs text-[#6A7581] mt-2 flex items-center gap-1"><i data-lucide="link" class="w-3 h-3"></i>smesouthafrica.co.za › guides › business-plan</p>
+    </a>
+
+    <a href="public-resource.html" class="result card-lift block bg-white border border-[#E7EBEF] rounded-2xl p-5" data-type="resource" data-text="south african funder directory list business funding institutions contacts banks dfis">
+      <span class="inline-flex items-center gap-1 text-[11px] font-bold uppercase tracking-wider text-[#0C1F31] bg-slate-100 rounded-full px-2.5 py-1 mb-2"><i data-lucide="folder" class="w-3 h-3"></i>Resource</span>
+      <h3 class="font-jakarta font-extrabold text-lg leading-snug result-title hover:text-[#DC183C] transition">Directory of South African funders</h3>
+      <p class="text-sm text-slate-600 mt-1 result-snippet">A maintained list of banks, DFIs and private funders offering business funding — with eligibility notes and contacts.</p>
+      <p class="text-xs text-[#6A7581] mt-2 flex items-center gap-1"><i data-lucide="link" class="w-3 h-3"></i>smesouthafrica.co.za › resources › funder-directory</p>
+    </a>
+  </div>
+
+  <!-- EMPTY STATE -->
+  <div id="empty" class="hidden text-center py-16">
+    <div class="w-16 h-16 mx-auto rounded-2xl bg-slate-100 grid place-items-center text-slate-400 mb-4"><i data-lucide="search-x" class="w-7 h-7"></i></div>
+    <h3 class="font-jakarta font-extrabold text-xl">No results found</h3>
+    <p class="text-sm text-[#6A7581] mt-2 max-w-sm mx-auto">We couldn't find anything matching <span id="emptyQ" class="font-semibold text-[#121A21]"></span>. Try different keywords or browse a section below.</p>
+    <div class="flex flex-wrap items-center justify-center gap-2 mt-5">
+      <a href="public-articles.html" class="px-4 h-9 inline-flex items-center rounded-full border border-[#E7EBEF] bg-white text-sm font-semibold hover:border-[#DC183C] hover:text-[#DC183C] transition">Articles</a>
+      <a href="public-funding.html" class="px-4 h-9 inline-flex items-center rounded-full border border-[#E7EBEF] bg-white text-sm font-semibold hover:border-[#DC183C] hover:text-[#DC183C] transition">Funding</a>
+      <a href="public-resources.html" class="px-4 h-9 inline-flex items-center rounded-full border border-[#E7EBEF] bg-white text-sm font-semibold hover:border-[#DC183C] hover:text-[#DC183C] transition">Resources</a>
+    </div>
+  </div>
+
+  <!-- PAGINATION (visual only) -->
+  <div id="pagination" class="flex items-center justify-center gap-2 mt-12">
+    <button class="inline-flex items-center gap-1 h-10 px-4 rounded-full border border-[#E7EBEF] bg-white text-sm font-semibold text-[#6A7581] cursor-not-allowed" disabled><i data-lucide="chevron-left" class="w-4 h-4"></i> Prev</button>
+    <button class="w-10 h-10 rounded-full bg-[#DC183C] text-white text-sm font-bold">1</button>
+    <button class="w-10 h-10 rounded-full border border-[#E7EBEF] bg-white text-sm font-semibold hover:border-[#DC183C] hover:text-[#DC183C] transition">2</button>
+    <button class="w-10 h-10 rounded-full border border-[#E7EBEF] bg-white text-sm font-semibold hover:border-[#DC183C] hover:text-[#DC183C] transition">3</button>
+    <button class="inline-flex items-center gap-1 h-10 px-4 rounded-full border border-[#E7EBEF] bg-white text-sm font-semibold hover:border-[#DC183C] hover:text-[#DC183C] transition">Next <i data-lucide="chevron-right" class="w-4 h-4"></i></button>
+  </div>
+</main>
+
+<footer class="bg-[#0C1F31] text-white"><div class="max-w-7xl mx-auto px-4 sm:px-6 py-10 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm">
+  <a href="public-home.html" class="flex items-center gap-2.5"><span class="w-8 h-8 rounded-lg bg-white grid place-items-center"><img src="assets/logo-icon.png" class="w-6 h-6" alt="" /></span><span class="font-jakarta font-extrabold">SME South Africa</span></a>
+  <div class="flex flex-wrap items-center gap-x-5 gap-y-2 text-white/60"><a href="public-about.html" class="hover:text-white">About</a><a href="public-contact.html" class="hover:text-white">Contact</a><a href="public-advertise.html" class="hover:text-white">Advertise</a><a href="public-privacy.html" class="hover:text-white">Privacy</a><a href="public-terms.html" class="hover:text-white">Terms</a><a href="public-refunds.html" class="hover:text-white">Refunds</a><a href="public-popia.html" class="hover:text-white">POPIA</a></div>
+  <p class="text-white/40">© 2026 SME South Africa</p>
+</div></footer>
+
+<div id="overlay-root"></div><div id="toast" class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-50"></div>
+<script>
+  function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+  function showToast(m){const el=document.getElementById('toast');el.classList.remove('hidden');el.innerHTML=`<div class="bg-[#0C1F31] text-white rounded-full pl-3 pr-5 py-2.5 shadow-2xl flex items-center gap-2 text-sm font-semibold" style="border-left:4px solid #29A37A"><i data-lucide="check-circle" class="w-4 h-4" style="color:#29A37A"></i><span>${esc(m)}</span></div>`;lucide.createIcons();setTimeout(()=>{el.classList.add('hidden');el.innerHTML='';},2400);}
+
+  let activeTab='all';
+  function setTab(btn,filter){activeTab=filter;document.querySelectorAll('#tabs .tab').forEach(t=>t.classList.remove('active'));btn.classList.add('active');applyFilters();}
+
+  function applyFilters(){
+    const q=document.getElementById('q').value.trim().toLowerCase();
+    const cards=document.querySelectorAll('#results .result');
+    let visible=0;
+    cards.forEach(c=>{
+      const typeOk=activeTab==='all'||c.dataset.type===activeTab;
+      const txt=(c.dataset.text+' '+c.querySelector('.result-title').textContent+' '+c.querySelector('.result-snippet').textContent).toLowerCase();
+      const textOk=q===''||txt.includes(q);
+      const show=typeOk&&textOk;
+      c.style.display=show?'':'none';
+      if(show)visible++;
+    });
+    // count line
+    const cnt=document.getElementById('count');
+    if(q===''){cnt.innerHTML=`Showing all results`;}
+    else{cnt.innerHTML=`About ${visible} result${visible===1?'':'s'} for <span class="font-semibold text-[#121A21]">"${esc(q)}"</span>`;}
+    // empty state
+    const empty=document.getElementById('empty');
+    document.getElementById('results').classList.toggle('hidden',visible===0);
+    document.getElementById('pagination').classList.toggle('hidden',visible===0);
+    empty.classList.toggle('hidden',visible>0);
+    document.getElementById('emptyQ').textContent=q?`"${q}"`:'your search';
+  }
+
+  const BRIEF={title:'Search Results',sub:'Search endpoint + results template',purpose:'Unified site search across articles, guides, resources, brands and funding. Standalone page at /search?q=…',data:'Query string <code>?q=</code> + <code>?type=</code> filter. Each result: {type,title,snippet,url}.',logic:'Server returns ranked, typed results; tabs filter by type and the box filters live. Public + indexable.',components:'Header · search hero · count + type tabs · result cards · empty state · pagination · footer.',api:'GET /v1/search?q={query}&type={type}&page={n}'};
+  function toggleDevMode(){const on=document.body.classList.toggle('dev-on');const b=document.getElementById('devToggle');if(b)b.classList.toggle('on',on);if(on)showToast('Dev Mode on — tap any ⓘ for implementation notes.');lucide.createIcons();}
+  function closeOverlay(id){const el=document.getElementById(id);if(!el)return;el.classList.remove('open');setTimeout(()=>{if(el&&el.parentNode)el.remove();},300);}
+  function openBrief(){const b=BRIEF;const sec=(i,l,h)=>`<div class="px-6 py-4 border-t border-slate-100"><p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] flex items-center gap-1.5 mb-2"><i data-lucide="${i}" class="w-3.5 h-3.5"></i>${l}</p><div class="text-sm text-slate-600 leading-relaxed">${h}</div></div>`;document.getElementById('overlay-root').innerHTML=`<div class="ov" id="ov"><div class="ov-bg" onclick="closeOverlay('ov')"></div><div class="drawer"><div class="sticky top-0 z-10 bg-[#0C1F31] text-white px-6 py-5 flex items-start justify-between"><div><p class="text-[10px] font-bold uppercase tracking-widest text-[#FF9900] mb-1">Dev Brief</p><h3 class="font-jakarta font-extrabold text-lg leading-tight">${b.title}</h3><p class="text-xs text-white/60 mt-1">${b.sub}</p></div><button onclick="closeOverlay('ov')" class="text-white/60 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button></div>${sec('target','Purpose',b.purpose)}${sec('database','Data model',b.data)}${sec('git-branch','Logic',b.logic)}${sec('boxes','Components',b.components)}${sec('plug','API',`<code class="block bg-slate-900 text-emerald-300 text-xs font-mono px-3 py-2 rounded-lg overflow-x-auto">${b.api}</code>`)}</div></div>`;requestAnimationFrame(()=>{const o=document.getElementById('ov');if(o)o.classList.add('open');});lucide.createIcons();}
+  applyFilters();
+  lucide.createIcons();
+</script>
+</body>
+</html>
