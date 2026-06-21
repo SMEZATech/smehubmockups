@@ -69,7 +69,6 @@
     <span class="flex items-center gap-1.5"><i data-lucide="folder" class="w-4 h-4"></i> Funding</span>
   </div>
 
-  <img src="assets/article-1.jpg" alt="Guide to Asset Finance in South Africa" class="w-full rounded-2xl object-cover aspect-[16/9] mt-8 shadow-sm" />
 </div>
 
 <!-- BODY: 2-col grid -->
@@ -80,13 +79,6 @@
       <div class="hidden lg:block bg-white rounded-2xl border border-[#E7EBEF] p-5">
         <p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] flex items-center gap-1.5 mb-3"><i data-lucide="list" class="w-3.5 h-3.5"></i> In This Guide</p>
         <nav id="toc" class="-ml-px"></nav>
-      </div>
-      <!-- Download PDF widget -->
-      <div class="bg-white rounded-2xl border border-[#E7EBEF] p-5">
-        <div class="w-11 h-11 rounded-xl bg-[#FFF1E0] grid place-items-center mb-3"><i data-lucide="file-down" class="w-5 h-5 text-[#AE6B0A]"></i></div>
-        <h3 class="font-jakarta font-extrabold text-base text-[#0C1F31]">Download this guide</h3>
-        <p class="text-sm text-[#6A7581] mt-1.5 leading-relaxed">Take the full asset finance guide with you as a PDF.</p>
-        <button onclick="downloadPdf()" class="mt-4 inline-flex w-full items-center justify-center gap-2 h-11 rounded-full border border-[#E7EBEF] hover:border-[#DC183C] hover:text-[#DC183C] font-bold text-sm transition">Download PDF <i data-lucide="download" class="w-4 h-4"></i></button>
       </div>
       <!-- Apply for funding CTA -->
       <div class="rounded-2xl border border-[#E7EBEF] bg-[#FDECEF] p-6">
@@ -214,12 +206,10 @@
     {img:'assets/article-4.jpg',cat:'Operations',title:'Guide to Buying a Business'}
   ];
   document.getElementById('related').innerHTML = REL.map(g=>`
-    <a href="public-guide.html" class="group bg-white rounded-2xl border border-[#E7EBEF] overflow-hidden card-lift block">
-      <div class="relative aspect-[16/10] overflow-hidden">
-        <img src="${g.img}" class="w-full h-full object-cover group-hover:scale-105 transition duration-300" alt="${esc(g.title)}" />
-        <span class="absolute top-3 left-3 inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-bold bg-[#FF9900] text-[#0C1F31] shadow-sm"><i data-lucide="book-open" class="w-3 h-3"></i> GUIDE</span>
-      </div>
-      <div class="p-4"><span class="text-[10px] font-bold uppercase tracking-widest text-[#AE6B0A]">${esc(g.cat)}</span><h3 class="font-jakarta font-bold leading-snug mt-1 group-hover:text-[#DC183C] transition">${esc(g.title)}</h3></div>
+    <a href="public-guide.html" class="group bg-white rounded-2xl border border-[#E7EBEF] p-5 card-lift block">
+      <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-bold bg-[#FFF1E0] text-[#AE6B0A]"><i data-lucide="book-open" class="w-3 h-3"></i> GUIDE</span>
+      <span class="ml-1 text-[10px] font-bold uppercase tracking-widest text-[#AE6B0A]">${esc(g.cat)}</span>
+      <h3 class="font-jakarta font-bold leading-snug mt-2 group-hover:text-[#DC183C] transition">${esc(g.title)}</h3>
     </a>`).join('');
 
   const BRIEF={title:'Single Guide',sub:'WordPress “guide” CPT · public, indexable',purpose:'The long-form guide reading experience — an evergreen, in-depth how-to that anchors topic clusters for SEO. Standalone guide URL with breadcrumb, scroll-spy TOC, PDF + funding widgets, body and related guides.',data:'Guide: <code>{ id, title, category, body, hero, updated_at, read_minutes }</code> (CPT “guide”). TOC is derived from the body H2s. Related = same category cluster.',logic:'Public + indexable (Article/HowTo schema, “Updated” date surfaced for freshness). TOC + scroll-spy built client-side from <code>h2[id]</code> via IntersectionObserver; mobile TOC is a left slide-out drawer. PDF widget exports the rendered guide; funding CTA links to /funding.',components:'Breadcrumb · GUIDE tag · title · updated + read-time meta · hero · sticky TOC + Download PDF + Apply for funding widgets · guide body (drop cap, numbered list, tip callout) · related guides.',api:'GET /v1/guides/{slug} · GET /v1/guides?related={id} · GET /v1/guides/{slug}/pdf'};

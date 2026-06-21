@@ -27,6 +27,8 @@
     .rv h2 { font-family:'Plus Jakarta Sans',sans-serif; font-weight:800; font-size:1.5rem; color:#121A21; margin:0 0 .6rem; scroll-margin-top:6rem; }
     .rv h3 { font-family:'Plus Jakarta Sans',sans-serif; font-weight:700; font-size:1.05rem; color:#121A21; margin:1.3rem 0 .35rem; }
     .rv p { color:#374151; line-height:1.8; font-size:1.02rem; margin-bottom:1rem; }
+    .rv .hero-bg h2, .rv .hero-bg h3 { color:#fff; }
+    .rv .hero-bg p { color:rgba(255,255,255,.78); }
     .rv section { scroll-margin-top:6rem; }
     .dropcap::first-letter { font-family:'Plus Jakarta Sans',sans-serif; font-weight:800; color:#DC183C; float:left; font-size:3.2rem; line-height:.82; padding:.35rem .6rem 0 0; }
     .toc-link { display:flex; align-items:center; gap:.5rem; font-size:.85rem; color:#6A7581; padding:.4rem .75rem; border-left:2px solid transparent; transition:all .15s; line-height:1.35; }
@@ -78,7 +80,7 @@
       <span class="text-white/85 font-semibold">Yoco</span>
     </nav>
     <div class="flex flex-col sm:flex-row sm:items-end gap-5">
-      <div class="w-20 h-20 rounded-2xl bg-[#E4F5EE] text-[#29A37A] grid place-items-center font-jakarta font-extrabold text-3xl shrink-0">Yo</div>
+      <div class="w-20 h-20 rounded-2xl bg-white grid place-items-center shrink-0 relative overflow-hidden border border-white/20"><span class="font-jakarta font-extrabold text-3xl text-[#0C1F31]">Yo</span><img src="https://www.google.com/s2/favicons?domain=yoco.com&sz=128" alt="Yoco logo" class="absolute inset-0 w-full h-full object-contain p-3 bg-white" onerror="this.remove()"></div>
       <div>
         <div class="flex items-center gap-2">
           <h1 class="font-jakarta font-extrabold text-3xl sm:text-5xl tracking-tight">Yoco</h1>
@@ -86,8 +88,6 @@
           <button onclick="openBrief('brand')" class="dev-badge w-6 h-6 rounded-full bg-[#FF9900] text-[#121A21] items-center justify-center text-[11px] font-bold" title="Implementation notes">i</button>
         </div>
         <div class="mt-3 flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-white/75">
-          <span class="inline-flex items-center gap-1.5" id="hero-stars"></span>
-          <span class="text-white/55">Member rating <span class="font-bold text-white">4.7 / 5</span></span>
           <span class="flex items-center gap-1.5 text-white/55"><i data-lucide="calendar-check" class="w-4 h-4 text-[#FF9900]"></i> Updated on 12 June 2026</span>
           <span class="flex items-center gap-1.5 text-white/55"><i data-lucide="shield-check" class="w-4 h-4 text-[#29A37A]"></i> Vetted provider</span>
         </div>
@@ -110,7 +110,7 @@
       <!-- Quick-facts card -->
       <div class="bg-white rounded-2xl border border-[#E7EBEF] p-5">
         <div class="flex items-center gap-3">
-          <div class="w-12 h-12 rounded-xl bg-[#E4F5EE] text-[#29A37A] grid place-items-center font-jakarta font-extrabold text-lg shrink-0">Yo</div>
+          <div class="w-12 h-12 rounded-xl bg-white border border-[#E7EBEF] grid place-items-center shrink-0 relative overflow-hidden"><span class="font-jakarta font-extrabold text-lg text-[#0C1F31]">Yo</span><img src="https://www.google.com/s2/favicons?domain=yoco.com&sz=128" alt="Yoco logo" class="absolute inset-0 w-full h-full object-contain p-2 bg-white" onerror="this.remove()"></div>
           <div><h3 class="font-jakarta font-extrabold leading-tight">Yoco</h3><p class="text-xs text-slate-500">Card payments</p></div>
         </div>
         <dl class="mt-4 space-y-3 text-sm">
@@ -131,11 +131,6 @@
     <!-- AT-A-GLANCE -->
     <div class="bg-white rounded-2xl border border-[#E7EBEF] p-6 mb-8">
       <div class="flex flex-col sm:flex-row sm:items-center gap-5">
-        <div class="text-center shrink-0 sm:border-r sm:border-[#E7EBEF] sm:pr-6">
-          <div class="font-jakarta font-extrabold text-4xl text-[#DC183C] leading-none">4.7</div>
-          <div class="mt-1" id="verdict-stars"></div>
-          <p class="text-[11px] text-slate-400 mt-1">2,140 reviews</p>
-        </div>
         <div>
           <p class="text-[10px] font-bold uppercase tracking-widest text-[#29A37A] flex items-center gap-1.5"><i data-lucide="badge-check" class="w-4 h-4"></i> At a glance</p>
           <p class="text-slate-700 leading-relaxed mt-1.5 text-[15px]">Yoco is the go-to card-payment platform for South African small businesses. Affordable card machines, transparent pay-per-use pricing with no monthly rental, and a simple app make it easy for any trader to start accepting cards in minutes — backed by next-day settlement and a cash-advance product.</p>
@@ -234,7 +229,7 @@
         <div class="absolute inset-0 dot-pattern opacity-70 pointer-events-none"></div>
         <div class="relative p-7 sm:p-9 text-center">
           <div class="w-14 h-14 rounded-2xl bg-white/10 grid place-items-center mx-auto mb-4"><i data-lucide="lock" class="w-7 h-7 text-[#FF9900]"></i></div>
-          <h3 class="font-jakarta font-extrabold text-2xl">Sign in or sign up to compare quotes</h3>
+          <h3 class="font-jakarta font-extrabold text-2xl text-white">Sign in or sign up to compare quotes</h3>
           <p class="text-white/75 mt-2 max-w-lg mx-auto">To get a quote for Yoco and compare it against other vetted payment providers, you must sign in or sign up. It's free to join the SME Hub.</p>
           <div class="flex flex-col sm:flex-row gap-3 justify-center mt-6">
             <a href="public-auth.html" class="inline-flex items-center justify-center gap-2 px-6 h-12 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold transition">Sign in to get a quote <i data-lucide="log-in" class="w-4 h-4"></i></a>
@@ -310,8 +305,6 @@
       html+=`<i data-lucide="star" class="${cls||'w-4 h-4'}" style="${f||h?`color:${STAR_GOLD};fill:${STAR_GOLD}`:'color:#CBD2DA'}${h?';clip-path:inset(0 50% 0 0)':''}"></i>`; }
     return html;
   }
-  document.getElementById('hero-stars').innerHTML = stars(4.7) + '<span class="font-bold text-white ml-1">4.7</span>';
-  document.getElementById('verdict-stars').innerHTML = `<span class="inline-flex gap-0.5">${stars(4.7)}</span>`;
 
   // ---- TOC + scroll-spy (built from sections with id, reusing the review/article pattern) ----
   const TOC=[ ['introduction','Introduction','book-open'], ['features','Main Features','layers'], ['pricing','Pricing','tag'], ['pros-cons','Pros & Cons','scale'], ['faqs','FAQs','help-circle'], ['get-quote','Get a Quote','git-compare'] ];

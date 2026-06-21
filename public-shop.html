@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SME South Africa — Shop</title>
-  <meta name="description" content="Premium branded merchandise for South Africa's SME community — built to last, priced to ship." />
+  <meta name="description" content="The SME South Africa store is launching soon — branded merch and SME essentials on the way." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
@@ -12,22 +12,18 @@
   <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
   <script>
     tailwind.config = { theme: { extend: { fontFamily: {
-      jakarta: ['Plus Jakarta Sans', 'sans-serif'], inter: ['Inter', 'system-ui', 'sans-serif'], mono:['ui-monospace','SFMono-Regular','Menlo','monospace']
+      jakarta: ['Plus Jakarta Sans', 'sans-serif'], inter: ['Inter', 'system-ui', 'sans-serif']
     } } } };
   </script>
   <style>
     html, body { font-family: 'Inter', system-ui, sans-serif; }
     .font-jakarta { font-family: 'Plus Jakarta Sans', sans-serif; letter-spacing: 0.005em; }
-    .font-mono { font-family:'ui-monospace','SFMono-Regular',Menlo,monospace; }
-    .no-scrollbar::-webkit-scrollbar { display:none; } .no-scrollbar { -ms-overflow-style:none; scrollbar-width:none; }
     .hero-bg { background: linear-gradient(115deg,#0C1F31 0%,#0C1F31 50%,#2b1626 80%,#5e1a2c 115%); }
     .dot-pattern { background-image: radial-gradient(rgba(255,255,255,.07) 1px, transparent 1.5px); background-size: 22px 22px; }
     @keyframes fadeUp { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
     .reveal { animation: fadeUp .5s cubic-bezier(.2,.7,.2,1) backwards; }
-    .card-lift { transition: box-shadow .2s, transform .2s; }
-    .card-lift:hover { box-shadow: 0 10px 24px -10px rgba(10,44,61,0.18); transform: translateY(-2px); }
-    .fpill { transition: all .15s; cursor:pointer; }
-    .fpill.active { background:#0C1F31; color:#fff; border-color:#0C1F31; }
+    .field { width:100%; height:3rem; border:1px solid #E7EBEF; border-radius:9999px; padding:0 1.25rem; outline:none; transition:border .15s, box-shadow .15s; }
+    .field:focus { border-color:#DC183C; box-shadow:0 0 0 3px rgba(220,24,60,.12); }
     .dev-badge { display:none; } body.dev-on .dev-badge { display:inline-flex; }
     #devToggle.on { background:#DC183C; color:#fff; border-color:#DC183C; }
     .ov { position:fixed; inset:0; z-index:60; }
@@ -38,10 +34,6 @@
   </style>
 </head>
 <body class="bg-[#FCFCFC] text-[#121A21] antialiased">
-
-<a href="#" class="block bg-[#DC183C] text-white text-center text-[13px] font-semibold py-2 px-4 hover:bg-[#B0142F] transition">
-  <i data-lucide="truck" class="inline w-3.5 h-3.5 -mt-0.5"></i> Free delivery on orders over R750 · nationwide.
-</a>
 
 <header class="bg-white border-b border-[#E7EBEF] sticky top-0 z-40">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center gap-4">
@@ -58,62 +50,47 @@
     </nav>
     <div class="flex items-center gap-1 sm:gap-2 ml-auto">
       <button id="devToggle" onclick="toggleDevMode()" class="hidden sm:flex items-center gap-1.5 px-3 h-9 rounded-full border border-slate-200 text-slate-500 hover:border-[#DC183C] hover:text-[#DC183C] transition text-[11px] font-bold uppercase tracking-wider" title="Toggle implementation notes"><i data-lucide="code-2" class="w-3.5 h-3.5"></i><span>Dev</span></button>
-      <button onclick="openCart()" aria-label="Cart" class="relative w-10 h-10 grid place-items-center rounded-full hover:bg-slate-100 text-slate-600"><i data-lucide="shopping-bag" class="w-5 h-5"></i><span id="cartCount" class="absolute top-1.5 right-1.5 bg-[#DC183C] text-white text-[10px] font-bold rounded-full w-4 h-4 grid place-items-center">0</span></button>
       <a href="public-auth.html" class="hidden sm:inline-flex items-center px-3 h-9 rounded-full text-sm font-bold text-[#121A21] hover:bg-slate-100 transition">Sign in</a>
       <a href="public-auth.html#join" class="inline-flex items-center px-4 h-9 rounded-full text-sm font-bold text-white bg-[#DC183C] hover:bg-[#B0142F] transition">Join Free</a>
     </div>
   </div>
 </header>
 
-<!-- ===================== HERO ===================== -->
+<!-- ===================== COMING SOON ===================== -->
 <section class="hero-bg text-white relative overflow-hidden">
   <div class="absolute inset-0 dot-pattern opacity-60 pointer-events-none"></div>
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-12 sm:py-16 grid lg:grid-cols-2 gap-10 items-center relative">
-    <div class="reveal">
-      <p class="text-[12px] text-white/50 mb-4"><a href="public-home.html" class="hover:text-white">Home</a> <span class="mx-1">/</span> <span class="text-white/80">Shop</span></p>
-      <span class="inline-flex items-center gap-2 px-3 h-7 rounded-full bg-white/10 border border-white/15 text-[11px] font-bold uppercase tracking-widest mb-5">
-        <i data-lucide="shopping-bag" class="w-3.5 h-3.5 text-[#FF9900]"></i> SME Shop
-        <button onclick="openBrief('shop')" class="dev-badge ml-1 w-4 h-4 rounded-full bg-[#FF9900] text-[#0C1F31] items-center justify-center text-[9px] font-bold" title="Implementation notes">i</button>
-      </span>
-      <h1 class="font-jakarta font-extrabold text-4xl sm:text-6xl leading-[1.05] tracking-tight">Equip Your <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#DC183C] to-[#FF9900]">Growth</span></h1>
-      <p class="mt-4 text-lg text-white/70 max-w-md">Premium merchandise designed for South Africa's SME community. Show up as the leader your business deserves — built to last, priced to ship.</p>
-      <div class="mt-7 flex flex-wrap items-center gap-3">
-        <a href="#collection" class="inline-flex items-center gap-2 px-6 h-12 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold transition">Shop the Collection <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
-        <a href="public-home.html" class="inline-flex items-center gap-2 px-6 h-12 rounded-full bg-white/5 border border-white/20 hover:bg-white/10 text-white font-bold transition">Back to Main Platform</a>
-      </div>
+  <div class="max-w-3xl mx-auto px-4 sm:px-6 py-20 sm:py-28 text-center relative">
+    <p class="text-[12px] text-white/50 mb-6 reveal"><a href="public-home.html" class="hover:text-white">Home</a> <span class="mx-1">/</span> <span class="text-white/80">Shop</span></p>
+    <span class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 border border-white/15 text-[11px] font-bold uppercase tracking-widest text-[#FF9900] reveal">
+      <i data-lucide="store" class="w-3.5 h-3.5"></i> SME Shop
+      <button onclick="openBrief('shop')" class="dev-badge ml-1 w-4 h-4 rounded-full bg-[#FF9900] text-[#0C1F31] items-center justify-center text-[9px] font-bold" title="Implementation notes">i</button>
+    </span>
+    <h1 class="font-jakarta font-extrabold text-4xl sm:text-6xl leading-[1.05] tracking-tight mt-6 reveal" style="animation-delay:60ms">Great things are <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#DC183C] to-[#FF9900]">on the horizon</span></h1>
+    <p class="mt-5 text-lg text-white/70 max-w-xl mx-auto reveal" style="animation-delay:120ms">Something big is brewing — our store is in the works and launching soon. Branded merch and SME essentials are on the way.</p>
+
+    <form onsubmit="notifyMe(event)" class="mt-9 flex flex-col sm:flex-row gap-3 max-w-md mx-auto reveal" style="animation-delay:180ms">
+      <input type="email" required placeholder="you@business.co.za" class="field flex-grow text-[#121A21] bg-white" />
+      <button type="submit" class="h-12 px-6 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold transition inline-flex items-center justify-center gap-2 whitespace-nowrap">Notify me <i data-lucide="bell" class="w-4 h-4"></i></button>
+    </form>
+    <p class="text-[11px] text-white/45 mt-3 reveal" style="animation-delay:200ms">We'll email you the moment the store opens. No spam.</p>
+
+    <!-- teaser of what's coming -->
+    <div class="mt-12 grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 max-w-xl mx-auto reveal" style="animation-delay:260ms">
+      <div class="rounded-2xl bg-white/5 border border-white/10 p-5 flex flex-col items-center gap-2"><i data-lucide="shirt" class="w-6 h-6 text-white/70"></i><span class="text-xs font-semibold text-white/70">Apparel</span></div>
+      <div class="rounded-2xl bg-white/5 border border-white/10 p-5 flex flex-col items-center gap-2"><i data-lucide="coffee" class="w-6 h-6 text-white/70"></i><span class="text-xs font-semibold text-white/70">Drinkware</span></div>
+      <div class="rounded-2xl bg-white/5 border border-white/10 p-5 flex flex-col items-center gap-2"><i data-lucide="notebook" class="w-6 h-6 text-white/70"></i><span class="text-xs font-semibold text-white/70">Stationery</span></div>
+      <div class="rounded-2xl bg-white/5 border border-white/10 p-5 flex flex-col items-center gap-2"><i data-lucide="shopping-bag" class="w-6 h-6 text-white/70"></i><span class="text-xs font-semibold text-white/70">Accessories</span></div>
     </div>
-    <!-- hero product thumbnails 2x2 -->
-    <div class="grid grid-cols-2 gap-4 reveal" style="animation-delay:120ms">
-      <div class="aspect-square rounded-2xl bg-white/90 grid place-items-center"><i data-lucide="shirt" class="w-14 h-14 text-[#0C1F31]/70"></i></div>
-      <div class="aspect-square rounded-2xl bg-white/90 grid place-items-center"><i data-lucide="hard-hat" class="w-14 h-14 text-[#0C1F31]/70"></i></div>
-      <div class="aspect-square rounded-2xl bg-white/90 grid place-items-center"><i data-lucide="shopping-bag" class="w-14 h-14 text-[#0C1F31]/70"></i></div>
-      <div class="aspect-square rounded-2xl bg-white/90 grid place-items-center"><i data-lucide="coffee" class="w-14 h-14 text-[#0C1F31]/70"></i></div>
+
+    <div class="mt-10 flex flex-wrap items-center justify-center gap-3 reveal" style="animation-delay:320ms">
+      <a href="public-resources.html" class="inline-flex items-center gap-1.5 px-4 h-10 rounded-full bg-white/10 hover:bg-white/20 text-white text-sm font-semibold transition"><i data-lucide="folder" class="w-4 h-4"></i>Browse Resources</a>
+      <a href="public-funding.html" class="inline-flex items-center gap-1.5 px-4 h-10 rounded-full bg-white/10 hover:bg-white/20 text-white text-sm font-semibold transition"><i data-lucide="banknote" class="w-4 h-4"></i>Explore Funding</a>
+      <a href="public-home.html" class="inline-flex items-center gap-1.5 px-4 h-10 rounded-full bg-white/10 hover:bg-white/20 text-white text-sm font-semibold transition"><i data-lucide="arrow-left" class="w-4 h-4"></i>Back to Platform</a>
     </div>
   </div>
 </section>
 
-<!-- ===================== COLLECTION ===================== -->
-<main id="collection" class="max-w-7xl mx-auto px-4 sm:px-6 py-14">
-  <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-5 mb-8">
-    <div>
-      <p class="text-[12px] font-bold uppercase tracking-widest text-[#DC183C]">Shop the Collection</p>
-      <h2 class="font-jakarta font-extrabold text-3xl sm:text-4xl mt-1">Built for Founders.</h2>
-    </div>
-    <div id="cat-bar" class="flex items-center gap-2 overflow-x-auto no-scrollbar -mx-1 px-1"></div>
-  </div>
-  <div id="grid" class="grid grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6"></div>
-</main>
-
-<!-- ===================== TRUST BAND ===================== -->
-<section class="border-t border-[#E7EBEF] bg-white">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-10 grid sm:grid-cols-3 gap-6">
-    <div class="flex items-center gap-3"><div class="w-11 h-11 rounded-xl bg-[#FDECEF] text-[#DC183C] grid place-items-center shrink-0"><i data-lucide="truck" class="w-5 h-5"></i></div><div><p class="font-jakarta font-bold text-sm">SA Wide Shipping</p><p class="text-sm text-[#6A7581]">Reliable delivery to your door, anywhere in South Africa.</p></div></div>
-    <div class="flex items-center gap-3"><div class="w-11 h-11 rounded-xl bg-[#E4F5EE] text-[#29A37A] grid place-items-center shrink-0"><i data-lucide="shield-check" class="w-5 h-5"></i></div><div><p class="font-jakarta font-bold text-sm">Secure Transactions</p><p class="text-sm text-[#6A7581]">Powered by PayFast. Your financial security is our top priority.</p></div></div>
-    <div class="flex items-center gap-3"><div class="w-11 h-11 rounded-xl bg-[#FFF1E0] text-[#AE6B0A] grid place-items-center shrink-0"><i data-lucide="award" class="w-5 h-5"></i></div><div><p class="font-jakarta font-bold text-sm">Premium Quality</p><p class="text-sm text-[#6A7581]">Carefully sourced materials that reflect the professional SME brand.</p></div></div>
-  </div>
-</section>
-
-<footer class="bg-[#0C1F31] text-white">
+<footer class="bg-[#0C1F31] text-white border-t border-white/10">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 py-12">
     <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
       <div class="col-span-2 md:col-span-1">
@@ -136,63 +113,26 @@
 
 <script>
   function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c])); }
-  function showToast(msg){ const el=document.getElementById('toast'); el.classList.remove('hidden'); el.innerHTML=`<div class="bg-[#0C1F31] text-white rounded-full pl-3 pr-5 py-2.5 shadow-2xl flex items-center gap-2 text-sm font-semibold" style="border-left:4px solid #29A37A"><i data-lucide="check-circle" class="w-4 h-4" style="color:#29A37A"></i><span>${esc(msg)}</span></div>`; lucide.createIcons(); setTimeout(()=>{el.classList.add('hidden');el.innerHTML='';},2200); }
-
-  let cart = 0;
-  const CATS = ['All','Apparel','Accessories','Stationery','Drinkware'];
-  // tint = [bg, icon] for the product image placeholder; badge: {t,bg,fg}
-  const PRODUCTS = [
-    { name:'SME SA Signature Hoodie',     cat:'Apparel',     price:650, icon:'shirt',        badge:{t:'Bestseller', bg:'#0C1F31', fg:'#fff'} },
-    { name:"Entrepreneur 'Hustle' Cap",   cat:'Apparel',     price:295, icon:'hard-hat',     badge:{t:'New',        bg:'#29A37A', fg:'#fff'} },
-    { name:'Strategic Planning Notebook', cat:'Stationery',  price:220, icon:'notebook',     badge:null },
-    { name:'Matte Black Logo Mug',        cat:'Drinkware',   price:185, icon:'coffee',       badge:null },
-    { name:'Stainless Steel Water Bottle',cat:'Drinkware',   price:350, icon:'cup-soda',     badge:{t:'Sale',       bg:'#FF9900', fg:'#0C1F31'} },
-    { name:'Premium Cotton Tote',         cat:'Accessories', price:150, icon:'shopping-bag', badge:{t:'Bestseller', bg:'#0C1F31', fg:'#fff'} }
-  ];
-
-  let activeCat='All';
-  function renderCats(){ document.getElementById('cat-bar').innerHTML = CATS.map(c=>`<button onclick="setCat('${c}')" class="fpill shrink-0 px-4 h-9 rounded-full border border-[#E7EBEF] bg-white text-sm font-bold text-slate-600 ${c===activeCat?'active':''}">${esc(c)}</button>`).join(''); }
-  function setCat(c){ activeCat=c; renderCats(); renderGrid(); }
-  function renderGrid(){
-    const list = activeCat==='All' ? PRODUCTS : PRODUCTS.filter(p=>p.cat===activeCat);
-    document.getElementById('grid').innerHTML = list.map((p,i)=>`
-      <div class="bg-white rounded-2xl border border-[#E7EBEF] overflow-hidden card-lift reveal" style="animation-delay:${i*40}ms">
-        <div class="relative aspect-square grid place-items-center" style="background:linear-gradient(160deg,#F4F6F8,#E9edf1)">
-          <i data-lucide="${p.icon}" class="w-16 h-16 text-[#0C1F31]/35"></i>
-          ${p.badge?`<span class="absolute top-3 left-3 px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wide" style="background:${p.badge.bg};color:${p.badge.fg}">${esc(p.badge.t)}</span>`:''}
-        </div>
-        <div class="p-4">
-          <p class="text-[10px] font-bold uppercase tracking-widest text-[#6A7581]">${esc(p.cat)}</p>
-          <h3 class="font-jakarta font-bold leading-snug mt-1">${esc(p.name)}</h3>
-          <div class="flex items-center justify-between mt-3">
-            <span class="font-mono font-bold text-[#121A21]">R ${p.price}</span>
-            <button onclick="addToCart('${esc(p.name).replace(/'/g,"&#39;")}')" aria-label="Add to cart" class="w-9 h-9 rounded-full bg-[#0C1F31] hover:bg-[#1b3247] text-white grid place-items-center transition"><i data-lucide="plus" class="w-4 h-4"></i></button>
-          </div>
-        </div>
-      </div>`).join('');
-    lucide.createIcons();
-  }
-  function addToCart(name){ cart++; document.getElementById('cartCount').textContent = cart; showToastCart('Added to cart: ' + name); }
-  function showToastCart(msg){ const el=document.getElementById('toast'); el.classList.remove('hidden'); el.innerHTML=`<div class="bg-[#0C1F31] text-white rounded-full pl-3 pr-2 py-2 shadow-2xl flex items-center gap-2 text-sm font-semibold" style="border-left:4px solid #29A37A"><i data-lucide="check-circle" class="w-4 h-4" style="color:#29A37A"></i><span>${esc(msg)}</span><button onclick="openCart()" class="ml-1 inline-flex items-center gap-1 px-3 h-7 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white text-[12px] font-bold transition">Checkout <i data-lucide="arrow-right" class="w-3 h-3"></i></button></div>`; lucide.createIcons(); setTimeout(()=>{el.classList.add('hidden');el.innerHTML='';},4000); }
-  function openCart(){ window.location.href='public-checkout.html'; }
+  function showToast(msg){ const el=document.getElementById('toast'); el.classList.remove('hidden'); el.innerHTML=`<div class="bg-[#0C1F31] text-white rounded-full pl-3 pr-5 py-2.5 shadow-2xl flex items-center gap-2 text-sm font-semibold" style="border-left:4px solid #29A37A"><i data-lucide="check-circle" class="w-4 h-4" style="color:#29A37A"></i><span>${esc(msg)}</span></div>`; lucide.createIcons(); setTimeout(()=>{el.classList.add('hidden');el.innerHTML='';},2400); }
+  function notifyMe(e){ e.preventDefault(); e.target.reset(); showToast("You're on the list — we'll let you know when the shop opens."); }
 
   const BRIEFS = { shop: {
-    title:'Merch Shop', sub:'WooCommerce · branded merch only',
-    purpose:'Sells <b>physical branded merchandise only</b> — apparel, accessories, stationery, drinkware. No digital downloads here (those live in MemberPress / Resources). Builds belonging + a small revenue line. Cart &amp; checkout hand off to WooCommerce secure pages; never rebuild card/checkout UI.',
-    data:'WooCommerce Product: <code>{ id, name, category, price_zar, badge, image, stock }</code>. Order data is POPIA-scoped and included in the member data export.',
-    logic:'Add-to-cart → WooCommerce cart (shared WP user record with BuddyBoss + MemberPress — one login). Checkout, payment (PayFast) and delivery tracking live in WooCommerce. Categories filter client-side; badges are product flags.',
-    components:'Hero (thumbnails) · category filter pills · product grid (badge, price, add) · trust band · WooCommerce handoff.',
-    api:'WC REST: GET /wp-json/wc/v3/products?category={cat} · POST /wp-json/wc/store/cart/add-item'
+    title:'Shop — Coming Soon', sub:'WooCommerce · store not yet launched',
+    purpose:'Placeholder for the merch store while it is being built — mirrors the live "launching soon" state. Captures interest via a notify-me email so there is an audience on launch day, and routes visitors to live surfaces (Resources, Funding, Community) instead of a dead end.',
+    data:'Notify list: <code>{ email, source:"shop-coming-soon", created_at }</code>. On launch this page is replaced by the WooCommerce shop archive (products, categories, cart).',
+    logic:'Notify form posts the email to the marketing list (mock here → toast). No products/cart yet. When the store opens, swap this template for the WooCommerce storefront; the nav Shop link stays the same.',
+    components:'Header · coming-soon hero (notify-me email + category teaser + quick links) · footer.',
+    api:'POST /v1/marketing/notify { email, list:"shop" }'
   } };
   function toggleDevMode(){ const on=document.body.classList.toggle('dev-on'); const b=document.getElementById('devToggle'); if(b)b.classList.toggle('on',on); if(on)showToast('Dev Mode on — tap any ⓘ for implementation notes.'); lucide.createIcons(); }
   function closeOverlay(id){ const el=document.getElementById(id); if(!el)return; el.classList.remove('open'); setTimeout(()=>{ if(el&&el.parentNode) el.remove(); },300); }
   function openBrief(id){ const b=BRIEFS[id]; if(!b)return;
     const sec=(icon,label,html)=>`<div class="px-6 py-4 border-t border-slate-100"><p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] flex items-center gap-1.5 mb-2"><i data-lucide="${icon}" class="w-3.5 h-3.5"></i>${label}</p><div class="text-sm text-slate-600 leading-relaxed">${html}</div></div>`;
-    document.getElementById('overlay-root').innerHTML=`<div class="ov" id="ov-brief"><div class="ov-bg" onclick="closeOverlay('ov-brief')"></div><div class="drawer"><div class="sticky top-0 z-10 bg-[#0C1F31] text-white px-6 py-5 flex items-start justify-between"><div class="min-w-0"><p class="text-[10px] font-bold uppercase tracking-widest text-[#FF9900] mb-1">Dev Brief</p><h3 class="font-jakarta font-extrabold text-lg leading-tight">${b.title}</h3><p class="text-xs text-white/60 mt-1">${b.sub}</p></div><button onclick="closeOverlay('ov-brief')" aria-label="Close" class="text-white/60 hover:text-white shrink-0 ml-3"><i data-lucide="x" class="w-5 h-5"></i></button></div>${sec('target','Purpose',b.purpose)}${sec('database','Data model',b.data)}${sec('git-branch','Logic',b.logic)}${sec('boxes','Components',b.components)}${sec('plug','API',`<code class="block bg-slate-900 text-emerald-300 text-xs font-mono px-3 py-2 rounded-lg overflow-x-auto">${b.api}</code>`)}<div class="px-6 py-4 border-t border-slate-100"><p class="text-[11px] text-slate-400 flex items-center gap-1.5"><i data-lucide="info" class="w-3.5 h-3.5"></i> Spec lives beside the feature — toggle Dev Mode off for the clean view.</p></div></div></div>`;
+    document.getElementById('overlay-root').innerHTML=`<div class="ov" id="ov-brief"><div class="ov-bg" onclick="closeOverlay('ov-brief')"></div><div class="drawer"><div class="sticky top-0 z-10 bg-[#0C1F31] text-white px-6 py-5 flex items-start justify-between"><div class="min-w-0"><p class="text-[10px] font-bold uppercase tracking-widest text-[#FF9900] mb-1">Dev Brief</p><h3 class="font-jakarta font-extrabold text-lg leading-tight">${b.title}</h3><p class="text-xs text-white/60 mt-1">${b.sub}</p></div><button onclick="closeOverlay('ov-brief')" aria-label="Close" class="text-white/60 hover:text-white shrink-0 ml-3"><i data-lucide="x" class="w-5 h-5"></i></button></div>${sec('target','Purpose',b.purpose)}${sec('database','Data model',b.data)}${sec('git-branch','Logic',b.logic)}${sec('boxes','Components',b.components)}${sec('plug','API',`<code class="block bg-slate-900 text-emerald-300 text-xs font-mono px-3 py-2 rounded-lg overflow-x-auto">${b.api}</code>`)}</div></div>`;
     requestAnimationFrame(()=>{ const o=document.getElementById('ov-brief'); if(o)o.classList.add('open'); }); lucide.createIcons();
   }
 
-  renderCats(); renderGrid(); lucide.createIcons();
+  lucide.createIcons();
 </script>
 </body>
 </html>
