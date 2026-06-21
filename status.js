@@ -20,6 +20,7 @@ window.MOCKUP_STATUS = {
   "public-solutions.html": "under-review",
   "public-solution-category.html": "under-review",
   "public-solution-review.html": "under-review",
+  "public-sustainability.html": "under-review",
   "public-shop.html": "under-review",
   "public-checkout.html": "under-review",
   "public-auth.html": "finalised",
