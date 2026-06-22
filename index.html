@@ -50,6 +50,12 @@
         <span>Finalised work — <span id="liveCount" class="text-white/70 font-semibold">…</span></span>
       </div>
     </div>
+    <div class="px-3 pt-1 pb-2 shrink-0">
+      <a href="compare.html" target="_blank" rel="noopener" class="flex items-center gap-2.5 px-3 py-2 rounded-lg bg-[#3B82F6]/10 border border-[#3B82F6]/25 text-[#9cc4ff] hover:bg-[#3B82F6]/20 transition text-sm font-semibold" title="Compare developer builds against the mockups">
+        <i data-lucide="git-compare" class="w-4 h-4 shrink-0"></i><span>Compare / Dev review</span>
+        <span id="devCount" class="ml-auto text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded-full bg-[#3B82F6]/20"></span>
+      </a>
+    </div>
     <nav id="nav" class="flex-1 overflow-y-auto no-scrollbar px-3 py-3 space-y-6"></nav>
     <div class="px-5 py-4 border-t border-white/10 text-[11px] text-white/40 shrink-0">
       <p class="text-white/70 font-semibold">© 2026 Tshepho Joel</p>
@@ -180,6 +186,7 @@
     document.getElementById('nav').innerHTML = html;
     lucide.createIcons();
     const el=document.getElementById('liveCount'); if(el) el.textContent = finalised.length+' of '+total+' finalised';
+    const dcEl=document.getElementById('devCount'); if(dcEl){ const n=Object.keys(DEV).length; dcEl.textContent=n?String(n):''; dcEl.style.display=n?'':'none'; }
   }
 
   function load(file, group, label, accent){
