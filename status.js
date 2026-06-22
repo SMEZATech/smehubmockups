@@ -57,3 +57,7 @@ window.MOCKUP_STATUS = {
   "public-icons.html": "finalised"
 };
 window.MOCKUP_STATUS_PUBLISHED = "2026-06-15T10:21:06.161Z";
+/* Developer builds (staging) — { mockup file: { url, status } }; status: "pending-review" | "reviewed" | "approved" */
+window.MOCKUP_DEV = {
+  "public-home.html": { "url": "https://smesastg.wpengine.com/", "status": "pending-review" }
+};

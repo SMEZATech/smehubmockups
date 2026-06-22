@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dev ⟷ Mockup Compare — SME South Africa</title>
+  <meta name="description" content="Internal review tool — compare a developer's staging build against the approved mockup." />
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  <script src="status.js"></script>
+  <script>
+    tailwind.config = { theme: { extend: {
+      fontFamily: { jakarta: ['Plus Jakarta Sans', 'sans-serif'], inter: ['Inter', 'system-ui', 'sans-serif'] },
+      colors: {
+        ink:'#121A21', navy:'#0C1F31', red:'#DC183C', redh:'#B0142F',
+        orange:'#FF9900', green:'#29A37A', blue:'#3B82F6',
+        bd:'#E7EBEF', bg:'#FCFCFC'
+      }
+    } } };
+  </script>
+  <style>
+    html, body { font-family:'Inter', system-ui, sans-serif; height:100%; }
+    .font-jakarta { font-family:'Plus Jakarta Sans', sans-serif; letter-spacing:0.005em; }
+    .no-scrollbar::-webkit-scrollbar { display:none; } .no-scrollbar { -ms-overflow-style:none; scrollbar-width:none; }
+    /* checkerboard stage bg */
+    #stage {
+      background-color:#EEF2F6;
+      background-image:
+        linear-gradient(45deg, #E2E8F0 25%, transparent 25%),
+        linear-gradient(-45deg, #E2E8F0 25%, transparent 25%),
+        linear-gradient(45deg, transparent 75%, #E2E8F0 75%),
+        linear-gradient(-45deg, transparent 75%, #E2E8F0 75%);
+      background-size:22px 22px;
+      background-position:0 0, 0 11px, 11px -11px, -11px 0px;
+    }
+    .vp-btn.active, .mode-btn.active { background:#0C1F31; color:#fff; }
+    iframe { background:#fff; }
+    .frame-shell { box-shadow:0 8px 30px -8px rgba(12,31,49,.22); }
+    /* swipe handle */
+    #swipeHandle { cursor:ew-resize; touch-action:none; }
+    #swipeHandle .grip { box-shadow:0 2px 10px rgba(12,31,49,.35); }
+    input[type=range] { accent-color:#DC183C; }
+    .check-item input { accent-color:#29A37A; }
+    #drawer { transition:transform .3s cubic-bezier(.2,.7,.2,1); }
+    #drawer.closed { transform:translateX(100%); }
+    .fade-scroll { scrollbar-width:thin; }
+  </style>
+</head>
+<body class="bg-bg text-ink antialiased h-full overflow-hidden">
+
+<div class="flex flex-col h-full">
+
+  <!-- ============ TOP BAR ============ -->
+  <header class="shrink-0 bg-white border-b border-bd">
+    <div class="h-14 px-3 sm:px-4 flex items-center gap-3">
+      <a href="index.html" class="flex items-center gap-1.5 text-[13px] font-semibold text-ink/70 hover:text-red shrink-0">
+        <i data-lucide="chevron-left" class="w-4 h-4"></i><span class="hidden sm:inline">Mockup Hub</span>
+      </a>
+      <div class="w-px h-6 bg-bd shrink-0"></div>
+      <div class="flex items-center gap-2 shrink-0">
+        <span class="w-7 h-7 rounded-lg bg-navy grid place-items-center"><i data-lucide="git-compare-arrows" class="w-4 h-4 text-white"></i></span>
+        <h1 class="font-jakarta font-extrabold text-[15px] leading-none whitespace-nowrap">Dev <span class="text-red">⟷</span> Mockup Compare</h1>
+      </div>
+
+      <!-- controls (right side, scroll on small screens) -->
+      <div id="controls" class="flex-1 flex items-center gap-2 justify-end overflow-x-auto no-scrollbar pl-2">
+        <select id="pageSel" class="text-[13px] font-semibold bg-bg border border-bd rounded-lg pl-3 pr-8 py-2 outline-none focus:border-navy shrink-0 max-w-[200px]"></select>
+
+        <span id="statusPill" class="hidden shrink-0 inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wide px-2.5 py-1.5 rounded-full text-white">
+          <span class="w-1.5 h-1.5 rounded-full bg-white"></span><span id="statusPillText">—</span>
+        </span>
+
+        <!-- viewport presets -->
+        <div id="vpGroup" class="hidden shrink-0 flex items-center gap-0.5 bg-bg border border-bd rounded-lg p-0.5">
+          <button data-vp="100%"  class="vp-btn active rounded-md px-2.5 py-1.5 text-[12px] font-semibold flex items-center gap-1" title="Desktop"><i data-lucide="monitor" class="w-3.5 h-3.5"></i></button>
+          <button data-vp="834px"  class="vp-btn rounded-md px-2.5 py-1.5 text-[12px] font-semibold flex items-center gap-1" title="Tablet (834px)"><i data-lucide="tablet" class="w-3.5 h-3.5"></i></button>
+          <button data-vp="390px"  class="vp-btn rounded-md px-2.5 py-1.5 text-[12px] font-semibold flex items-center gap-1" title="Mobile (390px)"><i data-lucide="smartphone" class="w-3.5 h-3.5"></i></button>
+        </div>
+
+        <!-- mode toggle -->
+        <div id="modeGroup" class="hidden shrink-0 flex items-center gap-0.5 bg-bg border border-bd rounded-lg p-0.5">
+          <button data-mode="side"    class="mode-btn active rounded-md px-2.5 py-1.5 text-[12px] font-semibold">Side by side</button>
+          <button data-mode="overlay" class="mode-btn rounded-md px-2.5 py-1.5 text-[12px] font-semibold">Overlay</button>
+          <button data-mode="swipe"   class="mode-btn rounded-md px-2.5 py-1.5 text-[12px] font-semibold">Swipe</button>
+        </div>
+
+        <button id="openMockup" class="hidden shrink-0 inline-flex items-center gap-1.5 text-[12px] font-semibold border border-bd rounded-lg px-2.5 py-2 hover:bg-bg" title="Open mockup in a new tab">
+          <i data-lucide="external-link" class="w-3.5 h-3.5 text-navy"></i><span class="hidden md:inline">Mockup</span>
+        </button>
+        <button id="openDev" class="hidden shrink-0 inline-flex items-center gap-1.5 text-[12px] font-bold text-white bg-red hover:bg-redh rounded-lg px-3 py-2" title="Open dev build in a new tab">
+          <i data-lucide="external-link" class="w-3.5 h-3.5"></i>Open dev ↗
+        </button>
+        <button id="reloadBtn" class="hidden shrink-0 inline-flex items-center justify-center border border-bd rounded-lg w-9 h-9 hover:bg-bg" title="Reload both frames">
+          <i data-lucide="rotate-cw" class="w-4 h-4 text-ink/70"></i>
+        </button>
+        <button id="checklistBtn" class="hidden shrink-0 inline-flex items-center gap-1.5 text-[12px] font-semibold border border-bd rounded-lg px-2.5 py-2 hover:bg-bg" title="Review checklist">
+          <i data-lucide="list-checks" class="w-3.5 h-3.5 text-green"></i><span class="hidden lg:inline">Checklist</span>
+          <span id="checklistBadge" class="text-[10px] font-bold bg-green/10 text-green rounded px-1.5 py-0.5">0/9</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- overlay opacity bar (only in overlay mode) -->
+    <div id="opacityBar" class="hidden border-t border-bd bg-bg px-4 py-2 items-center gap-3">
+      <span class="text-[12px] font-semibold text-ink/70 flex items-center gap-1.5"><i data-lucide="contrast" class="w-3.5 h-3.5"></i>Dev opacity</span>
+      <input id="opacitySlider" type="range" min="0" max="100" value="50" class="flex-1 max-w-md" />
+      <span id="opacityVal" class="text-[12px] font-bold text-navy tabular-nums w-10 text-right">50%</span>
+    </div>
+  </header>
+
+  <!-- ============ STAGE ============ -->
+  <main id="stage" class="flex-1 relative overflow-auto">
+
+    <!-- EMPTY STATE -->
+    <div id="emptyState" class="hidden absolute inset-0 grid place-items-center p-6">
+      <div class="max-w-md text-center bg-white border border-bd rounded-2xl p-8 shadow-sm">
+        <span class="mx-auto w-14 h-14 rounded-2xl bg-[#FFF1E0] grid place-items-center"><i data-lucide="inbox" class="w-7 h-7 text-orange"></i></span>
+        <h2 class="font-jakarta font-extrabold text-lg mt-4">No developed pages yet</h2>
+        <p class="text-[13.5px] text-ink/60 mt-2 leading-relaxed">Add a dev build in the controller (<span class="font-semibold text-ink">control.html</span>) to start comparing staging pages against their mockups.</p>
+        <a href="index.html" class="inline-flex items-center gap-1.5 mt-5 text-[13px] font-bold text-red hover:text-redh"><i data-lucide="arrow-left" class="w-4 h-4"></i>Back to the Mockup Hub</a>
+      </div>
+    </div>
+
+    <!-- COMPARE CONTENT (rendered by JS) -->
+    <div id="compareWrap" class="hidden min-h-full">
+
+      <!-- SIDE BY SIDE -->
+      <div id="sideView" class="hidden p-4 sm:p-6">
+        <div class="flex flex-wrap items-start justify-center gap-6">
+          <div class="flex flex-col items-center gap-2">
+            <span class="inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wide text-white bg-navy rounded-full px-3 py-1">
+              <i data-lucide="layout-template" class="w-3 h-3"></i>Mockup
+            </span>
+            <div class="frame-shell rounded-xl overflow-hidden border border-bd bg-white" style="width:100%">
+              <iframe id="sideMockup" class="block w-full" style="height:78vh" title="Mockup"></iframe>
+            </div>
+          </div>
+          <div class="flex flex-col items-center gap-2">
+            <span id="sideDevChip" class="inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wide text-white rounded-full px-3 py-1 bg-orange">
+              <i data-lucide="code-2" class="w-3 h-3"></i>Dev build · <span class="devChipStatus">—</span>
+            </span>
+            <div class="frame-shell rounded-xl overflow-hidden border border-bd bg-white" style="width:100%">
+              <iframe id="sideDev" class="block w-full" style="height:78vh" title="Dev build" referrerpolicy="no-referrer"></iframe>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- OVERLAY -->
+      <div id="overlayView" class="hidden p-4 sm:p-6">
+        <div class="flex flex-col items-center gap-2">
+          <div class="flex items-center gap-2">
+            <span class="inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wide text-white bg-navy rounded-full px-3 py-1"><i data-lucide="layout-template" class="w-3 h-3"></i>Mockup</span>
+            <span class="text-ink/30">+</span>
+            <span id="overlayDevChip" class="inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wide text-white rounded-full px-3 py-1 bg-orange"><i data-lucide="code-2" class="w-3 h-3"></i>Dev · <span class="devChipStatus">—</span></span>
+          </div>
+          <div id="overlayBox" class="relative frame-shell rounded-xl overflow-hidden border border-bd bg-white" style="width:100%; height:80vh">
+            <iframe id="ovMockup" class="absolute inset-0 w-full h-full block" title="Mockup (overlay base)"></iframe>
+            <iframe id="ovDev" class="absolute inset-0 w-full h-full block" title="Dev build (overlay top)" referrerpolicy="no-referrer"></iframe>
+          </div>
+        </div>
+      </div>
+
+      <!-- SWIPE -->
+      <div id="swipeView" class="hidden p-4 sm:p-6">
+        <div class="flex flex-col items-center gap-2">
+          <div class="flex items-center gap-2">
+            <span class="inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wide text-white bg-navy rounded-full px-3 py-1"><i data-lucide="layout-template" class="w-3 h-3"></i>Mockup</span>
+            <i data-lucide="move-horizontal" class="w-4 h-4 text-ink/40"></i>
+            <span id="swipeDevChip" class="inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wide text-white rounded-full px-3 py-1 bg-orange"><i data-lucide="code-2" class="w-3 h-3"></i>Dev · <span class="devChipStatus">—</span></span>
+          </div>
+          <div id="swipeBox" class="relative frame-shell rounded-xl overflow-hidden border border-bd bg-white select-none" style="width:100%; height:80vh">
+            <iframe id="swMockup" class="absolute inset-0 w-full h-full block" title="Mockup (swipe base)"></iframe>
+            <iframe id="swDev" class="absolute inset-0 w-full h-full block" title="Dev build (swipe top)" referrerpolicy="no-referrer"></iframe>
+            <div id="swipeHandle" class="absolute top-0 bottom-0 w-0.5 bg-red z-10" style="left:50%">
+              <span class="grip absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-red grid place-items-center text-white">
+                <i data-lucide="chevrons-left-right" class="w-4 h-4"></i>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- embed-block note -->
+      <div class="px-4 sm:px-6 pb-6">
+        <div class="mx-auto max-w-2xl flex items-start gap-2.5 text-[12.5px] text-ink/70 bg-[#FFF1E0] border border-orange/30 rounded-xl px-4 py-3">
+          <i data-lucide="info" class="w-4 h-4 text-orange shrink-0 mt-0.5"></i>
+          <p>Dev build not showing? Some hosts block embedding (X-Frame-Options / CSP) — use <button id="noteOpenDev" class="font-bold text-red hover:text-redh underline underline-offset-2">Open dev ↗</button> to view it in a tab.</p>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- ============ CHECKLIST DRAWER ============ -->
+<div id="drawerOverlay" class="hidden fixed inset-0 bg-navy/30 z-40"></div>
+<aside id="drawer" class="closed fixed top-0 right-0 h-full w-[340px] max-w-[90vw] bg-white border-l border-bd z-50 flex flex-col shadow-2xl">
+  <div class="h-14 px-4 flex items-center justify-between border-b border-bd shrink-0">
+    <h2 class="font-jakarta font-extrabold text-[15px] flex items-center gap-2"><i data-lucide="list-checks" class="w-4 h-4 text-green"></i>Review checklist</h2>
+    <button id="drawerClose" class="w-8 h-8 grid place-items-center rounded-lg hover:bg-bg"><i data-lucide="x" class="w-4 h-4"></i></button>
+  </div>
+  <div class="px-4 py-3 border-b border-bd shrink-0">
+    <p class="text-[12px] text-ink/55">Reviewing <span id="drawerPage" class="font-bold text-ink">—</span></p>
+    <div class="mt-2 flex items-center gap-2">
+      <div class="flex-1 h-2 rounded-full bg-bd overflow-hidden"><div id="progBar" class="h-full bg-green transition-all" style="width:0%"></div></div>
+      <span id="progText" class="text-[12px] font-bold text-green tabular-nums">0 of 9</span>
+    </div>
+  </div>
+  <div id="checkList" class="flex-1 overflow-y-auto fade-scroll px-4 py-3 space-y-1"></div>
+  <div class="px-4 py-3 border-t border-bd shrink-0 space-y-2">
+    <button id="copyNotes" class="w-full inline-flex items-center justify-center gap-2 text-[13px] font-bold text-white bg-navy hover:bg-ink rounded-lg py-2.5">
+      <i data-lucide="clipboard-copy" class="w-4 h-4"></i><span id="copyNotesLabel">Copy review notes</span>
+    </button>
+    <p class="text-[11.5px] text-ink/55 leading-relaxed">Set the dev status (Pending review → Reviewed → Approved) in <span class="font-semibold text-ink">control.html</span>.</p>
+  </div>
+</aside>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ---------- data ---------- */
+  var DEV = window.MOCKUP_DEV || {};
+  var KEYS = Object.keys(DEV);
+
+  var STATUS_META = {
+    "pending-review": { label:"Pending review", color:"#FF9900" },
+    "reviewed":       { label:"Reviewed",        color:"#3B82F6" },
+    "approved":       { label:"Approved",        color:"#29A37A" }
+  };
+  function statusMeta(s){ return STATUS_META[s] || { label:"Unknown", color:"#9AA6B2" }; }
+
+  var CHECK_ITEMS = [
+    "Layout & structure", "Spacing & sizing", "Brand colours",
+    "Typography & fonts", "Content & copy", "Images & icons",
+    "Responsive (mobile/tablet)", "Links & navigation", "Interactive states (hover/empty/error)"
+  ];
+
+  /* ---------- helpers ---------- */
+  function $(id){ return document.getElementById(id); }
+  function labelFor(file){
+    var slug = file.replace(/^public-/, "").replace(/\.html$/, "");
+    if (!slug || slug === "home" || file === "public-home.html") slug = "home";
+    return slug.split(/[-_]/).map(function(w){ return w ? w.charAt(0).toUpperCase()+w.slice(1) : ""; }).join(" ").trim() || file;
+  }
+  function icons(){ if (window.lucide) lucide.createIcons(); }
+
+  /* ---------- empty state ---------- */
+  if (KEYS.length === 0){
+    $("emptyState").classList.remove("hidden");
+    $("pageSel").classList.add("hidden");
+    icons();
+    return;
+  }
+
+  /* ---------- state ---------- */
+  var params = new URLSearchParams(location.search);
+  var current = params.get("m");
+  if (!current || !DEV[current]) current = KEYS[0];
+  var viewport = "100%";
+  var mode = "side";
+
+  /* ---------- build select ---------- */
+  var sel = $("pageSel");
+  KEYS.forEach(function(k){
+    var o = document.createElement("option");
+    o.value = k; o.textContent = labelFor(k);
+    sel.appendChild(o);
+  });
+  sel.value = current;
+
+  /* ---------- show controls ---------- */
+  ["statusPill","vpGroup","modeGroup","openMockup","openDev","reloadBtn","checklistBtn"].forEach(function(id){
+    $(id).classList.remove("hidden");
+  });
+  $("compareWrap").classList.remove("hidden");
+
+  /* ---------- render mockup/dev sources ---------- */
+  var FRAME_PAIRS = {
+    side:    ["sideMockup", "sideDev"],
+    overlay: ["ovMockup", "ovDev"],
+    swipe:   ["swMockup", "swDev"]
+  };
+
+  function devUrl(){ var e = DEV[current]; return e && e.url ? e.url : ""; }
+
+  function applyViewportWidths(){
+    // width applies to the active mode's frame container(s)
+    var boxes = [];
+    if (mode === "side"){
+      boxes = document.querySelectorAll("#sideView .frame-shell");
+    } else if (mode === "overlay"){
+      boxes = [ $("overlayBox") ];
+    } else {
+      boxes = [ $("swipeBox") ];
+    }
+    boxes.forEach(function(b){
+      if (!b) return;
+      if (viewport === "100%"){ b.style.width = "100%"; b.style.maxWidth = "100%"; }
+      else { b.style.width = viewport; b.style.maxWidth = "100%"; }
+    });
+  }
+
+  function loadFrames(){
+    var mk = current, dv = devUrl();
+    // load only the active mode's frames (avoids loading hidden iframes / triple-loading)
+    var pair = FRAME_PAIRS[mode];
+    var mkFrame = $(pair[0]), dvFrame = $(pair[1]);
+    if (mkFrame) mkFrame.src = mk;
+    if (dvFrame) dvFrame.src = dv || "about:blank";
+  }
+
+  function reloadAll(){
+    var pair = FRAME_PAIRS[mode];
+    var mkFrame = $(pair[0]), dvFrame = $(pair[1]);
+    if (mkFrame) mkFrame.src = mkFrame.src;
+    if (dvFrame && devUrl()) dvFrame.src = devUrl(); else if (dvFrame) dvFrame.src = "about:blank";
+  }
+
+  /* ---------- status pill + dev chips ---------- */
+  function applyStatus(){
+    var st = (DEV[current] && DEV[current].status) || "";
+    var m = statusMeta(st);
+    var pill = $("statusPill");
+    pill.style.backgroundColor = m.color;
+    $("statusPillText").textContent = m.label;
+    // dev chips across all modes
+    document.querySelectorAll(".devChipStatus").forEach(function(el){ el.textContent = m.label; });
+    ["sideDevChip","overlayDevChip","swipeDevChip"].forEach(function(id){
+      var chip = $(id);
+      if (chip) chip.style.backgroundColor = m.color;
+    });
+  }
+
+  /* ---------- mode switching ---------- */
+  function applyMode(){
+    $("sideView").classList.toggle("hidden", mode !== "side");
+    $("overlayView").classList.toggle("hidden", mode !== "overlay");
+    $("swipeView").classList.toggle("hidden", mode !== "swipe");
+    $("opacityBar").classList.toggle("hidden", mode !== "overlay");
+    $("opacityBar").classList.toggle("flex", mode === "overlay");
+    if (mode === "overlay") applyOpacity();
+    if (mode === "swipe") setSwipe(swipePct);
+    loadFrames();
+    applyViewportWidths();
+    icons();
+  }
+
+  /* ---------- overlay opacity ---------- */
+  function applyOpacity(){
+    var v = +$("opacitySlider").value;
+    $("ovDev").style.opacity = (v/100).toString();
+    $("opacityVal").textContent = v + "%";
+  }
+  $("opacitySlider").addEventListener("input", applyOpacity);
+
+  /* ---------- swipe ---------- */
+  var swipePct = 50;
+  function setSwipe(pct){
+    pct = Math.max(0, Math.min(100, pct));
+    swipePct = pct;
+    // dev layer clipped from the right: reveal left part of dev over mockup
+    $("swDev").style.clipPath = "inset(0 " + (100 - pct) + "% 0 0)";
+    $("swipeHandle").style.left = pct + "%";
+  }
+  (function swipeDrag(){
+    var box = $("swipeBox"), handle = $("swipeHandle"), dragging = false;
+    function pctFromEvent(clientX){
+      var r = box.getBoundingClientRect();
+      return ((clientX - r.left) / r.width) * 100;
+    }
+    function down(e){ dragging = true; e.preventDefault(); }
+    function move(e){
+      if (!dragging) return;
+      var x = (e.touches ? e.touches[0].clientX : e.clientX);
+      setSwipe(pctFromEvent(x));
+    }
+    function up(){ dragging = false; }
+    handle.addEventListener("mousedown", down);
+    handle.addEventListener("touchstart", down, {passive:false});
+    window.addEventListener("mousemove", move);
+    window.addEventListener("touchmove", move, {passive:false});
+    window.addEventListener("mouseup", up);
+    window.addEventListener("touchend", up);
+  })();
+
+  /* ---------- controls wiring ---------- */
+  sel.addEventListener("change", function(){
+    current = sel.value;
+    params.set("m", current);
+    history.replaceState(null, "", location.pathname + "?" + params.toString());
+    applyStatus();
+    loadFrames();
+    applyViewportWidths();
+    renderChecklist();
+  });
+
+  document.querySelectorAll(".vp-btn").forEach(function(b){
+    b.addEventListener("click", function(){
+      document.querySelectorAll(".vp-btn").forEach(function(x){ x.classList.remove("active"); });
+      b.classList.add("active");
+      viewport = b.getAttribute("data-vp");
+      applyViewportWidths();
+    });
+  });
+
+  document.querySelectorAll(".mode-btn").forEach(function(b){
+    b.addEventListener("click", function(){
+      document.querySelectorAll(".mode-btn").forEach(function(x){ x.classList.remove("active"); });
+      b.classList.add("active");
+      mode = b.getAttribute("data-mode");
+      applyMode();
+    });
+  });
+
+  $("openMockup").addEventListener("click", function(){ window.open(current, "_blank", "noopener"); });
+  function openDev(){ var u = devUrl(); if (u) window.open(u, "_blank", "noopener"); }
+  $("openDev").addEventListener("click", openDev);
+  $("noteOpenDev").addEventListener("click", openDev);
+  $("reloadBtn").addEventListener("click", reloadAll);
+
+  /* ---------- checklist ---------- */
+  function storeKey(){ return "cmp:" + current; }
+  function readChecks(){
+    try { return JSON.parse(localStorage.getItem(storeKey()) || "{}") || {}; }
+    catch(e){ return {}; }
+  }
+  function writeChecks(obj){
+    try { localStorage.setItem(storeKey(), JSON.stringify(obj)); } catch(e){}
+  }
+
+  function renderChecklist(){
+    var saved = readChecks();
+    $("drawerPage").textContent = labelFor(current);
+    var wrap = $("checkList");
+    wrap.innerHTML = "";
+    CHECK_ITEMS.forEach(function(item, i){
+      var id = "chk_" + i;
+      var checked = !!saved[item];
+      var row = document.createElement("label");
+      row.className = "check-item flex items-start gap-2.5 px-2 py-2 rounded-lg hover:bg-bg cursor-pointer text-[13.5px]";
+      row.innerHTML =
+        '<input type="checkbox" class="mt-0.5 w-4 h-4 rounded" ' + (checked ? "checked" : "") + ' />' +
+        '<span class="leading-snug ' + (checked ? "line-through text-ink/40" : "text-ink/80") + '">' + item + '</span>';
+      var cb = row.querySelector("input");
+      cb.addEventListener("change", function(){
+        var s = readChecks();
+        if (cb.checked) s[item] = true; else delete s[item];
+        writeChecks(s);
+        row.querySelector("span").className = "leading-snug " + (cb.checked ? "line-through text-ink/40" : "text-ink/80");
+        updateProgress();
+      });
+      wrap.appendChild(row);
+    });
+    updateProgress();
+  }
+
+  function countChecked(){
+    var s = readChecks(), n = 0;
+    CHECK_ITEMS.forEach(function(it){ if (s[it]) n++; });
+    return n;
+  }
+  function updateProgress(){
+    var n = countChecked(), total = CHECK_ITEMS.length;
+    $("progText").textContent = n + " of " + total;
+    $("progBar").style.width = Math.round(n/total*100) + "%";
+    $("checklistBadge").textContent = n + "/" + total;
+  }
+
+  /* ---------- copy review notes ---------- */
+  $("copyNotes").addEventListener("click", function(){
+    var saved = readChecks();
+    var st = (DEV[current] && DEV[current].status) || "";
+    var lines = [];
+    lines.push("Dev ⟷ Mockup review");
+    lines.push("Page:    " + labelFor(current) + "  (" + current + ")");
+    lines.push("Dev URL: " + (devUrl() || "—"));
+    lines.push("Status:  " + statusMeta(st).label);
+    lines.push("Checked: " + countChecked() + " of " + CHECK_ITEMS.length);
+    lines.push("");
+    CHECK_ITEMS.forEach(function(it){ lines.push((saved[it] ? "[x] " : "[ ] ") + it); });
+    var text = lines.join("\n");
+    var done = function(ok){
+      var lbl = $("copyNotesLabel");
+      lbl.textContent = ok ? "Copied!" : "Copy failed — select manually";
+      setTimeout(function(){ lbl.textContent = "Copy review notes"; }, 1800);
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text).then(function(){ done(true); }, function(){ fallbackCopy(text, done); });
+    } else { fallbackCopy(text, done); }
+  });
+  function fallbackCopy(text, done){
+    try {
+      var ta = document.createElement("textarea");
+      ta.value = text; ta.style.position = "fixed"; ta.style.opacity = "0";
+      document.body.appendChild(ta); ta.select();
+      var ok = document.execCommand("copy");
+      document.body.removeChild(ta); done(ok);
+    } catch(e){ done(false); }
+  }
+
+  /* ---------- drawer open/close ---------- */
+  function openDrawer(){ $("drawer").classList.remove("closed"); $("drawerOverlay").classList.remove("hidden"); }
+  function closeDrawer(){ $("drawer").classList.add("closed"); $("drawerOverlay").classList.add("hidden"); }
+  $("checklistBtn").addEventListener("click", openDrawer);
+  $("drawerClose").addEventListener("click", closeDrawer);
+  $("drawerOverlay").addEventListener("click", closeDrawer);
+
+  /* ---------- init ---------- */
+  applyStatus();
+  applyMode();          // sets visible view + loads its frames
+  renderChecklist();
+  icons();
+})();
+</script>
+</body>
+</html>
