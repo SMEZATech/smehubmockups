@@ -57,8 +57,8 @@
 </header>
 
 <div class="max-w-6xl mx-auto px-4 sm:px-6 pt-10">
-  <!-- meta -->
-  <p class="text-xs text-[#6A7581] mb-4"><a href="public-articles.html" class="hover:text-[#DC183C]">Articles</a> <span class="mx-1">/</span> <span>Starting Up</span></p>
+  <!-- Breadcrumb (global pattern) -->
+  <nav aria-label="Breadcrumb" class="text-xs text-[#6A7581] flex items-center flex-wrap gap-x-1.5 mb-4"><a href="public-home.html" class="hover:text-[#DC183C] transition">Home</a><span class="text-slate-300">›</span><a href="public-articles.html" class="hover:text-[#DC183C] transition">Articles</a><span class="text-slate-300">›</span><span class="text-[#121A21] font-medium truncate">Kasi Money Starts With How You Earn</span></nav>
   <h1 class="font-jakarta font-extrabold text-3xl sm:text-[2.6rem] leading-[1.1] tracking-tight mt-3 max-w-3xl">Kasi Money Starts With How You Earn
     <button onclick="openBrief()" class="dev-badge align-middle ml-1 w-6 h-6 rounded-full bg-[#DC183C] text-white items-center justify-center text-[11px] font-bold">i</button>
   </h1>
@@ -204,14 +204,25 @@
   document.addEventListener('keydown',e=>{if(e.key==='Escape')closeTOC();});
 
   const REL=[
-    {img:'assets/article-2.jpg',cat:'Finance',title:'How to Read a Cash-Flow Statement Without an Accountant'},
-    {img:'assets/article-3.jpg',cat:'Marketing',title:'Free AI Tools Every Small Business Should Be Using'},
-    {img:'assets/article-4.jpg',cat:'Operations',title:'Tips on Increasing E-hailing Profits in South Africa'}
+    {img:'assets/article-2.jpg',cat:'Finance',   title:'How to Read a Cash-Flow Statement Without an Accountant', excerpt:'A plain-language walkthrough of the one report that tells you whether your business can survive next month.', author:'Lerato Dlamini', init:'LD', date:'5 June 2026',  read:5},
+    {img:'assets/article-3.jpg',cat:'Marketing', title:'AI Tools Every Small Business Should Be Using',           excerpt:'From copywriting to customer support, these no-cost tools punch far above their weight for lean teams.', author:'Naledi Mokoena', init:'NM', date:'28 May 2026', read:6},
+    {img:'assets/article-4.jpg',cat:'Operations',title:'Tips on Increasing E-hailing Profits in South Africa',     excerpt:'Fuel, maintenance and dead-time eat your margin. Here is how top drivers keep more of every fare.',     author:'Sipho Maseko',   init:'SM', date:'19 May 2026', read:4}
   ];
   document.getElementById('related').innerHTML = REL.map(a=>`
-    <a href="public-article.html" class="group bg-white rounded-2xl border border-[#E7EBEF] overflow-hidden card-lift block">
-      <div class="aspect-[16/10] overflow-hidden"><img src="${a.img}" class="w-full h-full object-cover group-hover:scale-105 transition duration-300" alt="${esc(a.title)}" /></div>
-      <div class="p-4"><span class="text-[10px] font-bold uppercase tracking-widest text-[#AE6B0A]">${esc(a.cat)}</span><h3 class="font-jakarta font-bold leading-snug mt-1 group-hover:text-[#DC183C] transition">${esc(a.title)}</h3></div>
+    <a href="public-article.html" class="group bg-white rounded-2xl border border-[#E7EBEF] overflow-hidden card-lift flex flex-col">
+      <div class="relative aspect-[16/10] overflow-hidden">
+        <img src="${a.img}" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" alt="${esc(a.title)}" />
+        <span class="absolute top-3 left-3 px-[11px] py-[5px] rounded-full bg-[#DC183C] text-white font-jakarta font-bold uppercase tracking-widest" style="font-size:10px;">${esc(a.cat)}</span>
+      </div>
+      <div class="p-5 flex flex-col flex-1">
+        <p class="text-xs text-[#6A7581]">${esc(a.date)} · ${a.read} min read</p>
+        <h3 class="font-jakarta font-extrabold text-lg leading-snug mt-2 group-hover:text-[#DC183C] transition line-clamp-2">${esc(a.title)}</h3>
+        <p class="text-sm text-[#6A7581] mt-2 leading-relaxed line-clamp-2">${esc(a.excerpt)}</p>
+        <div class="flex items-center gap-2.5 mt-auto pt-4 border-t border-[#E7EBEF]">
+          <span class="w-[30px] h-[30px] rounded-full bg-gradient-to-br from-[#DC183C] to-[#FF9900] grid place-items-center text-white font-jakarta font-bold" style="font-size:11px;">${esc(a.init)}</span>
+          <span class="font-jakarta font-bold text-[13px] text-[#121A21]">${esc(a.author)}</span>
+        </div>
+      </div>
     </a>`).join('');
 
   const BRIEF={title:'Single Article',sub:'WordPress post · public, indexable',purpose:'The article reading experience — the core content surface for SEO and top-of-funnel acquisition. Standalone post URL with author bar, share, scroll-spy TOC, body and related posts.',data:'Post: <code>{ id, title, category, body, hero, author{name,role,id}, published_at, read_minutes }</code>. TOC is derived from the post body H2s. Related = same category, newest.',logic:'Public + indexable (Yoast/RankMath + Article schema). TOC + scroll-spy built client-side from <code>h2[id]</code> via IntersectionObserver. Share uses native share / clipboard. Funding CTA links to /funding.',components:'Breadcrumb · category · title · author bar + share · hero · article body (drop cap) · sticky TOC + funding widget · author bio · related posts.',api:'GET /v1/articles/{slug} · GET /v1/articles?related={id}'};
