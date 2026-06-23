@@ -4,7 +4,7 @@
  * Allowed: "finalised" | "under-review" | "under-work" | "not-started"
  */
 window.MOCKUP_STATUS = {
-  "public-home.html": "under-work",
+  "public-home.html": "finalised",
   "public-articles.html": "finalised",
   "public-article-categories.html": "finalised",
   "public-category.html": "finalised",
@@ -25,9 +25,9 @@ window.MOCKUP_STATUS = {
   "public-brand.html": "under-review",
   "public-deals.html": "under-review",
   "public-deal.html": "under-review",
-  "public-guides.html": "under-review",
-  "public-guide.html": "under-review",
-  "public-founder-focus.html": "under-review",
+  "public-guides.html": "under-work",
+  "public-guide.html": "under-work",
+  "public-founder-focus.html": "under-work",
   "public-shop.html": "under-review",
   "public-checkout.html": "under-review",
   "public-auth.html": "finalised",
@@ -41,6 +41,7 @@ window.MOCKUP_STATUS = {
   "public-advertising-disclosure.html": "under-review",
   "member-hub.html": "under-review",
   "members.html": "under-review",
+  "single-post.html": "not-started",
   "single-group.html": "under-review",
   "forums.html": "under-review",
   "member-account.html": "under-review",
@@ -50,15 +51,18 @@ window.MOCKUP_STATUS = {
   "podcast.html": "under-work",
   "brand_ci.html": "finalised",
   "public-icons.html": "finalised",
+  "chrome-preview.html": "not-started",
   "public-help.html": "under-review",
   "public-help-article.html": "under-review",
   "public-search.html": "under-review",
   "public-404.html": "under-review"
 };
-window.MOCKUP_STATUS_PUBLISHED = "2026-06-23T13:25:52.117Z";
+window.MOCKUP_STATUS_PUBLISHED = "2026-06-23T20:09:13.091Z";
 /* Developer builds (staging) — { mockup file: { url, status } }; status: "pending-review" | "reviewed" | "approved" */
 window.MOCKUP_DEV = {
   "public-home.html": {"url":"https://smesastg.wpengine.com/","status":"pending-review"}
 };
 /* Group overrides — { mockup file: "Group name" }; overrides default NAV grouping in index.html */
-window.MOCKUP_GROUPS = {};
+window.MOCKUP_GROUPS = {
+
+};
