@@ -19,7 +19,6 @@ window.MOCKUP_STATUS = {
   "public-loan-option.html": "under-review",
   "public-solutions.html": "under-review",
   "public-solution-category.html": "under-review",
-  "public-solution-review.html": "under-review",
   "public-sustainability.html": "under-review",
   "public-pricing.html": "under-review",
   "public-brands.html": "under-review",
@@ -61,3 +60,5 @@ window.MOCKUP_STATUS_PUBLISHED = "2026-06-23T13:25:52.117Z";
 window.MOCKUP_DEV = {
   "public-home.html": {"url":"https://smesastg.wpengine.com/","status":"pending-review"}
 };
+/* Group overrides — { mockup file: "Group name" }; overrides default NAV grouping in index.html */
+window.MOCKUP_GROUPS = {};

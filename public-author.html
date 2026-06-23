@@ -63,7 +63,10 @@
   <div class="max-w-7xl mx-auto px-4 sm:px-6 py-10">
     <p class="text-xs text-[#6A7581] mb-5"><a href="public-articles.html" class="hover:text-[#DC183C]">Articles</a> <span class="mx-1">/</span> <span>Authors</span> <span class="mx-1">/</span> <span class="text-[#121A21] font-semibold">Karabo Kgophane</span></p>
     <div class="flex flex-col sm:flex-row gap-6 sm:gap-8">
-      <div class="w-32 h-36 rounded-2xl bg-gradient-to-br from-[#DC183C] to-[#FF9900] grid place-items-center font-jakarta font-extrabold text-white text-4xl shrink-0 shadow-lg">KK</div>
+      <div class="relative w-24 h-24 sm:w-32 sm:h-32 rounded-full shrink-0 shadow-lg overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-br from-[#DC183C] to-[#FF9900] grid place-items-center font-jakarta font-extrabold text-white text-4xl" aria-hidden="true">KK</div>
+        <img src="https://smesouthafrica.co.za/wp-content/uploads/2025/02/SME-South-Africa-Team-Members_0000s_0004_3-2048x2048.jpg" alt="Karabo Kgophane" class="absolute inset-0 w-full h-full object-cover" onerror="this.remove()" />
+      </div>
       <div class="min-w-0">
         <div class="flex items-start gap-2">
           <h1 class="font-jakarta font-extrabold text-3xl sm:text-4xl text-[#0C1F31] tracking-tight">Karabo Kgophane</h1>
@@ -112,39 +115,193 @@
   function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c])); }
   function showToast(msg){ const el=document.getElementById('toast'); el.classList.remove('hidden'); el.innerHTML=`<div class="bg-[#0C1F31] text-white rounded-full pl-3 pr-5 py-2.5 shadow-2xl flex items-center gap-2 text-sm font-semibold" style="border-left:4px solid #DC183C"><i data-lucide="check-circle" class="w-4 h-4" style="color:#DC183C"></i><span>${esc(msg)}</span></div>`; lucide.createIcons(); setTimeout(()=>{el.classList.add('hidden');el.innerHTML='';},2200); }
 
-  const CATS = ['All','Articles','Brands','Guides','SME Resources','SME Reviews','Loan Options'];
+  const CATS = ['All','Articles','SME Resources','Guides','SME Reviews','Brands','Loan Options'];
   const AUTHOR = { name:'Karabo Kgophane', init:'KK' };
+
+  // Resource type config — matches public-resource-category.html
+  const RES_TYPES = {
+    'Ebook':     { icon:'book-open',        tint:['#FDECEF','#DC183C'] },
+    'Template':  { icon:'file-spreadsheet', tint:['#E4F5EE','#29A37A'] },
+    'Guide':     { icon:'compass',          tint:['#FFF1E0','#AE6B0A'] },
+    'Report':    { icon:'bar-chart-3',      tint:['#FDECEF','#DC183C'] }
+  };
+
+  // Brand palette for monogram fallback colour (matches public-brands.html pattern)
+  const BPAL = [['#FDECEF','#DC183C'],['#E4F5EE','#29A37A'],['#FFF1E0','#AE6B0A'],['#E6EEF5','#0C1F31']];
+
+  // ARTICLES (image cards w/ red ALL-CAPS pill + monogram byline)
   const ARTICLES = [
-    { img:'assets/article-1.jpg', cat:'Articles',      title:'Kasi Money Starts With How You Earn',                              excerpt:'Township founders unpack what really moves the needle on cash flow — pricing, stock turn, and the small habits that compound.',                          date:'20 Jan 2026', read:6 },
-    { img:'assets/article-2.jpg', cat:'Guides',        title:'Tips For Increasing Scooter Delivery Profits',                     excerpt:'From route batching to fuel tracking — practical levers two-wheel couriers can pull this month to lift margin.',                                          date:'14 Jan 2026', read:5 },
-    { img:'assets/article-3.jpg', cat:'SME Resources', title:'Free AI Tools To Use in Your Business',                            excerpt:'A curated stack of zero-cost AI tools founders are already using for marketing, ops and customer support.',                                              date:'12 Jan 2026', read:7 },
-    { img:'assets/article-4.jpg', cat:'Guides',        title:'Tips on Increasing e-hailing Profits in South Africa',             excerpt:'Where the real money lives for Bolt and Uber drivers — peak-time strategy, vehicle costs, and side-revenue plays.',                                       date:'7 Jan 2026',  read:6 },
-    { img:'assets/article-5.jpg', cat:'Articles',      title:'Happy Holidays! Make Your SME Shine This Festive Season',          excerpt:'Quick-win merchandising, social, and customer-care moves to turn December footfall into loyal repeat buyers.',                                           date:'22 Dec 2025', read:4 },
-    { img:'assets/article-6.jpg', cat:'Articles',      title:'Time Management for Entrepreneurs During the Festive Season',      excerpt:'Founder-tested routines for protecting deep work, rest, and family time while the business keeps trading.',                                              date:'18 Dec 2025', read:5 },
-    { img:'assets/article-7.jpg', cat:'SME Reviews',   title:'Affordable Workspaces for South African Entrepreneurs',            excerpt:'The best co-working spaces, hubs and hot-desks in Jo’burg, Cape Town and Durban — priced, rated, compared.',                                       date:'12 Dec 2025', read:8 },
-    { img:'assets/article-8.jpg', cat:'Brands',        title:'Queen’s Green Makes its Mark at the 2025 Township Economy Summit', excerpt:'How a kasi-grown plant brand turned a summit booth into national wholesale conversations — and what other founders can copy.', date:'5 Dec 2025',  read:6 }
+    { img:'assets/article-1.jpg', cat:'Funding',       title:'Kasi Money Starts With How You Earn',                              excerpt:'Township founders unpack what really moves the needle on cash flow — pricing, stock turn, and the small habits that compound.', date:'20 January 2026', read:6 },
+    { img:'assets/article-5.jpg', cat:'Marketing',     title:'Happy Holidays! Make Your SME Shine This Festive Season',          excerpt:'Quick-win merchandising, social, and customer-care moves to turn December footfall into loyal repeat buyers.',                date:'22 December 2025', read:4 },
+    { img:'assets/article-6.jpg', cat:'Operations',    title:'Time Management for Entrepreneurs During the Festive Season',      excerpt:'Founder-tested routines for protecting deep work, rest, and family time while the business keeps trading.',                   date:'18 December 2025', read:5 },
+    { img:'assets/article-2.jpg', cat:'Sales',         title:'Pricing Strategies That Actually Work for SA SMEs',                excerpt:'How to set prices that win customers without leaving margin on the table — five frameworks founders are using right now.',     date:'15 December 2025', read:7 },
+    { img:'assets/article-7.jpg', cat:'Technology',    title:'Five WhatsApp Business Tricks That Lift Repeat Orders',            excerpt:'Catalogues, labels, broadcast lists — the small features that turn casual buyers into loyal regulars.',                       date:'8 December 2025',  read:5 },
+    { img:'assets/article-3.jpg', cat:'Technology',    title:'Free AI Tools To Use in Your Business',                            excerpt:'A curated stack of zero-cost AI tools founders are already using for marketing, ops and customer support.',                    date:'2 December 2025',  read:7 }
   ];
+
+  // SME RESOURCES (icon tile + type tag + category tag + Download Now)
+  const RESOURCES = [
+    { type:'Ebook',    cat:'Marketing',    title:'Building a Brand on a Budget',           desc:'Look established before you are — for under R5,000.' },
+    { type:'Template', cat:'Finance',      title:'Cash Flow Forecast (12 Months)',         desc:'See your runway month by month.' },
+    { type:'Guide',    cat:'Compliance',   title:'POPIA Compliance for Small Teams',       desc:'A practical checklist to get data handling right.' },
+    { type:'Report',   cat:'Operations',   title:'State of SA Small Business 2026',        desc:'Confidence, funding access and hiring intentions.' },
+    { type:'Ebook',    cat:'Sales',        title:'Selling on WhatsApp & Social',           desc:'Turn followers and chats into paying customers.' },
+    { type:'Template', cat:'Sales',        title:'Sales Pipeline Tracker',                 desc:'Track leads from first contact to close.' },
+    { type:'Guide',    cat:'Finance',      title:'Opening a Business Bank Account',        desc:'What each bank needs and how to compare them.' },
+    { type:'Report',   cat:'Marketing',    title:'Township Economy Opportunity Map',       desc:'Where formal and informal markets converge.' }
+  ];
+
+  // GUIDES (image-less, GUIDE pill + category chip + read-guide CTA)
+  const GUIDES = [
+    { cat:'Funding',     title:'Tips For Increasing Scooter Delivery Profits',           excerpt:'From route batching to fuel tracking — practical levers two-wheel couriers can pull this month to lift margin.',     read:5 },
+    { cat:'Funding',     title:'Tips on Increasing e-hailing Profits in South Africa',   excerpt:'Where the real money lives for Bolt and Uber drivers — peak-time strategy, vehicle costs, and side-revenue plays.', read:6 },
+    { cat:'Compliance',  title:'Registering Your Business with CIPC',                    excerpt:'Every step, document and fee to register your company from scratch — without the agent fees.',                  read:8 },
+    { cat:'Marketing',   title:'A Practical SEO Playbook for Founder-Led Brands',        excerpt:'The eight content moves that compound — and the five vanity tactics that quietly waste your time.',           read:9 },
+    { cat:'Operations',  title:'How to Hire Your First Five Employees Properly',         excerpt:'A founder’s checklist for sourcing, screening, contracts and onboarding without expensive missteps.',           read:7 },
+    { cat:'Technology',  title:'Setting Up Online Payments for an SA Small Business',    excerpt:'Compare PayFast, Yoco Online, Stitch and Peach — fees, settlement times and integration effort.',             read:6 }
+  ];
+
+  // SME REVIEWS / BRANDS (favicon logo tile + category tag + read review)
+  const BRANDS = [
+    { name:'Yoco',           site:'yoco.com',                cat:'Banking & Cards',         desc:'Card readers and a business account built for SA small businesses.' },
+    { name:'Lula',           site:'lula.co.za',              cat:'Funding & Investment',    desc:'Working-capital funding and business banking in one app.' },
+    { name:'Retail Capital', site:'retailcapital.co.za',     cat:'Funding & Investment',    desc:'Revenue-based funding from R50k to R5m for trading businesses.' },
+    { name:'Xero',           site:'xero.com',                cat:'Accounting & Tax',        desc:'Cloud accounting trusted by thousands of South African SMEs.' },
+    { name:'Sage',           site:'sage.com',                cat:'Accounting & Tax',        desc:'Accounting and payroll for growing SA businesses.' },
+    { name:'PayFast',        site:'payfast.io',              cat:'Payments',                desc:'The most-integrated online payments gateway in South Africa.' },
+    { name:'Afrihost',       site:'afrihost.com',            cat:'Hosting & Domains',       desc:'Hosting, domains and fibre for founders who want it to just work.' },
+    { name:'Workshop17',     site:'workshop17.co.za',        cat:'Workspaces',              desc:'Coworking and meeting spaces across Jo’burg, Cape Town and Durban.' }
+  ];
+
+  // LOAN OPTIONS (list-row: icon tile + name + one-line desc + View →)
+  const LOANS = [
+    { icon:'truck',           name:'Asset Finance',            desc:'Fund equipment and vehicles without using your working capital.' },
+    { icon:'milestone',       name:'Bridging Finance',         desc:'Short-term cash to close the gap on a confirmed contract or payment.' },
+    { icon:'file-text',       name:'Invoice Finance',          desc:'Unlock cash from unpaid invoices instead of waiting 30–90 days.' },
+    { icon:'layers',          name:'Mezzanine Funding',        desc:'A flexible blend of debt and equity for growth-stage businesses.' },
+    { icon:'clipboard-check', name:'Purchase Order Funding',   desc:'Pay suppliers upfront to fulfil a confirmed customer order.' },
+    { icon:'hand-coins',      name:'Unsecured Business Loan',  desc:'Funding without collateral — fast turnaround for trading businesses.' },
+    { icon:'wallet',          name:'Working Capital Loans',    desc:'Smooth cash flow, cover payroll and stock up for busy periods.' }
+  ];
+
   let activeCat='All';
   function renderCats(){ document.getElementById('cat-bar').innerHTML = CATS.map(c=>`<button onclick="setCat('${c.replace(/'/g,"\\'")}')" class="fpill shrink-0 px-3.5 h-9 rounded-full border border-[#E7EBEF] bg-white text-sm font-semibold text-slate-600 ${c===activeCat?'active':''}">${esc(c)}</button>`).join(''); }
   function setCat(c){ activeCat=c; renderCats(); renderGrid(); }
-  function renderGrid(){
-    const list = activeCat==='All' ? ARTICLES : ARTICLES.filter(a=>a.cat===activeCat);
-    document.getElementById('artCount').textContent = ARTICLES.length;
-    document.getElementById('grid').innerHTML = list.map((a,i)=>`
+
+  // ===== Per-type card renderers =====
+  function articleCard(a,i){
+    return `
       <a href="public-article.html" class="group bg-white rounded-2xl border border-[#E7EBEF] overflow-hidden card-lift reveal flex flex-col" style="animation-delay:${i*40}ms">
         <div class="relative aspect-[16/10] overflow-hidden">
           <img src="${a.img}" alt="${esc(a.title)}" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" />
-          <span class="absolute top-3 left-3 px-2.5 py-1 rounded-full text-[10px] font-bold bg-[#FDECEF] text-[#DC183C] shadow-sm">${esc(a.cat)}</span>
+          <span class="absolute top-3 left-3 px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-[#FDECEF] text-[#DC183C] shadow-sm">${esc(a.cat)}</span>
         </div>
         <div class="p-5 flex flex-col flex-1">
-          <h3 class="font-jakarta font-bold text-lg leading-snug group-hover:text-[#DC183C] transition line-clamp-2 min-h-[3.25rem]">${esc(a.title)}</h3>
+          <p class="text-xs text-[#6A7581] font-semibold">${esc(a.date)} · ${a.read} min read</p>
+          <h3 class="font-jakarta font-extrabold text-lg leading-snug mt-2 group-hover:text-[#DC183C] transition line-clamp-2 min-h-[3.25rem]">${esc(a.title)}</h3>
           <p class="text-sm text-[#6A7581] mt-2 leading-relaxed line-clamp-2">${esc(a.excerpt)}</p>
           <div class="flex items-center gap-2.5 mt-auto pt-4 border-t border-[#E7EBEF]">
             <span class="w-8 h-8 rounded-full bg-gradient-to-br from-[#DC183C] to-[#FF9900] grid place-items-center text-white text-[11px] font-bold">${esc(AUTHOR.init)}</span>
-            <div class="text-xs"><p class="font-semibold text-[#121A21]">${esc(AUTHOR.name)}</p><p class="text-[#6A7581]">${esc(a.date)} · ${a.read} min read</p></div>
+            <div class="text-xs"><p class="font-semibold text-[#121A21]">${esc(AUTHOR.name)}</p><p class="text-[#6A7581]">Social Media &amp; Digital Community Manager</p></div>
           </div>
         </div>
-      </a>`).join('');
+      </a>`;
+  }
+  function resourceCard(r,i){
+    const t = RES_TYPES[r.type] || RES_TYPES.Ebook;
+    return `
+      <a href="public-resource.html" class="group bg-white rounded-2xl border border-[#E7EBEF] overflow-hidden card-lift reveal flex flex-col" style="animation-delay:${i*40}ms">
+        <div class="aspect-[16/9] w-full grid place-items-center" style="background:${t.tint[0]};color:${t.tint[1]}"><i data-lucide="${t.icon}" class="w-9 h-9"></i></div>
+        <div class="p-5 flex flex-col flex-1">
+          <div class="flex items-center gap-2 text-[11px] font-bold">
+            <span class="inline-flex px-2 py-0.5 rounded-full" style="background:${t.tint[0]};color:${t.tint[1]}">${esc(r.type)}</span>
+            <span class="inline-flex px-2 py-0.5 rounded-full bg-slate-100 text-slate-500">${esc(r.cat)}</span>
+          </div>
+          <h3 class="font-jakarta font-bold text-base leading-snug mt-3 group-hover:text-[#DC183C] transition">${esc(r.title)}</h3>
+          <p class="text-sm text-slate-600 mt-2 flex-1">${esc(r.desc)}</p>
+          <span class="mt-4 pt-4 border-t border-[#E7EBEF] inline-flex items-center gap-1.5 text-sm font-bold text-[#DC183C]"><i data-lucide="download" class="w-4 h-4"></i> Download Now</span>
+        </div>
+      </a>`;
+  }
+  function guideCard(g,i){
+    return `
+      <a href="public-guide.html" class="group bg-white rounded-2xl border border-[#E7EBEF] p-5 card-lift reveal flex flex-col" style="animation-delay:${i*40}ms">
+        <div class="flex items-center gap-2">
+          <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-bold bg-[#FFF1E0] text-[#AE6B0A]"><i data-lucide="book-open" class="w-3 h-3"></i> GUIDE</span>
+          <span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-[#FDECEF] text-[#DC183C]">${esc(g.cat)}</span>
+        </div>
+        <h3 class="font-jakarta font-extrabold text-lg leading-snug mt-3 group-hover:text-[#DC183C] transition line-clamp-2">${esc(g.title)}</h3>
+        <p class="text-sm text-[#6A7581] mt-2 leading-relaxed line-clamp-3 flex-1">${esc(g.excerpt)}</p>
+        <div class="flex items-center gap-2 mt-4 pt-4 border-t border-[#E7EBEF] text-xs text-[#6A7581]">
+          <i data-lucide="clock" class="w-3.5 h-3.5"></i><span class="font-semibold">${g.read} min read</span>
+          <span class="ml-auto inline-flex items-center gap-1 text-[#DC183C] font-bold">Read guide <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i></span>
+        </div>
+      </a>`;
+  }
+  function brandLogoTile(b,i){
+    const initials=b.name.split(/\s|&|\.|-/).filter(Boolean).slice(0,2).map(w=>w[0]).join('').toUpperCase();
+    const c=BPAL[i%BPAL.length];
+    return `<div class="w-14 h-14 rounded-2xl grid place-items-center shrink-0 relative overflow-hidden bg-white border border-[#E7EBEF]"><span class="font-jakarta font-extrabold text-base" style="color:${c[1]}">${esc(initials)}</span><img src="https://www.google.com/s2/favicons?domain=${esc(b.site)}&sz=128" alt="${esc(b.name)} logo" loading="lazy" class="absolute inset-0 w-full h-full object-contain p-2 bg-white" onerror="this.remove()"></div>`;
+  }
+  function brandCard(b,i){
+    return `
+      <div class="bg-white rounded-2xl border border-[#E7EBEF] card-lift reveal p-5 flex flex-col" style="animation-delay:${i*40}ms">
+        <div class="flex items-start gap-4">
+          ${brandLogoTile(b,i)}
+          <div class="min-w-0 flex-1">
+            <h3 class="font-jakarta font-extrabold text-base leading-tight truncate">${esc(b.name)}</h3>
+            <span class="inline-flex items-center gap-1.5 mt-1.5 text-[11px] font-bold uppercase tracking-wider text-[#DC183C] bg-[#FDECEF] rounded-full px-2.5 py-1"><i data-lucide="tag" class="w-3 h-3"></i> ${esc(b.cat)}</span>
+          </div>
+        </div>
+        <p class="text-sm text-slate-600 leading-relaxed mt-4 line-clamp-2 flex-1">${esc(b.desc)}</p>
+        <div class="flex items-center gap-3 mt-5 pt-4 border-t border-[#E7EBEF]">
+          <a href="public-brand.html" class="inline-flex items-center gap-1 text-sm font-bold text-[#DC183C] hover:gap-2 transition-all">Read review <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
+        </div>
+      </div>`;
+  }
+  function loanCard(o,i){
+    return `
+      <a href="public-loan-option.html" class="group bg-white rounded-2xl border border-[#E7EBEF] p-5 card-lift reveal flex items-center gap-4" style="animation-delay:${i*40}ms">
+        <span class="w-12 h-12 rounded-xl bg-[#FDECEF] text-[#DC183C] grid place-items-center shrink-0"><i data-lucide="${esc(o.icon)}" class="w-5 h-5"></i></span>
+        <div class="min-w-0 flex-1">
+          <h3 class="font-jakarta font-bold text-base leading-tight group-hover:text-[#DC183C] transition">${esc(o.name)}</h3>
+          <p class="text-sm text-[#6A7581] leading-snug mt-1 line-clamp-1">${esc(o.desc)}</p>
+        </div>
+        <span class="inline-flex items-center gap-1 text-xs font-bold text-[#DC183C] shrink-0">View <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i></span>
+      </a>`;
+  }
+
+  function renderGrid(){
+    const grid = document.getElementById('grid');
+    const totalArticles = ARTICLES.length;
+    document.getElementById('artCount').textContent = totalArticles;
+
+    // Reset layout class — list rows for loans, grid otherwise
+    grid.className = (activeCat==='Loan Options')
+      ? 'grid sm:grid-cols-2 gap-4'
+      : (activeCat==='SME Reviews' || activeCat==='Brands')
+        ? 'grid sm:grid-cols-2 lg:grid-cols-3 gap-5'
+        : 'grid sm:grid-cols-2 lg:grid-cols-4 gap-6';
+
+    let html = '';
+    if(activeCat==='All'){
+      // Mixed feed — render each type with its own card style
+      html += ARTICLES.map((a,i)=>articleCard(a,i)).join('');
+      // For 'All' keep the grid in 4-col article layout; resources/guides naturally drop in
+      html += GUIDES.slice(0,2).map((g,i)=>guideCard(g,i+ARTICLES.length)).join('');
+      html += RESOURCES.slice(0,2).map((r,i)=>resourceCard(r,i+ARTICLES.length+2)).join('');
+    } else if(activeCat==='Articles'){
+      html = ARTICLES.map((a,i)=>articleCard(a,i)).join('');
+    } else if(activeCat==='SME Resources'){
+      html = RESOURCES.map((r,i)=>resourceCard(r,i)).join('');
+    } else if(activeCat==='Guides'){
+      html = GUIDES.map((g,i)=>guideCard(g,i)).join('');
+    } else if(activeCat==='SME Reviews' || activeCat==='Brands'){
+      html = BRANDS.map((b,i)=>brandCard(b,i)).join('');
+    } else if(activeCat==='Loan Options'){
+      html = LOANS.map((o,i)=>loanCard(o,i)).join('');
+    }
+    grid.innerHTML = html;
     lucide.createIcons();
   }
 
