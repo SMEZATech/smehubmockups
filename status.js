@@ -26,14 +26,9 @@ window.MOCKUP_STATUS = {
   "public-brand.html": "under-review",
   "public-deals.html": "under-review",
   "public-deal.html": "under-review",
-  "public-help.html": "under-review",
-  "public-help-article.html": "under-review",
-  "public-guides.html": "under-review",
+  "public-guides.html": "finalised",
   "public-guide.html": "under-review",
   "public-founder-focus.html": "under-review",
-  "public-advertising-disclosure.html": "under-review",
-  "public-search.html": "under-review",
-  "public-404.html": "under-review",
   "public-shop.html": "under-review",
   "public-checkout.html": "under-review",
   "public-auth.html": "finalised",
@@ -44,6 +39,7 @@ window.MOCKUP_STATUS = {
   "public-terms.html": "finalised",
   "public-refunds.html": "finalised",
   "public-popia.html": "finalised",
+  "public-advertising-disclosure.html": "under-review",
   "member-hub.html": "finalised",
   "members.html": "under-review",
   "single-post.html": "under-review",
@@ -56,10 +52,14 @@ window.MOCKUP_STATUS = {
   "podcast.html": "under-work",
   "brand_ci.html": "finalised",
   "public-icons.html": "finalised",
+  "public-help.html": "under-review",
+  "public-help-article.html": "under-review",
+  "public-search.html": "under-review",
+  "public-404.html": "under-review",
   "chrome-preview.html": "under-review"
 };
-window.MOCKUP_STATUS_PUBLISHED = "2026-06-15T10:21:06.161Z";
+window.MOCKUP_STATUS_PUBLISHED = "2026-06-23T12:20:23.238Z";
 /* Developer builds (staging) — { mockup file: { url, status } }; status: "pending-review" | "reviewed" | "approved" */
 window.MOCKUP_DEV = {
-  "public-home.html": { "url": "https://smesastg.wpengine.com/", "status": "pending-review" }
+  "public-home.html": {"url":"https://smesastg.wpengine.com/","status":"pending-review"}
 };
