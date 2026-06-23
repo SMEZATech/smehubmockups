@@ -61,7 +61,8 @@
 <!-- ===================== AUTHOR HEADER ===================== -->
 <section class="bg-white border-b border-[#E7EBEF]">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 py-10">
-    <p class="text-xs text-[#6A7581] mb-5"><a href="public-articles.html" class="hover:text-[#DC183C]">Articles</a> <span class="mx-1">/</span> <span>Authors</span> <span class="mx-1">/</span> <span class="text-[#121A21] font-semibold">Karabo Kgophane</span></p>
+    <!-- Breadcrumb (global pattern) -->
+    <nav aria-label="Breadcrumb" class="text-xs text-[#6A7581] flex items-center flex-wrap gap-x-1.5 mb-5"><a href="public-home.html" class="hover:text-[#DC183C] transition">Home</a><span class="text-slate-300">›</span><a href="public-articles.html" class="hover:text-[#DC183C] transition">Authors</a><span class="text-slate-300">›</span><span class="text-[#121A21] font-medium truncate">Karabo Kgophane</span></nav>
     <div class="flex flex-col sm:flex-row gap-6 sm:gap-8">
       <div class="relative w-24 h-24 sm:w-32 sm:h-32 rounded-full shrink-0 shadow-lg overflow-hidden">
         <div class="absolute inset-0 bg-gradient-to-br from-[#DC183C] to-[#FF9900] grid place-items-center font-jakarta font-extrabold text-white text-4xl" aria-hidden="true">KK</div>
@@ -161,7 +162,22 @@
     { cat:'Technology',  title:'Setting Up Online Payments for an SA Small Business',    excerpt:'Compare PayFast, Yoco Online, Stitch and Peach — fees, settlement times and integration effort.',             read:6 }
   ];
 
-  // SME REVIEWS / BRANDS (favicon logo tile + category tag + read review)
+  // SME REVIEWS — solution category cards (matches public-solutions.html archive)
+  const SOL_PAL = [['#FDECEF','#DC183C'],['#FFF1E0','#AE6B0A'],['#E4F5EE','#29A37A']];
+  const SOLUTION_CATEGORIES = [
+    ['AI App & Website Builders','sparkles'],
+    ['Accounting Software','calculator'],
+    ['CRM Platforms','users-round'],
+    ['Payment Gateways','credit-card'],
+    ['POS Systems','scan-line'],
+    ['Project Management','kanban'],
+    ['Email Marketing','mail'],
+    ['Web Hosting','server'],
+    ['E-commerce Platforms','shopping-cart'],
+    ['Payroll Software','wallet']
+  ];
+
+  // BRANDS (favicon logo tile + category tag + read review)
   const BRANDS = [
     { name:'Yoco',           site:'yoco.com',                cat:'Banking & Cards',         desc:'Card readers and a business account built for SA small businesses.' },
     { name:'Lula',           site:'lula.co.za',              cat:'Funding & Investment',    desc:'Working-capital funding and business banking in one app.' },
@@ -259,6 +275,14 @@
         </div>
       </div>`;
   }
+  function solutionCategoryCard(c,i){
+    const p=SOL_PAL[i%3];
+    return `
+      <a href="public-solution-category.html?cat=${encodeURIComponent(c[0])}" class="bg-white rounded-2xl border border-[#E7EBEF] p-5 card-lift flex items-center gap-3 reveal" style="animation-delay:${i*22}ms">
+        <div class="w-11 h-11 rounded-xl grid place-items-center shrink-0" style="background:${p[0]};color:${p[1]}"><i data-lucide="${c[1]}" class="w-5 h-5"></i></div>
+        <span class="font-jakarta font-bold text-sm leading-tight">${esc(c[0])}</span>
+      </a>`;
+  }
   function loanCard(o,i){
     return `
       <a href="public-loan-option.html" class="group bg-white rounded-2xl border border-[#E7EBEF] p-5 card-lift reveal flex items-center gap-4" style="animation-delay:${i*40}ms">
@@ -279,9 +303,11 @@
     // Reset layout class — list rows for loans, grid otherwise
     grid.className = (activeCat==='Loan Options')
       ? 'grid sm:grid-cols-2 gap-4'
-      : (activeCat==='SME Reviews' || activeCat==='Brands')
-        ? 'grid sm:grid-cols-2 lg:grid-cols-3 gap-5'
-        : 'grid sm:grid-cols-2 lg:grid-cols-4 gap-6';
+      : (activeCat==='SME Reviews')
+        ? 'grid sm:grid-cols-2 lg:grid-cols-4 gap-4'
+        : (activeCat==='Brands')
+          ? 'grid sm:grid-cols-2 lg:grid-cols-3 gap-5'
+          : 'grid sm:grid-cols-2 lg:grid-cols-4 gap-6';
 
     let html = '';
     if(activeCat==='All'){
@@ -296,7 +322,9 @@
       html = RESOURCES.map((r,i)=>resourceCard(r,i)).join('');
     } else if(activeCat==='Guides'){
       html = GUIDES.map((g,i)=>guideCard(g,i)).join('');
-    } else if(activeCat==='SME Reviews' || activeCat==='Brands'){
+    } else if(activeCat==='SME Reviews'){
+      html = SOLUTION_CATEGORIES.map((c,i)=>solutionCategoryCard(c,i)).join('');
+    } else if(activeCat==='Brands'){
       html = BRANDS.map((b,i)=>brandCard(b,i)).join('');
     } else if(activeCat==='Loan Options'){
       html = LOANS.map((o,i)=>loanCard(o,i)).join('');
