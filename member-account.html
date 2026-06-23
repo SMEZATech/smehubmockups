@@ -396,7 +396,9 @@ const state = {
   activityFilter:'all', connTab:'connections', connView:'list', forumTab:'discussions',
   settingsTab:'profile', activeConv:'c1', msgPane:'list', cannedIdx:0, notifUnread:14, notifFilter:'all',
   notif:{ digest:'weekly', reply:true, mention:true, sectorAsk:true, winConn:true, event:true, suggested:false },
-  privacy:{ visibility:'community', postDefault:'community', messages:'connections', directory:true, stats:true }
+  privacy:{ visibility:'community', postDefault:'community', messages:'connections', directory:true, stats:true },
+  downloads:{ q:'', type:'all', sort:'newest' },
+  funding:{ q:'', status:'all', sort:'newest', expanded:{}, editing:{}, view:'list', activeId:null }
 };
 function person(){ return PEOPLE[state.role]; }
 
@@ -477,6 +479,8 @@ function renderUserMenu(){
       ${item('invites','mail-plus','Email Invites',{active:inProfile && state.profileTab==='invites'})}
       ${item('membership','crown','Membership',{active:state.view==='settings' && state.settingsTab==='membership'})}
       ${item('orders','shopping-bag','My Orders',{active:state.view==='settings' && state.settingsTab==='orders'})}
+      ${item('downloads','download-cloud','Downloads',{active:state.view==='settings' && state.settingsTab==='downloads'})}
+      ${item('funding','banknote','Funding applications',{active:state.view==='settings' && state.settingsTab==='funding'})}
     </div>
     <div class="py-1 border-t border-slate-100">
       ${item('logout','log-out','Log Out')}
@@ -549,6 +553,8 @@ function navTo(dest){
     case 'account':     switchView('settings'); setSettingsTab('profile'); break;
     case 'membership':  switchView('settings'); setSettingsTab('membership'); break;
     case 'orders':      switchView('settings'); setSettingsTab('orders'); break;
+    case 'downloads':   switchView('settings'); setSettingsTab('downloads'); break;
+    case 'funding':     switchView('settings'); setSettingsTab('funding'); break;
     case 'messages':    openMessages(); break;
     case 'notifications': toggleNotifMenu(); break;
     case 'logout':      openLogoutModal(); break;
@@ -1307,6 +1313,8 @@ const SETTINGS_NAV = [
   { id:'blocked',       label:'Blocked Members',icon:'user-x' },
   { id:'membership',    label:'Membership',     icon:'crown' },
   { id:'orders',        label:'My Orders',      icon:'shopping-bag' },
+  { id:'downloads',     label:'Downloads',      icon:'download-cloud' },
+  { id:'funding',       label:'Funding applications', icon:'banknote' },
   { id:'security',      label:'Security',       icon:'lock' },
   { id:'data',          label:'Data & POPIA',   icon:'shield-check' }
 ];
@@ -1343,7 +1351,7 @@ function toggleRow(label, sub, on, onclick){
 
 function renderSettingsContent(){
   const host = document.getElementById('settings-content');
-  const map = { profile:setProfile, notifications:setNotifications, privacy:setPrivacy, blocked:setBlocked, membership:setMembership, orders:setOrders, security:setSecurity, data:setData };
+  const map = { profile:setProfile, notifications:setNotifications, privacy:setPrivacy, blocked:setBlocked, membership:setMembership, orders:setOrders, downloads:renderDownloads, funding:renderFunding, security:setSecurity, data:setData };
   host.innerHTML = (map[state.settingsTab]||setProfile)();
   lucide.createIcons();
 }
@@ -1547,6 +1555,657 @@ function setOrders(){
     </div>
     <p class="text-xs text-slate-400 mt-5 flex items-center gap-1.5"><i data-lucide="info" class="w-3.5 h-3.5"></i> The SME SA store sells branded merchandise. Orders are managed securely by <span class="font-mono">WooCommerce</span> — payment and address management hands off to the WooCommerce secure account page. Member resources &amp; downloads are managed separately through your Membership.</p>`;
   return settingsCard('My Orders', 'Your SME South Africa merchandise orders.', body);
+}
+
+/* ===================== SETTINGS · DOWNLOADS ===================== */
+const DOWNLOADS = [
+  { id:'d1',  title:'Your Guide to AI Prompting',          type:'ebook',     date:'18 Jun 2026', format:'PDF', size:'2.4 MB', accessed:3, icon:'book-open' },
+  { id:'d2',  title:'One-Page Business Plan Template',     type:'template',  date:'14 Jun 2026', format:'DOCX',size:'180 KB', accessed:5, icon:'file-text' },
+  { id:'d3',  title:'Pitching to Funders That Say Yes',    type:'guide',     date:'11 Jun 2026', format:'PDF', size:'3.1 MB', accessed:2, icon:'clipboard-list' },
+  { id:'d4',  title:'Cash Flow Forecast (12 Months)',      type:'template',  date:'2 Jun 2026',  format:'XLSX',size:'92 KB',  accessed:8, icon:'file-text' },
+  { id:'d5',  title:'State of SA Small Business 2026',     type:'report',    date:'28 May 2026', format:'PDF', size:'6.8 MB', accessed:1, icon:'bar-chart' },
+  { id:'d6',  title:'Marketing Calendar Template',         type:'template',  date:'22 May 2026', format:'XLSX',size:'140 KB', accessed:4, icon:'file-text' },
+  { id:'d7',  title:'Selling on WhatsApp & Social',        type:'guide',     date:'15 May 2026', format:'PDF', size:'2.0 MB', accessed:2, icon:'clipboard-list' },
+  { id:'d8',  title:'Registering Your Business with CIPC', type:'guide',     date:'8 May 2026',  format:'PDF', size:'1.5 MB', accessed:6, icon:'clipboard-list' },
+  { id:'d9',  title:'Hiring Your First Five People',       type:'ebook',     date:'2 May 2026',  format:'PDF', size:'2.9 MB', accessed:1, icon:'book-open' },
+  { id:'d10', title:"The Bootstrapper's Handbook",         type:'ebook',     date:'24 Apr 2026', format:'PDF', size:'4.1 MB', accessed:3, icon:'book-open' }
+];
+const DOWNLOAD_TYPES = [['all','All'],['ebook','eBooks'],['template','Templates'],['guide','Guides'],['report','Reports & Surveys']];
+const DOWNLOAD_TYPE_META = {
+  ebook:    { label:'eBook',    color:'#DC183C', bg:'#FDECEF' },
+  template: { label:'Template', color:'#3B82F6', bg:'#E5EFFB' },
+  guide:    { label:'Guide',    color:'#AE6B0A', bg:'#FFF1E0' },
+  report:   { label:'Report',   color:'#29A37A', bg:'#E4F5EE' }
+};
+
+function setDownloadType(t){ state.downloads.type=t; renderSettingsContent(); }
+function setDownloadSort(v){ state.downloads.sort=v; renderSettingsContent(); }
+function setDownloadQ(v){ state.downloads.q=v; renderDownloadList(); }
+function reDownload(id){
+  const d = DOWNLOADS.find(x=>x.id===id); if(!d) return;
+  showToast('Re-downloading '+d.title+'…', null);
+}
+
+function renderDownloadList(){
+  const host = document.getElementById('dl-list'); if(!host) return;
+  const q = (state.downloads.q||'').toLowerCase();
+  let list = DOWNLOADS.slice();
+  if(state.downloads.type!=='all') list = list.filter(d=>d.type===state.downloads.type);
+  if(q) list = list.filter(d=>d.title.toLowerCase().includes(q));
+  if(state.downloads.sort==='oldest') list.reverse();
+  else if(state.downloads.sort==='accessed') list.sort((a,b)=>b.accessed-a.accessed);
+  const empty = document.getElementById('dl-empty');
+  if(!list.length){
+    host.innerHTML = '';
+    if(empty) empty.classList.remove('hidden');
+    lucide.createIcons();
+    return;
+  }
+  if(empty) empty.classList.add('hidden');
+  host.innerHTML = list.map((d,i)=>{
+    const m = DOWNLOAD_TYPE_META[d.type];
+    return `<div class="flex items-center gap-3 px-4 py-3.5 ${i%2?'bg-slate-50/50':''} border-b border-slate-100 last:border-0">
+      <div class="w-11 h-11 rounded-xl grid place-items-center shrink-0" style="background:${m.bg}"><i data-lucide="${d.icon}" class="w-5 h-5" style="color:${m.color}"></i></div>
+      <div class="min-w-0 flex-1">
+        <a href="public-resource.html" class="font-jakarta font-bold text-sm text-[#121A21] hover:text-[#DC183C] truncate block">${esc(d.title)}</a>
+        <div class="flex items-center gap-2 flex-wrap mt-1">
+          <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold" style="background:${m.bg};color:${m.color}">${m.label}</span>
+          <span class="text-[11px] text-slate-400">Downloaded ${esc(d.date)}</span>
+          <span class="text-[11px] text-slate-300">·</span>
+          <span class="text-[11px] text-slate-400 font-mono">${esc(d.format)} · ${esc(d.size)}</span>
+        </div>
+      </div>
+      <button onclick="reDownload('${d.id}')" class="text-xs font-bold text-[#DC183C] hover:text-[#B0142F] flex items-center gap-1.5 shrink-0 px-3 py-1.5 rounded-full hover:bg-[#FDECEF]/60 transition"><i data-lucide="download" class="w-3.5 h-3.5"></i><span class="hidden sm:inline">Download again</span></button>
+      <button onclick="showToast('Menu (mockup): Remove · Share',null)" class="w-8 h-8 grid place-items-center rounded-full text-slate-400 hover:bg-slate-100 hover:text-slate-700 shrink-0"><i data-lucide="more-horizontal" class="w-4 h-4"></i></button>
+    </div>`;
+  }).join('');
+  lucide.createIcons();
+}
+
+function renderDownloads(){
+  const total = DOWNLOADS.length;
+  const thisMonth = DOWNLOADS.filter(d=>/Jun 2026|May 2026/.test(d.date) && /Jun 2026/.test(d.date)).length;
+  const storage = DOWNLOADS.length + ' documents';
+  const statCard = (label,val,color) => `<div class="bg-white rounded-2xl border border-slate-100 p-4">
+    <p class="text-[10px] font-bold uppercase tracking-widest text-slate-400">${esc(label)}</p>
+    <p class="font-jakarta font-extrabold text-2xl mt-1" style="color:${color}">${esc(val)}</p>
+  </div>`;
+  const chips = DOWNLOAD_TYPES.map(([id,l])=>`<button onclick="setDownloadType('${id}')" class="shrink-0 px-3.5 py-1.5 rounded-full text-xs font-bold border ${state.downloads.type===id?'bg-[#DC183C] text-white border-[#DC183C]':'border-slate-200 bg-white text-slate-600 hover:bg-slate-50'}">${l}</button>`).join('');
+  const body = `
+    <div class="rounded-2xl overflow-hidden border border-slate-100 mb-5">
+      <div class="bg-[#0C1F31] px-5 py-5 relative">
+        <div class="absolute inset-0 opacity-40" style="background:radial-gradient(circle at 80% 30%, #FF9900 0%, transparent 60%);"></div>
+        <p class="relative text-[10px] font-bold uppercase tracking-widest text-[#FF9900]">Resource Downloads</p>
+        <h3 class="relative font-jakarta font-extrabold text-2xl text-white mt-0.5">Everything you've downloaded, in one place.</h3>
+        <p class="relative text-xs text-white/60 mt-1">Re-download anything you've taken from the Resources library — no hunting through old emails.</p>
+      </div>
+    </div>
+    <div class="grid grid-cols-3 gap-3 mb-5">
+      ${statCard('Total downloads', total, '#DC183C')}
+      ${statCard('This month', thisMonth, '#29A37A')}
+      ${statCard('Storage saved', storage, '#0C1F31')}
+    </div>
+    <div class="bg-white rounded-2xl border border-slate-100 p-4 mb-4">
+      <div class="flex flex-col sm:flex-row gap-3 sm:items-center">
+        <div class="relative flex-1">
+          <i data-lucide="search" class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400"></i>
+          <input value="${esc(state.downloads.q)}" oninput="setDownloadQ(this.value)" placeholder="Search downloads…" class="w-full bg-slate-50 border border-slate-200 rounded-full pl-9 pr-3 py-2 text-sm outline-none focus:bg-white focus:border-[#DC183C] transition">
+        </div>
+        <select onchange="setDownloadSort(this.value)" class="text-xs font-semibold border border-slate-200 rounded-full px-3 py-2 outline-none text-slate-600 bg-white">
+          <option value="newest" ${state.downloads.sort==='newest'?'selected':''}>Newest</option>
+          <option value="oldest" ${state.downloads.sort==='oldest'?'selected':''}>Oldest</option>
+          <option value="accessed" ${state.downloads.sort==='accessed'?'selected':''}>Most accessed</option>
+        </select>
+      </div>
+      <div class="flex gap-2 overflow-x-auto no-scrollbar mt-3">${chips}</div>
+    </div>
+    <div class="bg-white rounded-2xl border border-slate-100 overflow-hidden">
+      <div id="dl-list"></div>
+      <div id="dl-empty" class="hidden text-center py-12 px-4">
+        <div class="w-14 h-14 mx-auto rounded-full bg-slate-100 grid place-items-center mb-3"><i data-lucide="folder-search" class="w-6 h-6 text-slate-400"></i></div>
+        <p class="font-jakarta font-bold text-[#121A21]">Nothing matches your filters yet</p>
+        <p class="text-sm text-slate-500 max-w-xs mx-auto mt-1">Try clearing the search, or browse the library to grab something new.</p>
+        <a href="public-resources.html" class="mt-4 bg-[#DC183C] hover:bg-[#B0142F] text-white rounded-full px-5 py-2.5 font-jakarta font-bold text-sm transition inline-flex items-center gap-2"><i data-lucide="compass" class="w-4 h-4"></i> Browse Resources →</a>
+      </div>
+    </div>
+    <a href="public-resources.html" class="mt-5 block rounded-2xl border border-slate-100 bg-gradient-to-br from-[#FDECEF]/40 to-[#FFF1E0]/40 p-5 flex items-center gap-4 hover:border-[#DC183C] transition">
+      <div class="w-12 h-12 rounded-full bg-white grid place-items-center shrink-0 shadow-sm"><i data-lucide="compass" class="w-5 h-5 text-[#DC183C]"></i></div>
+      <div class="min-w-0 flex-1">
+        <p class="font-jakarta font-bold text-[#121A21]">Looking for something new?</p>
+        <p class="text-xs text-slate-500 mt-0.5">Fresh templates, guides and reports drop in the Resources library every week.</p>
+      </div>
+      <i data-lucide="chevron-right" class="w-5 h-5 text-slate-400 shrink-0"></i>
+    </a>`;
+  // schedule list render after DOM lands
+  setTimeout(renderDownloadList, 0);
+  return settingsCard('Downloads', 'Resource download history — re-download anything you have ever pulled from the library.', body);
+}
+
+/* ===================== SETTINGS · FUNDING APPLICATIONS ===================== */
+const FUNDING_STATUS = {
+  draft:     { label:'Draft',                color:'#6A7581', bg:'#E7EBEF' },
+  submitted: { label:'Submitted',            color:'#3B82F6', bg:'#E5EFFB' },
+  review:    { label:'In review',            color:'#FF9900', bg:'#FFF1E0' },
+  docs:      { label:'Documents requested',  color:'#DC183C', bg:'#FDECEF' },
+  approved:  { label:'Approved',             color:'#29A37A', bg:'#E4F5EE' },
+  declined:  { label:'Declined',             color:'#6A7581', bg:'#E7EBEF' },
+  funded:    { label:'Funded',               color:'#29A37A', bg:'#E4F5EE' }
+};
+const FUNDING_FILTERS = [['all','All'],['draft','Draft'],['submitted','Submitted'],['review','In review'],['docs','Documents requested'],['approved','Approved'],['declined','Declined'],['funded','Funded']];
+const FUNDING_STEPS = ['Submitted','Documents','In review','Decision','Funded'];
+
+const APPLICATIONS = [
+  {
+    id:'APP-2026-0481', product:'Asset Finance', icon:'truck',
+    amount:1200000, term:'48 months', purpose:'Two delivery vehicles for Gauteng route expansion.',
+    submitted:'12 Jun 2026', updated:'2 days ago', status:'docs', step:1,
+    lender:'Business Partners Limited', contact:'Khanyi Mthembu',
+    documents:[
+      { name:'Company registration (CIPC)', state:'provided' },
+      { name:'6 months bank statements', state:'provided' },
+      { name:'Latest management accounts', state:'reupload' },
+      { name:'Tax clearance certificate', state:'pending' }
+    ],
+    timeline:[
+      { date:'12 Jun 2026', text:'Application created.', icon:'file-plus' },
+      { date:'12 Jun 2026', text:'Application submitted.', icon:'send' },
+      { date:'14 Jun 2026', text:'Matched with Business Partners Limited.', icon:'link' },
+      { date:'18 Jun 2026', text:'Viewed by lender (Khanyi Mthembu).', icon:'eye' },
+      { date:'21 Jun 2026', text:'Documents requested — see list.', icon:'file-warning' }
+    ]
+  },
+  {
+    id:'APP-2026-0420', product:'Working Capital Loan', icon:'wallet',
+    amount:250000, term:'12 months', purpose:'Bridge stock purchase for Q3 retail orders.',
+    submitted:'2 Jun 2026', updated:'5 days ago', status:'review', step:2,
+    lender:'Lula Lend', contact:'Sipho Khumalo',
+    documents:[
+      { name:'Company registration (CIPC)', state:'provided' },
+      { name:'3 months bank statements', state:'provided' },
+      { name:'ID copies of directors', state:'provided' }
+    ],
+    timeline:[
+      { date:'2 Jun 2026', text:'Application submitted.', icon:'send' },
+      { date:'3 Jun 2026', text:'Matched with Lula Lend.', icon:'link' },
+      { date:'8 Jun 2026', text:'Lender opened the application.', icon:'eye' },
+      { date:'15 Jun 2026', text:'Underwriter assigned: Sipho Khumalo.', icon:'user-check' }
+    ]
+  },
+  {
+    id:'APP-2026-0388', product:'Invoice Finance', icon:'file-text',
+    amount:480000, term:'90 days revolving', purpose:'Discount outstanding invoices from corporate clients.',
+    submitted:'24 May 2026', updated:'today', status:'approved', step:3,
+    lender:'Merchant Factors', contact:'Lerato Sibiya',
+    documents:[
+      { name:'Debtors age analysis', state:'provided' },
+      { name:'Top 5 client contracts', state:'provided' },
+      { name:'Bank statements (6 months)', state:'provided' }
+    ],
+    timeline:[
+      { date:'24 May 2026', text:'Application submitted.', icon:'send' },
+      { date:'26 May 2026', text:'Matched with Merchant Factors.', icon:'link' },
+      { date:'30 May 2026', text:'All documents received.', icon:'check' },
+      { date:'10 Jun 2026', text:'Underwriting complete.', icon:'shield-check' },
+      { date:'22 Jun 2026', text:'Approved — awaiting signed term sheet.', icon:'badge-check' }
+    ]
+  },
+  {
+    id:'APP-2026-0357', product:'Bridging Finance', icon:'arrow-right-left',
+    amount:600000, term:'6 months', purpose:'Bridging finance for property transfer (tenant deposit).',
+    submitted:'12 May 2026', updated:'1 week ago', status:'submitted', step:0,
+    lender:null, contact:null,
+    documents:[
+      { name:'Sale agreement', state:'provided' },
+      { name:'Conveyancer letter', state:'pending' }
+    ],
+    timeline:[
+      { date:'12 May 2026', text:'Application submitted.', icon:'send' },
+      { date:'13 May 2026', text:'Awaiting lender match.', icon:'clock' }
+    ]
+  },
+  {
+    id:'APP-2026-0509', product:'Working Capital Loan', icon:'wallet',
+    amount:75000, term:'6 months', purpose:'Smaller top-up for marketing spend ahead of Black Friday.',
+    submitted:'—', updated:'in progress', status:'draft', step:-1,
+    lender:null, contact:null,
+    documents:[
+      { name:'Company registration (CIPC)', state:'pending' },
+      { name:'Bank statements', state:'pending' },
+      { name:'Latest management accounts', state:'pending' }
+    ],
+    timeline:[
+      { date:'20 Jun 2026', text:'Draft created — not yet submitted.', icon:'file-pen' }
+    ]
+  }
+];
+
+function setFundingFilter(s){ state.funding.status=s; renderSettingsContent(); }
+function setFundingSort(v){ state.funding.sort=v; renderSettingsContent(); }
+function setFundingQ(v){ state.funding.q=v; renderFundingList(); }
+function fundingZAR(n){ return 'R '+Number(n).toLocaleString('en-ZA'); }
+
+function withdrawApp(id){
+  const a = APPLICATIONS.find(x=>x.id===id); if(!a) return;
+  if(confirm('Withdraw application '+id+'? This cannot be undone.')){
+    a.status='declined'; a.step=-1; a.updated='just now';
+    a.timeline.push({ date:'today', text:'Withdrawn by applicant.', icon:'x-circle' });
+    renderSettingsContent();
+    showToast('Application '+id+' withdrawn.', null);
+  }
+}
+function toggleEditApp(id){
+  state.funding.editing[id] = !state.funding.editing[id];
+  renderFundingList();
+}
+function saveEditApp(id){
+  const a = APPLICATIONS.find(x=>x.id===id); if(!a) return;
+  const amt = document.getElementById('fa-amt-'+id); const term = document.getElementById('fa-term-'+id); const purp = document.getElementById('fa-purp-'+id);
+  if(amt){ const v=parseInt(String(amt.value).replace(/[^0-9]/g,''),10); if(v) a.amount=v; }
+  if(term && term.value.trim()) a.term=term.value.trim();
+  if(purp && purp.value.trim()) a.purpose=purp.value.trim();
+  a.updated='just now';
+  state.funding.editing[id] = false;
+  renderFundingList();
+  showToast('Application '+id+' updated.', 'win');
+}
+function uploadDoc(id, docIdx){
+  const a = APPLICATIONS.find(x=>x.id===id); if(!a) return;
+  const d = a.documents[docIdx]; if(!d) return;
+  d.state = 'provided';
+  a.updated='just now';
+  renderFundingList();
+  showToast('Uploaded: '+d.name, 'win');
+}
+
+function fundingStepper(step){
+  // step = -1 (draft, no progress), 0..4
+  return `<div class="flex items-center gap-1 mt-3">
+    ${FUNDING_STEPS.map((s,i)=>{
+      const done = step>i, cur = step===i;
+      const dotColor = done?'#29A37A':cur?'#DC183C':'#CBD5E1';
+      const lineColor = done?'#29A37A':'#E2E8F0';
+      const icon = done?'check':(cur?'circle-dot':'circle');
+      return `<div class="flex items-center ${i===FUNDING_STEPS.length-1?'':'flex-1'} min-w-0">
+        <div class="flex flex-col items-center">
+          <div class="w-6 h-6 rounded-full grid place-items-center shrink-0" style="background:${done?'#29A37A':cur?'#FDECEF':'#F1F5F9'};${cur?'box-shadow:0 0 0 2px #DC183C':''}"><i data-lucide="${icon}" class="w-3 h-3" style="color:${done?'#fff':dotColor}"></i></div>
+          <p class="text-[9px] font-bold mt-1 ${cur?'text-[#DC183C]':done?'text-[#29A37A]':'text-slate-400'} uppercase tracking-wide text-center">${s}</p>
+        </div>
+        ${i<FUNDING_STEPS.length-1?`<div class="flex-1 h-0.5 mx-1 -mt-4" style="background:${lineColor}"></div>`:''}
+      </div>`;
+    }).join('')}
+  </div>`;
+}
+
+function docBadge(s){
+  if(s==='provided') return `<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#E4F5EE] text-[#29A37A]"><i data-lucide="check" class="w-3 h-3"></i> Provided</span>`;
+  if(s==='reupload') return `<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#FDECEF] text-[#DC183C]"><i data-lucide="refresh-cw" class="w-3 h-3"></i> Re-upload</span>`;
+  return `<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#FFF1E0] text-[#AE6B0A]"><i data-lucide="clock" class="w-3 h-3"></i> Pending</span>`;
+}
+
+function fundingRowMenu(id){
+  return `<div class="relative inline-block">
+    <button onclick="event.stopPropagation();document.getElementById('fa-menu-${id}').classList.toggle('hidden')" class="w-8 h-8 rounded-lg border border-[#E7EBEF] hover:border-[#DC183C] hover:text-[#DC183C] text-slate-500 grid place-items-center transition"><i data-lucide="more-horizontal" class="w-4 h-4"></i></button>
+    <div id="fa-menu-${id}" class="hidden absolute right-0 mt-1 w-44 bg-white rounded-xl border border-[#E7EBEF] shadow-lg z-10 py-1">
+      <button onclick="event.stopPropagation();document.getElementById('fa-menu-${id}').classList.add('hidden');viewFunding('${id}')" class="w-full text-left px-3 py-2 text-xs font-semibold text-[#121A21] hover:bg-slate-50 flex items-center gap-2"><i data-lucide="pencil" class="w-3.5 h-3.5"></i> Update info</button>
+      <button onclick="event.stopPropagation();document.getElementById('fa-menu-${id}').classList.add('hidden');confirmWithdraw('${id}')" class="w-full text-left px-3 py-2 text-xs font-semibold text-[#DC183C] hover:bg-[#FDECEF] flex items-center gap-2"><i data-lucide="x-circle" class="w-3.5 h-3.5"></i> Withdraw</button>
+    </div>
+  </div>`;
+}
+
+function fundingTableRow(a, idx){
+  const s = FUNDING_STATUS[a.status];
+  const zebra = idx%2===0 ? 'bg-white' : 'bg-[#FCFCFC]';
+  return `<tr class="${zebra} hover:bg-[#FDECEF]/40 transition cursor-pointer border-b border-[#E7EBEF] last:border-0" onclick="viewFunding('${a.id}')">
+    <td class="px-4 py-3"><span class="inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-bold whitespace-nowrap" style="background:${s.bg};color:${s.color}">${s.label}</span></td>
+    <td class="px-4 py-3">
+      <div class="flex items-center gap-2.5 min-w-0">
+        <div class="w-8 h-8 rounded-lg bg-[#0C1F31] grid place-items-center shrink-0"><i data-lucide="${a.icon}" class="w-4 h-4 text-[#FF9900]"></i></div>
+        <p class="font-jakarta font-bold text-[#121A21] text-sm leading-tight">${esc(a.product)}</p>
+      </div>
+    </td>
+    <td class="px-4 py-3 text-[11px] font-mono text-slate-500">${esc(a.id)}</td>
+    <td class="px-4 py-3 text-sm font-mono font-bold text-[#121A21] text-right whitespace-nowrap">${esc(fundingZAR(a.amount))}</td>
+    <td class="px-4 py-3 text-xs text-slate-600 whitespace-nowrap">${esc(a.submitted)}</td>
+    <td class="px-4 py-3 text-xs text-slate-500 whitespace-nowrap">${esc(a.updated)}</td>
+    <td class="px-4 py-3 text-right whitespace-nowrap">
+      <div class="inline-flex items-center gap-1.5" onclick="event.stopPropagation()">
+        <button onclick="viewFunding('${a.id}')" class="bg-[#DC183C] hover:bg-[#B0142F] text-white rounded-full px-3 py-1.5 text-[11px] font-bold transition inline-flex items-center gap-1">View application <i data-lucide="arrow-right" class="w-3 h-3"></i></button>
+        ${fundingRowMenu(a.id)}
+      </div>
+    </td>
+  </tr>`;
+}
+
+function fundingMobileCard(a){
+  const s = FUNDING_STATUS[a.status];
+  return `<div class="bg-white rounded-xl border border-[#E7EBEF] p-4 cursor-pointer hover:border-[#DC183C] transition" onclick="viewFunding('${a.id}')">
+    <div class="flex items-start justify-between gap-2 mb-3">
+      <div class="flex items-center gap-2.5 min-w-0">
+        <div class="w-9 h-9 rounded-lg bg-[#0C1F31] grid place-items-center shrink-0"><i data-lucide="${a.icon}" class="w-4 h-4 text-[#FF9900]"></i></div>
+        <div class="min-w-0">
+          <p class="font-jakarta font-bold text-[#121A21] text-sm leading-tight">${esc(a.product)}</p>
+          <p class="text-[10px] font-mono text-slate-400 mt-0.5">${esc(a.id)}</p>
+        </div>
+      </div>
+      <span class="px-2 py-0.5 rounded-full text-[10px] font-bold whitespace-nowrap shrink-0" style="background:${s.bg};color:${s.color}">${s.label}</span>
+    </div>
+    <div class="grid grid-cols-2 gap-2 text-[11px] mb-3">
+      <div><p class="uppercase font-bold text-slate-400 tracking-wider">Amount</p><p class="font-mono font-bold text-[#121A21] text-sm">${esc(fundingZAR(a.amount))}</p></div>
+      <div><p class="uppercase font-bold text-slate-400 tracking-wider">Submitted</p><p class="text-slate-600">${esc(a.submitted)}</p></div>
+      <div class="col-span-2"><p class="uppercase font-bold text-slate-400 tracking-wider">Last update</p><p class="text-slate-500">${esc(a.updated)}</p></div>
+    </div>
+    <button onclick="event.stopPropagation();viewFunding('${a.id}')" class="w-full bg-[#DC183C] hover:bg-[#B0142F] text-white rounded-full px-3 py-2 text-xs font-bold transition inline-flex items-center justify-center gap-1.5">View application <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i></button>
+  </div>`;
+}
+
+function renderFundingList(){
+  const host = document.getElementById('fa-list'); if(!host) return;
+  let list = APPLICATIONS.slice();
+  if(state.funding.status!=='all') list = list.filter(a=>a.status===state.funding.status);
+  const q = (state.funding.q||'').toLowerCase();
+  if(q) list = list.filter(a => (a.product+' '+a.id+' '+a.purpose).toLowerCase().includes(q));
+  if(state.funding.sort==='amount') list.sort((a,b)=>b.amount-a.amount);
+  else if(state.funding.sort==='status') list.sort((a,b)=>a.status.localeCompare(b.status));
+  const empty = document.getElementById('fa-empty');
+  if(!list.length){ host.innerHTML=''; if(empty) empty.classList.remove('hidden'); lucide.createIcons(); return; }
+  if(empty) empty.classList.add('hidden');
+  const head = `<thead class="bg-[#FCFCFC] border-b border-[#E7EBEF]"><tr>
+    <th class="px-4 py-3 text-left text-[11px] font-bold uppercase tracking-wider text-[#0C1F31]">Status</th>
+    <th class="px-4 py-3 text-left text-[11px] font-bold uppercase tracking-wider text-[#0C1F31]">Product</th>
+    <th class="px-4 py-3 text-left text-[11px] font-bold uppercase tracking-wider text-[#0C1F31]">Reference</th>
+    <th class="px-4 py-3 text-right text-[11px] font-bold uppercase tracking-wider text-[#0C1F31]">Amount</th>
+    <th class="px-4 py-3 text-left text-[11px] font-bold uppercase tracking-wider text-[#0C1F31]">Submitted</th>
+    <th class="px-4 py-3 text-left text-[11px] font-bold uppercase tracking-wider text-[#0C1F31]">Last update</th>
+    <th class="px-4 py-3 text-right text-[11px] font-bold uppercase tracking-wider text-[#0C1F31]">Actions</th>
+  </tr></thead>`;
+  host.innerHTML = `
+    <div class="hidden md:block bg-white rounded-2xl border border-[#E7EBEF] overflow-hidden">
+      <div class="overflow-x-auto"><table class="w-full text-sm">${head}<tbody>${list.map((a,i)=>fundingTableRow(a,i)).join('')}</tbody></table></div>
+    </div>
+    <div class="md:hidden space-y-3">${list.map(fundingMobileCard).join('')}</div>`;
+  lucide.createIcons();
+}
+
+function renderFunding(){
+  if(state.funding.view==='detail' && state.funding.activeId){
+    return renderFundingDetail(state.funding.activeId);
+  }
+  const total = APPLICATIONS.length;
+  const inReview = APPLICATIONS.filter(a=>a.status==='review'||a.status==='docs').length;
+  const approved = APPLICATIONS.filter(a=>a.status==='approved'||a.status==='funded').length;
+  const declined = APPLICATIONS.filter(a=>a.status==='declined').length;
+  const stat = (label,val,color)=>`<div class="bg-white rounded-2xl border border-[#E7EBEF] p-4">
+    <p class="text-[10px] font-bold uppercase tracking-widest text-slate-400">${esc(label)}</p>
+    <div class="flex items-baseline gap-2 mt-1"><p class="font-jakarta font-extrabold text-2xl" style="color:${color}">${val}</p><span class="w-2 h-2 rounded-full" style="background:${color}"></span></div>
+  </div>`;
+  const chips = FUNDING_FILTERS.map(([id,l])=>`<button onclick="setFundingFilter('${id}')" class="shrink-0 px-3.5 py-1.5 rounded-full text-xs font-bold border ${state.funding.status===id?'bg-[#DC183C] text-white border-[#DC183C]':'border-[#E7EBEF] bg-white text-slate-600 hover:bg-slate-50'}">${l}</button>`).join('');
+  const body = `
+    <div class="rounded-2xl overflow-hidden border border-[#E7EBEF] mb-5">
+      <div class="bg-[#0C1F31] px-5 py-5 relative flex items-start justify-between gap-3 flex-wrap">
+        <div class="absolute inset-0 opacity-40" style="background:radial-gradient(circle at 80% 30%, #29A37A 0%, transparent 60%);"></div>
+        <div class="relative min-w-0">
+          <p class="text-[10px] font-bold uppercase tracking-widest text-[#FF9900]">Funding Applications</p>
+          <h3 class="font-jakarta font-extrabold text-2xl text-white mt-0.5">Track every application in one place.</h3>
+          <p class="text-xs text-white/60 mt-1">Status, lender matches, documents needed and decisions — all live here.</p>
+        </div>
+        <a href="public-funding.html#apply" class="relative bg-[#DC183C] hover:bg-[#B0142F] text-white rounded-full px-5 py-2.5 font-jakarta font-bold text-sm transition flex items-center gap-2 shrink-0"><i data-lucide="plus" class="w-4 h-4"></i> New funding application</a>
+      </div>
+    </div>
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-5">
+      ${stat('Total applications',total,'#0C1F31')}
+      ${stat('In review',inReview,'#FF9900')}
+      ${stat('Approved',approved,'#29A37A')}
+      ${stat('Declined',declined,'#6A7581')}
+    </div>
+    <div class="bg-white rounded-2xl border border-[#E7EBEF] p-4 mb-4">
+      <div class="flex flex-col sm:flex-row gap-3 sm:items-center">
+        <div class="relative flex-1">
+          <i data-lucide="search" class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400"></i>
+          <input value="${esc(state.funding.q)}" oninput="setFundingQ(this.value)" placeholder="Search by product, reference or purpose…" class="w-full bg-[#FCFCFC] border border-[#E7EBEF] rounded-full pl-9 pr-3 py-2 text-sm outline-none focus:bg-white focus:border-[#DC183C] transition">
+        </div>
+        <select onchange="setFundingSort(this.value)" class="text-xs font-semibold border border-[#E7EBEF] rounded-full px-3 py-2 outline-none text-slate-600 bg-white">
+          <option value="newest" ${state.funding.sort==='newest'?'selected':''}>Newest first</option>
+          <option value="amount" ${state.funding.sort==='amount'?'selected':''}>Highest amount</option>
+          <option value="status" ${state.funding.sort==='status'?'selected':''}>Status</option>
+        </select>
+      </div>
+      <div class="flex gap-2 overflow-x-auto no-scrollbar mt-3">${chips}</div>
+    </div>
+    <div id="fa-list"></div>
+    <div id="fa-empty" class="hidden text-center py-12 px-4 bg-white rounded-2xl border border-[#E7EBEF]">
+      <div class="w-14 h-14 mx-auto rounded-full bg-slate-100 grid place-items-center mb-3"><i data-lucide="banknote" class="w-6 h-6 text-slate-400"></i></div>
+      <p class="font-jakarta font-bold text-[#121A21]">No applications match that filter</p>
+      <p class="text-sm text-slate-500 max-w-xs mx-auto mt-1">Adjust the status chips, or start a fresh application.</p>
+      <a href="public-funding.html#apply" class="mt-4 bg-[#DC183C] hover:bg-[#B0142F] text-white rounded-full px-5 py-2.5 font-jakarta font-bold text-sm transition inline-flex items-center gap-2"><i data-lucide="arrow-right" class="w-4 h-4"></i> Apply for funding →</a>
+    </div>`;
+  setTimeout(renderFundingList, 0);
+  return settingsCard('Funding applications', 'Track and update every application you have made through the SME Hub.', body);
+}
+
+function viewFunding(id){
+  state.funding.activeId = id;
+  state.funding.view = 'detail';
+  renderSettingsContent();
+  window.scrollTo({top:120,behavior:'smooth'});
+}
+function backToFundingList(){
+  state.funding.view = 'list';
+  renderSettingsContent();
+  window.scrollTo({top:120,behavior:'smooth'});
+}
+function confirmWithdraw(id){
+  const a = APPLICATIONS.find(x=>x.id===id); if(!a) return;
+  if(confirm('Withdraw application '+id+'? This cannot be undone.')){
+    a.status='declined'; a.step=-1; a.updated='just now';
+    a.timeline.push({ date:'today', text:'Withdrawn by applicant.', icon:'x-circle' });
+    if(state.funding.view==='detail') renderSettingsContent();
+    else renderFundingList();
+    showToast('Application '+id+' withdrawn.', null);
+  }
+}
+
+function fundingContextCTA(a){
+  let title='', body='', cta='Continue', icon='arrow-right', tone='#0C1F31';
+  switch(a.status){
+    case 'draft':
+      title='Finish your draft and submit.'; body='Complete the required fields so we can match you with a lender.'; cta='Continue application'; icon='edit-3'; break;
+    case 'submitted':
+      title='Awaiting lender match.'; body='Your application is in the queue. We typically match within 2 business days.'; cta='Message support'; icon='clock'; break;
+    case 'review':
+      title='Your application is being reviewed.'; body='The underwriter is assessing your file. We will notify you of any next steps.'; cta='View timeline'; icon='search'; break;
+    case 'docs': {
+      const pending = a.documents.filter(d=>d.state!=='provided').length;
+      title=`You have ${pending} document${pending===1?'':'s'} outstanding — upload now.`; body='The lender cannot continue until every requested document is provided.'; cta='Upload documents'; icon='upload'; tone='#DC183C'; break;
+    }
+    case 'approved':
+      title='Congratulations — review your funding offer.'; body='An approval term sheet is ready. Sign to release funds.'; cta='Review offer'; icon='badge-check'; tone='#29A37A'; break;
+    case 'funded':
+      title='Funds disbursed.'; body='This application is closed. A statement will be available in your account portal.'; cta='Download statement'; icon='download'; tone='#29A37A'; break;
+    case 'declined':
+      title='Application closed.'; body='If circumstances change, you can submit a new application at any time.'; cta='Start a new application'; icon='refresh-cw'; break;
+  }
+  return `<div class="rounded-2xl overflow-hidden border border-[#E7EBEF] mt-6">
+    <div class="px-5 py-5 relative flex items-center justify-between gap-3 flex-wrap" style="background:${tone}">
+      <div class="absolute inset-0 opacity-30" style="background:radial-gradient(circle at 90% 50%, #FF9900 0%, transparent 60%);"></div>
+      <div class="relative min-w-0 flex items-start gap-3">
+        <div class="w-10 h-10 rounded-xl bg-white/10 grid place-items-center shrink-0"><i data-lucide="${icon}" class="w-5 h-5 text-[#FF9900]"></i></div>
+        <div class="min-w-0">
+          <p class="font-jakarta font-extrabold text-white text-base leading-tight">${esc(title)}</p>
+          <p class="text-xs text-white/70 mt-1">${esc(body)}</p>
+        </div>
+      </div>
+      <button onclick="showToast('${esc(cta)} (mockup).',null)" class="relative bg-[#DC183C] hover:bg-[#B0142F] text-white rounded-full px-5 py-2.5 font-jakarta font-bold text-sm transition flex items-center gap-2 shrink-0"><i data-lucide="${icon}" class="w-4 h-4"></i> ${esc(cta)}</button>
+    </div>
+  </div>`;
+}
+
+function fundingDocRow(a, d, i){
+  const sizes = ['1.2 MB','864 KB','2.1 MB','512 KB','1.7 MB','948 KB'];
+  const fname = (d.state==='provided') ? (d.name.toLowerCase().replace(/[^a-z0-9]+/g,'-').slice(0,28)+'.pdf') : '';
+  const size = sizes[i % sizes.length];
+  let action = '';
+  if(d.state==='provided') action = `<button onclick="showToast('Viewing '+${JSON.stringify(d.name)},null)" class="text-[11px] font-bold text-slate-500 hover:text-[#DC183C] border border-[#E7EBEF] rounded-full px-3 py-1.5 transition">View</button>`;
+  else if(d.state==='reupload') action = `<button onclick="uploadDoc('${a.id}',${i})" class="bg-[#FF9900] hover:bg-[#AE6B0A] text-white rounded-full px-3 py-1.5 text-[11px] font-bold transition inline-flex items-center gap-1.5"><i data-lucide="refresh-cw" class="w-3 h-3"></i> Re-upload</button>`;
+  else action = `<button onclick="uploadDoc('${a.id}',${i})" class="bg-[#DC183C] hover:bg-[#B0142F] text-white rounded-full px-3 py-1.5 text-[11px] font-bold transition inline-flex items-center gap-1.5"><i data-lucide="upload" class="w-3 h-3"></i> Upload</button>`;
+  return `<div class="flex items-center gap-3 py-3 border-b border-[#E7EBEF] last:border-0">
+    <div class="w-9 h-9 rounded-lg bg-[#FCFCFC] border border-[#E7EBEF] grid place-items-center shrink-0"><i data-lucide="${d.state==='provided'?'file-check':'file'}" class="w-4 h-4 ${d.state==='provided'?'text-[#29A37A]':'text-slate-400'}"></i></div>
+    <div class="min-w-0 flex-1">
+      <p class="text-sm font-semibold text-[#121A21] truncate">${esc(d.name)}</p>
+      ${fname?`<p class="text-[11px] font-mono text-slate-400 truncate">${fname} · ${size}</p>`:'<p class="text-[11px] text-slate-400">No file uploaded yet</p>'}
+    </div>
+    ${docBadge(d.state)}
+    ${action}
+  </div>`;
+}
+
+function fundingDetailStepper(step){
+  return `<div class="flex items-center w-full">
+    ${FUNDING_STEPS.map((s,i)=>{
+      const done = step>i, cur = step===i;
+      const dotBg = done?'#29A37A':cur?'#FDECEF':'#FCFCFC';
+      const dotIconColor = done?'#fff':cur?'#DC183C':'#94A3B8';
+      const icon = done?'check':(cur?'circle-dot':'circle');
+      const lineColor = done?'#29A37A':'#E7EBEF';
+      return `<div class="flex items-center ${i===FUNDING_STEPS.length-1?'':'flex-1'} min-w-0">
+        <div class="flex flex-col items-center">
+          <div class="w-10 h-10 rounded-full grid place-items-center shrink-0 border-2" style="background:${dotBg};border-color:${done?'#29A37A':cur?'#DC183C':'#E7EBEF'};${cur?'box-shadow:0 0 0 3px #FDECEF':''}"><i data-lucide="${icon}" class="w-4 h-4" style="color:${dotIconColor}"></i></div>
+          <p class="text-[10px] font-bold mt-2 ${cur?'text-[#DC183C]':done?'text-[#29A37A]':'text-slate-400'} uppercase tracking-wide text-center whitespace-nowrap">${s}</p>
+        </div>
+        ${i<FUNDING_STEPS.length-1?`<div class="flex-1 h-0.5 mx-2 -mt-6" style="background:${lineColor}"></div>`:''}
+      </div>`;
+    }).join('')}
+  </div>`;
+}
+
+function renderFundingDetail(id){
+  const a = APPLICATIONS.find(x=>x.id===id);
+  if(!a) return renderFunding();
+  const s = FUNDING_STATUS[a.status];
+  const provided = a.documents.filter(d=>d.state==='provided').length;
+
+  const glance = `<div class="bg-white rounded-2xl border border-[#E7EBEF] p-5">
+    <p class="text-[10px] font-bold uppercase tracking-widest text-[#0C1F31] mb-3">At a glance</p>
+    <div class="space-y-3">
+      <div><p class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Amount requested</p><p class="font-jakarta font-extrabold text-2xl text-[#121A21] font-mono mt-0.5">${esc(fundingZAR(a.amount))}</p></div>
+      <div><p class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Term</p><p class="text-sm font-semibold text-[#121A21] mt-0.5">${esc(a.term)}</p></div>
+      <div><p class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Purpose</p><p class="text-sm text-slate-600 mt-0.5 leading-snug">${esc(a.purpose)}</p></div>
+      <div><p class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Industry</p><p class="text-sm text-[#121A21] mt-0.5">Manufacturing &amp; Logistics</p></div>
+      <div><p class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Application type</p><p class="text-sm text-[#121A21] mt-0.5">${esc(a.product)}</p></div>
+    </div>
+  </div>`;
+
+  const lender = a.lender ? `<div class="bg-white rounded-2xl border border-[#E7EBEF] p-5 mt-4">
+    <p class="text-[10px] font-bold uppercase tracking-widest text-[#0C1F31] mb-3">Lender match</p>
+    <div class="flex items-center gap-3 mb-3">
+      <div class="w-11 h-11 rounded-xl bg-[#FFF1E0] grid place-items-center shrink-0"><i data-lucide="landmark" class="w-5 h-5 text-[#AE6B0A]"></i></div>
+      <div class="min-w-0"><p class="font-jakarta font-bold text-[#121A21] text-sm">${esc(a.lender)}</p><p class="text-xs text-slate-500">Underwriter: ${esc(a.contact||'—')}</p></div>
+    </div>
+    <div class="space-y-1.5 text-xs">
+      <div class="flex items-center gap-2 text-slate-600"><i data-lucide="mail" class="w-3.5 h-3.5 text-slate-400"></i> ${esc((a.contact||'team').toLowerCase().replace(/\s+/g,'.'))}@${esc(a.lender.toLowerCase().replace(/[^a-z]+/g,''))}.co.za</div>
+      <div class="flex items-center gap-2 text-slate-600"><i data-lucide="phone" class="w-3.5 h-3.5 text-slate-400"></i> +27 11 555 0182</div>
+    </div>
+    <button onclick="showToast('Opening message thread with lender (mockup).',null)" class="mt-4 w-full border border-[#E7EBEF] hover:border-[#DC183C] hover:text-[#DC183C] text-[#121A21] rounded-full px-4 py-2 text-xs font-bold transition inline-flex items-center justify-center gap-1.5"><i data-lucide="message-square" class="w-3.5 h-3.5"></i> Message lender</button>
+  </div>` : `<div class="bg-[#FCFCFC] rounded-2xl border border-dashed border-[#E7EBEF] p-5 mt-4 text-center">
+    <div class="w-10 h-10 mx-auto rounded-full bg-white grid place-items-center mb-2 border border-[#E7EBEF]"><i data-lucide="search" class="w-5 h-5 text-slate-400"></i></div>
+    <p class="text-sm font-bold text-[#121A21]">Awaiting lender match</p>
+    <p class="text-[11px] text-slate-500 mt-1">We typically match within 2 business days.</p>
+  </div>`;
+
+  const actions = `<div class="bg-white rounded-2xl border border-[#E7EBEF] p-5 mt-4">
+    <p class="text-[10px] font-bold uppercase tracking-widest text-[#0C1F31] mb-3">Actions</p>
+    <div class="space-y-2">
+      ${a.status!=='declined' && a.status!=='funded' ? `<button onclick="confirmWithdraw('${a.id}')" class="w-full text-left text-xs font-bold text-[#DC183C] hover:bg-[#FDECEF] rounded-lg px-3 py-2 transition flex items-center gap-2"><i data-lucide="x-circle" class="w-3.5 h-3.5"></i> Withdraw application</button>`:''}
+      <button onclick="showToast('Duplicated as draft (mockup).','win')" class="w-full text-left text-xs font-bold text-[#121A21] hover:bg-slate-50 rounded-lg px-3 py-2 transition flex items-center gap-2"><i data-lucide="copy" class="w-3.5 h-3.5 text-slate-500"></i> Duplicate as draft</button>
+      <button onclick="showToast('Generating summary PDF (mockup).',null)" class="w-full text-left text-xs font-bold text-[#121A21] hover:bg-slate-50 rounded-lg px-3 py-2 transition flex items-center gap-2"><i data-lucide="download" class="w-3.5 h-3.5 text-slate-500"></i> Download summary (PDF)</button>
+    </div>
+  </div>`;
+
+  const dl = (label,val)=>`<div><p class="text-[10px] font-bold uppercase tracking-wider text-slate-400">${esc(label)}</p><p class="text-sm font-semibold text-[#121A21] mt-1">${val}</p></div>`;
+  const details = `<div class="bg-white rounded-2xl border border-[#E7EBEF] p-5 mt-5">
+    <p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] mb-4 flex items-center gap-1.5"><i data-lucide="file-text" class="w-3.5 h-3.5"></i> Application details</p>
+    <div class="grid sm:grid-cols-2 gap-x-6 gap-y-4">
+      ${dl('Amount requested', `<span class="font-mono">${esc(fundingZAR(a.amount))}</span>`)}
+      ${dl('Term', esc(a.term))}
+      ${dl('Monthly turnover stated', '<span class="font-mono">R 480,000</span>')}
+      ${dl('Years in business', '6 years')}
+      ${dl('Business type', '(Pty) Ltd')}
+      ${dl('Industry', 'Manufacturing &amp; Logistics')}
+    </div>
+    <div class="mt-4 pt-4 border-t border-[#E7EBEF]">
+      <p class="text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1">Purpose narrative</p>
+      <p class="text-sm text-slate-600 leading-relaxed">${esc(a.purpose)}</p>
+    </div>
+  </div>`;
+
+  const docsSec = `<div class="bg-white rounded-2xl border border-[#E7EBEF] p-5 mt-5">
+    <div class="flex items-center justify-between gap-3 mb-1">
+      <p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] flex items-center gap-1.5"><i data-lucide="paperclip" class="w-3.5 h-3.5"></i> Documents</p>
+      <p class="text-[11px] font-semibold text-slate-500">${provided} of ${a.documents.length} documents provided</p>
+    </div>
+    <div class="mt-3">${a.documents.map((d,i)=>fundingDocRow(a,d,i)).join('')}</div>
+  </div>`;
+
+  const timelineSec = `<div class="bg-white rounded-2xl border border-[#E7EBEF] p-5 mt-5">
+    <p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] mb-4 flex items-center gap-1.5"><i data-lucide="clock" class="w-3.5 h-3.5"></i> Activity timeline</p>
+    <ol class="relative border-l-2 border-[#E7EBEF] ml-3 space-y-5 pl-5">
+      ${a.timeline.slice().reverse().map((t,idx)=>{
+        const isLast = idx===a.timeline.length-1;
+        return `<li class="relative">
+          <div class="absolute -left-[27px] top-0 w-7 h-7 rounded-full grid place-items-center" style="background:${isLast?'#FDECEF':'#FCFCFC'};border:2px solid ${isLast?'#DC183C':'#E7EBEF'}"><i data-lucide="${t.icon}" class="w-3.5 h-3.5" style="color:${isLast?'#DC183C':'#6A7581'}"></i></div>
+          <div class="flex items-center gap-2 mb-0.5">
+            <div class="w-5 h-5 rounded-full bg-[#0C1F31] text-white text-[9px] font-bold grid place-items-center">${isLast?'YOU':'SYS'}</div>
+            <p class="text-[11px] font-mono text-slate-400">${esc(t.date)}</p>
+          </div>
+          <p class="text-sm text-[#121A21] font-semibold leading-snug">${esc(t.text)}</p>
+        </li>`;
+      }).join('')}
+    </ol>
+  </div>`;
+
+  const body = `
+    <div class="flex items-center justify-between gap-3 mb-4 flex-wrap">
+      <button onclick="backToFundingList()" class="text-xs font-bold text-[#121A21] hover:text-[#DC183C] transition inline-flex items-center gap-1.5"><i data-lucide="arrow-left" class="w-4 h-4"></i> Back to applications</button>
+      <p class="text-[11px] font-mono text-slate-400">${esc(a.id)}</p>
+    </div>
+
+    <div class="rounded-2xl border border-[#0C1F31]/15 bg-white p-6 mb-5">
+      <div class="flex items-start justify-between gap-4 flex-wrap">
+        <div class="flex items-start gap-4 min-w-0 flex-1">
+          <div class="w-14 h-14 rounded-2xl bg-[#0C1F31] grid place-items-center shrink-0"><i data-lucide="${a.icon}" class="w-7 h-7 text-[#FF9900]"></i></div>
+          <div class="min-w-0">
+            <h1 class="font-jakarta font-extrabold text-[#121A21] text-2xl leading-tight">${esc(a.product)}</h1>
+            <div class="mt-2"><span class="inline-flex items-center px-3 py-1.5 rounded-full text-xs font-bold" style="background:${s.bg};color:${s.color}">${s.label}</span></div>
+          </div>
+        </div>
+        <div class="text-right shrink-0">
+          <p class="text-[11px] text-slate-500">Submitted ${esc(a.submitted)} <span class="text-slate-300">·</span> Updated ${esc(a.updated)}</p>
+          <button onclick="showToast('Opening edit form (mockup).',null)" class="mt-2 bg-[#DC183C] hover:bg-[#B0142F] text-white rounded-full px-4 py-2 text-xs font-bold transition inline-flex items-center gap-1.5"><i data-lucide="pencil" class="w-3.5 h-3.5"></i> Update info</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid lg:grid-cols-3 gap-5">
+      <aside class="lg:col-span-1">
+        ${glance}
+        ${lender}
+        ${actions}
+      </aside>
+      <div class="lg:col-span-2">
+        ${a.status!=='draft' ? `<div class="bg-white rounded-2xl border border-[#E7EBEF] p-6">
+          <p class="text-[10px] font-bold uppercase tracking-widest text-[#0C1F31] mb-5">Progress</p>
+          ${fundingDetailStepper(a.step)}
+        </div>` : ''}
+        ${details}
+        ${docsSec}
+        ${timelineSec}
+      </div>
+    </div>
+
+    ${fundingContextCTA(a)}
+  `;
+
+  setTimeout(()=>lucide.createIcons(), 0);
+  return settingsCard('Funding applications', 'Track and update every application you have made through the SME Hub.', body);
 }
 
 function setSecurity(){
@@ -1772,6 +2431,18 @@ const BRIEFS = {
     logic:'Order history and downloads render inline. Addresses and payment methods hand off to the WooCommerce My Account secure page (never rebuild card-handling UI in custom code). Download links use WooCommerce\'s own signed URLs with expiry. Order data falls under POPIA and is included in the data export scope — the data-export endpoint already covers this.',
     components:'Order history rows · status pills · download buttons · address & payment quick-links.',
     api:'GET /wp-json/wc/v3/orders?customer={userId} · GET /wp-json/wc/v3/customers/{id}/downloads' },
+  set_downloads:{ title:'Settings · Downloads', sub:'Resource download history',
+    purpose:'A persistent record of every resource the member has pulled from the Resources library — so a guide, template or report a founder grabbed three months ago is one click away, instead of buried in their email. Re-download fires a fresh signed URL; nothing is stored client-side. Counts and filters are read-only here; the actual storage lives in the Resources / WP media library, gated by the member\'s active subscription.',
+    data:'<code>downloads[] { id, resource_id, title, type: ebook|template|guide|report, format, size, downloaded_at, last_accessed_at, access_count }</code>. Joined to <code>wp_posts</code> for the resource record. Type taxonomy mirrors the public Resources filter.',
+    logic:'Server logs every download event from the Resources detail page (public-resource.html) — the click that triggers a download writes a row here. Re-download generates a new short-lived signed URL (S3/WP-media signed). Filters and search run client-side over the prefetched list (typically &lt;200 rows per member). When an entitlement lapses (membership downgrade) the row stays but the re-download CTA flips to an upgrade prompt.',
+    components:'Header band · stat strip (3) · search + type chips + sort · scannable row list with type tile, title, tag, date, format, re-download CTA, kebab menu · empty state · soft CTA card to Resources.',
+    api:'GET /v1/users/{id}/downloads · POST /v1/resources/{id}/redownload (returns signed URL)' },
+  set_funding:{ title:'Settings · Funding applications', sub:'Full funding application tracker',
+    purpose:'<b>The robust funding-tracking surface the platform was missing.</b> Every application a member submits through SME Hub (Asset Finance, Working Capital, Invoice Finance, Bridging) lives here with full status, lender match, document checklist and timeline. Replaces the email-thread approach with a single source of truth — for both the founder and the support team.',
+    data:'<code>applications[] { id, product, amount_zar, term, purpose, status: draft|submitted|review|docs|approved|declined|funded, step, submitted_at, updated_at, status_at, lender:{ name, contact_name, contact_email, contact_phone }, documents[]{ name, state: pending|provided|reupload, file_name, file_size }, timeline[]{ date, text, icon, actor: system|lender|user } }</code>. Linked to <code>users.id</code> and the public funding form (public-funding.html).',
+    logic:'Two views inside the same Settings content area: <b>list view</b> = responsive table (md+) / stacked cards (sm) — columns Status · Product · Reference · Amount · Submitted · Last update · Actions, with a per-row "View application →" button + 3-dot menu (Update info / Withdraw). <b>Detail view</b> = full inline page (NOT a drawer) — back link returns to list with filters preserved. Application status drives the 5-step tracker (Submitted → Documents → In review → Decision → Funded). Status changes write a timeline event server-side; lender actions (open, request docs, decision) fire webhooks back into the timeline. Document state transitions (pending → provided → reupload) trigger member notifications. Withdraw is irreversible; Update info is allowed until the lender locks the file. Context CTA band at the bottom of the detail view changes by status (e.g. "X documents outstanding" for docs, "Review your offer" for approved).',
+    components:'<b>List view:</b> hero band + new-application CTA · 4-stat strip · status chips + search + sort · semantic table (md+) with zebra rows + hover highlight + status pill + amount right-aligned + per-row View application CTA + kebab menu · mobile stacked cards · empty state. <b>Detail view:</b> back link + reference · hero card (product icon + h1 + large status pill + Updated meta + Update info CTA) · 3-column grid on lg: left sidebar = At a glance + Lender match (or awaiting placeholder) + Actions (Withdraw / Duplicate / Download PDF); right column = wide 5-step progress tracker, Application details (dl grid), Documents (rows with status badge + file name + Upload/Re-upload/View), Activity timeline (vertical with icons + actor avatars). · Context CTA band keyed off status.',
+    api:'GET /v1/users/{id}/funding-applications · POST /v1/funding-applications · PATCH /v1/funding-applications/{id} · POST /v1/funding-applications/{id}/documents · POST /v1/funding-applications/{id}/withdraw' },
   set_security:{ title:'Settings · Security', sub:'Password, sessions, 2FA',
     purpose:'Account protection: change password, review & revoke active sessions, and a 2FA toggle shown as coming-soon.',
     data:'Password (write-only), <code>sessions[] { device, location, last_active, current }</code>, <code>twofa_enabled</code>.',

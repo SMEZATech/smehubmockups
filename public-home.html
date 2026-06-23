@@ -205,6 +205,21 @@
   <div id="founder-grid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
 </section>
 
+<!-- ===================== ARTICLES (Brand CI card) ===================== -->
+<section class="border-t border-[#E7EBEF] bg-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-16 sm:py-20">
+    <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-10">
+      <div>
+        <p class="text-[12px] font-bold uppercase tracking-widest text-[#DC183C]">Insights</p>
+        <h2 class="font-jakarta font-extrabold text-3xl sm:text-4xl mt-2">Articles</h2>
+        <p class="mt-3 text-lg text-[#6A7581] max-w-xl">Plain-language guides and expert insights for South African founders.</p>
+      </div>
+      <a href="public-articles.html" class="inline-flex items-center gap-2 px-4 h-11 rounded-full border border-[#E7EBEF] bg-white text-sm font-bold hover:border-[#0C1F31] transition shrink-0">View All Articles <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
+    </div>
+    <div id="article-grid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+  </div>
+</section>
+
 <!-- ===================== TESTIMONIALS (carousel) ===================== -->
 <section style="background:linear-gradient(180deg,#FDF5F3,#FBEEEA)">
   <div class="max-w-5xl mx-auto px-4 sm:px-6 py-16 sm:py-20">
@@ -416,6 +431,36 @@
     lucide.createIcons();
   }
 
+  // ===== Articles (Brand CI card) =============================================
+  const ARTICLES = [
+    { img:'assets/article-1.jpg', cat:'Finance',     title:'Pricing for Profit, Not Just to Compete',           excerpt:'Undercutting the shop next door caps your growth. Learn to price against the value only you provide.', author:'Thabo Nkosi',     init:'TN', date:'12 June 2026', read:4 },
+    { img:'assets/article-2.jpg', cat:'Funding',     title:'How to Read a Cash-Flow Statement Without an Accountant', excerpt:'A plain-language walkthrough of the one report that tells you whether your business can survive next month.', author:'Lerato Dlamini', init:'LD', date:'5 June 2026',  read:5 },
+    { img:'assets/article-3.jpg', cat:'Marketing',   title:'Free AI Tools Every Small Business Should Be Using', excerpt:'From copywriting to customer support, these no-cost tools punch far above their weight for lean teams.',     author:'Naledi Mokoena', init:'NM', date:'28 May 2026',  read:6 },
+    { img:'assets/article-4.jpg', cat:'Operations',  title:'Tips on Increasing E-hailing Profits in South Africa', excerpt:'Fuel, maintenance and dead-time eat your margin. Here is how top drivers keep more of every fare.',         author:'Sipho Maseko',   init:'SM', date:'19 May 2026',  read:4 },
+    { img:'assets/article-5.jpg', cat:'Compliance',  title:'Registering Your Business With CIPC: A 2026 Checklist', excerpt:'Everything you need before, during and after registration — with the costs and timelines that actually apply.', author:'Maryna Steyn',  init:'MS', date:'10 May 2026',  read:7 },
+    { img:'assets/article-6.jpg', cat:'Technology',  title:'Building a Brand on Zero Budget',                     excerpt:'Identity, voice and consistency cost nothing but discipline. A practical brand playbook for bootstrapped SMEs.', author:'Karabo Kgophane', init:'KK', date:'2 May 2026',  read:5 }
+  ];
+  function renderArticles(){
+    const grid = document.getElementById('article-grid'); if(!grid) return;
+    grid.innerHTML = ARTICLES.map((a,i)=>`
+      <a href="public-article.html" class="group bg-white rounded-2xl border border-[#E7EBEF] overflow-hidden card-lift reveal flex flex-col" style="animation-delay:${i*60}ms">
+        <div class="relative aspect-[16/10] overflow-hidden">
+          <img src="${a.img}" alt="${esc(a.title)}" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" />
+          <span class="absolute top-3 left-3 px-[11px] py-[5px] rounded-full bg-[#DC183C] text-white font-jakarta font-bold uppercase tracking-widest" style="font-size:10px;">${esc(a.cat)}</span>
+        </div>
+        <div class="p-5 flex flex-col flex-1">
+          <p class="text-xs text-[#6A7581]">${esc(a.date)} · ${a.read} min read</p>
+          <h3 class="font-jakarta font-extrabold text-lg leading-snug mt-2 group-hover:text-[#DC183C] transition">${esc(a.title)}</h3>
+          <p class="text-sm text-[#6A7581] mt-2 leading-relaxed line-clamp-2">${esc(a.excerpt)}</p>
+          <div class="flex items-center gap-2.5 mt-auto pt-4 border-t border-[#E7EBEF]">
+            <span class="w-[30px] h-[30px] rounded-full bg-gradient-to-br from-[#DC183C] to-[#FF9900] grid place-items-center text-white font-jakarta font-bold" style="font-size:11px;">${esc(a.init)}</span>
+            <span class="font-jakarta font-bold text-[13px] text-[#121A21]">${esc(a.author)}</span>
+          </div>
+        </div>
+      </a>`).join('');
+    lucide.createIcons();
+  }
+
   // ===== Testimonials carousel ================================================
   const TESTI = [
     { img:'assets/founder-2.jpg', name:'Ravi Naidoo',    role:'CEO, DigitalBridge Solutions', quote:'The webinars and resources gave me the confidence to scale from a side hustle to a full-time business employing 12 people.' },
@@ -509,7 +554,9 @@
     requestAnimationFrame(()=>{ const o=document.getElementById('ov-brief'); if(o)o.classList.add('open'); }); lucide.createIcons();
   }
 
-  renderStepper(); renderPanel(); renderFounders(); renderTesti(); lucide.createIcons();
+  renderStepper(); renderPanel(); renderFounders(); renderArticles(); renderTesti(); lucide.createIcons();
 </script>
+<script src="status.js"></script>
+<script src="gate-links.js"></script>
 </body>
 </html>
