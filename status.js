@@ -46,6 +46,7 @@ window.MOCKUP_STATUS = {
   "public-popia.html": "finalised",
   "member-hub.html": "finalised",
   "members.html": "under-review",
+  "single-post.html": "under-review",
   "single-group.html": "under-review",
   "forums.html": "under-review",
   "member-account.html": "under-review",
