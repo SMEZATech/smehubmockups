@@ -93,7 +93,7 @@
     <div class="mt-10 grid grid-cols-2 lg:grid-cols-4 gap-y-10 gap-x-6 text-center">
       <div><p class="font-jakarta font-extrabold text-4xl sm:text-5xl grad-text">100K+</p><p class="mt-2 text-sm text-white/70">Members</p></div>
       <div><p class="font-jakarta font-extrabold text-4xl sm:text-5xl grad-text">R100M+</p><p class="mt-2 text-sm text-white/70">Loans Facilitated</p></div>
-      <div><p class="font-jakarta font-extrabold text-4xl sm:text-5xl grad-text">5000+</p><p class="mt-2 text-sm text-white/70">Webinars &amp; Events Hosted</p></div>
+      <div><p class="font-jakarta font-extrabold text-4xl sm:text-5xl grad-text">5000+</p><p class="mt-2 text-sm text-white/70">Webinar &amp; Event Attendees</p></div>
       <div><p class="font-jakarta font-extrabold text-4xl sm:text-5xl grad-text">50K+</p><p class="mt-2 text-sm text-white/70">Downloads</p></div>
     </div>
   </div>
@@ -199,14 +199,13 @@
   function showToast(m){const el=document.getElementById('toast');el.classList.remove('hidden');el.innerHTML=`<div class="bg-[#0C1F31] text-white rounded-full pl-3 pr-5 py-2.5 shadow-2xl flex items-center gap-2 text-sm font-semibold" style="border-left:4px solid #29A37A"><i data-lucide="check-circle" class="w-4 h-4" style="color:#29A37A"></i><span>${esc(m)}</span></div>`;lucide.createIcons();setTimeout(()=>{el.classList.add('hidden');el.innerHTML='';},2400);}
 
   // ----- TEAM DATA -----
-  // photo: drop the real headshots from the live site at assets/team/<slug>.jpg
   const TEAM=[
-    {name:'Velly Bosega',role:'Founder & CEO',i:'VB',photo:'assets/team/velly-bosega.jpg'},
-    {name:'Tshepho Joel',role:'Platform Manager',i:'TJ',photo:'assets/team/tshepho-joel.jpg'},
-    {name:'Maryna Steyn',role:'Editor',i:'MS',photo:'assets/team/maryna-steyn.jpg'},
-    {name:'Lungile Msomi',role:'Digital Content Specialist & Editor (Startup.Africa)',i:'LM',photo:'assets/team/lungile-msomi.jpg'},
-    {name:'Karabo Kgophane',role:'Social Media & Digital Community Manager',i:'KK',photo:'assets/team/karabo-kgophane.jpg',link:'public-author.html'},
-    {name:'Omega Fumba',role:'Content Manager',i:'OF',photo:'assets/team/omega-fumba.jpg'}
+    {name:'Velly Bosega',role:'Founder & CEO',i:'VB',photo:'https://smesouthafrica.co.za/wp-content/uploads/2025/02/SME-South-Africa-Team-Members_0000s_0000_7-2048x2048.jpg'},
+    {name:'Tshepho Joel',role:'Platform Manager',i:'TJ',photo:'https://smesouthafrica.co.za/wp-content/uploads/2025/02/SME-South-Africa-Team-Members_0000s_0006_1-2048x2048.jpg'},
+    {name:'Maryna Steyn',role:'Editor',i:'MS',photo:'https://smesouthafrica.co.za/wp-content/uploads/2025/02/SME-South-Africa-Team-Members_0000s_0003_4-2048x2048.jpg'},
+    {name:'Lungile Msomi',role:'Digital Content Specialist & Editor (Startup.Africa)',i:'LM',photo:'https://smesouthafrica.co.za/wp-content/uploads/2025/02/SME-South-Africa-Team-Members_0000s_0001_6-2048x2048.jpg'},
+    {name:'Karabo Kgophane',role:'Social Media & Digital Community Manager',i:'KK',photo:'https://smesouthafrica.co.za/wp-content/uploads/2025/02/SME-South-Africa-Team-Members_0000s_0004_3-2048x2048.jpg',link:'public-author.html'},
+    {name:'Omega Fumba',role:'Content Manager',i:'OF',photo:'https://smesouthafrica.co.za/wp-content/uploads/2025/02/SME-South-Africa-Team-MembersArtboard-1-2-2048x2048.jpg'}
   ];
   function renderTeam(){
     const grid=document.getElementById('team-grid');

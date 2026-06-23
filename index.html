@@ -59,7 +59,7 @@
       </div>
       <button id="devPill" type="button" onclick="scrollToDev()" class="hidden w-full items-center gap-2 text-[10px] text-white/55 bg-[#3B82F6]/10 border border-[#3B82F6]/25 hover:bg-[#3B82F6]/15 rounded-lg px-3 py-2 transition text-left">
         <i data-lucide="code-2" class="w-3.5 h-3.5 text-[#3B82F6]"></i>
-        <span>Dev builds — <span id="devCount" class="text-white/80 font-semibold">0</span></span>
+        <span>Dev builds — <span id="devCount" class="text-white/80 font-semibold">0 of 0</span></span>
         <i data-lucide="arrow-down" class="w-3 h-3 ml-auto text-white/40"></i>
       </button>
     </div>
@@ -109,40 +109,15 @@
 <script>
   const STATUS = window.MOCKUP_STATUS || {};
   const DEV = window.MOCKUP_DEV || {};
+  const GROUP_OVERRIDES = window.MOCKUP_GROUPS || {};
   const DEVMETA = { 'pending-review':{label:'Pending review',c:'#FF9900'}, 'reviewed':{label:'Reviewed',c:'#3B82F6'}, 'approved':{label:'Approved',c:'#29A37A'} };
   const isLive = f => STATUS[f] === 'finalised';
-  const NAV = [
-    { group:'Public site', tag:'Logged-out', accent:'#FF9900', icon:'globe', items:[
-      { label:'Home',                 file:'public-home.html',                 icon:'home' },
-      { label:'Articles',             file:'public-articles.html',             icon:'newspaper' },
-      { label:'Author page',          file:'public-author.html',               icon:'feather' },
-      { label:'Single article',       file:'public-article.html',              icon:'file-text' },
-      { label:'Article categories',   file:'public-article-categories.html',   icon:'layout-list' },
-      { label:'Category archive',     file:'public-category.html',             icon:'folder' },
-      { label:'Subcategory archive',  file:'public-subcategory.html',          icon:'folder-tree' },
-      { label:'Resources',            file:'public-resources.html',            icon:'folder-open' },
-      { label:'Resource category',    file:'public-resource-category.html',    icon:'folders' },
-      { label:'Single resource',      file:'public-resource.html',             icon:'file' },
-      { label:'Funding',              file:'public-funding.html',              icon:'banknote' },
-      { label:'Funding articles',     file:'public-funding-category.html',     icon:'wallet' },
-      { label:'Loan option',          file:'public-loan-option.html',          icon:'landmark' },
-      { label:'Solutions',            file:'public-solutions.html',            icon:'layout-grid' },
-      { label:'Solution category',    file:'public-solution-category.html',    icon:'grid-3x3' },
-      { label:'Solution review',      file:'public-solution-review.html',      icon:'star' },
-      { label:'Sustainability',       file:'public-sustainability.html',       icon:'leaf' },
-      { label:'Pricing / Plans',      file:'public-pricing.html',              icon:'crown' },
-      { label:'Brands directory',     file:'public-brands.html',               icon:'store' },
-      { label:'Brand profile',        file:'public-brand.html',                icon:'badge-check' },
-      { label:'Partner deals',        file:'public-deals.html',                icon:'percent' },
-      { label:'Single deal',          file:'public-deal.html',                 icon:'tag' },
-      { label:'Guides',               file:'public-guides.html',               icon:'book-open' },
-      { label:'Single guide',         file:'public-guide.html',                icon:'book' },
-      { label:'Founder Focus',        file:'public-founder-focus.html',        icon:'rocket' },
-      { label:'Shop',                 file:'public-shop.html',                 icon:'shopping-bag' },
-      { label:'Checkout',             file:'public-checkout.html',             icon:'credit-card' },
-      { label:'Login / Sign up',      file:'public-auth.html',                 icon:'log-in' }
+  const DEFAULT_NAV = [
+    { group:'Global', tag:'Chrome', accent:'#6A7581', icon:'layout-template', items:[
+      { label:'Header & Footer', file:'chrome-preview.html', icon:'layout-template' }
     ]},
-    { group:'Site pages', tag:'Info', accent:'#6A7581', icon:'file-text', items:[
+    { group:'Single Pages', tag:'Pages', accent:'#FF9900', icon:'file-text', items:[
+      { label:'Home',                   file:'public-home.html',                   icon:'home' },
       { label:'About',                  file:'public-about.html',                  icon:'building-2' },
       { label:'Contact',                file:'public-contact.html',                icon:'mail' },
       { label:'Advertise',              file:'public-advertise.html',              icon:'megaphone' },
@@ -150,32 +125,94 @@
       { label:'Terms',                  file:'public-terms.html',                  icon:'file-text' },
       { label:'Refunds',                file:'public-refunds.html',                icon:'rotate-ccw' },
       { label:'POPIA',                  file:'public-popia.html',                  icon:'lock' },
-      { label:'Advertising disclosure', file:'public-advertising-disclosure.html', icon:'info' }
+      { label:'Advertising Disclosure', file:'public-advertising-disclosure.html', icon:'info' },
+      { label:'Sustainability',         file:'public-sustainability.html',         icon:'leaf' },
+      { label:'Author page',            file:'public-author.html',                 icon:'feather' },
+      { label:'Pricing / Plans',        file:'public-pricing.html',                icon:'crown' },
+      { label:'Login / Sign up',        file:'public-auth.html',                   icon:'log-in' }
     ]},
-    { group:'Member hub', tag:'Logged-in', accent:'#DC183C', icon:'users', items:[
-      { label:'Community Feed',     file:'member-hub.html',     icon:'rss' },
-      { label:'Members',            file:'members.html',        icon:'users' },
-      { label:'The Group',          file:'single-group.html',   icon:'users-round' },
-      { label:'Forums',             file:'forums.html',         icon:'messages-square' },
-      { label:'Account & settings', file:'member-account.html', icon:'settings' }
+    { group:'Articles', tag:'Editorial', accent:'#DC183C', icon:'newspaper', items:[
+      { label:'Articles',              file:'public-articles.html',           icon:'newspaper' },
+      { label:'Single Article',        file:'public-article.html',            icon:'file-text' },
+      { label:'Categories Archive',    file:'public-article-categories.html', icon:'layout-grid' },
+      { label:'Articles Categories',   file:'public-category.html',           icon:'folder' },
+      { label:'Articles Subcategories',file:'public-subcategory.html',        icon:'folder-tree' },
+      { label:'Founder Focus',         file:'public-founder-focus.html',      icon:'sparkles' }
     ]},
-    { group:'Content modules', tag:'In repo', accent:'#FF9900', icon:'layers', items:[
-      { label:'Events',           file:'events.html',           icon:'calendar' },
+    { group:'Funding', tag:'Money', accent:'#29A37A', icon:'banknote', items:[
+      { label:'Funding',          file:'public-funding.html',          icon:'banknote' },
+      { label:'Funding Articles', file:'public-funding-category.html', icon:'newspaper' },
+      { label:'Loan Option',      file:'public-loan-option.html',      icon:'landmark' }
+    ]},
+    { group:'Resources', tag:'Library', accent:'#3B82F6', icon:'folder-open', items:[
+      { label:'Resources',          file:'public-resources.html',         icon:'folder-open' },
+      { label:'Resource Category',  file:'public-resource-category.html', icon:'folder' },
+      { label:'Single Resource',    file:'public-resource.html',          icon:'file' },
+      { label:'Guides',             file:'public-guides.html',            icon:'book-open' },
+      { label:'Single Guide',       file:'public-guide.html',             icon:'book' }
+    ]},
+    { group:'Solutions', tag:'Marketplace', accent:'#FF9900', icon:'layout-grid', items:[
+      { label:'Solutions',         file:'public-solutions.html',         icon:'layout-grid' },
+      { label:'Solution Category', file:'public-solution-category.html', icon:'folder' },
+      { label:'Brands Category',   file:'public-brands.html',            icon:'store' },
+      { label:'Brand Review',      file:'public-brand.html',             icon:'badge-check' }
+    ]},
+    { group:'Community', tag:'Logged-in', accent:'#DC183C', icon:'users', items:[
+      { label:'Feed',             file:'member-hub.html',     icon:'rss' },
+      { label:'Single Feed',      file:'single-post.html',    icon:'message-square' },
+      { label:'Members',          file:'members.html',        icon:'users' },
+      { label:'Group',            file:'single-group.html',   icon:'users-round' },
+      { label:'Forum',            file:'forums.html',         icon:'messages-square' },
+      { label:'Account Settings', file:'member-account.html', icon:'settings' }
+    ]},
+    { group:'Events', tag:'Calendar', accent:'#FF9900', icon:'calendar', items:[
+      { label:'Events', file:'events.html', icon:'calendar' }
+    ]},
+    { group:'Newsletter', tag:'Comms', accent:'#3B82F6', icon:'mail', items:[
       { label:'Newsletter',       file:'newsletter.html',       icon:'mail' },
-      { label:'Newsletter issue', file:'newsletter-issue.html', icon:'mail-open' },
+      { label:'Newsletter Issue', file:'newsletter-issue.html', icon:'mail-open' },
       { label:'Podcast',          file:'podcast.html',          icon:'mic-2' }
     ]},
-    { group:'Help & system', tag:'Support', accent:'#3B82F6', icon:'life-buoy', items:[
-      { label:'Help center',   file:'public-help.html',         icon:'life-buoy' },
-      { label:'Help article',  file:'public-help-article.html', icon:'help-circle' },
-      { label:'Search results',file:'public-search.html',       icon:'search' },
-      { label:'404 page',      file:'public-404.html',          icon:'triangle-alert' }
+    { group:'Shop', tag:'Commerce', accent:'#29A37A', icon:'shopping-bag', items:[
+      { label:'Shop',     file:'public-shop.html',     icon:'shopping-bag' },
+      { label:'Checkout', file:'public-checkout.html', icon:'credit-card' }
+    ]},
+    { group:'Help and System', tag:'Support', accent:'#3B82F6', icon:'help-circle', items:[
+      { label:'Help Center',    file:'public-help.html',         icon:'help-circle' },
+      { label:'Help Article',   file:'public-help-article.html', icon:'file-text' },
+      { label:'Search results', file:'public-search.html',       icon:'search' },
+      { label:'404 page',       file:'public-404.html',          icon:'file-x' }
     ]},
     { group:'Reference', tag:'Brand', accent:'#6A7581', icon:'palette', items:[
       { label:'Brand CI 2026', file:'brand_ci.html',     icon:'palette' },
-      { label:'Icon library',  file:'public-icons.html', icon:'shapes' }
+      { label:'Icon Library',  file:'public-icons.html', icon:'shapes' }
     ]}
   ];
+
+  // Apply MOCKUP_GROUPS overrides: pull file out of its default group, append to the named group (create if needed).
+  function buildNavFromOverrides(){
+    const nav = DEFAULT_NAV.map(sec => ({ ...sec, items: sec.items.slice() }));
+    const sectionByName = {};
+    nav.forEach(sec => { sectionByName[sec.group] = sec; });
+    Object.keys(GROUP_OVERRIDES).forEach(file => {
+      const targetName = GROUP_OVERRIDES[file];
+      if(!targetName) return;
+      let movedItem = null;
+      for(const sec of nav){
+        const idx = sec.items.findIndex(it => it.file === file);
+        if(idx >= 0){ movedItem = sec.items.splice(idx, 1)[0]; break; }
+      }
+      if(!movedItem) movedItem = { label:file, file, icon:'file' };
+      if(!sectionByName[targetName]){
+        const newSec = { group:targetName, tag:'Custom', accent:'#6A7581', icon:'folder', items:[] };
+        nav.push(newSec);
+        sectionByName[targetName] = newSec;
+      }
+      sectionByName[targetName].items.push(movedItem);
+    });
+    return nav;
+  }
+  const NAV = buildNavFromOverrides();
 
   // Map file → NAV entry (so DEV section can look up label/group/accent)
   const FILE_INDEX = {};
@@ -195,16 +232,53 @@
 
   function esc(s){ return String(s).replace(/'/g,"\\'"); }
 
+  // Compute newly-finalised files (finalised now, but not seen-as-finalised yet by this user).
+  function getSeenFinalised(){ try{ return JSON.parse(localStorage.getItem('smeSeenFinalised')||'{}'); }catch(e){ return {}; } }
+  function setSeenFinalised(map){ try{ localStorage.setItem('smeSeenFinalised', JSON.stringify(map)); }catch(e){} }
+  function computeNewlyFinalised(){
+    const seen = getSeenFinalised(); const out = [];
+    NAV.forEach(sec => sec.items.forEach(it => { if(isLive(it.file) && !seen[it.file]) out.push({ file:it.file, label:it.label, group:sec.group }); }));
+    return out;
+  }
+  function markSeenFinalised(files){
+    const seen = getSeenFinalised();
+    files.forEach(f => { seen[f] = true; });
+    setSeenFinalised(seen);
+  }
+  function showFinalisedToast(label){
+    let host = document.getElementById('finalToastHost');
+    if(!host){ host = document.createElement('div'); host.id='finalToastHost'; host.className='fixed bottom-6 right-6 z-[70] space-y-2'; document.body.appendChild(host); }
+    const t = document.createElement('div');
+    t.className = 'flex items-center gap-2 bg-[#0C1F31] text-white border border-[#29A37A]/40 rounded-lg pl-3 pr-2 py-2 shadow-xl text-sm font-semibold';
+    t.style.borderLeft = '3px solid #29A37A';
+    t.innerHTML = `<i data-lucide="check-circle" class="w-4 h-4" style="color:#29A37A"></i><span class="font-jakarta">${label} is now finalised</span><button class="ml-2 w-6 h-6 grid place-items-center rounded hover:bg-white/10 text-white/60"><i data-lucide="x" class="w-3.5 h-3.5"></i></button>`;
+    t.querySelector('button').addEventListener('click', ()=> t.remove());
+    host.appendChild(t); lucide.createIcons();
+    setTimeout(()=>{ if(t.parentNode) t.remove(); }, 3000);
+  }
+
   function buildNav(currentFile){
     let total=0, totalFinalised=0;
-    NAV.forEach(sec=> sec.items.forEach(it=>{ total++; if(isLive(it.file)) totalFinalised++; }));
+    NAV.forEach(sec=> sec.items.forEach(it=>{
+      if(it.file === 'chrome-preview.html') return;
+      total++; if(isLive(it.file)) totalFinalised++;
+    }));
 
     const devFiles = Object.keys(DEV || {});
     let html='';
 
-    // ---- DEVELOPMENT section (always-clickable lane) ----
+    // Determine which section holds the current file (for default-expand).
+    const currentSection = currentFile && FILE_INDEX[currentFile] ? FILE_INDEX[currentFile].group : null;
+    const currentIsDev = !!(currentFile && DEV[currentFile]);
+
+    // Sections containing newly-finalised items bubble to top (after Development).
+    const newlyFinalised = computeNewlyFinalised();
+    const bubbleGroups = {};
+    newlyFinalised.forEach(n => { bubbleGroups[n.group] = true; });
+
+    // ---- DEVELOPMENT section — ONLY external dev/staging URL builds ----
     if(devFiles.length){
-      const devOpen = getSecState('Development', true);
+      const devOpen = currentIsDev;
       html += `<details class="nav-sec rounded-lg border border-[#3B82F6]/20 bg-white/[0.02]" data-dev="1" data-group="Development" ${devOpen?'open':''}>
         <summary class="flex items-center gap-2 px-3 py-2.5 rounded-lg">
           <i data-lucide="chevron-right" class="chev w-3.5 h-3.5 text-white/50 shrink-0"></i>
@@ -221,7 +295,7 @@
                 <i data-lucide="${meta.icon}" class="w-4 h-4 shrink-0"></i>
                 <span class="truncate">${meta.label}</span>
                 <span class="ml-auto shrink-0 inline-flex items-center gap-1 text-[8px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded-full" style="background:${dm.c}26;color:${dm.c}">
-                  <span class="w-1.5 h-1.5 rounded-full" style="background:${dm.c}"></span>${dm.label}
+                  <span class="w-1.5 h-1.5 rounded-full" style="background:${dm.c}"></span>Dev · ${dm.label}
                 </span>
               </button>`;
           }).join('')}
@@ -229,14 +303,18 @@
       </details>`;
     }
 
-    // ---- Standard NAV sections (collapsible) ----
-    // Determine which section holds the current file so we can default-expand it.
-    const currentSection = currentFile && FILE_INDEX[currentFile] ? FILE_INDEX[currentFile].group : null;
+    // ---- Standard NAV sections — bubble groups with newly-finalised items first ----
+    const sortedNav = NAV.slice().sort((a,b)=>{
+      const aHas = bubbleGroups[a.group] ? 1 : 0;
+      const bHas = bubbleGroups[b.group] ? 1 : 0;
+      return bHas - aHas; // newly-finalised groups first
+    });
 
-    NAV.forEach(sec=>{
+    sortedNav.forEach(sec=>{
       const finalisedItems = sec.items.filter(it=>isLive(it.file));
       const pendingItems   = sec.items.filter(it=>!isLive(it.file));
       const open = getSecState(sec.group, sec.group === currentSection);
+      // Note: default-collapsed unless this section holds the current file.
 
       const finalisedCount = finalisedItems.length;
       const pendingCount   = pendingItems.length;
@@ -277,26 +355,34 @@
     const lc = document.getElementById('liveCount'); if(lc) lc.textContent = totalFinalised+' of '+total+' finalised';
     const dp = document.getElementById('devPill'), dc = document.getElementById('devCount');
     if(dp && dc){
-      if(devFiles.length){ dp.classList.remove('hidden'); dp.classList.add('flex'); dc.textContent = devFiles.length+' in progress'; }
+      if(devFiles.length){ dp.classList.remove('hidden'); dp.classList.add('flex'); dc.textContent = devFiles.length+' of '+total; }
       else { dp.classList.add('hidden'); dp.classList.remove('flex'); }
+    }
+
+    // Fire one-time toasts for newly-finalised items, then mark them seen.
+    if(newlyFinalised.length){
+      newlyFinalised.forEach((n,i)=> setTimeout(()=> showFinalisedToast(n.label), i*350));
+      markSeenFinalised(newlyFinalised.map(n=>n.file));
     }
   }
 
-  // Dev lane — bypass the finalised gate. Looks up label/group/accent from FILE_INDEX.
+  // Dev lane — bypass the finalised gate. Loads the staging URL (not the mockup file).
   function loadDev(file){
     const meta = FILE_INDEX[file] || { label:file, group:'Development', accent:'#3B82F6' };
-    _doLoad(file, meta.group, meta.label, meta.accent);
+    const devInfo = DEV[file];
+    const stagingUrl = devInfo && devInfo.url ? devInfo.url : file;
+    _doLoad(file, 'Development', meta.label, '#3B82F6', stagingUrl);
   }
   function load(file, group, label, accent){
     if(!isLive(file)) return; // gate: only finalised mockups open via standard lane
-    _doLoad(file, group, label, accent);
+    _doLoad(file, group, label, accent, file);
   }
-  function _doLoad(file, group, label, accent){
-    document.getElementById('frame').src = file;
+  function _doLoad(file, group, label, accent, srcUrl){
+    document.getElementById('frame').src = srcUrl || file;
     document.getElementById('curGroup').textContent = group;
     document.getElementById('curGroup').style.color = accent || '#AE6B0A';
     document.getElementById('curTitle').textContent = label;
-    document.getElementById('openTab').href = file;
+    document.getElementById('openTab').href = srcUrl || file;
     const dev = DEV[file], db = document.getElementById('devBar');
     if(db){
       if(dev){ const dm = DEVMETA[dev.status] || {label:dev.status, c:'#6A7581'};
