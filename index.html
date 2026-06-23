@@ -30,6 +30,14 @@
       #sidebar.open { transform:translateX(0); }
     }
     .frame-wrap { transition: max-width .35s cubic-bezier(.2,.7,.2,1); }
+    /* Collapsible sidebar sections */
+    .nav-sec > summary { list-style:none; cursor:pointer; }
+    .nav-sec > summary::-webkit-details-marker { display:none; }
+    .nav-sec > summary .chev { transition: transform .2s ease; }
+    .nav-sec[open] > summary .chev { transform: rotate(90deg); }
+    .nav-sec > summary:hover { background: rgba(255,255,255,0.04); }
+    .nav-sec[data-dev="1"] > summary { background: rgba(59,130,246,0.06); }
+    .nav-sec[data-dev="1"][open] > summary { background: rgba(59,130,246,0.10); }
   </style>
 </head>
 <body class="bg-[#0C1F31] text-[#121A21] antialiased h-full overflow-hidden">
@@ -44,13 +52,18 @@
         <p class="text-[11px] text-white/50 font-mono">Mockup Hub</p>
       </div>
     </div>
-    <div class="px-4 pt-3 pb-1 shrink-0">
+    <div class="px-4 pt-3 pb-1 shrink-0 space-y-1.5">
       <div class="flex items-center gap-2 text-[10px] text-white/45 bg-white/5 border border-white/10 rounded-lg px-3 py-2">
         <i data-lucide="eye" class="w-3.5 h-3.5 text-[#29A37A]"></i>
         <span>Finalised work — <span id="liveCount" class="text-white/70 font-semibold">…</span></span>
       </div>
+      <button id="devPill" type="button" onclick="scrollToDev()" class="hidden w-full items-center gap-2 text-[10px] text-white/55 bg-[#3B82F6]/10 border border-[#3B82F6]/25 hover:bg-[#3B82F6]/15 rounded-lg px-3 py-2 transition text-left">
+        <i data-lucide="code-2" class="w-3.5 h-3.5 text-[#3B82F6]"></i>
+        <span>Dev builds — <span id="devCount" class="text-white/80 font-semibold">0</span></span>
+        <i data-lucide="arrow-down" class="w-3 h-3 ml-auto text-white/40"></i>
+      </button>
     </div>
-    <nav id="nav" class="flex-1 overflow-y-auto no-scrollbar px-3 py-3 space-y-6"></nav>
+    <nav id="nav" class="flex-1 overflow-y-auto no-scrollbar px-3 py-3 space-y-2"></nav>
     <div class="px-5 py-4 border-t border-white/10 text-[11px] text-white/40 shrink-0">
       <p class="text-white/70 font-semibold">© 2026 Tshepho Joel</p>
       <p class="mt-0.5">All rights reserved. Proprietary &amp; confidential.</p>
@@ -99,91 +112,186 @@
   const DEVMETA = { 'pending-review':{label:'Pending review',c:'#FF9900'}, 'reviewed':{label:'Reviewed',c:'#3B82F6'}, 'approved':{label:'Approved',c:'#29A37A'} };
   const isLive = f => STATUS[f] === 'finalised';
   const NAV = [
-    { group:'Public site', tag:'Logged-out', accent:'#FF9900', items:[
-      { label:'Home',           file:'public-home.html',      icon:'home' },
-      { label:'Articles',       file:'public-articles.html',  icon:'newspaper' },
-      { label:'Author page',    file:'public-author.html',    icon:'feather' },
-      { label:'Single article', file:'public-article.html',   icon:'file-text' },
-      { label:'Resources',      file:'public-resources.html', icon:'folder-open' },
-      { label:'Funding',        file:'public-funding.html',   icon:'banknote' },
-      { label:'Solutions',      file:'public-solutions.html', icon:'layout-grid' },
-      { label:'Shop',           file:'public-shop.html',      icon:'shopping-bag' },
-      { label:'Checkout',       file:'public-checkout.html',  icon:'credit-card' },
-      { label:'Login / Sign up',file:'public-auth.html',      icon:'log-in' }
+    { group:'Public site', tag:'Logged-out', accent:'#FF9900', icon:'globe', items:[
+      { label:'Home',                 file:'public-home.html',                 icon:'home' },
+      { label:'Articles',             file:'public-articles.html',             icon:'newspaper' },
+      { label:'Author page',          file:'public-author.html',               icon:'feather' },
+      { label:'Single article',       file:'public-article.html',              icon:'file-text' },
+      { label:'Article categories',   file:'public-article-categories.html',   icon:'layout-list' },
+      { label:'Category archive',     file:'public-category.html',             icon:'folder' },
+      { label:'Subcategory archive',  file:'public-subcategory.html',          icon:'folder-tree' },
+      { label:'Resources',            file:'public-resources.html',            icon:'folder-open' },
+      { label:'Resource category',    file:'public-resource-category.html',    icon:'folders' },
+      { label:'Single resource',      file:'public-resource.html',             icon:'file' },
+      { label:'Funding',              file:'public-funding.html',              icon:'banknote' },
+      { label:'Funding articles',     file:'public-funding-category.html',     icon:'wallet' },
+      { label:'Loan option',          file:'public-loan-option.html',          icon:'landmark' },
+      { label:'Solutions',            file:'public-solutions.html',            icon:'layout-grid' },
+      { label:'Solution category',    file:'public-solution-category.html',    icon:'grid-3x3' },
+      { label:'Solution review',      file:'public-solution-review.html',      icon:'star' },
+      { label:'Sustainability',       file:'public-sustainability.html',       icon:'leaf' },
+      { label:'Pricing / Plans',      file:'public-pricing.html',              icon:'crown' },
+      { label:'Brands directory',     file:'public-brands.html',               icon:'store' },
+      { label:'Brand profile',        file:'public-brand.html',                icon:'badge-check' },
+      { label:'Partner deals',        file:'public-deals.html',                icon:'percent' },
+      { label:'Single deal',          file:'public-deal.html',                 icon:'tag' },
+      { label:'Guides',               file:'public-guides.html',               icon:'book-open' },
+      { label:'Single guide',         file:'public-guide.html',                icon:'book' },
+      { label:'Founder Focus',        file:'public-founder-focus.html',        icon:'rocket' },
+      { label:'Shop',                 file:'public-shop.html',                 icon:'shopping-bag' },
+      { label:'Checkout',             file:'public-checkout.html',             icon:'credit-card' },
+      { label:'Login / Sign up',      file:'public-auth.html',                 icon:'log-in' }
     ]},
-    { group:'Site pages', tag:'Info', accent:'#6A7581', items:[
-      { label:'About',     file:'public-about.html',     icon:'building-2' },
-      { label:'Contact',   file:'public-contact.html',   icon:'mail' },
-      { label:'Advertise', file:'public-advertise.html', icon:'megaphone' },
-      { label:'Privacy',   file:'public-privacy.html',   icon:'shield' },
-      { label:'Terms',     file:'public-terms.html',     icon:'file-text' },
-      { label:'Refunds',   file:'public-refunds.html',   icon:'rotate-ccw' },
-      { label:'POPIA',     file:'public-popia.html',     icon:'lock' }
+    { group:'Site pages', tag:'Info', accent:'#6A7581', icon:'file-text', items:[
+      { label:'About',                  file:'public-about.html',                  icon:'building-2' },
+      { label:'Contact',                file:'public-contact.html',                icon:'mail' },
+      { label:'Advertise',              file:'public-advertise.html',              icon:'megaphone' },
+      { label:'Privacy',                file:'public-privacy.html',                icon:'shield' },
+      { label:'Terms',                  file:'public-terms.html',                  icon:'file-text' },
+      { label:'Refunds',                file:'public-refunds.html',                icon:'rotate-ccw' },
+      { label:'POPIA',                  file:'public-popia.html',                  icon:'lock' },
+      { label:'Advertising disclosure', file:'public-advertising-disclosure.html', icon:'info' }
     ]},
-    { group:'Member hub', tag:'Logged-in', accent:'#DC183C', items:[
+    { group:'Member hub', tag:'Logged-in', accent:'#DC183C', icon:'users', items:[
       { label:'Community Feed',     file:'member-hub.html',     icon:'rss' },
       { label:'Members',            file:'members.html',        icon:'users' },
       { label:'The Group',          file:'single-group.html',   icon:'users-round' },
       { label:'Forums',             file:'forums.html',         icon:'messages-square' },
       { label:'Account & settings', file:'member-account.html', icon:'settings' }
     ]},
-    { group:'Content modules', tag:'In repo', accent:'#FF9900', items:[
+    { group:'Content modules', tag:'In repo', accent:'#FF9900', icon:'layers', items:[
       { label:'Events',           file:'events.html',           icon:'calendar' },
       { label:'Newsletter',       file:'newsletter.html',       icon:'mail' },
       { label:'Newsletter issue', file:'newsletter-issue.html', icon:'mail-open' },
       { label:'Podcast',          file:'podcast.html',          icon:'mic-2' }
     ]},
-    { group:'Reference', tag:'Brand', accent:'#6A7581', items:[
+    { group:'Help & system', tag:'Support', accent:'#3B82F6', icon:'life-buoy', items:[
+      { label:'Help center',   file:'public-help.html',         icon:'life-buoy' },
+      { label:'Help article',  file:'public-help-article.html', icon:'help-circle' },
+      { label:'Search results',file:'public-search.html',       icon:'search' },
+      { label:'404 page',      file:'public-404.html',          icon:'triangle-alert' }
+    ]},
+    { group:'Reference', tag:'Brand', accent:'#6A7581', icon:'palette', items:[
       { label:'Brand CI 2026', file:'brand_ci.html',     icon:'palette' },
       { label:'Icon library',  file:'public-icons.html', icon:'shapes' }
     ]}
   ];
 
-  function esc(s){ return String(s).replace(/'/g,"\\'"); }
+  // Map file → NAV entry (so DEV section can look up label/group/accent)
+  const FILE_INDEX = {};
+  NAV.forEach(sec => sec.items.forEach(it => { FILE_INDEX[it.file] = { ...it, group:sec.group, accent:sec.accent }; }));
 
-  function buildNav(){
-    let total=0; const finalised=[];
-    NAV.forEach(sec=> sec.items.forEach(it=>{ total++; if(isLive(it.file)) finalised.push({ ...it, group:sec.group, accent:sec.accent }); }));
-    let html='';
-    // ---- Pinned: finalised first ----
-    if(finalised.length){
-      html += `<div>
-        <div class="flex items-center justify-between px-2 mb-2">
-          <p class="text-[10px] font-bold uppercase tracking-widest text-[#29A37A] flex items-center gap-1.5"><i data-lucide="check-circle-2" class="w-3 h-3"></i> Finalised</p>
-          <span class="text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded-full bg-[#29A37A]/15 text-[#29A37A]">Ready</span>
-        </div>
-        <div class="space-y-0.5">
-          ${finalised.map(it=>`<button onclick="load('${it.file}','${it.group}','${esc(it.label)}','${it.accent}')" data-file="${it.file}" class="nav-item w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-semibold text-white/80 hover:bg-white/5 hover:text-white transition text-left">
-               <i data-lucide="${it.icon}" class="w-4 h-4 shrink-0"></i><span class="truncate">${it.label}</span>
-               ${DEV[it.file]?`<span class="ml-auto shrink-0 inline-flex items-center gap-1 text-[8px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded-full" style="background:${(DEVMETA[DEV[it.file].status]||{c:'#6A7581'}).c}26;color:${(DEVMETA[DEV[it.file].status]||{c:'#6A7581'}).c}"><i data-lucide="code-2" class="w-2.5 h-2.5"></i> Dev</span>`:`<span class="ni-dot ml-auto w-1.5 h-1.5 rounded-full bg-[#29A37A] opacity-0"></span>`}
-             </button>`).join('')}
-        </div>
-      </div>`;
-    }
-    // ---- Remaining (greyed) grouped below ----
-    NAV.forEach(sec=>{
-      const pending = sec.items.filter(it=>!isLive(it.file));
-      if(!pending.length) return;
-      html += `<div>
-        <div class="flex items-center justify-between px-2 mb-2">
-          <p class="text-[10px] font-bold uppercase tracking-widest text-white/40">${sec.group}</p>
-          <span class="text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded-full" style="background:${sec.accent}22;color:${sec.accent}">${sec.tag}</span>
-        </div>
-        <div class="space-y-0.5">
-          ${pending.map(it=>`<div title="Coming soon — not yet finalised" class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-semibold text-white/25 cursor-not-allowed select-none">
-               <i data-lucide="${it.icon}" class="w-4 h-4 shrink-0"></i><span class="truncate">${it.label}</span>
-               <span class="ml-auto text-[8px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded-full bg-white/5 text-white/30 flex items-center gap-1 shrink-0"><i data-lucide="lock" class="w-2.5 h-2.5"></i> Soon</span>
-             </div>`).join('')}
-        </div>
-      </div>`;
-    });
-    document.getElementById('nav').innerHTML = html;
-    lucide.createIcons();
-    const el=document.getElementById('liveCount'); if(el) el.textContent = finalised.length+' of '+total+' finalised';
+  // localStorage helpers for section open/close persistence
+  function secKey(g){ return 'smeNav:'+g.replace(/\s+/g,'_').toLowerCase(); }
+  function getSecState(g, dflt){ try{ const v=localStorage.getItem(secKey(g)); if(v===null) return dflt; return v==='1'; }catch(e){ return dflt; } }
+  function setSecState(g, open){ try{ localStorage.setItem(secKey(g), open?'1':'0'); }catch(e){} }
+
+  function scrollToDev(){
+    const el = document.querySelector('[data-dev="1"]');
+    if(!el) return;
+    if(!el.open){ el.open = true; setSecState('Development', true); }
+    el.scrollIntoView({ behavior:'smooth', block:'start' });
   }
 
+  function esc(s){ return String(s).replace(/'/g,"\\'"); }
+
+  function buildNav(currentFile){
+    let total=0, totalFinalised=0;
+    NAV.forEach(sec=> sec.items.forEach(it=>{ total++; if(isLive(it.file)) totalFinalised++; }));
+
+    const devFiles = Object.keys(DEV || {});
+    let html='';
+
+    // ---- DEVELOPMENT section (always-clickable lane) ----
+    if(devFiles.length){
+      const devOpen = getSecState('Development', true);
+      html += `<details class="nav-sec rounded-lg border border-[#3B82F6]/20 bg-white/[0.02]" data-dev="1" data-group="Development" ${devOpen?'open':''}>
+        <summary class="flex items-center gap-2 px-3 py-2.5 rounded-lg">
+          <i data-lucide="chevron-right" class="chev w-3.5 h-3.5 text-white/50 shrink-0"></i>
+          <i data-lucide="code-2" class="w-4 h-4 text-[#3B82F6] shrink-0"></i>
+          <span class="text-[11px] font-bold uppercase tracking-widest text-white/80">Development</span>
+          <span class="ml-auto text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded-full bg-[#3B82F6]/20 text-[#3B82F6]">${devFiles.length} build${devFiles.length===1?'':'s'}</span>
+        </summary>
+        <div class="px-2 pb-2 pt-1 space-y-0.5">
+          ${devFiles.map(file=>{
+            const meta = FILE_INDEX[file] || { label:file, icon:'file', group:'Development', accent:'#3B82F6' };
+            const devInfo = DEV[file];
+            const dm = DEVMETA[devInfo.status] || { label:devInfo.status, c:'#6A7581' };
+            return `<button onclick="loadDev('${file}')" data-devfile="${file}" class="nav-item w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-semibold text-white/85 hover:bg-white/5 hover:text-white transition text-left">
+                <i data-lucide="${meta.icon}" class="w-4 h-4 shrink-0"></i>
+                <span class="truncate">${meta.label}</span>
+                <span class="ml-auto shrink-0 inline-flex items-center gap-1 text-[8px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded-full" style="background:${dm.c}26;color:${dm.c}">
+                  <span class="w-1.5 h-1.5 rounded-full" style="background:${dm.c}"></span>${dm.label}
+                </span>
+              </button>`;
+          }).join('')}
+        </div>
+      </details>`;
+    }
+
+    // ---- Standard NAV sections (collapsible) ----
+    // Determine which section holds the current file so we can default-expand it.
+    const currentSection = currentFile && FILE_INDEX[currentFile] ? FILE_INDEX[currentFile].group : null;
+
+    NAV.forEach(sec=>{
+      const finalisedItems = sec.items.filter(it=>isLive(it.file));
+      const pendingItems   = sec.items.filter(it=>!isLive(it.file));
+      const open = getSecState(sec.group, sec.group === currentSection);
+
+      const finalisedCount = finalisedItems.length;
+      const pendingCount   = pendingItems.length;
+      const countLabel = `${finalisedCount} finalised, ${pendingCount} pending`;
+
+      html += `<details class="nav-sec rounded-lg border border-white/5" data-group="${sec.group}" ${open?'open':''}>
+        <summary class="flex items-center gap-2 px-3 py-2.5 rounded-lg">
+          <i data-lucide="chevron-right" class="chev w-3.5 h-3.5 text-white/40 shrink-0"></i>
+          <i data-lucide="${sec.icon}" class="w-4 h-4 shrink-0" style="color:${sec.accent}"></i>
+          <span class="text-[11px] font-bold uppercase tracking-widest text-white/75">${sec.group}</span>
+          <span class="ml-auto text-[9px] font-semibold text-white/40">${finalisedCount}/${sec.items.length}</span>
+        </summary>
+        <div class="px-2 pb-2 pt-0.5">
+          <p class="px-3 pb-1.5 text-[9px] uppercase tracking-wider text-white/30 font-semibold">${countLabel}</p>
+          <div class="space-y-0.5">
+            ${finalisedItems.map(it=>`<button onclick="load('${it.file}','${esc(sec.group)}','${esc(it.label)}','${sec.accent}')" data-file="${it.file}" class="nav-item w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-semibold text-white/80 hover:bg-white/5 hover:text-white transition text-left">
+                  <i data-lucide="${it.icon}" class="w-4 h-4 shrink-0"></i><span class="truncate">${it.label}</span>
+                  ${DEV[it.file]?`<span class="ml-auto shrink-0 inline-flex items-center gap-1 text-[8px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded-full" style="background:${(DEVMETA[DEV[it.file].status]||{c:'#6A7581'}).c}26;color:${(DEVMETA[DEV[it.file].status]||{c:'#6A7581'}).c}"><i data-lucide="code-2" class="w-2.5 h-2.5"></i> Dev</span>`:`<span class="ni-dot ml-auto w-1.5 h-1.5 rounded-full bg-[#29A37A] opacity-0"></span>`}
+                </button>`).join('')}
+            ${pendingItems.map(it=>`<div title="Coming soon — not yet finalised" class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-semibold text-white/25 cursor-not-allowed select-none">
+                  <i data-lucide="${it.icon}" class="w-4 h-4 shrink-0"></i><span class="truncate">${it.label}</span>
+                  <span class="ml-auto text-[8px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded-full bg-white/5 text-white/30 flex items-center gap-1 shrink-0"><i data-lucide="lock" class="w-2.5 h-2.5"></i> Soon</span>
+                </div>`).join('')}
+          </div>
+        </div>
+      </details>`;
+    });
+
+    const navEl = document.getElementById('nav');
+    navEl.innerHTML = html;
+
+    // Wire up persistence on toggle
+    navEl.querySelectorAll('details.nav-sec').forEach(d=>{
+      d.addEventListener('toggle', ()=> setSecState(d.dataset.group, d.open));
+    });
+
+    lucide.createIcons();
+    const lc = document.getElementById('liveCount'); if(lc) lc.textContent = totalFinalised+' of '+total+' finalised';
+    const dp = document.getElementById('devPill'), dc = document.getElementById('devCount');
+    if(dp && dc){
+      if(devFiles.length){ dp.classList.remove('hidden'); dp.classList.add('flex'); dc.textContent = devFiles.length+' in progress'; }
+      else { dp.classList.add('hidden'); dp.classList.remove('flex'); }
+    }
+  }
+
+  // Dev lane — bypass the finalised gate. Looks up label/group/accent from FILE_INDEX.
+  function loadDev(file){
+    const meta = FILE_INDEX[file] || { label:file, group:'Development', accent:'#3B82F6' };
+    _doLoad(file, meta.group, meta.label, meta.accent);
+  }
   function load(file, group, label, accent){
-    if(!isLive(file)) return; // gate: only finalised mockups open
+    if(!isLive(file)) return; // gate: only finalised mockups open via standard lane
+    _doLoad(file, group, label, accent);
+  }
+  function _doLoad(file, group, label, accent){
     document.getElementById('frame').src = file;
     document.getElementById('curGroup').textContent = group;
     document.getElementById('curGroup').style.color = accent || '#AE6B0A';
@@ -198,7 +306,7 @@
         db.classList.remove('hidden'); db.classList.add('flex'); lucide.createIcons();
       } else { db.classList.add('hidden'); db.classList.remove('flex'); db.innerHTML=''; }
     }
-    document.querySelectorAll('.nav-item').forEach(n=> n.classList.toggle('active', n.dataset.file===file));
+    document.querySelectorAll('.nav-item').forEach(n=> n.classList.toggle('active', n.dataset.file===file || n.dataset.devfile===file));
     if(location.hash.slice(1) !== file) history.replaceState(null,'','#'+file);
     closeSidebar();
   }
@@ -214,17 +322,22 @@
   function openSidebar(){ document.getElementById('sidebar').classList.add('open'); document.getElementById('backdrop').classList.remove('hidden'); }
   function closeSidebar(){ document.getElementById('sidebar').classList.remove('open'); document.getElementById('backdrop').classList.add('hidden'); }
 
-  // Init — restore from hash only if that mockup is finalised, else first finalised.
-  buildNav();
+  // Init — restore from hash (dev lane bypasses gate), else first finalised.
   try{ if(window.MOCKUP_STATUS_PUBLISHED){ document.getElementById('lastPub').textContent = 'Updated '+new Date(window.MOCKUP_STATUS_PUBLISHED).toLocaleDateString('en-ZA',{day:'numeric',month:'short',year:'numeric'}); } }catch(e){}
   (function initLoad(){
     const hash = location.hash.slice(1);
-    let found = null, grp = null, acc = null;
-    NAV.forEach(sec=> sec.items.forEach(it=>{ if(it.file===hash && isLive(it.file)){ found=it; grp=sec.group; acc=sec.accent; } }));
-    if(found){ load(found.file, grp, found.label, acc); return; }
+    // hash + finalised → normal load
+    if(hash){
+      let found = null, grp = null, acc = null;
+      NAV.forEach(sec=> sec.items.forEach(it=>{ if(it.file===hash && isLive(it.file)){ found=it; grp=sec.group; acc=sec.accent; } }));
+      if(found){ buildNav(found.file); load(found.file, grp, found.label, acc); return; }
+      // hash + dev entry → dev lane (bypass gate)
+      if(DEV && DEV[hash]){ buildNav(hash); loadDev(hash); return; }
+    }
     // default: first finalised item
-    for(const sec of NAV){ for(const it of sec.items){ if(isLive(it.file)){ load(it.file, sec.group, it.label, sec.accent); return; } } }
-    // nothing finalised — clear the frame
+    for(const sec of NAV){ for(const it of sec.items){ if(isLive(it.file)){ buildNav(it.file); load(it.file, sec.group, it.label, sec.accent); return; } } }
+    // nothing finalised — build nav, clear the frame
+    buildNav(null);
     document.getElementById('frame').removeAttribute('src');
   })();
   lucide.createIcons();

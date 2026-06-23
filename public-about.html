@@ -31,9 +31,12 @@
       <i data-lucide="construction" class="w-3.5 h-3.5 text-slate-500"></i>
       Header placeholder &middot; design pending
     </p>
-    <a href="index.html" class="ml-auto inline-flex items-center gap-1.5 px-3 h-8 rounded-full bg-white border border-slate-300 hover:border-slate-500 text-[11px] font-bold text-slate-700 transition">
-      <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i>Launcher
-    </a>
+    <div class="ml-auto flex items-center gap-2">
+      <button id="devToggle" onclick="toggleDevMode()" class="inline-flex items-center gap-1.5 px-2.5 h-8 rounded-full bg-white border border-slate-300 hover:border-[#DC183C] hover:text-[#DC183C] text-[11px] font-bold uppercase tracking-wider text-slate-600 transition" title="Toggle implementation notes"><i data-lucide="code-2" class="w-3.5 h-3.5"></i><span class="hidden sm:inline">Dev</span></button>
+      <a href="index.html" class="inline-flex items-center gap-1.5 px-3 h-8 rounded-full bg-white border border-slate-300 hover:border-slate-500 text-[11px] font-bold text-slate-700 transition">
+        <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i><span class="hidden sm:inline">Launcher</span>
+      </a>
+    </div>
   </div>
 </header>
 
@@ -86,11 +89,11 @@
 <section class="bg-[#0C1F31] text-white relative overflow-hidden">
   <div class="absolute inset-0 dot-pattern opacity-60 pointer-events-none"></div>
   <div class="max-w-7xl mx-auto px-4 sm:px-6 py-16 relative">
-    <p class="text-center text-[12px] font-bold uppercase tracking-widest text-white/50">Our Impact</p>
-    <div class="mt-8 grid grid-cols-2 lg:grid-cols-4 gap-y-10 gap-x-6 text-center">
+    <h2 class="text-center font-jakarta font-extrabold text-3xl sm:text-4xl tracking-tight">Our Impact</h2>
+    <div class="mt-10 grid grid-cols-2 lg:grid-cols-4 gap-y-10 gap-x-6 text-center">
       <div><p class="font-jakarta font-extrabold text-4xl sm:text-5xl grad-text">100K+</p><p class="mt-2 text-sm text-white/70">Members</p></div>
       <div><p class="font-jakarta font-extrabold text-4xl sm:text-5xl grad-text">R100M+</p><p class="mt-2 text-sm text-white/70">Loans Facilitated</p></div>
-      <div><p class="font-jakarta font-extrabold text-4xl sm:text-5xl grad-text">500+</p><p class="mt-2 text-sm text-white/70">Events Hosted</p></div>
+      <div><p class="font-jakarta font-extrabold text-4xl sm:text-5xl grad-text">5000+</p><p class="mt-2 text-sm text-white/70">Webinars &amp; Events Hosted</p></div>
       <div><p class="font-jakarta font-extrabold text-4xl sm:text-5xl grad-text">50K+</p><p class="mt-2 text-sm text-white/70">Downloads</p></div>
     </div>
   </div>
@@ -99,34 +102,33 @@
 <!-- PRODUCTS -->
 <section id="products" class="max-w-7xl mx-auto px-4 sm:px-6 py-20 sm:py-24">
   <div class="max-w-2xl">
-    <p class="text-[12px] font-bold uppercase tracking-widest text-[#DC183C]">What We Offer</p>
-    <h2 class="font-jakarta font-extrabold text-3xl sm:text-4xl leading-tight mt-3">One platform, four ways to grow</h2>
-    <p class="mt-4 text-[#6A7581] text-lg">Everything a South African founder needs to learn, fund, build, and run a business — designed to work together.</p>
+    <h2 class="font-jakarta font-extrabold text-3xl sm:text-4xl leading-tight">One platform, four ways to grow</h2>
+    <p class="mt-4 text-[#6A7581] text-lg">Everything a South African founder needs to connect, learn, fund and run a business — designed to work together.</p>
   </div>
   <div class="mt-12 grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
-    <a href="public-articles.html" class="card-lift group bg-white rounded-2xl border border-[#E7EBEF] p-6 block">
-      <div class="w-12 h-12 rounded-xl bg-[#FDECEF] text-[#DC183C] grid place-items-center"><i data-lucide="newspaper" class="w-6 h-6"></i></div>
-      <h3 class="font-jakarta font-extrabold text-xl mt-5">Insights</h3>
-      <p class="mt-2 text-sm text-[#6A7581] leading-relaxed">Expert articles, interviews, and how-to guides to help you make sharper business decisions.</p>
-      <span class="mt-4 inline-flex items-center gap-1.5 text-sm font-bold text-[#DC183C]">Read Insights <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition"></i></span>
+    <a href="member-hub.html" class="card-lift group bg-white rounded-2xl border border-[#E7EBEF] p-6 block">
+      <div class="w-12 h-12 rounded-xl bg-[#FDECEF] text-[#DC183C] grid place-items-center"><i data-lucide="users" class="w-6 h-6"></i></div>
+      <h3 class="font-jakarta font-extrabold text-xl mt-5">Community Connect</h3>
+      <p class="mt-2 text-sm text-[#6A7581] leading-relaxed">Network with thousands of South African entrepreneurs, mentors and investors in one trusted community.</p>
+      <span class="mt-4 inline-flex items-center gap-1.5 text-sm font-bold text-[#DC183C]">Join the conversation <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition"></i></span>
+    </a>
+    <a href="events.html" class="card-lift group bg-white rounded-2xl border border-[#E7EBEF] p-6 block">
+      <div class="w-12 h-12 rounded-xl bg-[#FFF1E0] text-[#AE6B0A] grid place-items-center"><i data-lucide="calendar" class="w-6 h-6"></i></div>
+      <h3 class="font-jakarta font-extrabold text-xl mt-5">Events &amp; Webinars</h3>
+      <p class="mt-2 text-sm text-[#6A7581] leading-relaxed">Learn live from leading founders and operators — from intimate workshops to flagship summits.</p>
+      <span class="mt-4 inline-flex items-center gap-1.5 text-sm font-bold text-[#DC183C]">See what's on <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition"></i></span>
     </a>
     <a href="public-funding.html" class="card-lift group bg-white rounded-2xl border border-[#E7EBEF] p-6 block">
-      <div class="w-12 h-12 rounded-xl bg-[#E4F5EE] text-[#29A37A] grid place-items-center"><i data-lucide="landmark" class="w-6 h-6"></i></div>
-      <h3 class="font-jakarta font-extrabold text-xl mt-5">Funding</h3>
-      <p class="mt-2 text-sm text-[#6A7581] leading-relaxed">Direct access to small business financing — apply, compare, and get matched to capital.</p>
-      <span class="mt-4 inline-flex items-center gap-1.5 text-sm font-bold text-[#DC183C]">Explore Funding <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition"></i></span>
-    </a>
-    <a href="public-solutions.html" class="card-lift group bg-white rounded-2xl border border-[#E7EBEF] p-6 block">
-      <div class="w-12 h-12 rounded-xl bg-[#FFF1E0] text-[#AE6B0A] grid place-items-center"><i data-lucide="layout-grid" class="w-6 h-6"></i></div>
-      <h3 class="font-jakarta font-extrabold text-xl mt-5">Solutions</h3>
-      <p class="mt-2 text-sm text-[#6A7581] leading-relaxed">Vetted tools and services — from accounting to compliance — to run your business better.</p>
-      <span class="mt-4 inline-flex items-center gap-1.5 text-sm font-bold text-[#DC183C]">Browse Solutions <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition"></i></span>
+      <div class="w-12 h-12 rounded-xl bg-[#E4F5EE] text-[#29A37A] grid place-items-center"><i data-lucide="banknote" class="w-6 h-6"></i></div>
+      <h3 class="font-jakarta font-extrabold text-xl mt-5">Funding Access</h3>
+      <p class="mt-2 text-sm text-[#6A7581] leading-relaxed">Apply once and get matched with South Africa's top lenders, grants and investment programmes.</p>
+      <span class="mt-4 inline-flex items-center gap-1.5 text-sm font-bold text-[#DC183C]">Explore funding <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition"></i></span>
     </a>
     <a href="public-resources.html" class="card-lift group bg-white rounded-2xl border border-[#E7EBEF] p-6 block">
       <div class="w-12 h-12 rounded-xl bg-[#FDECEF] text-[#DC183C] grid place-items-center"><i data-lucide="folder-down" class="w-6 h-6"></i></div>
-      <h3 class="font-jakarta font-extrabold text-xl mt-5">Resources</h3>
-      <p class="mt-2 text-sm text-[#6A7581] leading-relaxed">Premium templates, toolkits, and downloadable guides ready to put to work today.</p>
-      <span class="mt-4 inline-flex items-center gap-1.5 text-sm font-bold text-[#DC183C]">Get Resources <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition"></i></span>
+      <h3 class="font-jakarta font-extrabold text-xl mt-5">Resources &amp; Tools</h3>
+      <p class="mt-2 text-sm text-[#6A7581] leading-relaxed">Premium templates, toolkits and guides — vetted by operators and ready to put to work today.</p>
+      <span class="mt-4 inline-flex items-center gap-1.5 text-sm font-bold text-[#DC183C]">Browse resources <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition"></i></span>
     </a>
   </div>
 </section>
@@ -175,8 +177,8 @@
     <div class="absolute -bottom-24 -left-16 w-80 h-80 rounded-full bg-[#FF9900]/15 blur-3xl pointer-events-none"></div>
     <div class="relative max-w-2xl mx-auto">
       <h2 class="font-jakarta font-extrabold text-3xl sm:text-4xl leading-tight">Ready to scale your business?</h2>
-      <p class="mt-4 text-white/75 text-lg">Join over 100,000 South African entrepreneurs accessing community, capital, and tools — free to start.</p>
-      <a href="public-auth.html#join" class="mt-8 inline-flex items-center gap-2 px-7 h-12 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold transition">Join for Free <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
+      <p class="mt-4 text-white/75 text-lg">Join over 100,000 South African entrepreneurs accessing community, capital and tools — all in one place.</p>
+      <a href="public-auth.html#join" class="mt-8 inline-flex items-center gap-2 px-7 h-12 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold transition">Join the Community <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
     </div>
   </div>
 </section>
@@ -188,7 +190,7 @@
       <i data-lucide="construction" class="w-3.5 h-3.5 text-slate-500"></i>
       Footer placeholder &middot; design pending
     </p>
-    <p class="text-[11px] text-slate-500 mt-2">&copy; 2026 SME South Africa &middot; The final footer is being reviewed &mdash; see <a href="chrome-preview.html" class="font-semibold text-slate-700 hover:text-slate-900 underline">chrome-preview.html</a> for the proposal.</p>
+    <p class="text-[11px] text-slate-500 mt-2">&copy; 2026 SME South Africa</p>
   </div>
 </footer>
 <div id="overlay-root"></div><div id="toast" class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-50"></div>
@@ -197,26 +199,31 @@
   function showToast(m){const el=document.getElementById('toast');el.classList.remove('hidden');el.innerHTML=`<div class="bg-[#0C1F31] text-white rounded-full pl-3 pr-5 py-2.5 shadow-2xl flex items-center gap-2 text-sm font-semibold" style="border-left:4px solid #29A37A"><i data-lucide="check-circle" class="w-4 h-4" style="color:#29A37A"></i><span>${esc(m)}</span></div>`;lucide.createIcons();setTimeout(()=>{el.classList.add('hidden');el.innerHTML='';},2400);}
 
   // ----- TEAM DATA -----
+  // photo: drop the real headshots from the live site at assets/team/<slug>.jpg
   const TEAM=[
-    {name:'Velly Bosega',role:'Founder & CEO',i:'VB'},
-    {name:'Tshepho Joel',role:'Platform Manager',i:'TJ'},
-    {name:'Gcina Madonsela',role:'Business Development Executive',i:'GM'},
-    {name:'Maryna Steyn',role:'Editor',i:'MS'},
-    {name:'Lungile Msomi',role:'Digital Content Specialist & Editor (Startup.Africa)',i:'LM'},
-    {name:'Karabo Kgophane',role:'Social Media & Digital Community Manager',i:'KK',link:'public-author.html'},
-    {name:'Omega Fumba',role:'Content Manager',i:'OF'}
+    {name:'Velly Bosega',role:'Founder & CEO',i:'VB',photo:'assets/team/velly-bosega.jpg'},
+    {name:'Tshepho Joel',role:'Platform Manager',i:'TJ',photo:'assets/team/tshepho-joel.jpg'},
+    {name:'Maryna Steyn',role:'Editor',i:'MS',photo:'assets/team/maryna-steyn.jpg'},
+    {name:'Lungile Msomi',role:'Digital Content Specialist & Editor (Startup.Africa)',i:'LM',photo:'assets/team/lungile-msomi.jpg'},
+    {name:'Karabo Kgophane',role:'Social Media & Digital Community Manager',i:'KK',photo:'assets/team/karabo-kgophane.jpg',link:'public-author.html'},
+    {name:'Omega Fumba',role:'Content Manager',i:'OF',photo:'assets/team/omega-fumba.jpg'}
   ];
   function renderTeam(){
     const grid=document.getElementById('team-grid');
     grid.innerHTML=TEAM.map(m=>{
       const nameHtml=m.link?`<a href="${m.link}" class="hover:text-[#DC183C] transition">${esc(m.name)}</a>`:esc(m.name);
-      return `<div class="card-lift bg-[#FCFCFC] rounded-2xl border border-[#E7EBEF] p-6 flex items-center gap-4">
-        <div class="shrink-0 w-14 h-14 rounded-2xl grid place-items-center text-white font-jakarta font-extrabold text-lg" style="background:linear-gradient(135deg,#DC183C,#FF9900)">${esc(m.i)}</div>
-        <div class="min-w-0 flex-1">
-          <h3 class="font-jakarta font-extrabold text-[1.05rem] leading-tight">${nameHtml}</h3>
-          <p class="text-sm text-[#6A7581] mt-0.5 leading-snug">${esc(m.role)}</p>
+      return `<div class="card-lift bg-white rounded-2xl border border-[#E7EBEF] overflow-hidden">
+        <div class="relative aspect-square overflow-hidden bg-gradient-to-br from-[#FDECEF] to-[#FFF1E0]">
+          <img src="${esc(m.photo)}" alt="${esc(m.name)}" loading="lazy" class="w-full h-full object-cover" onerror="this.style.display='none';this.nextElementSibling.style.display='grid';" />
+          <div class="absolute inset-0 grid place-items-center font-jakarta font-extrabold text-white" style="display:none;background:linear-gradient(135deg,#DC183C,#FF9900);font-size:3.5rem">${esc(m.i)}</div>
         </div>
-        <a href="#" onclick="event.preventDefault()" aria-label="LinkedIn" class="shrink-0 w-9 h-9 rounded-lg border border-[#E7EBEF] text-[#6A7581] hover:text-[#DC183C] hover:border-[#DC183C] grid place-items-center transition"><svg viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4" aria-hidden="true"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.42v1.56h.05c.47-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.07 2.07 0 1 1 0-4.14 2.07 2.07 0 0 1 0 4.14zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.8 0 0 .78 0 1.73v20.54C0 23.22.8 24 1.77 24h20.45C23.2 24 24 23.22 24 22.27V1.73C24 .78 23.2 0 22.22 0z"/></svg></a>
+        <div class="p-5 flex items-start gap-3">
+          <div class="min-w-0 flex-1">
+            <h3 class="font-jakarta font-extrabold text-[1.05rem] leading-tight">${nameHtml}</h3>
+            <p class="text-sm text-[#6A7581] mt-1 leading-snug">${esc(m.role)}</p>
+          </div>
+          <a href="#" onclick="event.preventDefault()" aria-label="LinkedIn" class="shrink-0 w-9 h-9 rounded-lg border border-[#E7EBEF] text-[#6A7581] hover:text-[#DC183C] hover:border-[#DC183C] grid place-items-center transition"><svg viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4" aria-hidden="true"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.42v1.56h.05c.47-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.07 2.07 0 1 1 0-4.14 2.07 2.07 0 0 1 0 4.14zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.8 0 0 .78 0 1.73v20.54C0 23.22.8 24 1.77 24h20.45C23.2 24 24 23.22 24 22.27V1.73C24 .78 23.2 0 22.22 0z"/></svg></a>
+        </div>
       </div>`;
     }).join('');
     lucide.createIcons();
