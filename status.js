@@ -7,10 +7,10 @@ window.MOCKUP_STATUS = {
   "public-home.html": "finalised",
   "public-articles.html": "finalised",
   "public-article-categories.html": "finalised",
-  "public-category.html": "under-review",
-  "public-subcategory.html": "under-review",
-  "public-author.html": "under-review",
-  "public-article.html": "under-review",
+  "public-category.html": "finalised",
+  "public-subcategory.html": "finalised",
+  "public-author.html": "finalised",
+  "public-article.html": "finalised",
   "public-resources.html": "under-review",
   "public-resource-category.html": "under-review",
   "public-resource.html": "under-review",
@@ -26,7 +26,7 @@ window.MOCKUP_STATUS = {
   "public-brand.html": "under-review",
   "public-deals.html": "under-review",
   "public-deal.html": "under-review",
-  "public-guides.html": "finalised",
+  "public-guides.html": "under-review",
   "public-guide.html": "under-review",
   "public-founder-focus.html": "under-review",
   "public-shop.html": "under-review",
@@ -40,12 +40,12 @@ window.MOCKUP_STATUS = {
   "public-refunds.html": "finalised",
   "public-popia.html": "finalised",
   "public-advertising-disclosure.html": "under-review",
-  "member-hub.html": "finalised",
+  "member-hub.html": "under-review",
   "members.html": "under-review",
   "single-group.html": "under-review",
   "forums.html": "under-review",
   "member-account.html": "under-review",
-  "events.html": "finalised",
+  "events.html": "under-review",
   "newsletter.html": "under-review",
   "newsletter-issue.html": "under-review",
   "podcast.html": "under-work",
@@ -56,7 +56,7 @@ window.MOCKUP_STATUS = {
   "public-search.html": "under-review",
   "public-404.html": "under-review"
 };
-window.MOCKUP_STATUS_PUBLISHED = "2026-06-23T12:20:23.238Z";
+window.MOCKUP_STATUS_PUBLISHED = "2026-06-23T13:19:32.963Z";
 /* Developer builds (staging) — { mockup file: { url, status } }; status: "pending-review" | "reviewed" | "approved" */
 window.MOCKUP_DEV = {
   "public-home.html": {"url":"https://smesastg.wpengine.com/","status":"pending-review"}
