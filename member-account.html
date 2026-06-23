@@ -398,7 +398,7 @@ const state = {
   notif:{ digest:'weekly', reply:true, mention:true, sectorAsk:true, winConn:true, event:true, suggested:false },
   privacy:{ visibility:'community', postDefault:'community', messages:'connections', directory:true, stats:true },
   downloads:{ q:'', type:'all', sort:'newest' },
-  funding:{ q:'', status:'all', sort:'newest', expanded:{}, editing:{} }
+  funding:{ q:'', status:'all', sort:'newest', expanded:{}, editing:{}, view:'list', activeId:null }
 };
 function person(){ return PEOPLE[state.role]; }
 
@@ -1842,64 +1842,59 @@ function docBadge(s){
   return `<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#FFF1E0] text-[#AE6B0A]"><i data-lucide="clock" class="w-3 h-3"></i> Pending</span>`;
 }
 
-function fundingAppCard(a){
+function fundingRowMenu(id){
+  return `<div class="relative inline-block">
+    <button onclick="event.stopPropagation();document.getElementById('fa-menu-${id}').classList.toggle('hidden')" class="w-8 h-8 rounded-lg border border-[#E7EBEF] hover:border-[#DC183C] hover:text-[#DC183C] text-slate-500 grid place-items-center transition"><i data-lucide="more-horizontal" class="w-4 h-4"></i></button>
+    <div id="fa-menu-${id}" class="hidden absolute right-0 mt-1 w-44 bg-white rounded-xl border border-[#E7EBEF] shadow-lg z-10 py-1">
+      <button onclick="event.stopPropagation();document.getElementById('fa-menu-${id}').classList.add('hidden');viewFunding('${id}')" class="w-full text-left px-3 py-2 text-xs font-semibold text-[#121A21] hover:bg-slate-50 flex items-center gap-2"><i data-lucide="pencil" class="w-3.5 h-3.5"></i> Update info</button>
+      <button onclick="event.stopPropagation();document.getElementById('fa-menu-${id}').classList.add('hidden');confirmWithdraw('${id}')" class="w-full text-left px-3 py-2 text-xs font-semibold text-[#DC183C] hover:bg-[#FDECEF] flex items-center gap-2"><i data-lucide="x-circle" class="w-3.5 h-3.5"></i> Withdraw</button>
+    </div>
+  </div>`;
+}
+
+function fundingTableRow(a, idx){
   const s = FUNDING_STATUS[a.status];
-  const pendingDocs = a.documents.filter(d=>d.state!=='provided').length;
-  const editing = state.funding.editing[a.id];
-  return `<div class="bg-white rounded-2xl border border-slate-100 p-5 reveal">
-    <div class="flex items-start justify-between gap-3 flex-wrap">
-      <div class="flex items-start gap-3 min-w-0 flex-1">
-        <div class="w-11 h-11 rounded-xl bg-[#0C1F31] grid place-items-center shrink-0"><i data-lucide="${a.icon}" class="w-5 h-5 text-[#FF9900]"></i></div>
+  const zebra = idx%2===0 ? 'bg-white' : 'bg-[#FCFCFC]';
+  return `<tr class="${zebra} hover:bg-[#FDECEF]/40 transition cursor-pointer border-b border-[#E7EBEF] last:border-0" onclick="viewFunding('${a.id}')">
+    <td class="px-4 py-3"><span class="inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-bold whitespace-nowrap" style="background:${s.bg};color:${s.color}">${s.label}</span></td>
+    <td class="px-4 py-3">
+      <div class="flex items-center gap-2.5 min-w-0">
+        <div class="w-8 h-8 rounded-lg bg-[#0C1F31] grid place-items-center shrink-0"><i data-lucide="${a.icon}" class="w-4 h-4 text-[#FF9900]"></i></div>
+        <p class="font-jakarta font-bold text-[#121A21] text-sm leading-tight">${esc(a.product)}</p>
+      </div>
+    </td>
+    <td class="px-4 py-3 text-[11px] font-mono text-slate-500">${esc(a.id)}</td>
+    <td class="px-4 py-3 text-sm font-mono font-bold text-[#121A21] text-right whitespace-nowrap">${esc(fundingZAR(a.amount))}</td>
+    <td class="px-4 py-3 text-xs text-slate-600 whitespace-nowrap">${esc(a.submitted)}</td>
+    <td class="px-4 py-3 text-xs text-slate-500 whitespace-nowrap">${esc(a.updated)}</td>
+    <td class="px-4 py-3 text-right whitespace-nowrap">
+      <div class="inline-flex items-center gap-1.5" onclick="event.stopPropagation()">
+        <button onclick="viewFunding('${a.id}')" class="bg-[#DC183C] hover:bg-[#B0142F] text-white rounded-full px-3 py-1.5 text-[11px] font-bold transition inline-flex items-center gap-1">View application <i data-lucide="arrow-right" class="w-3 h-3"></i></button>
+        ${fundingRowMenu(a.id)}
+      </div>
+    </td>
+  </tr>`;
+}
+
+function fundingMobileCard(a){
+  const s = FUNDING_STATUS[a.status];
+  return `<div class="bg-white rounded-xl border border-[#E7EBEF] p-4 cursor-pointer hover:border-[#DC183C] transition" onclick="viewFunding('${a.id}')">
+    <div class="flex items-start justify-between gap-2 mb-3">
+      <div class="flex items-center gap-2.5 min-w-0">
+        <div class="w-9 h-9 rounded-lg bg-[#0C1F31] grid place-items-center shrink-0"><i data-lucide="${a.icon}" class="w-4 h-4 text-[#FF9900]"></i></div>
         <div class="min-w-0">
-          <p class="font-jakarta font-extrabold text-[#121A21] text-base leading-tight">${esc(a.product)}</p>
-          <p class="text-[11px] text-slate-400 font-mono mt-0.5">${esc(a.id)} <span class="text-slate-300">·</span> Submitted ${esc(a.submitted)} <span class="text-slate-300">·</span> Updated ${esc(a.updated)}</p>
+          <p class="font-jakarta font-bold text-[#121A21] text-sm leading-tight">${esc(a.product)}</p>
+          <p class="text-[10px] font-mono text-slate-400 mt-0.5">${esc(a.id)}</p>
         </div>
       </div>
-      <div class="flex items-center gap-2 shrink-0">
-        <span class="px-2.5 py-1 rounded-full text-[10px] font-bold" style="background:${s.bg};color:${s.color}">${s.label}</span>
-        ${pendingDocs?`<span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-[#FDECEF] text-[#DC183C]">${pendingDocs} doc${pendingDocs>1?'s':''} needed</span>`:''}
-      </div>
+      <span class="px-2 py-0.5 rounded-full text-[10px] font-bold whitespace-nowrap shrink-0" style="background:${s.bg};color:${s.color}">${s.label}</span>
     </div>
-
-    <div class="mt-4 grid sm:grid-cols-3 gap-3 pb-4 border-b border-slate-100">
-      ${editing?`
-        <div class="sm:col-span-3 grid sm:grid-cols-3 gap-3">
-          <div><label class="block text-[10px] font-bold uppercase tracking-wider text-slate-500 mb-1">Amount (ZAR)</label><input id="fa-amt-${a.id}" value="${a.amount}" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-sm outline-none focus:border-[#DC183C]"></div>
-          <div><label class="block text-[10px] font-bold uppercase tracking-wider text-slate-500 mb-1">Term</label><input id="fa-term-${a.id}" value="${esc(a.term)}" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-sm outline-none focus:border-[#DC183C]"></div>
-          <div><label class="block text-[10px] font-bold uppercase tracking-wider text-slate-500 mb-1">Purpose</label><input id="fa-purp-${a.id}" value="${esc(a.purpose)}" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-sm outline-none focus:border-[#DC183C]"></div>
-          <div class="sm:col-span-3 flex gap-2"><button onclick="saveEditApp('${a.id}')" class="bg-[#29A37A] hover:opacity-90 text-white rounded-full px-4 py-1.5 text-xs font-bold flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5"></i> Save</button><button onclick="toggleEditApp('${a.id}')" class="text-slate-500 text-xs font-semibold px-2">Cancel</button></div>
-        </div>`:`
-        <div><p class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Amount requested</p><p class="font-jakarta font-extrabold text-xl text-[#121A21] font-mono">${esc(fundingZAR(a.amount))}</p></div>
-        <div><p class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Term</p><p class="text-sm font-semibold text-[#121A21] mt-1">${esc(a.term)}</p></div>
-        <div><p class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Purpose</p><p class="text-sm text-slate-600 mt-1 leading-snug">${esc(a.purpose)}</p></div>`}
+    <div class="grid grid-cols-2 gap-2 text-[11px] mb-3">
+      <div><p class="uppercase font-bold text-slate-400 tracking-wider">Amount</p><p class="font-mono font-bold text-[#121A21] text-sm">${esc(fundingZAR(a.amount))}</p></div>
+      <div><p class="uppercase font-bold text-slate-400 tracking-wider">Submitted</p><p class="text-slate-600">${esc(a.submitted)}</p></div>
+      <div class="col-span-2"><p class="uppercase font-bold text-slate-400 tracking-wider">Last update</p><p class="text-slate-500">${esc(a.updated)}</p></div>
     </div>
-
-    ${a.status!=='draft' ? `<div class="pb-4 border-b border-slate-100">${fundingStepper(a.step)}</div>`:''}
-
-    ${a.lender?`
-    <div class="mt-4 pb-4 border-b border-slate-100 flex items-center gap-3">
-      <div class="w-9 h-9 rounded-lg bg-[#FFF1E0] grid place-items-center shrink-0"><i data-lucide="landmark" class="w-4 h-4 text-[#AE6B0A]"></i></div>
-      <div class="min-w-0 flex-1"><p class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Matched lender</p><p class="text-sm font-semibold text-[#121A21]">${esc(a.lender)} <span class="text-slate-300">·</span> <span class="text-slate-500 font-normal">${esc(a.contact||'')}</span></p></div>
-      <button onclick="showToast('Opening lender matches (mockup).',null)" class="text-xs font-bold text-[#DC183C] hover:underline shrink-0">View matches</button>
-    </div>`:''}
-
-    <div class="mt-4">
-      <p class="text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-2">Documents</p>
-      <div class="space-y-1.5">
-        ${a.documents.map((d,i)=>`<div class="flex items-center gap-2 py-1.5">
-          <i data-lucide="file" class="w-4 h-4 text-slate-400 shrink-0"></i>
-          <p class="text-sm text-[#121A21] flex-1 truncate">${esc(d.name)}</p>
-          ${docBadge(d.state)}
-          ${d.state!=='provided'?`<button onclick="uploadDoc('${a.id}',${i})" class="text-[11px] font-bold text-[#DC183C] hover:underline shrink-0">Upload</button>`:''}
-        </div>`).join('')}
-      </div>
-    </div>
-
-    <div class="mt-4 pt-4 border-t border-slate-100 flex flex-wrap gap-2">
-      <button onclick="openFundingDetails('${a.id}')" class="bg-[#DC183C] hover:bg-[#B0142F] text-white rounded-full px-4 py-2 text-xs font-bold transition flex items-center gap-1.5"><i data-lucide="list-checks" class="w-3.5 h-3.5"></i> View details</button>
-      ${a.status!=='declined'?`<button onclick="toggleEditApp('${a.id}')" class="border border-slate-200 hover:border-[#DC183C] hover:text-[#DC183C] text-slate-600 rounded-full px-4 py-2 text-xs font-bold transition flex items-center gap-1.5"><i data-lucide="pencil" class="w-3.5 h-3.5"></i> ${editing?'Cancel':'Update info'}</button>`:''}
-      ${a.status!=='declined' && a.status!=='funded'?`<button onclick="withdrawApp('${a.id}')" class="text-slate-400 hover:text-[#DC183C] rounded-full px-4 py-2 text-xs font-bold transition flex items-center gap-1.5 ml-auto"><i data-lucide="x" class="w-3.5 h-3.5"></i> Withdraw</button>`:''}
-    </div>
+    <button onclick="event.stopPropagation();viewFunding('${a.id}')" class="w-full bg-[#DC183C] hover:bg-[#B0142F] text-white rounded-full px-3 py-2 text-xs font-bold transition inline-flex items-center justify-center gap-1.5">View application <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i></button>
   </div>`;
 }
 
@@ -1914,22 +1909,38 @@ function renderFundingList(){
   const empty = document.getElementById('fa-empty');
   if(!list.length){ host.innerHTML=''; if(empty) empty.classList.remove('hidden'); lucide.createIcons(); return; }
   if(empty) empty.classList.add('hidden');
-  host.innerHTML = `<div class="grid grid-cols-1 xl:grid-cols-2 gap-4">${list.map(fundingAppCard).join('')}</div>`;
+  const head = `<thead class="bg-[#FCFCFC] border-b border-[#E7EBEF]"><tr>
+    <th class="px-4 py-3 text-left text-[11px] font-bold uppercase tracking-wider text-[#0C1F31]">Status</th>
+    <th class="px-4 py-3 text-left text-[11px] font-bold uppercase tracking-wider text-[#0C1F31]">Product</th>
+    <th class="px-4 py-3 text-left text-[11px] font-bold uppercase tracking-wider text-[#0C1F31]">Reference</th>
+    <th class="px-4 py-3 text-right text-[11px] font-bold uppercase tracking-wider text-[#0C1F31]">Amount</th>
+    <th class="px-4 py-3 text-left text-[11px] font-bold uppercase tracking-wider text-[#0C1F31]">Submitted</th>
+    <th class="px-4 py-3 text-left text-[11px] font-bold uppercase tracking-wider text-[#0C1F31]">Last update</th>
+    <th class="px-4 py-3 text-right text-[11px] font-bold uppercase tracking-wider text-[#0C1F31]">Actions</th>
+  </tr></thead>`;
+  host.innerHTML = `
+    <div class="hidden md:block bg-white rounded-2xl border border-[#E7EBEF] overflow-hidden">
+      <div class="overflow-x-auto"><table class="w-full text-sm">${head}<tbody>${list.map((a,i)=>fundingTableRow(a,i)).join('')}</tbody></table></div>
+    </div>
+    <div class="md:hidden space-y-3">${list.map(fundingMobileCard).join('')}</div>`;
   lucide.createIcons();
 }
 
 function renderFunding(){
+  if(state.funding.view==='detail' && state.funding.activeId){
+    return renderFundingDetail(state.funding.activeId);
+  }
   const total = APPLICATIONS.length;
   const inReview = APPLICATIONS.filter(a=>a.status==='review'||a.status==='docs').length;
   const approved = APPLICATIONS.filter(a=>a.status==='approved'||a.status==='funded').length;
   const declined = APPLICATIONS.filter(a=>a.status==='declined').length;
-  const stat = (label,val,color,bg)=>`<div class="bg-white rounded-2xl border border-slate-100 p-4">
+  const stat = (label,val,color)=>`<div class="bg-white rounded-2xl border border-[#E7EBEF] p-4">
     <p class="text-[10px] font-bold uppercase tracking-widest text-slate-400">${esc(label)}</p>
     <div class="flex items-baseline gap-2 mt-1"><p class="font-jakarta font-extrabold text-2xl" style="color:${color}">${val}</p><span class="w-2 h-2 rounded-full" style="background:${color}"></span></div>
   </div>`;
-  const chips = FUNDING_FILTERS.map(([id,l])=>`<button onclick="setFundingFilter('${id}')" class="shrink-0 px-3.5 py-1.5 rounded-full text-xs font-bold border ${state.funding.status===id?'bg-[#DC183C] text-white border-[#DC183C]':'border-slate-200 bg-white text-slate-600 hover:bg-slate-50'}">${l}</button>`).join('');
+  const chips = FUNDING_FILTERS.map(([id,l])=>`<button onclick="setFundingFilter('${id}')" class="shrink-0 px-3.5 py-1.5 rounded-full text-xs font-bold border ${state.funding.status===id?'bg-[#DC183C] text-white border-[#DC183C]':'border-[#E7EBEF] bg-white text-slate-600 hover:bg-slate-50'}">${l}</button>`).join('');
   const body = `
-    <div class="rounded-2xl overflow-hidden border border-slate-100 mb-5">
+    <div class="rounded-2xl overflow-hidden border border-[#E7EBEF] mb-5">
       <div class="bg-[#0C1F31] px-5 py-5 relative flex items-start justify-between gap-3 flex-wrap">
         <div class="absolute inset-0 opacity-40" style="background:radial-gradient(circle at 80% 30%, #29A37A 0%, transparent 60%);"></div>
         <div class="relative min-w-0">
@@ -1946,13 +1957,13 @@ function renderFunding(){
       ${stat('Approved',approved,'#29A37A')}
       ${stat('Declined',declined,'#6A7581')}
     </div>
-    <div class="bg-white rounded-2xl border border-slate-100 p-4 mb-4">
+    <div class="bg-white rounded-2xl border border-[#E7EBEF] p-4 mb-4">
       <div class="flex flex-col sm:flex-row gap-3 sm:items-center">
         <div class="relative flex-1">
           <i data-lucide="search" class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400"></i>
-          <input value="${esc(state.funding.q)}" oninput="setFundingQ(this.value)" placeholder="Search by product, reference or purpose…" class="w-full bg-slate-50 border border-slate-200 rounded-full pl-9 pr-3 py-2 text-sm outline-none focus:bg-white focus:border-[#DC183C] transition">
+          <input value="${esc(state.funding.q)}" oninput="setFundingQ(this.value)" placeholder="Search by product, reference or purpose…" class="w-full bg-[#FCFCFC] border border-[#E7EBEF] rounded-full pl-9 pr-3 py-2 text-sm outline-none focus:bg-white focus:border-[#DC183C] transition">
         </div>
-        <select onchange="setFundingSort(this.value)" class="text-xs font-semibold border border-slate-200 rounded-full px-3 py-2 outline-none text-slate-600 bg-white">
+        <select onchange="setFundingSort(this.value)" class="text-xs font-semibold border border-[#E7EBEF] rounded-full px-3 py-2 outline-none text-slate-600 bg-white">
           <option value="newest" ${state.funding.sort==='newest'?'selected':''}>Newest first</option>
           <option value="amount" ${state.funding.sort==='amount'?'selected':''}>Highest amount</option>
           <option value="status" ${state.funding.sort==='status'?'selected':''}>Status</option>
@@ -1961,53 +1972,240 @@ function renderFunding(){
       <div class="flex gap-2 overflow-x-auto no-scrollbar mt-3">${chips}</div>
     </div>
     <div id="fa-list"></div>
-    <div id="fa-empty" class="hidden text-center py-12 px-4 bg-white rounded-2xl border border-slate-100">
+    <div id="fa-empty" class="hidden text-center py-12 px-4 bg-white rounded-2xl border border-[#E7EBEF]">
       <div class="w-14 h-14 mx-auto rounded-full bg-slate-100 grid place-items-center mb-3"><i data-lucide="banknote" class="w-6 h-6 text-slate-400"></i></div>
       <p class="font-jakarta font-bold text-[#121A21]">No applications match that filter</p>
       <p class="text-sm text-slate-500 max-w-xs mx-auto mt-1">Adjust the status chips, or start a fresh application.</p>
-      <a href="public-funding.html" class="mt-4 bg-[#DC183C] hover:bg-[#B0142F] text-white rounded-full px-5 py-2.5 font-jakarta font-bold text-sm transition inline-flex items-center gap-2"><i data-lucide="arrow-right" class="w-4 h-4"></i> Apply for funding →</a>
+      <a href="public-funding.html#apply" class="mt-4 bg-[#DC183C] hover:bg-[#B0142F] text-white rounded-full px-5 py-2.5 font-jakarta font-bold text-sm transition inline-flex items-center gap-2"><i data-lucide="arrow-right" class="w-4 h-4"></i> Apply for funding →</a>
     </div>`;
   setTimeout(renderFundingList, 0);
   return settingsCard('Funding applications', 'Track and update every application you have made through the SME Hub.', body);
 }
 
-function openFundingDetails(id){
+function viewFunding(id){
+  state.funding.activeId = id;
+  state.funding.view = 'detail';
+  renderSettingsContent();
+  window.scrollTo({top:120,behavior:'smooth'});
+}
+function backToFundingList(){
+  state.funding.view = 'list';
+  renderSettingsContent();
+  window.scrollTo({top:120,behavior:'smooth'});
+}
+function confirmWithdraw(id){
   const a = APPLICATIONS.find(x=>x.id===id); if(!a) return;
-  const s = FUNDING_STATUS[a.status];
-  const sec = (icon,label,html) => `<div class="px-6 py-4 border-t border-slate-100">
-    <p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] flex items-center gap-1.5 mb-2"><i data-lucide="${icon}" class="w-3.5 h-3.5"></i>${label}</p>
-    <div class="text-sm text-slate-600 leading-relaxed">${html}</div>
-  </div>`;
-  const timeline = `<ol class="space-y-3">${a.timeline.slice().reverse().map(t=>`
-    <li class="flex gap-3">
-      <div class="w-8 h-8 rounded-full bg-[#FDECEF] grid place-items-center shrink-0"><i data-lucide="${t.icon}" class="w-4 h-4 text-[#DC183C]"></i></div>
-      <div class="min-w-0"><p class="text-sm text-[#121A21] font-semibold leading-snug">${esc(t.text)}</p><p class="text-[11px] text-slate-400 mt-0.5">${esc(t.date)}</p></div>
-    </li>`).join('')}</ol>`;
-  const docs = `<div class="space-y-1.5">${a.documents.map(d=>`<div class="flex items-center gap-2 py-1.5"><i data-lucide="file" class="w-4 h-4 text-slate-400 shrink-0"></i><p class="text-sm flex-1 truncate">${esc(d.name)}</p>${docBadge(d.state)}</div>`).join('')}</div>`;
-  document.getElementById('overlay-root').innerHTML = `
-    <div class="ov" id="ov-funding">
-      <div class="ov-bg" onclick="closeOverlay('ov-funding')"></div>
-      <div class="drawer">
-        <div class="sticky top-0 z-10 bg-[#0C1F31] text-white px-6 py-5 flex items-start justify-between">
-          <div class="min-w-0">
-            <p class="text-[10px] font-bold uppercase tracking-widest text-[#FF9900] mb-1">${esc(a.id)}</p>
-            <h3 class="font-jakarta font-extrabold text-lg leading-tight">${esc(a.product)}</h3>
-            <p class="text-xs text-white/60 mt-1">${esc(fundingZAR(a.amount))} <span class="text-white/30">·</span> ${esc(a.term)}</p>
-            <span class="inline-flex items-center gap-1.5 mt-2 px-2.5 py-1 rounded-full text-[10px] font-bold" style="background:${s.bg};color:${s.color}">${s.label}</span>
-          </div>
-          <button onclick="closeOverlay('ov-funding')" class="text-white/60 hover:text-white shrink-0 ml-3"><i data-lucide="x" class="w-5 h-5"></i></button>
-        </div>
-        ${sec('flag','Purpose', esc(a.purpose))}
-        ${a.lender?sec('landmark','Lender & contact', `<p><b>${esc(a.lender)}</b></p><p class="text-slate-500 text-xs mt-1">Underwriter: ${esc(a.contact||'—')}</p>`):''}
-        ${sec('clock','Activity timeline', timeline)}
-        ${sec('paperclip','Documents', docs)}
-        <div class="px-6 py-4 border-t border-slate-100 flex items-center gap-2">
-          <a href="public-contact.html" class="text-sm font-bold text-[#DC183C] hover:underline flex items-center gap-1.5"><i data-lucide="life-buoy" class="w-4 h-4"></i> Message support</a>
+  if(confirm('Withdraw application '+id+'? This cannot be undone.')){
+    a.status='declined'; a.step=-1; a.updated='just now';
+    a.timeline.push({ date:'today', text:'Withdrawn by applicant.', icon:'x-circle' });
+    if(state.funding.view==='detail') renderSettingsContent();
+    else renderFundingList();
+    showToast('Application '+id+' withdrawn.', null);
+  }
+}
+
+function fundingContextCTA(a){
+  let title='', body='', cta='Continue', icon='arrow-right', tone='#0C1F31';
+  switch(a.status){
+    case 'draft':
+      title='Finish your draft and submit.'; body='Complete the required fields so we can match you with a lender.'; cta='Continue application'; icon='edit-3'; break;
+    case 'submitted':
+      title='Awaiting lender match.'; body='Your application is in the queue. We typically match within 2 business days.'; cta='Message support'; icon='clock'; break;
+    case 'review':
+      title='Your application is being reviewed.'; body='The underwriter is assessing your file. We will notify you of any next steps.'; cta='View timeline'; icon='search'; break;
+    case 'docs': {
+      const pending = a.documents.filter(d=>d.state!=='provided').length;
+      title=`You have ${pending} document${pending===1?'':'s'} outstanding — upload now.`; body='The lender cannot continue until every requested document is provided.'; cta='Upload documents'; icon='upload'; tone='#DC183C'; break;
+    }
+    case 'approved':
+      title='Congratulations — review your funding offer.'; body='An approval term sheet is ready. Sign to release funds.'; cta='Review offer'; icon='badge-check'; tone='#29A37A'; break;
+    case 'funded':
+      title='Funds disbursed.'; body='This application is closed. A statement will be available in your account portal.'; cta='Download statement'; icon='download'; tone='#29A37A'; break;
+    case 'declined':
+      title='Application closed.'; body='If circumstances change, you can submit a new application at any time.'; cta='Start a new application'; icon='refresh-cw'; break;
+  }
+  return `<div class="rounded-2xl overflow-hidden border border-[#E7EBEF] mt-6">
+    <div class="px-5 py-5 relative flex items-center justify-between gap-3 flex-wrap" style="background:${tone}">
+      <div class="absolute inset-0 opacity-30" style="background:radial-gradient(circle at 90% 50%, #FF9900 0%, transparent 60%);"></div>
+      <div class="relative min-w-0 flex items-start gap-3">
+        <div class="w-10 h-10 rounded-xl bg-white/10 grid place-items-center shrink-0"><i data-lucide="${icon}" class="w-5 h-5 text-[#FF9900]"></i></div>
+        <div class="min-w-0">
+          <p class="font-jakarta font-extrabold text-white text-base leading-tight">${esc(title)}</p>
+          <p class="text-xs text-white/70 mt-1">${esc(body)}</p>
         </div>
       </div>
-    </div>`;
-  requestAnimationFrame(()=>{ const o=document.getElementById('ov-funding'); if(o) o.classList.add('open'); });
-  lucide.createIcons();
+      <button onclick="showToast('${esc(cta)} (mockup).',null)" class="relative bg-[#DC183C] hover:bg-[#B0142F] text-white rounded-full px-5 py-2.5 font-jakarta font-bold text-sm transition flex items-center gap-2 shrink-0"><i data-lucide="${icon}" class="w-4 h-4"></i> ${esc(cta)}</button>
+    </div>
+  </div>`;
+}
+
+function fundingDocRow(a, d, i){
+  const sizes = ['1.2 MB','864 KB','2.1 MB','512 KB','1.7 MB','948 KB'];
+  const fname = (d.state==='provided') ? (d.name.toLowerCase().replace(/[^a-z0-9]+/g,'-').slice(0,28)+'.pdf') : '';
+  const size = sizes[i % sizes.length];
+  let action = '';
+  if(d.state==='provided') action = `<button onclick="showToast('Viewing '+${JSON.stringify(d.name)},null)" class="text-[11px] font-bold text-slate-500 hover:text-[#DC183C] border border-[#E7EBEF] rounded-full px-3 py-1.5 transition">View</button>`;
+  else if(d.state==='reupload') action = `<button onclick="uploadDoc('${a.id}',${i})" class="bg-[#FF9900] hover:bg-[#AE6B0A] text-white rounded-full px-3 py-1.5 text-[11px] font-bold transition inline-flex items-center gap-1.5"><i data-lucide="refresh-cw" class="w-3 h-3"></i> Re-upload</button>`;
+  else action = `<button onclick="uploadDoc('${a.id}',${i})" class="bg-[#DC183C] hover:bg-[#B0142F] text-white rounded-full px-3 py-1.5 text-[11px] font-bold transition inline-flex items-center gap-1.5"><i data-lucide="upload" class="w-3 h-3"></i> Upload</button>`;
+  return `<div class="flex items-center gap-3 py-3 border-b border-[#E7EBEF] last:border-0">
+    <div class="w-9 h-9 rounded-lg bg-[#FCFCFC] border border-[#E7EBEF] grid place-items-center shrink-0"><i data-lucide="${d.state==='provided'?'file-check':'file'}" class="w-4 h-4 ${d.state==='provided'?'text-[#29A37A]':'text-slate-400'}"></i></div>
+    <div class="min-w-0 flex-1">
+      <p class="text-sm font-semibold text-[#121A21] truncate">${esc(d.name)}</p>
+      ${fname?`<p class="text-[11px] font-mono text-slate-400 truncate">${fname} · ${size}</p>`:'<p class="text-[11px] text-slate-400">No file uploaded yet</p>'}
+    </div>
+    ${docBadge(d.state)}
+    ${action}
+  </div>`;
+}
+
+function fundingDetailStepper(step){
+  return `<div class="flex items-center w-full">
+    ${FUNDING_STEPS.map((s,i)=>{
+      const done = step>i, cur = step===i;
+      const dotBg = done?'#29A37A':cur?'#FDECEF':'#FCFCFC';
+      const dotIconColor = done?'#fff':cur?'#DC183C':'#94A3B8';
+      const icon = done?'check':(cur?'circle-dot':'circle');
+      const lineColor = done?'#29A37A':'#E7EBEF';
+      return `<div class="flex items-center ${i===FUNDING_STEPS.length-1?'':'flex-1'} min-w-0">
+        <div class="flex flex-col items-center">
+          <div class="w-10 h-10 rounded-full grid place-items-center shrink-0 border-2" style="background:${dotBg};border-color:${done?'#29A37A':cur?'#DC183C':'#E7EBEF'};${cur?'box-shadow:0 0 0 3px #FDECEF':''}"><i data-lucide="${icon}" class="w-4 h-4" style="color:${dotIconColor}"></i></div>
+          <p class="text-[10px] font-bold mt-2 ${cur?'text-[#DC183C]':done?'text-[#29A37A]':'text-slate-400'} uppercase tracking-wide text-center whitespace-nowrap">${s}</p>
+        </div>
+        ${i<FUNDING_STEPS.length-1?`<div class="flex-1 h-0.5 mx-2 -mt-6" style="background:${lineColor}"></div>`:''}
+      </div>`;
+    }).join('')}
+  </div>`;
+}
+
+function renderFundingDetail(id){
+  const a = APPLICATIONS.find(x=>x.id===id);
+  if(!a) return renderFunding();
+  const s = FUNDING_STATUS[a.status];
+  const provided = a.documents.filter(d=>d.state==='provided').length;
+
+  const glance = `<div class="bg-white rounded-2xl border border-[#E7EBEF] p-5">
+    <p class="text-[10px] font-bold uppercase tracking-widest text-[#0C1F31] mb-3">At a glance</p>
+    <div class="space-y-3">
+      <div><p class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Amount requested</p><p class="font-jakarta font-extrabold text-2xl text-[#121A21] font-mono mt-0.5">${esc(fundingZAR(a.amount))}</p></div>
+      <div><p class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Term</p><p class="text-sm font-semibold text-[#121A21] mt-0.5">${esc(a.term)}</p></div>
+      <div><p class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Purpose</p><p class="text-sm text-slate-600 mt-0.5 leading-snug">${esc(a.purpose)}</p></div>
+      <div><p class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Industry</p><p class="text-sm text-[#121A21] mt-0.5">Manufacturing &amp; Logistics</p></div>
+      <div><p class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Application type</p><p class="text-sm text-[#121A21] mt-0.5">${esc(a.product)}</p></div>
+    </div>
+  </div>`;
+
+  const lender = a.lender ? `<div class="bg-white rounded-2xl border border-[#E7EBEF] p-5 mt-4">
+    <p class="text-[10px] font-bold uppercase tracking-widest text-[#0C1F31] mb-3">Lender match</p>
+    <div class="flex items-center gap-3 mb-3">
+      <div class="w-11 h-11 rounded-xl bg-[#FFF1E0] grid place-items-center shrink-0"><i data-lucide="landmark" class="w-5 h-5 text-[#AE6B0A]"></i></div>
+      <div class="min-w-0"><p class="font-jakarta font-bold text-[#121A21] text-sm">${esc(a.lender)}</p><p class="text-xs text-slate-500">Underwriter: ${esc(a.contact||'—')}</p></div>
+    </div>
+    <div class="space-y-1.5 text-xs">
+      <div class="flex items-center gap-2 text-slate-600"><i data-lucide="mail" class="w-3.5 h-3.5 text-slate-400"></i> ${esc((a.contact||'team').toLowerCase().replace(/\s+/g,'.'))}@${esc(a.lender.toLowerCase().replace(/[^a-z]+/g,''))}.co.za</div>
+      <div class="flex items-center gap-2 text-slate-600"><i data-lucide="phone" class="w-3.5 h-3.5 text-slate-400"></i> +27 11 555 0182</div>
+    </div>
+    <button onclick="showToast('Opening message thread with lender (mockup).',null)" class="mt-4 w-full border border-[#E7EBEF] hover:border-[#DC183C] hover:text-[#DC183C] text-[#121A21] rounded-full px-4 py-2 text-xs font-bold transition inline-flex items-center justify-center gap-1.5"><i data-lucide="message-square" class="w-3.5 h-3.5"></i> Message lender</button>
+  </div>` : `<div class="bg-[#FCFCFC] rounded-2xl border border-dashed border-[#E7EBEF] p-5 mt-4 text-center">
+    <div class="w-10 h-10 mx-auto rounded-full bg-white grid place-items-center mb-2 border border-[#E7EBEF]"><i data-lucide="search" class="w-5 h-5 text-slate-400"></i></div>
+    <p class="text-sm font-bold text-[#121A21]">Awaiting lender match</p>
+    <p class="text-[11px] text-slate-500 mt-1">We typically match within 2 business days.</p>
+  </div>`;
+
+  const actions = `<div class="bg-white rounded-2xl border border-[#E7EBEF] p-5 mt-4">
+    <p class="text-[10px] font-bold uppercase tracking-widest text-[#0C1F31] mb-3">Actions</p>
+    <div class="space-y-2">
+      ${a.status!=='declined' && a.status!=='funded' ? `<button onclick="confirmWithdraw('${a.id}')" class="w-full text-left text-xs font-bold text-[#DC183C] hover:bg-[#FDECEF] rounded-lg px-3 py-2 transition flex items-center gap-2"><i data-lucide="x-circle" class="w-3.5 h-3.5"></i> Withdraw application</button>`:''}
+      <button onclick="showToast('Duplicated as draft (mockup).','win')" class="w-full text-left text-xs font-bold text-[#121A21] hover:bg-slate-50 rounded-lg px-3 py-2 transition flex items-center gap-2"><i data-lucide="copy" class="w-3.5 h-3.5 text-slate-500"></i> Duplicate as draft</button>
+      <button onclick="showToast('Generating summary PDF (mockup).',null)" class="w-full text-left text-xs font-bold text-[#121A21] hover:bg-slate-50 rounded-lg px-3 py-2 transition flex items-center gap-2"><i data-lucide="download" class="w-3.5 h-3.5 text-slate-500"></i> Download summary (PDF)</button>
+    </div>
+  </div>`;
+
+  const dl = (label,val)=>`<div><p class="text-[10px] font-bold uppercase tracking-wider text-slate-400">${esc(label)}</p><p class="text-sm font-semibold text-[#121A21] mt-1">${val}</p></div>`;
+  const details = `<div class="bg-white rounded-2xl border border-[#E7EBEF] p-5 mt-5">
+    <p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] mb-4 flex items-center gap-1.5"><i data-lucide="file-text" class="w-3.5 h-3.5"></i> Application details</p>
+    <div class="grid sm:grid-cols-2 gap-x-6 gap-y-4">
+      ${dl('Amount requested', `<span class="font-mono">${esc(fundingZAR(a.amount))}</span>`)}
+      ${dl('Term', esc(a.term))}
+      ${dl('Monthly turnover stated', '<span class="font-mono">R 480,000</span>')}
+      ${dl('Years in business', '6 years')}
+      ${dl('Business type', '(Pty) Ltd')}
+      ${dl('Industry', 'Manufacturing &amp; Logistics')}
+    </div>
+    <div class="mt-4 pt-4 border-t border-[#E7EBEF]">
+      <p class="text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1">Purpose narrative</p>
+      <p class="text-sm text-slate-600 leading-relaxed">${esc(a.purpose)}</p>
+    </div>
+  </div>`;
+
+  const docsSec = `<div class="bg-white rounded-2xl border border-[#E7EBEF] p-5 mt-5">
+    <div class="flex items-center justify-between gap-3 mb-1">
+      <p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] flex items-center gap-1.5"><i data-lucide="paperclip" class="w-3.5 h-3.5"></i> Documents</p>
+      <p class="text-[11px] font-semibold text-slate-500">${provided} of ${a.documents.length} documents provided</p>
+    </div>
+    <div class="mt-3">${a.documents.map((d,i)=>fundingDocRow(a,d,i)).join('')}</div>
+  </div>`;
+
+  const timelineSec = `<div class="bg-white rounded-2xl border border-[#E7EBEF] p-5 mt-5">
+    <p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] mb-4 flex items-center gap-1.5"><i data-lucide="clock" class="w-3.5 h-3.5"></i> Activity timeline</p>
+    <ol class="relative border-l-2 border-[#E7EBEF] ml-3 space-y-5 pl-5">
+      ${a.timeline.slice().reverse().map((t,idx)=>{
+        const isLast = idx===a.timeline.length-1;
+        return `<li class="relative">
+          <div class="absolute -left-[27px] top-0 w-7 h-7 rounded-full grid place-items-center" style="background:${isLast?'#FDECEF':'#FCFCFC'};border:2px solid ${isLast?'#DC183C':'#E7EBEF'}"><i data-lucide="${t.icon}" class="w-3.5 h-3.5" style="color:${isLast?'#DC183C':'#6A7581'}"></i></div>
+          <div class="flex items-center gap-2 mb-0.5">
+            <div class="w-5 h-5 rounded-full bg-[#0C1F31] text-white text-[9px] font-bold grid place-items-center">${isLast?'YOU':'SYS'}</div>
+            <p class="text-[11px] font-mono text-slate-400">${esc(t.date)}</p>
+          </div>
+          <p class="text-sm text-[#121A21] font-semibold leading-snug">${esc(t.text)}</p>
+        </li>`;
+      }).join('')}
+    </ol>
+  </div>`;
+
+  const body = `
+    <div class="flex items-center justify-between gap-3 mb-4 flex-wrap">
+      <button onclick="backToFundingList()" class="text-xs font-bold text-[#121A21] hover:text-[#DC183C] transition inline-flex items-center gap-1.5"><i data-lucide="arrow-left" class="w-4 h-4"></i> Back to applications</button>
+      <p class="text-[11px] font-mono text-slate-400">${esc(a.id)}</p>
+    </div>
+
+    <div class="rounded-2xl border border-[#0C1F31]/15 bg-white p-6 mb-5">
+      <div class="flex items-start justify-between gap-4 flex-wrap">
+        <div class="flex items-start gap-4 min-w-0 flex-1">
+          <div class="w-14 h-14 rounded-2xl bg-[#0C1F31] grid place-items-center shrink-0"><i data-lucide="${a.icon}" class="w-7 h-7 text-[#FF9900]"></i></div>
+          <div class="min-w-0">
+            <h1 class="font-jakarta font-extrabold text-[#121A21] text-2xl leading-tight">${esc(a.product)}</h1>
+            <div class="mt-2"><span class="inline-flex items-center px-3 py-1.5 rounded-full text-xs font-bold" style="background:${s.bg};color:${s.color}">${s.label}</span></div>
+          </div>
+        </div>
+        <div class="text-right shrink-0">
+          <p class="text-[11px] text-slate-500">Submitted ${esc(a.submitted)} <span class="text-slate-300">·</span> Updated ${esc(a.updated)}</p>
+          <button onclick="showToast('Opening edit form (mockup).',null)" class="mt-2 bg-[#DC183C] hover:bg-[#B0142F] text-white rounded-full px-4 py-2 text-xs font-bold transition inline-flex items-center gap-1.5"><i data-lucide="pencil" class="w-3.5 h-3.5"></i> Update info</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid lg:grid-cols-3 gap-5">
+      <aside class="lg:col-span-1">
+        ${glance}
+        ${lender}
+        ${actions}
+      </aside>
+      <div class="lg:col-span-2">
+        ${a.status!=='draft' ? `<div class="bg-white rounded-2xl border border-[#E7EBEF] p-6">
+          <p class="text-[10px] font-bold uppercase tracking-widest text-[#0C1F31] mb-5">Progress</p>
+          ${fundingDetailStepper(a.step)}
+        </div>` : ''}
+        ${details}
+        ${docsSec}
+        ${timelineSec}
+      </div>
+    </div>
+
+    ${fundingContextCTA(a)}
+  `;
+
+  setTimeout(()=>lucide.createIcons(), 0);
+  return settingsCard('Funding applications', 'Track and update every application you have made through the SME Hub.', body);
 }
 
 function setSecurity(){
@@ -2241,9 +2439,9 @@ const BRIEFS = {
     api:'GET /v1/users/{id}/downloads · POST /v1/resources/{id}/redownload (returns signed URL)' },
   set_funding:{ title:'Settings · Funding applications', sub:'Full funding application tracker',
     purpose:'<b>The robust funding-tracking surface the platform was missing.</b> Every application a member submits through SME Hub (Asset Finance, Working Capital, Invoice Finance, Bridging) lives here with full status, lender match, document checklist and timeline. Replaces the email-thread approach with a single source of truth — for both the founder and the support team.',
-    data:'<code>applications[] { id, product, amount_zar, term, purpose, status: draft|submitted|review|docs|approved|declined|funded, step, submitted_at, updated_at, lender_id, contact_id, documents[]{name,state}, timeline[]{date,text,icon} }</code>. Linked to <code>users.id</code> and the public funding form (public-funding.html).',
-    logic:'Application status drives the 5-step tracker (Submitted → Documents → In review → Decision → Funded). Status changes write a timeline event server-side; lender actions (open, request docs, decision) fire webhooks back into the timeline. Document state transitions (pending → provided → reupload-requested) trigger member notifications. Withdraw is irreversible; Update info is allowed until the lender locks the file. Details drawer reuses the same .ov/.drawer pattern as the dev-brief overlay.',
-    components:'Hero band + new-application CTA · 4-stat strip · status chips + search + sort · responsive 1/2-col card grid · per-card stepper, docs list with upload, inline edit, withdraw · right-side details drawer with full timeline, lender info, document audit · empty state.',
+    data:'<code>applications[] { id, product, amount_zar, term, purpose, status: draft|submitted|review|docs|approved|declined|funded, step, submitted_at, updated_at, status_at, lender:{ name, contact_name, contact_email, contact_phone }, documents[]{ name, state: pending|provided|reupload, file_name, file_size }, timeline[]{ date, text, icon, actor: system|lender|user } }</code>. Linked to <code>users.id</code> and the public funding form (public-funding.html).',
+    logic:'Two views inside the same Settings content area: <b>list view</b> = responsive table (md+) / stacked cards (sm) — columns Status · Product · Reference · Amount · Submitted · Last update · Actions, with a per-row "View application →" button + 3-dot menu (Update info / Withdraw). <b>Detail view</b> = full inline page (NOT a drawer) — back link returns to list with filters preserved. Application status drives the 5-step tracker (Submitted → Documents → In review → Decision → Funded). Status changes write a timeline event server-side; lender actions (open, request docs, decision) fire webhooks back into the timeline. Document state transitions (pending → provided → reupload) trigger member notifications. Withdraw is irreversible; Update info is allowed until the lender locks the file. Context CTA band at the bottom of the detail view changes by status (e.g. "X documents outstanding" for docs, "Review your offer" for approved).',
+    components:'<b>List view:</b> hero band + new-application CTA · 4-stat strip · status chips + search + sort · semantic table (md+) with zebra rows + hover highlight + status pill + amount right-aligned + per-row View application CTA + kebab menu · mobile stacked cards · empty state. <b>Detail view:</b> back link + reference · hero card (product icon + h1 + large status pill + Updated meta + Update info CTA) · 3-column grid on lg: left sidebar = At a glance + Lender match (or awaiting placeholder) + Actions (Withdraw / Duplicate / Download PDF); right column = wide 5-step progress tracker, Application details (dl grid), Documents (rows with status badge + file name + Upload/Re-upload/View), Activity timeline (vertical with icons + actor avatars). · Context CTA band keyed off status.',
     api:'GET /v1/users/{id}/funding-applications · POST /v1/funding-applications · PATCH /v1/funding-applications/{id} · POST /v1/funding-applications/{id}/documents · POST /v1/funding-applications/{id}/withdraw' },
   set_security:{ title:'Settings · Security', sub:'Password, sessions, 2FA',
     purpose:'Account protection: change password, review & revoke active sessions, and a 2FA toggle shown as coming-soon.',

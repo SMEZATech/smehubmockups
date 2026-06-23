@@ -55,7 +55,8 @@ window.MOCKUP_STATUS = {
   "newsletter-issue.html": "under-review",
   "podcast.html": "under-work",
   "brand_ci.html": "finalised",
-  "public-icons.html": "finalised"
+  "public-icons.html": "finalised",
+  "chrome-preview.html": "under-review"
 };
 window.MOCKUP_STATUS_PUBLISHED = "2026-06-15T10:21:06.161Z";
 /* Developer builds (staging) — { mockup file: { url, status } }; status: "pending-review" | "reviewed" | "approved" */
