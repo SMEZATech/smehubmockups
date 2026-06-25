@@ -166,27 +166,42 @@
   function closeOverlay(id){const el=document.getElementById(id);if(!el)return;el.classList.remove('open');setTimeout(()=>{if(el&&el.parentNode)el.remove();},300);}
   function openBrief(id){const b=BRIEFS[id];if(!b)return;const sec=(i,l,h)=>`<div class="px-6 py-4 border-t border-slate-100"><p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] flex items-center gap-1.5 mb-2"><i data-lucide="${i}" class="w-3.5 h-3.5"></i>${l}</p><div class="text-sm text-slate-600 leading-relaxed">${h}</div></div>`;document.getElementById('overlay-root').innerHTML=`<div class="ov" id="ov"><div class="ov-bg" onclick="closeOverlay('ov')"></div><div class="drawer"><div class="sticky top-0 z-10 bg-[#0C1F31] text-white px-6 py-5 flex items-start justify-between"><div><p class="text-[10px] font-bold uppercase tracking-widest text-[#FF9900] mb-1">Dev Brief</p><h3 class="font-jakarta font-extrabold text-lg leading-tight">${b.title}</h3><p class="text-xs text-white/60 mt-1">${b.sub}</p></div><button onclick="closeOverlay('ov')" class="text-white/60 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button></div>${sec('target','Purpose',b.purpose)}${sec('database','Data model',b.data)}${sec('git-branch','Logic',b.logic)}${sec('boxes','Components',b.components)}${sec('plug','API',`<code class="block bg-slate-900 text-emerald-300 text-xs font-mono px-3 py-2 rounded-lg overflow-x-auto">${b.api}</code>`)}</div></div>`;requestAnimationFrame(()=>{const o=document.getElementById('ov');if(o)o.classList.add('open');});lucide.createIcons();}
 
-  // Canonical resource card — identical across public-resources, public-resource-category, public-resource
+  // Canonical resource card — IDENTICAL across public-resources, public-resource-category, public-resource.
+  // Guide-type resources adopt the public-guides.html card shape (read time + Read Guide row).
   const TYPE_PILL = { Ebook:['#FDECEF','#DC183C'], Template:['#E4F5EE','#29A37A'], Guide:['#FFF1E0','#AE6B0A'], Report:['#FDECEF','#DC183C'] };
   function resourceCard(r){
     const t = TYPE_PILL[r.type] || ['#F1F5F9','#475569'];
     const isGuide = r.type === 'Guide';
-    const ctaText = isGuide ? 'Read Guide' : 'Download Now';
-    const ctaIcon = isGuide ? 'arrow-right' : 'download';
+    const ctaRow = isGuide
+      ? `<div class="mt-auto pt-4 border-t border-[#E7EBEF] flex items-center gap-2 text-xs text-[#6A7581]">
+           <i data-lucide="clock" class="w-3.5 h-3.5"></i><span class="font-semibold">${r.read||10} min read</span>
+           <span class="ml-auto inline-flex items-center gap-1 text-[#DC183C] font-bold text-sm">Read Guide <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i></span>
+         </div>`
+      : `<span class="mt-auto pt-4 border-t border-[#E7EBEF] inline-flex items-center gap-1.5 text-sm font-bold text-[#DC183C] group-hover:gap-2 transition-all">Download Now <i data-lucide="download" class="w-4 h-4"></i></span>`;
     return `<a href="public-resource.html" class="group bg-white rounded-2xl border border-[#E7EBEF] p-5 card-lift flex flex-col h-full">
       <span class="inline-flex w-max px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider" style="background:${t[0]};color:${t[1]}">${esc(r.type)}</span>
       <h3 class="font-jakarta font-extrabold text-lg leading-snug mt-3 group-hover:text-[#DC183C] transition line-clamp-2 min-h-[3.25rem]">${esc(r.title)}</h3>
       <p class="text-sm text-[#6A7581] leading-relaxed mt-2 line-clamp-2 flex-1">${esc(r.desc||r.excerpt||'')}</p>
-      <span class="mt-auto pt-4 border-t border-[#E7EBEF] inline-flex items-center gap-1.5 text-sm font-bold text-[#DC183C] group-hover:gap-2 transition-all">${ctaText} <i data-lucide="${ctaIcon}" class="w-4 h-4"></i></span>
+      ${ctaRow}
     </a>`;
   }
-  // 4 types covered so all colour/CTA variations are visible
-  const RELATED = [
-    { type:'Ebook',    title:'Pitching to Funders That Say Yes', desc:'Structure a deck that survives the first five minutes.' },
-    { type:'Template', title:'Marketing Calendar Template',      desc:'Plan a year of campaigns on a single tab.' },
-    { type:'Guide',    title:'Selling on WhatsApp & Social',     desc:'Turn followers and chats into paying customers.' },
-    { type:'Report',   title:'State of SA Small Business 2026',  desc:'Confidence, funding access and hiring intentions.' }
+  // The current resource's type — determines which related items show.
+  // In production this comes from the post taxonomy; for the mockup we hard-code Ebook to match the page subject.
+  const CURRENT_TYPE = 'Ebook';
+  // Curated related pool — only items of the SAME type as the current resource render.
+  const RELATED_POOL = [
+    { type:'Ebook',    title:'Pitching to Funders That Say Yes',    desc:'Structure a deck that survives the first five minutes.' },
+    { type:'Ebook',    title:'The Bootstrapper’s Handbook',     desc:'Grow on revenue without giving away equity.' },
+    { type:'Ebook',    title:'Building a Brand on a Budget',         desc:'Look established before you are — for under R5,000.' },
+    { type:'Ebook',    title:'Surviving a Cash Flow Crunch',         desc:'The moves that keep the lights on when money is tight.' },
+    { type:'Template', title:'Marketing Calendar Template',          desc:'Plan a year of campaigns on a single tab.' },
+    { type:'Template', title:'Cash Flow Forecast (12 Months)',       desc:'A plug-and-play spreadsheet to see your runway month by month.' },
+    { type:'Guide',    read:7,  title:'Selling on WhatsApp & Social', desc:'Turn followers and chats into paying customers.' },
+    { type:'Guide',    read:9,  title:'POPIA Compliance for Small Teams', desc:'A practical checklist to get your data handling in order.' },
+    { type:'Report',   title:'State of SA Small Business 2026',      desc:'Confidence, funding access and hiring intentions.' },
+    { type:'Report',   title:'Township Economy Opportunity Map',     desc:'Where formal and informal markets are converging.' }
   ];
+  const RELATED = RELATED_POOL.filter(r=>r.type===CURRENT_TYPE).slice(0,4);
   document.getElementById('related-grid').innerHTML = RELATED.map(resourceCard).join('');
 
   setState('out'); lucide.createIcons();
