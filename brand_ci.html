@@ -648,51 +648,149 @@
   <div class="wrap">
     <p class="sec-label">07 · Content structure</p>
     <h2 class="sec-title">Cards &amp; content display</h2>
-    <p class="sec-desc">How articles, resources, and reports render in the 2026 system — generous spacing, Jakarta headings, brand-red category labels. Article cards and posts always carry an <b>author byline</b> (avatar + name); this powers author schema and strengthens E-E-A-T for search.</p>
+    <p class="sec-desc">Three canonical preview cards. <b>Article</b> and <b>Guide</b> variants stay consistent across listing, related and archive pages. <b>Resources</b> have four sub-types (Ebook, Template, Guide, Report) — each with its own type pill and CTA — but identical card structure. Article cards and posts always carry an <b>author byline</b> (avatar + name); this powers author schema and strengthens E-E-A-T for search.</p>
 
     <div class="cta-grid" style="grid-template-columns:repeat(auto-fit,minmax(280px,1fr));">
-      <!-- Article card -->
-      <div class="article-card">
-        <div class="img" style="position:relative;">
-          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
-          <span style="position:absolute; top:12px; left:12px; background:hsl(var(--primary)); color:white; font-family:'Plus Jakarta Sans'; font-weight:700; font-size:10px; text-transform:uppercase; letter-spacing:.06em; padding:5px 11px; border-radius:999px;">Operations</span>
-        </div>
-        <div class="bd">
-          <p class="meta">8 April 2026 · 5 min read</p>
-          <h4>Compliance Basics Every Small Business Must Know</h4>
-          <p style="font-size:14px; color:hsl(var(--muted-foreground)); margin-top:4px;">Tax registration, BEE, labour laws — a no-jargon guide to staying on the right side of the rules.</p>
-          <div style="display:flex; align-items:center; gap:9px; margin-top:16px; padding-top:14px; border-top:1px solid hsl(var(--border));">
-            <span style="width:30px; height:30px; border-radius:50%; background:var(--gradient-accent); display:grid; place-items:center; color:white; font-family:'Plus Jakarta Sans'; font-weight:700; font-size:11px; flex-shrink:0;">TM</span>
-            <span style="font-size:13px; font-weight:700; font-family:'Plus Jakarta Sans';">Thabo Molefe</span>
+
+      <!-- =============== VARIANT A — ARTICLE CARD =============== -->
+      <div>
+        <p style="font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:.14em; color:hsl(var(--muted-foreground)); margin-bottom:10px;">Variant A · Article card</p>
+        <div class="article-card">
+          <div class="img" style="position:relative;">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+            <span style="position:absolute; top:12px; left:12px; background:hsl(var(--primary)); color:white; font-family:'Plus Jakarta Sans'; font-weight:700; font-size:10px; text-transform:uppercase; letter-spacing:.06em; padding:5px 11px; border-radius:999px;">Operations</span>
+          </div>
+          <div class="bd">
+            <p class="meta">8 April 2026 · 5 min read</p>
+            <h4 style="font-family:'Plus Jakarta Sans'; font-weight:800;">Compliance Basics Every Small Business Must Know</h4>
+            <p style="font-size:14px; color:hsl(var(--muted-foreground)); margin-top:4px; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;">Tax registration, BEE, labour laws — a no-jargon guide to staying on the right side of the rules.</p>
+            <div style="display:flex; align-items:center; gap:9px; margin-top:16px; padding-top:14px; border-top:1px solid hsl(var(--border));">
+              <span style="width:30px; height:30px; border-radius:50%; background:linear-gradient(135deg,#DC183C 0%,#FF9900 100%); display:grid; place-items:center; color:white; font-family:'Plus Jakarta Sans'; font-weight:700; font-size:11px; flex-shrink:0;">TM</span>
+              <span style="font-size:13px; font-weight:700; font-family:'Plus Jakarta Sans';">Thabo Molefe</span>
+            </div>
           </div>
         </div>
       </div>
 
-      <!-- Resource card -->
-      <div class="article-card">
-        <div class="img" style="background:var(--gradient-accent);"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6"/></svg></div>
-        <div class="bd">
-          <p class="cat">Latest Resource</p>
-          <h4>Executing diligence in a competitive environment</h4>
-          <p class="meta">16 May 2026 · Guide</p>
-          <div style="margin-top:12px"><a href="#content" class="link-arrow">View Resource →</a></div>
+      <!-- =============== VARIANT B — RESOURCE CARD (generic) =============== -->
+      <div>
+        <p style="font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:.14em; color:hsl(var(--muted-foreground)); margin-bottom:10px;">Variant B · Resource card</p>
+        <div class="article-card" style="border-radius:1rem;">
+          <div class="bd" style="padding:22px 20px;">
+            <span style="display:inline-block; background:#FDECEF; color:#DC183C; font-family:'Plus Jakarta Sans'; font-weight:700; font-size:10px; text-transform:uppercase; letter-spacing:.08em; padding:5px 11px; border-radius:999px;">Ebook</span>
+            <h4 style="font-family:'Plus Jakarta Sans'; font-weight:800; margin-top:12px; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;">Pitching to Funders That Say Yes</h4>
+            <p style="font-size:14px; color:#6A7581; margin-top:6px; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;">A 24-page playbook covering the questions every funder asks — and the numbers you need ready.</p>
+            <div style="margin-top:18px;">
+              <a href="#content" style="display:inline-flex; align-items:center; gap:6px; color:#DC183C; font-family:'Plus Jakarta Sans'; font-weight:700; font-size:13px; text-decoration:none;">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                Download Now
+              </a>
+            </div>
+          </div>
         </div>
       </div>
 
-      <!-- Post page header sample -->
-      <div class="article-card">
-        <div class="bd" style="padding-top:22px">
-          <p class="cat">Article · Post Page</p>
-          <h4 style="font-size:22px">How to register your small business in SA</h4>
-          <p class="meta" style="margin-bottom:14px">By <b style="color:hsl(var(--foreground))">Thabo Molefe</b> · Updated 29 November 2026</p>
-          <div style="display:flex; align-items:center; gap:14px; padding:12px 0; border-top:1px solid hsl(var(--border)); border-bottom:1px solid hsl(var(--border));">
-            <span class="link-arrow" style="font-size:12px;">▷ Listen · 7 min</span>
-            <span style="font-size:12px; color:hsl(var(--muted-foreground));">Share</span>
+      <!-- =============== VARIANT C — GUIDE CARD (CPT, image-less) =============== -->
+      <div>
+        <p style="font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:.14em; color:hsl(var(--muted-foreground)); margin-bottom:10px;">Variant C · Guide card (CPT)</p>
+        <div class="article-card" style="border-radius:1rem;">
+          <div class="bd" style="padding:20px;">
+            <span style="display:inline-block; background:#FDECEF; color:#DC183C; font-family:'Plus Jakarta Sans'; font-weight:700; font-size:10px; text-transform:uppercase; letter-spacing:.08em; padding:5px 11px; border-radius:999px;">Funding</span>
+            <h4 style="font-family:'Plus Jakarta Sans'; font-weight:800; margin-top:12px; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;">Guide to Asset Finance in South Africa</h4>
+            <p style="font-size:14px; color:#6A7581; margin-top:6px; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;">How asset finance works, who qualifies, and the four-step path from application to approval.</p>
+            <div style="display:flex; align-items:center; justify-content:space-between; margin-top:18px; padding-top:14px; border-top:1px solid #E7EBEF;">
+              <span style="display:inline-flex; align-items:center; gap:6px; font-size:12px; color:#6A7581;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                8 min read
+              </span>
+              <a href="#content" style="display:inline-flex; align-items:center; gap:6px; color:#DC183C; font-family:'Plus Jakarta Sans'; font-weight:700; font-size:13px; text-decoration:none;">
+                Read Guide
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+              </a>
+            </div>
           </div>
-          <div class="field" style="margin-top:14px; max-width:none;"><input placeholder="Your email address" /><button class="btn btn-primary btn-sm">Subscribe</button></div>
         </div>
+      </div>
+
+    </div>
+
+    <!-- ============ RESOURCE SUB-TYPES — pill + CTA matrix ============ -->
+    <div style="margin-top:34px;">
+      <p style="font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:.14em; color:hsl(var(--muted-foreground)); margin-bottom:4px;">Resource sub-types</p>
+      <h3 style="font-family:'Plus Jakarta Sans'; font-weight:800; font-size:18px; margin:0 0 4px;">Four sub-types · one card shape</h3>
+      <p style="font-size:13px; color:#6A7581; margin:0 0 16px;">Same markup, only the type pill colour and CTA copy change. Resource cards have no image header — the pill sits top-left inside the body.</p>
+
+      <div class="cta-grid" style="grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:16px;">
+
+        <!-- EBOOK -->
+        <div class="article-card" style="border-radius:1rem;">
+          <div class="bd" style="padding:18px;">
+            <p style="font-size:9px; font-weight:700; text-transform:uppercase; letter-spacing:.14em; color:hsl(var(--muted-foreground)); margin-bottom:10px;">Ebook · Resource</p>
+            <span style="display:inline-block; background:#FDECEF; color:#DC183C; font-family:'Plus Jakarta Sans'; font-weight:700; font-size:10px; text-transform:uppercase; letter-spacing:.08em; padding:4px 10px; border-radius:999px;">Ebook</span>
+            <h4 style="font-family:'Plus Jakarta Sans'; font-weight:800; font-size:15px; margin-top:10px;">Pitching to Funders That Say Yes</h4>
+            <a href="#content" style="display:inline-flex; align-items:center; gap:6px; margin-top:12px; color:#DC183C; font-family:'Plus Jakarta Sans'; font-weight:700; font-size:12px; text-decoration:none;">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              Download Now
+            </a>
+          </div>
+        </div>
+
+        <!-- TEMPLATE -->
+        <div class="article-card" style="border-radius:1rem;">
+          <div class="bd" style="padding:18px;">
+            <p style="font-size:9px; font-weight:700; text-transform:uppercase; letter-spacing:.14em; color:hsl(var(--muted-foreground)); margin-bottom:10px;">Template · Resource</p>
+            <span style="display:inline-block; background:#E4F5EE; color:#29A37A; font-family:'Plus Jakarta Sans'; font-weight:700; font-size:10px; text-transform:uppercase; letter-spacing:.08em; padding:4px 10px; border-radius:999px;">Template</span>
+            <h4 style="font-family:'Plus Jakarta Sans'; font-weight:800; font-size:15px; margin-top:10px;">Cash Flow Forecast (12 Months)</h4>
+            <a href="#content" style="display:inline-flex; align-items:center; gap:6px; margin-top:12px; color:#DC183C; font-family:'Plus Jakarta Sans'; font-weight:700; font-size:12px; text-decoration:none;">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              Download Now
+            </a>
+          </div>
+        </div>
+
+        <!-- GUIDE (resource-of-type-guide) -->
+        <div class="article-card" style="border-radius:1rem;">
+          <div class="bd" style="padding:18px;">
+            <p style="font-size:9px; font-weight:700; text-transform:uppercase; letter-spacing:.14em; color:hsl(var(--muted-foreground)); margin-bottom:10px;">Guide · Resource</p>
+            <span style="display:inline-block; background:#FFF1E0; color:#AE6B0A; font-family:'Plus Jakarta Sans'; font-weight:700; font-size:10px; text-transform:uppercase; letter-spacing:.08em; padding:4px 10px; border-radius:999px;">Guide</span>
+            <h4 style="font-family:'Plus Jakarta Sans'; font-weight:800; font-size:15px; margin-top:10px;">Selling on WhatsApp &amp; Social</h4>
+            <a href="#content" style="display:inline-flex; align-items:center; gap:6px; margin-top:12px; color:#DC183C; font-family:'Plus Jakarta Sans'; font-weight:700; font-size:12px; text-decoration:none;">
+              Read Guide
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- REPORT -->
+        <div class="article-card" style="border-radius:1rem;">
+          <div class="bd" style="padding:18px;">
+            <p style="font-size:9px; font-weight:700; text-transform:uppercase; letter-spacing:.14em; color:hsl(var(--muted-foreground)); margin-bottom:10px;">Report · Resource</p>
+            <span style="display:inline-block; background:#FDECEF; color:#DC183C; font-family:'Plus Jakarta Sans'; font-weight:700; font-size:10px; text-transform:uppercase; letter-spacing:.08em; padding:4px 10px; border-radius:999px;">Report</span>
+            <h4 style="font-family:'Plus Jakarta Sans'; font-weight:800; font-size:15px; margin-top:10px;">State of SA Small Business 2026</h4>
+            <a href="#content" style="display:inline-flex; align-items:center; gap:6px; margin-top:12px; color:#DC183C; font-family:'Plus Jakarta Sans'; font-weight:700; font-size:12px; text-decoration:none;">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              Download Now
+            </a>
+          </div>
+        </div>
+
       </div>
     </div>
+
+    <!-- ============ RULES CALLOUT ============ -->
+    <div class="panel" style="margin-top:28px; background:hsl(210 45% 96%); border:1px solid hsl(var(--border)); border-radius:var(--radius); padding:22px 24px;">
+      <p style="font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:.14em; color:hsl(var(--muted-foreground)); margin:0 0 10px;">Card rules · the dev checklist</p>
+      <ul style="margin:0; padding-left:18px; font-size:13.5px; line-height:1.7; color:hsl(var(--foreground));">
+        <li><b>Tag positioning</b> — top-left of the card (or top-left of the image if image-led).</li>
+        <li><b>CTA copy</b> — Templates / Reports / Ebooks = <b>"Download Now"</b> (download icon). Long-form Guides = <b>"Read Guide"</b> (arrow-right icon). Articles use full-card hover (no in-card CTA button).</li>
+        <li><b>Author byline</b> — only on Article cards. Top-bordered row · 30px gradient monogram avatar (#DC183C → #FF9900) + name in Jakarta bold.</li>
+        <li><b>Image-led vs image-less</b> — Articles + Resources (when used on a featured/archive slot) have images; Guide CPT cards do <b>not</b> use images by default.</li>
+        <li><b>Resource sub-type pill colours</b> — Ebook / Report = red (#FDECEF / #DC183C) · Template = green (#E4F5EE / #29A37A) · Resource-Guide = amber (#FFF1E0 / #AE6B0A).</li>
+        <li><b>Guide CPT (variant C)</b> — uses a single category pill (FUNDING / COMPLIANCE / OPERATIONS) in red. The old orange "GUIDE" pill is <b>removed</b>.</li>
+        <li><b>Consistency rule</b> — the same card markup must be reused wherever its content type appears (resource cards must look identical on public-resources.html, public-resource-category.html and the related section of public-resource.html).</li>
+      </ul>
+    </div>
+
   </div>
 </section>
 
