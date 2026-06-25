@@ -11,22 +11,22 @@ window.MOCKUP_STATUS = {
   "public-subcategory.html": "finalised",
   "public-author.html": "finalised",
   "public-article.html": "finalised",
-  "public-resources.html": "under-review",
-  "public-resource-category.html": "under-review",
-  "public-resource.html": "under-review",
+  "public-resources.html": "finalised",
+  "public-resource-category.html": "finalised",
+  "public-resource.html": "finalised",
   "public-funding.html": "under-review",
   "public-funding-category.html": "under-review",
   "public-loan-option.html": "under-review",
   "public-solutions.html": "under-review",
   "public-solution-category.html": "under-review",
   "public-sustainability.html": "under-review",
-  "public-pricing.html": "under-review",
+  "public-pricing.html": "under-work",
   "public-brands.html": "under-review",
   "public-brand.html": "under-review",
   "public-deals.html": "under-review",
   "public-deal.html": "under-review",
-  "public-guides.html": "under-work",
-  "public-guide.html": "under-work",
+  "public-guides.html": "finalised",
+  "public-guide.html": "finalised",
   "public-founder-focus.html": "under-work",
   "public-shop.html": "under-review",
   "public-checkout.html": "under-review",
@@ -46,7 +46,7 @@ window.MOCKUP_STATUS = {
   "forums.html": "under-review",
   "member-account.html": "under-review",
   "events.html": "under-review",
-  "newsletter.html": "under-review",
+  "newsletter.html": "finalised",
   "newsletter-issue.html": "under-review",
   "podcast.html": "under-work",
   "brand_ci.html": "finalised",
@@ -57,7 +57,7 @@ window.MOCKUP_STATUS = {
   "public-search.html": "under-review",
   "public-404.html": "under-review"
 };
-window.MOCKUP_STATUS_PUBLISHED = "2026-06-25T09:48:48.460Z";
+window.MOCKUP_STATUS_PUBLISHED = "2026-06-25T10:42:08.025Z";
 /* Developer builds (staging) — { mockup file: { url, status } }; status: "pending-review" | "reviewed" | "approved" */
 window.MOCKUP_DEV = {
   "public-home.html": {"url":"https://smesastg.wpengine.com/","status":"pending-review"},
