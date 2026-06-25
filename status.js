@@ -49,7 +49,6 @@ window.MOCKUP_STATUS = {
   "newsletter.html": "under-review",
   "newsletter-issue.html": "under-review",
   "podcast.html": "under-work",
-  "handbook.html": "finalised",
   "brand_ci.html": "finalised",
   "public-icons.html": "finalised",
   "chrome-preview.html": "not-started",
