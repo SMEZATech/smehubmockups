@@ -202,16 +202,17 @@
   document.addEventListener('keydown',e=>{if(e.key==='Escape')closeTOC();});
 
   const REL=[
-    {img:'assets/article-2.jpg',cat:'Funding',title:'Guide to Credit Scores'},
-    {img:'assets/article-3.jpg',cat:'Funding',title:'Guide to Franchise Funding'},
-    {img:'assets/article-4.jpg',cat:'Operations',title:'Guide to Buying a Business'}
+    {cat:'Funding',   read:10, title:'Guide to Credit Scores',     excerpt:'What lenders actually see when they pull your record, how business and personal scores interact, and the practical moves that lift them.'},
+    {cat:'Funding',   read:11, title:'Guide to Franchise Funding', excerpt:'From franchise fees to working capital, a full walkthrough of how to finance buying into an established brand in South Africa.'},
+    {cat:'Operations',read:13, title:'Guide to Buying a Business', excerpt:'Due diligence, valuation, deal structures and handover — how to acquire an existing business without inheriting its problems.'}
   ];
   document.getElementById('related').innerHTML = REL.map(g=>`
-    <a href="public-guide.html" class="group bg-white rounded-2xl border border-[#E7EBEF] p-5 card-lift block">
-      <span class="inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-[#FDECEF] text-[#DC183C]">${esc(g.cat)}</span>
+    <a href="public-guide.html" class="group bg-white rounded-2xl border border-[#E7EBEF] p-5 card-lift flex flex-col">
+      <span class="inline-flex w-max px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-[#FDECEF] text-[#DC183C]">${esc(g.cat)}</span>
       <h3 class="font-jakarta font-extrabold leading-snug mt-3 group-hover:text-[#DC183C] transition line-clamp-2">${esc(g.title)}</h3>
+      <p class="text-sm text-[#6A7581] mt-2 leading-relaxed line-clamp-2 flex-1">${esc(g.excerpt)}</p>
       <div class="flex items-center gap-2 mt-4 pt-4 border-t border-[#E7EBEF] text-xs text-[#6A7581]">
-        <i data-lucide="clock" class="w-3.5 h-3.5"></i><span class="font-semibold">8 min read</span>
+        <i data-lucide="clock" class="w-3.5 h-3.5"></i><span class="font-semibold">${g.read} min read</span>
         <span class="ml-auto inline-flex items-center gap-1 text-[#DC183C] font-bold">Read Guide <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i></span>
       </div>
     </a>`).join('');
