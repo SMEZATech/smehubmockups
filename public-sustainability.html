@@ -128,7 +128,7 @@
     <div class="text-center max-w-2xl mx-auto">
       <h2 class="font-jakarta font-extrabold text-3xl sm:text-4xl tracking-tight mt-2">Why partner with the Growth Lab</h2>
     </div>
-    <div id="whyGrid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-12"></div>
+    <div id="whyGrid" class="grid sm:grid-cols-2 gap-6 mt-12 max-w-4xl mx-auto"></div>
   </div>
 </section>
 
@@ -168,7 +168,7 @@
     <div class="text-center max-w-2xl mx-auto">
       <h2 class="font-jakarta font-extrabold text-3xl sm:text-4xl tracking-tight mt-2">Meet the Growth Lab team</h2>
     </div>
-    <div id="teamGrid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6 mt-12"></div>
+    <div id="teamGrid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 mt-12"></div>
   </div>
 </section>
 
@@ -294,8 +294,7 @@
     {icon:'eye',tint:'red',title:'Strategic Vision',blurb:'We see the full picture and align impact with your long-term business strategy.'},
     {icon:'handshake',tint:'green',title:'Stakeholder Engagement',blurb:'We bring communities, regulators and your board to the same table.'},
     {icon:'layers',tint:'orange',title:'Resources & Management',blurb:'Experienced teams and tools to run programmes without straining yours.'},
-    {icon:'git-merge',tint:'red',title:'Seamless Integration',blurb:'Strategy, programmes and reporting that plug into how you already work.'},
-    {icon:'target',tint:'green',title:'Measurable Impact',blurb:'Every initiative is tied to clear, reportable outcomes you can prove.'}
+    {icon:'target',tint:'red',title:'Measurable Impact',blurb:'Every initiative is tied to clear, reportable outcomes you can prove.'}
   ];
   function renderWhy(){
     document.getElementById('whyGrid').innerHTML=WHY.map(w=>`
@@ -308,21 +307,30 @@
       </div>`).join('');
   }
 
-  /* ---------- 7. Team ---------- */
+  /* ---------- 7. Team — same shape as public-about.html ---------- */
   const TEAM=[
-    {name:'Velly Bosega',role:'Founder & CEO',init:'VB'},
-    {name:'Amore Potgieter',role:'Chief Financial Officer',init:'AP'},
-    {name:'Rachel Letadi',role:'Solutions Manager',init:'RL'},
-    {name:'Ralph Ndhlovu',role:'Project Manager',init:'RN'},
-    {name:'Shianne Frieslaar',role:'Executive Assistant',init:'SF'}
+    {name:'Velly Bosega',role:'Founder & CEO',i:'VB',photo:'https://smesouthafrica.co.za/wp-content/uploads/2025/02/SME-South-Africa-Team-Members_0000s_0000_7-2048x2048.jpg'},
+    {name:'Amore Potgieter',role:'Chief Financial Officer',i:'AP'},
+    {name:'Rachel Letadi',role:'Solutions Manager',i:'RL'},
+    {name:'Ralph Ndhlovu',role:'Project Manager',i:'RN'},
+    {name:'Shianne Frieslaar',role:'Executive Assistant',i:'SF'}
   ];
   function renderTeam(){
-    document.getElementById('teamGrid').innerHTML=TEAM.map(t=>`
-      <div class="bg-white rounded-2xl border border-[#E7EBEF] p-6 text-center card-lift">
-        <span class="w-16 h-16 rounded-full bg-gradient-to-br from-[#DC183C] to-[#FF9900] grid place-items-center text-white font-jakarta font-extrabold text-lg mx-auto">${esc(t.init)}</span>
-        <h3 class="font-jakarta font-bold text-base mt-4">${esc(t.name)}</h3>
-        <p class="text-xs text-[#6A7581] mt-1">${esc(t.role)}</p>
+    document.getElementById('teamGrid').innerHTML=TEAM.map(m=>`
+      <div class="card-lift bg-white rounded-2xl border border-[#E7EBEF] overflow-hidden">
+        <div class="relative aspect-square overflow-hidden bg-gradient-to-br from-[#FDECEF] to-[#FFF1E0]">
+          ${m.photo?`<img src="${esc(m.photo)}" alt="${esc(m.name)}" loading="lazy" class="w-full h-full object-cover" onerror="this.style.display='none';this.nextElementSibling.style.display='grid';" />`:''}
+          <div class="absolute inset-0 grid place-items-center font-jakarta font-extrabold text-white" style="${m.photo?'display:none;':''}background:linear-gradient(135deg,#DC183C,#FF9900);font-size:3.5rem">${esc(m.i)}</div>
+        </div>
+        <div class="p-5 flex items-start gap-3">
+          <div class="min-w-0 flex-1">
+            <h3 class="font-jakarta font-extrabold text-[1.05rem] leading-tight">${esc(m.name)}</h3>
+            <p class="text-sm text-[#6A7581] mt-1 leading-snug">${esc(m.role)}</p>
+          </div>
+          <a href="#" onclick="event.preventDefault()" aria-label="LinkedIn" class="shrink-0 w-9 h-9 rounded-lg border border-[#E7EBEF] text-[#6A7581] hover:text-[#DC183C] hover:border-[#DC183C] grid place-items-center transition"><svg viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4" aria-hidden="true"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.42v1.56h.05c.47-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.07 2.07 0 1 1 0-4.14 2.07 2.07 0 0 1 0 4.14zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.8 0 0 .78 0 1.73v20.54C0 23.22.8 24 1.77 24h20.45C23.2 24 24 23.22 24 22.27V1.73C24 .78 23.2 0 22.22 0z"/></svg></a>
+        </div>
       </div>`).join('');
+    lucide.createIcons();
   }
 
   /* ---------- 2. Stat count-up ---------- */
