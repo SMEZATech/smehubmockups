@@ -49,19 +49,22 @@ window.MOCKUP_STATUS = {
   "newsletter.html": "under-review",
   "newsletter-issue.html": "under-review",
   "podcast.html": "under-work",
+  "handbook.html": "finalised",
   "brand_ci.html": "finalised",
   "public-icons.html": "finalised",
-  "handbook.html": "finalised",
   "chrome-preview.html": "not-started",
   "public-help.html": "under-review",
   "public-help-article.html": "under-review",
   "public-search.html": "under-review",
   "public-404.html": "under-review"
 };
-window.MOCKUP_STATUS_PUBLISHED = "2026-06-23T20:09:13.091Z";
+window.MOCKUP_STATUS_PUBLISHED = "2026-06-25T09:48:48.460Z";
 /* Developer builds (staging) — { mockup file: { url, status } }; status: "pending-review" | "reviewed" | "approved" */
 window.MOCKUP_DEV = {
-  "public-home.html": {"url":"https://smesastg.wpengine.com/","status":"pending-review"}
+  "public-home.html": {"url":"https://smesastg.wpengine.com/","status":"pending-review"},
+  "public-about.html": {"url":"https://smesastg.wpengine.com/about/","status":"pending-review"},
+  "public-contact.html": {"url":"https://smesastg.wpengine.com/contact-us/","status":"pending-review"},
+  "public-advertise.html": {"url":"https://smesastg.wpengine.com/advertise-with-us/","status":"pending-review"}
 };
 /* Group overrides — { mockup file: "Group name" }; overrides default NAV grouping in index.html */
 window.MOCKUP_GROUPS = {
