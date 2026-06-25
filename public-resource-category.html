@@ -168,8 +168,25 @@
   function setType(k){ active=k; history.replaceState(null,'',`?type=${k}`); renderHero(); renderGrid(); }
   function setCat(k){ activeCat=k; renderHero(); renderGrid(); }
 
+  // Canonical resource card — identical across public-resources, public-resource-category, public-resource
+  const TYPE_PILL = { Ebook:['#FDECEF','#DC183C'], Template:['#E4F5EE','#29A37A'], Guide:['#FFF1E0','#AE6B0A'], Report:['#FDECEF','#DC183C'] };
+  const TYPE_LABEL = { ebooks:'Ebook', templates:'Template', guides:'Guide', reports:'Report' };
+  function resourceCard(r){
+    const t = TYPE_PILL[r.type] || ['#F1F5F9','#475569'];
+    const isGuide = r.type === 'Guide';
+    const ctaText = isGuide ? 'Read Guide' : 'Download Now';
+    const ctaIcon = isGuide ? 'arrow-right' : 'download';
+    return `<a href="public-resource.html" class="group bg-white rounded-2xl border border-[#E7EBEF] p-5 card-lift flex flex-col h-full">
+      <span class="inline-flex w-max px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider" style="background:${t[0]};color:${t[1]}">${esc(r.type)}</span>
+      <h3 class="font-jakarta font-extrabold text-lg leading-snug mt-3 group-hover:text-[#DC183C] transition line-clamp-2 min-h-[3.25rem]">${esc(r.title)}</h3>
+      <p class="text-sm text-[#6A7581] leading-relaxed mt-2 line-clamp-2 flex-1">${esc(r.desc||r.excerpt||'')}</p>
+      <span class="mt-auto pt-4 border-t border-[#E7EBEF] inline-flex items-center gap-1.5 text-sm font-bold text-[#DC183C] group-hover:gap-2 transition-all">${ctaText} <i data-lucide="${ctaIcon}" class="w-4 h-4"></i></span>
+    </a>`;
+  }
+
   function renderGrid(){
     const c = TYPES[active];
+    const typeLabel = TYPE_LABEL[active] || 'Ebook';
     const q = (document.getElementById('search').value||'').toLowerCase();
     // Combine: matches selected TYPE (via active list) AND selected CATEGORY AND search query
     let list = DATA[active].filter(r =>
@@ -178,19 +195,7 @@
     );
     if(document.getElementById('sort').value==='az') list = list.slice().sort((a,b)=>a.t.localeCompare(b.t));
     document.getElementById('count').textContent = `${list.length} resource${list.length===1?'':'s'}`;
-    document.getElementById('grid').innerHTML = list.map(r=>`
-      <a href="public-resource.html" data-category="${esc(r.c)}" class="group bg-white rounded-2xl border border-[#E7EBEF] overflow-hidden card-lift block flex flex-col">
-        <div class="aspect-[16/9] w-full grid place-items-center" style="background:${c.tint[0]};color:${c.tint[1]}"><i data-lucide="${c.icon}" class="w-9 h-9"></i></div>
-        <div class="p-5 flex flex-col flex-1">
-          <div class="flex items-center gap-2 text-[11px] font-bold">
-            <span class="inline-flex px-2 py-0.5 rounded-full" style="background:${c.tint[0]};color:${c.tint[1]}">${esc(c.label)}</span>
-            <span class="inline-flex px-2 py-0.5 rounded-full bg-slate-100 text-slate-500">${esc(r.c)}</span>
-          </div>
-          <h3 class="font-jakarta font-bold text-base leading-snug mt-3 group-hover:text-[#DC183C] transition">${esc(r.t)}</h3>
-          <p class="text-sm text-slate-600 mt-2 flex-1">${esc(r.d)}</p>
-          <span class="mt-4 pt-4 border-t border-[#E7EBEF] inline-flex items-center gap-1.5 text-sm font-bold text-[#DC183C]"><i data-lucide="download" class="w-4 h-4"></i> Download Now</span>
-        </div>
-      </a>`).join('');
+    document.getElementById('grid').innerHTML = list.map(r=>resourceCard({type:typeLabel, title:r.t, desc:r.d})).join('');
     lucide.createIcons();
   }
 

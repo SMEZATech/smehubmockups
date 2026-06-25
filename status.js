@@ -50,6 +50,7 @@ window.MOCKUP_STATUS = {
   "podcast.html": "under-work",
   "brand_ci.html": "finalised",
   "public-icons.html": "finalised",
+  "handbook.html": "finalised",
   "public-help.html": "under-review",
   "public-help-article.html": "under-review",
   "public-search.html": "under-review",

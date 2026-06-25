@@ -89,7 +89,7 @@
       <span class="inline-flex w-max px-2.5 py-1 rounded-full text-[11px] font-bold bg-[#FDECEF] text-[#DC183C]">EBOOK</span>
       <h2 class="font-jakarta font-extrabold text-2xl sm:text-3xl leading-snug mt-3">Your Guide to AI Prompting</h2>
       <p class="text-slate-600 mt-3">Learn the four core pillars of AI prompting with practical examples for business leaders.</p>
-      <a href="public-resource.html" class="mt-6 inline-flex w-max items-center gap-2 px-6 h-12 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold transition"><i data-lucide="lock" class="w-4 h-4"></i> Unlock This Resource</a>
+      <a href="public-resource.html" class="mt-6 inline-flex w-max items-center gap-2 px-6 h-12 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold transition"><i data-lucide="download" class="w-4 h-4"></i> Download Now</a>
     </div>
   </div>
 
@@ -119,6 +119,19 @@
 
   // type -> [tintBg, tintText]
   const TYPE = { Ebook:['#FDECEF','#DC183C'], Template:['#E4F5EE','#29A37A'], Guide:['#FFF1E0','#AE6B0A'], Report:['#FDECEF','#DC183C'] };
+  // Canonical resource card — identical across public-resources, public-resource-category, public-resource
+  function resourceCard(r){
+    const t = TYPE[r.type] || ['#F1F5F9','#475569'];
+    const isGuide = r.type === 'Guide';
+    const ctaText = isGuide ? 'Read Guide' : 'Download Now';
+    const ctaIcon = isGuide ? 'arrow-right' : 'download';
+    return `<a href="public-resource.html" class="group bg-white rounded-2xl border border-[#E7EBEF] p-5 card-lift flex flex-col h-full">
+      <span class="inline-flex w-max px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider" style="background:${t[0]};color:${t[1]}">${esc(r.type)}</span>
+      <h3 class="font-jakarta font-extrabold text-lg leading-snug mt-3 group-hover:text-[#DC183C] transition line-clamp-2 min-h-[3.25rem]">${esc(r.title)}</h3>
+      <p class="text-sm text-[#6A7581] leading-relaxed mt-2 line-clamp-2 flex-1">${esc(r.desc||r.excerpt||'')}</p>
+      <span class="mt-auto pt-4 border-t border-[#E7EBEF] inline-flex items-center gap-1.5 text-sm font-bold text-[#DC183C] group-hover:gap-2 transition-all">${ctaText} <i data-lucide="${ctaIcon}" class="w-4 h-4"></i></span>
+    </a>`;
+  }
   const FILTERS = [['All','All'],['Ebooks','Ebook'],['Templates','Template'],['Guides','Guide'],['Reports','Report']];
   const RESOURCES = [
     { type:'Ebook',    gated:true,  title:'Your Guide to AI Prompting',         desc:'The four pillars of prompting, with examples built for business owners.' },
@@ -139,15 +152,7 @@
   function setType(v){ activeType=v; renderTypes(); renderGrid(); }
   function renderGrid(){
     const list = activeType==='All' ? RESOURCES : RESOURCES.filter(r=>r.type===activeType);
-    document.getElementById('grid').innerHTML = list.map(r=>{ const t=TYPE[r.type]||['#F1F5F9','#475569'];
-      return `<a href="public-resource.html" class="group bg-white rounded-2xl border border-[#E7EBEF] p-5 card-lift block flex flex-col">
-        <span class="inline-flex w-max px-2.5 py-1 rounded-full text-[11px] font-bold" style="background:${t[0]};color:${t[1]}">${esc(r.type)}</span>
-        <h3 class="font-jakarta font-bold text-lg leading-snug mt-3 group-hover:text-[#DC183C] transition">${esc(r.title)}</h3>
-        <p class="text-sm text-slate-600 mt-2 flex-1">${esc(r.desc)}</p>
-        <span class="mt-4 inline-flex items-center gap-2 text-sm font-bold ${r.gated?'text-[#DC183C]':'text-[#29A37A]'}">
-          <i data-lucide="${r.gated?'lock':'download'}" class="w-4 h-4"></i> ${r.gated?'Unlock':'Download Free'}
-        </span>
-      </a>`; }).join('');
+    document.getElementById('grid').innerHTML = list.map(r=>resourceCard(r)).join('');
     lucide.createIcons();
   }
 
