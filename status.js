@@ -11,9 +11,9 @@ window.MOCKUP_STATUS = {
   "public-subcategory.html": "finalised",
   "public-author.html": "finalised",
   "public-article.html": "finalised",
-  "public-resources.html": "under-review",
-  "public-resource-category.html": "under-review",
-  "public-resource.html": "under-review",
+  "public-resources.html": "finalised",
+  "public-resource-category.html": "finalised",
+  "public-resource.html": "finalised",
   "public-funding.html": "under-review",
   "public-funding-category.html": "under-review",
   "public-loan-option.html": "under-review",
@@ -25,8 +25,8 @@ window.MOCKUP_STATUS = {
   "public-brand.html": "under-review",
   "public-deals.html": "under-review",
   "public-deal.html": "under-review",
-  "public-guides.html": "under-work",
-  "public-guide.html": "under-work",
+  "public-guides.html": "finalised",
+  "public-guide.html": "finalised",
   "public-founder-focus.html": "under-work",
   "public-shop.html": "under-review",
   "public-checkout.html": "under-review",
@@ -57,7 +57,7 @@ window.MOCKUP_STATUS = {
   "public-search.html": "under-review",
   "public-404.html": "under-review"
 };
-window.MOCKUP_STATUS_PUBLISHED = "2026-06-26T08:11:32.980Z";
+window.MOCKUP_STATUS_PUBLISHED = "2026-06-26T09:05:00.357Z";
 /* Developer builds (staging) — { mockup file: { url, status } }; status: "pending-review" | "reviewed" | "approved" */
 window.MOCKUP_DEV = {
   "public-home.html": {"url":"https://smesastg.wpengine.com/","status":"pending-review"},
@@ -72,5 +72,6 @@ window.MOCKUP_DEV = {
 };
 /* Group overrides — { mockup file: "Group name" }; overrides default NAV grouping in index.html */
 window.MOCKUP_GROUPS = {
-
+  "public-sustainability.html": "Site pages",
+  "podcast.html": "Site pages"
 };
