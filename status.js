@@ -57,7 +57,7 @@ window.MOCKUP_STATUS = {
   "public-search.html": "under-review",
   "public-404.html": "under-review"
 };
-window.MOCKUP_STATUS_PUBLISHED = "2026-06-26T09:05:00.357Z";
+window.MOCKUP_STATUS_PUBLISHED = "2026-06-29T05:19:32.052Z";
 /* Developer builds (staging) — { mockup file: { url, status } }; status: "pending-review" | "reviewed" | "approved" */
 window.MOCKUP_DEV = {
   "public-home.html": {"url":"https://smesastg.wpengine.com/","status":"pending-review"},
@@ -72,6 +72,5 @@ window.MOCKUP_DEV = {
 };
 /* Group overrides — { mockup file: "Group name" }; overrides default NAV grouping in index.html */
 window.MOCKUP_GROUPS = {
-  "public-sustainability.html": "Site pages",
   "podcast.html": "Site pages"
 };
