@@ -57,7 +57,7 @@ window.MOCKUP_STATUS = {
   "public-search.html": "under-review",
   "public-404.html": "under-review"
 };
-window.MOCKUP_STATUS_PUBLISHED = "2026-06-30T13:39:14.874Z";
+window.MOCKUP_STATUS_PUBLISHED = "2026-06-30T13:40:35.616Z";
 /* Developer builds (staging) — { mockup file: { url, status } }; status: "pending-review" | "reviewed" | "approved" */
 window.MOCKUP_DEV = {
   "public-home.html": {"url":"https://smesastg.wpengine.com/","status":"pending-review"},
@@ -66,7 +66,7 @@ window.MOCKUP_DEV = {
   "public-about.html": {"url":"https://smesastg.wpengine.com/about/","status":"pending-review"},
   "public-contact.html": {"url":"https://smesastg.wpengine.com/contact-us/","status":"pending-review"},
   "public-advertise.html": {"url":"https://smesastg.wpengine.com/advertise-with-us/","status":"pending-review"},
-  "public-privacy.html": {"url":"https://smesastg.wpengine.com/privacy-policy/","status":"pending-review"},
+  "public-privacy.html": {"url":"https://smesastg.wpengine.com/privacy-policy/","status":"reviewed"},
   "public-terms.html": {"url":"https://smesastg.wpengine.com/terms-of-use/","status":"pending-review"},
   "public-refunds.html": {"url":"https://smesastg.wpengine.com/refund-and-cancellation/","status":"pending-review"},
   "public-popia.html": {"url":"https://smesastg.wpengine.com/popia/","status":"pending-review"},
