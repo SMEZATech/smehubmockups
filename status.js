@@ -57,11 +57,11 @@ window.MOCKUP_STATUS = {
   "public-search.html": "under-review",
   "public-404.html": "under-review"
 };
-window.MOCKUP_STATUS_PUBLISHED = "2026-06-30T13:44:06.204Z";
+window.MOCKUP_STATUS_PUBLISHED = "2026-06-30T14:10:15.199Z";
 /* Developer builds (staging) — { mockup file: { url, status } }; status: "pending-review" | "reviewed" | "approved" */
 window.MOCKUP_DEV = {
   "public-home.html": {"url":"https://smesastg.wpengine.com/","status":"pending-review"},
-  "public-articles.html": {"url":"https://smesastg.wpengine.com/sme-articles/","status":""},
+  "public-articles.html": {"url":"https://smesastg.wpengine.com/sme-articles/","status":"pending-review"},
   "public-sustainability.html": {"url":"https://smesastg.wpengine.com/sustainability-solutions/","status":"pending-review"},
   "public-about.html": {"url":"https://smesastg.wpengine.com/about/","status":"pending-review"},
   "public-contact.html": {"url":"https://smesastg.wpengine.com/contact-us/","status":"pending-review"},
