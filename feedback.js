@@ -32,6 +32,29 @@
       var data = read();
       return (data[file] && data[file].sections) ? data[file] : { sections:{} };
     },
+    // ---- shared notes (ship with repo, visible to everyone) ----
+    getShared: function(file){
+      var s = (global.SHARED_NOTES || {})[file];
+      return s || {};
+    },
+    countSharedByFile: function(){
+      var s = global.SHARED_NOTES || {}, out = {};
+      Object.keys(s).forEach(function(f){
+        var n = Object.keys(s[f] || {}).length;
+        if(n) out[f] = n;
+      });
+      return out;
+    },
+    // total = local + shared, for pill counts on nav items
+    countTotalByFile: function(){
+      var local = Feedback.countByFile();
+      var shared = Feedback.countSharedByFile();
+      var out = {};
+      Object.keys(local).forEach(function(f){ out[f] = (out[f]||0) + local[f]; });
+      Object.keys(shared).forEach(function(f){ out[f] = (out[f]||0) + shared[f]; });
+      return out;
+    },
+
     countByFile: function(){
       var data = read(), out = {};
       Object.keys(data).forEach(function(f){
@@ -111,12 +134,21 @@
     // ---- export ----
     exportMarkdown: function(file, fileLabel){
       var rec = Feedback.get(file);
-      var secs = rec.sections || {};
-      var keys = Object.keys(secs);
-      if(!keys.length) return '# ' + (fileLabel||file) + ' — no notes\n';
-      var lines = ['# ' + (fileLabel || file) + ' — ' + keys.length + ' note' + (keys.length===1?'':'s'), ''];
-      keys.forEach(function(k){
-        var s = secs[k];
+      var localSecs = rec.sections || {};
+      var sharedSecs = Feedback.getShared(file);
+      var localKeys = Object.keys(localSecs);
+      var sharedKeys = Object.keys(sharedSecs);
+      if(!localKeys.length && !sharedKeys.length) return '# ' + (fileLabel||file) + ' — no notes\n';
+      var total = localKeys.length + sharedKeys.length;
+      var lines = ['# ' + (fileLabel || file) + ' — ' + total + ' note' + (total===1?'':'s'), ''];
+      sharedKeys.forEach(function(k){
+        var s = sharedSecs[k];
+        lines.push('## ' + s.label + '  _(shared · ' + (s.author||'team') + ')_');
+        lines.push(s.text);
+        lines.push('');
+      });
+      localKeys.forEach(function(k){
+        var s = localSecs[k];
         lines.push('## ' + s.label);
         lines.push(s.text);
         lines.push('');

@@ -11,6 +11,7 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
   <script src="status.js"></script>
+  <script src="shared-notes.js"></script>
   <script src="feedback.js"></script>
   <script>
     tailwind.config = { theme: { extend: { fontFamily: {
@@ -135,6 +136,16 @@
   .np-sec .meta{display:flex;align-items:center;justify-content:space-between;margin-top:6px;font-size:11px;color:#9aa3ac}
   .np-sec .meta button{background:transparent;border:0;color:#9aa3ac;cursor:pointer;font-size:11px;text-decoration:underline}
   .np-sec .meta button:hover{color:#DC183C}
+  /* Shared notes — visible to everyone (ship with repo) */
+  .np-shared{padding:14px 22px;border-bottom:1px solid #F0F2F5;background:#FFF8E1;border-left:4px solid #AE6B0A}
+  .np-shared .head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:8px}
+  .np-shared .lab{font:700 11px/1 'Plus Jakarta Sans',sans-serif;text-transform:uppercase;letter-spacing:.1em;color:#5C3A00}
+  .np-shared .chip{font:800 9px/1 'Plus Jakarta Sans',sans-serif;text-transform:uppercase;letter-spacing:.08em;background:#AE6B0A;color:#fff;padding:3px 7px;border-radius:999px;display:inline-flex;align-items:center;gap:4px}
+  .np-shared .chip .d{width:5px;height:5px;border-radius:50%;background:#FF9900;box-shadow:0 0 0 2px rgba(255,255,255,.3)}
+  .np-shared .body{font:14px/1.55 Inter,sans-serif;color:#5C3A00;white-space:pre-wrap;word-wrap:break-word}
+  .np-shared .body code{background:rgba(174,107,10,.15);padding:1px 5px;border-radius:4px;font:12.5px/1.3 ui-monospace,SFMono-Regular,Menlo,monospace;color:#5C3A00}
+  .np-shared .body strong{color:#3E2600;font-weight:800}
+  .np-shared .ts{font-size:11px;color:#AE6B0A;margin-top:8px;font-weight:600}
   .np-f{padding:14px 22px;border-top:1px solid #E7EBEF;background:#FCFCFC;display:flex;gap:8px;flex-wrap:wrap}
   .np-f button{flex:1;min-width:140px;padding:10px 14px;border-radius:8px;font:700 12px/1 'Plus Jakarta Sans',sans-serif;letter-spacing:.04em;text-transform:uppercase;cursor:pointer;border:1px solid #E7EBEF;background:#fff;color:#121A21;transition:background .15s ease}
   .np-f button:hover{background:#F4F6F8}
@@ -185,11 +196,35 @@
     document.getElementById('notesPanel').classList.remove('open');
     document.getElementById('notesBackdrop').classList.remove('open');
   }
+  // Render shared notes body with lightweight Markdown: **bold**, `code`, and newline breaks.
+  function renderNoteBody(text){
+    if(!text) return '';
+    let html = escHtml(text);
+    html = html.replace(/`([^`]+)`/g, '<code>$1</code>');
+    html = html.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+    return html;
+  }
   function renderNotesPanel(){
     if(!_npFile) return;
     const rec = Feedback.get(_npFile);
     const secs = rec.sections || {};
-    const rows = _npSections.map(s=>{
+    const shared = Feedback.getShared(_npFile);
+    const sharedKeys = Object.keys(shared);
+    // Shared block (read-only, visible to everyone)
+    const sharedHtml = sharedKeys.map(k=>{
+      const s = shared[k];
+      const ts = s.ts ? new Date(s.ts).toLocaleDateString('en-ZA',{day:'numeric',month:'short',year:'numeric'}) : '';
+      return `<div class="np-shared">
+        <div class="head">
+          <span class="lab">${escHtml(s.label||k)}</span>
+          <span class="chip"><span class="d"></span>Shared · ${escHtml(s.author||'team')}</span>
+        </div>
+        <div class="body">${renderNoteBody(s.text)}</div>
+        ${ts?`<p class="ts">${ts}</p>`:''}
+      </div>`;
+    }).join('');
+    // Local block (editable, browser-local)
+    const localHtml = _npSections.map(s=>{
       const v = secs[s.id]; const text = v ? v.text : ''; const ts = v ? new Date(v.ts).toLocaleString('en-ZA') : '';
       return `<div class="np-sec" data-sid="${escHtml(s.id)}" data-label="${escHtml(s.label)}">
         <div class="lab">${escHtml(s.label)}</div>
@@ -197,9 +232,14 @@
         <div class="meta"><span class="ts">${ts?'Saved '+ts:''}</span>${text?'<button class="clr">Clear</button>':'<span></span>'}</div>
       </div>`;
     }).join('');
-    document.getElementById('npBody').innerHTML = rows;
-    const total = Object.keys(secs).length;
-    document.getElementById('npSub').textContent = total+' note'+(total===1?'':'s')+' · '+_npSections.length+' section'+(_npSections.length===1?'':'s');
+    document.getElementById('npBody').innerHTML = sharedHtml + localHtml;
+    const localTotal = Object.keys(secs).length;
+    const grand = localTotal + sharedKeys.length;
+    const parts = [];
+    if(sharedKeys.length) parts.push(sharedKeys.length+' shared');
+    if(localTotal) parts.push(localTotal+' yours');
+    if(!parts.length) parts.push('0 notes');
+    document.getElementById('npSub').textContent = grand+' note'+(grand===1?'':'s')+' ('+parts.join(' · ')+') · '+_npSections.length+' section'+(_npSections.length===1?'':'s');
     wireNpRows();
   }
   function wireNpRows(){
@@ -235,7 +275,7 @@
 
   // ---- Pills on nav items ----
   function refreshPills(){
-    const counts = Feedback.countByFile();
+    const counts = Feedback.countTotalByFile();
     document.querySelectorAll('.nav-item').forEach(btn=>{
       const file = btn.dataset.file || btn.dataset.devfile;
       const existing = btn.querySelector('.note-pill');
