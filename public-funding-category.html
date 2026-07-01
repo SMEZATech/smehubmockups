@@ -58,12 +58,12 @@
 </section>
 
 <main class="max-w-7xl mx-auto px-4 sm:px-6">
-  <!-- FEATURED (latest) ARTICLE — large 2-column card overlapping hero -->
+  <!-- FEATURED CARD overlapping hero — matches public-category.html exactly -->
   <a href="public-article.html" class="group block bg-white rounded-3xl border border-[#E7EBEF] overflow-hidden shadow-xl -mt-16 relative card-lift">
     <div class="grid md:grid-cols-2">
       <div class="relative aspect-[16/11] md:aspect-auto overflow-hidden">
         <img src="assets/article-1.jpg" alt="The Funding Mistakes SMEs Are Making — and How to Fix Them" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" />
-        <span class="absolute top-4 left-4 px-3 py-1 rounded-full text-[11px] font-bold bg-[#FF9900] text-[#0C1F31] shadow">LATEST</span>
+        <span class="absolute top-4 left-4 px-3 py-1 rounded-full text-[11px] font-bold bg-[#FF9900] text-[#0C1F31] shadow">FEATURED</span>
       </div>
       <div class="p-7 sm:p-9 flex flex-col justify-center">
         <span class="inline-block self-start px-2.5 py-1 rounded-full text-[11px] font-bold bg-[#FDECEF] text-[#DC183C]">FUNDING</span>
@@ -73,7 +73,6 @@
           <span class="w-10 h-10 rounded-full bg-gradient-to-br from-[#DC183C] to-[#FF9900] grid place-items-center text-white text-sm font-bold">TN</span>
           <div class="text-sm"><p class="font-bold">Thabo Nkosi</p><p class="text-[#6A7581]">11 Jun 2026 · 7 min read</p></div>
         </div>
-        <span class="mt-6 inline-flex self-start items-center gap-2 h-11 px-5 rounded-full bg-[#DC183C] group-hover:bg-[#B0142F] text-white font-bold text-sm transition">Read full article <i data-lucide="arrow-right" class="w-4 h-4"></i></span>
       </div>
     </div>
   </a>
@@ -98,16 +97,19 @@
     </div>
   </section>
 
-  <!-- LATEST IN FUNDING -->
+  <!-- LATEST ARTICLES — merged from prior "Latest in Funding" + "Funding Insights" (same content type) -->
   <section class="mt-14">
-    <h2 class="font-jakarta font-extrabold text-2xl sm:text-3xl tracking-tight">Latest in Funding</h2>
-    <div id="latestGrid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-6"></div>
-  </section>
+    <div class="flex items-end justify-between gap-4 flex-wrap">
+      <div>
+        <h2 class="font-jakarta font-extrabold text-2xl sm:text-3xl tracking-tight">Latest Articles</h2>
+        <p class="text-sm text-[#6A7581] mt-1.5">Every funding article, freshest first. 9 per page.</p>
+      </div>
+      <span id="articleCount" class="text-[11px] font-bold uppercase tracking-widest text-[#6A7581]"></span>
+    </div>
+    <div id="articlesGrid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-6"></div>
 
-  <!-- FUNDING INSIGHTS -->
-  <section class="mt-14">
-    <h2 class="font-jakarta font-extrabold text-2xl sm:text-3xl tracking-tight">Funding Insights</h2>
-    <div id="insightsGrid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-6"></div>
+    <!-- Pagination -->
+    <nav id="pagination" class="mt-10 flex items-center justify-center gap-2" aria-label="Pagination"></nav>
   </section>
 </main>
 
@@ -176,13 +178,11 @@
       </a>`;
   }
 
-  const LATEST=[
+  // All funding articles — merged (was: Latest in Funding + Funding Insights)
+  const ARTICLES=[
     {img:'assets/article-2.jpg',cat:'FUNDING',title:'Business Infrastructure Support Programme',excerpt:'A new round of state-backed support helping SMEs fund the premises, plant and equipment they need to scale.',author:'Lungile Msomi',init:'LM',date:'6 Jun 2026',read:5},
     {img:'assets/article-3.jpg',cat:'FUNDING',title:'How Blended Finance Can Support SME Growth',excerpt:'Mixing grants, concessional loans and commercial capital lowers your cost of funding — here is how it works.',author:'Naledi Mokoena',init:'NM',date:'29 May 2026',read:6},
-    {img:'assets/article-4.jpg',cat:'FUNDING',title:'A Guide to Government Funding for SMEs',excerpt:'From DTIC incentives to SEFA loans, a map of the public funding landscape and how to qualify.',author:'Thabo Nkosi',init:'TN',date:'20 May 2026',read:8}
-  ];
-
-  const INSIGHTS=[
+    {img:'assets/article-4.jpg',cat:'FUNDING',title:'A Guide to Government Funding for SMEs',excerpt:'From DTIC incentives to SEFA loans, a map of the public funding landscape and how to qualify.',author:'Thabo Nkosi',init:'TN',date:'20 May 2026',read:8},
     {img:'assets/article-5.jpg',cat:'FUNDING',title:'Identifying and Correcting Funding Risks in Your Business',excerpt:'The red flags funders spot in your numbers — and the practical fixes that strengthen your application.',author:'Maryna Steyn',init:'MS',date:'12 May 2026',read:6},
     {img:'assets/article-6.jpg',cat:'FUNDING',title:'What is Revenue-Based Financing?',excerpt:'Repay as a share of monthly revenue instead of fixed instalments — a flexible option for growing SMEs.',author:'Lerato Dlamini',init:'LD',date:'4 May 2026',read:5},
     {img:'assets/article-7.jpg',cat:'FUNDING',title:'Cash Advance: A Quick Financing Solution for SMEs',excerpt:'When you need working capital fast, a merchant cash advance can bridge the gap — at a cost worth understanding.',author:'Sipho Maseko',init:'SM',date:'26 Apr 2026',read:4},
@@ -192,24 +192,68 @@
   ];
 
   const GUIDES=[
-    'Guide to Project Finance','Guide to Asset Finance','Guide to Credit Scores',
-    'Female Empowerment Funds','Guide to Venture Capital','A Guide to Angel Investors',
-    'Guide to NYDA Funding','Youth Business Funding','A Guide to Government Funding'
+    {title:'Guide to Project Finance',      cat:'Funding',    excerpt:'Structuring long-term finance for capital-intensive projects — from feasibility through drawdown.',read:12},
+    {title:'Guide to Asset Finance',        cat:'Funding',    excerpt:'How asset finance works, who qualifies, and the four-step path from application to approval.',read:8},
+    {title:'Guide to Credit Scores',        cat:'Funding',    excerpt:'What lenders actually see when they pull your record, how business and personal scores interact, and how to lift both.',read:10},
+    {title:'Female Empowerment Funds',      cat:'Funding',    excerpt:'A map of the SA funders backing women-led SMEs — from grants to equity — plus what a strong application looks like.',read:9},
+    {title:'Guide to Venture Capital',      cat:'Funding',    excerpt:'When VC fits (and when it doesn’t), how term sheets read, and what founders concede in exchange for capital.',read:14},
+    {title:'A Guide to Angel Investors',    cat:'Funding',    excerpt:'Finding, pitching and closing an angel — the SA network landscape and typical cheque sizes.',read:9},
+    {title:'Guide to NYDA Funding',         cat:'Funding',    excerpt:'Eligibility, product options and application deadlines for the National Youth Development Agency.',read:7},
+    {title:'Youth Business Funding',        cat:'Funding',    excerpt:'Every major funder aimed at under-35 founders — grants, blended finance and enterprise-development programmes.',read:11},
+    {title:'A Guide to Government Funding', cat:'Funding',    excerpt:'From DTIC incentives to SEFA loans — a working map of the public funding landscape and how to qualify.',read:13}
   ];
 
-  function guideCard(title){
+  const CAT_PILL = { Funding:['#FDECEF','#DC183C'], Operations:['#E4F5EE','#29A37A'], Compliance:['#FFF1E0','#AE6B0A'] };
+
+  // Guide card — matches Brand CI Variant C exactly. Category pill (red), title, excerpt,
+  // divider, "X min read" + "Read Guide →". No image, no orange "GUIDE" pill.
+  function guideCard(g){
+    const t = CAT_PILL[g.cat] || ['#FDECEF','#DC183C'];
     return `
-      <a href="public-article.html" class="group snap-start shrink-0 w-[78%] sm:w-[300px] bg-white rounded-2xl border border-[#E7EBEF] p-5 flex items-start gap-4 card-lift">
-        <span class="w-11 h-11 rounded-xl bg-[#FDECEF] text-[#DC183C] grid place-items-center shrink-0"><i data-lucide="book-open" class="w-5 h-5"></i></span>
-        <div class="flex flex-col">
-          <h3 class="font-jakarta font-bold text-base leading-snug group-hover:text-[#DC183C] transition">${esc(title)}</h3>
-          <span class="inline-flex items-center gap-1 mt-2 text-sm font-bold text-[#DC183C]">Read guide <i data-lucide="arrow-right" class="w-4 h-4"></i></span>
+      <a href="public-guide.html" class="group snap-start shrink-0 w-[78%] sm:w-[320px] bg-white rounded-2xl border border-[#E7EBEF] p-5 flex flex-col card-lift">
+        <span class="inline-flex w-max px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider" style="background:${t[0]};color:${t[1]}">${esc(g.cat)}</span>
+        <h3 class="font-jakarta font-extrabold text-lg leading-snug mt-3 group-hover:text-[#DC183C] transition line-clamp-2 min-h-[3.25rem]">${esc(g.title)}</h3>
+        <p class="text-sm text-[#6A7581] leading-relaxed mt-2 line-clamp-2 flex-1">${esc(g.excerpt)}</p>
+        <div class="mt-4 pt-4 border-t border-[#E7EBEF] flex items-center gap-2 text-xs text-[#6A7581]">
+          <i data-lucide="clock" class="w-3.5 h-3.5"></i><span class="font-semibold">${g.read} min read</span>
+          <span class="ml-auto inline-flex items-center gap-1 text-[#DC183C] font-bold text-sm">Read Guide <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i></span>
         </div>
       </a>`;
   }
 
-  document.getElementById('latestGrid').innerHTML = LATEST.map(articleCard).join('');
-  document.getElementById('insightsGrid').innerHTML = INSIGHTS.map(articleCard).join('');
+  // Pagination — 9 per page. With 9 articles today we show 1 page; the widget still shows the
+  // next-page numbers so it reads as a real paginator once the archive grows.
+  const PER_PAGE = 9;
+  const TOTAL_PAGES_MOCK = 4; // Mock: pretend 4 pages so the paginator has content
+  let currentPage = 1;
+  function renderArticles(){
+    const start = (currentPage-1)*PER_PAGE;
+    const slice = ARTICLES.slice(start, start+PER_PAGE);
+    document.getElementById('articlesGrid').innerHTML = slice.map(articleCard).join('');
+    document.getElementById('articleCount').textContent = 'Page '+currentPage+' of '+TOTAL_PAGES_MOCK;
+    renderPagination();
+    lucide.createIcons();
+  }
+  function renderPagination(){
+    const nav = document.getElementById('pagination');
+    const btn = (p, label, opts={}) => {
+      const active = opts.active ? 'bg-[#DC183C] text-white border-[#DC183C]' : 'bg-white text-[#121A21] border-[#E7EBEF] hover:border-[#0C1F31]';
+      const disabled = opts.disabled ? 'opacity-40 pointer-events-none' : '';
+      return `<button data-p="${p}" class="page-btn w-10 h-10 rounded-full border font-jakarta font-bold text-sm transition ${active} ${disabled}" aria-label="${esc(label||'Page '+p)}">${label||p}</button>`;
+    };
+    let html = btn(currentPage-1, '‹', {disabled: currentPage===1});
+    for(let i=1;i<=TOTAL_PAGES_MOCK;i++){ html += btn(i, String(i), {active: i===currentPage}); }
+    html += btn(currentPage+1, '›', {disabled: currentPage===TOTAL_PAGES_MOCK});
+    nav.innerHTML = html;
+    nav.querySelectorAll('.page-btn').forEach(b=>{
+      b.addEventListener('click', ()=>{
+        const p = +b.getAttribute('data-p');
+        if(p>=1 && p<=TOTAL_PAGES_MOCK){ currentPage = p; renderArticles(); window.scrollTo({top:document.getElementById('articlesGrid').offsetTop-100, behavior:'smooth'}); }
+      });
+    });
+  }
+
+  renderArticles();
   document.getElementById('guidesGrid').innerHTML = GUIDES.map(guideCard).join('');
 
   // Funding Guides horizontal carousel controls
@@ -237,7 +281,7 @@
     update();
   })();
 
-  const BRIEF={title:'Funding Articles — Category Archive',sub:'WordPress category archive · public, indexable',purpose:'The special Funding category hub. Unlike an ordinary category archive it leads with the latest funding article as a hero, drives the primary conversion (a funding application), and surfaces an evergreen Funding Guides library. Replaces the live /funding-articles/ archive.',data:'Category: <code>funding { posts[], guides[] }</code>. Post: <code>{ title, excerpt, hero, author{name,initials}, published_at, read_minutes, featured }</code>. Guides are an evergreen subset/taxonomy of funding posts.',logic:'Featured = the newest funding post (flagged <code>featured</code>). The primary CTA routes to the funding application funnel (<code>public-funding.html#apply</code>); secondary closing CTA repeats it. Latest/Insights/Guides render from the same category feed. Public + indexable (term archive + Article schema).',components:'Header · archive hero (Home › Funding › Articles) · featured latest card · application CTA band · Latest in Funding grid · Funding Insights grid · Funding Guides library · closing CTA · footer.',api:'GET /v1/categories/funding?q=&sort=&page= · GET /v1/categories/funding/guides · POST /v1/funding/applications'};
+  const BRIEF={title:'Funding Articles — Category Archive',sub:'WordPress category archive · matches public-category.html shape',purpose:'The Funding category hub. Leads with a featured card (matching <code>public-category.html</code> exactly), drives the primary conversion (a funding application), and surfaces the evergreen <b>Funding Guides</b> library (Guide CPT, NOT articles). Replaces the live /funding-articles/ archive.',data:'Category: <code>funding { posts[], guides[] }</code>. Post: <code>{ title, excerpt, hero, author{name,initials}, published_at, read_minutes, featured }</code>. <b>Guides are the Guide CPT</b> (a separate post type), NOT a taxonomy of funding posts — the guide card links to <code>public-guide.html</code>, never <code>public-article.html</code>.',logic:'Featured = the newest funding post (flagged <code>featured</code>). Primary CTA routes to <code>public-funding.html#apply</code>; closing CTA repeats it. <b>Latest Articles</b> merges what were two separate sections (Latest in Funding + Funding Insights — same content type, no reason to split). Grid is 3-col, 9 per page, real pagination. Funding Guides render the <b>canonical Guide card</b> (Brand CI Variant C): red category pill · title · excerpt · divider · read-time + Read Guide link — identical to the guide card on public-resource-category, public-resources, and the related section of public-resource. Public + indexable (term archive + Article schema).',components:'Header · archive hero (Home › Funding › Articles) · featured card (overlaps hero, matches public-category.html) · application CTA band · Latest Articles grid + pagination · Funding Guides carousel (Guide CPT cards) · closing CTA · footer.',api:'GET /v1/categories/funding?page={n}&per_page=9 · GET /v1/guides?category=funding · POST /v1/funding/applications'};
   function toggleDevMode(){const on=document.body.classList.toggle('dev-on');const b=document.getElementById('devToggle');if(b)b.classList.toggle('on',on);if(on)showToast('Dev Mode on — tap any ⓘ for implementation notes.');lucide.createIcons();}
   function closeOverlay(id){const el=document.getElementById(id);if(!el)return;el.classList.remove('open');setTimeout(()=>{if(el&&el.parentNode)el.remove();},300);}
   function openBrief(){const b=BRIEF;const sec=(i,l,h)=>`<div class="px-6 py-4 border-t border-slate-100"><p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] flex items-center gap-1.5 mb-2"><i data-lucide="${i}" class="w-3.5 h-3.5"></i>${l}</p><div class="text-sm text-slate-600 leading-relaxed">${h}</div></div>`;document.getElementById('overlay-root').innerHTML=`<div class="ov" id="ov"><div class="ov-bg" onclick="closeOverlay('ov')"></div><div class="drawer"><div class="sticky top-0 z-10 bg-[#0C1F31] text-white px-6 py-5 flex items-start justify-between"><div><p class="text-[10px] font-bold uppercase tracking-widest text-[#FF9900] mb-1">Dev Brief</p><h3 class="font-jakarta font-extrabold text-lg leading-tight">${b.title}</h3><p class="text-xs text-white/60 mt-1">${b.sub}</p></div><button onclick="closeOverlay('ov')" class="text-white/60 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button></div>${sec('target','Purpose',b.purpose)}${sec('database','Data model',b.data)}${sec('git-branch','Logic',b.logic)}${sec('boxes','Components',b.components)}${sec('plug','API',`<code class="block bg-slate-900 text-emerald-300 text-xs font-mono px-3 py-2 rounded-lg overflow-x-auto">${b.api}</code>`)}</div></div>`;requestAnimationFrame(()=>{const o=document.getElementById('ov');if(o)o.classList.add('open');});lucide.createIcons();}
