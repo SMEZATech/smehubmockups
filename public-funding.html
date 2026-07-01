@@ -61,12 +61,12 @@
   <div class="max-w-5xl mx-auto px-4 sm:px-6 pt-12 pb-16 relative text-center">
     <!-- Breadcrumb (global pattern) -->
     <nav aria-label="Breadcrumb" class="text-xs text-white/55 flex items-center justify-center flex-wrap gap-x-1.5 mb-4"><a href="public-home.html" class="hover:text-white transition">Home</a><span class="text-white/30">›</span><span class="text-white/85 font-medium truncate">Funding</span></nav>
-    <h1 class="font-jakarta font-extrabold text-4xl sm:text-5xl tracking-tight leading-tight">Apply for <span class="text-[#DC183C]">Business Funding</span>
+    <h1 class="font-jakarta font-extrabold text-4xl sm:text-5xl tracking-tight leading-tight">Apply for <span class="bg-gradient-to-r from-[#DC183C] to-[#FF9900] bg-clip-text text-transparent">Business Funding</span>
       <button onclick="openBrief('funding')" class="dev-badge align-middle ml-1 w-6 h-6 rounded-full bg-[#FF9900] text-[#0C1F31] items-center justify-center text-[11px] font-bold">i</button>
     </h1>
     <p class="mt-5 text-white/70 max-w-2xl mx-auto text-lg">Fast, transparent, and stress-free. Access funding quickly and easily to capitalise on new opportunities and achieve your business goals.</p>
     <div class="mt-8 flex items-center justify-center">
-      <button type="button" onclick="openApply()" class="inline-flex items-center gap-2 px-7 h-12 rounded-full bg-[#DC183C] hover:bg-[#B0142F] font-bold transition">Get Started <i data-lucide="arrow-right" class="w-4 h-4"></i></button>
+      <button type="button" onclick="openApply()" class="inline-flex items-center gap-2 px-7 h-12 rounded-full bg-[#DC183C] hover:bg-[#B0142F] font-bold transition">Apply Now <i data-lucide="arrow-right" class="w-4 h-4"></i></button>
     </div>
   </div>
 </section>
@@ -77,7 +77,7 @@
     <h2 class="font-jakarta font-extrabold text-3xl sm:text-4xl tracking-tight">Business Funding Options Tailored To Your Needs</h2>
     <p class="mt-4 text-[#6A7581] text-lg">Choose from a range of financing solutions designed for South African small businesses.</p>
   </div>
-  <div id="options" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-12"></div>
+  <div id="options" class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 mt-12"></div>
 </section>
 
 <!-- ===================== 3. HOW IT WORKS ===================== -->
@@ -247,14 +247,14 @@
   ];
   function renderOptions(){
     document.getElementById('options').innerHTML=OPTIONS.map(o=>`
-      <div class="bg-white rounded-2xl border border-[#E7EBEF] p-6 card-lift flex flex-col">
-        <div class="w-12 h-12 rounded-xl grid place-items-center ${TINTS[o.tint]} mb-4"><i data-lucide="${o.icon}" class="w-6 h-6"></i></div>
-        <h3 class="font-jakarta font-bold text-xl">${esc(o.name)}</h3>
-        <p class="text-sm text-[#6A7581] mt-2 leading-relaxed">${esc(o.desc)}</p>
-        <ul class="mt-4 space-y-2 text-sm text-[#6A7581] flex-1">
-          ${o.bullets.map(b=>`<li class="flex gap-2"><i data-lucide="check" class="w-4 h-4 text-[#29A37A] shrink-0 mt-0.5"></i><span>${esc(b)}</span></li>`).join('')}
+      <div class="bg-white rounded-2xl border border-[#E7EBEF] p-5 card-lift flex flex-col">
+        <div class="w-11 h-11 rounded-xl grid place-items-center ${TINTS[o.tint]} mb-3.5"><i data-lucide="${o.icon}" class="w-5 h-5"></i></div>
+        <h3 class="font-jakarta font-bold text-base leading-snug">${esc(o.name)}</h3>
+        <p class="text-[13px] text-[#6A7581] mt-1.5 leading-relaxed">${esc(o.desc)}</p>
+        <ul class="mt-3.5 space-y-1.5 text-[13px] text-[#6A7581] flex-1">
+          ${o.bullets.map(b=>`<li class="flex gap-2"><i data-lucide="check" class="w-3.5 h-3.5 text-[#29A37A] shrink-0 mt-0.5"></i><span>${esc(b)}</span></li>`).join('')}
         </ul>
-        <a href="public-loan-option.html" class="inline-flex items-center gap-1 text-sm font-bold text-[#DC183C] mt-5 hover:gap-2 transition-all">Learn More <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
+        <a href="public-loan-option.html" class="inline-flex items-center gap-1 text-sm font-bold text-[#DC183C] mt-4 hover:gap-2 transition-all">Learn More <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
       </div>`).join('');
   }
 
