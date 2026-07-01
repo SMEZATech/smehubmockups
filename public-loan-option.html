@@ -57,9 +57,8 @@
       <button onclick="openBrief('loan')" class="dev-badge align-middle ml-1 w-6 h-6 rounded-full bg-[#FF9900] text-[#0C1F31] items-center justify-center text-[11px] font-bold">i</button>
     </h1>
     <p class="mt-5 text-white/70 max-w-2xl mx-auto text-lg">Don't let limited cash flow hold your business back — inventory finance is a smarter way to access working capital.</p>
-    <div class="mt-8 flex flex-col items-center gap-4">
-      <a href="public-funding.html#apply" class="inline-flex items-center gap-2 px-7 h-12 rounded-full bg-[#DC183C] hover:bg-[#B0142F] font-bold transition">Get Started <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
-      <span class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 border border-white/15 text-xs font-semibold text-white/80"><i data-lucide="banknote" class="w-3.5 h-3.5"></i> R10,000 – R5,000,000 · no commitment</span>
+    <div class="mt-8 flex items-center justify-center">
+      <a href="public-funding.html#apply" class="inline-flex items-center gap-2 px-7 h-12 rounded-full bg-[#DC183C] hover:bg-[#B0142F] font-bold transition">Apply Now <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
     </div>
   </div>
 </section>
@@ -113,10 +112,10 @@
       </ul>
     </div>
 
-    <!-- In-page TOC -->
-    <div class="mt-6 rounded-2xl border border-[#E7EBEF] bg-white p-5">
+    <!-- In-page TOC — mobile only (matches current mobile order). Desktop version lives in the right sidebar. -->
+    <div class="lg:hidden mt-6 rounded-2xl border border-[#E7EBEF] bg-white p-5">
       <p class="text-[11px] font-bold uppercase tracking-widest text-[#DC183C] flex items-center gap-1.5 mb-3"><i data-lucide="list" class="w-3.5 h-3.5"></i> On This Page</p>
-      <nav id="toc" class="-ml-px"></nav>
+      <nav class="toc-list -ml-px"></nav>
     </div>
 
     <!-- WHAT -->
@@ -209,6 +208,12 @@
   <!-- RIGHT: sticky sidebar -->
   <aside class="lg:col-span-1">
     <div class="lg:sticky lg:top-24 space-y-6">
+      <!-- On-this-page TOC — desktop only (mobile version is in the main column, above the body) -->
+      <div class="hidden lg:block rounded-2xl border border-[#E7EBEF] bg-white p-5">
+        <p class="text-[11px] font-bold uppercase tracking-widest text-[#DC183C] flex items-center gap-1.5 mb-3"><i data-lucide="list" class="w-3.5 h-3.5"></i> On This Page</p>
+        <nav class="toc-list -ml-px"></nav>
+      </div>
+
       <!-- Apply widget -->
       <div class="rounded-2xl bg-[#0C1F31] text-white p-6 relative overflow-hidden">
         <div class="absolute inset-0 dot-pattern opacity-40 pointer-events-none"></div>
@@ -301,10 +306,11 @@
     b.classList.toggle('hidden');ic.style.transform=open?'':'rotate(180deg)';
   }
 
-  /* ---------- In-page TOC + scroll-spy (article pattern) ---------- */
+  /* ---------- In-page TOC + scroll-spy (article pattern) — renders into BOTH mobile & desktop containers ---------- */
   const heads=[...document.querySelectorAll('.doc h2[id]')];
-  document.getElementById('toc').innerHTML=heads.map(h=>`<a href="#${h.id}" class="toc-link" data-id="${h.id}">${esc(h.textContent.trim())}</a>`).join('');
-  const links=[...document.querySelectorAll('#toc .toc-link')];
+  const tocHtml = heads.map(h=>`<a href="#${h.id}" class="toc-link" data-id="${h.id}">${esc(h.textContent.trim())}</a>`).join('');
+  document.querySelectorAll('.toc-list').forEach(el=>{ el.innerHTML = tocHtml; });
+  const links=[...document.querySelectorAll('.toc-list .toc-link')];
   links.forEach(l=>l.addEventListener('click',e=>{e.preventDefault();const t=document.getElementById(l.dataset.id);if(t)t.scrollIntoView({behavior:'smooth',block:'start'});}));
   const spy=new IntersectionObserver(entries=>{
     entries.forEach(en=>{if(en.isIntersecting){const id=en.target.id;links.forEach(l=>l.classList.toggle('active',l.dataset.id===id));}});
