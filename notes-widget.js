@@ -16,12 +16,22 @@
   if(!isLocal) return;
   if(document.getElementById('sme-notes-widget')) return; // idempotent
 
+  function loadScript(src){
+    return new Promise(function(res){
+      var s = document.createElement('script');
+      s.src = src;
+      s.onload = function(){ res(true); };
+      s.onerror = function(){ res(false); };
+      document.head.appendChild(s);
+    });
+  }
   function load(cb){
-    if(window.Feedback){ cb(); return; }
-    var s = document.createElement('script');
-    s.src = 'feedback.js';
-    s.onload = cb;
-    document.head.appendChild(s);
+    var needFeedback = !window.Feedback;
+    var needShared = !window.SHARED_NOTES;
+    Promise.resolve()
+      .then(function(){ return needShared ? loadScript('shared-notes.js') : null; })
+      .then(function(){ return needFeedback ? loadScript('feedback.js') : null; })
+      .then(cb);
   }
 
   function file(){
@@ -69,6 +79,15 @@
       .smn-sec .meta{display:flex;align-items:center;justify-content:space-between;margin-top:6px;font-size:11px;color:#9aa3ac}
       .smn-sec .meta button{background:transparent;border:0;color:#9aa3ac;cursor:pointer;font-size:11px;text-decoration:underline}
       .smn-sec .meta button:hover{color:#DC183C}
+      .smn-shared{padding:14px 22px;border-bottom:1px solid #F0F2F5;background:#FFF8E1;border-left:4px solid #AE6B0A}
+      .smn-shared .head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:8px}
+      .smn-shared .lab{font:700 11px/1 'Plus Jakarta Sans',system-ui,sans-serif;text-transform:uppercase;letter-spacing:.1em;color:#5C3A00}
+      .smn-shared .chip{font:800 9px/1 'Plus Jakarta Sans',system-ui,sans-serif;text-transform:uppercase;letter-spacing:.08em;background:#AE6B0A;color:#fff;padding:3px 7px;border-radius:999px;display:inline-flex;align-items:center;gap:4px}
+      .smn-shared .chip .d{width:5px;height:5px;border-radius:50%;background:#FF9900;box-shadow:0 0 0 2px rgba(255,255,255,.3)}
+      .smn-shared .body{font:14px/1.55 Inter,system-ui,sans-serif;color:#5C3A00;white-space:pre-wrap;word-wrap:break-word}
+      .smn-shared .body code{background:rgba(174,107,10,.15);padding:1px 5px;border-radius:4px;font:12.5px/1.3 ui-monospace,SFMono-Regular,Menlo,monospace;color:#5C3A00}
+      .smn-shared .body strong{color:#3E2600;font-weight:800}
+      .smn-shared .ts{font-size:11px;color:#AE6B0A;margin-top:8px;font-weight:600}
       .smn-f{padding:14px 22px;border-top:1px solid #E7EBEF;background:#FCFCFC;display:flex;gap:8px;flex-wrap:wrap}
       .smn-f button{flex:1;min-width:140px;padding:10px 14px;border-radius:8px;font:700 12px/1 'Plus Jakarta Sans',system-ui,sans-serif;letter-spacing:.04em;text-transform:uppercase;cursor:pointer;border:1px solid #E7EBEF;background:#fff;color:#121A21;transition:background .15s ease,border-color .15s ease}
       .smn-f button:hover{background:#F4F6F8}
@@ -93,9 +112,30 @@
   var SECTIONS = [];
   var FILE = '';
 
+  function renderBody(text){
+    if(!text) return '';
+    var html = esc(text);
+    html = html.replace(/`([^`]+)`/g, '<code>$1</code>');
+    html = html.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+    return html;
+  }
   function renderPanel(){
     var rec = window.Feedback.get(FILE);
     var secs = rec.sections || {};
+    var shared = window.Feedback.getShared ? window.Feedback.getShared(FILE) : {};
+    var sharedKeys = Object.keys(shared);
+    // Shared block — read-only, ships with repo
+    var sharedHtml = sharedKeys.map(function(k){
+      var s = shared[k];
+      var ts = s.ts ? new Date(s.ts).toLocaleDateString('en-ZA',{day:'numeric',month:'short',year:'numeric'}) : '';
+      return '<div class="smn-shared">'
+           +   '<div class="head"><span class="lab">' + esc(s.label||k) + '</span>'
+           +     '<span class="chip"><span class="d"></span>Shared · ' + esc(s.author||'team') + '</span></div>'
+           +   '<div class="body">' + renderBody(s.text) + '</div>'
+           +   (ts?'<p class="ts">'+ts+'</p>':'')
+           + '</div>';
+    }).join('');
+    // Local block — editable, browser-local
     var rows = SECTIONS.map(function(s){
       var v = secs[s.id];
       var text = v ? v.text : '';
@@ -107,9 +147,14 @@
            +   '<div class="meta"><span class="ts">' + (ts?'Saved '+ts:'') + '</span>' + (text?'<button class="clr">Clear</button>':'<span></span>') + '</div>'
            + '</div>';
     }).join('');
-    document.querySelector('#sme-notes-panel .smn-b').innerHTML = rows;
-    var total = Object.keys(secs).length;
-    document.querySelector('#sme-notes-panel .smn-h .sub').textContent = total + ' note' + (total===1?'':'s') + ' · ' + SECTIONS.length + ' section' + (SECTIONS.length===1?'':'s');
+    document.querySelector('#sme-notes-panel .smn-b').innerHTML = sharedHtml + rows;
+    var localTotal = Object.keys(secs).length;
+    var grand = localTotal + sharedKeys.length;
+    var parts = [];
+    if(sharedKeys.length) parts.push(sharedKeys.length + ' shared');
+    if(localTotal) parts.push(localTotal + ' yours');
+    if(!parts.length) parts.push('0 notes');
+    document.querySelector('#sme-notes-panel .smn-h .sub').textContent = grand + ' note' + (grand===1?'':'s') + ' (' + parts.join(' · ') + ') · ' + SECTIONS.length + ' section' + (SECTIONS.length===1?'':'s');
     wireRows();
     updateFab();
   }
@@ -142,7 +187,8 @@
   function updateFab(){
     var fab = document.getElementById('sme-notes-fab');
     if(!fab) return;
-    var n = (window.Feedback.countByFile()[FILE]) || 0;
+    var counts = window.Feedback.countTotalByFile ? window.Feedback.countTotalByFile() : window.Feedback.countByFile();
+    var n = counts[FILE] || 0;
     var c = fab.querySelector('.count');
     if(n){ c.textContent = n; c.style.display=''; }
     else { c.style.display='none'; }
