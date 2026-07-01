@@ -28,7 +28,7 @@ window.MOCKUP_STATUS = {
   "public-guides.html": "finalised",
   "public-guide.html": "finalised",
   "public-founder-focus.html": "under-work",
-  "public-shop.html": "under-review",
+  "public-shop.html": "finalised",
   "public-checkout.html": "under-review",
   "public-auth.html": "finalised",
   "public-about.html": "finalised",
@@ -57,19 +57,20 @@ window.MOCKUP_STATUS = {
   "public-search.html": "under-review",
   "public-404.html": "under-review"
 };
-window.MOCKUP_STATUS_PUBLISHED = "2026-07-01T12:13:58.606Z";
+window.MOCKUP_STATUS_PUBLISHED = "2026-07-01T14:17:40.577Z";
 /* Developer builds (staging) — { mockup file: { url, status } }; status: "pending-review" | "reviewed" | "approved" */
 window.MOCKUP_DEV = {
   "public-home.html": {"url":"https://smesastg.wpengine.com/","status":"pending-review"},
   "public-articles.html": {"url":"https://smesastg.wpengine.com/sme-articles/","status":"pending-review"},
   "public-sustainability.html": {"url":"https://smesastg.wpengine.com/sustainability-solutions/","status":"pending-review"},
-  "public-about.html": {"url":"https://smesastg.wpengine.com/about/","status":"pending-review"},
+  "public-shop.html": {"url":"https://smesouthafrica.co.za/shop/","status":"approved"},
+  "public-about.html": {"url":"https://smesastg.wpengine.com/about/","status":"reviewed"},
   "public-contact.html": {"url":"https://smesastg.wpengine.com/contact-us/","status":"pending-review"},
   "public-advertise.html": {"url":"https://smesastg.wpengine.com/advertise-with-us/","status":"pending-review"},
   "public-privacy.html": {"url":"https://smesastg.wpengine.com/privacy-policy/","status":"reviewed"},
-  "public-terms.html": {"url":"https://smesastg.wpengine.com/terms-of-use/","status":"pending-review"},
-  "public-refunds.html": {"url":"https://smesastg.wpengine.com/refund-and-cancellation/","status":"pending-review"},
-  "public-popia.html": {"url":"https://smesastg.wpengine.com/popia/","status":"pending-review"},
+  "public-terms.html": {"url":"https://smesastg.wpengine.com/terms-of-use/","status":"reviewed"},
+  "public-refunds.html": {"url":"https://smesastg.wpengine.com/refund-and-cancellation/","status":"reviewed"},
+  "public-popia.html": {"url":"https://smesastg.wpengine.com/popia/","status":"reviewed"},
   "public-advertising-disclosure.html": {"url":"https://smesastg.wpengine.com/advertising-disclosure/","status":"pending-review"}
 };
 /* Group overrides — { mockup file: "Group name" }; overrides default NAV grouping in index.html */
