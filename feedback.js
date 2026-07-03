@@ -33,14 +33,23 @@
       return (data[file] && data[file].sections) ? data[file] : { sections:{} };
     },
     // ---- shared notes (ship with repo, visible to everyone) ----
+    // Notes with `pending:true` are held in Mission Control for operator review
+    // and DO NOT appear on the public hub. They surface only after PUBLISH LIVE
+    // strips the pending flag.
     getShared: function(file){
-      var s = (global.SHARED_NOTES || {})[file];
-      return s || {};
+      var s = (global.SHARED_NOTES || {})[file] || {};
+      var out = {};
+      Object.keys(s).forEach(function(k){
+        if(!s[k] || !s[k].pending) out[k] = s[k];
+      });
+      return out;
     },
     countSharedByFile: function(){
       var s = global.SHARED_NOTES || {}, out = {};
       Object.keys(s).forEach(function(f){
-        var n = Object.keys(s[f] || {}).length;
+        var secs = s[f] || {};
+        var n = 0;
+        Object.keys(secs).forEach(function(k){ if(!secs[k] || !secs[k].pending) n++; });
         if(n) out[f] = n;
       });
       return out;
