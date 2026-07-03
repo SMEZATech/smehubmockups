@@ -57,12 +57,14 @@ window.MOCKUP_STATUS = {
   "public-search.html": "under-review",
   "public-404.html": "under-review"
 };
-window.MOCKUP_STATUS_PUBLISHED = "2026-07-03T07:02:04.256Z";
+window.MOCKUP_STATUS_PUBLISHED = "2026-07-03T13:21:43.308Z";
 /* Developer builds (staging) — { mockup file: { url, status } }; status: "pending-review" | "reviewed" | "approved" */
 window.MOCKUP_DEV = {
-  "public-home.html": {"url":"https://smesastg.wpengine.com/","status":"pending-review"},
-  "public-articles.html": {"url":"https://smesastg.wpengine.com/sme-articles/","status":"pending-review"},
+  "public-home.html": {"url":"https://smesastg.wpengine.com/","status":"reviewed"},
+  "public-articles.html": {"url":"https://smesastg.wpengine.com/sme-articles/","status":"reviewed"},
+  "public-article-categories.html": {"url":"https://smesastg.wpengine.com/starting-a-business/agriculture-and-farming/","status":"pending-review"},
   "public-category.html": {"url":"https://smesastg.wpengine.com/article-categories/","status":"pending-review"},
+  "public-subcategory.html": {"url":"https://smesastg.wpengine.com/starting-a-business/agriculture-and-farming/","status":"pending-review"},
   "public-article.html": {"url":"https://smesastg.wpengine.com/how-to-find-your-brands-tone-of-voice/","status":"pending-review"},
   "public-sustainability.html": {"url":"https://smesastg.wpengine.com/sustainability-solutions/","status":"pending-review"},
   "public-shop.html": {"url":"https://smesouthafrica.co.za/shop/","status":"approved"},
