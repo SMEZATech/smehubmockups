@@ -696,24 +696,21 @@
       purpose:'SEO-able permalink for any member activity post. Logged-in members get the full action bar (like/comment/share/save). Non-members see a teaser and are redirected to <code>/join</code> below the fold. The page mirrors the in-feed card so the experience is consistent.',
       data:'<code>{ id, member, body, attachments[], hashtags[], timestamp, likes, comments[] }</code> — same schema as the feed item; this template just renders a single record at <code>/members/{slug}/activity/{id}/</code>.',
       logic:'BuddyBoss activity permalink. Like/save state is persisted per-user. Share copies the canonical URL. Comments support one-level nesting; author replies get an Author badge.',
-      components:'Author bar · post card · link preview · attached image · hashtag chips · action bar · comment thread · sticky member rail.',
-      api:'GET /v1/activity/{id} · POST /v1/activity/{id}/reactions · POST /v1/activity/{id}/comments'
+      components:'Author bar · post card · link preview · attached image · hashtag chips · action bar · comment thread · sticky member rail.'
     },
     breadcrumb: {
       title:'Breadcrumb', sub:'Activity URL pattern',
       purpose:'Reinforces the URL hierarchy and makes back-navigation cheap. Matches the live BuddyBoss path <code>/members/{slug}/activity/{id}/</code>.',
       data:'Derived from URL segments + member profile lookup.',
       logic:'Static render. Last segment is the activity id, not a link.',
-      components:'Breadcrumb row.',
-      api:'n/a — URL-derived'
+      components:'Breadcrumb row.'
     },
     comments: {
       title:'Comment thread', sub:'One-level nesting, author badge',
       purpose:'Replies that move the conversation forward. Members can reply, like, and share comments. The original author’s replies are visually marked.',
       data:'<code>Comment { id, post_id, author, body, created_at, likes, parent_id }</code>. parent_id is null for top-level, otherwise the parent comment id.',
       logic:'Top-level comments sort newest-first. Replies nest under their parent in chronological order. Like state is per-user. Mentions (<code>@name</code>) trigger a notification.',
-      components:'Composer · comment row · reply row (indented) · Author badge · like/reply/share actions · Load older.',
-      api:'GET /v1/activity/{id}/comments?cursor=... · POST /v1/activity/{id}/comments'
+      components:'Composer · comment row · reply row (indented) · Author badge · like/reply/share actions · Load older.'
     }
   };
   function openBrief(id){
@@ -739,7 +736,6 @@
           ${sec('database','Data model', b.data)}
           ${sec('git-branch','Logic', b.logic)}
           ${sec('boxes','Components', b.components)}
-          ${sec('plug','API', `<code class="block bg-slate-900 text-emerald-300 text-xs font-mono px-3 py-2 rounded-lg overflow-x-auto">${b.api}</code>`)}
           <div class="px-6 py-4 border-t border-slate-100">
             <p class="text-[11px] text-slate-400 flex items-center gap-1.5"><i data-lucide="info" class="w-3.5 h-3.5"></i> Spec lives beside the feature — toggle Dev Mode off for the clean stakeholder view.</p>
           </div>

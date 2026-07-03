@@ -762,48 +762,42 @@
       purpose:'Surfaces <b>unanswered</b> Asks in the member&rsquo;s sector — not just new ones. Unanswered Asks are the #1 churn driver in a young community, so the nudge targets <i>reply-rate</i>, the engagement heartbeat. <b>Help out →</b> filters the feed to Asks needing answers.',
       data:'Asks where <code>type = ask</code> AND <code>reply_count = 0</code>, scoped to the member&rsquo;s sector/community, ordered by age.',
       logic:'Poll every ~60s (or websocket). Show only when unanswered count &gt; 0. Copy escalates with wait time. <b>Help out →</b> sets the feed filter to unanswered Asks and scrolls to it.',
-      components:'Ribbon bar · unanswered count · deep-link <code>?filter=unanswered</code>.',
-      api:'GET /v1/feed/asks?status=unanswered&sector={sector}'
+      components:'Ribbon bar · unanswered count · deep-link <code>?filter=unanswered</code>.'
     },
     help: {
       title:'Help a Founder', sub:'The reply-rate engine, made visible',
       purpose:'Promotes the open-loop from a thin ribbon to a real module: 2&ndash;3 <b>unanswered</b> Asks in your sector with one-tap <b>Answer</b>. Communities die when Asks go unanswered — this module exists to guarantee they don&rsquo;t. It is the single highest-leverage retention surface.',
       data:'Asks with <code>reply_count = 0</code>, matched to the viewer by {sector, stage, tags}, ranked by age + match strength. Excludes the viewer&rsquo;s own Asks.',
       logic:'Refreshes as Asks get answered (they drop off the list). &ldquo;waiting Nh&rdquo; escalates urgency. Seed/ambassador layer should keep this list short — an empty list means a healthy reply-rate.',
-      components:'Navy header · unanswered-ask rows · Answer CTA · waiting timer · &ldquo;see all&rdquo; link.',
-      api:'GET /v1/members/{id}/asks-to-help?limit=3'
+      components:'Navy header · unanswered-ask rows · Answer CTA · waiting timer · &ldquo;see all&rdquo; link.'
     },
     contribution: {
       title:'Contribution', sub:'How a member gives back — Ask / Win / Share',
       purpose:'Reputation built on <b>generosity, not vanity metrics</b>. It mirrors the Ask / Win / Share taxonomy: Asks you helped answer, Wins you celebrated, Shares you amplified. Tapping the stat opens the full breakdown.',
       data:'Per member: <code>asks_helped</code> (answers marked helpful), <code>wins_celebrated</code> (reactions on others&rsquo; Wins), <code>shares_amplified</code> (reshares / saves of Shares).',
       logic:'Increment on each qualifying action. The card headline shows <code>asks_helped</code> (strongest signal); the modal reveals all three. The total can drive an optional Contributor tier.',
-      components:'Compact stat card → modal with three colour-coded rows (red / green / orange) + summary.',
-      api:'GET /v1/users/{id}/contribution'
+      components:'Compact stat card → modal with three colour-coded rows (red / green / orange) + summary.'
     },
     activity: {
       title:'Your Activity', sub:'The member&rsquo;s own posts, by type &amp; status',
       purpose:'A personal index of what <b>you</b> posted — distinct from Contribution (which is helping others). Every row maps 1:1 to the post taxonomy, so the data model stays consistent platform-wide.',
       data:'Your posts grouped by type + status: Asks (open vs resolved), Wins, Shares. <code>resolved</code> = an answer was accepted.',
       logic:'Tapping a row filters the feed to YOUR posts of that type / status (in this mockup it filters the demo feed by type). Counts update live when you post via the composer.',
-      components:'Stat list · colour dot per type (red / grey / green / orange) · click → filtered feed.',
-      api:'GET /v1/users/{id}/posts?type={ask|win|share}&status={open|resolved}'
+      components:'Stat list · colour dot per type (red / grey / green / orange) · click → filtered feed.'
     },
     suggested: {
       title:'Suggested Members', sub:'Smart discovery — replaces &ldquo;New This Week&rdquo;',
       purpose:'Connects founders who can actually help each other. Shows <b>only</b> members who (1) share interests / sector / stage and (2) have a <b>completed profile</b> (green check). Chronological &ldquo;new members&rdquo; was noise — this is signal.',
       data:'Candidates = members with <code>profile_complete = true</code>, excluding existing connections. Match on overlap of {sector, stage, province, tags}.',
       logic:'Score each candidate by weighted overlap → sort descending → take top N. Each card shows its strongest match reason. Recomputed when a profile changes.',
-      components:'Member row · avatar + completeness badge · match-reason chip · one-tap Connect.',
-      api:'GET /v1/members/suggested?for={id}&limit=3'
+      components:'Member row · avatar + completeness badge · match-reason chip · one-tap Connect.'
     },
     taxonomy: {
       title:'Ask / Win / Share', sub:'The three post types — the spine of the platform',
       purpose:'Every post is one of three intents. <b>Ask</b> (red) = request help. <b>Win</b> (green) = celebrate a milestone. <b>Share</b> (orange) = a resource or lesson. Colour + left stripe keep the feed scannable.',
       data:'Post: <code>{ id, type, author_id, content, created_at, reactions, comments }</code> · type ∈ {ask, win, share}.',
       logic:'The composer sets <code>type</code>; routing then differs — Asks notify members likely to help, Wins surface in celebration, Shares feed the resource index. Sort tabs filter by type.',
-      components:'Composer chips · type pill + stripe · sort tabs · feed card.',
-      api:'POST /v1/posts · GET /v1/feed?type={type}'
+      components:'Composer chips · type pill + stripe · sort tabs · feed card.'
     }
   };
 
@@ -846,7 +840,6 @@
           ${sec('database','Data model', b.data)}
           ${sec('git-branch','Logic', b.logic)}
           ${sec('boxes','Components', b.components)}
-          ${sec('plug','API', `<code class="block bg-slate-900 text-emerald-300 text-xs font-mono px-3 py-2 rounded-lg overflow-x-auto">${b.api}</code>`)}
           <div class="px-6 py-4 border-t border-slate-100">
             <p class="text-[11px] text-slate-400 flex items-center gap-1.5"><i data-lucide="info" class="w-3.5 h-3.5"></i> Spec lives beside the feature — toggle Dev Mode off for the clean stakeholder view.</p>
           </div>

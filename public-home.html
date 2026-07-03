@@ -100,8 +100,8 @@
         <div class="pl-4 sm:pl-6 border-l border-white/10"><p class="font-jakarta font-extrabold text-2xl sm:text-3xl">50K+</p><p class="text-sm text-white/50 mt-1">Downloads</p></div>
       </div>
     </div>
-    <!-- Right: hero image with floating chips -->
-    <div class="reveal" style="animation-delay:120ms">
+    <!-- Right: hero image with floating chips — hidden on mobile, copy + CTAs carry the hero on small screens -->
+    <div class="hidden lg:block reveal" style="animation-delay:120ms">
       <div class="relative">
         <img src="assets/hero-entrepreneurs.jpg" alt="South African entrepreneurs collaborating" class="w-full rounded-3xl shadow-2xl object-cover aspect-[4/3]" />
         <!-- top-right pill -->
@@ -360,7 +360,6 @@
       <a href="public-articles.html" class="group bg-white rounded-2xl border border-[#E7EBEF] overflow-hidden card-lift reveal flex flex-col" style="animation-delay:${i*80}ms">
         <div class="relative aspect-[16/10] overflow-hidden">
           <img src="${f.img}" alt="${esc(f.title)}" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" />
-          <span class="absolute top-3 left-3 px-[11px] py-[5px] rounded-full bg-[#DC183C] text-white font-jakarta font-bold uppercase tracking-widest" style="font-size:10px;">${esc(f.cat)}</span>
         </div>
         <div class="p-5 flex flex-col flex-1">
           <p class="text-xs text-[#6A7581]">${esc(f.date)} · ${esc(f.read)}</p>
@@ -428,45 +427,42 @@
       purpose:'The logged-out front door. One job: convert a visitor into a member (<b>Join the Community</b> → MemberPress) or send them to value (<b>Explore Resources</b>). Dark navy + the entrepreneur photo, star rating and stat strip build trust above the fold.',
       data:'Static copy + live counters (members, loans_zar, downloads). Hero image = static asset (assets/hero-entrepreneurs.jpg). Floating chips show members + funding totals.',
       logic:'CTAs route to MemberPress register/login. Counters cached hourly (WP Engine CPU). Public, indexable page. The Funding Summit pill is a dismissible promo slot.',
-      components:'White header · promo pill · 2-col hero (copy + image) · A/B/C/D avatars + stars · 3-stat strip · two floating image chips.',
-      api:'GET /v1/stats/platform (cached) · MemberPress /register'
+      components:'White header · promo pill · 2-col hero (copy + image) · A/B/C/D avatars + stars · 3-stat strip · two floating image chips.'
     },
     pillars: {
       title:'Platform Pillars', sub:'The four-part value proposition',
       purpose:'Four reasons to join — Community, Events, Funding, Resources — each linking to its destination so the marketing promise maps to real product surfaces.',
       data:'Static cards (icon, title, copy, link). Colour top-accent per pillar uses the brand palette.',
       logic:'Order fixed (Community first — retention engine). All CTAs are primary red for a single, clear action colour.',
-      components:'4 cards · colour top-accent · tinted icon tiles · red links.', api:'— (static)'
+      components:'4 cards · colour top-accent · tinted icon tiles · red links.'
     },
     journey: {
       title:'Business Journey', sub:'Stepper + detail card',
       purpose:'Lets a visitor self-identify by stage (Start / Manage / Growth / Fund). The stepper swaps a detail card with stage-specific guidance + CTA; the chosen stage personalises the experience after signup.',
       data:'Stage taxonomy <code>stage ∈ {start,manage,growth,fund}</code>; per stage: heading, body, 4 features, CTA. Saved to the member profile post-signup.',
       logic:'Stepper node click swaps the card (client-side). Post-signup the chosen stage personalises hub feed, suggested members and funding matches.',
-      components:'4-node stepper with connectors · detail card (Step badge + heading + body + 2×2 features + CTA).',
-      api:'PATCH /v1/members/{id} { stage }'
+      components:'4-node stepper with connectors · detail card (Step badge + heading + body + 2×2 features + CTA).'
     },
     testimonials: {
       title:'Testimonials', sub:'Social-proof carousel',
       purpose:'Rotating member quotes build trust near the mid-page. Real names, roles and photos make the proof concrete.',
       data:'Testimonial: <code>{ name, role, quote, rating, photo }</code>. Curated/approved set; could pull from a CMS collection.',
       logic:'Client-side carousel — prev/next + dot navigation, wraps around. Could auto-advance with pause-on-hover; manual here for the mockup.',
-      components:'Card (photo + name + role · stars + quote) · prev/next arrows · dot pagination.',
-      api:'GET /v1/testimonials?status=approved'
+      components:'Card (photo + name + role · stars + quote) · prev/next arrows · dot pagination.'
     },
     impact: {
       title:'Impact Counters', sub:'Animated social-proof metrics',
       purpose:'Headline platform metrics that count up when scrolled into view — a low-cost trust signal near the final CTA.',
       data:'Live aggregates: members, loans facilitated (ZAR), events hosted, downloads. Same source as the hero strip.',
       logic:'IntersectionObserver triggers a one-time eased count-up. Values cached server-side; animation is client-only (no CPU cost).',
-      components:'4 stat cards · count-up animation · IntersectionObserver trigger.', api:'GET /v1/stats/platform (cached)'
+      components:'4 stat cards · count-up animation · IntersectionObserver trigger.'
     }
   };
   function toggleDevMode(){ const on=document.body.classList.toggle('dev-on'); const b=document.getElementById('devToggle'); if(b)b.classList.toggle('on',on); if(on)showToast('Dev Mode on — tap any ⓘ for implementation notes.', null); lucide.createIcons(); }
   function closeOverlay(id){ const el=document.getElementById(id); if(!el)return; el.classList.remove('open'); setTimeout(()=>{ if(el&&el.parentNode) el.remove(); },300); }
   function openBrief(id){ const b=BRIEFS[id]; if(!b)return;
     const sec=(icon,label,html)=>`<div class="px-6 py-4 border-t border-slate-100"><p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] flex items-center gap-1.5 mb-2"><i data-lucide="${icon}" class="w-3.5 h-3.5"></i>${label}</p><div class="text-sm text-slate-600 leading-relaxed">${html}</div></div>`;
-    document.getElementById('overlay-root').innerHTML=`<div class="ov" id="ov-brief"><div class="ov-bg" onclick="closeOverlay('ov-brief')"></div><div class="drawer"><div class="sticky top-0 z-10 bg-[#0C1F31] text-white px-6 py-5 flex items-start justify-between"><div class="min-w-0"><p class="text-[10px] font-bold uppercase tracking-widest text-[#FF9900] mb-1">Dev Brief</p><h3 class="font-jakarta font-extrabold text-lg leading-tight">${b.title}</h3><p class="text-xs text-white/60 mt-1">${b.sub}</p></div><button onclick="closeOverlay('ov-brief')" aria-label="Close" class="text-white/60 hover:text-white shrink-0 ml-3"><i data-lucide="x" class="w-5 h-5"></i></button></div>${sec('target','Purpose',b.purpose)}${sec('database','Data model',b.data)}${sec('git-branch','Logic',b.logic)}${sec('boxes','Components',b.components)}${sec('plug','API',`<code class="block bg-slate-900 text-emerald-300 text-xs font-mono px-3 py-2 rounded-lg overflow-x-auto">${b.api}</code>`)}<div class="px-6 py-4 border-t border-slate-100"><p class="text-[11px] text-slate-400 flex items-center gap-1.5"><i data-lucide="info" class="w-3.5 h-3.5"></i> Spec lives beside the feature — toggle Dev Mode off for the clean stakeholder view.</p></div></div></div>`;
+    document.getElementById('overlay-root').innerHTML=`<div class="ov" id="ov-brief"><div class="ov-bg" onclick="closeOverlay('ov-brief')"></div><div class="drawer"><div class="sticky top-0 z-10 bg-[#0C1F31] text-white px-6 py-5 flex items-start justify-between"><div class="min-w-0"><p class="text-[10px] font-bold uppercase tracking-widest text-[#FF9900] mb-1">Dev Brief</p><h3 class="font-jakarta font-extrabold text-lg leading-tight">${b.title}</h3><p class="text-xs text-white/60 mt-1">${b.sub}</p></div><button onclick="closeOverlay('ov-brief')" aria-label="Close" class="text-white/60 hover:text-white shrink-0 ml-3"><i data-lucide="x" class="w-5 h-5"></i></button></div>${sec('target','Purpose',b.purpose)}${sec('database','Data model',b.data)}${sec('git-branch','Logic',b.logic)}${sec('boxes','Components',b.components)}<div class="px-6 py-4 border-t border-slate-100"><p class="text-[11px] text-slate-400 flex items-center gap-1.5"><i data-lucide="info" class="w-3.5 h-3.5"></i> Spec lives beside the feature — toggle Dev Mode off for the clean stakeholder view.</p></div></div></div>`;
     requestAnimationFrame(()=>{ const o=document.getElementById('ov-brief'); if(o)o.classList.add('open'); }); lucide.createIcons();
   }
 
