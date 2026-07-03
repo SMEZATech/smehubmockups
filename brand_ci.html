@@ -374,6 +374,59 @@
       <div class="swatch"><div class="chip" style="background:hsl(var(--background)); border-bottom:1px solid hsl(var(--border))"></div><div class="info"><div class="name">Background</div><div class="role">Page base</div><div class="vals"><span><b>HEX</b> #FCFCFC</span><span><b>HSL</b> 0 0% 99%</span></div></div></div>
     </div>
 
+    <!-- ============ COLOUR ROLES — surface vs text (dev-facing rule) ============ -->
+    <div class="subhead">Colour roles &middot; surface vs text</div>
+    <p style="font-size:13.5px; color:hsl(var(--muted-foreground)); margin:0 0 12px; line-height:1.7;">
+      Colours have <b>roles</b>, not just values. Two dark shades in the palette look almost identical but do very different jobs. Never use a surface colour for text, and never use a text colour for a surface — even when the hex values are close.
+    </p>
+
+    <div class="panel" style="background:hsl(var(--secondary)); border:1px solid hsl(var(--border)); border-radius:var(--radius); padding:22px 24px; margin:0 0 22px;">
+      <p style="font-size:10.5px; font-weight:800; text-transform:uppercase; letter-spacing:.14em; color:#DC183C; margin:0 0 12px;">The <code style="background:rgba(220,24,60,.08); padding:1px 5px; border-radius:3px; color:#DC183C;">#0C1F31</code> vs <code style="background:rgba(18,26,33,.08); padding:1px 5px; border-radius:3px;">#121A21</code> trap</p>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px; align-items:stretch;">
+        <div style="background:#0C1F31; color:#fff; padding:16px 18px; border-radius:calc(var(--radius) - 4px);">
+          <p style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.1em; color:rgba(255,255,255,.6); margin:0 0 8px;">SURFACE</p>
+          <p style="font-family:'JetBrains Mono',ui-monospace,monospace; font-size:15px; font-weight:700; margin:0 0 6px;">#0C1F31 &middot; Navy</p>
+          <p style="font-size:12.5px; line-height:1.5; color:rgba(255,255,255,.75); margin:0;">Backgrounds only &mdash; dark hero sections, dark cards, dark bands, footers.<br/><b style="color:#FF9900;">Never use for text.</b></p>
+        </div>
+        <div style="background:#fff; color:#121A21; padding:16px 18px; border-radius:calc(var(--radius) - 4px); border:1px solid hsl(var(--border));">
+          <p style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.1em; color:#6A7581; margin:0 0 8px;">TEXT</p>
+          <p style="font-family:'JetBrains Mono',ui-monospace,monospace; font-size:15px; font-weight:700; margin:0 0 6px;">#121A21 &middot; Ink</p>
+          <p style="font-size:12.5px; line-height:1.5; color:#6A7581; margin:0;">Primary typography &mdash; H1/H2, body copy, CTAs on light cards.<br/><b style="color:#DC183C;">Never use for a background.</b></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="grad-grid" style="grid-template-columns:1fr 1fr; gap:16px;">
+      <div class="grad-card">
+        <div class="info" style="padding:18px 20px;">
+          <p style="font-size:10.5px; font-weight:800; text-transform:uppercase; letter-spacing:.14em; color:#DC183C; margin:0 0 10px;">Text on light backgrounds</p>
+          <ul style="margin:0; padding-left:16px; font-size:13px; line-height:1.9; color:#121A21;">
+            <li><code style="background:#F0F5F9; padding:1px 5px; border-radius:3px;">#121A21</code> &mdash; Ink &middot; H1/H2, body, primary text, CTA labels</li>
+            <li><code style="background:#F0F5F9; padding:1px 5px; border-radius:3px;">#6A7581</code> &mdash; Muted &middot; byline, date, 'Last updated', card meta</li>
+            <li><code style="background:#F0F5F9; padding:1px 5px; border-radius:3px;">#374151</code> &mdash; Reading grey &middot; long-form article body (optional, softer than ink)</li>
+          </ul>
+        </div>
+      </div>
+      <div class="grad-card" style="background:#0C1F31;">
+        <div class="info" style="padding:18px 20px;">
+          <p style="font-size:10.5px; font-weight:800; text-transform:uppercase; letter-spacing:.14em; color:#FF9900; margin:0 0 10px;">Text on dark (navy) backgrounds</p>
+          <ul style="margin:0; padding-left:16px; font-size:13px; line-height:1.9; color:#fff;">
+            <li><code style="background:rgba(255,255,255,.1); padding:1px 5px; border-radius:3px; color:#fff;">#FFFFFF</code> &mdash; Primary text &middot; H1, body on hero</li>
+            <li><code style="background:rgba(255,255,255,.1); padding:1px 5px; border-radius:3px; color:#fff;">rgba(255,255,255,.75)</code> &mdash; Sub copy under H1</li>
+            <li><code style="background:rgba(255,255,255,.1); padding:1px 5px; border-radius:3px; color:#fff;">rgba(255,255,255,.55)</code> &mdash; Muted &middot; breadcrumb, 'Last updated', meta</li>
+            <li><code style="background:rgba(255,255,255,.1); padding:1px 5px; border-radius:3px; color:#fff;">rgba(255,255,255,.30)</code> &mdash; Very muted &middot; <span style="opacity:.55;">›</span> separators</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel" style="margin:22px 0 0; background:hsl(210 45% 96%); border:1px solid hsl(var(--border)); border-radius:var(--radius); padding:18px 22px;">
+      <p style="font-size:10.5px; font-weight:800; text-transform:uppercase; letter-spacing:.14em; color:hsl(var(--muted-foreground)); margin:0 0 8px;">The rule</p>
+      <p style="font-size:13.5px; line-height:1.7; color:hsl(var(--foreground)); margin:0;">
+        <b>The mockup is the source of truth.</b> If you're unsure which token to use, inspect the mockup element with dev tools and copy the exact value. Don't guess and don't 'round' to a similar colour. When a hex looks familiar but a shade off, it's usually the surface-vs-text mismatch above.
+      </p>
+    </div>
+
     <div class="subhead">Shades of primary (toward black)</div>
     <div class="ramp">
       <div style="background:hsl(349 80% 48%)">48</div>
