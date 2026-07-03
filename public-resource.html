@@ -44,17 +44,6 @@
   </div>
 </header>
 
-<!-- ===================== PREVIEW STATE TOGGLE (mockup helper) ===================== -->
-<div class="bg-[#0C1F31] text-white">
-  <div class="max-w-6xl mx-auto px-4 sm:px-6 py-2.5 flex items-center justify-center sm:justify-end gap-3 text-xs">
-    <span class="text-white/60 font-semibold uppercase tracking-wider">Preview as</span>
-    <div class="seg">
-      <button id="seg-out" class="on" onclick="setState('out')">Logged out</button>
-      <button id="seg-in" onclick="setState('in')">Member</button>
-    </div>
-  </div>
-</div>
-
 <main class="max-w-6xl mx-auto px-4 sm:px-6 py-8">
   <!-- Breadcrumb (global pattern) -->
   <nav aria-label="Breadcrumb" class="text-xs text-[#6A7581] flex items-center flex-wrap gap-x-1.5 mb-6"><a href="public-home.html" class="hover:text-[#DC183C] transition">Home</a><span class="text-slate-300">›</span><a href="public-resources.html" class="hover:text-[#DC183C] transition">Resources</a><span class="text-slate-300">›</span><span class="text-[#121A21] font-medium truncate">Your Guide to AI Prompting</span></nav>
@@ -81,32 +70,17 @@
         <span class="flex items-center gap-1.5"><i data-lucide="calendar" class="w-4 h-4 text-slate-400"></i> Updated 12 June 2026</span>
       </div>
 
-      <!-- ===================== GATED DOWNLOAD PANEL ===================== -->
-      <!-- Logged OUT -->
-      <div id="panel-out" class="mt-7 rounded-2xl border border-[#E7EBEF] bg-white p-6">
+      <!-- ===================== DOWNLOAD CTA — single button, opens lead-capture form ===================== -->
+      <div class="mt-7 rounded-2xl border border-[#E7EBEF] bg-white p-6">
         <div class="flex items-center gap-3">
-          <div class="w-11 h-11 rounded-xl bg-[#FDECEF] text-[#DC183C] grid place-items-center shrink-0"><i data-lucide="lock" class="w-5 h-5"></i></div>
+          <div class="w-11 h-11 rounded-xl bg-[#FDECEF] text-[#DC183C] grid place-items-center shrink-0"><i data-lucide="download" class="w-5 h-5"></i></div>
           <div>
-            <h2 class="font-jakarta font-extrabold text-lg leading-tight">Sign in or join free to download</h2>
-            <p class="text-sm text-slate-600 mt-0.5">This resource is free for SME South Africa members.</p>
+            <h2 class="font-jakarta font-extrabold text-lg leading-tight">Get your free copy</h2>
+            <p class="text-sm text-[#6A7581] mt-0.5">Enter a few details and we&rsquo;ll send it your way.</p>
           </div>
         </div>
-        <div class="flex flex-col sm:flex-row gap-3 mt-5">
-          <a href="public-auth.html#join" class="flex-1 h-12 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold transition flex items-center justify-center gap-2"><i data-lucide="download" class="w-4 h-4"></i> Download Now</a>
-          <a href="public-auth.html" class="flex-1 h-12 rounded-full border border-[#E7EBEF] hover:bg-slate-100 text-[#121A21] font-bold transition flex items-center justify-center gap-2">Sign in</a>
-        </div>
-        <p class="text-xs text-slate-500 mt-3 flex items-center gap-1.5"><i data-lucide="badge-check" class="w-3.5 h-3.5 text-[#29A37A]"></i> Free membership — no card required.</p>
-      </div>
-      <!-- Logged IN (member) -->
-      <div id="panel-in" class="hidden mt-7 rounded-2xl border border-[#29A37A]/30 bg-[#E4F5EE] p-6">
-        <div class="flex items-center gap-3">
-          <div class="w-11 h-11 rounded-xl bg-[#29A37A] text-white grid place-items-center shrink-0"><i data-lucide="check" class="w-5 h-5"></i></div>
-          <div>
-            <h2 class="font-jakarta font-extrabold text-lg leading-tight">You have access</h2>
-            <p class="text-sm text-[#1f7a5b] mt-0.5">Your free membership unlocks this download.</p>
-          </div>
-        </div>
-        <button onclick="showToast('Your download will start shortly.')" class="mt-5 w-full h-12 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold transition flex items-center justify-center gap-2"><i data-lucide="download" class="w-4 h-4"></i> Download Now</button>
+        <button type="button" onclick="openLeadForm()" class="mt-5 w-full h-12 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold transition flex items-center justify-center gap-2"><i data-lucide="download" class="w-4 h-4"></i> Download Resource</button>
+        <p class="text-xs text-[#6A7581] mt-3 flex items-center gap-1.5"><i data-lucide="badge-check" class="w-3.5 h-3.5 text-[#29A37A]"></i> No account required.</p>
       </div>
     </div>
   </div>
@@ -141,32 +115,75 @@
   </div>
 </footer>
 
+<!-- ===================== LEAD FORM MODAL ===================== -->
+<div id="leadForm" class="hidden fixed inset-0 z-[70] items-center justify-center p-4" style="display:none">
+  <div class="absolute inset-0 bg-[#0C1F31]/60 backdrop-blur-sm" onclick="closeLeadForm()"></div>
+  <div class="relative bg-white rounded-2xl w-full max-w-md p-6 sm:p-7 shadow-2xl max-h-[92vh] overflow-y-auto">
+    <div class="flex items-start justify-between gap-4 mb-5">
+      <div>
+        <div class="flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-[#DC183C]"><i data-lucide="download" class="w-3.5 h-3.5"></i> Download resource</div>
+        <h3 class="font-jakarta font-extrabold text-xl mt-1.5 text-[#121A21] leading-tight" id="leadTitle">Your Guide to AI Prompting</h3>
+        <p class="text-sm text-[#6A7581] mt-1">A few details and we&rsquo;ll send it your way.</p>
+      </div>
+      <button onclick="closeLeadForm()" class="text-[#6A7581] hover:text-[#121A21] shrink-0" aria-label="Close"><i data-lucide="x" class="w-5 h-5"></i></button>
+    </div>
+    <form onsubmit="submitLead(event)" class="space-y-3.5">
+      <div class="grid sm:grid-cols-2 gap-3">
+        <div><label class="block text-[11px] font-bold uppercase tracking-wider text-[#6A7581] mb-1">First name</label><input required class="w-full h-11 px-3 rounded-lg border border-[#E7EBEF] focus:border-[#DC183C] focus:ring-2 focus:ring-[#DC183C]/15 outline-none text-sm" placeholder="Thabo" /></div>
+        <div><label class="block text-[11px] font-bold uppercase tracking-wider text-[#6A7581] mb-1">Last name</label><input required class="w-full h-11 px-3 rounded-lg border border-[#E7EBEF] focus:border-[#DC183C] focus:ring-2 focus:ring-[#DC183C]/15 outline-none text-sm" placeholder="Mokoena" /></div>
+      </div>
+      <div><label class="block text-[11px] font-bold uppercase tracking-wider text-[#6A7581] mb-1">Email</label><input type="email" required class="w-full h-11 px-3 rounded-lg border border-[#E7EBEF] focus:border-[#DC183C] focus:ring-2 focus:ring-[#DC183C]/15 outline-none text-sm" placeholder="you@business.co.za" /></div>
+      <div><label class="block text-[11px] font-bold uppercase tracking-wider text-[#6A7581] mb-1">Phone <span class="text-slate-400 font-normal normal-case">(optional)</span></label>
+        <div class="flex">
+          <span class="inline-flex items-center px-2.5 h-11 rounded-l-lg border border-r-0 border-[#E7EBEF] bg-white text-xs font-semibold text-[#121A21]">+27</span>
+          <input type="tel" class="w-full h-11 px-3 rounded-r-lg border border-[#E7EBEF] focus:border-[#DC183C] focus:ring-2 focus:ring-[#DC183C]/15 outline-none text-sm" placeholder="82 123 4567" />
+        </div>
+      </div>
+      <div><label class="block text-[11px] font-bold uppercase tracking-wider text-[#6A7581] mb-1">Company</label><input class="w-full h-11 px-3 rounded-lg border border-[#E7EBEF] focus:border-[#DC183C] focus:ring-2 focus:ring-[#DC183C]/15 outline-none text-sm" placeholder="Your business" /></div>
+      <label class="flex items-start gap-2 text-xs text-[#6A7581] pt-1"><input type="checkbox" class="mt-0.5 w-4 h-4 accent-[#DC183C]" /><span>Send me practical business tips and new resources from SME South Africa. I can unsubscribe anytime.</span></label>
+      <button class="w-full h-12 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold text-sm transition flex items-center justify-center gap-2 mt-1"><i data-lucide="download" class="w-4 h-4"></i> Send me the download</button>
+      <p class="text-[11px] text-[#6A7581] text-center">By submitting, you agree to our <a href="public-privacy.html" class="text-[#DC183C] font-semibold hover:underline">Privacy Policy</a>.</p>
+    </form>
+  </div>
+</div>
+
 <div id="overlay-root"></div><div id="toast" class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-50"></div>
 <script>
   function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
   function showToast(m){const el=document.getElementById('toast');el.classList.remove('hidden');el.innerHTML=`<div class="bg-[#0C1F31] text-white rounded-full pl-3 pr-5 py-2.5 shadow-2xl flex items-center gap-2 text-sm font-semibold" style="border-left:4px solid #29A37A"><i data-lucide="check-circle" class="w-4 h-4" style="color:#29A37A"></i><span>${esc(m)}</span></div>`;lucide.createIcons();setTimeout(()=>{el.classList.add('hidden');el.innerHTML='';},2400);}
 
-  // Preview state: 'out' (default) | 'in'
-  function setState(s){
-    const out = s==='out';
-    document.getElementById('panel-out').classList.toggle('hidden', !out);
-    document.getElementById('panel-in').classList.toggle('hidden', out);
-    document.getElementById('seg-out').classList.toggle('on', out);
-    document.getElementById('seg-in').classList.toggle('on', !out);
+  // Lead form open/close + submit
+  function openLeadForm(){
+    const m = document.getElementById('leadForm');
+    m.style.display = 'flex';
+    m.classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+    setTimeout(()=>{ const f=m.querySelector('input'); if(f) f.focus(); }, 60);
     lucide.createIcons();
+  }
+  function closeLeadForm(){
+    const m = document.getElementById('leadForm');
+    m.style.display = 'none';
+    m.classList.add('hidden');
+    document.body.style.overflow = '';
+  }
+  function submitLead(e){
+    e.preventDefault();
+    closeLeadForm();
+    showToast('Thanks — check your inbox, the download is on its way.');
+    e.target.reset();
   }
 
   const BRIEFS = { resource: {
-    title:'Resource Detail', sub:'Single resource — gated download',
-    purpose:'The conversion point of the resource funnel. Works for both logged-out visitors (prompt to join free) and members (instant download). Free membership is the gate.',
-    data:'Resource: <code>{ id, title, type, excerpt, body, cover, file_url, format, gated, related[] }</code>. User session resolves the access state.',
-    logic:'MemberPress checks membership on render. Logged-out → join/sign-in CTAs. Member → signed, time-limited download URL. The PDF is served from a CDN (not WP Engine) to protect origin CPU. CTA label is consistently "Download Now" across all states and resource types.',
-    components:'Breadcrumb · cover + details hero · gated panel (2 states) · What’s inside · related grid.',
-    api:'GET /v1/resources/{id} · POST /v1/resources/{id}/download → 302 CDN URL'
+    title:'Resource Detail', sub:'Single resource — open download via short lead-capture form',
+    purpose:'The conversion point of the resource funnel. Open to everyone — visitors, standard members, premium members. One CTA, one flow. Lead form captures the details we&rsquo;d otherwise get via signup; the resource is then delivered by email.',
+    data:'Resource: <code>{ id, title, type, excerpt, body, cover, file_url, format, related[] }</code>. Lead: <code>{ first_name, last_name, email, phone, company, resource_id, opt_in }</code>.',
+    logic:'<b>No membership gate</b> — anyone can click Download Resource. Modal opens the short lead form (first/last name, email, phone optional, company, marketing opt-in). On submit → POST to CRM/newsletter (Kit or equivalent) → resource file emailed via templated confirmation. The user sees a toast confirmation on the page. Matches the live-site behaviour on <code>/sme-resource/…</code>. CTA label is consistently "Download Resource" across all resource types.',
+    components:'Breadcrumb · cover + details hero · single Download Resource CTA card · lead-form modal · What&rsquo;s inside · related grid.'
   } };
   function toggleDevMode(){const on=document.body.classList.toggle('dev-on');const b=document.getElementById('devToggle');if(b)b.classList.toggle('on',on);if(on)showToast('Dev Mode on — tap any ⓘ for implementation notes.');lucide.createIcons();}
   function closeOverlay(id){const el=document.getElementById(id);if(!el)return;el.classList.remove('open');setTimeout(()=>{if(el&&el.parentNode)el.remove();},300);}
-  function openBrief(id){const b=BRIEFS[id];if(!b)return;const sec=(i,l,h)=>`<div class="px-6 py-4 border-t border-slate-100"><p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] flex items-center gap-1.5 mb-2"><i data-lucide="${i}" class="w-3.5 h-3.5"></i>${l}</p><div class="text-sm text-slate-600 leading-relaxed">${h}</div></div>`;document.getElementById('overlay-root').innerHTML=`<div class="ov" id="ov"><div class="ov-bg" onclick="closeOverlay('ov')"></div><div class="drawer"><div class="sticky top-0 z-10 bg-[#0C1F31] text-white px-6 py-5 flex items-start justify-between"><div><p class="text-[10px] font-bold uppercase tracking-widest text-[#FF9900] mb-1">Dev Brief</p><h3 class="font-jakarta font-extrabold text-lg leading-tight">${b.title}</h3><p class="text-xs text-white/60 mt-1">${b.sub}</p></div><button onclick="closeOverlay('ov')" class="text-white/60 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button></div>${sec('target','Purpose',b.purpose)}${sec('database','Data model',b.data)}${sec('git-branch','Logic',b.logic)}${sec('boxes','Components',b.components)}${sec('plug','API',`<code class="block bg-slate-900 text-emerald-300 text-xs font-mono px-3 py-2 rounded-lg overflow-x-auto">${b.api}</code>`)}</div></div>`;requestAnimationFrame(()=>{const o=document.getElementById('ov');if(o)o.classList.add('open');});lucide.createIcons();}
+  function openBrief(id){const b=BRIEFS[id];if(!b)return;const sec=(i,l,h)=>`<div class="px-6 py-4 border-t border-slate-100"><p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] flex items-center gap-1.5 mb-2"><i data-lucide="${i}" class="w-3.5 h-3.5"></i>${l}</p><div class="text-sm text-slate-600 leading-relaxed">${h}</div></div>`;document.getElementById('overlay-root').innerHTML=`<div class="ov" id="ov"><div class="ov-bg" onclick="closeOverlay('ov')"></div><div class="drawer"><div class="sticky top-0 z-10 bg-[#0C1F31] text-white px-6 py-5 flex items-start justify-between"><div><p class="text-[10px] font-bold uppercase tracking-widest text-[#FF9900] mb-1">Dev Brief</p><h3 class="font-jakarta font-extrabold text-lg leading-tight">${b.title}</h3><p class="text-xs text-white/60 mt-1">${b.sub}</p></div><button onclick="closeOverlay('ov')" class="text-white/60 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button></div>${sec('target','Purpose',b.purpose)}${sec('database','Data model',b.data)}${sec('git-branch','Logic',b.logic)}${sec('boxes','Components',b.components)}</div></div>`;requestAnimationFrame(()=>{const o=document.getElementById('ov');if(o)o.classList.add('open');});lucide.createIcons();}
 
   // Canonical resource card — IDENTICAL across public-resources, public-resource-category, public-resource.
   // Guide-type resources adopt the public-guides.html card shape (read time + Read Guide row).
@@ -207,7 +224,7 @@
   const RELATED = RELATED_POOL.filter(r=>r.type===CURRENT_TYPE).slice(0,4);
   document.getElementById('related-grid').innerHTML = RELATED.map(resourceCard).join('');
 
-  setState('out'); lucide.createIcons();
+  lucide.createIcons();
 </script>
 </body>
 </html>
