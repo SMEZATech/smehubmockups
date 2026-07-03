@@ -167,6 +167,13 @@ window.SHARED_NOTES = {
   },
 
   "brand_ci.html": {
+    "article-card-reading-order": {
+      "label": "Variant A · Article card reading order",
+      "author": "Tshepho",
+      "ts": "2026-07-04",
+      "pending": true,
+      "text": "**Article preview cards: title always comes first under the image.**\n\nCorrect order:\n1. Image (with category overlay top-left)\n2. **Title** (Plus Jakarta Sans, weight 800)\n3. Excerpt (14px muted, 2-line clamp)\n4. Divider (1px `#E7EBEF`)\n5. Byline row: 30px gradient avatar + author name (13px Jakarta bold, ink) with `date · X min read` (12px muted) directly under the name\n\n**Never** put date/read-time as its own row above the title. This matches the editorial standard used by Medium, Substack, The Guardian and every major SA publication — the title is what readers scan first, meta info sits with the author at the bottom.\n\nApplied consistently across:\n- public-articles.html grid cards\n- public-category.html grid cards\n- public-home.html Founder Focus cards\n- public-funding-category.html article cards\n- public-article.html related articles\n\nBrand CI Variant A has been corrected to match."
+    },
     "colours": {
       "label": "Colour usage · read this first",
       "author": "Tshepho",
