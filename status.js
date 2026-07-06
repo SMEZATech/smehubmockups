@@ -57,13 +57,13 @@ window.MOCKUP_STATUS = {
   "public-search.html": "under-review",
   "public-404.html": "under-review"
 };
-window.MOCKUP_STATUS_PUBLISHED = "2026-07-03T15:02:11.112Z";
+window.MOCKUP_STATUS_PUBLISHED = "2026-07-06T08:59:13.466Z";
 /* Developer builds (staging) — { mockup file: { url, status } }; status: "pending-review" | "reviewed" | "approved" */
 window.MOCKUP_DEV = {
   "public-home.html": {"url":"https://smesastg.wpengine.com/","status":"reviewed"},
   "public-articles.html": {"url":"https://smesastg.wpengine.com/sme-articles/","status":"reviewed"},
-  "public-article-categories.html": {"url":"https://smesastg.wpengine.com/starting-a-business/agriculture-and-farming/","status":"pending-review"},
-  "public-category.html": {"url":"https://smesastg.wpengine.com/article-categories/","status":"pending-review"},
+  "public-article-categories.html": {"url":"https://smesastg.wpengine.com/article-categories/","status":"reviewed"},
+  "public-category.html": {"url":"https://smesastg.wpengine.com/starting-a-business","status":"reviewed"},
   "public-subcategory.html": {"url":"https://smesastg.wpengine.com/starting-a-business/agriculture-and-farming/","status":"pending-review"},
   "public-article.html": {"url":"https://smesastg.wpengine.com/how-to-find-your-brands-tone-of-voice/","status":"pending-review"},
   "public-sustainability.html": {"url":"https://smesastg.wpengine.com/sustainability-solutions/","status":"pending-review"},
