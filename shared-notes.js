@@ -65,6 +65,15 @@ window.SHARED_NOTES = {
     }
   },
 
+  "public-article-categories.html": {
+    "section-2-icons": {
+      "label": "Section 2 - Icons",
+      "author": "Tshepho",
+      "ts": "2026-07-06",
+      "text": "- Update your heading to H1 (Browse by Category) is currently set to H2\n- Please update the rendered size size on the icon: the outlin size should be 48x48px and the icon size should be24x24px as per the mockup. Currently it is 26x26px and your outline size is 52x52px\n- The font size for the Top Category names should be 20px\n- Please pull ALL categories there except the newsletter, i have updated the mockup to show the same."
+    }
+  },
+
   "public-article.html": {
     "hero": {
       "label": "First section (article header)",
@@ -108,14 +117,32 @@ window.SHARED_NOTES = {
       "author": "Tshepho",
       "ts": "2026-07-03",
       "pending": true,
-      "text": "**Featured card overlaps upward into this hero — please match the overlap exactly.**\n\nSpec:\n- Container: max-width 1280px, LEFT-aligned content (not centered).\n- Padding: **48px top / 112px bottom** (pt-12 pb-28). The extra bottom space is intentional — it makes room for the featured card that overlaps upward with `margin-top: -64px`.\n\nTypography:\n- H1: **36px mobile / 48px desktop**, Plus Jakarta Sans weight 800, colour `#FFFFFF`, tracking-tight.\n- Sub: 18px, `rgba(255,255,255,0.70)`, max-width ~672px.\n- Breadcrumb: 12px, `rgba(255,255,255,0.55)`.\n- 'Browse all categories' link: 14px, weight 700, white, with layout-grid icon.\n\n**Do not shorten the bottom padding of the hero — the featured card needs room to sit half-in / half-out of the hero band.**"
+      "text": "**Featured card overlaps upward into this hero â please match the overlap exactly.**\n\nSpec:\n- Container: max-width 1280px, LEFT-aligned content (not centered).\n- Padding: **48px top / 112px bottom** (pt-12 pb-28). The extra bottom space is intentional â it makes room for the featured card that overlaps upward with `margin-top: -64px`.\n\nTypography:\n- H1: **36px mobile / 48px desktop**, Plus Jakarta Sans weight 800, colour `#FFFFFF`, tracking-tight.\n- Sub: 18px, `rgba(255,255,255,0.70)`, max-width ~672px.\n- Breadcrumb: 12px, `rgba(255,255,255,0.55)`.\n- 'Browse all categories' link: 14px, weight 700, white, with layout-grid icon.\n\n**Do not shorten the bottom padding of the hero â the featured card needs room to sit half-in / half-out of the hero band.**"
     },
     "featured-card": {
       "label": "Featured card (overlaps hero)",
       "author": "Tshepho",
       "ts": "2026-07-03",
       "pending": true,
-      "text": "Card: `bg #FFFFFF`, border `#E7EBEF`, border-radius **1.5rem (24px)**, shadow-xl, margin-top **-64px** (this is what makes it overlap the hero above).\n\nLayout: 2-column grid on md+, 1 column mobile. Left column is image, right is content.\n\nImage: aspect 16/11, object-cover. FEATURED pill top-left: 11px uppercase, `bg #FF9900`, colour `#0C1F31` (navy on orange), rounded-full.\n\nContent right:\n- Category pill: 11px uppercase, `bg #FDECEF`, colour `#DC183C`.\n- Title: 24px mobile / 32px desktop, Plus Jakarta Sans weight 800, colour `#121A21` (ink), line-height 1.15.\n- Excerpt: 16px, colour `#6A7581`.\n- Byline avatar: 40 × 40 gradient. Name 14px weight 700 ink. Date · read time 14px muted."
+      "text": "Card: `bg #FFFFFF`, border `#E7EBEF`, border-radius **1.5rem (24px)**, shadow-xl, margin-top **-64px** (this is what makes it overlap the hero above).\n\nLayout: 2-column grid on md+, 1 column mobile. Left column is image, right is content.\n\nImage: aspect 16/11, object-cover. FEATURED pill top-left: 11px uppercase, `bg #FF9900`, colour `#0C1F31` (navy on orange), rounded-full.\n\nContent right:\n- Category pill: 11px uppercase, `bg #FDECEF`, colour `#DC183C`.\n- Title: 24px mobile / 32px desktop, Plus Jakarta Sans weight 800, colour `#121A21` (ink), line-height 1.15.\n- Excerpt: 16px, colour `#6A7581`.\n- Byline avatar: 40 Ã 40 gradient. Name 14px weight 700 ink. Date Â· read time 14px muted."
+    },
+    "breadcrumbs": {
+      "label": "First Section",
+      "author": "Tshepho",
+      "ts": "2026-07-06",
+      "text": "- The breadcrumbs text size should be 12px as per the mockup. Currently is set to 13px.\n- Please keep the icon by browse by category 16x16 as per the mockup"
+    },
+    "second-section-featured-article": {
+      "label": "Second Section - Featured Article",
+      "author": "Tshepho",
+      "ts": "2026-07-06",
+      "text": "- Update the Article featured image to 614x404px as per the mockup\n- Update the Article Title to 32px as per the Mockup\n- The tag name size should be 11px as per the mockup"
+    },
+    "third-section-subcategories": {
+      "label": "Third Section - Subcategories",
+      "author": "Tshepho",
+      "ts": "2026-07-06",
+      "text": "- Please update your row design to show 4 articles per the mockup\n- Update the subcategory names heading size to 30px as per the mockup\n- The See all CTA size should be 14px as per the mockup\n-"
     }
   },
 
