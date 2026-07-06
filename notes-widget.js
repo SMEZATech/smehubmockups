@@ -58,6 +58,9 @@
       #sme-notes-fab:hover{transform:translateY(-1px);box-shadow:0 12px 30px -6px rgba(220,24,60,.65)}
       #sme-notes-fab .dot{width:8px;height:8px;border-radius:50%;background:#fff;box-shadow:0 0 0 3px rgba(255,255,255,.25)}
       #sme-notes-fab .count{background:rgba(255,255,255,.22);color:#fff;font-size:11px;padding:2px 7px;border-radius:999px;min-width:18px;text-align:center}
+      #sme-suggest-fab{position:fixed;right:18px;bottom:70px;z-index:2147483600;display:inline-flex;align-items:center;gap:8px;padding:10px 16px;border:0;border-radius:999px;background:#3B82F6;color:#fff;font:700 12px/1 'Plus Jakarta Sans',system-ui,sans-serif;letter-spacing:.06em;text-transform:uppercase;box-shadow:0 8px 24px -6px rgba(59,130,246,.55),0 2px 6px rgba(0,0,0,.15);cursor:pointer;transition:transform .15s ease,box-shadow .15s ease}
+      #sme-suggest-fab:hover{transform:translateY(-1px);box-shadow:0 12px 30px -6px rgba(59,130,246,.65)}
+      #sme-suggest-fab svg{width:14px;height:14px;stroke:currentColor;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round}
       #sme-notes-panel{position:fixed;top:0;right:0;height:100vh;width:min(440px,100vw);z-index:2147483601;background:#fff;color:#121A21;box-shadow:-12px 0 40px rgba(12,31,49,.25);transform:translateX(105%);transition:transform .25s cubic-bezier(.2,.7,.2,1);display:flex;flex-direction:column;font:14px/1.5 Inter,system-ui,sans-serif}
       #sme-notes-panel.open{transform:translateX(0)}
       #sme-notes-backdrop{position:fixed;inset:0;z-index:2147483599;background:rgba(12,31,49,.45);opacity:0;pointer-events:none;transition:opacity .2s ease}
@@ -95,7 +98,7 @@
       .smn-f button.primary:hover{background:#16314a}
       .smn-f button.danger{color:#DC183C;border-color:#FDECEF}
       .smn-f button.danger:hover{background:#FDECEF}
-      @media (max-width:600px){#sme-notes-fab{right:12px;bottom:12px;padding:9px 13px;font-size:11px}}
+      @media (max-width:600px){#sme-notes-fab{right:12px;bottom:12px;padding:9px 13px;font-size:11px}#sme-suggest-fab{right:12px;bottom:60px;padding:9px 13px;font-size:11px}}
     `;
     var st = document.createElement('style');
     st.id = 'sme-notes-style';
@@ -246,6 +249,17 @@
     fab.innerHTML = '<span class="dot"></span>Review<span class="count" style="display:none">0</span>';
     fab.addEventListener('click', openPanel);
     document.body.appendChild(fab);
+
+    // Suggest button — only shown when SmeSuggest is available.
+    // Sits stacked above the Review button so it's discoverable without competing.
+    if(window.SmeSuggest){
+      var sug = document.createElement('button');
+      sug.id = 'sme-suggest-fab';
+      sug.title = 'Suggest a change on this mockup — becomes a GitHub Issue for Tshepho to review';
+      sug.innerHTML = '<svg viewBox="0 0 24 24"><circle cx="18" cy="18" r="3"/><circle cx="6" cy="6" r="3"/><path d="M6 21V9a9 9 0 0 0 9 9"/></svg>Suggest';
+      sug.addEventListener('click', function(){ window.SmeSuggest.open(FILE); });
+      document.body.appendChild(sug);
+    }
 
     var bd = document.createElement('div');
     bd.id = 'sme-notes-backdrop';

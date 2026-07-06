@@ -13,6 +13,7 @@
   <script src="status.js"></script>
   <script src="shared-notes.js"></script>
   <script src="feedback.js"></script>
+  <script src="suggestions.js"></script>
   <script>
     tailwind.config = { theme: { extend: { fontFamily: {
       jakarta: ['Plus Jakarta Sans', 'sans-serif'], inter: ['Inter', 'system-ui', 'sans-serif'], mono:['monospace']
@@ -99,6 +100,7 @@
           <button onclick="setVP('mobile')" id="vp-mobile" class="vp-btn px-3 h-8 rounded-full text-xs font-bold flex items-center gap-1.5" title="Mobile"><i data-lucide="smartphone" class="w-4 h-4"></i></button>
         </div>
         <div id="devBar" class="hidden items-center gap-2"></div>
+        <button onclick="openSuggestForCurrent()" class="hidden sm:inline-flex items-center gap-1.5 px-3 h-9 rounded-full bg-[#3B82F6]/10 hover:bg-[#3B82F6]/20 text-[#3B82F6] text-xs font-bold transition" title="Suggest a change on this mockup — becomes a GitHub Issue for Tshepho to review"><i data-lucide="git-pull-request" class="w-4 h-4"></i><span>Suggest</span></button>
         <button onclick="openCurrentNotes()" class="hidden sm:inline-flex items-center gap-1.5 px-3 h-9 rounded-full bg-slate-100 hover:bg-slate-200 text-[#121A21] text-xs font-bold transition" title="Add review notes for this mockup"><i data-lucide="message-square-text" class="w-4 h-4"></i><span id="topNotesLbl">Notes</span></button>
         <button onclick="reloadFrame()" class="w-9 h-9 grid place-items-center rounded-full hover:bg-slate-100 text-slate-600" title="Reload"><i data-lucide="rotate-cw" class="w-4 h-4"></i></button>
         <a id="openTab" href="public-home.html" target="_blank" class="inline-flex items-center gap-1.5 px-3.5 h-9 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white text-sm font-bold transition"><i data-lucide="external-link" class="w-4 h-4"></i><span class="hidden sm:inline">Open standalone</span></a>
@@ -296,6 +298,13 @@
   window.addEventListener('sme-feedback-changed', refreshPills);
   window.addEventListener('message', (e)=>{ if(e.data && e.data.type==='sme-feedback-changed'){ refreshPills(); if(_npFile===e.data.file && document.getElementById('notesPanel').classList.contains('open')) renderNotesPanel(); } });
 
+  // Open the Suggest modal for the currently-loaded mockup
+  function openSuggestForCurrent(){
+    if(!window.SmeSuggest) return;
+    const f = (location.hash||'').replace('#','') || (document.querySelector('.nav-item.active') && (document.querySelector('.nav-item.active').dataset.file || document.querySelector('.nav-item.active').dataset.devfile)) || 'public-home.html';
+    window.SmeSuggest.open(f);
+  }
+
   // Open the panel for the currently-loaded mockup
   function openCurrentNotes(){
     const f = (location.hash||'').replace('#','') || (document.querySelector('.nav-item.active') && (document.querySelector('.nav-item.active').dataset.file || document.querySelector('.nav-item.active').dataset.devfile));
@@ -311,9 +320,14 @@
         const doc = frame.contentDocument;
         if(!doc) return;
         if(doc.getElementById('sme-notes-widget')) return; // already injected
+        // Load suggestions.js first so notes-widget can wire the Suggest button
+        const sug = doc.createElement('script');
+        sug.src = 'suggestions.js';
+        sug.async = false;
+        doc.body.appendChild(sug);
         const s = doc.createElement('script');
         s.src = 'notes-widget.js';
-        s.async = true;
+        s.async = false;
         doc.body.appendChild(s);
       } catch(_){ /* cross-origin (dev URLs) — skip; widget only works on local mockups */ }
     });
