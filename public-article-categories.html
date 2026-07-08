@@ -96,8 +96,8 @@
   // SIGNATURE SERIES — Tshepho's four flagship editorial features. No subcategories.
   const SERIES_CATEGORIES=[
     {icon:'briefcase-business', tint:'bg-[#FDECEF] text-[#DC183C]', name:'Business Opportunities', desc:'Live deals, grants, tenders and partnership openings for South African SMEs.'},
-    {icon:'user-round',         tint:'bg-[#FFF1E0] text-[#AE6B0A]', name:'Founder Focus',          desc:'Founder profiles, lived lessons and the moves that moved the needle.'},
-    {icon:'presentation',       tint:'bg-[#E4F5EE] text-[#29A37A]', name:'Funding Summit',         desc:'Event coverage, speaker takeaways and funding insights from the summit series.'},
+    {icon:'user-round',         tint:'bg-[#FFF1E0] text-[#AE6B0A]', name:'Founder Focus',          desc:'Founder profiles, lived lessons and the moves that moved the needle.', href:'public-founder-focus-category.html'},
+    {icon:'presentation',       tint:'bg-[#E4F5EE] text-[#29A37A]', name:'Funding Summit',         desc:'Event coverage, speaker takeaways and funding insights from the summit series.', href:'public-funding-summit-category.html'},
     {icon:'megaphone',          tint:'bg-[#F0F2F5] text-[#0C1F31]', name:'Brand Voice',            desc:'Editorial, brand-building playbooks and marketing perspectives from SA operators.'}
   ];
 
@@ -116,11 +116,12 @@
 
   // Card without subcategories (signature editorial series)
   function seriesCard(c){
+    const href = c.href || 'public-category.html';
     return `<div class="bg-white rounded-2xl border border-[#E7EBEF] p-6 card-lift flex flex-col">
       <div class="w-12 h-12 rounded-xl ${c.tint} grid place-items-center mb-4"><i data-lucide="${c.icon}" class="w-6 h-6"></i></div>
-      <a href="public-category.html" class="font-jakarta font-extrabold text-xl hover:text-[#DC183C] transition">${esc(c.name)}</a>
+      <a href="${href}" class="font-jakarta font-extrabold text-xl hover:text-[#DC183C] transition">${esc(c.name)}</a>
       <p class="text-sm text-[#6A7581] mt-1.5 leading-relaxed flex-1">${esc(c.desc)}</p>
-      <a href="public-category.html" class="inline-flex items-center gap-1 text-sm font-bold text-[#DC183C] mt-5 pt-4 border-t border-[#E7EBEF] hover:gap-2 transition-all">View all <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
+      <a href="${href}" class="inline-flex items-center gap-1 text-sm font-bold text-[#DC183C] mt-5 pt-4 border-t border-[#E7EBEF] hover:gap-2 transition-all">View all <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
     </div>`;
   }
 

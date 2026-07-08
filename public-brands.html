@@ -83,6 +83,7 @@
       <span class="text-xs text-slate-500 flex items-center gap-1.5"><i data-lucide="sparkles" class="w-3.5 h-3.5"></i> Curated &amp; verified</span>
     </div>
     <div id="brand-grid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5"></div>
+    <nav id="brand-pagination" class="mt-10 flex items-center justify-center gap-2 hidden" aria-label="Pagination"></nav>
     <div id="empty-state" class="hidden text-center py-16">
       <div class="w-14 h-14 rounded-2xl bg-[#FDECEF] text-[#DC183C] grid place-items-center mx-auto mb-4"><i data-lucide="search-x" class="w-7 h-7"></i></div>
       <p class="font-jakarta font-bold text-lg">No brands match your search</p>
@@ -172,13 +173,14 @@
     { name:'Standard Business Credit Card', cat:'Banking & Cards', rating:4.2, desc:'Standard Bank business credit card with budget facilities and rewards.', site:'standardbank.co.za' }
   ];
 
-  let activeCat='All', query='';
+  let activeCat='All', query='', currentPage=1;
+  const PER_PAGE = 12;
 
   function renderChips(){
     document.getElementById('chipRow').innerHTML = CATEGORIES.map(c=>`<button class="chip ${c===activeCat?'active':''}" data-cat="${esc(c)}" onclick="setCat('${esc(c)}')">${esc(c)}</button>`).join('');
   }
-  function setCat(c){ activeCat=c; renderChips(); applyFilters(); }
-  function resetFilters(){ activeCat='All'; query=''; document.getElementById('searchInput').value=''; renderChips(); applyFilters(); }
+  function setCat(c){ activeCat=c; currentPage=1; renderChips(); applyFilters(); }
+  function resetFilters(){ activeCat='All'; query=''; currentPage=1; document.getElementById('searchInput').value=''; renderChips(); applyFilters(); }
 
   const COMPARE_CATS=['Funding & Investment','Banking & Cards'];
   function logoTile(b,i){ const initials=b.name.split(/\s|&|\.|-/).filter(Boolean).slice(0,2).map(w=>w[0]).join('').toUpperCase(); const c=PAL[i%PAL.length];
@@ -199,7 +201,8 @@
       </div>
     </div>`; }
 
-  function applyFilters(){
+  function applyFilters(resetPage){
+    if(resetPage) currentPage = 1;
     query=(document.getElementById('searchInput').value||'').trim().toLowerCase();
     const list=BRANDS.filter(b=>{
       const matchCat = activeCat==='All' || b.cat===activeCat;
@@ -207,10 +210,45 @@
       return matchCat && matchQ;
     });
     document.getElementById('grid-count').textContent = '· '+list.length+(list.length===1?' brand':' brands');
-    const grid=document.getElementById('brand-grid'), empty=document.getElementById('empty-state');
-    if(list.length===0){ grid.innerHTML=''; grid.classList.add('hidden'); empty.classList.remove('hidden'); }
-    else { grid.classList.remove('hidden'); empty.classList.add('hidden'); grid.innerHTML=list.map((b,i)=>cardHTML(b,i)).join(''); }
+    const grid=document.getElementById('brand-grid'), empty=document.getElementById('empty-state'), pag=document.getElementById('brand-pagination');
+    if(list.length===0){
+      grid.innerHTML=''; grid.classList.add('hidden'); empty.classList.remove('hidden'); pag.classList.add('hidden');
+    } else {
+      // Clamp currentPage to the valid range for the current filter
+      const totalPages = Math.max(1, Math.ceil(list.length / PER_PAGE));
+      if(currentPage > totalPages) currentPage = totalPages;
+      const start = (currentPage-1) * PER_PAGE;
+      const slice = list.slice(start, start + PER_PAGE);
+      grid.classList.remove('hidden'); empty.classList.add('hidden');
+      grid.innerHTML = slice.map((b,i)=>cardHTML(b, start+i)).join('');
+      renderPagination(totalPages);
+    }
     lucide.createIcons();
+  }
+  function renderPagination(totalPages){
+    const pag = document.getElementById('brand-pagination');
+    if(totalPages <= 1){ pag.classList.add('hidden'); pag.innerHTML=''; return; }
+    pag.classList.remove('hidden');
+    const btn = (label, page, opts) => {
+      opts = opts||{};
+      const active   = opts.active   ? 'bg-[#DC183C] text-white border-[#DC183C]' : 'bg-white text-[#121A21] border-[#E7EBEF] hover:border-[#0C1F31]';
+      const disabled = opts.disabled ? 'opacity-40 pointer-events-none' : '';
+      return `<button data-p="${page}" class="page-btn w-10 h-10 rounded-full border font-jakarta font-bold text-sm transition ${active} ${disabled}" aria-label="${esc(opts.aria||('Page '+page))}">${label}</button>`;
+    };
+    let html = btn('&lsaquo;', currentPage-1, { disabled: currentPage===1, aria:'Previous page' });
+    for(let i=1; i<=totalPages; i++){ html += btn(String(i), i, { active: i===currentPage }); }
+    html += btn('&rsaquo;', currentPage+1, { disabled: currentPage===totalPages, aria:'Next page' });
+    pag.innerHTML = html;
+    pag.querySelectorAll('.page-btn').forEach(b=>{
+      b.addEventListener('click', ()=>{
+        const p = +b.getAttribute('data-p');
+        if(p>=1 && p<=totalPages){
+          currentPage = p;
+          applyFilters();
+          window.scrollTo({ top: document.getElementById('brand-grid').offsetTop - 100, behavior:'smooth' });
+        }
+      });
+    });
   }
 
   // ---- Dev brief ----
