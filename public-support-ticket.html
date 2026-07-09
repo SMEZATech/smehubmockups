@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Support Tickets — SME South Africa</title>
+  <meta name="description" content="Open a support ticket and track your open and closed requests with the SME South Africa support team." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script><script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  <script>tailwind.config={theme:{extend:{fontFamily:{jakarta:['Plus Jakarta Sans','sans-serif'],inter:['Inter','system-ui','sans-serif']}}}};</script>
+  <style>
+    html,body{font-family:'Inter',system-ui,sans-serif;} .font-jakarta{font-family:'Plus Jakarta Sans',sans-serif;letter-spacing:.005em;}
+    .hero-soft{background:linear-gradient(180deg,#F4F1FB 0%,#FCFCFC 100%);}
+    .field{width:100%;background:#fff;border:1px solid #E7EBEF;border-radius:.75rem;height:3rem;padding:0 1rem;font-size:.9rem;outline:none;transition:border-color .15s,box-shadow .15s;} .field:focus{border-color:#DC183C;box-shadow:0 0 0 3px rgba(220,24,60,.12);}
+    .tk-tab{font-size:.85rem;font-weight:700;padding:.4rem .9rem;border-radius:.6rem;color:#6A7581;transition:all .15s;} .tk-tab.active{background:#fff;color:#121A21;box-shadow:0 1px 2px rgba(12,31,49,.08);}
+    .dev-badge{display:none;} body.dev-on .dev-badge{display:inline-flex;} #devToggle.on{background:#DC183C;color:#fff;border-color:#DC183C;}
+    .ov{position:fixed;inset:0;z-index:60;} .ov-bg{position:absolute;inset:0;background:rgba(12,31,49,.45);backdrop-filter:blur(2px);opacity:0;transition:opacity .3s;} .ov.open .ov-bg{opacity:1;}
+    .drawer{position:absolute;right:0;top:0;height:100%;width:100%;max-width:440px;background:#fff;box-shadow:-12px 0 40px rgba(12,31,49,.25);overflow-y:auto;transform:translateX(100%);transition:transform .3s cubic-bezier(.2,.7,.2,1);} .ov.open .drawer{transform:translateX(0);}
+    #ticketModal{position:fixed;inset:0;z-index:70;display:none;align-items:center;justify-content:center;padding:16px;} #ticketModal.open{display:flex;}
+  </style>
+</head>
+<body class="bg-[#FCFCFC] text-[#121A21] antialiased">
+
+<header class="bg-slate-100 border-b-2 border-dashed border-slate-400 relative overflow-hidden">
+  <div class="absolute inset-0 opacity-30 pointer-events-none" style="background:repeating-linear-gradient(45deg,transparent,transparent 8px,rgba(100,116,139,.18) 8px,rgba(100,116,139,.18) 16px)"></div>
+  <div class="relative max-w-7xl mx-auto px-4 sm:px-6 h-14 flex items-center gap-3 sm:gap-4">
+    <a href="public-home.html" class="flex items-center gap-2 shrink-0 opacity-70 hover:opacity-100 transition">
+      <img src="assets/logo-icon.png" alt="SME South Africa" class="w-7 h-7" />
+      <span class="font-jakarta font-extrabold text-[13px] tracking-tight text-slate-700 hidden sm:inline">SME South Africa</span>
+    </a>
+    <span class="mx-1 hidden sm:inline w-px h-5 bg-slate-300"></span>
+    <p class="text-[10px] sm:text-[11px] font-bold uppercase tracking-widest text-slate-600 flex items-center gap-1.5"><i data-lucide="construction" class="w-3.5 h-3.5 text-slate-500"></i>Header placeholder &middot; design pending</p>
+    <div class="ml-auto flex items-center gap-2">
+      <button id="devToggle" onclick="toggleDevMode()" class="inline-flex items-center gap-1.5 px-2.5 h-8 rounded-full bg-white border border-slate-300 hover:border-[#DC183C] hover:text-[#DC183C] text-[11px] font-bold uppercase tracking-wider text-slate-600 transition" title="Toggle implementation notes"><i data-lucide="code-2" class="w-3.5 h-3.5"></i><span class="hidden sm:inline">Dev</span></button>
+      <a href="index.html" class="inline-flex items-center gap-1.5 px-3 h-8 rounded-full bg-white border border-slate-300 hover:border-slate-500 text-[11px] font-bold text-slate-700 transition"><i data-lucide="arrow-left" class="w-3.5 h-3.5"></i><span class="hidden sm:inline">Launcher</span></a>
+    </div>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero-soft">
+  <div class="max-w-3xl mx-auto px-4 sm:px-6 pt-14 pb-8 text-center">
+    <nav aria-label="Breadcrumb" class="text-xs text-[#6A7581] flex items-center justify-center flex-wrap gap-x-1.5 mb-4"><a href="public-home.html" class="hover:text-[#DC183C] transition">Home</a><span class="text-slate-300">›</span><a href="public-help.html" class="hover:text-[#DC183C] transition">Help</a><span class="text-slate-300">›</span><span class="text-[#121A21] font-medium">Support Tickets</span></nav>
+    <h1 class="font-jakarta font-extrabold text-3xl sm:text-[2.4rem] tracking-tight text-[#0C1F31]">Help &amp; Support Center
+      <button onclick="openBrief()" class="dev-badge align-middle ml-1 w-6 h-6 rounded-full bg-[#FF9900] text-[#0C1F31] items-center justify-center text-[11px] font-bold">i</button>
+    </h1>
+    <p class="text-[#6A7581] mt-2">Find answers quickly and connect with our support team.</p>
+    <form onsubmit="event.preventDefault();showToast('Searching the Knowledge Base…')" class="mt-6 relative">
+      <i data-lucide="search" class="w-5 h-5 absolute left-4 top-1/2 -translate-y-1/2 text-[#6A7581]"></i>
+      <input class="w-full h-13 rounded-xl bg-white border border-[#E7EBEF] pl-12 pr-4 text-[15px] outline-none shadow-sm focus:border-[#DC183C] focus:ring-2 focus:ring-[#DC183C]/15 transition" style="height:3.25rem" placeholder="Search" />
+    </form>
+  </div>
+</section>
+
+<main class="max-w-4xl mx-auto px-4 sm:px-6 pb-16 -mt-2">
+
+  <!-- TABS: Knowledge Base (→ KB home) | Support Ticket (active) -->
+  <div class="flex items-end gap-1 border-b border-[#E7EBEF]">
+    <a href="public-help.html" class="inline-flex items-center gap-2 px-5 h-11 rounded-t-lg text-sm font-bold text-[#6A7581] hover:text-[#121A21] bg-[#F7F9FB] border border-b-0 border-[#E7EBEF] transition"><i data-lucide="book-open" class="w-4 h-4"></i> Knowledge Base</a>
+    <span class="inline-flex items-center gap-2 px-5 h-11 rounded-t-lg text-sm font-bold text-white bg-[#DC183C] border border-b-0 border-[#DC183C]"><i data-lucide="headphones" class="w-4 h-4"></i> Support Ticket</span>
+  </div>
+
+  <!-- PANEL -->
+  <div class="border border-t-0 border-[#E7EBEF] rounded-b-2xl bg-white p-5 sm:p-7">
+    <h2 class="font-jakarta font-extrabold text-xl text-[#0C1F31]">My Support Tickets</h2>
+    <p class="text-sm text-[#6A7581] mt-1">Track the status of your open and closed support requests.</p>
+    <button onclick="showToast('Opening your ticket history dashboard…')" class="mt-4 w-full h-12 rounded-xl border border-[#DC183C] text-[#DC183C] font-bold text-sm hover:bg-[#FDECEF] transition inline-flex items-center justify-center gap-2"><i data-lucide="layout-dashboard" class="w-4 h-4"></i> View Ticket History Dashboard</button>
+
+    <!-- ALL TICKETS -->
+    <div class="mt-6 border border-[#E7EBEF] rounded-2xl overflow-hidden">
+      <div class="flex items-center justify-between gap-3 px-4 sm:px-5 py-4 border-b border-[#E7EBEF]">
+        <h3 class="font-jakarta font-extrabold text-[17px]">All Tickets</h3>
+        <button onclick="openTicketModal()" class="inline-flex items-center gap-1.5 h-9 px-4 rounded-lg bg-[#0C1F31] hover:bg-[#142b40] text-white text-[13px] font-bold transition"><i data-lucide="plus" class="w-4 h-4"></i> Create Ticket</button>
+      </div>
+
+      <div class="px-4 sm:px-5 pt-4">
+        <div class="flex items-center justify-between gap-3 flex-wrap">
+          <div class="inline-flex items-center gap-1 bg-[#F0F2F5] rounded-xl p-1">
+            <button class="tk-tab active" data-filter="all" onclick="setFilter('all')">All</button>
+            <button class="tk-tab" data-filter="open" onclick="setFilter('open')">Open</button>
+            <button class="tk-tab" data-filter="closed" onclick="setFilter('closed')">Closed</button>
+          </div>
+          <button class="w-9 h-9 grid place-items-center rounded-lg border border-[#E7EBEF] text-[#6A7581] hover:border-[#121A21] transition" title="Sort"><i data-lucide="arrow-down-up" class="w-4 h-4"></i></button>
+        </div>
+        <div class="relative mt-3">
+          <i data-lucide="search" class="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400"></i>
+          <input id="tkSearch" oninput="renderTickets()" class="w-full h-11 rounded-lg border border-[#E7EBEF] pl-10 pr-3 text-sm outline-none focus:border-[#DC183C] focus:ring-2 focus:ring-[#DC183C]/15 transition" placeholder="Search…" />
+        </div>
+      </div>
+
+      <!-- table head -->
+      <div class="hidden sm:grid grid-cols-[1fr,140px,120px] gap-3 px-5 py-3 mt-3 bg-[#F7F9FB] border-y border-[#E7EBEF] text-[11px] font-bold uppercase tracking-wider text-[#6A7581]">
+        <span>Conversation</span><span>Date</span><span>Status</span>
+      </div>
+      <div id="tkList" class="divide-y divide-[#E7EBEF]"></div>
+      <div id="tkEmpty" class="hidden text-center py-12">
+        <div class="w-12 h-12 rounded-2xl bg-[#FDECEF] text-[#DC183C] grid place-items-center mx-auto mb-3"><i data-lucide="inbox" class="w-6 h-6"></i></div>
+        <p class="font-jakarta font-bold">No tickets here</p>
+        <p class="text-sm text-slate-500 mt-1">Nothing matches this filter yet.</p>
+      </div>
+
+      <!-- pagination -->
+      <div class="flex items-center justify-between gap-3 px-4 sm:px-5 py-4 border-t border-[#E7EBEF] text-sm">
+        <span class="text-[#6A7581]">Page <b class="text-[#121A21]">1</b> of 1</span>
+        <div class="flex items-center gap-2">
+          <div class="inline-flex items-center gap-1.5 h-9 px-3 rounded-lg border border-[#E7EBEF] text-[13px] text-[#6A7581]">10 / page <i data-lucide="chevron-down" class="w-3.5 h-3.5"></i></div>
+          <button class="w-9 h-9 grid place-items-center rounded-lg border border-[#E7EBEF] text-slate-300 cursor-not-allowed" disabled><i data-lucide="chevron-left" class="w-4 h-4"></i></button>
+          <button class="w-9 h-9 grid place-items-center rounded-lg bg-[#DC183C] text-white text-[13px] font-bold">1</button>
+          <button class="w-9 h-9 grid place-items-center rounded-lg border border-[#E7EBEF] text-slate-300 cursor-not-allowed" disabled><i data-lucide="chevron-right" class="w-4 h-4"></i></button>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="bg-slate-100 border-t-2 border-dashed border-slate-400 relative overflow-hidden">
+  <div class="absolute inset-0 opacity-30 pointer-events-none" style="background:repeating-linear-gradient(45deg,transparent,transparent 8px,rgba(100,116,139,.18) 8px,rgba(100,116,139,.18) 16px)"></div>
+  <div class="relative max-w-7xl mx-auto px-4 sm:px-6 py-6 text-center">
+    <p class="text-[10px] sm:text-[11px] font-bold uppercase tracking-widest text-slate-600 flex items-center justify-center gap-1.5"><i data-lucide="construction" class="w-3.5 h-3.5 text-slate-500"></i>Footer placeholder &middot; design pending</p>
+    <p class="text-[11px] text-slate-500 mt-2">&copy; 2026 SME South Africa</p>
+  </div>
+</footer>
+
+<!-- CREATE TICKET MODAL -->
+<div id="ticketModal">
+  <div class="absolute inset-0 bg-[#0C1F31]/55 backdrop-blur-sm" onclick="closeTicketModal()"></div>
+  <div class="relative bg-white rounded-2xl w-full max-w-lg max-h-[92vh] overflow-y-auto shadow-2xl">
+    <div class="flex items-start justify-between gap-3 px-6 py-5 border-b border-[#E7EBEF] sticky top-0 bg-white">
+      <div><p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] mb-1">New request</p><h3 class="font-jakarta font-extrabold text-lg">Create a support ticket</h3></div>
+      <button onclick="closeTicketModal()" class="text-slate-400 hover:text-[#121A21]"><i data-lucide="x" class="w-5 h-5"></i></button>
+    </div>
+    <form onsubmit="submitTicket(event)" class="p-6 space-y-4">
+      <div><label class="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1.5">Subject</label><input required class="field" placeholder="Briefly, what do you need help with?" /></div>
+      <div class="grid grid-cols-2 gap-3">
+        <div><label class="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1.5">Department</label>
+          <select required class="field bg-white"><option value="" disabled selected>Select…</option><option>General</option><option>Account &amp; Billing</option><option>Funding</option><option>Technical</option></select></div>
+        <div><label class="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1.5">Priority</label>
+          <select required class="field bg-white"><option value="" disabled selected>Select…</option><option>Low</option><option selected>Normal</option><option>High</option><option>Urgent</option></select></div>
+      </div>
+      <div><label class="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1.5">Message</label><textarea required rows="4" class="w-full bg-white border border-[#E7EBEF] rounded-xl px-4 py-3 text-sm outline-none focus:border-[#DC183C] focus:ring-2 focus:ring-[#DC183C]/15 resize-none" placeholder="Give us the details — the more context, the faster we can help."></textarea></div>
+      <label class="flex items-center gap-2 text-sm text-[#6A7581]"><span class="inline-flex items-center gap-1.5 h-10 px-3 rounded-lg border border-dashed border-[#E7EBEF] text-slate-400 text-[13px]"><i data-lucide="paperclip" class="w-4 h-4"></i> Attach a file</span><span class="text-xs">(optional)</span></label>
+      <div class="flex items-center gap-2 pt-1">
+        <button type="button" onclick="closeTicketModal()" class="flex-1 h-12 rounded-full border border-[#E7EBEF] font-bold text-sm hover:border-[#121A21] transition">Cancel</button>
+        <button type="submit" class="flex-1 h-12 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold text-sm transition inline-flex items-center justify-center gap-2">Submit ticket <i data-lucide="send" class="w-4 h-4"></i></button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div id="overlay-root"></div><div id="toast" class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-[80]"></div>
+
+<script>
+  function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+  function showToast(m){const el=document.getElementById('toast');el.classList.remove('hidden');el.innerHTML=`<div class="bg-[#0C1F31] text-white rounded-full pl-3 pr-5 py-2.5 shadow-2xl flex items-center gap-2 text-sm font-semibold" style="border-left:4px solid #29A37A"><i data-lucide="check-circle" class="w-4 h-4" style="color:#29A37A"></i><span>${esc(m)}</span></div>`;lucide.createIcons();setTimeout(()=>{el.classList.add('hidden');el.innerHTML='';},2600);}
+
+  // ---- Tickets (sample data; production reads from Fluent Support for the logged-in member) ----
+  let TICKETS=[
+    {id:1042,subject:'Card machine not connecting to the app',excerpt:'Paired once, now the Yoco Neo shows offline…',date:'2 days ago',status:'open'},
+    {id:1038,subject:'Funding application stuck at step 3',excerpt:'The document upload keeps failing on submit.',date:'5 days ago',status:'open'},
+    {id:1021,subject:'Billing invoice query for June',excerpt:'I was charged twice for my membership.',date:'3 weeks ago',status:'closed'},
+    {id:1009,subject:'Profile photo won’t upload',excerpt:'PNG under 2MB but it errors every time.',date:'1 month ago',status:'closed'},
+    {id:1003,subject:'How to add a team member',excerpt:'Resolved — thanks for the walkthrough.',date:'2 months ago',status:'closed'}
+  ];
+  let filter='all';
+  function setFilter(f){ filter=f; document.querySelectorAll('.tk-tab').forEach(b=>b.classList.toggle('active',b.dataset.filter===f)); renderTickets(); }
+  function statusChip(s){
+    if(s==='open') return '<span class="inline-flex items-center gap-1.5 text-[12px] font-semibold text-[#29A37A]"><span class="w-1.5 h-1.5 rounded-full bg-[#29A37A]"></span> open</span>';
+    return '<span class="inline-flex items-center gap-1.5 text-[12px] font-semibold text-[#6A7581]"><span class="w-1.5 h-1.5 rounded-full bg-[#6A7581]"></span> closed</span>';
+  }
+  function renderTickets(){
+    const q=(document.getElementById('tkSearch').value||'').trim().toLowerCase();
+    const rows=TICKETS.filter(t=>(filter==='all'||t.status===filter) && (!q || (t.subject+' '+t.excerpt).toLowerCase().includes(q)));
+    const list=document.getElementById('tkList'), empty=document.getElementById('tkEmpty');
+    if(!rows.length){ list.innerHTML=''; empty.classList.remove('hidden'); lucide.createIcons(); return; }
+    empty.classList.add('hidden');
+    list.innerHTML=rows.map(t=>`
+      <a href="#" onclick="event.preventDefault();showToast('Opening ticket #${t.id}…')" class="grid sm:grid-cols-[1fr,140px,120px] gap-1 sm:gap-3 items-center px-4 sm:px-5 py-4 hover:bg-[#FDECEF]/30 transition group">
+        <div class="min-w-0">
+          <p class="font-jakarta font-bold text-[15px] text-[#121A21] group-hover:text-[#DC183C] transition truncate">${esc(t.subject)}</p>
+          <p class="text-[13px] text-[#6A7581] truncate">${esc(t.excerpt)}</p>
+        </div>
+        <p class="text-[13px] text-[#6A7581] sm:whitespace-nowrap">${esc(t.date)}</p>
+        <div>${statusChip(t.status)}</div>
+      </a>`).join('');
+    lucide.createIcons();
+  }
+
+  function openTicketModal(){ document.getElementById('ticketModal').classList.add('open'); lucide.createIcons(); }
+  function closeTicketModal(){ document.getElementById('ticketModal').classList.remove('open'); }
+  function submitTicket(e){
+    e.preventDefault();
+    const subject=e.target.querySelector('input').value.trim()||'New request';
+    const newId=Math.max.apply(null,TICKETS.map(t=>t.id))+1;
+    TICKETS.unshift({id:newId,subject:subject,excerpt:'You just opened this ticket — our team will reply shortly.',date:'just now',status:'open'});
+    e.target.reset();
+    closeTicketModal();
+    setFilter('all');
+    showToast('Ticket #'+newId+' created — we’ll reply by email and here.');
+  }
+  document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeTicketModal(); });
+
+  // ---- Dev brief ----
+  const BRIEF={
+    title:'Support Tickets', sub:'Fluent Support portal (member-scoped)',
+    purpose:'The member-facing support portal, powered by Fluent Support (WordPress). Deliberately separate from the BetterDocs Knowledge Base — the two are linked by the tab bar. Members raise and track tickets here; the KB handles self-service.',
+    data:'Ticket: <code>{ id, subject, excerpt, customer_id, department, priority, status: open|closed, created_at, updated_at, messages[] }</code>. List is scoped to the logged-in member. New ticket posts to Fluent Support and triggers the agent-side workflow + email replies.',
+    logic:'Gated (members only). Tabs: Knowledge Base → public-help.html, Support Ticket = here. All/Open/Closed filter + search are client-side over the member’s tickets (server-queried in production). Create Ticket = Fluent Support submission (subject, department, priority, message, optional attachment). “View Ticket History Dashboard” → the member’s full history view.',
+    components:'Header · hero (title, search) · KB/Support tabs · My Support Tickets card + history-dashboard CTA · All Tickets (filter tabs, search, conversation/date/status table, pagination) · Create Ticket modal · footer.'
+  };
+  function toggleDevMode(){const on=document.body.classList.toggle('dev-on');const b=document.getElementById('devToggle');if(b)b.classList.toggle('on',on);if(on)showToast('Dev Mode on — tap any ⓘ for implementation notes.');lucide.createIcons();}
+  function closeOverlay(id){const el=document.getElementById(id);if(!el)return;el.classList.remove('open');setTimeout(()=>{if(el&&el.parentNode)el.remove();},300);}
+  function openBrief(){const b=BRIEF;const sec=(i,l,h)=>`<div class="px-6 py-4 border-t border-slate-100"><p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] flex items-center gap-1.5 mb-2"><i data-lucide="${i}" class="w-3.5 h-3.5"></i>${l}</p><div class="text-sm text-slate-600 leading-relaxed">${h}</div></div>`;
+    document.getElementById('overlay-root').innerHTML=`<div class="ov" id="ov"><div class="ov-bg" onclick="closeOverlay('ov')"></div><div class="drawer"><div class="sticky top-0 z-10 bg-[#0C1F31] text-white px-6 py-5 flex items-start justify-between"><div><p class="text-[10px] font-bold uppercase tracking-widest text-[#FF9900] mb-1">Dev Brief</p><h3 class="font-jakarta font-extrabold text-lg leading-tight">${b.title}</h3><p class="text-xs text-white/60 mt-1">${b.sub}</p></div><button onclick="closeOverlay('ov')" class="text-white/60 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button></div>${sec('target','Purpose',b.purpose)}${sec('database','Data model',b.data)}${sec('git-branch','Logic',b.logic)}${sec('boxes','Components',b.components)}</div></div>`;
+    requestAnimationFrame(()=>{const o=document.getElementById('ov');if(o)o.classList.add('open');});lucide.createIcons();
+  }
+
+  renderTickets(); lucide.createIcons();
+</script>
+</body>
+</html>

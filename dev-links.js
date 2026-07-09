@@ -6,7 +6,7 @@
  * On submit the entry is stored locally under `smeDevLinkOutbox` and shown
  * as a success confirmation. Production will replace the outbox step with
  * a private webhook (e.g. Formspree / Netlify Forms) that emails
- * adops@adclickafrica.com; Mission Control fetches from that endpoint.
+ * joel@smesouthafrica.co.za; Mission Control fetches from that endpoint.
  *
  * IMPORTANT: never redirect to github.com — Tshepho keeps the repo
  * private from the dev.
@@ -14,7 +14,7 @@
 (function(global){
   'use strict';
   var OUTBOX_KEY = 'smeDevLinkOutbox';
-  var MAIL_TO = 'adops@adclickafrica.com'; // Tshepho — interim delivery until an auto endpoint is chosen
+  var MAIL_TO = 'joel@smesouthafrica.co.za'; // Tshepho (Joel) — interim delivery until an auto endpoint is chosen
   var STYLE_ID = 'sme-devlink-style';
   var MODAL_ID = 'sme-devlink-modal';
 
