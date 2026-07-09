@@ -1,16 +1,19 @@
 /*
  * SME South Africa — Dev-link bridge.
- * Mirrors suggestions.js: opens an "Add dev link" modal that submits the
- * staging URL as a pre-filled GitHub Issue (labelled `dev-link`). Tshepho
- * accepts it in Mission Control and it gets written into status.js
- * (window.MOCKUP_DEV) on the next publish.
+ * Opens an "Add dev link" modal so Sandile can attach a staging URL to
+ * any mockup without routing through GitHub or Slack.
  *
- * Author is Sandile by default (single dev).
+ * On submit the entry is stored locally under `smeDevLinkOutbox` and shown
+ * as a success confirmation. Production will replace the outbox step with
+ * a private webhook (e.g. Formspree / Netlify Forms) that emails
+ * adops@adclickafrica.com; Mission Control fetches from that endpoint.
+ *
+ * IMPORTANT: never redirect to github.com — Tshepho keeps the repo
+ * private from the dev.
  */
 (function(global){
   'use strict';
-  var REPO = 'SMEZATech/smehubmockups';
-  var LABEL = 'dev-link';
+  var OUTBOX_KEY = 'smeDevLinkOutbox';
   var STYLE_ID = 'sme-devlink-style';
   var MODAL_ID = 'sme-devlink-modal';
 
@@ -59,26 +62,43 @@
       +     '<div><p class="eyebrow">Dev link</p><h3>Add dev / staging URL</h3></div>'
       +     '<button class="x" type="button" aria-label="Close">&#10005;</button>'
       +   '</div>'
-      +   '<p class="sub">Attach your staging URL to this mockup so Tshepho can wire it into Mission Control. Nothing goes live until it&rsquo;s accepted.</p>'
-      +   '<label>Mockup / page</label>'
-      +   '<input id="sme-dl-file" />'
-      +   '<label>Dev / staging URL</label>'
-      +   '<input id="sme-dl-url" placeholder="https://staging.smesouthafrica.co.za/…" />'
-      +   '<label>Notes <span style="text-transform:none;letter-spacing:0;font-weight:400;color:#9aa3ac">(optional)</span></label>'
-      +   '<textarea id="sme-dl-notes" placeholder="Anything worth flagging — auth, known issues, deploy branch, etc."></textarea>'
-      +   '<input type="hidden" id="sme-dl-name" value="Sandile" />'
-      +   '<div class="btns"><button class="cancel" type="button">Cancel</button><button class="submit" type="button">Submit dev link</button></div>'
+      +   '<p class="sub">Attach your staging URL to this mockup so Tshepho can wire it in. Nothing goes live until it&rsquo;s accepted.</p>'
+      +   '<div id="sme-dl-form">'
+      +     '<label>Mockup / page</label>'
+      +     '<input id="sme-dl-file" />'
+      +     '<label>Dev / staging URL</label>'
+      +     '<input id="sme-dl-url" placeholder="https://staging.smesouthafrica.co.za/…" />'
+      +     '<label>Notes <span style="text-transform:none;letter-spacing:0;font-weight:400;color:#9aa3ac">(optional)</span></label>'
+      +     '<textarea id="sme-dl-notes" placeholder="Anything worth flagging — auth, known issues, deploy branch, etc."></textarea>'
+      +     '<input type="hidden" id="sme-dl-name" value="Sandile" />'
+      +     '<div class="btns"><button class="cancel" type="button">Cancel</button><button class="submit" type="button">Send to Tshepho</button></div>'
+      +   '</div>'
+      +   '<div id="sme-dl-success" style="display:none;text-align:center;padding:8px 4px 4px">'
+      +     '<div style="width:56px;height:56px;border-radius:50%;background:#29A37A1a;color:#29A37A;display:grid;place-items:center;margin:0 auto 12px;font-size:28px;font-weight:800">✓</div>'
+      +     '<p style="font:800 17px/1.3 \'Plus Jakarta Sans\',sans-serif;color:#121A21;margin:0 0 6px">Sent to Tshepho</p>'
+      +     '<p style="color:#6A7581;font-size:13px;margin:0 0 18px;line-height:1.5">Your dev link is queued for her review. She&rsquo;ll wire it into the mockup hub from her side.</p>'
+      +     '<div class="btns" style="margin-top:0"><button class="cancel" id="sme-dl-close-ok" type="button">Close</button></div>'
+      +   '</div>'
       + '</div>';
     document.body.appendChild(m);
     m.querySelector('.bg').addEventListener('click', close);
     m.querySelector('.x').addEventListener('click', close);
-    m.querySelector('.cancel').addEventListener('click', close);
-    m.querySelector('.submit').addEventListener('click', submit);
+    m.querySelector('#sme-dl-form .cancel').addEventListener('click', close);
+    m.querySelector('#sme-dl-form .submit').addEventListener('click', submit);
+    m.querySelector('#sme-dl-close-ok').addEventListener('click', close);
     return m;
+  }
+
+  function resetView(){
+    var f = document.getElementById('sme-dl-form');
+    var s = document.getElementById('sme-dl-success');
+    if(f) f.style.display = '';
+    if(s) s.style.display = 'none';
   }
 
   function open(prefillFile, prefillUrl){
     var m = ensureModal();
+    resetView();
     document.getElementById('sme-dl-file').value = prefillFile || getPageFile();
     document.getElementById('sme-dl-url').value = prefillUrl || '';
     document.getElementById('sme-dl-notes').value = '';
@@ -97,24 +117,31 @@
     if(!file){ alert('Please add the mockup filename.'); return; }
     if(!url){ alert('Please add the dev URL.'); return; }
     if(!/^https?:\/\//i.test(url)){ alert('Dev URL must start with http:// or https://'); return; }
-    var title = '[Dev link] ' + file + ' → ' + url;
-    var body = '**Mockup:** ' + file
-      + '\n**Dev URL:** ' + url
-      + '\n**From:** ' + name
-      + (notes ? '\n\n---\n\n' + notes : '');
-    var issueUrl = 'https://github.com/' + REPO + '/issues/new'
-      + '?title=' + encodeURIComponent(title)
-      + '&body=' + encodeURIComponent(body)
-      + '&labels=' + encodeURIComponent(LABEL);
-    window.open(issueUrl, '_blank', 'noopener');
-    close();
+
+    // Queue locally — production replaces this with a private webhook that
+    // posts to adops@adclickafrica.com. No external redirect from the dev's side.
+    var entry = { file:file, url:url, notes:notes, from:name, ts:new Date().toISOString() };
+    var outbox = [];
+    try { outbox = JSON.parse(localStorage.getItem(OUTBOX_KEY) || '[]'); } catch(_){}
+    outbox.push(entry);
+    try { localStorage.setItem(OUTBOX_KEY, JSON.stringify(outbox)); } catch(_){}
+
+    document.getElementById('sme-dl-form').style.display = 'none';
+    document.getElementById('sme-dl-success').style.display = '';
+  }
+
+  function readOutbox(){
+    try { return JSON.parse(localStorage.getItem(OUTBOX_KEY) || '[]'); } catch(_){ return []; }
+  }
+  function clearOutbox(){
+    try { localStorage.removeItem(OUTBOX_KEY); } catch(_){}
   }
 
   global.SmeDevLink = {
-    REPO: REPO,
-    LABEL: LABEL,
     open: open,
     close: close,
-    getPageFile: getPageFile
+    getPageFile: getPageFile,
+    readOutbox: readOutbox,
+    clearOutbox: clearOutbox
   };
 })(typeof window !== 'undefined' ? window : this);

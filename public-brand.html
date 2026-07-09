@@ -200,47 +200,48 @@
       <div id="faq-list" class="mt-2 space-y-3"></div>
     </section>
 
-    <!-- GET A QUOTE — inline step-by-step form, blends with the body -->
+    <!-- GET A QUOTE — compact single-card wizard, one step per page -->
     <section id="get-quote" class="mb-10">
       <h2>Compare Quotes</h2>
       <p>Answer a few quick questions and we&rsquo;ll match you with card-payment providers that fit your business — Yoco included. No cost, no obligation.</p>
-      <form onsubmit="quoteSubmit(event)" class="mt-5 space-y-6" id="quote-form">
 
-        <!-- Step 1 -->
-        <div class="flex gap-4">
-          <div class="shrink-0 w-8 h-8 rounded-full bg-[#DC183C] text-white font-jakarta font-extrabold grid place-items-center text-sm">1</div>
-          <div class="flex-1 pt-0.5">
-            <p class="font-jakarta font-bold text-[#121A21]">What are you looking for?</p>
-            <div class="mt-3 grid sm:grid-cols-2 gap-2.5">
-              <label class="flex items-center gap-2 px-3 h-11 rounded-lg border border-[#E7EBEF] hover:border-[#121A21] cursor-pointer text-sm"><input type="radio" name="need" value="card" class="accent-[#DC183C]" required /> Card machine</label>
-              <label class="flex items-center gap-2 px-3 h-11 rounded-lg border border-[#E7EBEF] hover:border-[#121A21] cursor-pointer text-sm"><input type="radio" name="need" value="online" class="accent-[#DC183C]" /> Online payments</label>
-              <label class="flex items-center gap-2 px-3 h-11 rounded-lg border border-[#E7EBEF] hover:border-[#121A21] cursor-pointer text-sm"><input type="radio" name="need" value="both" class="accent-[#DC183C]" /> Both</label>
-              <label class="flex items-center gap-2 px-3 h-11 rounded-lg border border-[#E7EBEF] hover:border-[#121A21] cursor-pointer text-sm"><input type="radio" name="need" value="not-sure" class="accent-[#DC183C]" /> Not sure yet</label>
-            </div>
+      <div class="mt-5 bg-white rounded-2xl border border-[#E7EBEF] shadow-sm overflow-hidden max-w-lg">
+        <!-- Step header (badge + progress) -->
+        <div class="flex items-center gap-3 px-5 sm:px-6 py-4 bg-[#0C1F31] text-white">
+          <span id="qw-badge" class="shrink-0 w-9 h-9 rounded-full bg-[#DC183C] text-white font-jakarta font-extrabold grid place-items-center text-sm">1</span>
+          <div class="min-w-0 flex-1">
+            <p class="font-jakarta font-extrabold text-[15px] leading-tight" id="qw-title">What do you need?</p>
+            <p class="text-[11px] text-white/60 mt-0.5" id="qw-sub">Step <span id="qw-cur">1</span> of <span id="qw-total">4</span></p>
           </div>
         </div>
 
-        <!-- Step 2 -->
-        <div class="flex gap-4">
-          <div class="shrink-0 w-8 h-8 rounded-full bg-[#DC183C] text-white font-jakarta font-extrabold grid place-items-center text-sm">2</div>
-          <div class="flex-1 pt-0.5">
-            <p class="font-jakarta font-bold text-[#121A21]">Monthly card turnover</p>
-            <select required class="mt-3 w-full h-11 px-3 rounded-lg border border-[#E7EBEF] focus:border-[#DC183C] focus:ring-2 focus:ring-[#DC183C]/15 outline-none text-sm bg-white">
+        <!-- Progress bar -->
+        <div class="h-1 bg-[#F0F2F5]"><div id="qw-bar" class="h-full bg-[#DC183C] transition-all" style="width:25%"></div></div>
+
+        <form onsubmit="return false" id="quote-wizard" class="p-5 sm:p-6">
+
+          <!-- Step 1: Need -->
+          <div class="qw-step" data-step="1">
+            <div class="grid grid-cols-1 gap-2">
+              <label class="flex items-center gap-2.5 px-4 h-12 rounded-lg border border-[#E7EBEF] hover:border-[#DC183C] cursor-pointer text-sm transition"><input type="radio" name="qw-need" value="card" class="accent-[#DC183C]" /> Card machine</label>
+              <label class="flex items-center gap-2.5 px-4 h-12 rounded-lg border border-[#E7EBEF] hover:border-[#DC183C] cursor-pointer text-sm transition"><input type="radio" name="qw-need" value="online" class="accent-[#DC183C]" /> Online payments</label>
+              <label class="flex items-center gap-2.5 px-4 h-12 rounded-lg border border-[#E7EBEF] hover:border-[#DC183C] cursor-pointer text-sm transition"><input type="radio" name="qw-need" value="both" class="accent-[#DC183C]" /> Both</label>
+              <label class="flex items-center gap-2.5 px-4 h-12 rounded-lg border border-[#E7EBEF] hover:border-[#DC183C] cursor-pointer text-sm transition"><input type="radio" name="qw-need" value="not-sure" class="accent-[#DC183C]" /> Not sure yet</label>
+            </div>
+          </div>
+
+          <!-- Step 2: Turnover + Industry -->
+          <div class="qw-step hidden" data-step="2">
+            <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1.5">Monthly card turnover</label>
+            <select id="qw-turnover" class="w-full h-12 px-3 rounded-lg border border-[#E7EBEF] focus:border-[#DC183C] focus:ring-2 focus:ring-[#DC183C]/15 outline-none text-sm bg-white">
               <option value="" disabled selected>Select a range</option>
               <option>Under R50,000</option>
               <option>R50,000 – R250,000</option>
               <option>R250,000 – R1M</option>
               <option>R1M+</option>
             </select>
-          </div>
-        </div>
-
-        <!-- Step 3 -->
-        <div class="flex gap-4">
-          <div class="shrink-0 w-8 h-8 rounded-full bg-[#DC183C] text-white font-jakarta font-extrabold grid place-items-center text-sm">3</div>
-          <div class="flex-1 pt-0.5">
-            <p class="font-jakarta font-bold text-[#121A21]">Business industry</p>
-            <select required class="mt-3 w-full h-11 px-3 rounded-lg border border-[#E7EBEF] focus:border-[#DC183C] focus:ring-2 focus:ring-[#DC183C]/15 outline-none text-sm bg-white">
+            <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1.5 mt-4">Business industry</label>
+            <select id="qw-industry" class="w-full h-12 px-3 rounded-lg border border-[#E7EBEF] focus:border-[#DC183C] focus:ring-2 focus:ring-[#DC183C]/15 outline-none text-sm bg-white">
               <option value="" disabled selected>Select an industry</option>
               <option>Retail / Shop</option>
               <option>Restaurant / Food service</option>
@@ -250,30 +251,43 @@
               <option>Other</option>
             </select>
           </div>
-        </div>
 
-        <!-- Step 4 -->
-        <div class="flex gap-4">
-          <div class="shrink-0 w-8 h-8 rounded-full bg-[#DC183C] text-white font-jakarta font-extrabold grid place-items-center text-sm">4</div>
-          <div class="flex-1 pt-0.5">
-            <p class="font-jakarta font-bold text-[#121A21]">Your details</p>
-            <div class="mt-3 space-y-2.5">
-              <input required class="w-full h-11 px-3 rounded-lg border border-[#E7EBEF] focus:border-[#DC183C] focus:ring-2 focus:ring-[#DC183C]/15 outline-none text-sm" placeholder="Full name" />
-              <input required type="email" class="w-full h-11 px-3 rounded-lg border border-[#E7EBEF] focus:border-[#DC183C] focus:ring-2 focus:ring-[#DC183C]/15 outline-none text-sm" placeholder="Work email" />
-              <div class="flex">
-                <span class="inline-flex items-center px-2.5 h-11 rounded-l-lg border border-r-0 border-[#E7EBEF] bg-white text-xs font-semibold text-[#121A21]">+27</span>
-                <input type="tel" class="w-full h-11 px-3 rounded-r-lg border border-[#E7EBEF] focus:border-[#DC183C] focus:ring-2 focus:ring-[#DC183C]/15 outline-none text-sm" placeholder="Phone (optional)" />
-              </div>
+          <!-- Step 3: Your details -->
+          <div class="qw-step hidden" data-step="3">
+            <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1.5">Full name</label>
+            <input id="qw-name" class="w-full h-12 px-3 rounded-lg border border-[#E7EBEF] focus:border-[#DC183C] focus:ring-2 focus:ring-[#DC183C]/15 outline-none text-sm mb-3" placeholder="Thabo Mokoena" />
+            <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1.5">Work email</label>
+            <input id="qw-email" type="email" class="w-full h-12 px-3 rounded-lg border border-[#E7EBEF] focus:border-[#DC183C] focus:ring-2 focus:ring-[#DC183C]/15 outline-none text-sm mb-3" placeholder="you@business.co.za" />
+            <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1.5">Phone <span class="text-slate-400 font-normal normal-case">(optional)</span></label>
+            <div class="flex">
+              <span class="inline-flex items-center px-3 h-12 rounded-l-lg border border-r-0 border-[#E7EBEF] bg-white text-xs font-semibold text-[#121A21]">+27</span>
+              <input id="qw-phone" type="tel" class="w-full h-12 px-3 rounded-r-lg border border-[#E7EBEF] focus:border-[#DC183C] focus:ring-2 focus:ring-[#DC183C]/15 outline-none text-sm" placeholder="82 123 4567" />
             </div>
           </div>
-        </div>
 
-        <label class="flex items-start gap-2 text-xs text-slate-600 pl-12"><input type="checkbox" class="mt-0.5 w-4 h-4 accent-[#DC183C]" required /><span>I agree to be contacted by SME South Africa about my comparison request. See our <a href="public-privacy.html" class="text-[#DC183C] font-semibold hover:underline">Privacy Policy</a>.</span></label>
+          <!-- Step 4: Review + consent -->
+          <div class="qw-step hidden" data-step="4">
+            <div class="rounded-lg bg-[#FCFCFC] border border-[#E7EBEF] p-4 text-sm space-y-1.5" id="qw-review">
+              <!-- populated by JS -->
+            </div>
+            <label class="flex items-start gap-2 text-xs text-slate-600 mt-4"><input id="qw-consent" type="checkbox" class="mt-0.5 w-4 h-4 accent-[#DC183C]" /><span>I agree to be contacted by SME South Africa about my comparison request. See our <a href="public-privacy.html" class="text-[#DC183C] font-semibold hover:underline">Privacy Policy</a>.</span></label>
+          </div>
 
-        <div class="pl-12">
-          <button class="h-12 px-6 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold text-sm transition inline-flex items-center gap-2">Compare quotes <i data-lucide="arrow-right" class="w-4 h-4"></i></button>
-        </div>
-      </form>
+          <!-- Wizard controls -->
+          <div class="flex items-center gap-2 mt-6 pt-5 border-t border-[#E7EBEF]">
+            <button type="button" id="qw-back" class="h-11 px-4 rounded-full border border-[#E7EBEF] text-sm font-bold text-slate-600 hover:border-[#121A21] hover:text-[#121A21] transition inline-flex items-center gap-1.5 hidden"><i data-lucide="arrow-left" class="w-4 h-4"></i> Back</button>
+            <button type="button" id="qw-next" class="ml-auto h-11 px-5 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white text-sm font-bold transition inline-flex items-center gap-1.5">Next <i data-lucide="arrow-right" class="w-4 h-4"></i></button>
+            <button type="button" id="qw-submit" class="ml-auto h-11 px-5 rounded-full bg-[#29A37A] hover:opacity-90 text-white text-sm font-bold transition inline-flex items-center gap-1.5 hidden">Compare quotes <i data-lucide="check" class="w-4 h-4"></i></button>
+          </div>
+
+          <!-- Success -->
+          <div id="qw-done" class="hidden text-center py-6">
+            <div class="w-14 h-14 rounded-full bg-[#29A37A]/10 text-[#29A37A] grid place-items-center mx-auto mb-3"><i data-lucide="check" class="w-7 h-7"></i></div>
+            <p class="font-jakarta font-extrabold text-lg">Thanks — you&rsquo;re in.</p>
+            <p class="text-sm text-slate-500 mt-1.5 max-w-xs mx-auto">Expect your personalised comparison within one business day.</p>
+          </div>
+        </form>
+      </div>
     </section>
 
     <!-- SIMILAR BRANDS -->
@@ -390,6 +404,66 @@
     document.getElementById('overlay-root').innerHTML=`<div class="ov" id="ov-brief"><div class="ov-bg" onclick="closeOverlay('ov-brief')"></div><div class="drawer"><div class="sticky top-0 z-10 bg-[#0C1F31] text-white px-6 py-5 flex items-start justify-between"><div class="min-w-0"><p class="text-[10px] font-bold uppercase tracking-widest text-[#FF9900] mb-1">Dev Brief</p><h3 class="font-jakarta font-extrabold text-lg leading-tight">${b.title}</h3><p class="text-xs text-white/60 mt-1">${b.sub}</p></div><button onclick="closeOverlay('ov-brief')" aria-label="Close" class="text-white/60 hover:text-white shrink-0 ml-3"><i data-lucide="x" class="w-5 h-5"></i></button></div>${sec('target','Purpose',b.purpose)}${sec('database','Data model',b.data)}${sec('git-branch','Logic',b.logic)}${sec('boxes','Components',b.components)}<div class="px-6 py-4 border-t border-slate-100"><p class="text-[11px] text-slate-400 flex items-center gap-1.5"><i data-lucide="info" class="w-3.5 h-3.5"></i> Spec lives beside the feature — toggle Dev Mode off for the clean view.</p></div></div></div>`;
     requestAnimationFrame(()=>{ const o=document.getElementById('ov-brief'); if(o)o.classList.add('open'); }); lucide.createIcons();
   }
+
+  // ---- Quote wizard ----
+  (function(){
+    var STEPS = [
+      { title:'What do you need?',       validate:function(){ return !!document.querySelector('input[name="qw-need"]:checked'); }, err:'Pick one option to continue.' },
+      { title:'About your business',     validate:function(){ return document.getElementById('qw-turnover').value && document.getElementById('qw-industry').value; }, err:'Please answer both questions.' },
+      { title:'Your details',            validate:function(){ var n=document.getElementById('qw-name').value.trim(); var e=document.getElementById('qw-email').value.trim(); return n && /.+@.+\..+/.test(e); }, err:'Add a name and a valid email.' },
+      { title:'Review & submit',         validate:function(){ return document.getElementById('qw-consent').checked; }, err:'Please tick the consent box.' }
+    ];
+    var cur = 1;
+    var titleEl = document.getElementById('qw-title');
+    var badgeEl = document.getElementById('qw-badge');
+    var curEl = document.getElementById('qw-cur');
+    var totalEl = document.getElementById('qw-total');
+    var barEl = document.getElementById('qw-bar');
+    var backBtn = document.getElementById('qw-back');
+    var nextBtn = document.getElementById('qw-next');
+    var subBtn = document.getElementById('qw-submit');
+    totalEl.textContent = STEPS.length;
+
+    function paint(){
+      document.querySelectorAll('.qw-step').forEach(function(s){ s.classList.toggle('hidden', +s.dataset.step !== cur); });
+      titleEl.textContent = STEPS[cur-1].title;
+      badgeEl.textContent = cur;
+      curEl.textContent = cur;
+      barEl.style.width = (cur/STEPS.length*100) + '%';
+      backBtn.classList.toggle('hidden', cur === 1);
+      nextBtn.classList.toggle('hidden', cur === STEPS.length);
+      subBtn.classList.toggle('hidden', cur !== STEPS.length);
+      if(cur === STEPS.length) renderReview();
+      lucide.createIcons();
+    }
+    function renderReview(){
+      var need = (document.querySelector('input[name="qw-need"]:checked')||{}).value || '—';
+      var rows = [
+        ['Need', need],
+        ['Turnover', document.getElementById('qw-turnover').value || '—'],
+        ['Industry', document.getElementById('qw-industry').value || '—'],
+        ['Name', document.getElementById('qw-name').value || '—'],
+        ['Email', document.getElementById('qw-email').value || '—'],
+        ['Phone', document.getElementById('qw-phone').value ? '+27 ' + document.getElementById('qw-phone').value : '—']
+      ];
+      document.getElementById('qw-review').innerHTML = rows.map(function(r){
+        return '<div class="flex justify-between gap-3"><span class="text-slate-500">'+r[0]+'</span><span class="font-semibold text-right">'+esc(r[1])+'</span></div>';
+      }).join('');
+    }
+    nextBtn.addEventListener('click', function(){
+      if(!STEPS[cur-1].validate()){ showToast(STEPS[cur-1].err); return; }
+      if(cur < STEPS.length){ cur++; paint(); }
+    });
+    backBtn.addEventListener('click', function(){ if(cur>1){ cur--; paint(); } });
+    subBtn.addEventListener('click', function(){
+      if(!STEPS[cur-1].validate()){ showToast(STEPS[cur-1].err); return; }
+      document.querySelectorAll('.qw-step').forEach(function(s){ s.classList.add('hidden'); });
+      backBtn.classList.add('hidden'); subBtn.classList.add('hidden');
+      document.getElementById('qw-done').classList.remove('hidden');
+      lucide.createIcons();
+    });
+    paint();
+  })();
 
   lucide.createIcons();
 </script>

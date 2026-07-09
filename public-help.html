@@ -72,15 +72,6 @@
   <p class="text-[#6A7581] text-sm mb-7">Find step-by-step guides grouped by topic.</p>
   <div id="categories" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
 
-  <!-- POPULAR ARTICLES -->
-  <section class="mt-16">
-    <h2 class="font-jakarta font-extrabold text-2xl mb-1">Popular articles</h2>
-    <p class="text-[#6A7581] text-sm mb-6">The questions members ask us most.</p>
-    <div class="bg-white rounded-2xl border border-[#E7EBEF] overflow-hidden">
-      <ul id="popular" class="divide-y divide-[#E7EBEF]"></ul>
-    </div>
-  </section>
-
   <!-- CONTACT CTA -->
   <section class="mt-16">
     <div class="rounded-3xl hero-bg text-white relative overflow-hidden px-6 sm:px-10 py-10 text-center">
@@ -122,32 +113,27 @@
     {icon:'calendar-days',tint:'#E4F5EE',color:'#29A37A',title:'Events & Webinars',count:6,arts:['Do you offer webinars or host live events?','Registering for an event','Accessing webinar recordings']},
     {icon:'megaphone',tint:'#FFF1E0',color:'#AE6B0A',title:'Advertising',count:5,arts:['Can I advertise my business on your platform?','Ad formats and placements','Submitting your campaign assets']}
   ];
-  document.getElementById('categories').innerHTML=CATS.map(c=>`
+  function slugify(s){return String(s).toLowerCase().replace(/&/g,'and').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');}
+  document.getElementById('categories').innerHTML=CATS.map(c=>{
+    var slug = slugify(c.title);
+    var catUrl = 'public-help-category.html?cat=' + encodeURIComponent(slug);
+    return `
     <div class="bg-white rounded-2xl border border-[#E7EBEF] p-6 card-lift">
-      <div class="flex items-center gap-3 mb-4">
+      <a href="${catUrl}" class="flex items-center gap-3 mb-4 group">
         <div class="w-11 h-11 rounded-xl grid place-items-center shrink-0" style="background:${c.tint};color:${c.color}"><i data-lucide="${c.icon}" class="w-5 h-5"></i></div>
-        <div><h3 class="font-jakarta font-extrabold text-[17px] leading-tight">${esc(c.title)}</h3><p class="text-xs text-[#6A7581]">${c.count} articles</p></div>
-      </div>
+        <div>
+          <h3 class="font-jakarta font-extrabold text-[17px] leading-tight group-hover:text-[#DC183C] transition">${esc(c.title)}</h3>
+          <p class="text-xs text-[#6A7581]">${c.count} articles</p>
+        </div>
+      </a>
       <ul class="space-y-2.5">
         ${c.arts.map(a=>`<li><a href="public-help-article.html" class="text-sm text-[#374151] hover:text-[#DC183C] flex items-start gap-2 transition"><i data-lucide="file-text" class="w-4 h-4 mt-0.5 text-[#6A7581] shrink-0"></i><span>${esc(a)}</span></a></li>`).join('')}
       </ul>
-      <a href="public-help-article.html" class="inline-flex items-center gap-1 text-sm font-bold mt-4 transition-all hover:gap-2" style="color:${c.color}">View all <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
-    </div>`).join('');
+      <a href="${catUrl}" class="inline-flex items-center gap-1 text-sm font-bold mt-4 transition-all hover:gap-2" style="color:${c.color}">View all <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
+    </div>`;
+  }).join('');
 
-  // POPULAR ARTICLES
-  const POP=[
-    'How to change your email or password','Creating a post','Post privacy',
-    'Is SME South Africa a membership-based platform?','How do I apply for funding through your platform?',
-    'What types of funding options are available?','Do you offer webinars or host live events?','Can I advertise my business on your platform?'
-  ];
-  document.getElementById('popular').innerHTML=POP.map(t=>`
-    <li><a href="public-help-article.html" class="flex items-center gap-3 px-5 py-4 hover:bg-[#FDECEF]/40 transition group">
-      <i data-lucide="file-text" class="w-4 h-4 text-[#6A7581] shrink-0"></i>
-      <span class="text-sm font-medium group-hover:text-[#DC183C] transition">${esc(t)}</span>
-      <i data-lucide="chevron-right" class="w-4 h-4 text-[#6A7581] ml-auto group-hover:text-[#DC183C] transition"></i>
-    </a></li>`).join('');
-
-  const BRIEF={title:'Help Center (KB Home)',sub:'WordPress page + KB search index',purpose:'Self-service support entry point. Search the Knowledge Base, browse categories, and reach popular articles before contacting support. Standalone public page at /help.',data:'Categories: <code>{ id, title, icon, article_count }</code>. Articles: <code>{ slug, title, category }</code>. Search hits a KB index (e.g. Algolia / WP search).',logic:'Public + indexable. Search is client-mocked here; production posts the query to the KB index and renders ranked hits. Category & popular lists are content-managed.',components:'Header · hero + search + suggestions · category grid · popular articles list · contact CTA · footer.'};
+  const BRIEF={title:'Help Center (KB Home)',sub:'BetterDocs KB — WordPress plugin',purpose:'Self-service support entry point. Search the Knowledge Base, browse categories, and drill into a category page or article. Standalone public page at /help.',data:'Categories: <code>{ id, title, icon, article_count }</code>. Articles: <code>{ slug, title, category }</code>. Managed via <b>BetterDocs</b> in WordPress — category chips + heading link to the category archive at <code>public-help-category.html?cat={slug}</code>.',logic:'Public + indexable. Search hits the BetterDocs search index (client-mocked here). Category heading, icon and "View all" all navigate to the category page — the design stays within BetterDocs\' theming so we can keep managing content in the plugin.',components:'Header · hero + search + suggestions · category grid (heading + top articles + View all) · contact CTA · footer. Popular articles list removed per QC — the category cards already surface top articles.'};
   function toggleDevMode(){const on=document.body.classList.toggle('dev-on');const b=document.getElementById('devToggle');if(b)b.classList.toggle('on',on);if(on)showToast('Dev Mode on — tap any ⓘ for implementation notes.');lucide.createIcons();}
   function closeOverlay(id){const el=document.getElementById(id);if(!el)return;el.classList.remove('open');setTimeout(()=>{if(el&&el.parentNode)el.remove();},300);}
   function openBrief(){const b=BRIEF;const sec=(i,l,h)=>`<div class="px-6 py-4 border-t border-slate-100"><p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] flex items-center gap-1.5 mb-2"><i data-lucide="${i}" class="w-3.5 h-3.5"></i>${l}</p><div class="text-sm text-slate-600 leading-relaxed">${h}</div></div>`;document.getElementById('overlay-root').innerHTML=`<div class="ov" id="ov"><div class="ov-bg" onclick="closeOverlay('ov')"></div><div class="drawer"><div class="sticky top-0 z-10 bg-[#0C1F31] text-white px-6 py-5 flex items-start justify-between"><div><p class="text-[10px] font-bold uppercase tracking-widest text-[#FF9900] mb-1">Dev Brief</p><h3 class="font-jakarta font-extrabold text-lg leading-tight">${b.title}</h3><p class="text-xs text-white/60 mt-1">${b.sub}</p></div><button onclick="closeOverlay('ov')" class="text-white/60 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button></div>${sec('target','Purpose',b.purpose)}${sec('database','Data model',b.data)}${sec('git-branch','Logic',b.logic)}${sec('boxes','Components',b.components)}</div></div>`;requestAnimationFrame(()=>{const o=document.getElementById('ov');if(o)o.classList.add('open');});lucide.createIcons();}
