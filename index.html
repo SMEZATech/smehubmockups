@@ -14,7 +14,6 @@
   <script src="shared-notes.js"></script>
   <script src="feedback.js"></script>
   <script src="suggestions.js"></script>
-  <script src="dev-links.js"></script>
   <script>
     tailwind.config = { theme: { extend: { fontFamily: {
       jakarta: ['Plus Jakarta Sans', 'sans-serif'], inter: ['Inter', 'system-ui', 'sans-serif'], mono:['monospace']
@@ -321,15 +320,11 @@
         const doc = frame.contentDocument;
         if(!doc) return;
         if(doc.getElementById('sme-notes-widget')) return; // already injected
-        // Load suggestions.js + dev-links.js first so notes-widget can wire both buttons
+        // Load suggestions.js first so notes-widget can wire the Suggest button
         const sug = doc.createElement('script');
         sug.src = 'suggestions.js';
         sug.async = false;
         doc.body.appendChild(sug);
-        const dl = doc.createElement('script');
-        dl.src = 'dev-links.js';
-        dl.async = false;
-        doc.body.appendChild(dl);
         const s = doc.createElement('script');
         s.src = 'notes-widget.js';
         s.async = false;
@@ -415,6 +410,7 @@
       { label:'Help Category',  file:'public-help-category.html',   icon:'folder-open' },
       { label:'Help Article',   file:'public-help-article.html',    icon:'file-text' },
       { label:'Support Tickets',file:'public-support-ticket.html',  icon:'headphones' },
+      { label:'Ticket detail',  file:'public-support-detailed-ticket.html', icon:'message-square' },
       { label:'Search results', file:'public-search.html',       icon:'search' },
       { label:'404 page',       file:'public-404.html',          icon:'file-x' }
     ]},
@@ -621,7 +617,9 @@
     const lc = document.getElementById('liveCount'); if(lc) lc.textContent = totalFinalised+' of '+total+' finalised';
     const dp = document.getElementById('devPill'), dc = document.getElementById('devCount');
     if(dp && dc){
-      if(pendingDevFiles.length){ dp.classList.remove('hidden'); dp.classList.add('flex'); dc.textContent = pendingDevFiles.length+' of '+total; }
+      // Count dev links ADDED (a staging URL exists), regardless of review status.
+      const addedDevCount = devFiles.filter(f => (DEV[f]||{}).url).length;
+      if(addedDevCount){ dp.classList.remove('hidden'); dp.classList.add('flex'); dc.textContent = addedDevCount+' of '+total; }
       else { dp.classList.add('hidden'); dp.classList.remove('flex'); }
     }
     const sop = document.getElementById('signedOffPill'), soc = document.getElementById('signedOffCount');

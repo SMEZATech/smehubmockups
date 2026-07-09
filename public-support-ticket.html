@@ -1,159 +1,269 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Support Tickets — SME South Africa</title>
   <meta name="description" content="Open a support ticket and track your open and closed requests with the SME South Africa support team." />
-  <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-  <script src="https://cdn.tailwindcss.com"></script><script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
-  <script>tailwind.config={theme:{extend:{fontFamily:{jakarta:['Plus Jakarta Sans','sans-serif'],inter:['Inter','system-ui','sans-serif']}}}};</script>
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  
+  <script>
+    tailwind.config = {
+      corePlugins: {
+        preflight: false,
+      },
+      theme: {
+        extend: {
+          fontFamily: {
+            jakarta: ['Plus Jakarta Sans', 'sans-serif'],
+            inter: ['Inter', 'system-ui', 'sans-serif']
+          },
+          colors: {
+            primary: '#DC183C',
+            accent: '#FF9900',
+            navy: '#0C1F31',
+            success: '#29A37A',
+            ink: '#121A21',
+            muted: '#6A7581',
+            border: '#E7EBEF',
+            secondary: '#F0F5F9',
+            background: '#FCFCFC'
+          }
+        }
+      }
+    };
+  </script>
+  
   <style>
-    html,body{font-family:'Inter',system-ui,sans-serif;} .font-jakarta{font-family:'Plus Jakarta Sans',sans-serif;letter-spacing:.005em;}
-    .hero-soft{background:linear-gradient(180deg,#F4F1FB 0%,#FCFCFC 100%);}
-    .field{width:100%;background:#fff;border:1px solid #E7EBEF;border-radius:.75rem;height:3rem;padding:0 1rem;font-size:.9rem;outline:none;transition:border-color .15s,box-shadow .15s;} .field:focus{border-color:#DC183C;box-shadow:0 0 0 3px rgba(220,24,60,.12);}
-    .tk-tab{font-size:.85rem;font-weight:700;padding:.4rem .9rem;border-radius:.6rem;color:#6A7581;transition:all .15s;} .tk-tab.active{background:#fff;color:#121A21;box-shadow:0 1px 2px rgba(12,31,49,.08);}
-    .dev-badge{display:none;} body.dev-on .dev-badge{display:inline-flex;} #devToggle.on{background:#DC183C;color:#fff;border-color:#DC183C;}
-    .ov{position:fixed;inset:0;z-index:60;} .ov-bg{position:absolute;inset:0;background:rgba(12,31,49,.45);backdrop-filter:blur(2px);opacity:0;transition:opacity .3s;} .ov.open .ov-bg{opacity:1;}
-    .drawer{position:absolute;right:0;top:0;height:100%;width:100%;max-width:440px;background:#fff;box-shadow:-12px 0 40px rgba(12,31,49,.25);overflow-y:auto;transform:translateX(100%);transition:transform .3s cubic-bezier(.2,.7,.2,1);} .ov.open .drawer{transform:translateX(0);}
-    #ticketModal{position:fixed;inset:0;z-index:70;display:none;align-items:center;justify-content:center;padding:16px;} #ticketModal.open{display:flex;}
+    /* Tailwind Preflight Fallback */
+    html { line-height: 1.5; -webkit-text-size-adjust: 100%; tab-size: 100%; font-family: 'Inter', system-ui, sans-serif; }
+    body { margin: 0; line-height: inherit; background-color: #FCFCFC; color: #121A21; -webkit-font-smoothing: antialiased; }
+    *, ::before, ::after { box-sizing: border-box; border-width: 0; border-style: solid; border-color: currentColor; }
+    h1, h2, h3, h4, h5, h6 { font-size: inherit; font-weight: inherit; margin: 0; }
+    a { color: inherit; text-decoration: inherit; }
+    p { margin: 0; }
+    button { cursor: pointer; background: transparent; padding: 0; }
+    img { display: block; max-width: 100%; height: auto; }
+
+    /* CI Typography & Backgrounds */
+    .font-jakarta { font-family: 'Plus Jakarta Sans', sans-serif; letter-spacing: -0.01em; }
+    .hero-bg { background: linear-gradient(115deg, #0C1F31 0%, #0C1F31 50%, #2b1626 80%, #5e1a2c 115%); }
+    .dot-pattern { background-image: radial-gradient(rgba(255,255,255,0.07) 1px, transparent 1.5px); background-size: 22px 22px; }
+    
+    /* UI Components */
+    .card-lift { transition: box-shadow 0.3s cubic-bezier(0.2, 0.7, 0.2, 1), transform 0.3s cubic-bezier(0.2, 0.7, 0.2, 1); }
+    .card-lift:hover { box-shadow: 0 16px 32px -12px rgba(12, 31, 49, 0.15); transform: translateY(-3px); }
+    
+    .field { width: 100%; background: #fff; border: 1px solid #E7EBEF; border-radius: 0.75rem; height: 3rem; padding: 0 1rem; font-size: 0.9rem; outline: none; transition: border-color 0.15s, box-shadow 0.15s; } 
+    .field:focus { border-color: #DC183C; box-shadow: 0 0 0 3px rgba(220, 24, 60, 0.12); }
+    
+    .tk-tab { font-size: 0.85rem; font-weight: 700; padding: 0.4rem 0.9rem; border-radius: 0.6rem; color: #6A7581; transition: all 0.15s; } 
+    .tk-tab.active { background: #fff; color: #121A21; box-shadow: 0 1px 2px rgba(12, 31, 49, 0.08); }
+    
+    .dev-badge { display: none; } 
+    body.dev-on .dev-badge { display: inline-flex; } 
+    #devToggle.on { background: #DC183C; color: #fff; border-color: #DC183C; }
+    
+    /* Overlays & Modals */
+    .ov { position: fixed; inset: 0; z-index: 60; } 
+    .ov-bg { position: absolute; inset: 0; background: rgba(12, 31, 49, 0.45); backdrop-filter: blur(2px); opacity: 0; transition: opacity 0.3s; } 
+    .ov.open .ov-bg { opacity: 1; }
+    
+    .drawer { position: absolute; right: 0; top: 0; height: 100%; width: 100%; max-width: 440px; background: #fff; box-shadow: -12px 0 40px rgba(12, 31, 49, 0.25); overflow-y: auto; transform: translateX(100%); transition: transform 0.3s cubic-bezier(0.2, 0.7, 0.2, 1); } 
+    .ov.open .drawer { transform: translateX(0); }
+    
+    #ticketModal { position: fixed; inset: 0; z-index: 70; display: none; align-items: center; justify-content: center; padding: 16px; } 
+    #ticketModal.open { display: flex; }
+    
+    /* Toast Animation */
+    @keyframes toastIn { from { opacity:0; transform:translateY(20px) translateX(-50%); } to { opacity:1; transform:translateY(0) translateX(-50%); } }
+    .toast-animate { animation: toastIn 0.3s cubic-bezier(0.2, 0.7, 0.2, 1) forwards; }
   </style>
 </head>
-<body class="bg-[#FCFCFC] text-[#121A21] antialiased">
+<body class="bg-background text-ink antialiased">
 
-<header class="bg-slate-100 border-b-2 border-dashed border-slate-400 relative overflow-hidden">
-  <div class="absolute inset-0 opacity-30 pointer-events-none" style="background:repeating-linear-gradient(45deg,transparent,transparent 8px,rgba(100,116,139,.18) 8px,rgba(100,116,139,.18) 16px)"></div>
-  <div class="relative max-w-7xl mx-auto px-4 sm:px-6 h-14 flex items-center gap-3 sm:gap-4">
-    <a href="public-home.html" class="flex items-center gap-2 shrink-0 opacity-70 hover:opacity-100 transition">
-      <img src="assets/logo-icon.png" alt="SME South Africa" class="w-7 h-7" />
-      <span class="font-jakarta font-extrabold text-[13px] tracking-tight text-slate-700 hidden sm:inline">SME South Africa</span>
-    </a>
-    <span class="mx-1 hidden sm:inline w-px h-5 bg-slate-300"></span>
-    <p class="text-[10px] sm:text-[11px] font-bold uppercase tracking-widest text-slate-600 flex items-center gap-1.5"><i data-lucide="construction" class="w-3.5 h-3.5 text-slate-500"></i>Header placeholder &middot; design pending</p>
-    <div class="ml-auto flex items-center gap-2">
-      <button id="devToggle" onclick="toggleDevMode()" class="inline-flex items-center gap-1.5 px-2.5 h-8 rounded-full bg-white border border-slate-300 hover:border-[#DC183C] hover:text-[#DC183C] text-[11px] font-bold uppercase tracking-wider text-slate-600 transition" title="Toggle implementation notes"><i data-lucide="code-2" class="w-3.5 h-3.5"></i><span class="hidden sm:inline">Dev</span></button>
-      <a href="index.html" class="inline-flex items-center gap-1.5 px-3 h-8 rounded-full bg-white border border-slate-300 hover:border-slate-500 text-[11px] font-bold text-slate-700 transition"><i data-lucide="arrow-left" class="w-3.5 h-3.5"></i><span class="hidden sm:inline">Launcher</span></a>
+<header class="bg-white border-b border-border sticky top-0 z-50 shadow-sm">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+    <div class="flex items-center gap-8">
+      <a href="public-home.html" class="flex items-center gap-2 group">
+        <div class="w-8 h-8 rounded-lg bg-primary grid place-items-center text-white font-jakarta font-extrabold text-xs group-hover:scale-105 transition-transform">SME</div>
+        <span class="font-jakarta font-extrabold text-[15px] tracking-tight text-ink hidden sm:block">SME South Africa</span>
+      </a>
+      <span class="mx-1 hidden sm:inline w-px h-5 bg-border"></span>
+      <p class="text-[10px] sm:text-[11px] font-bold uppercase tracking-widest text-muted flex items-center gap-1.5"><i data-lucide="construction" class="w-3.5 h-3.5 text-muted"></i>Header placeholder</p>
+    </div>
+    <div class="flex items-center gap-2">
+      <button id="devToggle" onclick="toggleDevMode()" class="inline-flex items-center gap-1.5 px-3 h-9 rounded-full bg-secondary border border-border hover:border-primary hover:text-primary text-[11px] font-bold uppercase tracking-wider text-muted transition" title="Toggle implementation notes"><i data-lucide="code-2" class="w-3.5 h-3.5"></i><span class="hidden sm:inline">Dev</span></button>
+      <a href="index.html" class="inline-flex items-center justify-center px-5 py-2 h-9 rounded-full bg-primary text-white font-jakarta font-bold text-[12px] hover:bg-[#B0142F] transition-colors"><i data-lucide="arrow-left" class="w-3.5 h-3.5 mr-1.5"></i>Launcher</a>
     </div>
   </div>
 </header>
 
-<!-- HERO -->
-<section class="hero-soft">
-  <div class="max-w-3xl mx-auto px-4 sm:px-6 pt-14 pb-8 text-center">
-    <nav aria-label="Breadcrumb" class="text-xs text-[#6A7581] flex items-center justify-center flex-wrap gap-x-1.5 mb-4"><a href="public-home.html" class="hover:text-[#DC183C] transition">Home</a><span class="text-slate-300">›</span><a href="public-help.html" class="hover:text-[#DC183C] transition">Help</a><span class="text-slate-300">›</span><span class="text-[#121A21] font-medium">Support Tickets</span></nav>
-    <h1 class="font-jakarta font-extrabold text-3xl sm:text-[2.4rem] tracking-tight text-[#0C1F31]">Help &amp; Support Center
-      <button onclick="openBrief()" class="dev-badge align-middle ml-1 w-6 h-6 rounded-full bg-[#FF9900] text-[#0C1F31] items-center justify-center text-[11px] font-bold">i</button>
+<!-- UNIFIED HERO SECTION -->
+<section class="hero-bg text-white relative overflow-hidden">
+  <div class="absolute inset-0 dot-pattern opacity-70 pointer-events-none"></div>
+  <div class="absolute -top-32 -right-24 w-96 h-96 rounded-full bg-primary/20 blur-3xl pointer-events-none"></div>
+  
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 pt-12 pb-24 relative z-10 text-center">
+    <!-- Clean Breadcrumb -->
+    <nav aria-label="Breadcrumb" class="text-xs text-white/55 flex items-center justify-center flex-wrap gap-x-1.5 mb-5">
+      <a href="public-home.html" class="hover:text-white transition">Home</a>
+      <span class="text-white/30">›</span>
+      <a href="public-help.html" class="hover:text-white transition">Help</a>
+      <span class="text-white/30">›</span>
+      <span class="text-white/85 font-medium truncate">Support Tickets</span>
+    </nav>
+    
+    <h1 class="font-jakarta font-extrabold text-4xl sm:text-5xl tracking-tight">
+      Support Tickets
+      <button onclick="openBrief()" class="dev-badge align-middle ml-1 w-6 h-6 rounded-full bg-accent text-navy items-center justify-center text-[11px] font-bold">i</button>
     </h1>
-    <p class="text-[#6A7581] mt-2">Find answers quickly and connect with our support team.</p>
-    <form onsubmit="event.preventDefault();showToast('Searching the Knowledge Base…')" class="mt-6 relative">
-      <i data-lucide="search" class="w-5 h-5 absolute left-4 top-1/2 -translate-y-1/2 text-[#6A7581]"></i>
-      <input class="w-full h-13 rounded-xl bg-white border border-[#E7EBEF] pl-12 pr-4 text-[15px] outline-none shadow-sm focus:border-[#DC183C] focus:ring-2 focus:ring-[#DC183C]/15 transition" style="height:3.25rem" placeholder="Search" />
-    </form>
+    <p class="text-white/70 mt-4 text-lg max-w-lg mx-auto">Track the status of your open requests or create a new ticket to connect directly with our support team.</p>
   </div>
 </section>
 
-<main class="max-w-4xl mx-auto px-4 sm:px-6 pb-16 -mt-2">
+<!-- MAIN DASHBOARD -->
+<main class="max-w-4xl mx-auto px-4 sm:px-6 relative z-20 -mt-12 pb-20">
 
-  <!-- TABS: Knowledge Base (→ KB home) | Support Ticket (active) -->
-  <div class="flex items-end gap-1 border-b border-[#E7EBEF]">
-    <a href="public-help.html" class="inline-flex items-center gap-2 px-5 h-11 rounded-t-lg text-sm font-bold text-[#6A7581] hover:text-[#121A21] bg-[#F7F9FB] border border-b-0 border-[#E7EBEF] transition"><i data-lucide="book-open" class="w-4 h-4"></i> Knowledge Base</a>
-    <span class="inline-flex items-center gap-2 px-5 h-11 rounded-t-lg text-sm font-bold text-white bg-[#DC183C] border border-b-0 border-[#DC183C]"><i data-lucide="headphones" class="w-4 h-4"></i> Support Ticket</span>
-  </div>
-
-  <!-- PANEL -->
-  <div class="border border-t-0 border-[#E7EBEF] rounded-b-2xl bg-white p-5 sm:p-7">
-    <h2 class="font-jakarta font-extrabold text-xl text-[#0C1F31]">My Support Tickets</h2>
-    <p class="text-sm text-[#6A7581] mt-1">Track the status of your open and closed support requests.</p>
-    <button onclick="showToast('Opening your ticket history dashboard…')" class="mt-4 w-full h-12 rounded-xl border border-[#DC183C] text-[#DC183C] font-bold text-sm hover:bg-[#FDECEF] transition inline-flex items-center justify-center gap-2"><i data-lucide="layout-dashboard" class="w-4 h-4"></i> View Ticket History Dashboard</button>
-
-    <!-- ALL TICKETS -->
-    <div class="mt-6 border border-[#E7EBEF] rounded-2xl overflow-hidden">
-      <div class="flex items-center justify-between gap-3 px-4 sm:px-5 py-4 border-b border-[#E7EBEF]">
-        <h3 class="font-jakarta font-extrabold text-[17px]">All Tickets</h3>
-        <button onclick="openTicketModal()" class="inline-flex items-center gap-1.5 h-9 px-4 rounded-lg bg-[#0C1F31] hover:bg-[#142b40] text-white text-[13px] font-bold transition"><i data-lucide="plus" class="w-4 h-4"></i> Create Ticket</button>
+  <!-- DASHBOARD CARD -->
+  <div class="border border-border rounded-2xl bg-white shadow-xl card-lift">
+    
+    <div class="p-6 sm:p-8 border-b border-border flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div>
+        <h2 class="font-jakarta font-extrabold text-2xl text-ink">Your Tickets</h2>
+        <p class="text-[15px] text-muted mt-1">Manage your active and past conversations.</p>
       </div>
+      <button onclick="openTicketModal()" class="inline-flex items-center justify-center gap-2 h-12 px-7 rounded-full bg-primary hover:bg-[#B0142F] text-white text-[15px] font-jakarta font-bold transition shadow-sm shrink-0">
+        <i data-lucide="plus" class="w-4 h-4"></i> Create Ticket
+      </button>
+    </div>
 
-      <div class="px-4 sm:px-5 pt-4">
-        <div class="flex items-center justify-between gap-3 flex-wrap">
-          <div class="inline-flex items-center gap-1 bg-[#F0F2F5] rounded-xl p-1">
-            <button class="tk-tab active" data-filter="all" onclick="setFilter('all')">All</button>
-            <button class="tk-tab" data-filter="open" onclick="setFilter('open')">Open</button>
-            <button class="tk-tab" data-filter="closed" onclick="setFilter('closed')">Closed</button>
-          </div>
-          <button class="w-9 h-9 grid place-items-center rounded-lg border border-[#E7EBEF] text-[#6A7581] hover:border-[#121A21] transition" title="Sort"><i data-lucide="arrow-down-up" class="w-4 h-4"></i></button>
+    <div class="p-6 sm:p-8">
+      <!-- Filters and Search -->
+      <div class="flex items-center justify-between gap-4 flex-col sm:flex-row mb-6">
+        <div class="inline-flex items-center gap-1 bg-secondary rounded-xl p-1.5 w-full sm:w-auto border border-border">
+          <button class="tk-tab active flex-1 sm:flex-none text-center" data-filter="all" onclick="setFilter('all')">All</button>
+          <button class="tk-tab flex-1 sm:flex-none text-center" data-filter="open" onclick="setFilter('open')">Open</button>
+          <button class="tk-tab flex-1 sm:flex-none text-center" data-filter="closed" onclick="setFilter('closed')">Closed</button>
         </div>
-        <div class="relative mt-3">
-          <i data-lucide="search" class="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400"></i>
-          <input id="tkSearch" oninput="renderTickets()" class="w-full h-11 rounded-lg border border-[#E7EBEF] pl-10 pr-3 text-sm outline-none focus:border-[#DC183C] focus:ring-2 focus:ring-[#DC183C]/15 transition" placeholder="Search…" />
+        <div class="relative w-full sm:w-72 shrink-0">
+          <i data-lucide="search" class="w-5 h-5 absolute left-3.5 top-1/2 -translate-y-1/2 text-muted"></i>
+          <input id="tkSearch" oninput="renderTickets()" class="w-full h-12 rounded-xl border border-border pl-11 pr-3 text-[15px] outline-none focus:border-primary focus:ring-2 focus:ring-primary/15 transition bg-background" placeholder="Search tickets…" />
         </div>
       </div>
 
-      <!-- table head -->
-      <div class="hidden sm:grid grid-cols-[1fr,140px,120px] gap-3 px-5 py-3 mt-3 bg-[#F7F9FB] border-y border-[#E7EBEF] text-[11px] font-bold uppercase tracking-wider text-[#6A7581]">
-        <span>Conversation</span><span>Date</span><span>Status</span>
-      </div>
-      <div id="tkList" class="divide-y divide-[#E7EBEF]"></div>
-      <div id="tkEmpty" class="hidden text-center py-12">
-        <div class="w-12 h-12 rounded-2xl bg-[#FDECEF] text-[#DC183C] grid place-items-center mx-auto mb-3"><i data-lucide="inbox" class="w-6 h-6"></i></div>
-        <p class="font-jakarta font-bold">No tickets here</p>
-        <p class="text-sm text-slate-500 mt-1">Nothing matches this filter yet.</p>
+      <!-- Table Head -->
+      <div class="hidden sm:grid grid-cols-[1fr,140px,120px] gap-3 px-5 py-3 bg-secondary rounded-lg text-[11px] font-bold uppercase tracking-wider text-muted mb-2 border border-border">
+        <span>Conversation</span><span>Last Updated</span><span>Status</span>
       </div>
 
-      <!-- pagination -->
-      <div class="flex items-center justify-between gap-3 px-4 sm:px-5 py-4 border-t border-[#E7EBEF] text-sm">
-        <span class="text-[#6A7581]">Page <b class="text-[#121A21]">1</b> of 1</span>
+      <!-- Ticket List -->
+      <div id="tkList" class="divide-y divide-border border-t border-border sm:border-t-0"></div>
+      
+      <!-- Empty State -->
+      <div id="tkEmpty" class="hidden text-center py-16">
+        <div class="w-16 h-16 rounded-2xl bg-[#FDECEF] text-primary grid place-items-center mx-auto mb-4"><i data-lucide="inbox" class="w-8 h-8"></i></div>
+        <p class="font-jakarta font-extrabold text-ink text-xl">No tickets found</p>
+        <p class="text-[15px] text-muted mt-2">There are no support requests matching this view.</p>
+      </div>
+
+      <!-- Pagination -->
+      <div class="flex items-center justify-between gap-3 pt-6 mt-4 border-t border-border text-sm">
+        <span class="text-muted">Page <b class="text-ink">1</b> of 1</span>
         <div class="flex items-center gap-2">
-          <div class="inline-flex items-center gap-1.5 h-9 px-3 rounded-lg border border-[#E7EBEF] text-[13px] text-[#6A7581]">10 / page <i data-lucide="chevron-down" class="w-3.5 h-3.5"></i></div>
-          <button class="w-9 h-9 grid place-items-center rounded-lg border border-[#E7EBEF] text-slate-300 cursor-not-allowed" disabled><i data-lucide="chevron-left" class="w-4 h-4"></i></button>
-          <button class="w-9 h-9 grid place-items-center rounded-lg bg-[#DC183C] text-white text-[13px] font-bold">1</button>
-          <button class="w-9 h-9 grid place-items-center rounded-lg border border-[#E7EBEF] text-slate-300 cursor-not-allowed" disabled><i data-lucide="chevron-right" class="w-4 h-4"></i></button>
+          <button class="w-10 h-10 grid place-items-center rounded-lg border border-border bg-white text-slate-300 cursor-not-allowed shadow-sm" disabled><i data-lucide="chevron-left" class="w-5 h-5"></i></button>
+          <button class="w-10 h-10 grid place-items-center rounded-lg border border-border bg-white text-slate-300 cursor-not-allowed shadow-sm" disabled><i data-lucide="chevron-right" class="w-5 h-5"></i></button>
         </div>
       </div>
+
     </div>
   </div>
 </main>
 
-<footer class="bg-slate-100 border-t-2 border-dashed border-slate-400 relative overflow-hidden">
-  <div class="absolute inset-0 opacity-30 pointer-events-none" style="background:repeating-linear-gradient(45deg,transparent,transparent 8px,rgba(100,116,139,.18) 8px,rgba(100,116,139,.18) 16px)"></div>
-  <div class="relative max-w-7xl mx-auto px-4 sm:px-6 py-6 text-center">
-    <p class="text-[10px] sm:text-[11px] font-bold uppercase tracking-widest text-slate-600 flex items-center justify-center gap-1.5"><i data-lucide="construction" class="w-3.5 h-3.5 text-slate-500"></i>Footer placeholder &middot; design pending</p>
-    <p class="text-[11px] text-slate-500 mt-2">&copy; 2026 SME South Africa</p>
+<footer class="bg-navy border-t border-[#1a2d40] relative overflow-hidden mt-12">
+  <div class="absolute inset-0 opacity-10 pointer-events-none" style="background:repeating-linear-gradient(45deg,transparent,transparent 8px,rgba(255,255,255,.18) 8px,rgba(255,255,255,.18) 16px)"></div>
+  <div class="relative max-w-7xl mx-auto px-4 sm:px-6 py-10 flex flex-col md:flex-row items-center justify-between gap-6">
+    <div class="flex items-center gap-2">
+      <div class="w-8 h-8 rounded-lg bg-primary grid place-items-center text-white font-jakarta font-extrabold text-xs">SME</div>
+      <span class="font-jakarta font-extrabold text-[15px] text-white">SME South Africa</span>
+    </div>
+    <p class="text-[12px] text-white/50">&copy; 2026 SME South Africa. All rights reserved.</p>
   </div>
 </footer>
 
 <!-- CREATE TICKET MODAL -->
 <div id="ticketModal">
-  <div class="absolute inset-0 bg-[#0C1F31]/55 backdrop-blur-sm" onclick="closeTicketModal()"></div>
-  <div class="relative bg-white rounded-2xl w-full max-w-lg max-h-[92vh] overflow-y-auto shadow-2xl">
-    <div class="flex items-start justify-between gap-3 px-6 py-5 border-b border-[#E7EBEF] sticky top-0 bg-white">
-      <div><p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] mb-1">New request</p><h3 class="font-jakarta font-extrabold text-lg">Create a support ticket</h3></div>
-      <button onclick="closeTicketModal()" class="text-slate-400 hover:text-[#121A21]"><i data-lucide="x" class="w-5 h-5"></i></button>
-    </div>
-    <form onsubmit="submitTicket(event)" class="p-6 space-y-4">
-      <div><label class="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1.5">Subject</label><input required class="field" placeholder="Briefly, what do you need help with?" /></div>
-      <div class="grid grid-cols-2 gap-3">
-        <div><label class="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1.5">Department</label>
-          <select required class="field bg-white"><option value="" disabled selected>Select…</option><option>General</option><option>Account &amp; Billing</option><option>Funding</option><option>Technical</option></select></div>
-        <div><label class="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1.5">Priority</label>
-          <select required class="field bg-white"><option value="" disabled selected>Select…</option><option>Low</option><option selected>Normal</option><option>High</option><option>Urgent</option></select></div>
+  <div class="absolute inset-0 bg-navy/60 backdrop-blur-sm" onclick="closeTicketModal()"></div>
+  <div class="relative bg-white rounded-3xl w-full max-w-lg max-h-[92vh] overflow-y-auto shadow-2xl m-4">
+    <div class="flex items-start justify-between gap-3 px-8 py-6 border-b border-border sticky top-0 bg-white z-10">
+      <div>
+        <p class="text-[11px] font-bold uppercase tracking-widest text-primary mb-1">New request</p>
+        <h3 class="font-jakarta font-extrabold text-xl text-ink">Create a support ticket</h3>
       </div>
-      <div><label class="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1.5">Message</label><textarea required rows="4" class="w-full bg-white border border-[#E7EBEF] rounded-xl px-4 py-3 text-sm outline-none focus:border-[#DC183C] focus:ring-2 focus:ring-[#DC183C]/15 resize-none" placeholder="Give us the details — the more context, the faster we can help."></textarea></div>
-      <label class="flex items-center gap-2 text-sm text-[#6A7581]"><span class="inline-flex items-center gap-1.5 h-10 px-3 rounded-lg border border-dashed border-[#E7EBEF] text-slate-400 text-[13px]"><i data-lucide="paperclip" class="w-4 h-4"></i> Attach a file</span><span class="text-xs">(optional)</span></label>
-      <div class="flex items-center gap-2 pt-1">
-        <button type="button" onclick="closeTicketModal()" class="flex-1 h-12 rounded-full border border-[#E7EBEF] font-bold text-sm hover:border-[#121A21] transition">Cancel</button>
-        <button type="submit" class="flex-1 h-12 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold text-sm transition inline-flex items-center justify-center gap-2">Submit ticket <i data-lucide="send" class="w-4 h-4"></i></button>
+      <button onclick="closeTicketModal()" class="text-muted hover:text-ink transition bg-secondary hover:bg-border p-2 rounded-full"><i data-lucide="x" class="w-5 h-5"></i></button>
+    </div>
+    
+    <form onsubmit="submitTicket(event)" class="p-8 space-y-5">
+      <div>
+        <label class="block text-[12px] font-bold uppercase tracking-wider text-muted mb-2">Subject</label>
+        <input required class="field text-[15px]" placeholder="Briefly, what do you need help with?" />
+      </div>
+      
+      <div class="grid grid-cols-2 gap-4">
+        <div>
+          <label class="block text-[12px] font-bold uppercase tracking-wider text-muted mb-2">Department</label>
+          <select required class="field bg-white text-[15px] text-slate-700" style="-webkit-appearance:none;appearance:none;background-image:url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2216%22 height=%2216%22 fill=%22none%22 stroke=%22%236A7581%22 stroke-width=%222%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22><path d=%22M6 9l6 6 6-6%22/></svg>');background-repeat:no-repeat;background-position:right 1rem center;padding-right:2.5rem">
+            <option value="" disabled selected>Select…</option>
+            <option>General</option>
+            <option>Account &amp; Billing</option>
+            <option>Funding</option>
+            <option>Technical</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-[12px] font-bold uppercase tracking-wider text-muted mb-2">Priority</label>
+          <select required class="field bg-white text-[15px] text-slate-700" style="-webkit-appearance:none;appearance:none;background-image:url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2216%22 height=%2216%22 fill=%22none%22 stroke=%22%236A7581%22 stroke-width=%222%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22><path d=%22M6 9l6 6 6-6%22/></svg>');background-repeat:no-repeat;background-position:right 1rem center;padding-right:2.5rem">
+            <option value="" disabled selected>Select…</option>
+            <option>Low</option>
+            <option selected>Normal</option>
+            <option>High</option>
+            <option>Urgent</option>
+          </select>
+        </div>
+      </div>
+      
+      <div>
+        <label class="block text-[12px] font-bold uppercase tracking-wider text-muted mb-2">Message</label>
+        <textarea required rows="4" class="w-full bg-white border border-border rounded-xl px-4 py-3 text-[15px] outline-none focus:border-primary focus:ring-2 focus:ring-primary/15 resize-none transition" placeholder="Give us the details — the more context, the faster we can help."></textarea>
+      </div>
+      
+      <label class="flex items-center gap-2 text-sm text-muted cursor-pointer w-max group">
+        <span class="inline-flex items-center gap-2 h-11 px-5 rounded-xl border border-dashed border-[#CBD2DA] group-hover:border-ink group-hover:text-ink transition text-slate-500 text-[14px] font-semibold bg-background"><i data-lucide="paperclip" class="w-4 h-4"></i> Attach a file</span>
+        <span class="text-xs text-slate-400">(optional)</span>
+      </label>
+      
+      <div class="flex items-center gap-3 pt-5 border-t border-border mt-2">
+        <button type="button" onclick="closeTicketModal()" class="flex-1 h-12 rounded-full border border-border font-jakarta font-bold text-[15px] hover:bg-secondary hover:border-ink transition text-ink">Cancel</button>
+        <button type="submit" class="flex-1 h-12 rounded-full bg-primary hover:bg-[#B0142F] text-white font-jakarta font-bold text-[15px] transition inline-flex items-center justify-center gap-2 shadow-md">Submit ticket <i data-lucide="send" class="w-4 h-4"></i></button>
       </div>
     </form>
   </div>
 </div>
 
-<div id="overlay-root"></div><div id="toast" class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-[80]"></div>
+<div id="overlay-root"></div>
+<div id="toast" class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-[80] toast-animate w-max max-w-sm"></div>
 
 <script>
   function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
-  function showToast(m){const el=document.getElementById('toast');el.classList.remove('hidden');el.innerHTML=`<div class="bg-[#0C1F31] text-white rounded-full pl-3 pr-5 py-2.5 shadow-2xl flex items-center gap-2 text-sm font-semibold" style="border-left:4px solid #29A37A"><i data-lucide="check-circle" class="w-4 h-4" style="color:#29A37A"></i><span>${esc(m)}</span></div>`;lucide.createIcons();setTimeout(()=>{el.classList.add('hidden');el.innerHTML='';},2600);}
+  function showToast(m){const el=document.getElementById('toast');el.classList.remove('hidden');el.innerHTML=`<div class="bg-navy text-white rounded-full pl-4 pr-6 py-3 shadow-2xl flex items-center gap-2.5 text-[15px] font-semibold" style="border-left:4px solid #29A37A"><i data-lucide="check-circle" class="w-5 h-5" style="color:#29A37A"></i><span>${esc(m)}</span></div>`;lucide.createIcons();setTimeout(()=>{el.classList.add('hidden');el.innerHTML='';},2600);}
 
-  // ---- Tickets (sample data; production reads from Fluent Support for the logged-in member) ----
+  // ---- Tickets Data ----
   let TICKETS=[
     {id:1042,subject:'Card machine not connecting to the app',excerpt:'Paired once, now the Yoco Neo shows offline…',date:'2 days ago',status:'open'},
     {id:1038,subject:'Funding application stuck at step 3',excerpt:'The document upload keeps failing on submit.',date:'5 days ago',status:'open'},
@@ -162,31 +272,43 @@
     {id:1003,subject:'How to add a team member',excerpt:'Resolved — thanks for the walkthrough.',date:'2 months ago',status:'closed'}
   ];
   let filter='all';
-  function setFilter(f){ filter=f; document.querySelectorAll('.tk-tab').forEach(b=>b.classList.toggle('active',b.dataset.filter===f)); renderTickets(); }
-  function statusChip(s){
-    if(s==='open') return '<span class="inline-flex items-center gap-1.5 text-[12px] font-semibold text-[#29A37A]"><span class="w-1.5 h-1.5 rounded-full bg-[#29A37A]"></span> open</span>';
-    return '<span class="inline-flex items-center gap-1.5 text-[12px] font-semibold text-[#6A7581]"><span class="w-1.5 h-1.5 rounded-full bg-[#6A7581]"></span> closed</span>';
+  
+  function setFilter(f){ 
+    filter=f; 
+    document.querySelectorAll('.tk-tab').forEach(b=>b.classList.toggle('active',b.dataset.filter===f)); 
+    renderTickets(); 
   }
+  
+  function statusChip(s){
+    if(s==='open') return '<span class="inline-flex items-center justify-center w-20 py-1.5 rounded-lg bg-[#E4F5EE] text-[11px] font-bold uppercase tracking-widest text-success">Open</span>';
+    return '<span class="inline-flex items-center justify-center w-20 py-1.5 rounded-lg bg-secondary text-[11px] font-bold uppercase tracking-widest text-muted border border-border">Closed</span>';
+  }
+  
   function renderTickets(){
     const q=(document.getElementById('tkSearch').value||'').trim().toLowerCase();
     const rows=TICKETS.filter(t=>(filter==='all'||t.status===filter) && (!q || (t.subject+' '+t.excerpt).toLowerCase().includes(q)));
     const list=document.getElementById('tkList'), empty=document.getElementById('tkEmpty');
+    
     if(!rows.length){ list.innerHTML=''; empty.classList.remove('hidden'); lucide.createIcons(); return; }
+    
     empty.classList.add('hidden');
     list.innerHTML=rows.map(t=>`
-      <a href="#" onclick="event.preventDefault();showToast('Opening ticket #${t.id}…')" class="grid sm:grid-cols-[1fr,140px,120px] gap-1 sm:gap-3 items-center px-4 sm:px-5 py-4 hover:bg-[#FDECEF]/30 transition group">
+      <a href="public-support-detailed-ticket.html" class="grid sm:grid-cols-[1fr,140px,120px] gap-2 sm:gap-3 items-center px-5 py-4 hover:bg-secondary transition group rounded-lg sm:rounded-none">
         <div class="min-w-0">
-          <p class="font-jakarta font-bold text-[15px] text-[#121A21] group-hover:text-[#DC183C] transition truncate">${esc(t.subject)}</p>
-          <p class="text-[13px] text-[#6A7581] truncate">${esc(t.excerpt)}</p>
+          <p class="font-jakarta font-bold text-[16px] text-ink group-hover:text-primary transition truncate flex items-center gap-2">
+            <span class="text-[13px] font-semibold text-slate-400">#${t.id}</span> ${esc(t.subject)}
+          </p>
+          <p class="text-[14px] text-muted truncate mt-1">${esc(t.excerpt)}</p>
         </div>
-        <p class="text-[13px] text-[#6A7581] sm:whitespace-nowrap">${esc(t.date)}</p>
-        <div>${statusChip(t.status)}</div>
+        <p class="text-[13px] font-medium text-muted sm:whitespace-nowrap flex items-center gap-1.5"><i data-lucide="clock" class="w-4 h-4 hidden sm:block"></i> ${esc(t.date)}</p>
+        <div class="mt-2 sm:mt-0">${statusChip(t.status)}</div>
       </a>`).join('');
     lucide.createIcons();
   }
 
   function openTicketModal(){ document.getElementById('ticketModal').classList.add('open'); lucide.createIcons(); }
   function closeTicketModal(){ document.getElementById('ticketModal').classList.remove('open'); }
+  
   function submitTicket(e){
     e.preventDefault();
     const subject=e.target.querySelector('input').value.trim()||'New request';
@@ -197,20 +319,21 @@
     setFilter('all');
     showToast('Ticket #'+newId+' created — we’ll reply by email and here.');
   }
+  
   document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeTicketModal(); });
 
   // ---- Dev brief ----
   const BRIEF={
     title:'Support Tickets', sub:'Fluent Support portal (member-scoped)',
-    purpose:'The member-facing support portal, powered by Fluent Support (WordPress). Deliberately separate from the BetterDocs Knowledge Base — the two are linked by the tab bar. Members raise and track tickets here; the KB handles self-service.',
+    purpose:'The member-facing support portal, powered by Fluent Support (WordPress). Deliberately isolated as a standalone dashboard so users can focus on resolving their issues without being distracted by KB articles.',
     data:'Ticket: <code>{ id, subject, excerpt, customer_id, department, priority, status: open|closed, created_at, updated_at, messages[] }</code>. List is scoped to the logged-in member. New ticket posts to Fluent Support and triggers the agent-side workflow + email replies.',
-    logic:'Gated (members only). Tabs: Knowledge Base → public-help.html, Support Ticket = here. All/Open/Closed filter + search are client-side over the member’s tickets (server-queried in production). Create Ticket = Fluent Support submission (subject, department, priority, message, optional attachment). “View Ticket History Dashboard” → the member’s full history view.',
-    components:'Header · hero (title, search) · KB/Support tabs · My Support Tickets card + history-dashboard CTA · All Tickets (filter tabs, search, conversation/date/status table, pagination) · Create Ticket modal · footer.'
+    logic:'Gated (members only). Standalone UI. All/Open/Closed filter + search are client-side over the member’s tickets (server-queried in production). Create Ticket = Fluent Support submission (subject, department, priority, message, optional attachment).',
+    components:'Header · Hero (Navy CI) · Dashboard Card (Filters, Search, Conversation/Date/Status table, Pagination) · Create Ticket Modal · Footer.'
   };
   function toggleDevMode(){const on=document.body.classList.toggle('dev-on');const b=document.getElementById('devToggle');if(b)b.classList.toggle('on',on);if(on)showToast('Dev Mode on — tap any ⓘ for implementation notes.');lucide.createIcons();}
   function closeOverlay(id){const el=document.getElementById(id);if(!el)return;el.classList.remove('open');setTimeout(()=>{if(el&&el.parentNode)el.remove();},300);}
-  function openBrief(){const b=BRIEF;const sec=(i,l,h)=>`<div class="px-6 py-4 border-t border-slate-100"><p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] flex items-center gap-1.5 mb-2"><i data-lucide="${i}" class="w-3.5 h-3.5"></i>${l}</p><div class="text-sm text-slate-600 leading-relaxed">${h}</div></div>`;
-    document.getElementById('overlay-root').innerHTML=`<div class="ov" id="ov"><div class="ov-bg" onclick="closeOverlay('ov')"></div><div class="drawer"><div class="sticky top-0 z-10 bg-[#0C1F31] text-white px-6 py-5 flex items-start justify-between"><div><p class="text-[10px] font-bold uppercase tracking-widest text-[#FF9900] mb-1">Dev Brief</p><h3 class="font-jakarta font-extrabold text-lg leading-tight">${b.title}</h3><p class="text-xs text-white/60 mt-1">${b.sub}</p></div><button onclick="closeOverlay('ov')" class="text-white/60 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button></div>${sec('target','Purpose',b.purpose)}${sec('database','Data model',b.data)}${sec('git-branch','Logic',b.logic)}${sec('boxes','Components',b.components)}</div></div>`;
+  function openBrief(){const b=BRIEF;const sec=(i,l,h)=>`<div class="px-6 py-5 border-t border-slate-100"><p class="text-[11px] font-bold uppercase tracking-widest text-primary flex items-center gap-1.5 mb-2"><i data-lucide="${i}" class="w-4 h-4"></i>${l}</p><div class="text-[15px] text-slate-600 leading-relaxed">${h}</div></div>`;
+    document.getElementById('overlay-root').innerHTML=`<div class="ov" id="ov"><div class="ov-bg" onclick="closeOverlay('ov')"></div><div class="drawer"><div class="sticky top-0 z-10 bg-navy text-white px-6 py-6 flex items-start justify-between"><div><p class="text-[11px] font-bold uppercase tracking-widest text-accent mb-1">Dev Brief</p><h3 class="font-jakarta font-extrabold text-xl leading-tight">${b.title}</h3><p class="text-sm text-white/60 mt-1">${b.sub}</p></div><button onclick="closeOverlay('ov')" class="text-white/60 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button></div>${sec('target','Purpose',b.purpose)}${sec('database','Data model',b.data)}${sec('git-branch','Logic',b.logic)}${sec('boxes','Components',b.components)}</div></div>`;
     requestAnimationFrame(()=>{const o=document.getElementById('ov');if(o)o.classList.add('open');});lucide.createIcons();
   }
 
