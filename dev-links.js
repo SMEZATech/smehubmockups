@@ -14,6 +14,7 @@
 (function(global){
   'use strict';
   var OUTBOX_KEY = 'smeDevLinkOutbox';
+  var MAIL_TO = 'adops@adclickafrica.com'; // Tshepho — interim delivery until an auto endpoint is chosen
   var STYLE_ID = 'sme-devlink-style';
   var MODAL_ID = 'sme-devlink-modal';
 
@@ -71,13 +72,17 @@
       +     '<label>Notes <span style="text-transform:none;letter-spacing:0;font-weight:400;color:#9aa3ac">(optional)</span></label>'
       +     '<textarea id="sme-dl-notes" placeholder="Anything worth flagging — auth, known issues, deploy branch, etc."></textarea>'
       +     '<input type="hidden" id="sme-dl-name" value="Sandile" />'
-      +     '<div class="btns"><button class="cancel" type="button">Cancel</button><button class="submit" type="button">Send to Tshepho</button></div>'
+      +     '<div class="btns"><button class="cancel" type="button">Cancel</button><button class="submit" type="button">Continue &rarr;</button></div>'
       +   '</div>'
-      +   '<div id="sme-dl-success" style="display:none;text-align:center;padding:8px 4px 4px">'
-      +     '<div style="width:56px;height:56px;border-radius:50%;background:#29A37A1a;color:#29A37A;display:grid;place-items:center;margin:0 auto 12px;font-size:28px;font-weight:800">✓</div>'
-      +     '<p style="font:800 17px/1.3 \'Plus Jakarta Sans\',sans-serif;color:#121A21;margin:0 0 6px">Sent to Tshepho</p>'
-      +     '<p style="color:#6A7581;font-size:13px;margin:0 0 18px;line-height:1.5">Your dev link is queued for her review. She&rsquo;ll wire it into the mockup hub from her side.</p>'
-      +     '<div class="btns" style="margin-top:0"><button class="cancel" id="sme-dl-close-ok" type="button">Close</button></div>'
+      +   '<div id="sme-dl-success" style="display:none;padding:4px 2px 2px">'
+      +     '<div style="text-align:center;margin-bottom:14px">'
+      +       '<div style="width:52px;height:52px;border-radius:50%;background:#29A37A1a;color:#29A37A;display:grid;place-items:center;margin:0 auto 10px"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></div>'
+      +       '<p style="font:800 17px/1.3 \'Plus Jakarta Sans\',sans-serif;color:#121A21;margin:0 0 6px">Ready to send to Tshepho</p>'
+      +       '<p style="color:#6A7581;font-size:13px;margin:0;line-height:1.5">Copy this or email it &mdash; she wires the dev link into the hub from Mission Control.</p>'
+      +     '</div>'
+      +     '<textarea id="sme-dl-payload" readonly style="width:100%;min-height:118px;font:12px/1.5 ui-monospace,Menlo,monospace;background:#F7F9FB;color:#121A21;border:1px solid #E7EBEF;border-radius:8px;padding:10px 12px;resize:vertical;box-sizing:border-box"></textarea>'
+      +     '<div class="btns"><button class="cancel" id="sme-dl-copy" type="button">Copy</button><button class="submit" id="sme-dl-email" type="button">Email to Tshepho</button></div>'
+      +     '<div style="text-align:center;margin-top:10px"><button id="sme-dl-close-ok" type="button" style="background:transparent;border:0;color:#9aa3ac;font-size:12px;cursor:pointer;text-decoration:underline">Close</button></div>'
       +   '</div>'
       + '</div>';
     document.body.appendChild(m);
@@ -86,6 +91,8 @@
     m.querySelector('#sme-dl-form .cancel').addEventListener('click', close);
     m.querySelector('#sme-dl-form .submit').addEventListener('click', submit);
     m.querySelector('#sme-dl-close-ok').addEventListener('click', close);
+    m.querySelector('#sme-dl-copy').addEventListener('click', copyPayload);
+    m.querySelector('#sme-dl-email').addEventListener('click', emailPayload);
     return m;
   }
 
@@ -109,6 +116,7 @@
     var m = document.getElementById(MODAL_ID);
     if(m) m.classList.remove('open');
   }
+  var _payload = '';
   function submit(){
     var name = (document.getElementById('sme-dl-name').value || 'Sandile').trim() || 'Sandile';
     var file = (document.getElementById('sme-dl-file').value || '').trim();
@@ -118,16 +126,45 @@
     if(!url){ alert('Please add the dev URL.'); return; }
     if(!/^https?:\/\//i.test(url)){ alert('Dev URL must start with http:// or https://'); return; }
 
-    // Queue locally — production replaces this with a private webhook that
-    // posts to adops@adclickafrica.com. No external redirect from the dev's side.
-    var entry = { file:file, url:url, notes:notes, from:name, ts:new Date().toISOString() };
-    var outbox = [];
-    try { outbox = JSON.parse(localStorage.getItem(OUTBOX_KEY) || '[]'); } catch(_){}
-    outbox.push(entry);
-    try { localStorage.setItem(OUTBOX_KEY, JSON.stringify(outbox)); } catch(_){}
+    // Compose a plain-text record the dev copies or emails to Tshepho. No fake
+    // "sent" — delivery is an explicit copy/email action, honest and infra-free.
+    // (Upgrade path: a Cloudflare Worker or form endpoint can auto-deliver later.)
+    _payload = 'Dev link — ' + file
+      + '\nStaging URL: ' + url
+      + '\nFrom: ' + name
+      + (notes ? '\nNotes: ' + notes : '');
 
+    // Keep a personal log on the dev's own device (not a delivery channel).
+    try {
+      var outbox = JSON.parse(localStorage.getItem(OUTBOX_KEY) || '[]');
+      outbox.push({ file:file, url:url, notes:notes, from:name });
+      localStorage.setItem(OUTBOX_KEY, JSON.stringify(outbox));
+    } catch(_){}
+
+    var ta = document.getElementById('sme-dl-payload');
+    if(ta) ta.value = _payload;
     document.getElementById('sme-dl-form').style.display = 'none';
     document.getElementById('sme-dl-success').style.display = '';
+  }
+
+  function copyPayload(){
+    var ta = document.getElementById('sme-dl-payload');
+    var btn = document.getElementById('sme-dl-copy');
+    function done(ok){ if(btn){ btn.textContent = ok ? 'Copied ✓' : 'Press Ctrl+C'; setTimeout(function(){ if(btn) btn.textContent='Copy'; }, 1800); } }
+    try {
+      if(navigator.clipboard && navigator.clipboard.writeText){
+        navigator.clipboard.writeText(_payload).then(function(){ done(true); }, function(){ if(ta){ ta.focus(); ta.select(); } done(false); });
+        return;
+      }
+    } catch(_){}
+    if(ta){ ta.focus(); ta.select(); try { document.execCommand('copy'); done(true); } catch(_){ done(false); } }
+  }
+
+  function emailPayload(){
+    var file = (document.getElementById('sme-dl-file') && document.getElementById('sme-dl-file').value) || '';
+    var subject = 'Dev link — ' + file;
+    var href = 'mailto:' + MAIL_TO + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(_payload);
+    window.location.href = href;
   }
 
   function readOutbox(){
