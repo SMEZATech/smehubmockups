@@ -61,9 +61,6 @@
       #sme-suggest-fab{position:fixed;right:18px;bottom:70px;z-index:2147483600;display:inline-flex;align-items:center;gap:8px;padding:10px 16px;border:0;border-radius:999px;background:#3B82F6;color:#fff;font:700 12px/1 'Plus Jakarta Sans',system-ui,sans-serif;letter-spacing:.06em;text-transform:uppercase;box-shadow:0 8px 24px -6px rgba(59,130,246,.55),0 2px 6px rgba(0,0,0,.15);cursor:pointer;transition:transform .15s ease,box-shadow .15s ease}
       #sme-suggest-fab:hover{transform:translateY(-1px);box-shadow:0 12px 30px -6px rgba(59,130,246,.65)}
       #sme-suggest-fab svg{width:14px;height:14px;stroke:currentColor;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round}
-      #sme-devlink-fab{position:fixed;right:18px;bottom:122px;z-index:2147483600;display:inline-flex;align-items:center;gap:8px;padding:10px 16px;border:0;border-radius:999px;background:#29A37A;color:#fff;font:700 12px/1 'Plus Jakarta Sans',system-ui,sans-serif;letter-spacing:.06em;text-transform:uppercase;box-shadow:0 8px 24px -6px rgba(41,163,122,.55),0 2px 6px rgba(0,0,0,.15);cursor:pointer;transition:transform .15s ease,box-shadow .15s ease}
-      #sme-devlink-fab:hover{transform:translateY(-1px);box-shadow:0 12px 30px -6px rgba(41,163,122,.65)}
-      #sme-devlink-fab svg{width:14px;height:14px;stroke:currentColor;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round}
       #sme-notes-panel{position:fixed;top:0;right:0;height:100vh;width:min(440px,100vw);z-index:2147483601;background:#fff;color:#121A21;box-shadow:-12px 0 40px rgba(12,31,49,.25);transform:translateX(105%);transition:transform .25s cubic-bezier(.2,.7,.2,1);display:flex;flex-direction:column;font:14px/1.5 Inter,system-ui,sans-serif}
       #sme-notes-panel.open{transform:translateX(0)}
       #sme-notes-backdrop{position:fixed;inset:0;z-index:2147483599;background:rgba(12,31,49,.45);opacity:0;pointer-events:none;transition:opacity .2s ease}
@@ -101,7 +98,7 @@
       .smn-f button.primary:hover{background:#16314a}
       .smn-f button.danger{color:#DC183C;border-color:#FDECEF}
       .smn-f button.danger:hover{background:#FDECEF}
-      @media (max-width:600px){#sme-notes-fab{right:12px;bottom:12px;padding:9px 13px;font-size:11px}#sme-suggest-fab{right:12px;bottom:60px;padding:9px 13px;font-size:11px}#sme-devlink-fab{right:12px;bottom:108px;padding:9px 13px;font-size:11px}}
+      @media (max-width:600px){#sme-notes-fab{right:12px;bottom:12px;padding:9px 13px;font-size:11px}#sme-suggest-fab{right:12px;bottom:60px;padding:9px 13px;font-size:11px}}
     `;
     var st = document.createElement('style');
     st.id = 'sme-notes-style';
@@ -262,17 +259,6 @@
       sug.innerHTML = '<svg viewBox="0 0 24 24"><circle cx="18" cy="18" r="3"/><circle cx="6" cy="6" r="3"/><path d="M6 21V9a9 9 0 0 0 9 9"/></svg>Suggest';
       sug.addEventListener('click', function(){ window.SmeSuggest.open(FILE); });
       document.body.appendChild(sug);
-    }
-
-    // Dev-link button — only shown when SmeDevLink is available.
-    // Stacks above Suggest. Green to signal dev/staging as opposed to review chatter.
-    if(window.SmeDevLink){
-      var dl = document.createElement('button');
-      dl.id = 'sme-devlink-fab';
-      dl.title = 'Attach a dev / staging URL for this mockup — becomes a GitHub Issue for Tshepho to accept';
-      dl.innerHTML = '<svg viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>Dev link';
-      dl.addEventListener('click', function(){ window.SmeDevLink.open(FILE); });
-      document.body.appendChild(dl);
     }
 
     var bd = document.createElement('div');

@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ticket #1042 — SME South Africa Support</title>
+  <meta name="description" content="View and reply to your open support ticket with SME South Africa." />
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  
+  <script>
+    tailwind.config = {
+      corePlugins: {
+        preflight: false,
+      },
+      theme: {
+        extend: {
+          fontFamily: {
+            jakarta: ['Plus Jakarta Sans', 'sans-serif'],
+            inter: ['Inter', 'system-ui', 'sans-serif']
+          },
+          colors: {
+            primary: '#DC183C',
+            accent: '#FF9900',
+            navy: '#0C1F31',
+            success: '#29A37A',
+            ink: '#121A21',
+            muted: '#6A7581',
+            border: '#E7EBEF',
+            secondary: '#F0F5F9',
+            background: '#FCFCFC'
+          }
+        }
+      }
+    };
+  </script>
+  
+  <style>
+    html { line-height: 1.5; -webkit-text-size-adjust: 100%; tab-size: 100%; font-family: 'Inter', system-ui, sans-serif; }
+    body { margin: 0; line-height: inherit; background-color: #FCFCFC; color: #121A21; -webkit-font-smoothing: antialiased; }
+    *, ::before, ::after { box-sizing: border-box; border-width: 0; border-style: solid; border-color: currentColor; }
+    h1, h2, h3, h4, h5, h6 { font-size: inherit; font-weight: inherit; margin: 0; }
+    a { color: inherit; text-decoration: inherit; }
+    p { margin: 0; }
+    button { cursor: pointer; background: transparent; padding: 0; }
+    img { display: block; max-width: 100%; height: auto; }
+
+    /* CI Typography & Backgrounds */
+    .font-jakarta { font-family: 'Plus Jakarta Sans', sans-serif; letter-spacing: -0.01em; }
+    .hero-bg { background: linear-gradient(115deg, #0C1F31 0%, #0C1F31 50%, #2b1626 80%, #5e1a2c 115%); }
+    .dot-pattern { background-image: radial-gradient(rgba(255,255,255,0.07) 1px, transparent 1.5px); background-size: 22px 22px; }
+    
+    /* UI Components */
+    .card-lift { transition: box-shadow 0.3s cubic-bezier(0.2, 0.7, 0.2, 1), transform 0.3s cubic-bezier(0.2, 0.7, 0.2, 1); }
+    .card-lift:hover { box-shadow: 0 16px 32px -12px rgba(12, 31, 49, 0.12); transform: translateY(-2px); }
+    
+    .field { width: 100%; background: #fff; border: 1px solid #E7EBEF; border-radius: 0.75rem; padding: 1rem; font-size: 0.9rem; outline: none; transition: border-color 0.15s, box-shadow 0.15s; } 
+    .field:focus { border-color: #DC183C; box-shadow: 0 0 0 3px rgba(220, 24, 60, 0.12); }
+    
+    .dev-badge { display: none; } 
+    body.dev-on .dev-badge { display: inline-flex; } 
+    #devToggle.on { background: #DC183C; color: #fff; border-color: #DC183C; }
+    
+    /* Overlays & Drawers */
+    .ov { position: fixed; inset: 0; z-index: 60; } 
+    .ov-bg { position: absolute; inset: 0; background: rgba(12, 31, 49, 0.45); backdrop-filter: blur(2px); opacity: 0; transition: opacity 0.3s; } 
+    .ov.open .ov-bg { opacity: 1; }
+    
+    .drawer { position: absolute; right: 0; top: 0; height: 100%; width: 100%; max-width: 440px; background: #fff; box-shadow: -12px 0 40px rgba(12, 31, 49, 0.25); overflow-y: auto; transform: translateX(100%); transition: transform 0.3s cubic-bezier(0.2, 0.7, 0.2, 1); } 
+    .ov.open .drawer { transform: translateX(0); }
+    
+    /* Toast Animation */
+    @keyframes toastIn { from { opacity:0; transform:translateY(20px) translateX(-50%); } to { opacity:1; transform:translateY(0) translateX(-50%); } }
+    .toast-animate { animation: toastIn 0.3s cubic-bezier(0.2, 0.7, 0.2, 1) forwards; }
+    
+    /* Thread Connector Line */
+    .thread-line::before {
+      content: '';
+      position: absolute;
+      left: 2rem;
+      top: 3rem;
+      bottom: -2rem;
+      width: 2px;
+      background-color: #E7EBEF;
+      z-index: 0;
+    }
+    .thread-item:last-child .thread-line::before { display: none; }
+  </style>
+</head>
+<body class="bg-background text-ink antialiased">
+
+<header class="bg-white border-b border-border sticky top-0 z-50 shadow-sm">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+    <div class="flex items-center gap-8">
+      <a href="public-home.html" class="flex items-center gap-2 group">
+        <div class="w-8 h-8 rounded-lg bg-primary grid place-items-center text-white font-jakarta font-extrabold text-xs group-hover:scale-105 transition-transform">SME</div>
+        <span class="font-jakarta font-extrabold text-[15px] tracking-tight text-ink hidden sm:block">SME South Africa</span>
+      </a>
+      <span class="mx-1 hidden sm:inline w-px h-5 bg-border"></span>
+      <p class="text-[10px] sm:text-[11px] font-bold uppercase tracking-widest text-muted flex items-center gap-1.5"><i data-lucide="headphones" class="w-3.5 h-3.5 text-muted"></i> Support Portal</p>
+    </div>
+    <div class="flex items-center gap-2">
+      <button id="devToggle" onclick="toggleDevMode()" class="inline-flex items-center gap-1.5 px-3 h-9 rounded-full bg-secondary border border-border hover:border-primary hover:text-primary text-[11px] font-bold uppercase tracking-wider text-muted transition" title="Toggle implementation notes"><i data-lucide="code-2" class="w-3.5 h-3.5"></i><span class="hidden sm:inline">Dev</span></button>
+      <a href="index.html" class="inline-flex items-center justify-center px-5 py-2 h-9 rounded-full bg-primary text-white font-jakarta font-bold text-[12px] hover:bg-[#B0142F] transition-colors"><i data-lucide="arrow-left" class="w-3.5 h-3.5 mr-1.5"></i>Launcher</a>
+    </div>
+  </div>
+</header>
+
+<section class="hero-bg text-white relative overflow-hidden">
+  <div class="absolute inset-0 dot-pattern opacity-70 pointer-events-none"></div>
+  <div class="absolute -top-32 -right-24 w-96 h-96 rounded-full bg-primary/20 blur-3xl pointer-events-none"></div>
+  
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 pt-12 pb-28 relative z-10">
+    <nav aria-label="Breadcrumb" class="text-xs text-white/55 flex items-center flex-wrap gap-x-1.5 mb-5">
+      <a href="public-home.html" class="hover:text-white transition">Home</a>
+      <span class="text-white/30">›</span>
+      <a href="public-help.html" class="hover:text-white transition">Help</a>
+      <span class="text-white/30">›</span>
+      <a href="public-support-ticket.html" class="hover:text-white transition">Support Tickets</a>
+      <span class="text-white/30">›</span>
+      <span class="text-white/85 font-medium truncate">Ticket #1042</span>
+    </nav>
+    
+    <div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
+      <div class="max-w-3xl">
+        <div class="flex items-center gap-3 mb-3">
+          <span class="inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-widest text-[#29A37A] bg-[#E4F5EE] px-3 py-1 rounded-full"><span class="w-1.5 h-1.5 rounded-full bg-[#29A37A] animate-pulse"></span> Open</span>
+          <span class="text-[13px] font-semibold text-white/60">Ticket #1042</span>
+        </div>
+        <h1 class="font-jakarta font-extrabold text-3xl sm:text-4xl tracking-tight leading-tight">
+          Card machine not connecting to the app
+          <button onclick="openBrief()" class="dev-badge align-middle ml-2 w-6 h-6 rounded-full bg-accent text-navy items-center justify-center text-[11px] font-bold">i</button>
+        </h1>
+      </div>
+      
+      <!-- Quick Action Mobile -->
+      <a href="public-support-ticket.html" class="inline-flex items-center gap-2 h-10 px-5 rounded-full bg-white/10 hover:bg-white/20 text-white text-[13px] font-bold transition w-max shrink-0">
+        <i data-lucide="arrow-left" class="w-4 h-4"></i> Back to tickets
+      </a>
+    </div>
+  </div>
+</section>
+
+<main class="max-w-6xl mx-auto px-4 sm:px-6 relative z-20 -mt-16 pb-20">
+  <div class="grid lg:grid-cols-12 gap-8 items-start">
+    
+    <!-- LEFT COLUMN: Conversation Thread -->
+    <div class="lg:col-span-8 space-y-6">
+      
+      <!-- Thread Item 1: Original User Message -->
+      <div class="relative thread-item">
+        <div class="thread-line"></div>
+        <div class="bg-white border border-border rounded-2xl p-6 sm:p-8 shadow-sm relative z-10">
+          <div class="flex items-start gap-4 mb-5">
+            <div class="w-12 h-12 rounded-full bg-gradient-to-br from-primary to-accent grid place-items-center text-white font-jakarta font-bold text-sm shrink-0 shadow-inner">
+              TJ
+            </div>
+            <div class="flex-1 min-w-0 pt-0.5">
+              <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
+                <p class="font-jakarta font-bold text-ink text-[16px]">Tshepho Joel <span class="text-[13px] font-medium text-slate-400 font-inter ml-1">(You)</span></p>
+                <p class="text-[12px] text-muted font-medium flex items-center gap-1.5"><i data-lucide="calendar" class="w-3.5 h-3.5"></i> Jul 07, 2026 at 09:14 AM</p>
+              </div>
+            </div>
+          </div>
+          <div class="pl-0 sm:pl-16">
+            <div class="prose prose-slate max-w-none text-[15px] text-slate-700 leading-relaxed space-y-4">
+              <p>Hi team,</p>
+              <p>I received the new Yoco Neo card machine last week. It paired perfectly the first time I set it up, but since yesterday morning, the app continuously shows the machine as "Offline" even though the machine itself says it's connected to the 4G network.</p>
+              <p>I have already tried:</p>
+              <ul class="list-disc pl-5 space-y-1">
+                <li>Restarting the card machine.</li>
+                <li>Logging out and back into the SME/Yoco integration app.</li>
+                <li>Checking for app updates (I am on the latest version).</li>
+              </ul>
+              <p>We have a pop-up market this weekend and I urgently need this operational. Please advise on the next steps.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Thread Item 2: Support Agent Reply -->
+      <div class="relative thread-item">
+        <div class="thread-line"></div>
+        <div class="bg-secondary border border-border rounded-2xl p-6 sm:p-8 shadow-sm relative z-10" style="border-left: 4px solid #DC183C;">
+          <div class="flex items-start gap-4 mb-5">
+            <div class="w-12 h-12 rounded-full bg-navy grid place-items-center text-white font-jakarta font-extrabold text-[11px] shrink-0 shadow-md">
+              SME
+            </div>
+            <div class="flex-1 min-w-0 pt-0.5">
+              <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
+                <p class="font-jakarta font-bold text-ink text-[16px] flex items-center gap-2">
+                  SME Support Team
+                  <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-primary/10 text-primary text-[10px] uppercase tracking-widest"><i data-lucide="shield-check" class="w-3 h-3"></i> Support Agent</span>
+                </p>
+                <p class="text-[12px] text-muted font-medium flex items-center gap-1.5"><i data-lucide="calendar" class="w-3.5 h-3.5"></i> Jul 07, 2026 at 11:30 AM</p>
+              </div>
+            </div>
+          </div>
+          <div class="pl-0 sm:pl-16">
+            <div class="prose prose-slate max-w-none text-[15px] text-slate-700 leading-relaxed space-y-4">
+              <p>Hi Tshepho,</p>
+              <p>Thank you for reaching out and providing those troubleshooting details. I understand how urgent this is with your pop-up market approaching.</p>
+              <p>We recently pushed a backend update to the integration API which occasionally requires a hard re-sync from the terminal itself. Please try the following sequence to force a fresh connection token:</p>
+              <ol class="list-decimal pl-5 space-y-1 font-medium text-ink">
+                <li>Turn the Yoco Neo on.</li>
+                <li>Hold down the <strong>yellow 'Clear' button</strong> and the <strong>'Power' button</strong> simultaneously for 10 seconds.</li>
+                <li>The screen will flash and display "Maintenance Mode".</li>
+                <li>Press <strong>1</strong> (Network Reset).</li>
+                <li>Once it reboots, open your SME app and initiate a test transaction of R1.00.</li>
+              </ol>
+              <p>If the transaction goes through, you are fully synced. If it still shows offline, please reply here and I will escalate this directly to the hardware engineering team to provision a replacement unit for you before Friday.</p>
+              <p>Looking forward to your update.</p>
+            </div>
+            
+            <!-- Attachments from Agent -->
+            <div class="mt-6 pt-5 border-t border-border/60">
+              <p class="text-xs font-bold uppercase tracking-widest text-muted mb-3">Attachments (1)</p>
+              <a href="#" class="inline-flex items-center gap-3 p-3 pr-4 rounded-xl bg-white border border-border hover:border-primary transition group w-max max-w-full">
+                <div class="w-10 h-10 rounded-lg bg-[#E4F5EE] text-[#29A37A] grid place-items-center shrink-0 group-hover:bg-primary/10 group-hover:text-primary transition">
+                  <i data-lucide="file-text" class="w-5 h-5"></i>
+                </div>
+                <div class="min-w-0">
+                  <p class="text-sm font-bold text-ink truncate group-hover:text-primary transition">Yoco-Neo-Hard-Reset-Guide.pdf</p>
+                  <p class="text-xs text-muted">1.2 MB</p>
+                </div>
+                <i data-lucide="download" class="w-4 h-4 text-slate-300 ml-2 group-hover:text-primary transition"></i>
+              </a>
+            </div>
+            
+          </div>
+        </div>
+      </div>
+
+      <!-- Reply Box -->
+      <div class="relative thread-item mt-6">
+        <div class="bg-white border border-border rounded-2xl p-2 shadow-sm focus-within:border-primary focus-within:ring-2 focus-within:ring-primary/15 transition-all">
+          <form onsubmit="submitReply(event)">
+            <textarea required rows="4" class="w-full bg-transparent border-none px-4 py-3 text-[15px] outline-none resize-none placeholder:text-slate-400 text-ink" placeholder="Type your reply here..."></textarea>
+            
+            <div class="flex items-center justify-between gap-3 px-3 pb-2 pt-2 border-t border-border/50">
+              <button type="button" class="inline-flex items-center gap-1.5 px-3 h-9 rounded-lg text-slate-500 hover:bg-secondary hover:text-ink text-sm font-semibold transition" title="Attach file">
+                <i data-lucide="paperclip" class="w-4 h-4"></i> <span class="hidden sm:inline">Attach</span>
+              </button>
+              
+              <div class="flex items-center gap-2">
+                <button type="button" onclick="showToast('Ticket marked as resolved.')" class="h-10 px-5 rounded-full border border-border font-jakarta font-bold text-sm hover:bg-secondary text-ink transition">
+                  Mark Resolved
+                </button>
+                <button type="submit" class="h-10 px-6 rounded-full bg-primary hover:bg-[#B0142F] text-white font-jakarta font-bold text-sm transition inline-flex items-center justify-center gap-2 shadow-sm">
+                  Send Reply <i data-lucide="send" class="w-3.5 h-3.5"></i>
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- RIGHT COLUMN: Ticket Details Sidebar -->
+    <aside class="lg:col-span-4">
+      <div class="bg-white border border-border rounded-2xl shadow-xl sticky top-24 card-lift">
+        <div class="p-6 border-b border-border">
+          <h2 class="font-jakarta font-extrabold text-lg text-ink">Ticket Details</h2>
+        </div>
+        
+        <div class="p-6 space-y-5">
+          <!-- Detail Row -->
+          <div>
+            <p class="text-[11px] font-bold uppercase tracking-widest text-muted mb-1">Ticket ID</p>
+            <p class="font-mono font-bold text-[15px] text-ink">#1042</p>
+          </div>
+          
+          <div class="h-px w-full bg-border"></div>
+          
+          <!-- Detail Row -->
+          <div>
+            <p class="text-[11px] font-bold uppercase tracking-widest text-muted mb-1">Status</p>
+            <span class="inline-flex items-center gap-1.5 text-[13px] font-bold text-[#29A37A] bg-[#E4F5EE] px-3 py-1 rounded-lg border border-[#29A37A]/20">
+              <span class="w-1.5 h-1.5 rounded-full bg-[#29A37A] animate-pulse"></span> Awaiting your reply
+            </span>
+          </div>
+          
+          <div class="h-px w-full bg-border"></div>
+
+          <!-- Detail Row -->
+          <div>
+            <p class="text-[11px] font-bold uppercase tracking-widest text-muted mb-1">Department</p>
+            <p class="text-[14px] font-semibold text-ink flex items-center gap-2"><i data-lucide="cpu" class="w-4 h-4 text-slate-400"></i> Technical Support</p>
+          </div>
+
+          <!-- Detail Row -->
+          <div>
+            <p class="text-[11px] font-bold uppercase tracking-widest text-muted mb-1">Priority</p>
+            <p class="text-[14px] font-semibold text-ink flex items-center gap-2"><i data-lucide="alert-circle" class="w-4 h-4 text-accent"></i> High Priority</p>
+          </div>
+
+          <!-- Detail Row -->
+          <div>
+            <p class="text-[11px] font-bold uppercase tracking-widest text-muted mb-1">Opened</p>
+            <p class="text-[14px] font-medium text-slate-600">Jul 07, 2026 (2 days ago)</p>
+          </div>
+          
+          <div class="pt-4">
+            <button onclick="showToast('Ticket marked as resolved. You can reopen it at any time.')" class="w-full h-11 rounded-xl bg-secondary hover:bg-border text-ink font-jakarta font-bold text-sm transition border border-border">
+              Close Ticket
+            </button>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+  </div>
+</main>
+
+<footer class="bg-navy border-t border-[#1a2d40] relative overflow-hidden mt-12">
+  <div class="absolute inset-0 opacity-10 pointer-events-none" style="background:repeating-linear-gradient(45deg,transparent,transparent 8px,rgba(255,255,255,.18) 8px,rgba(255,255,255,.18) 16px)"></div>
+  <div class="relative max-w-7xl mx-auto px-4 sm:px-6 py-10 flex flex-col md:flex-row items-center justify-between gap-6">
+    <div class="flex items-center gap-2">
+      <div class="w-8 h-8 rounded-lg bg-primary grid place-items-center text-white font-jakarta font-extrabold text-xs">SME</div>
+      <span class="font-jakarta font-extrabold text-[15px] text-white">SME South Africa</span>
+    </div>
+    <p class="text-[12px] text-white/50">&copy; 2026 SME South Africa. All rights reserved.</p>
+  </div>
+</footer>
+
+<div id="overlay-root"></div>
+<div id="toast" class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-[80] toast-animate w-max max-w-sm"></div>
+
+<script>
+  function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+  function showToast(m){const el=document.getElementById('toast');el.classList.remove('hidden');el.innerHTML=`<div class="bg-navy text-white rounded-full pl-4 pr-6 py-3 shadow-2xl flex items-center gap-2.5 text-[15px] font-semibold" style="border-left:4px solid #29A37A"><i data-lucide="check-circle" class="w-5 h-5" style="color:#29A37A"></i><span>${esc(m)}</span></div>`;lucide.createIcons();setTimeout(()=>{el.classList.add('hidden');el.innerHTML='';},2600);}
+
+  // Simulate submitting a reply
+  function submitReply(e) {
+    e.preventDefault();
+    const textarea = e.target.querySelector('textarea');
+    if (!textarea.value.trim()) return;
+    
+    // In a real app, this would append to the DOM. For the mockup, we just show a toast and clear.
+    showToast('Reply sent successfully.');
+    textarea.value = '';
+  }
+
+  // ---- Dev brief ----
+  const BRIEF={
+    title:'Ticket Detail View', sub:'Fluent Support (Single Ticket View)',
+    purpose:'The conversation view for a specific support ticket. Built to feel like a premium SaaS helpdesk (e.g., Zendesk, Intercom) rather than a basic forum thread. Highly focused on resolving the user\'s issue.',
+    data:'Ticket: <code>{ id, subject, status, department, priority, created_at, updated_at }</code>. Messages: <code>{ id, author_type (user|agent), author_name, content, attachments[], created_at }</code>.',
+    logic:'Displays chronological messages. User can add a new reply or close the ticket. The sidebar keeps critical ticket meta-data visible at all times. Agent replies are visually distinct (navy avatar, primary left-border) to highlight the "signal".',
+    components:'Header · Hero (Dynamic Title & Status) · 8/4 Grid · Conversation Thread (User Msg, Agent Msg, Reply Box) · Ticket Details Sidebar · Footer.'
+  };
+  function toggleDevMode(){const on=document.body.classList.toggle('dev-on');const b=document.getElementById('devToggle');if(b)b.classList.toggle('on',on);if(on)showToast('Dev Mode on — tap any ⓘ for implementation notes.');lucide.createIcons();}
+  function closeOverlay(id){const el=document.getElementById(id);if(!el)return;el.classList.remove('open');setTimeout(()=>{if(el&&el.parentNode)el.remove();},300);}
+  function openBrief(){const b=BRIEF;const sec=(i,l,h)=>`<div class="px-6 py-5 border-t border-slate-100"><p class="text-[11px] font-bold uppercase tracking-widest text-primary flex items-center gap-1.5 mb-2"><i data-lucide="${i}" class="w-4 h-4"></i>${l}</p><div class="text-[15px] text-slate-600 leading-relaxed">${h}</div></div>`;
+    document.getElementById('overlay-root').innerHTML=`<div class="ov" id="ov"><div class="ov-bg" onclick="closeOverlay('ov')"></div><div class="drawer"><div class="sticky top-0 z-10 bg-navy text-white px-6 py-6 flex items-start justify-between"><div><p class="text-[11px] font-bold uppercase tracking-widest text-accent mb-1">Dev Brief</p><h3 class="font-jakarta font-extrabold text-xl leading-tight">${b.title}</h3><p class="text-sm text-white/60 mt-1">${b.sub}</p></div><button onclick="closeOverlay('ov')" class="text-white/60 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button></div>${sec('target','Purpose',b.purpose)}${sec('database','Data model',b.data)}${sec('git-branch','Logic',b.logic)}${sec('boxes','Components',b.components)}</div></div>`;
+    requestAnimationFrame(()=>{const o=document.getElementById('ov');if(o)o.classList.add('open');});lucide.createIcons();
+  }
+
+  lucide.createIcons();
+</script>
+</body>
+</html>
