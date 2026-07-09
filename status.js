@@ -56,6 +56,7 @@ window.MOCKUP_STATUS = {
   "public-help.html": "under-review",
   "public-help-category.html": "under-review",
   "public-help-article.html": "under-review",
+  "public-support-ticket.html": "under-review",
   "public-search.html": "finalised",
   "public-404.html": "finalised"
 };

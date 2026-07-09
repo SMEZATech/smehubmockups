@@ -65,6 +65,7 @@
     /* Forms */
     .field { width:100%; background:#fff; border:1px solid #E7EBEF; border-radius:.75rem; height:3rem; padding:0 1rem; font-size:.9rem; outline:none; transition:border-color .15s,box-shadow .15s; }
     .field:focus { border-color:#DC183C; box-shadow:0 0 0 3px rgba(220,24,60,.12); }
+    #brandScroller::-webkit-scrollbar { display:none; }
 
     /* Dev mode (parity with the rest of the hub) */
     .dev-badge { display:none; } body.dev-on .dev-badge { display:inline-flex; }
@@ -75,26 +76,19 @@
 </head>
 <body class="bg-background text-ink antialiased">
 
-<header class="bg-white border-b border-border sticky top-0 z-50 shadow-sm">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
-    <div class="flex items-center gap-8">
-      <a href="#" class="flex items-center gap-2 group">
-        <div class="w-8 h-8 rounded-lg bg-primary grid place-items-center text-white font-jakarta font-extrabold text-xs group-hover:scale-105 transition-transform">SME</div>
-        <span class="font-jakarta font-extrabold text-[15px] tracking-tight text-ink hidden sm:block">SME South Africa</span>
-      </a>
-      <nav class="hidden md:flex items-center gap-6">
-        <a href="#" class="text-[13px] font-semibold text-muted hover:text-ink transition-colors">Start</a>
-        <a href="#" class="text-[13px] font-semibold text-muted hover:text-ink transition-colors">Manage</a>
-        <a href="#" class="text-[13px] font-semibold text-muted hover:text-ink transition-colors">Grow</a>
-        <a href="#" class="text-[13px] font-extrabold text-primary border-b-2 border-primary py-5">Solutions</a>
-      </nav>
-    </div>
-    <div class="flex items-center gap-4">
-      <button class="text-muted hover:text-primary transition-colors" aria-label="Search">
-        <i data-lucide="search" class="w-5 h-5"></i>
-      </button>
-      <button id="devToggle" onclick="toggleDevMode()" class="inline-flex items-center gap-1.5 px-2.5 h-8 rounded-full border border-border hover:border-primary hover:text-primary text-[11px] font-bold uppercase tracking-wider text-muted transition" title="Toggle implementation notes"><i data-lucide="code-2" class="w-3.5 h-3.5"></i><span class="hidden sm:inline">Dev</span></button>
-      <a href="#" class="hidden sm:inline-flex items-center justify-center px-5 py-2.5 rounded-full bg-primary text-white font-jakarta font-bold text-[13px] hover:bg-[#B0142F] transition-colors">Sign In</a>
+<!-- Standard hub placeholder header (header/footer are design-pending across all mockups) -->
+<header class="bg-slate-100 border-b-2 border-dashed border-slate-400 relative overflow-hidden">
+  <div class="absolute inset-0 opacity-30 pointer-events-none" style="background:repeating-linear-gradient(45deg,transparent,transparent 8px,rgba(100,116,139,.18) 8px,rgba(100,116,139,.18) 16px)"></div>
+  <div class="relative max-w-7xl mx-auto px-4 sm:px-6 h-14 flex items-center gap-3 sm:gap-4">
+    <a href="public-home.html" class="flex items-center gap-2 shrink-0 opacity-70 hover:opacity-100 transition">
+      <img src="assets/logo-icon.png" alt="SME South Africa" class="w-7 h-7" />
+      <span class="font-jakarta font-extrabold text-[13px] tracking-tight text-slate-700 hidden sm:inline">SME South Africa</span>
+    </a>
+    <span class="mx-1 hidden sm:inline w-px h-5 bg-slate-300"></span>
+    <p class="text-[10px] sm:text-[11px] font-bold uppercase tracking-widest text-slate-600 flex items-center gap-1.5"><i data-lucide="construction" class="w-3.5 h-3.5 text-slate-500"></i>Header placeholder &middot; design pending</p>
+    <div class="ml-auto flex items-center gap-2">
+      <button id="devToggle" onclick="toggleDevMode()" class="inline-flex items-center gap-1.5 px-2.5 h-8 rounded-full bg-white border border-slate-300 hover:border-[#DC183C] hover:text-[#DC183C] text-[11px] font-bold uppercase tracking-wider text-slate-600 transition" title="Toggle implementation notes"><i data-lucide="code-2" class="w-3.5 h-3.5"></i><span class="hidden sm:inline">Dev</span></button>
+      <a href="index.html" class="inline-flex items-center gap-1.5 px-3 h-8 rounded-full bg-white border border-slate-300 hover:border-slate-500 text-[11px] font-bold text-slate-700 transition"><i data-lucide="arrow-left" class="w-3.5 h-3.5"></i><span class="hidden sm:inline">Launcher</span></a>
     </div>
   </div>
 </header>
@@ -121,10 +115,23 @@
 
 <main class="max-w-7xl mx-auto px-4 sm:px-6 relative z-20 -mt-20">
   
-  <div class="grid md:grid-cols-3 gap-6 mb-20">
-    
+  <!-- Ranked brands — horizontal carousel. We often feature more than 3 brands;
+       default shows ~3 on screen, the rest scroll in from the side (arrows / swipe). -->
+  <div class="relative mb-20">
+    <div class="flex items-end justify-between gap-4 mb-5">
+      <div>
+        <h2 class="font-jakarta font-extrabold text-2xl text-ink">Top-ranked CRMs</h2>
+        <p class="text-sm text-muted mt-1">Scroll for more &mdash; we feature beyond three when the category calls for it.</p>
+      </div>
+      <div class="hidden sm:flex items-center gap-2">
+        <button onclick="scrollBrands(-1)" aria-label="Previous brands" class="w-10 h-10 grid place-items-center rounded-full border border-border bg-white text-ink hover:border-ink transition"><i data-lucide="chevron-left" class="w-5 h-5"></i></button>
+        <button onclick="scrollBrands(1)" aria-label="More brands" class="w-10 h-10 grid place-items-center rounded-full border border-border bg-white text-ink hover:border-ink transition"><i data-lucide="chevron-right" class="w-5 h-5"></i></button>
+      </div>
+    </div>
+    <div id="brandScroller" class="flex gap-6 overflow-x-auto snap-x snap-mandatory pb-4 -mx-1 px-1" style="scrollbar-width:none">
+
     <!-- Card 1: monday.com -->
-    <div class="bg-white border border-border rounded-2xl overflow-hidden card-lift flex flex-col shadow-xl">
+    <div data-card class="snap-start shrink-0 w-[300px] sm:w-[340px] lg:w-[360px] bg-white border border-border rounded-2xl overflow-hidden card-lift flex flex-col shadow-xl">
       <div class="bg-gradient-to-r from-primary to-accent h-2"></div>
       <div class="p-6 sm:p-8 flex-1 flex flex-col">
         <div class="text-center mb-6">
@@ -153,7 +160,7 @@
     </div>
 
     <!-- Card 2: Zoho CRM -->
-    <div class="bg-white border border-border rounded-2xl overflow-hidden card-lift flex flex-col shadow-xl">
+    <div data-card class="snap-start shrink-0 w-[300px] sm:w-[340px] lg:w-[360px] bg-white border border-border rounded-2xl overflow-hidden card-lift flex flex-col shadow-xl">
       <div class="bg-navy h-2"></div>
       <div class="p-6 sm:p-8 flex-1 flex flex-col">
         <div class="text-center mb-6">
@@ -182,7 +189,7 @@
     </div>
 
     <!-- Card 3: HubSpot -->
-    <div class="bg-white border border-border rounded-2xl overflow-hidden card-lift flex flex-col shadow-xl">
+    <div data-card class="snap-start shrink-0 w-[300px] sm:w-[340px] lg:w-[360px] bg-white border border-border rounded-2xl overflow-hidden card-lift flex flex-col shadow-xl">
       <div class="bg-success h-2"></div>
       <div class="p-6 sm:p-8 flex-1 flex flex-col">
         <div class="text-center mb-6">
@@ -210,7 +217,62 @@
       </div>
     </div>
 
-  </div>
+    <!-- Card 4: Pipedrive -->
+    <div data-card class="snap-start shrink-0 w-[300px] sm:w-[340px] lg:w-[360px] bg-white border border-border rounded-2xl overflow-hidden card-lift flex flex-col shadow-xl">
+      <div class="bg-accent h-2"></div>
+      <div class="p-6 sm:p-8 flex-1 flex flex-col">
+        <div class="text-center mb-6">
+          <p class="text-[11px] font-bold text-accent uppercase tracking-widest mb-3">Best For Sales-First Teams</p>
+          <div class="bg-secondary rounded-xl h-16 flex items-center justify-center px-6 mb-4">
+             <img src="https://placehold.co/150x40/F0F5F9/121A21?text=Pipedrive&font=Montserrat" alt="Pipedrive" class="max-h-full mix-blend-multiply" />
+          </div>
+        </div>
+        <div class="mb-8 flex-1">
+          <ul class="space-y-3 text-sm text-slate-600">
+            <li class="flex items-start gap-2.5"><i data-lucide="check" class="w-4 h-4 text-success shrink-0 mt-0.5"></i> Laser-focused sales pipeline</li>
+            <li class="flex items-start gap-2.5"><i data-lucide="check" class="w-4 h-4 text-success shrink-0 mt-0.5"></i> Visual deal forecasting</li>
+            <li class="flex items-start gap-2.5"><i data-lucide="check" class="w-4 h-4 text-success shrink-0 mt-0.5"></i> Affordable entry pricing</li>
+          </ul>
+        </div>
+        <div class="border-t border-border pt-6 mt-auto">
+          <p class="text-center text-xs text-muted mb-4">Starting from <strong class="text-lg text-ink font-jakarta">R290</strong> /mo</p>
+          <div class="space-y-3">
+            <button class="w-full h-11 rounded-full bg-primary hover:bg-[#B0142F] text-white font-jakarta font-bold text-sm transition shadow-sm">Compare Quotes</button>
+            <button class="w-full h-11 rounded-full border border-border hover:border-ink text-ink font-jakarta font-bold text-sm transition">Read Review</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 5: Salesforce Starter -->
+    <div data-card class="snap-start shrink-0 w-[300px] sm:w-[340px] lg:w-[360px] bg-white border border-border rounded-2xl overflow-hidden card-lift flex flex-col shadow-xl">
+      <div class="bg-navy h-2"></div>
+      <div class="p-6 sm:p-8 flex-1 flex flex-col">
+        <div class="text-center mb-6">
+          <p class="text-[11px] font-bold text-navy uppercase tracking-widest mb-3">Best For Scaling Up</p>
+          <div class="bg-secondary rounded-xl h-16 flex items-center justify-center px-6 mb-4">
+             <img src="https://placehold.co/150x40/F0F5F9/121A21?text=Salesforce&font=Montserrat" alt="Salesforce Starter" class="max-h-full mix-blend-multiply" />
+          </div>
+        </div>
+        <div class="mb-8 flex-1">
+          <ul class="space-y-3 text-sm text-slate-600">
+            <li class="flex items-start gap-2.5"><i data-lucide="check" class="w-4 h-4 text-success shrink-0 mt-0.5"></i> Enterprise-grade platform</li>
+            <li class="flex items-start gap-2.5"><i data-lucide="check" class="w-4 h-4 text-success shrink-0 mt-0.5"></i> Deep customisation &amp; automation</li>
+            <li class="flex items-start gap-2.5"><i data-lucide="check" class="w-4 h-4 text-success shrink-0 mt-0.5"></i> Huge integration ecosystem</li>
+          </ul>
+        </div>
+        <div class="border-t border-border pt-6 mt-auto">
+          <p class="text-center text-xs text-muted mb-4">Starting from <strong class="text-lg text-ink font-jakarta">R380</strong> /mo</p>
+          <div class="space-y-3">
+            <button class="w-full h-11 rounded-full bg-primary hover:bg-[#B0142F] text-white font-jakarta font-bold text-sm transition shadow-sm">Compare Quotes</button>
+            <button class="w-full h-11 rounded-full border border-border hover:border-ink text-ink font-jakarta font-bold text-sm transition">Read Review</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    </div><!-- /#brandScroller -->
+  </div><!-- /brand carousel -->
 
   <div class="grid lg:grid-cols-4 gap-12 lg:gap-16 pt-8 pb-20">
     
@@ -433,17 +495,12 @@
   </div>
 </main>
 
-<footer class="bg-navy border-t border-[#1a2d40] relative overflow-hidden mt-12">
-  <div class="absolute inset-0 opacity-10 pointer-events-none" style="background:repeating-linear-gradient(45deg,transparent,transparent 8px,rgba(255,255,255,.18) 8px,rgba(255,255,255,.18) 16px)"></div>
-  <div class="relative max-w-7xl mx-auto px-4 sm:px-6 py-12 flex flex-col md:flex-row items-center justify-between gap-6">
-    <div class="flex items-center gap-2">
-      <div class="w-8 h-8 rounded-lg bg-primary grid place-items-center text-white font-jakarta font-extrabold text-xs">SME</div>
-      <span class="font-jakarta font-extrabold text-[15px] text-white">SME South Africa</span>
-    </div>
-    <div class="flex items-center bg-[#1a2d40] rounded-full p-1.5 w-full md:w-auto border border-white/10">
-      <input type="email" placeholder="Join the SME Newsletter" class="bg-transparent border-none outline-none text-white px-4 text-sm w-full md:w-64 placeholder:text-white/40" />
-      <button class="h-9 px-6 rounded-full bg-primary text-white font-bold text-xs uppercase tracking-widest hover:bg-[#B0142F] transition shrink-0">Subscribe</button>
-    </div>
+<!-- Standard hub placeholder footer -->
+<footer class="bg-slate-100 border-t-2 border-dashed border-slate-400 relative overflow-hidden mt-12">
+  <div class="absolute inset-0 opacity-30 pointer-events-none" style="background:repeating-linear-gradient(45deg,transparent,transparent 8px,rgba(100,116,139,.18) 8px,rgba(100,116,139,.18) 16px)"></div>
+  <div class="relative max-w-7xl mx-auto px-4 sm:px-6 py-6 text-center">
+    <p class="text-[10px] sm:text-[11px] font-bold uppercase tracking-widest text-slate-600 flex items-center justify-center gap-1.5"><i data-lucide="construction" class="w-3.5 h-3.5 text-slate-500"></i>Footer placeholder &middot; design pending</p>
+    <p class="text-[11px] text-slate-500 mt-2">&copy; 2026 SME South Africa</p>
   </div>
 </footer>
 
@@ -452,6 +509,15 @@
 <script>
   // Initialize Lucide Icons
   lucide.createIcons();
+
+  // ---- Ranked-brands carousel: arrows scroll one card at a time ----
+  function scrollBrands(dir){
+    var s = document.getElementById('brandScroller');
+    if(!s) return;
+    var card = s.querySelector('[data-card]');
+    var step = card ? card.offsetWidth + 24 : 360; // card width + gap-6
+    s.scrollBy({ left: dir * step, behavior: 'smooth' });
+  }
 
   // ---- Dev mode + implementation brief (parity with the rest of the hub) ----
   const BRIEF = {
