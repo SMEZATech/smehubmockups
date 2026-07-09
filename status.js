@@ -60,7 +60,7 @@ window.MOCKUP_STATUS = {
   "public-search.html": "finalised",
   "public-404.html": "finalised"
 };
-window.MOCKUP_STATUS_PUBLISHED = "2026-07-09T12:38:50.219Z";
+window.MOCKUP_STATUS_PUBLISHED = "2026-07-09T12:59:38.676Z";
 /* Developer builds (staging) — { mockup file: { url, status } }; status: "pending-review" | "reviewed" | "approved" */
 window.MOCKUP_DEV = {
   "public-home.html": {"url":"https://smesastg.wpengine.com/","status":"reviewed"},
@@ -69,7 +69,11 @@ window.MOCKUP_DEV = {
   "public-category.html": {"url":"https://smesastg.wpengine.com/starting-a-business","status":"reviewed"},
   "public-subcategory.html": {"url":"https://smesastg.wpengine.com/starting-a-business/agriculture-and-farming/","status":"pending-review"},
   "public-article.html": {"url":"https://smesastg.wpengine.com/how-to-find-your-brands-tone-of-voice/","status":"pending-review"},
+  "public-resources.html": {"url":"https://smesastg.wpengine.com/sme-resources/","status":"pending-review"},
+  "public-resource-category.html": {"url":"https://smesastg.wpengine.com/sme-resources/e-books/","status":"pending-review"},
+  "public-resource.html": {"url":"https://smesastg.wpengine.com/sme-resource/your-guide-to-ai-prompting/","status":"pending-review"},
   "public-sustainability.html": {"url":"https://smesastg.wpengine.com/sustainability-solutions/","status":"pending-review"},
+  "public-guides.html": {"url":"https://smesastg.wpengine.com/sme-resource/test-guide/","status":"pending-review"},
   "public-shop.html": {"url":"https://smesouthafrica.co.za/shop/","status":"approved"},
   "public-about.html": {"url":"https://smesastg.wpengine.com/about/","status":"reviewed"},
   "public-contact.html": {"url":"https://smesastg.wpengine.com/contact-us/","status":"pending-review"},
