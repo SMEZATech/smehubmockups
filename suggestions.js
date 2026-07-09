@@ -80,16 +80,14 @@
       +     '<button class="x" type="button" aria-label="Close">&#10005;</button>'
       +   '</div>'
       +   '<p class="sub">Your suggestion becomes a GitHub Issue that Tshepho reviews in Mission Control. Nothing goes public until it’s approved.</p>'
-      +   '<label>Your name</label>'
-      +   '<input id="sme-sug-name" placeholder="e.g. Andile" />'
       +   '<label>Mockup / page</label>'
       +   '<input id="sme-sug-file" />'
       +   '<label>Section</label>'
       +   '<input id="sme-sug-section" placeholder="e.g. First section" />'
       +   '<label>Suggestion</label>'
       +   '<textarea id="sme-sug-text" placeholder="What should change? Be specific &mdash; sizes, colours, copy, whatever."></textarea>'
-      +   '<div class="hint">Clicking submit opens the pre-filled issue form on <b>github.com</b> in a new tab. You need a free GitHub account. Nothing is sent from this page.</div>'
-      +   '<div class="btns"><button class="cancel" type="button">Cancel</button><button class="submit" type="button">Submit to GitHub →</button></div>'
+      +   '<input type="hidden" id="sme-sug-name" value="Sandile" />'
+      +   '<div class="btns"><button class="cancel" type="button">Cancel</button><button class="submit" type="button">Submit suggestion</button></div>'
       + '</div>';
     document.body.appendChild(m);
     m.querySelector('.bg').addEventListener('click', close);
@@ -104,7 +102,7 @@
     var section = prefillSection || detectSection().label;
     document.getElementById('sme-sug-file').value = prefillFile || getPageFile();
     document.getElementById('sme-sug-section').value = section;
-    document.getElementById('sme-sug-name').value = localStorage.getItem('smeSuggestName') || '';
+    document.getElementById('sme-sug-name').value = localStorage.getItem('smeSuggestName') || 'Sandile';
     document.getElementById('sme-sug-text').value = '';
     m.classList.add('open');
     setTimeout(function(){ document.getElementById('sme-sug-text').focus(); }, 80);
@@ -114,11 +112,10 @@
     if(m) m.classList.remove('open');
   }
   function submit(){
-    var name = (document.getElementById('sme-sug-name').value || '').trim();
+    var name = (document.getElementById('sme-sug-name').value || 'Sandile').trim() || 'Sandile';
     var file = (document.getElementById('sme-sug-file').value || '').trim();
     var section = (document.getElementById('sme-sug-section').value || '').trim();
     var text = (document.getElementById('sme-sug-text').value || '').trim();
-    if(!name){ alert('Please add your name.'); return; }
     if(!section){ alert('Please add a section label.'); return; }
     if(!text){ alert('Please write your suggestion.'); return; }
     localStorage.setItem('smeSuggestName', name);
