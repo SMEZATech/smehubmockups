@@ -14,6 +14,7 @@
   <script src="shared-notes.js"></script>
   <script src="feedback.js"></script>
   <script src="suggestions.js"></script>
+  <script src="dev-links.js"></script>
   <script>
     tailwind.config = { theme: { extend: { fontFamily: {
       jakarta: ['Plus Jakarta Sans', 'sans-serif'], inter: ['Inter', 'system-ui', 'sans-serif'], mono:['monospace']
@@ -320,11 +321,15 @@
         const doc = frame.contentDocument;
         if(!doc) return;
         if(doc.getElementById('sme-notes-widget')) return; // already injected
-        // Load suggestions.js first so notes-widget can wire the Suggest button
+        // Load suggestions.js + dev-links.js first so notes-widget can wire both buttons
         const sug = doc.createElement('script');
         sug.src = 'suggestions.js';
         sug.async = false;
         doc.body.appendChild(sug);
+        const dl = doc.createElement('script');
+        dl.src = 'dev-links.js';
+        dl.async = false;
+        doc.body.appendChild(dl);
         const s = doc.createElement('script');
         s.src = 'notes-widget.js';
         s.async = false;

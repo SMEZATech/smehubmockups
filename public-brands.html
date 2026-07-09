@@ -92,25 +92,83 @@
     </div>
   </section>
 
-  <!-- ===================== SUBMIT / LISTING CTA ===================== -->
+  <!-- ===================== PROVIDER LISTING FORM (advertise-with-us style) ===================== -->
   <section class="py-12">
     <div class="rounded-3xl hero-bg text-white relative overflow-hidden">
       <div class="absolute inset-0 dot-pattern opacity-70 pointer-events-none"></div>
-      <div class="relative grid lg:grid-cols-2 gap-8 p-8 sm:p-12 items-center">
+      <div class="relative grid lg:grid-cols-[1fr,1.15fr] gap-10 p-8 sm:p-12 items-start">
         <div>
           <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 text-[#FF9900] text-[11px] font-bold uppercase tracking-widest"><i data-lucide="badge-plus" class="w-3.5 h-3.5"></i> For providers</span>
           <h2 class="font-jakarta font-extrabold text-3xl sm:text-4xl mt-4 leading-tight">Get your brand listed in the directory</h2>
-          <p class="mt-4 text-white/75 max-w-md">Reach thousands of South African founders looking for tools and services. Apply to be vetted and featured.</p>
+          <p class="mt-4 text-white/75 max-w-md leading-relaxed">Reach thousands of South African founders looking for tools and services. Tell us about your brand and our editorial team will get back to you with the next steps to be vetted and featured.</p>
+          <ul class="mt-6 space-y-2.5 text-sm text-white/85">
+            <li class="flex items-start gap-2"><i data-lucide="check" class="w-4 h-4 text-[#29A37A] mt-0.5 shrink-0"></i>Full editorial profile — features, pricing, pros &amp; cons, FAQs</li>
+            <li class="flex items-start gap-2"><i data-lucide="check" class="w-4 h-4 text-[#29A37A] mt-0.5 shrink-0"></i>Category placement + directory search visibility</li>
+            <li class="flex items-start gap-2"><i data-lucide="check" class="w-4 h-4 text-[#29A37A] mt-0.5 shrink-0"></i>Lead-gen form on your brand page with warm enquiries</li>
+            <li class="flex items-start gap-2"><i data-lucide="check" class="w-4 h-4 text-[#29A37A] mt-0.5 shrink-0"></i>Newsletter mentions when your profile goes live</li>
+          </ul>
         </div>
         <form onsubmit="listSubmit(event)" class="bg-white text-[#121A21] rounded-2xl p-6 sm:p-7 shadow-2xl">
-          <h3 class="font-jakarta font-extrabold text-lg">Submit your brand</h3>
-          <p class="text-sm text-slate-500 mt-1 mb-4">We review every submission. No spam.</p>
-          <div class="space-y-3.5">
-            <div><label class="block text-xs font-semibold mb-1.5 text-slate-600">Brand name</label><input required class="field" placeholder="Your brand" /></div>
-            <div><label class="block text-xs font-semibold mb-1.5 text-slate-600">Website</label><input required class="field" placeholder="https://yourbrand.co.za" /></div>
-            <div><label class="block text-xs font-semibold mb-1.5 text-slate-600">Work email</label><input type="email" required class="field" placeholder="you@brand.co.za" /></div>
+          <h3 class="font-jakarta font-extrabold text-lg">Apply to be listed</h3>
+          <p class="text-sm text-slate-500 mt-1 mb-5">We&rsquo;ll reply within one business day.</p>
+
+          <div class="grid grid-cols-2 gap-3">
+            <div><label class="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1.5">First name</label><input required class="field" placeholder="Thabo" /></div>
+            <div><label class="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1.5">Last name</label><input required class="field" placeholder="Mokoena" /></div>
           </div>
-          <button class="mt-5 w-full h-12 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold transition flex items-center justify-center gap-2">Submit for review <i data-lucide="arrow-right" class="w-4 h-4"></i></button>
+
+          <div class="mt-3"><label class="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1.5">Work email</label><input type="email" required class="field" placeholder="you@brand.co.za" /></div>
+
+          <div class="mt-3"><label class="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1.5">Brand / Company name</label><input required class="field" placeholder="Your brand" /></div>
+
+          <div class="mt-3"><label class="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1.5">Website</label><input required class="field" placeholder="https://yourbrand.co.za" /></div>
+
+          <div class="grid grid-cols-2 gap-3 mt-3">
+            <div>
+              <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1.5">Category</label>
+              <select required class="field bg-white">
+                <option value="" disabled selected>Select…</option>
+                <option>Banking &amp; Cards</option>
+                <option>Payments</option>
+                <option>CRM &amp; Support</option>
+                <option>Hosting &amp; Domains</option>
+                <option>E-commerce</option>
+                <option>Funding &amp; Investment</option>
+                <option>Business Registration</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1.5">Country of operation</label>
+              <select required class="field bg-white">
+                <option value="" disabled selected>Select…</option>
+                <option>South Africa</option>
+                <option>Africa (multi-country)</option>
+                <option>Global</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="mt-3">
+            <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1.5">Marketing budget for this listing</label>
+            <select required class="field bg-white">
+              <option value="" disabled selected>Select a range</option>
+              <option>Under R10,000</option>
+              <option>R10,000 – R25,000</option>
+              <option>R25,000 – R50,000</option>
+              <option>R50,000+</option>
+              <option>Let&rsquo;s discuss</option>
+            </select>
+          </div>
+
+          <div class="mt-3">
+            <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1.5">Tell us about your brand</label>
+            <textarea required rows="3" class="w-full bg-white border border-[#E7EBEF] rounded-xl px-4 py-3 text-sm outline-none focus:border-[#DC183C] focus:ring-2 focus:ring-[#DC183C]/15 resize-none" placeholder="What you offer, who you serve, and why SA SMEs need to know about you."></textarea>
+          </div>
+
+          <label class="flex items-start gap-2 text-xs text-slate-600 mt-4"><input type="checkbox" required class="mt-0.5 w-4 h-4 accent-[#DC183C]" /><span>I agree to be contacted by SME South Africa about my listing enquiry. See our <a href="public-privacy.html" class="text-[#DC183C] font-semibold hover:underline">Privacy Policy</a>.</span></label>
+
+          <button class="mt-5 w-full h-12 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold transition flex items-center justify-center gap-2">Submit enquiry <i data-lucide="arrow-right" class="w-4 h-4"></i></button>
           <p class="text-[11px] text-slate-400 text-center mt-3">Listing is subject to editorial vetting.</p>
         </form>
       </div>
@@ -255,9 +313,9 @@
   const BRIEFS = { directory: {
     title:'Brands Directory', sub:'Curated provider directory (CPT archive)',
     purpose:'A curated, filterable directory of vetted SME service providers (brands), distinct from the editorial Solutions/Reviews ranking. Drives discovery and profile views; each card links to a single brand profile and a tracked outbound visit.',
-    data:'Brand (CPT): <code>{ id, name, slug, category, logo, rating, description, website, founded, best_for, featured }</code>. Category is a taxonomy term. Filtering and search are client-side over the rendered set; at scale this becomes a server query.',
-    logic:'JetEngine "Brand" CPT in a "Brand Category" taxonomy. Archive renders cards; category chips + search box filter the list (client-side here, query-based in production). View profile → single brand page; Visit site = tracked outbound redirect. Public + indexable.',
-    components:'Header · hero + breadcrumb · search input · category filter chips · responsive brand-card grid (monogram, name, category tag, description, star rating, View profile / Visit site) · empty state · submit-your-brand CTA · footer.'
+    data:'Brand (CPT): <code>{ id, name, slug, category, logo, rating, description, website, founded, best_for, featured }</code>. Category is a taxonomy term. Filtering and search are client-side over the rendered set; at scale this becomes a server query.<br><br><b>Listing enquiry (form submission):</b> <code>{ first_name, last_name, email, brand, website, category, country, budget_range, description, created_at, status }</code>. Enquiries route to the editorial inbox (not stored public-facing) and start the R15K paid-review workflow.',
+    logic:'JetEngine "Brand" CPT in a "Brand Category" taxonomy. Archive renders cards; category chips + search box filter the list (client-side here, query-based in production). View profile → single brand page; Visit site = tracked outbound redirect. Public + indexable.<br><br><b>Business model (internal, NOT public):</b> Each brand profile is a paid editorial review at <b>R15,000 per brand</b>. The listing form on this page is an enquiry/lead — it does NOT disclose the price. Editorial replies with a quote and terms after vetting. Frame it publicly as an "apply to be listed" advertise-with-us style flow.',
+    components:'Header · hero + breadcrumb · search input · category filter chips · responsive brand-card grid (monogram, name, category tag, description, star rating, View profile / Visit site) · empty state · provider listing enquiry form (advertise-with-us style — full lead-gen fields, no pricing disclosed) · footer.'
   } };
   function toggleDevMode(){ const on=document.body.classList.toggle('dev-on'); const b=document.getElementById('devToggle'); if(b)b.classList.toggle('on',on); if(on)showToast('Dev Mode on — tap any ⓘ for implementation notes.'); lucide.createIcons(); }
   function closeOverlay(id){ const el=document.getElementById(id); if(!el)return; el.classList.remove('open'); setTimeout(()=>{ if(el&&el.parentNode) el.remove(); },300); }
