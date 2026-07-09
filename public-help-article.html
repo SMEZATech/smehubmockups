@@ -17,9 +17,14 @@
     .toc-link{display:block;font-size:.85rem;color:#6A7581;padding:.4rem .75rem;border-left:2px solid transparent;transition:all .15s;line-height:1.35;}
     .toc-link:hover{color:#121A21;}
     .toc-link.active{color:#DC183C;font-weight:700;border-left-color:#DC183C;background:#FDECEF;border-radius:0 .4rem .4rem 0;}
-    .cat-art{display:flex;align-items:flex-start;gap:.55rem;font-size:13.5px;color:#374151;padding:.55rem .9rem;border-left:2px solid transparent;transition:all .15s;line-height:1.35;}
-    .cat-art:hover{color:#DC183C;background:#FDECEF;border-left-color:#DC183C;}
-    .cat-art.current{color:#DC183C;background:#FDECEF;border-left-color:#DC183C;font-weight:600;}
+    /* KB sidebar (mirrors public-help-category.html) */
+    .side-cat > summary{list-style:none;cursor:pointer;}
+    .side-cat > summary::-webkit-details-marker{display:none;}
+    .side-cat[open] .chev{transform:rotate(90deg);}
+    .side-cat .chev{transition:transform .18s ease;}
+    .art-link{display:flex;align-items:flex-start;gap:.55rem;font-size:13.5px;color:#374151;padding:.45rem .75rem .45rem 2rem;border-left:2px solid transparent;transition:all .15s;line-height:1.35;}
+    .art-link:hover{color:#DC183C;background:#FDECEF;border-left-color:#DC183C;}
+    .art-link.current{color:#DC183C;background:#FDECEF;border-left-color:#DC183C;font-weight:600;}
     .toc-tab{position:fixed;left:0;top:50%;transform:translateY(-50%);z-index:45;display:flex;align-items:center;justify-content:center;width:24px;height:60px;background:rgba(12,31,49,.38);color:#fff;border:1px solid rgba(255,255,255,.18);border-left:none;border-radius:0 .7rem .7rem 0;-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);opacity:.4;transition:opacity .2s;}
     .toc-tab:hover,.toc-tab:focus-visible{opacity:.95;}
     .toc-tab.hide{opacity:0;pointer-events:none;}
@@ -60,16 +65,44 @@
   <!-- Breadcrumb (global pattern) -->
   <nav aria-label="Breadcrumb" class="text-xs text-[#6A7581] flex items-center flex-wrap gap-x-1.5"><a href="public-home.html" class="hover:text-[#DC183C] transition">Home</a><span class="text-slate-300">›</span><a href="public-help.html" class="hover:text-[#DC183C] transition">Help</a><span class="text-slate-300">›</span><a href="public-help-category.html?cat=funding" class="hover:text-[#DC183C] transition">Funding</a><span class="text-slate-300">›</span><span class="text-[#121A21] font-medium truncate">How do I apply for funding through your platform?</span></nav>
 </div>
-<div class="max-w-6xl mx-auto px-4 sm:px-6 pt-10">
-  <h1 class="font-jakarta font-extrabold text-3xl sm:text-[2.4rem] leading-[1.12] tracking-tight max-w-3xl">How do I apply for funding through your platform?
-    <button onclick="openBrief()" class="dev-badge align-middle ml-1 w-6 h-6 rounded-full bg-[#DC183C] text-white items-center justify-center text-[11px] font-bold">i</button>
-  </h1>
-  <p class="flex items-center gap-1.5 text-sm text-[#6A7581] mt-4 pb-6 border-b border-[#E7EBEF]"><i data-lucide="clock" class="w-4 h-4"></i> Updated 18 June 2026 · 3 min read</p>
-</div>
+<!-- BODY: KB sidebar (left) + article (right) — the article opens INSIDE the KB nav -->
+<div class="max-w-6xl mx-auto px-4 sm:px-6 pt-8 pb-10 grid lg:grid-cols-[300px,1fr] gap-8">
 
-<!-- BODY: 2-col grid -->
-<div class="max-w-6xl mx-auto px-4 sm:px-6 py-10 grid lg:grid-cols-3 gap-10">
-  <article class="lg:col-span-2 article">
+  <!-- LEFT: KB category tree (mirrors public-help-category.html) -->
+  <aside class="order-2 lg:order-1">
+    <div class="lg:sticky lg:top-6 space-y-6">
+      <div class="bg-white rounded-2xl border border-[#E7EBEF] overflow-hidden">
+        <div class="px-4 py-3 border-b border-[#E7EBEF] flex items-center gap-2">
+          <i data-lucide="library" class="w-4 h-4 text-[#DC183C]"></i>
+          <p class="font-jakarta font-extrabold text-[13px]">Knowledge Base</p>
+        </div>
+        <div id="kbSidebar" class="py-2"></div>
+        <a href="public-help.html" class="flex items-center gap-2 px-4 py-3 border-t border-[#E7EBEF] text-[13px] font-bold text-[#DC183C] hover:bg-[#FDECEF] transition">
+          <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i> Back to Help Center
+        </a>
+      </div>
+      <!-- CONTACT SUPPORT CARD -->
+      <div class="rounded-2xl border border-[#E7EBEF] bg-[#FDECEF] p-6">
+        <div class="w-11 h-11 rounded-xl bg-white grid place-items-center mb-3 shadow-sm"><i data-lucide="life-buoy" class="w-5 h-5 text-[#DC183C]"></i></div>
+        <h3 class="font-jakarta font-extrabold text-lg text-[#0C1F31]">Still stuck?</h3>
+        <p class="text-sm text-[#6A7581] mt-1.5 leading-relaxed">Our support team can help with your application directly.</p>
+        <a href="public-contact.html" class="inline-flex w-full items-center justify-center gap-2 mt-4 h-11 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold text-sm transition">Contact support <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
+      </div>
+    </div>
+  </aside>
+
+  <!-- RIGHT: the article -->
+  <article class="order-1 lg:order-2 article">
+    <h1 class="font-jakarta font-extrabold text-3xl sm:text-[2.4rem] leading-[1.12] tracking-tight">How do I apply for funding through your platform?
+      <button onclick="openBrief()" class="dev-badge align-middle ml-1 w-6 h-6 rounded-full bg-[#DC183C] text-white items-center justify-center text-[11px] font-bold">i</button>
+    </h1>
+    <p class="flex items-center gap-1.5 text-sm text-[#6A7581] mt-4 pb-5 mb-6 border-b border-[#E7EBEF]"><i data-lucide="clock" class="w-4 h-4"></i> Updated 18 June 2026 · 3 min read</p>
+
+    <!-- On this page (collapsible, desktop) -->
+    <details class="hidden lg:block mb-8 rounded-xl border border-[#E7EBEF] bg-white overflow-hidden" open>
+      <summary class="cursor-pointer list-none px-4 py-3 flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-[#DC183C]"><i data-lucide="list" class="w-3.5 h-3.5"></i> On this page</summary>
+      <nav id="toc" class="px-2 pb-3"></nav>
+    </details>
     <p>Applying for business funding through SME South Africa is designed to be fast, transparent and stress-free. You complete one application, we match you to relevant funders, and you track everything from your dashboard. This guide walks you through the full process from start to finish.</p>
 
     <h2 id="before-you-start">Before you start</h2>
@@ -119,41 +152,6 @@
       </div>
     </div>
   </article>
-
-  <!-- STICKY SIDEBAR -->
-  <aside class="lg:col-span-1">
-    <div class="lg:sticky lg:top-24 space-y-6">
-      <!-- CATEGORY + ARTICLES IN THIS CATEGORY (Betterdocs-style) -->
-      <div class="bg-white rounded-2xl border border-[#E7EBEF] overflow-hidden">
-        <a href="public-help-category.html?cat=funding" class="flex items-center gap-3 px-5 py-4 border-b border-[#E7EBEF] bg-[#FCFCFC] hover:bg-[#FDECEF]/40 transition group">
-          <div class="w-10 h-10 rounded-xl grid place-items-center shrink-0" style="background:#FDECEF;color:#DC183C"><i data-lucide="wallet" class="w-5 h-5"></i></div>
-          <div class="min-w-0 flex-1">
-            <p class="text-[10px] font-bold uppercase tracking-widest text-[#6A7581]">Category</p>
-            <p class="font-jakarta font-extrabold text-[15px] leading-tight group-hover:text-[#DC183C] transition">Funding</p>
-          </div>
-          <i data-lucide="arrow-right" class="w-4 h-4 text-[#6A7581] group-hover:text-[#DC183C] transition"></i>
-        </a>
-        <nav id="catArts" class="py-2"></nav>
-        <a href="public-help-category.html?cat=funding" class="flex items-center gap-1.5 px-5 py-3 border-t border-[#E7EBEF] text-[13px] font-bold text-[#DC183C] hover:bg-[#FDECEF]/40 transition">
-          View all Funding articles <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
-        </a>
-      </div>
-
-      <!-- ON THIS PAGE (TOC) -->
-      <div class="hidden lg:block bg-white rounded-2xl border border-[#E7EBEF] p-5">
-        <p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] flex items-center gap-1.5 mb-3"><i data-lucide="list" class="w-3.5 h-3.5"></i> On This Page</p>
-        <nav id="toc" class="-ml-px"></nav>
-      </div>
-
-      <!-- CONTACT SUPPORT CARD -->
-      <div class="rounded-2xl border border-[#E7EBEF] bg-[#FDECEF] p-6">
-        <div class="w-11 h-11 rounded-xl bg-white grid place-items-center mb-3 shadow-sm"><i data-lucide="life-buoy" class="w-5 h-5 text-[#DC183C]"></i></div>
-        <h3 class="font-jakarta font-extrabold text-lg text-[#0C1F31]">Still stuck?</h3>
-        <p class="text-sm text-[#6A7581] mt-1.5 leading-relaxed">Our support team can help with your application directly.</p>
-        <a href="public-contact.html" class="inline-flex w-full items-center justify-center gap-2 mt-4 h-11 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold text-sm transition">Contact support <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
-      </div>
-    </div>
-  </aside>
 </div>
 
 <!-- RELATED ARTICLES -->
@@ -208,20 +206,34 @@
   window.openTOC=openTOC;window.closeTOC=closeTOC;
   document.addEventListener('keydown',e=>{if(e.key==='Escape')closeTOC();});
 
-  // CATEGORY ARTICLES (Betterdocs-style sidebar list) — mirrors public-help-category.html
+  // KB SIDEBAR — full category tree (mirrors public-help-category.html).
+  // The current article's category is expanded and the current article highlighted,
+  // so opening an article keeps you INSIDE the Knowledge Base browser.
+  const ACTIVE_CAT = 'Funding';
   const CURRENT_ARTICLE = 'How do I apply for funding through your platform?';
-  const CAT_ARTICLES = [
-    'How do I apply for funding through your platform?',
-    'What types of funding options are available?',
-    'Tracking your funding application',
-    'Uploading supporting documents',
-    'How the funding match works'
+  function slugify(s){return String(s).toLowerCase().replace(/&/g,'and').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');}
+  const CATS=[
+    {icon:'rocket',tint:'#FDECEF',color:'#DC183C',title:'Getting Started',arts:['Edit Your Profile','How to Change Profile & Cover Photos','How to Change Email or Password','How to join and post in the community','Getting around the SME Hub','How to set up your member profile','Why your profile photo matters, and how to add yours','Welcome to SME South Africa']},
+    {icon:'user-cog',tint:'#E4F5EE',color:'#29A37A',title:'Account & Membership',arts:['How to change your email or password','Is SME South Africa a membership-based platform?','Manage your notification settings','Update your billing information','Close or reopen your account','Two-factor authentication','Membership plans compared']},
+    {icon:'message-square',tint:'#FFF1E0',color:'#AE6B0A',title:'Posts & Groups',arts:['Creating a post','Post privacy','Joining and creating groups','Reporting a post','Editing or deleting your posts','Following members and topics','Group admin tools']},
+    {icon:'wallet',tint:'#FDECEF',color:'#DC183C',title:'Funding',arts:['How do I apply for funding through your platform?','What types of funding options are available?','Tracking your funding application','Uploading supporting documents','How the funding match works']},
+    {icon:'calendar-days',tint:'#E4F5EE',color:'#29A37A',title:'Events & Webinars',arts:['Do you offer webinars or host live events?','Registering for an event','Accessing webinar recordings','Adding events to your calendar','Speaking at an SME SA event']},
+    {icon:'megaphone',tint:'#FFF1E0',color:'#AE6B0A',title:'Advertising',arts:['Can I advertise my business on your platform?','Ad formats and placements','Submitting your campaign assets','Media kit & audience data','Editorial guidelines for sponsored content']}
   ];
-  document.getElementById('catArts').innerHTML = CAT_ARTICLES.map(a=>`
-    <a href="public-help-article.html" class="cat-art ${a===CURRENT_ARTICLE?'current':''}">
-      <i data-lucide="file-text" class="w-3.5 h-3.5 mt-0.5 text-[#6A7581] shrink-0"></i>
-      <span>${esc(a)}</span>
-    </a>`).join('');
+  document.getElementById('kbSidebar').innerHTML = CATS.map(c=>{
+    const isActive = c.title === ACTIVE_CAT;
+    const slug = slugify(c.title);
+    return `
+    <details class="side-cat" ${isActive?'open':''}>
+      <summary class="flex items-center gap-2 px-4 py-2.5 text-[13.5px] font-jakarta font-bold ${isActive?'text-[#DC183C]':'text-[#121A21]'} hover:bg-[#FCFCFC] transition">
+        <i data-lucide="chevron-right" class="chev w-4 h-4 text-[#6A7581]"></i>
+        <span class="w-6 h-6 rounded-md grid place-items-center shrink-0" style="background:${c.tint};color:${c.color}"><i data-lucide="${c.icon}" class="w-3.5 h-3.5"></i></span>
+        <span class="flex-1 truncate">${esc(c.title)}</span>
+        <span class="text-[10px] text-[#6A7581] font-semibold">${c.arts.length}</span>
+      </summary>
+      ${c.arts.map(a=>`<a href="public-help-article.html" class="art-link ${isActive && a===CURRENT_ARTICLE?'current':''}"><i data-lucide="file-text" class="w-3.5 h-3.5 mt-0.5 text-[#6A7581] shrink-0"></i><span>${esc(a)}</span></a>`).join('')}
+    </details>`;
+  }).join('');
 
   // RELATED ARTICLES
   const REL=[

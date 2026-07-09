@@ -3,270 +3,534 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Top CRM Platforms for Small Businesses — Reviews | SME South Africa</title>
-  <meta name="description" content="Compare the top vetted CRM platforms for South African SMEs — ranked, unbiased reviews to help you choose the right one." />
+  <title>The Best CRM Platforms for SA Small Businesses | SME South Africa</title>
+  <meta name="description" content="An editorial breakdown of the CRM platforms that actually fit South African small-business sales teams — features, ZAR pricing, comparison and FAQs." />
+
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  
   <script>
-    tailwind.config = { theme: { extend: { fontFamily: {
-      jakarta: ['Plus Jakarta Sans', 'sans-serif'], inter: ['Inter', 'system-ui', 'sans-serif']
-    } } } };
+    tailwind.config = {
+      corePlugins: {
+        preflight: false, // Strict CI compliance for CMS portability
+      },
+      theme: {
+        extend: {
+          fontFamily: {
+            jakarta: ['Plus Jakarta Sans', 'sans-serif'],
+            inter: ['Inter', 'system-ui', 'sans-serif']
+          },
+          colors: {
+            primary: '#DC183C',
+            accent: '#FF9900',
+            navy: '#0C1F31',
+            success: '#29A37A',
+            ink: '#121A21',
+            muted: '#6A7581',
+            border: '#E7EBEF',
+            secondary: '#F0F5F9',
+            background: '#FCFCFC'
+          }
+        }
+      }
+    };
   </script>
+  
   <style>
-    html, body { font-family: 'Inter', system-ui, sans-serif; }
-    .font-jakarta { font-family: 'Plus Jakarta Sans', sans-serif; letter-spacing: 0.005em; }
-    .hero-bg { background:linear-gradient(115deg,#0C1F31 0%,#0C1F31 50%,#2b1626 80%,#5e1a2c 115%); }
-    .dot-pattern { background-image:radial-gradient(rgba(255,255,255,.07) 1px,transparent 1.5px); background-size:22px 22px; }
-    .field { width:100%; background:#fff; border:1px solid #E7EBEF; border-radius:.75rem; height:3rem; padding:0 1rem; font-size:.9rem; outline:none; transition:border-color .15s,box-shadow .15s; } .field:focus { border-color:#DC183C; box-shadow:0 0 0 3px rgba(220,24,60,.12); }
-    @keyframes fadeUp { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
-    .reveal { animation: fadeUp .5s cubic-bezier(.2,.7,.2,1) backwards; }
-    .card-lift { transition: box-shadow .2s, transform .2s; }
-    .card-lift:hover { box-shadow: 0 10px 24px -10px rgba(10,44,61,0.18); transform: translateY(-2px); }
+    /* CSS Reset & CI Fallbacks (Since Preflight is false) */
+    html { line-height: 1.5; -webkit-text-size-adjust: 100%; font-family: 'Inter', system-ui, sans-serif; scroll-behavior: smooth; }
+    body { margin: 0; background-color: #FCFCFC; color: #121A21; -webkit-font-smoothing: antialiased; }
+    *, ::before, ::after { box-sizing: border-box; border-width: 0; border-style: solid; border-color: currentColor; }
+    h1, h2, h3, h4, h5, h6 { margin: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
+    p, ul, li, dl, dd { margin: 0; }
+    a { color: inherit; text-decoration: inherit; }
+    button, input, select { font-family: inherit; font-size: 100%; margin: 0; }
+    button { cursor: pointer; background: transparent; padding: 0; }
+    img { display: block; max-width: 100%; height: auto; }
+    table { text-indent: initial; border-collapse: collapse; }
+    
+    /* Utility Classes */
+    .hero-bg { background: #0C1F31; }
+    .card-lift { transition: box-shadow 0.3s ease, transform 0.3s ease; }
+    .card-lift:hover { box-shadow: 0 16px 32px -12px rgba(12, 31, 49, 0.1); transform: translateY(-3px); }
+    
+    /* Table of contents active state */
+    .toc-link { transition: all 0.2s; border-left: 2px solid transparent; }
+    .toc-link.active { border-left-color: #DC183C; color: #121A21; font-weight: 700; }
+    
+    /* Forms */
+    .field { width:100%; background:#fff; border:1px solid #E7EBEF; border-radius:.75rem; height:3rem; padding:0 1rem; font-size:.9rem; outline:none; transition:border-color .15s,box-shadow .15s; }
+    .field:focus { border-color:#DC183C; box-shadow:0 0 0 3px rgba(220,24,60,.12); }
+
+    /* Dev mode (parity with the rest of the hub) */
     .dev-badge { display:none; } body.dev-on .dev-badge { display:inline-flex; }
     #devToggle.on { background:#DC183C; color:#fff; border-color:#DC183C; }
-    .ov { position:fixed; inset:0; z-index:60; }
-    .ov-bg { position:absolute; inset:0; background:rgba(12,31,49,.45); backdrop-filter:blur(2px); opacity:0; transition:opacity .3s; }
-    .ov.open .ov-bg { opacity:1; }
-    .drawer { position:absolute; right:0; top:0; height:100%; width:100%; max-width:440px; background:#fff; box-shadow:-12px 0 40px rgba(12,31,49,.25); overflow-y:auto; transform:translateX(100%); transition:transform .3s cubic-bezier(.2,.7,.2,1); }
-    .ov.open .drawer { transform:translateX(0); }
+    .ov { position:fixed; inset:0; z-index:60; } .ov-bg { position:absolute; inset:0; background:rgba(12,31,49,.45); backdrop-filter:blur(2px); opacity:0; transition:opacity .3s; } .ov.open .ov-bg { opacity:1; }
+    .drawer { position:absolute; right:0; top:0; height:100%; width:100%; max-width:440px; background:#fff; box-shadow:-12px 0 40px rgba(12,31,49,.25); overflow-y:auto; transform:translateX(100%); transition:transform .3s cubic-bezier(.2,.7,.2,1); } .ov.open .drawer { transform:translateX(0); }
   </style>
 </head>
-<body class="bg-[#FCFCFC] text-[#121A21] antialiased">
+<body class="bg-background text-ink antialiased">
 
-
-<header class="bg-slate-100 border-b-2 border-dashed border-slate-400 relative overflow-hidden">
-  <div class="absolute inset-0 opacity-30 pointer-events-none" style="background:repeating-linear-gradient(45deg,transparent,transparent 8px,rgba(100,116,139,.18) 8px,rgba(100,116,139,.18) 16px)"></div>
-  <div class="relative max-w-7xl mx-auto px-4 sm:px-6 h-14 flex items-center gap-3 sm:gap-4">
-    <a href="public-home.html" class="flex items-center gap-2 shrink-0 opacity-70 hover:opacity-100 transition">
-      <img src="assets/logo-icon.png" alt="SME South Africa" class="w-7 h-7" />
-      <span class="font-jakarta font-extrabold text-[13px] tracking-tight text-slate-700 hidden sm:inline">SME South Africa</span>
-    </a>
-    <span class="mx-1 hidden sm:inline w-px h-5 bg-slate-300"></span>
-    <p class="text-[10px] sm:text-[11px] font-bold uppercase tracking-widest text-slate-600 flex items-center gap-1.5">
-      <i data-lucide="construction" class="w-3.5 h-3.5 text-slate-500"></i>
-      Header placeholder &middot; design pending
-    </p>
-    <div class="ml-auto flex items-center gap-2">
-      <button id="devToggle" onclick="toggleDevMode()" class="inline-flex items-center gap-1.5 px-2.5 h-8 rounded-full bg-white border border-slate-300 hover:border-[#DC183C] hover:text-[#DC183C] text-[11px] font-bold uppercase tracking-wider text-slate-600 transition" title="Toggle implementation notes"><i data-lucide="code-2" class="w-3.5 h-3.5"></i><span class="hidden sm:inline">Dev</span></button>
-      <a href="index.html" class="inline-flex items-center gap-1.5 px-3 h-8 rounded-full bg-white border border-slate-300 hover:border-slate-500 text-[11px] font-bold text-slate-700 transition">
-        <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i><span class="hidden sm:inline">Launcher</span>
+<header class="bg-white border-b border-border sticky top-0 z-50 shadow-sm">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+    <div class="flex items-center gap-8">
+      <a href="#" class="flex items-center gap-2 group">
+        <div class="w-8 h-8 rounded-lg bg-primary grid place-items-center text-white font-jakarta font-extrabold text-xs group-hover:scale-105 transition-transform">SME</div>
+        <span class="font-jakarta font-extrabold text-[15px] tracking-tight text-ink hidden sm:block">SME South Africa</span>
       </a>
+      <nav class="hidden md:flex items-center gap-6">
+        <a href="#" class="text-[13px] font-semibold text-muted hover:text-ink transition-colors">Start</a>
+        <a href="#" class="text-[13px] font-semibold text-muted hover:text-ink transition-colors">Manage</a>
+        <a href="#" class="text-[13px] font-semibold text-muted hover:text-ink transition-colors">Grow</a>
+        <a href="#" class="text-[13px] font-extrabold text-primary border-b-2 border-primary py-5">Solutions</a>
+      </nav>
+    </div>
+    <div class="flex items-center gap-4">
+      <button class="text-muted hover:text-primary transition-colors" aria-label="Search">
+        <i data-lucide="search" class="w-5 h-5"></i>
+      </button>
+      <button id="devToggle" onclick="toggleDevMode()" class="inline-flex items-center gap-1.5 px-2.5 h-8 rounded-full border border-border hover:border-primary hover:text-primary text-[11px] font-bold uppercase tracking-wider text-muted transition" title="Toggle implementation notes"><i data-lucide="code-2" class="w-3.5 h-3.5"></i><span class="hidden sm:inline">Dev</span></button>
+      <a href="#" class="hidden sm:inline-flex items-center justify-center px-5 py-2.5 rounded-full bg-primary text-white font-jakarta font-bold text-[13px] hover:bg-[#B0142F] transition-colors">Sign In</a>
     </div>
   </div>
 </header>
 
-<!-- ===================== HERO / ARCHIVE HEADER ===================== -->
-<section class="hero-bg text-white relative overflow-hidden">
-  <div class="absolute inset-0 dot-pattern opacity-70 pointer-events-none"></div>
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-12 sm:py-16 relative">
-    <!-- Breadcrumb (global pattern) -->
-    <nav aria-label="Breadcrumb" class="text-xs text-white/55 flex items-center flex-wrap gap-x-1.5 mb-5"><a href="public-home.html" class="hover:text-white transition">Home</a><span class="text-white/30">›</span><a href="public-solutions.html" class="hover:text-white transition">Solutions</a><span class="text-white/30">›</span><span id="bc-cat" class="text-white/85 font-medium truncate">CRM Platforms</span></nav>
-    <div class="flex items-center gap-2">
-      <h1 id="hero-title" class="font-jakarta font-extrabold text-3xl sm:text-5xl tracking-tight">Top CRM Platforms for Small Businesses</h1>
-      <button onclick="openBrief('category')" class="dev-badge w-6 h-6 rounded-full bg-[#FF9900] text-[#121A21] items-center justify-center text-[11px] font-bold" title="Implementation notes">i</button>
-    </div>
-    <p class="mt-4 text-lg text-white/75 max-w-2xl">We tested the leading CRMs on ease of use, South African support, and value in rand — so you can pick the right one with confidence.</p>
-    <div class="mt-6 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-white/70">
-      <span class="flex items-center gap-2"><i data-lucide="shield-check" class="w-4 h-4 text-[#29A37A]"></i> Independently vetted</span>
-      <span class="flex items-center gap-2"><i data-lucide="star" class="w-4 h-4 text-[#FF9900]"></i> Rated by SA founders</span>
-      <span class="flex items-center gap-2"><i data-lucide="calendar-check" class="w-4 h-4 text-[#FF9900]"></i> Updated June 2026</span>
+<section class="hero-bg text-white pt-16 pb-32 relative overflow-hidden">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
+    <nav aria-label="Breadcrumb" class="text-[12px] text-white/60 flex items-center flex-wrap gap-x-2 mb-6">
+      <a href="#" class="hover:text-white transition">Home</a> <span>/</span>
+      <a href="#" class="hover:text-white transition">SME Solutions</a> <span>/</span>
+      <span class="text-white font-semibold">CRM Software</span>
+    </nav>
+    <div class="max-w-3xl">
+      <h1 class="font-jakarta font-extrabold text-4xl sm:text-[3.25rem] leading-[1.1] mb-5">The Best CRM Platforms for SA Small Businesses
+        <button onclick="openBrief()" class="dev-badge align-middle ml-1 w-7 h-7 rounded-full bg-accent text-navy items-center justify-center text-[12px] font-bold">i</button>
+      </h1>
+      <p class="text-lg text-white/70 leading-relaxed mb-8">We stripped away the marketing fluff. Here is our editorial breakdown of the CRMs that actually move the needle for local sales teams, ranked by operational fit.</p>
+      <div class="flex items-center gap-4 text-xs font-bold text-white/50 uppercase tracking-widest">
+        <span class="flex items-center gap-1.5"><i data-lucide="shield-check" class="w-4 h-4 text-success"></i> Independently Vetted</span>
+        <span class="flex items-center gap-1.5"><i data-lucide="clock" class="w-4 h-4 text-accent"></i> Updated June 2026</span>
+      </div>
     </div>
   </div>
 </section>
 
-<main class="max-w-7xl mx-auto px-4 sm:px-6">
-
-  <!-- Intro + How we review -->
-  <section class="py-10 grid lg:grid-cols-3 gap-6">
-    <div class="lg:col-span-2">
-      <h2 class="font-jakarta font-extrabold text-2xl">The best CRM software to grow customer relationships</h2>
-      <p class="mt-3 text-slate-600 leading-relaxed">A good CRM keeps every lead, deal and conversation in one place — so nothing slips through the cracks as you scale. We compared the leading platforms on setup effort, pipeline and automation features, ZAR pricing, and how well they fit small South African teams. Here's how they rank.</p>
-    </div>
-    <div class="rounded-2xl bg-[#E4F5EE] border border-[#29A37A]/20 p-5">
-      <p class="text-[11px] font-bold uppercase tracking-widest text-[#29A37A] flex items-center gap-1.5"><i data-lucide="check-circle" class="w-4 h-4"></i> How we review</p>
-      <p class="mt-2 text-sm text-[#121A21]/80 leading-relaxed">Rankings are editorial and independent. Scores combine hands-on testing, verified member reviews, and value-for-money. Some links are partner links — they never affect rank.</p>
-    </div>
-  </section>
-
-  <!-- ===================== RANKED COMPARISON LIST ===================== -->
-  <section class="pb-4">
-    <div class="flex items-center justify-between mb-5">
-      <h2 class="font-jakarta font-extrabold text-xl">Ranked <span id="rank-count" class="text-slate-400 font-semibold text-base"></span></h2>
-      <span class="text-xs text-slate-500 flex items-center gap-1.5"><i data-lucide="arrow-up-down" class="w-3.5 h-3.5"></i> Sorted by editor score</span>
-    </div>
-    <div id="rank-list" class="space-y-4"></div>
-  </section>
-
-  <!-- ===================== BOTTOM LEAD CTA ===================== -->
-  <section class="py-12">
-    <div class="rounded-3xl hero-bg text-white relative overflow-hidden">
-      <div class="absolute inset-0 dot-pattern opacity-70 pointer-events-none"></div>
-      <div class="relative grid lg:grid-cols-2 gap-8 p-8 sm:p-12 items-center">
-        <div>
-          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 text-[#FF9900] text-[11px] font-bold uppercase tracking-widest"><i data-lucide="sparkles" class="w-3.5 h-3.5"></i> Free &amp; unbiased</span>
-          <h2 class="font-jakarta font-extrabold text-3xl sm:text-4xl mt-4 leading-tight">Get matched with the right CRM — <span class="text-[#FF9900]">free</span></h2>
-          <p class="mt-4 text-white/75 max-w-md">Skip the research. Tell us about your business and we'll recommend the best-fit platforms and pull quotes for you.</p>
-        </div>
-        <form onsubmit="leadSubmit(event)" class="bg-white text-[#121A21] rounded-2xl p-6 sm:p-7 shadow-2xl">
-          <h3 class="font-jakarta font-extrabold text-lg">Request quotes</h3>
-          <p class="text-sm text-slate-500 mt-1 mb-4">No obligation. Under a minute.</p>
-          <div class="space-y-3.5">
-            <div><label class="block text-xs font-semibold mb-1.5 text-slate-600">Business name</label><input required class="field" placeholder="Your business" /></div>
-            <div><label class="block text-xs font-semibold mb-1.5 text-slate-600">Email</label><input type="email" required class="field" placeholder="you@business.co.za" /></div>
-            <div><label class="block text-xs font-semibold mb-1.5 text-slate-600">Team size</label>
-              <select class="field" style="-webkit-appearance:none;appearance:none;background-image:url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2216%22 height=%2216%22 fill=%22none%22 stroke=%22%236A7581%22 stroke-width=%222%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22><path d=%22M6 9l6 6 6-6%22/></svg>');background-repeat:no-repeat;background-position:right 1rem center;padding-right:2.5rem">
-                <option value="" disabled selected>Select a range…</option>
-                <option>Just me</option><option>2 – 5 people</option><option>6 – 20 people</option><option>20+ people</option>
-              </select>
-            </div>
+<main class="max-w-7xl mx-auto px-4 sm:px-6 relative z-20 -mt-20">
+  
+  <div class="grid md:grid-cols-3 gap-6 mb-20">
+    
+    <!-- Card 1: monday.com -->
+    <div class="bg-white border border-border rounded-2xl overflow-hidden card-lift flex flex-col shadow-xl">
+      <div class="bg-gradient-to-r from-primary to-accent h-2"></div>
+      <div class="p-6 sm:p-8 flex-1 flex flex-col">
+        <div class="text-center mb-6">
+          <p class="text-[11px] font-bold text-primary uppercase tracking-widest mb-3">Best For Visual Pipelines</p>
+          <div class="bg-secondary rounded-xl h-16 flex items-center justify-center px-6 mb-4">
+             <img src="https://placehold.co/150x40/F0F5F9/121A21?text=monday.com&font=Montserrat" alt="monday.com" class="max-h-full mix-blend-multiply" />
           </div>
-          <button class="mt-5 w-full h-12 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold transition flex items-center justify-center gap-2">Get Matched <i data-lucide="arrow-right" class="w-4 h-4"></i></button>
-          <p class="text-[11px] text-slate-400 text-center mt-3">By submitting you agree to be contacted about relevant solutions.</p>
-        </form>
+        </div>
+        
+        <div class="mb-8 flex-1">
+          <ul class="space-y-3 text-sm text-slate-600">
+            <li class="flex items-start gap-2.5"><i data-lucide="check" class="w-4 h-4 text-success shrink-0 mt-0.5"></i> Highly intuitive interface</li>
+            <li class="flex items-start gap-2.5"><i data-lucide="check" class="w-4 h-4 text-success shrink-0 mt-0.5"></i> Exceptional automations</li>
+            <li class="flex items-start gap-2.5"><i data-lucide="check" class="w-4 h-4 text-success shrink-0 mt-0.5"></i> Customizable drag-and-drop boards</li>
+          </ul>
+        </div>
+        
+        <div class="border-t border-border pt-6 mt-auto">
+          <p class="text-center text-xs text-muted mb-4">Starting from <strong class="text-lg text-ink font-jakarta">R220</strong> /mo</p>
+          <div class="space-y-3">
+            <button class="w-full h-11 rounded-full bg-primary hover:bg-[#B0142F] text-white font-jakarta font-bold text-sm transition shadow-sm">Compare Quotes</button>
+            <button class="w-full h-11 rounded-full border border-border hover:border-ink text-ink font-jakarta font-bold text-sm transition">Read Review</button>
+          </div>
+        </div>
       </div>
     </div>
-  </section>
-</main>
 
-<!-- ===================== STICKY COMPARE BAR ===================== -->
-<div id="compareBar" class="fixed bottom-0 inset-x-0 z-40 translate-y-full transition-transform duration-300">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 pb-4">
-    <div class="bg-[#0C1F31] text-white rounded-2xl shadow-2xl px-4 sm:px-5 py-3 flex items-center gap-3">
-      <i data-lucide="git-compare" class="w-5 h-5 text-[#FF9900] shrink-0"></i>
-      <p class="text-sm font-semibold shrink-0 hidden sm:block">Compare</p>
-      <div id="compareChips" class="flex items-center gap-2 overflow-x-auto flex-1 min-h-[2rem]"></div>
-      <button onclick="runCompare()" class="shrink-0 inline-flex items-center gap-2 px-4 h-10 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold text-sm transition">Compare <span id="compareCount" class="bg-white/20 rounded-full px-2 text-xs"></span></button>
-      <button onclick="clearCompare()" aria-label="Clear" class="shrink-0 w-9 h-9 grid place-items-center rounded-full hover:bg-white/10 text-white/70"><i data-lucide="x" class="w-4 h-4"></i></button>
+    <!-- Card 2: Zoho CRM -->
+    <div class="bg-white border border-border rounded-2xl overflow-hidden card-lift flex flex-col shadow-xl">
+      <div class="bg-navy h-2"></div>
+      <div class="p-6 sm:p-8 flex-1 flex flex-col">
+        <div class="text-center mb-6">
+          <p class="text-[11px] font-bold text-navy uppercase tracking-widest mb-3">Best Value in ZAR</p>
+          <div class="bg-secondary rounded-xl h-16 flex items-center justify-center px-6 mb-4">
+             <img src="https://placehold.co/150x40/F0F5F9/121A21?text=Zoho+CRM&font=Montserrat" alt="Zoho CRM" class="max-h-full mix-blend-multiply" />
+          </div>
+        </div>
+        
+        <div class="mb-8 flex-1">
+          <ul class="space-y-3 text-sm text-slate-600">
+            <li class="flex items-start gap-2.5"><i data-lucide="check" class="w-4 h-4 text-success shrink-0 mt-0.5"></i> Billed in local currency (ZAR)</li>
+            <li class="flex items-start gap-2.5"><i data-lucide="check" class="w-4 h-4 text-success shrink-0 mt-0.5"></i> Deep native ecosystem integrations</li>
+            <li class="flex items-start gap-2.5"><i data-lucide="check" class="w-4 h-4 text-success shrink-0 mt-0.5"></i> Advanced custom reporting tools</li>
+          </ul>
+        </div>
+        
+        <div class="border-t border-border pt-6 mt-auto">
+          <p class="text-center text-xs text-muted mb-4">Starting from <strong class="text-lg text-ink font-jakarta">R150</strong> /mo</p>
+          <div class="space-y-3">
+            <button class="w-full h-11 rounded-full bg-primary hover:bg-[#B0142F] text-white font-jakarta font-bold text-sm transition shadow-sm">Compare Quotes</button>
+            <button class="w-full h-11 rounded-full border border-border hover:border-ink text-ink font-jakarta font-bold text-sm transition">Read Review</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 3: HubSpot -->
+    <div class="bg-white border border-border rounded-2xl overflow-hidden card-lift flex flex-col shadow-xl">
+      <div class="bg-success h-2"></div>
+      <div class="p-6 sm:p-8 flex-1 flex flex-col">
+        <div class="text-center mb-6">
+          <p class="text-[11px] font-bold text-success uppercase tracking-widest mb-3">Best Starter Tier</p>
+          <div class="bg-secondary rounded-xl h-16 flex items-center justify-center px-6 mb-4">
+             <img src="https://placehold.co/150x40/F0F5F9/121A21?text=HubSpot&font=Montserrat" alt="HubSpot" class="max-h-full mix-blend-multiply" />
+          </div>
+        </div>
+        
+        <div class="mb-8 flex-1">
+          <ul class="space-y-3 text-sm text-slate-600">
+            <li class="flex items-start gap-2.5"><i data-lucide="check" class="w-4 h-4 text-success shrink-0 mt-0.5"></i> Robust starter plan at R0</li>
+            <li class="flex items-start gap-2.5"><i data-lucide="check" class="w-4 h-4 text-success shrink-0 mt-0.5"></i> Built-in marketing tools</li>
+            <li class="flex items-start gap-2.5"><i data-lucide="check" class="w-4 h-4 text-success shrink-0 mt-0.5"></i> Extensive app marketplace</li>
+          </ul>
+        </div>
+        
+        <div class="border-t border-border pt-6 mt-auto">
+          <p class="text-center text-xs text-muted mb-4">Starting from <strong class="text-lg text-ink font-jakarta">R0</strong></p>
+          <div class="space-y-3">
+            <button class="w-full h-11 rounded-full bg-primary hover:bg-[#B0142F] text-white font-jakarta font-bold text-sm transition shadow-sm">Visit Site</button>
+            <button class="w-full h-11 rounded-full border border-border hover:border-ink text-ink font-jakarta font-bold text-sm transition">Read Review</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="grid lg:grid-cols-4 gap-12 lg:gap-16 pt-8 pb-20">
+    
+    <!-- Left Sidebar: Table of Contents -->
+    <aside class="hidden lg:block lg:col-span-1">
+      <div class="sticky top-24">
+        <p class="font-jakarta font-extrabold text-[11px] uppercase tracking-widest text-muted mb-5">Buyer's Guide</p>
+        <nav class="flex flex-col gap-1.5 border-l-2 border-border pl-4">
+          <a href="#intro" class="toc-link active text-[14px] text-muted hover:text-ink transition-colors py-1.5 pl-4 -ml-[18px]">Why you need a CRM</a>
+          <a href="#features" class="toc-link text-[14px] text-muted hover:text-ink transition-colors py-1.5 pl-4 -ml-[18px]">Core Features</a>
+          <a href="#pricing" class="toc-link text-[14px] text-muted hover:text-ink transition-colors py-1.5 pl-4 -ml-[18px]">How Pricing Works</a>
+          <a href="#compare" class="toc-link text-[14px] text-muted hover:text-ink transition-colors py-1.5 pl-4 -ml-[18px]">Compare Platforms</a>
+          <a href="#quote" class="toc-link text-[14px] text-muted hover:text-ink transition-colors py-1.5 pl-4 -ml-[18px]">Get a Quote</a>
+          <a href="#faqs" class="toc-link text-[14px] text-muted hover:text-ink transition-colors py-1.5 pl-4 -ml-[18px]">FAQs</a>
+        </nav>
+      </div>
+    </aside>
+
+    <!-- Right Column: Deep Dive Content -->
+    <div class="lg:col-span-3 space-y-16">
+      
+      <!-- Section 1: Introduction -->
+      <section id="intro" class="scroll-mt-24">
+        <div class="space-y-4 text-[15px] text-slate-600 leading-relaxed">
+          <p>Relying on spreadsheets and memory to manage your sales pipeline is a guaranteed way to lose revenue. A CRM (Customer Relationship Management) system acts as the single source of truth for your business.</p>
+          <p>It records every email, logs every call, and automates your follow-ups. Whether you are a solo consultant in Sandton or a 20-person logistics team in Cape Town, choosing the right platform depends heavily on your specific operational bottlenecks and team size.</p>
+        </div>
+      </section>
+
+      <!-- Section 2: Core Features -->
+      <section id="features" class="scroll-mt-24">
+        <h2 class="font-jakarta font-extrabold text-3xl text-ink mb-6">Core Features</h2>
+        <div class="space-y-6 text-[15px] text-slate-600 leading-relaxed">
+          <div>
+            <h3 class="font-jakarta font-bold text-lg text-ink mb-1.5">Pipeline Visibility</h3>
+            <p>Visualise your sales process. Move deals through stages (e.g., Lead, Proposal, Won) to identify bottlenecks.</p>
+          </div>
+          <div>
+            <h3 class="font-jakarta font-bold text-lg text-ink mb-1.5">Workflow Automation</h3>
+            <p>Set up triggers to automatically send welcome emails or schedule follow-up tasks, saving hours of manual work.</p>
+          </div>
+          <div>
+            <h3 class="font-jakarta font-bold text-lg text-ink mb-1.5">Local Integrations</h3>
+            <p>Ensure the CRM connects with the tools your SA business already uses—like Xero or Sage for accounting, local VoIP providers, or the WhatsApp Business API for customer communication.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 3: Pricing -->
+      <section id="pricing" class="scroll-mt-24">
+        <h2 class="font-jakarta font-extrabold text-3xl text-ink mb-6">How Pricing Works</h2>
+        <div class="space-y-4 text-[15px] text-slate-600 leading-relaxed">
+          <p><strong class="text-ink">Per-User Subscription</strong> – Cloud-based CRM software typically charges per user, per month. For South African businesses, this can range from a robust R0 starter tier up to R800+ per user for enterprise features. Most providers offer a 14-day or 30-day trial.</p>
+          <p><strong class="text-ink">The Forex Trap</strong> – Be mindful of currency fluctuations. If a US-based CRM charges $25/user/month, a weak Rand can dramatically inflate your software costs overnight. This is why platforms billing locally in ZAR (like Zoho) are highly attractive.</p>
+          <p><strong class="text-ink">Hidden Costs</strong> – Watch out for add-ons. You may have to pay separately for marketing automation hubs, advanced AI tools, or increased API limits as your business grows.</p>
+        </div>
+      </section>
+
+      <!-- Section 4: Compare -->
+      <section id="compare" class="scroll-mt-24 pt-4 border-t border-border">
+        <h2 class="font-jakarta font-extrabold text-3xl text-ink mb-6">Compare Platforms</h2>
+
+        <div class="overflow-x-auto pb-4 border border-border rounded-xl shadow-sm">
+          <table class="w-full text-left border-collapse min-w-[700px]">
+            <thead class="bg-secondary border-b border-border">
+              <tr>
+                <th class="p-4 w-1/4"><span class="font-jakarta font-bold text-xs text-muted uppercase tracking-widest">Compare</span></th>
+                <th class="p-4 w-1/4 text-center border-l border-border/50">
+                   <span class="font-jakarta font-extrabold text-ink block mb-2">monday.com</span>
+                   <button class="bg-primary text-white rounded-full px-4 py-1.5 text-[11px] font-bold w-full max-w-[120px]">Get Quote</button>
+                </th>
+                <th class="p-4 w-1/4 text-center border-l border-border/50">
+                   <span class="font-jakarta font-extrabold text-ink block mb-2">Zoho CRM</span>
+                   <button class="bg-primary text-white rounded-full px-4 py-1.5 text-[11px] font-bold w-full max-w-[120px]">Get Quote</button>
+                </th>
+                <th class="p-4 w-1/4 text-center border-l border-border/50">
+                   <span class="font-jakarta font-extrabold text-ink block mb-2">HubSpot</span>
+                   <button class="border border-border text-ink hover:bg-white rounded-full px-4 py-1.5 text-[11px] font-bold w-full max-w-[120px] transition">Visit Site</button>
+                </th>
+              </tr>
+            </thead>
+            <tbody class="text-sm">
+              <tr class="border-b border-border hover:bg-slate-50 transition">
+                <td class="p-4 font-semibold text-ink">Best For</td>
+                <td class="p-4 text-center text-slate-600 border-l border-border/50">Visual Pipelines</td>
+                <td class="p-4 text-center text-slate-600 border-l border-border/50">Value in ZAR</td>
+                <td class="p-4 text-center text-slate-600 border-l border-border/50">Starter (R0)</td>
+              </tr>
+              <tr class="border-b border-border hover:bg-slate-50 transition">
+                <td class="p-4 font-semibold text-ink">Starting Price</td>
+                <td class="p-4 text-center font-bold text-ink border-l border-border/50">R220 / mo</td>
+                <td class="p-4 text-center font-bold text-ink border-l border-border/50">R150 / mo</td>
+                <td class="p-4 text-center font-bold text-success border-l border-border/50">R0</td>
+              </tr>
+              <tr class="border-b border-border hover:bg-slate-50 transition">
+                <td class="p-4 font-semibold text-ink">Drag & Drop Pipeline</td>
+                <td class="p-4 text-center border-l border-border/50"><i data-lucide="check" class="w-4 h-4 text-success mx-auto"></i></td>
+                <td class="p-4 text-center border-l border-border/50"><i data-lucide="check" class="w-4 h-4 text-success mx-auto"></i></td>
+                <td class="p-4 text-center border-l border-border/50"><i data-lucide="check" class="w-4 h-4 text-success mx-auto"></i></td>
+              </tr>
+              <tr class="border-b border-border hover:bg-slate-50 transition">
+                <td class="p-4 font-semibold text-ink">AI Sales Assistant</td>
+                <td class="p-4 text-center border-l border-border/50"><i data-lucide="minus" class="w-4 h-4 text-slate-300 mx-auto"></i></td>
+                <td class="p-4 text-center border-l border-border/50"><i data-lucide="check" class="w-4 h-4 text-success mx-auto"></i></td>
+                <td class="p-4 text-center border-l border-border/50"><i data-lucide="minus" class="w-4 h-4 text-slate-300 mx-auto"></i></td>
+              </tr>
+              <tr class="hover:bg-slate-50 transition">
+                <td class="p-4 font-semibold text-ink">Marketing Hub</td>
+                <td class="p-4 text-center text-xs text-slate-500 font-semibold border-l border-border/50">Add-on</td>
+                <td class="p-4 text-center text-xs text-slate-500 font-semibold border-l border-border/50">Add-on</td>
+                <td class="p-4 text-center border-l border-border/50"><i data-lucide="check" class="w-4 h-4 text-success mx-auto"></i></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Section 5: Get a Quote -->
+      <section id="quote" class="scroll-mt-24">
+        <div class="bg-gradient-to-br from-secondary to-[#FDECEF] border border-[#FAD3D9] rounded-2xl p-8 sm:p-10 shadow-sm relative overflow-hidden">
+          <div class="absolute -right-10 -top-10 w-40 h-40 bg-primary/5 rounded-full blur-3xl"></div>
+          
+          <div class="max-w-xl relative z-10">
+            <h2 class="font-jakarta font-extrabold text-2xl text-ink mb-2">Request Custom CRM Quotes</h2>
+            <p class="text-sm text-slate-600 mb-8">Skip the endless research. Tell us about your team size and requirements, and we'll connect you directly with the best-fit providers for a custom ZAR quote.</p>
+            
+            <!-- Progress Indicator -->
+            <div class="flex items-center gap-2 mb-8 max-w-xs">
+              <div id="step1-dot" class="w-2.5 h-2.5 rounded-full bg-primary transition-colors duration-300"></div>
+              <div id="step1-line" class="h-1 flex-1 bg-white border border-border rounded-full overflow-hidden"><div class="h-full bg-primary w-0 transition-all duration-500 ease-out" id="step1-progress"></div></div>
+              <div id="step2-dot" class="w-2.5 h-2.5 rounded-full bg-white border border-border transition-colors duration-300"></div>
+            </div>
+
+            <form class="relative" onsubmit="event.preventDefault(); alert('Quote request submitted.');">
+              
+              <!-- Step 1 -->
+              <div id="form-step-1" class="w-full transition-all duration-300 opacity-100 translate-x-0">
+                <div class="grid sm:grid-cols-2 gap-5 mb-6">
+                  <div>
+                    <label class="block text-xs font-bold text-ink mb-1.5">Business Name</label>
+                    <input type="text" class="field" placeholder="e.g. Acme Corp" required />
+                  </div>
+                  <div>
+                    <label class="block text-xs font-bold text-ink mb-1.5">Work Email</label>
+                    <input type="email" class="field" placeholder="you@company.co.za" required />
+                  </div>
+                </div>
+                
+                <button type="button" onclick="nextFormStep()" class="w-full sm:w-auto px-8 h-12 rounded-full bg-ink hover:bg-navy text-white font-jakarta font-bold text-[15px] transition shadow-md flex items-center justify-center gap-2">
+                  Next Step <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                </button>
+              </div>
+              
+              <!-- Step 2 -->
+              <div id="form-step-2" class="absolute top-0 left-0 w-full transition-all duration-300 opacity-0 translate-x-8 pointer-events-none">
+                <div class="grid sm:grid-cols-2 gap-5 mb-6">
+                  <div>
+                    <label class="block text-xs font-bold text-ink mb-1.5">Team Size (Users)</label>
+                    <select class="field text-slate-600 bg-white" required>
+                      <option value="" disabled selected>Select size...</option>
+                      <option value="1">Just me (1 user)</option>
+                      <option value="2-5">2 - 5 users</option>
+                      <option value="6-15">6 - 15 users</option>
+                      <option value="16+">16+ users</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label class="block text-xs font-bold text-ink mb-1.5">Preferred Platform (Optional)</label>
+                    <select class="field text-slate-600 bg-white">
+                      <option value="" selected>Not sure yet</option>
+                      <option value="monday">monday.com</option>
+                      <option value="zoho">Zoho CRM</option>
+                      <option value="hubspot">HubSpot</option>
+                      <option value="other">Other</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="flex items-center gap-3">
+                  <button type="button" onclick="prevFormStep()" class="w-12 h-12 shrink-0 rounded-full border border-border bg-white text-ink flex items-center justify-center hover:border-ink transition shadow-sm" aria-label="Back">
+                    <i data-lucide="arrow-left" class="w-4 h-4"></i>
+                  </button>
+                  <button type="submit" class="flex-1 sm:flex-none sm:w-auto px-8 h-12 rounded-full bg-primary hover:bg-[#B0142F] text-white font-jakarta font-bold text-[15px] transition shadow-md">
+                    Get Matched Now
+                  </button>
+                </div>
+              </div>
+
+            </form>
+            <p class="text-[11px] text-slate-400 mt-6 flex items-center gap-1.5">
+              <i data-lucide="lock" class="w-3 h-3"></i> Your details are secure and POPIA compliant.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 6: FAQs -->
+      <section id="faqs" class="scroll-mt-24 pt-4 border-t border-border">
+        <h2 class="font-jakarta font-extrabold text-2xl text-ink mb-6">Frequently Asked Questions</h2>
+        <div class="space-y-4">
+          <details class="bg-white border border-border rounded-xl p-5 cursor-pointer group shadow-sm">
+            <summary class="font-jakarta font-bold text-ink list-none flex justify-between items-center text-[15px]">
+              What is the average cost of a CRM in SA?
+              <i data-lucide="chevron-down" class="w-5 h-5 text-muted group-open:rotate-180 transition"></i>
+            </summary>
+            <p class="text-sm text-slate-600 mt-4 leading-relaxed border-t border-border pt-4">Cloud-based CRM software typically ranges from R150 to R800 per user per month for small businesses in South Africa, depending on the features and integrations required. Many offer no-cost starter tiers for startups.</p>
+          </details>
+          
+          <details class="bg-white border border-border rounded-xl p-5 cursor-pointer group shadow-sm">
+            <summary class="font-jakarta font-bold text-ink list-none flex justify-between items-center text-[15px]">
+              Do I need a CRM if I just use Excel?
+              <i data-lucide="chevron-down" class="w-5 h-5 text-muted group-open:rotate-180 transition"></i>
+            </summary>
+            <p class="text-sm text-slate-600 mt-4 leading-relaxed border-t border-border pt-4">Excel is great for flat data storage, but a CRM automates your workflows. It actively reminds you to follow up, tracks email opens, logs call notes, and ensures no valuable leads are forgotten when your sales team gets busy.</p>
+          </details>
+        </div>
+      </section>
+
     </div>
   </div>
-</div>
+</main>
 
-<footer class="bg-slate-100 border-t-2 border-dashed border-slate-400 relative overflow-hidden">
-  <div class="absolute inset-0 opacity-30 pointer-events-none" style="background:repeating-linear-gradient(45deg,transparent,transparent 8px,rgba(100,116,139,.18) 8px,rgba(100,116,139,.18) 16px)"></div>
-  <div class="relative max-w-7xl mx-auto px-4 sm:px-6 py-6 text-center">
-    <p class="text-[10px] sm:text-[11px] font-bold uppercase tracking-widest text-slate-600 flex items-center justify-center gap-1.5">
-      <i data-lucide="construction" class="w-3.5 h-3.5 text-slate-500"></i>
-      Footer placeholder &middot; design pending
-    </p>
-    <p class="text-[11px] text-slate-500 mt-2">&copy; 2026 SME South Africa</p>
+<footer class="bg-navy border-t border-[#1a2d40] relative overflow-hidden mt-12">
+  <div class="absolute inset-0 opacity-10 pointer-events-none" style="background:repeating-linear-gradient(45deg,transparent,transparent 8px,rgba(255,255,255,.18) 8px,rgba(255,255,255,.18) 16px)"></div>
+  <div class="relative max-w-7xl mx-auto px-4 sm:px-6 py-12 flex flex-col md:flex-row items-center justify-between gap-6">
+    <div class="flex items-center gap-2">
+      <div class="w-8 h-8 rounded-lg bg-primary grid place-items-center text-white font-jakarta font-extrabold text-xs">SME</div>
+      <span class="font-jakarta font-extrabold text-[15px] text-white">SME South Africa</span>
+    </div>
+    <div class="flex items-center bg-[#1a2d40] rounded-full p-1.5 w-full md:w-auto border border-white/10">
+      <input type="email" placeholder="Join the SME Newsletter" class="bg-transparent border-none outline-none text-white px-4 text-sm w-full md:w-64 placeholder:text-white/40" />
+      <button class="h-9 px-6 rounded-full bg-primary text-white font-bold text-xs uppercase tracking-widest hover:bg-[#B0142F] transition shrink-0">Subscribe</button>
+    </div>
   </div>
 </footer>
 
 <div id="overlay-root"></div>
-<div id="toast" class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-50"></div>
 
 <script>
-  function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c])); }
-  function showToast(msg){ const el=document.getElementById('toast'); el.classList.remove('hidden'); el.innerHTML=`<div class="bg-[#0C1F31] text-white rounded-full pl-3 pr-5 py-2.5 shadow-2xl flex items-center gap-2 text-sm font-semibold" style="border-left:4px solid #FF9900"><i data-lucide="check-circle" class="w-4 h-4" style="color:#FF9900"></i><span>${esc(msg)}</span></div>`; lucide.createIcons(); setTimeout(()=>{el.classList.add('hidden');el.innerHTML='';},2400); }
+  // Initialize Lucide Icons
+  lucide.createIcons();
 
-  // ?cat= just relabels the page heading / breadcrumb. Reviews below are an example set for "CRM Platforms".
-  (function(){ const p=new URLSearchParams(location.search).get('cat'); if(p){ document.getElementById('hero-title').textContent='Top '+p+' for Small Businesses'; document.getElementById('bc-cat').textContent=p; document.title='Top '+p+' for Small Businesses — Reviews | SME South Africa'; } })();
-
-  const STAR_GOLD='#FF9900';
-  function stars(score){
-    let full=Math.floor(score), half=(score-full)>=0.5, html='';
-    for(let i=0;i<5;i++){ const f=i<full; const h=(i===full&&half);
-      html+=`<i data-lucide="star" class="w-4 h-4" style="${f||h?`color:${STAR_GOLD};fill:${STAR_GOLD}`:'color:#CBD2DA'}${h?';clip-path:inset(0 50% 0 0)':''}"></i>`; }
-    return `<span class="inline-flex items-center gap-0.5 align-middle">${html}</span>`;
-  }
-
-  // logo: styled monogram (placeholder brand mark)
-  function logoMark(name, c, big){ const initials=name.split(/\s|&|\./).filter(Boolean).slice(0,2).map(w=>w[0]).join('').toUpperCase();
-    const sz = big ? 'w-16 h-16 rounded-2xl text-xl' : 'w-14 h-14 rounded-2xl text-lg';
-    return `<div class="${sz} grid place-items-center shrink-0 font-jakarta font-extrabold" style="background:${c[0]};color:${c[1]}">${esc(initials)}</div>`; }
-
-  const PAL=[['#FDECEF','#DC183C'],['#FFF1E0','#AE6B0A'],['#E4F5EE','#29A37A'],['#0C1F31','#FF9900'],['#FDECEF','#B0142F'],['#FFF1E0','#AE6B0A']];
-
-  // Provider set for CRM Platforms. review_url points at the single review page.
-  const SOLUTIONS = [
-    { name:'monday.com CRM', rating:4.8, reviews:412, best:'Visual pipelines & teams', from:179, features:['Drag-and-drop pipelines','Strong automations','Generous free plan','Great mobile app'], review_url:'public-brand.html' },
-    { name:'Zoho CRM', rating:4.7, reviews:506, best:'Best value all-rounder', from:140, features:['Excellent value in ZAR','Deep customisation','Full Zoho ecosystem','Built-in AI assistant'], review_url:'public-brand.html' },
-    { name:'HubSpot CRM', rating:4.6, reviews:489, best:'Free CRM + marketing', from:0, features:['Powerful free tier','Marketing built in','Email & meeting tracking','Huge integration library'], review_url:'public-brand.html' },
-    { name:'Pipedrive', rating:4.5, reviews:344, best:'Sales-focused simplicity', from:240, features:['Clean sales pipeline','Activity reminders','Easy to learn','Strong reporting'], review_url:'public-brand.html' },
-    { name:'Freshsales', rating:4.3, reviews:212, best:'AI lead scoring', from:200, features:['Built-in phone & email','AI lead scoring','Good free plan','Simple setup'], review_url:'public-brand.html' },
-    { name:'Salesforce', rating:4.2, reviews:398, best:'Enterprise scale', from:460, features:['Endless customisation','Massive app marketplace','Advanced analytics','Best for scale'], review_url:'public-brand.html' }
-  ];
-
-  function priceLabel(v){ return v===0 ? 'Free' : 'R'+v+'/mo'; }
-
-  const compare = new Set();
-
-  function renderRanks(){
-    document.getElementById('rank-count').textContent = '· '+SOLUTIONS.length+' compared';
-    document.getElementById('rank-list').innerHTML = SOLUTIONS.map((s,i)=>{ const c=PAL[i%PAL.length]; const top=i===0; return `
-      <div class="bg-white rounded-2xl border ${top?'border-[#FF9900] ring-1 ring-[#FF9900]/30':'border-[#E7EBEF]'} card-lift reveal overflow-hidden" style="animation-delay:${i*40}ms">
-        ${top?`<div class="bg-[#FFF1E0] text-[#AE6B0A] text-[11px] font-bold uppercase tracking-widest px-5 sm:px-6 py-2 flex items-center gap-1.5"><i data-lucide="award" class="w-3.5 h-3.5"></i> Editor's Choice — best overall CRM</div>`:''}
-        <div class="p-5 sm:p-6">
-          <div class="flex flex-col sm:flex-row sm:items-start gap-4">
-            <div class="flex items-center gap-4">
-              <div class="relative">
-                ${logoMark(s.name,c,top)}
-                <span class="absolute -top-2 -left-2 w-7 h-7 rounded-full ${top?'bg-[#FF9900] text-[#0C1F31]':'bg-[#DC183C] text-white'} text-xs font-bold grid place-items-center shadow">#${i+1}</span>
-              </div>
-              <div class="min-w-0">
-                <h3 class="font-jakarta font-extrabold text-lg leading-tight">${esc(s.name)}</h3>
-                <span class="inline-flex items-center gap-1.5 mt-1 text-[11px] font-bold uppercase tracking-wider text-[#DC183C] bg-[#FDECEF] rounded-full px-2.5 py-1"><i data-lucide="target" class="w-3 h-3"></i> Best for ${esc(s.best)}</span>
-              </div>
-            </div>
-            <div class="sm:ml-auto sm:text-right flex sm:block items-center gap-4">
-              <div class="flex items-center gap-2 sm:justify-end">${stars(s.rating)}<span class="text-sm font-bold">${s.rating.toFixed(1)}</span></div>
-              <p class="text-xs text-slate-400 sm:mt-0.5">${s.reviews} reviews · from <span class="font-bold text-[#121A21]">${priceLabel(s.from)}</span></p>
-            </div>
-          </div>
-          <div class="grid sm:grid-cols-2 gap-x-6 gap-y-2 mt-5">
-            ${s.features.map(f=>`<div class="flex items-start gap-2 text-sm text-slate-700"><i data-lucide="check" class="w-4 h-4 text-[#29A37A] mt-0.5 shrink-0"></i><span>${esc(f)}</span></div>`).join('')}
-          </div>
-          <div class="flex flex-col sm:flex-row sm:items-center gap-3 mt-6">
-            <a href="${s.review_url}" class="flex-1 h-11 rounded-full border border-[#E7EBEF] hover:border-[#121A21] font-bold transition flex items-center justify-center gap-2">Read Review <i data-lucide="book-open" class="w-4 h-4"></i></a>
-            <button onclick="showToast('Opening ${esc(s.name)} (partner link)…')" class="flex-1 h-11 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold transition flex items-center justify-center gap-2">Visit Site <i data-lucide="external-link" class="w-4 h-4"></i></button>
-            <label class="flex items-center justify-center gap-2 text-sm font-semibold text-slate-500 hover:text-[#121A21] cursor-pointer select-none px-3 h-11 rounded-full sm:w-auto">
-              <input type="checkbox" onchange="toggleCompare('${esc(s.name)}',this.checked)" class="accent-[#DC183C] w-4 h-4" /> Compare
-            </label>
-          </div>
-          <div class="mt-3 text-center sm:text-left">
-            <button onclick="quote('${esc(s.name)}')" class="text-xs font-bold text-[#DC183C] hover:underline inline-flex items-center gap-1">Compare quotes for ${esc(s.name)} <i data-lucide="arrow-right" class="w-3 h-3"></i></button>
-          </div>
-        </div>
-      </div>`; }).join('');
-    lucide.createIcons();
-  }
-
-  // ---- Sticky compare bar ----
-  function toggleCompare(name, on){ if(on) compare.add(name); else compare.delete(name); renderCompareBar(); }
-  function renderCompareBar(){
-    const bar=document.getElementById('compareBar');
-    document.getElementById('compareCount').textContent = compare.size;
-    document.getElementById('compareChips').innerHTML = [...compare].map(n=>`<span class="shrink-0 inline-flex items-center gap-1.5 bg-white/10 rounded-full pl-3 pr-1.5 py-1 text-xs font-semibold whitespace-nowrap">${esc(n)} <button onclick="toggleCompare('${esc(n)}',false)" class="w-5 h-5 grid place-items-center rounded-full hover:bg-white/20"><i data-lucide="x" class="w-3 h-3"></i></button></span>`).join('');
-    bar.classList.toggle('translate-y-full', compare.size===0);
-    // keep checkboxes in sync when chips are removed
-    document.querySelectorAll('#rank-list input[type=checkbox]').forEach(cb=>{ const label=cb.closest('label'); });
-    lucide.createIcons();
-  }
-  function clearCompare(){ compare.clear(); document.querySelectorAll('#rank-list input[type=checkbox]').forEach(cb=>cb.checked=false); renderCompareBar(); }
-  function runCompare(){ if(compare.size<2){ showToast('Pick at least two to compare.'); return; } showToast('Comparing '+compare.size+' CRMs side by side…'); }
-
-  function quote(name){ showToast('Quote requested for '+name+' — we’ll be in touch.'); }
-  function leadSubmit(e){ e.preventDefault(); e.target.reset(); showToast('Got it — we’ll match you with quotes shortly.'); }
-
-  const BRIEFS = { category: {
-    title:'Solution Category / Reviews', sub:'Affiliate review CPT + lead capture',
-    purpose:'A ranked, editorial comparison page for one solution category (e.g. CRM Platforms). Mirrors the live site information structure — a category is a ranked list of providers — but with an improved, original layout. Drives affiliate clicks (Visit Site), review reads, and qualified leads (Compare Quotes).',
-    data:'Category: <code>{ slug, name, intro }</code>. Review (CPT): <code>{ id, category, vendor, logo, rating, review_count, best_for, pricing_from, features[], affiliate_url, review_url, quote_enabled }</code>. Lead: <code>{ business, email, team_size, category, vendor? }</code>.',
-    logic:'JetEngine CPT "Solution Review" related to a Category taxonomy; rank = editorial score (manual order or rating sort). #1 gets an Editor\'s Choice highlight. Read Review → single review page; Visit Site = tracked affiliate redirect; Compare = client-side multi-select shortlist; Compare Quotes = lead form → CRM, attributed to vendor. <code>?cat=</code> selects the category; reviews are queried by taxonomy term.',
-    components:'Header · hero + breadcrumb · intro + how-we-review · ranked comparison cards (rank badge, stars, Best-for tag, logo, check features, Read Review / Visit Site / Compare Quotes) · sticky compare bar · lead CTA · footer.'
-  } };
-  function toggleDevMode(){ const on=document.body.classList.toggle('dev-on'); const b=document.getElementById('devToggle'); if(b)b.classList.toggle('on',on); if(on)showToast('Dev Mode on — tap any ⓘ for implementation notes.'); lucide.createIcons(); }
+  // ---- Dev mode + implementation brief (parity with the rest of the hub) ----
+  const BRIEF = {
+    title:'Solution Category', sub:'Editorial "best of" ranking + lead-gen',
+    purpose:'A curated, editorial ranking of tools within one solution category (e.g. CRM). Distinct from the Brands directory: this is an opinionated buyer’s guide that drives comparison and quote requests, not a neutral listing.',
+    data:'Solution category (CPT/taxonomy): <code>{ id, title, slug, intro, updated_at }</code>. Ranked tools: <code>{ name, tagline, badge, bullets[], starting_price_zar, cta_type: "quote"|"visit", review_url }</code>. Quote lead: <code>{ business, email, team_size, preferred_platform }</code>.',
+    logic:'Public + indexable (editorial + FAQ schema). TOC + scroll-spy built client-side from <code>section[id]</code> via IntersectionObserver. Get-a-Quote is a 2-step lead form (details → requirements) posting to the comparison pipeline. “Read Review” deep-links to the brand profile; “Visit Site” is a tracked outbound redirect.',
+    components:'Header + nav · hero (breadcrumb, title, vetted/updated meta) · 3 ranked comparison cards · sticky buyer’s-guide TOC · deep-dive sections (why, features, pricing, compare table, quote, FAQs) · newsletter footer.'
+  };
+  function toggleDevMode(){ const on=document.body.classList.toggle('dev-on'); const b=document.getElementById('devToggle'); if(b)b.classList.toggle('on',on); lucide.createIcons(); }
   function closeOverlay(id){ const el=document.getElementById(id); if(!el)return; el.classList.remove('open'); setTimeout(()=>{ if(el&&el.parentNode) el.remove(); },300); }
-  function openBrief(id){ const b=BRIEFS[id]; if(!b)return;
-    const sec=(icon,label,html)=>`<div class="px-6 py-4 border-t border-slate-100"><p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] flex items-center gap-1.5 mb-2"><i data-lucide="${icon}" class="w-3.5 h-3.5"></i>${label}</p><div class="text-sm text-slate-600 leading-relaxed">${html}</div></div>`;
-    document.getElementById('overlay-root').innerHTML=`<div class="ov" id="ov-brief"><div class="ov-bg" onclick="closeOverlay('ov-brief')"></div><div class="drawer"><div class="sticky top-0 z-10 bg-[#0C1F31] text-white px-6 py-5 flex items-start justify-between"><div class="min-w-0"><p class="text-[10px] font-bold uppercase tracking-widest text-[#FF9900] mb-1">Dev Brief</p><h3 class="font-jakarta font-extrabold text-lg leading-tight">${b.title}</h3><p class="text-xs text-white/60 mt-1">${b.sub}</p></div><button onclick="closeOverlay('ov-brief')" aria-label="Close" class="text-white/60 hover:text-white shrink-0 ml-3"><i data-lucide="x" class="w-5 h-5"></i></button></div>${sec('target','Purpose',b.purpose)}${sec('database','Data model',b.data)}${sec('git-branch','Logic',b.logic)}${sec('boxes','Components',b.components)}<div class="px-6 py-4 border-t border-slate-100"><p class="text-[11px] text-slate-400 flex items-center gap-1.5"><i data-lucide="info" class="w-3.5 h-3.5"></i> Spec lives beside the feature — toggle Dev Mode off for the clean view.</p></div></div></div>`;
+  function openBrief(){ const b=BRIEF;
+    const sec=(icon,label,html)=>`<div class="px-6 py-4" style="border-top:1px solid #f1f5f9"><p class="text-[10px] font-bold uppercase tracking-widest text-primary flex items-center gap-1.5 mb-2"><i data-lucide="${icon}" class="w-3.5 h-3.5"></i>${label}</p><div class="text-sm text-slate-600 leading-relaxed">${html}</div></div>`;
+    document.getElementById('overlay-root').innerHTML=`<div class="ov" id="ov-brief"><div class="ov-bg" onclick="closeOverlay('ov-brief')"></div><div class="drawer"><div class="sticky top-0 z-10 bg-navy text-white px-6 py-5 flex items-start justify-between"><div class="min-w-0"><p class="text-[10px] font-bold uppercase tracking-widest text-accent mb-1">Dev Brief</p><h3 class="font-jakarta font-extrabold text-lg leading-tight">${b.title}</h3><p class="text-xs text-white/60 mt-1">${b.sub}</p></div><button onclick="closeOverlay('ov-brief')" aria-label="Close" class="text-white/60 hover:text-white shrink-0 ml-3"><i data-lucide="x" class="w-5 h-5"></i></button></div>${sec('target','Purpose',b.purpose)}${sec('database','Data model',b.data)}${sec('git-branch','Logic',b.logic)}${sec('boxes','Components',b.components)}</div></div>`;
     requestAnimationFrame(()=>{ const o=document.getElementById('ov-brief'); if(o)o.classList.add('open'); }); lucide.createIcons();
   }
+  
+  // Table of Contents Active State Observer
+  document.addEventListener('DOMContentLoaded', () => {
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.toc-link');
+    
+    // Intersection Observer to watch which section is currently in view
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          navLinks.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('href') === `#${entry.target.id}`) {
+              link.classList.add('active');
+            }
+          });
+        }
+      });
+    }, { 
+      rootMargin: '-100px 0px -60% 0px', // Adjust firing point
+      threshold: 0 
+    });
 
-  renderRanks(); renderCompareBar(); lucide.createIcons();
+    sections.forEach(section => {
+      observer.observe(section);
+    });
+  });
+
+  function nextFormStep() {
+    // Hide Step 1
+    const step1 = document.getElementById('form-step-1');
+    step1.classList.remove('opacity-100', 'translate-x-0');
+    step1.classList.add('opacity-0', '-translate-x-8', 'absolute', 'top-0', 'left-0', 'pointer-events-none');
+    
+    // Show Step 2
+    const step2 = document.getElementById('form-step-2');
+    step2.classList.remove('opacity-0', 'translate-x-8', 'absolute', 'top-0', 'left-0', 'pointer-events-none');
+    step2.classList.add('opacity-100', 'translate-x-0');
+
+    // Update Progress
+    document.getElementById('step1-progress').style.width = '100%';
+    const step2Dot = document.getElementById('step2-dot');
+    step2Dot.classList.remove('bg-white', 'border-border', 'border');
+    step2Dot.classList.add('bg-primary');
+  }
+
+  function prevFormStep() {
+    // Hide Step 2
+    const step2 = document.getElementById('form-step-2');
+    step2.classList.remove('opacity-100', 'translate-x-0');
+    step2.classList.add('opacity-0', 'translate-x-8', 'absolute', 'top-0', 'left-0', 'pointer-events-none');
+    
+    // Show Step 1
+    const step1 = document.getElementById('form-step-1');
+    step1.classList.remove('opacity-0', '-translate-x-8', 'absolute', 'top-0', 'left-0', 'pointer-events-none');
+    step1.classList.add('opacity-100', 'translate-x-0');
+
+    // Update Progress
+    document.getElementById('step1-progress').style.width = '0%';
+    const step2Dot = document.getElementById('step2-dot');
+    step2Dot.classList.add('bg-white', 'border-border', 'border');
+    step2Dot.classList.remove('bg-primary');
+  }
 </script>
 </body>
 </html>
