@@ -27,7 +27,6 @@ window.MOCKUP_STATUS = {
   "public-deal.html": "not-started",
   "public-guides.html": "finalised",
   "public-guide.html": "finalised",
-  "public-founder-focus.html": "under-work",
   "public-founder-focus-category.html": "under-work",
   "public-funding-summit-category.html": "under-review",
   "public-shop.html": "not-started",
@@ -55,6 +54,7 @@ window.MOCKUP_STATUS = {
   "public-icons.html": "finalised",
   "chrome-preview.html": "not-started",
   "public-help.html": "under-review",
+  "public-help-category.html": "under-review",
   "public-help-article.html": "under-review",
   "public-search.html": "under-review",
   "public-404.html": "finalised"
