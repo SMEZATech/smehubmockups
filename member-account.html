@@ -36,7 +36,6 @@
     }
     html, body { font-family:'Inter', system-ui, sans-serif; }
     .font-jakarta { font-family:'Plus Jakarta Sans', sans-serif; letter-spacing:.005em; }
-    .font-mono { font-family: ui-monospace, monospace; }
 
     .no-scrollbar::-webkit-scrollbar { display:none; }
     .no-scrollbar { -ms-overflow-style:none; scrollbar-width:none; }
@@ -1015,7 +1014,7 @@ function tabInvites(){
         <div class="mt-3 pt-3 border-t border-slate-100">
           <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1.5">Or share your invite link</label>
           <div class="flex gap-2">
-            <input id="invite-link" readonly value="https://smesouthafrica.co.za/join?ref=tshepho" class="flex-1 bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-sm text-slate-500 outline-none font-mono">
+            <input id="invite-link" readonly value="https://smesouthafrica.co.za/join?ref=tshepho" class="flex-1 bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-sm text-slate-500 outline-none font-jakarta">
             <button onclick="copyInviteLink()" class="border border-slate-200 hover:border-[#DC183C] hover:text-[#DC183C] text-slate-600 rounded-full px-4 py-2.5 font-jakarta font-bold text-sm transition flex items-center gap-2 shrink-0"><i data-lucide="copy" class="w-4 h-4"></i> Copy</button>
           </div>
         </div>
@@ -1044,7 +1043,7 @@ function renderAside(){
   const ring = (pct,color='#DC183C') => `
     <div class="relative w-16 h-16 shrink-0">
       <svg class="w-full h-full -rotate-90" viewBox="0 0 36 36">
-        <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" stroke="#F1F5F9" stroke-width="3" fill="none"></path>
+        <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" stroke="#F0F5F9" stroke-width="3" fill="none"></path>
         <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" stroke="${color}" stroke-width="3" stroke-linecap="round" fill="none" stroke-dasharray="${pct}, 100"></path>
       </svg>
       <div class="absolute inset-0 grid place-items-center"><p class="font-jakarta font-extrabold text-base text-[#121A21] leading-none">${pct}<span class="text-[10px] align-top">%</span></p></div>
@@ -1461,7 +1460,7 @@ function setMembership(){
         <div class="absolute inset-0 opacity-40" style="background:radial-gradient(circle at 80% 30%, #DC183C 0%, transparent 60%);"></div>
         <div class="relative flex items-center justify-between flex-wrap gap-3">
           <div><p class="text-[10px] font-bold uppercase tracking-widest text-[#FF9900]">Current plan</p>
-            <h3 class="font-jakarta font-extrabold text-2xl text-white mt-0.5 flex items-center gap-2">Free Member <span class="text-[10px] bg-white/15 text-white px-2 py-0.5 rounded-full uppercase tracking-wide">Active</span></h3>
+            <h3 class="font-jakarta font-extrabold text-2xl text-white mt-0.5 flex items-center gap-2">Standard Member <span class="text-[10px] bg-white/15 text-white px-2 py-0.5 rounded-full uppercase tracking-wide">Active</span></h3>
             <p class="text-xs text-white/60 mt-1">Next billing date: — &nbsp;·&nbsp; No card on file</p>
           </div>
           <button onclick="showToast('Upgrade flow handled by MemberPress.',null)" class="bg-[#DC183C] hover:bg-[#B0142F] text-white rounded-full px-5 py-2.5 font-jakarta font-bold text-sm transition flex items-center gap-2"><i data-lucide="crown" class="w-4 h-4"></i> Upgrade to Premium</button>
@@ -1473,10 +1472,10 @@ function setMembership(){
       ${usage.map(([l,v,m,c])=>`<div><div class="flex items-center justify-between mb-1.5"><span class="text-sm font-semibold text-[#121A21]">${l}</span><span class="text-xs font-bold text-slate-400">${v} / ${m}</span></div><div class="h-2 rounded-full bg-slate-100 overflow-hidden"><div class="h-full rounded-full" style="width:${Math.round(v/m*100)}%;background:${c}"></div></div></div>`).join('')}
     </div>
     <div class="mt-6 grid sm:grid-cols-2 gap-3">
-      <div class="border border-slate-200 rounded-2xl p-4"><p class="font-jakarta font-bold text-[#121A21] flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-[#29A37A]"></i> Free includes</p><ul class="text-sm text-slate-500 mt-2 space-y-1"><li>Community feed &amp; profile</li><li>Up to 250 connections</li><li>Join public groups</li></ul></div>
+      <div class="border border-slate-200 rounded-2xl p-4"><p class="font-jakarta font-bold text-[#121A21] flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-[#29A37A]"></i> Standard includes</p><ul class="text-sm text-slate-500 mt-2 space-y-1"><li>Community feed &amp; profile</li><li>Up to 250 connections</li><li>Join public groups</li></ul></div>
       <div class="border-2 border-[#DC183C] rounded-2xl p-4 bg-[#FDECEF]/40"><p class="font-jakarta font-bold text-[#DC183C] flex items-center gap-2"><i data-lucide="crown" class="w-4 h-4"></i> Premium adds</p><ul class="text-sm text-slate-600 mt-2 space-y-1"><li>Priority funding applications</li><li>Unlimited connections</li><li>Event discounts &amp; replays</li></ul></div>
     </div>
-    <p class="text-xs text-slate-400 mt-5 flex items-center gap-1.5"><i data-lucide="info" class="w-3.5 h-3.5"></i> Billing &amp; subscriptions are managed by <span class="font-mono">MemberPress</span>. SME HUB does not store card data.</p>`;
+    <p class="text-xs text-slate-400 mt-5 flex items-center gap-1.5"><i data-lucide="info" class="w-3.5 h-3.5"></i> Billing &amp; subscriptions are managed by <span class="font-jakarta">MemberPress</span>. SME HUB does not store card data.</p>`;
   return settingsCard('Membership', 'Your plan, usage and upgrade options.', body);
 }
 
@@ -1493,13 +1492,13 @@ function setOrders(){
       <div class="w-12 h-12 rounded-xl bg-slate-100 grid place-items-center shrink-0"><i data-lucide="shirt" class="w-6 h-6 text-slate-400"></i></div>
       <div class="min-w-0 flex-1">
         <div class="flex items-center gap-2 flex-wrap mb-1">
-          <p class="font-mono text-xs text-slate-400">${esc(o.id)}</p>
+          <p class="font-jakarta text-xs text-slate-400">${esc(o.id)}</p>
           <span class="px-2 py-0.5 rounded-full text-[10px] font-bold" style="background:${o.bg};color:${o.statusC}">${esc(o.status)}</span>
         </div>
         <p class="text-sm font-semibold text-[#121A21]">${esc(o.product)}</p>
         <p class="text-xs text-slate-400 mt-0.5">${esc(o.variant)} · Qty ${o.qty}</p>
         <p class="text-xs text-slate-400">${esc(o.date)} · <span class="font-semibold text-[#121A21]">${esc(o.total)}</span></p>
-        ${o.trackable ? `<p class="text-[11px] text-slate-400 mt-1 flex items-center gap-1"><i data-lucide="package" class="w-3.5 h-3.5 text-[#29A37A]"></i> Tracking: <span class="font-mono">${esc(o.tracking)}</span></p>` : ''}
+        ${o.trackable ? `<p class="text-[11px] text-slate-400 mt-1 flex items-center gap-1"><i data-lucide="package" class="w-3.5 h-3.5 text-[#29A37A]"></i> Tracking: <span class="font-jakarta">${esc(o.tracking)}</span></p>` : ''}
       </div>
       <div class="flex items-center gap-2 shrink-0 pt-1">
         <button onclick="showToast('Opening order ${esc(o.id)} details.',null)" class="border border-slate-200 hover:border-[#DC183C] hover:text-[#DC183C] text-slate-600 rounded-full px-4 py-1.5 text-xs font-bold transition">View order</button>
@@ -1531,7 +1530,7 @@ function setOrders(){
         <i data-lucide="chevron-right" class="w-4 h-4 text-slate-300 ml-auto"></i>
       </button>
     </div>
-    <p class="text-xs text-slate-400 mt-5 flex items-center gap-1.5"><i data-lucide="info" class="w-3.5 h-3.5"></i> The SME SA store sells branded merchandise. Orders are managed securely by <span class="font-mono">WooCommerce</span> — payment and address management hands off to the WooCommerce secure account page. Member resources &amp; downloads are managed separately through your Membership.</p>`;
+    <p class="text-xs text-slate-400 mt-5 flex items-center gap-1.5"><i data-lucide="info" class="w-3.5 h-3.5"></i> The SME SA store sells branded merchandise. Orders are managed securely by <span class="font-jakarta">WooCommerce</span> — payment and address management hands off to the WooCommerce secure account page. Member resources &amp; downloads are managed separately through your Membership.</p>`;
   return settingsCard('My Orders', 'Your SME South Africa merchandise orders.', body);
 }
 
@@ -1590,7 +1589,7 @@ function renderDownloadList(){
           <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold" style="background:${m.bg};color:${m.color}">${m.label}</span>
           <span class="text-[11px] text-slate-400">Downloaded ${esc(d.date)}</span>
           <span class="text-[11px] text-slate-300">·</span>
-          <span class="text-[11px] text-slate-400 font-mono">${esc(d.format)} · ${esc(d.size)}</span>
+          <span class="text-[11px] text-slate-400 font-jakarta">${esc(d.format)} · ${esc(d.size)}</span>
         </div>
       </div>
       <button onclick="reDownload('${d.id}')" class="text-xs font-bold text-[#DC183C] hover:text-[#B0142F] flex items-center gap-1.5 shrink-0 px-3 py-1.5 rounded-full hover:bg-[#FDECEF]/60 transition"><i data-lucide="download" class="w-3.5 h-3.5"></i><span class="hidden sm:inline">Download again</span></button>
@@ -1805,7 +1804,7 @@ function fundingStepper(step){
       const icon = done?'check':(cur?'circle-dot':'circle');
       return `<div class="flex items-center ${i===FUNDING_STEPS.length-1?'':'flex-1'} min-w-0">
         <div class="flex flex-col items-center">
-          <div class="w-6 h-6 rounded-full grid place-items-center shrink-0" style="background:${done?'#29A37A':cur?'#FDECEF':'#F1F5F9'};${cur?'box-shadow:0 0 0 2px #DC183C':''}"><i data-lucide="${icon}" class="w-3 h-3" style="color:${done?'#fff':dotColor}"></i></div>
+          <div class="w-6 h-6 rounded-full grid place-items-center shrink-0" style="background:${done?'#29A37A':cur?'#FDECEF':'#F0F5F9'};${cur?'box-shadow:0 0 0 2px #DC183C':''}"><i data-lucide="${icon}" class="w-3 h-3" style="color:${done?'#fff':dotColor}"></i></div>
           <p class="text-[9px] font-bold mt-1 ${cur?'text-[#DC183C]':done?'text-[#29A37A]':'text-slate-400'} uppercase tracking-wide text-center">${s}</p>
         </div>
         ${i<FUNDING_STEPS.length-1?`<div class="flex-1 h-0.5 mx-1 -mt-4" style="background:${lineColor}"></div>`:''}
@@ -1841,8 +1840,8 @@ function fundingTableRow(a, idx){
         <p class="font-jakarta font-bold text-[#121A21] text-sm leading-tight">${esc(a.product)}</p>
       </div>
     </td>
-    <td class="px-4 py-3 text-[11px] font-mono text-slate-500">${esc(a.id)}</td>
-    <td class="px-4 py-3 text-sm font-mono font-bold text-[#121A21] text-right whitespace-nowrap">${esc(fundingZAR(a.amount))}</td>
+    <td class="px-4 py-3 text-[11px] font-jakarta text-slate-500">${esc(a.id)}</td>
+    <td class="px-4 py-3 text-sm font-jakarta font-bold text-[#121A21] text-right whitespace-nowrap">${esc(fundingZAR(a.amount))}</td>
     <td class="px-4 py-3 text-xs text-slate-600 whitespace-nowrap">${esc(a.submitted)}</td>
     <td class="px-4 py-3 text-xs text-slate-500 whitespace-nowrap">${esc(a.updated)}</td>
     <td class="px-4 py-3 text-right whitespace-nowrap">
@@ -1862,13 +1861,13 @@ function fundingMobileCard(a){
         <div class="w-9 h-9 rounded-lg bg-[#0C1F31] grid place-items-center shrink-0"><i data-lucide="${a.icon}" class="w-4 h-4 text-[#FF9900]"></i></div>
         <div class="min-w-0">
           <p class="font-jakarta font-bold text-[#121A21] text-sm leading-tight">${esc(a.product)}</p>
-          <p class="text-[10px] font-mono text-slate-400 mt-0.5">${esc(a.id)}</p>
+          <p class="text-[10px] font-jakarta text-slate-400 mt-0.5">${esc(a.id)}</p>
         </div>
       </div>
       <span class="px-2 py-0.5 rounded-full text-[10px] font-bold whitespace-nowrap shrink-0" style="background:${s.bg};color:${s.color}">${s.label}</span>
     </div>
     <div class="grid grid-cols-2 gap-2 text-[11px] mb-3">
-      <div><p class="uppercase font-bold text-slate-400 tracking-wider">Amount</p><p class="font-mono font-bold text-[#121A21] text-sm">${esc(fundingZAR(a.amount))}</p></div>
+      <div><p class="uppercase font-bold text-slate-400 tracking-wider">Amount</p><p class="font-jakarta font-bold text-[#121A21] text-sm">${esc(fundingZAR(a.amount))}</p></div>
       <div><p class="uppercase font-bold text-slate-400 tracking-wider">Submitted</p><p class="text-slate-600">${esc(a.submitted)}</p></div>
       <div class="col-span-2"><p class="uppercase font-bold text-slate-400 tracking-wider">Last update</p><p class="text-slate-500">${esc(a.updated)}</p></div>
     </div>
@@ -2029,7 +2028,7 @@ function fundingDocRow(a, d, i){
     <div class="w-9 h-9 rounded-lg bg-[#FCFCFC] border border-[#E7EBEF] grid place-items-center shrink-0"><i data-lucide="${d.state==='provided'?'file-check':'file'}" class="w-4 h-4 ${d.state==='provided'?'text-[#29A37A]':'text-slate-400'}"></i></div>
     <div class="min-w-0 flex-1">
       <p class="text-sm font-semibold text-[#121A21] truncate">${esc(d.name)}</p>
-      ${fname?`<p class="text-[11px] font-mono text-slate-400 truncate">${fname} · ${size}</p>`:'<p class="text-[11px] text-slate-400">No file uploaded yet</p>'}
+      ${fname?`<p class="text-[11px] font-jakarta text-slate-400 truncate">${fname} · ${size}</p>`:'<p class="text-[11px] text-slate-400">No file uploaded yet</p>'}
     </div>
     ${docBadge(d.state)}
     ${action}
@@ -2064,7 +2063,7 @@ function renderFundingDetail(id){
   const glance = `<div class="bg-white rounded-2xl border border-[#E7EBEF] p-5">
     <p class="text-[10px] font-bold uppercase tracking-widest text-[#0C1F31] mb-3">At a glance</p>
     <div class="space-y-3">
-      <div><p class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Amount requested</p><p class="font-jakarta font-extrabold text-2xl text-[#121A21] font-mono mt-0.5">${esc(fundingZAR(a.amount))}</p></div>
+      <div><p class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Amount requested</p><p class="font-jakarta font-extrabold text-2xl text-[#121A21] mt-0.5">${esc(fundingZAR(a.amount))}</p></div>
       <div><p class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Term</p><p class="text-sm font-semibold text-[#121A21] mt-0.5">${esc(a.term)}</p></div>
       <div><p class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Purpose</p><p class="text-sm text-slate-600 mt-0.5 leading-snug">${esc(a.purpose)}</p></div>
       <div><p class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Industry</p><p class="text-sm text-[#121A21] mt-0.5">Manufacturing &amp; Logistics</p></div>
@@ -2102,9 +2101,9 @@ function renderFundingDetail(id){
   const details = `<div class="bg-white rounded-2xl border border-[#E7EBEF] p-5 mt-5">
     <p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] mb-4 flex items-center gap-1.5"><i data-lucide="file-text" class="w-3.5 h-3.5"></i> Application details</p>
     <div class="grid sm:grid-cols-2 gap-x-6 gap-y-4">
-      ${dl('Amount requested', `<span class="font-mono">${esc(fundingZAR(a.amount))}</span>`)}
+      ${dl('Amount requested', `<span class="font-jakarta">${esc(fundingZAR(a.amount))}</span>`)}
       ${dl('Term', esc(a.term))}
-      ${dl('Monthly turnover stated', '<span class="font-mono">R 480,000</span>')}
+      ${dl('Monthly turnover stated', '<span class="font-jakarta">R 480,000</span>')}
       ${dl('Years in business', '6 years')}
       ${dl('Business type', '(Pty) Ltd')}
       ${dl('Industry', 'Manufacturing &amp; Logistics')}
@@ -2132,7 +2131,7 @@ function renderFundingDetail(id){
           <div class="absolute -left-[27px] top-0 w-7 h-7 rounded-full grid place-items-center" style="background:${isLast?'#FDECEF':'#FCFCFC'};border:2px solid ${isLast?'#DC183C':'#E7EBEF'}"><i data-lucide="${t.icon}" class="w-3.5 h-3.5" style="color:${isLast?'#DC183C':'#6A7581'}"></i></div>
           <div class="flex items-center gap-2 mb-0.5">
             <div class="w-5 h-5 rounded-full bg-[#0C1F31] text-white text-[9px] font-bold grid place-items-center">${isLast?'YOU':'SYS'}</div>
-            <p class="text-[11px] font-mono text-slate-400">${esc(t.date)}</p>
+            <p class="text-[11px] font-jakarta text-slate-400">${esc(t.date)}</p>
           </div>
           <p class="text-sm text-[#121A21] font-semibold leading-snug">${esc(t.text)}</p>
         </li>`;
@@ -2143,7 +2142,7 @@ function renderFundingDetail(id){
   const body = `
     <div class="flex items-center justify-between gap-3 mb-4 flex-wrap">
       <button onclick="backToFundingList()" class="text-xs font-bold text-[#121A21] hover:text-[#DC183C] transition inline-flex items-center gap-1.5"><i data-lucide="arrow-left" class="w-4 h-4"></i> Back to applications</button>
-      <p class="text-[11px] font-mono text-slate-400">${esc(a.id)}</p>
+      <p class="text-[11px] font-jakarta text-slate-400">${esc(a.id)}</p>
     </div>
 
     <div class="rounded-2xl border border-[#0C1F31]/15 bg-white p-6 mb-5">
@@ -2272,8 +2271,8 @@ function openDeleteModal(){
           <div class="w-12 h-12 rounded-full bg-[#FDECEF] grid place-items-center mb-3"><i data-lucide="alert-triangle" class="w-6 h-6 text-[#DC183C]"></i></div>
           <h3 class="font-jakarta font-extrabold text-xl text-[#121A21]">Delete your account?</h3>
           <p class="text-sm text-slate-600 mt-2">This permanently erases your profile, ${PEOPLE.own.posts} posts and ${PEOPLE.own.connections} connections. Personal data is removed within 30 days under POPIA. <span class="font-semibold text-[#121A21]">This cannot be undone.</span></p>
-          <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mt-4 mb-1.5">Type <span class="font-mono text-[#DC183C]">DELETE</span> to confirm</label>
-          <input id="del-input" oninput="checkDelete()" placeholder="DELETE" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-sm outline-none focus:border-[#DC183C] font-mono tracking-widest">
+          <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mt-4 mb-1.5">Type <span class="font-jakarta text-[#DC183C]">DELETE</span> to confirm</label>
+          <input id="del-input" oninput="checkDelete()" placeholder="DELETE" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-sm outline-none focus:border-[#DC183C] font-jakarta tracking-widest">
         </div>
         <div class="p-6 flex gap-2 justify-end">
           <button onclick="closeOverlay('ov-del')" class="text-slate-500 hover:text-slate-700 text-sm font-semibold px-4 py-2.5">Cancel</button>
@@ -2300,7 +2299,7 @@ const BRIEFS = {
     data:'<code>viewer_id === profile_owner_id</code> → own. Otherwise peer. Peer also loads <code>connection_status</code> ∈ {none, pending, connected} and <code>mutual_count</code>.',
     logic:'Server resolves the relationship once and passes <code>is_owner</code> to the template. Private fields (email, settings) are never serialised for peer-view. Connect → POST creates a pending request; UI optimistically flips to “Request sent”.',
     components:'Hero actions · stat bar · sub-nav (peers see a subset) · Connect/Message buttons.',
-    specs:'<b>Breadcrumb bar:</b> container <code>max-w-7xl</code> = 1280px, padding-x 16px mobile / 24px sm (<code>px-4 sm:px-6</code>), 24px top (<code>pt-6</code>). Text 12px (<code>text-xs</code>) <code>#6A7581</code>; separator <code>&rsaquo;</code> slate-300; current crumb <code>#121A21</code> weight 500.<br/><b>Demo role banner:</b> full-width bg <code>#0C1F31</code>, inner <code>max-w-6xl</code> = 1152px, padding-y 8px (<code>py-2</code>), 12px text white/90. Label 12px weight 700 uppercase tracking-widest <code>#FF9900</code> + Lucide <code>eye</code> 14&times;14. Role toggle: pill group bg <code>rgba(255,255,255,0.10)</code> rounded-full 2px pad; each button padding 12px/4px (<code>px-3 py-1</code>) rounded-full 12px weight 700 (active = white bg, navy text).<br/><b>Page shell:</b> <code>&lt;main&gt;</code> inner <code>max-w-6xl</code> = 1152px, padding-x 16/24px, padding-y 24px (<code>py-6</code>). Content grid 12-col at lg (<code>lg:grid-cols-12</code>) 24px gap (<code>gap-6</code>): main column <code>lg:col-span-8</code>, aside <code>lg:col-span-4</code> with 20px vertical rhythm (<code>space-y-5</code>). 24px top margin above grid (<code>mt-6</code>).<br/><b>Card baseline:</b> every panel = bg <code>#FFFFFF</code>, radius 16px (<code>rounded-2xl</code>), 1px border <code>#F1F5F9</code> (slate-100).<br/><b>Own-view actions:</b> Edit Profile (primary) + settings icon button 44&times;44 (<code>w-11 h-11</code>) rounded-full 1px slate-200 border, hover border/text <code>#DC183C</code>.<br/><b>Peer-view actions:</b> Connect button padding 20px/10px (<code>px-5 py-2.5</code>) rounded-full bg <code>#DC183C</code> hover <code>#B0142F</code> white Plus Jakarta weight 700 14px; Connected state = <code>#29A37A</code> outline; pending = slate outline. Message button = 1px slate-200 outline, Lucide <code>mail</code> 16&times;16.' },
+    specs:'<b>Breadcrumb bar:</b> container <code>max-w-7xl</code> = 1280px, padding-x 16px mobile / 24px sm (<code>px-4 sm:px-6</code>), 24px top (<code>pt-6</code>). Text 12px (<code>text-xs</code>) <code>#6A7581</code>; separator <code>&rsaquo;</code> slate-300; current crumb <code>#121A21</code> weight 500.<br/><b>Demo role banner:</b> full-width bg <code>#0C1F31</code>, inner <code>max-w-6xl</code> = 1152px, padding-y 8px (<code>py-2</code>), 12px text white/90. Label 12px weight 700 uppercase tracking-widest <code>#FF9900</code> + Lucide <code>eye</code> 14&times;14. Role toggle: pill group bg <code>rgba(255,255,255,0.10)</code> rounded-full 2px pad; each button padding 12px/4px (<code>px-3 py-1</code>) rounded-full 12px weight 700 (active = white bg, navy text).<br/><b>Page shell:</b> <code>&lt;main&gt;</code> inner <code>max-w-6xl</code> = 1152px, padding-x 16/24px, padding-y 24px (<code>py-6</code>). Content grid 12-col at lg (<code>lg:grid-cols-12</code>) 24px gap (<code>gap-6</code>): main column <code>lg:col-span-8</code>, aside <code>lg:col-span-4</code> with 20px vertical rhythm (<code>space-y-5</code>). 24px top margin above grid (<code>mt-6</code>).<br/><b>Card baseline:</b> every panel = bg <code>#FFFFFF</code>, radius 16px (<code>rounded-2xl</code>), 1px border <code>#F0F5F9</code> (slate-100).<br/><b>Own-view actions:</b> Edit Profile (primary) + settings icon button 44&times;44 (<code>w-11 h-11</code>) rounded-full 1px slate-200 border, hover border/text <code>#DC183C</code>.<br/><b>Peer-view actions:</b> Connect button padding 20px/10px (<code>px-5 py-2.5</code>) rounded-full bg <code>#DC183C</code> hover <code>#B0142F</code> white Plus Jakarta weight 700 14px; Connected state = <code>#29A37A</code> outline; pending = slate outline. Message button = 1px slate-200 outline, Lucide <code>mail</code> 16&times;16.' },
   hero:{ title:'Profile Hero', sub:'Cover, avatar, identity, primary actions',
     purpose:'The identity banner. Cover photo with gradient fallback, overlapping gradient monogram (no real photos in mockups), name + title + handle, and Stage/Sector/Region taxonomy pills that power discovery and matching.',
     data:'<code>{ name, handle, role, company, stage, sector, province, city, tier, avatar_url, cover_url, online }</code>. Avatar is a generated monogram when no upload exists.',
@@ -2348,7 +2347,7 @@ const BRIEFS = {
     data:'Weighted checklist: bio, socials, cover photo, WhatsApp verified, groups joined. Score = Σ weights.',
     logic:'Each unmet item is an actionable deep-link into the relevant editor. Score updates live on save.',
     components:'Percentage ring · checklist with deep-links.',
-    specs:'<b>Card (owner only):</b> bg white rounded-2xl border slate-100 padding 20px (<code>p-5</code>).<br/><b>Ring:</b> 64&times;64 (<code>w-16 h-16</code>) SVG donut, viewBox 36&times;36, track stroke <code>#F1F5F9</code> width 3, progress stroke <code>#DC183C</code> width 3 round-cap, <code>stroke-dasharray = score,100</code>. Centre label Plus Jakarta 800 16px (<code>text-base</code>) <code>#121A21</code> with 10px <code>%</code>.<br/><b>Intro:</b> 12px slate-600, highlight weight 700 <code>#121A21</code>.<br/><b>Checklist:</b> 8px apart (<code>space-y-2</code>); check disc 20&times;20 (<code>w-5 h-5</code>) rounded-full &mdash; done = bg <code>#29A37A</code> white check, todo = 2px slate-200 border; label 14px, done = slate-400 line-through, todo = <code>#121A21</code> weight 600 + Lucide <code>chevron-right</code> 16&times;16 slate-300.' },
+    specs:'<b>Card (owner only):</b> bg white rounded-2xl border slate-100 padding 20px (<code>p-5</code>).<br/><b>Ring:</b> 64&times;64 (<code>w-16 h-16</code>) SVG donut, viewBox 36&times;36, track stroke <code>#F0F5F9</code> width 3, progress stroke <code>#DC183C</code> width 3 round-cap, <code>stroke-dasharray = score,100</code>. Centre label Plus Jakarta 800 16px (<code>text-base</code>) <code>#121A21</code> with 10px <code>%</code>.<br/><b>Intro:</b> 12px slate-600, highlight weight 700 <code>#121A21</code>.<br/><b>Checklist:</b> 8px apart (<code>space-y-2</code>); check disc 20&times;20 (<code>w-5 h-5</code>) rounded-full &mdash; done = bg <code>#29A37A</code> white check, todo = 2px slate-200 border; label 14px, done = slate-400 line-through, todo = <code>#121A21</code> weight 600 + Lucide <code>chevron-right</code> 16&times;16 slate-300.' },
   messages:{ title:'Messages', sub:'Private 1:1 conversations',
     purpose:'Redesign of the BuddyBoss messenger. Two-pane inbox: conversation list + active thread, with own messages in the red→orange gradient and incoming in neutral grey. Opened from the header mail icon or a member’s “Message” button.',
     data:'<code>conversations[] { id, participant_id, unread, last_message_at }</code> and <code>messages[] { id, conversation_id, sender_id, body, sent_at, read_at }</code>.',
@@ -2366,7 +2365,7 @@ const BRIEFS = {
     data:'<code>invites[] { email, status: pending|joined, sent_at }</code> · referral code per user · monthly quota.',
     logic:'Validate email; enforce quota; send via <b>Kit (ConvertKit)</b> in staggered batches (never a bulk blast — WP Engine CPU). Status flips to <i>joined</i> on registration attributed to the ref code.',
     components:'Email input + send · copyable referral link · sent-invite list with status pills + resend.',
-    specs:'<b>Header:</b> <code>sectionLabel</code> + quota count 12px weight 700 slate-400.<br/><b>Compose card:</b> 1px slate-100 rounded-2xl padding 16px (<code>p-4</code>); label 11px weight 700 uppercase tracking-wider slate-500. Email input bg slate-50 1px slate-200 rounded-xl (12px) padding 14px/10px 14px, focus border <code>#DC183C</code> + white bg. Send button bg <code>#DC183C</code> hover <code>#B0142F</code> rounded-full padding 20px/10px Plus Jakarta 700 14px white + Lucide <code>send</code> 16&times;16.<br/><b>Referral link:</b> readonly input bg slate-50 1px slate-200 rounded-xl <code>font-mono</code> 14px slate-500; Copy button 1px slate-200 outline hover border/text <code>#DC183C</code> rounded-full padding 16px/10px + Lucide <code>copy</code> 16&times;16.<br/><b>Invite rows:</b> padding-y 12px (<code>py-3</code>); mail disc 36&times;36 (<code>w-9 h-9</code>) rounded-full slate-100, Lucide <code>mail</code> 16&times;16 slate-500. Email 14px weight 600 <code>#121A21</code>; date 12px slate-400. Status pill padding 8px/2px rounded-full 10px weight 700 &mdash; Joined bg <code>#E4F5EE</code> text <code>#29A37A</code>, Pending bg slate-100 text slate-500. Resend link 12px weight 700 <code>#DC183C</code>.' },
+    specs:'<b>Header:</b> <code>sectionLabel</code> + quota count 12px weight 700 slate-400.<br/><b>Compose card:</b> 1px slate-100 rounded-2xl padding 16px (<code>p-4</code>); label 11px weight 700 uppercase tracking-wider slate-500. Email input bg slate-50 1px slate-200 rounded-xl (12px) padding 14px/10px 14px, focus border <code>#DC183C</code> + white bg. Send button bg <code>#DC183C</code> hover <code>#B0142F</code> rounded-full padding 20px/10px Plus Jakarta 700 14px white + Lucide <code>send</code> 16&times;16.<br/><b>Referral link:</b> readonly input bg slate-50 1px slate-200 rounded-xl <code>font-jakarta</code> 14px slate-500; Copy button 1px slate-200 outline hover border/text <code>#DC183C</code> rounded-full padding 16px/10px + Lucide <code>copy</code> 16&times;16.<br/><b>Invite rows:</b> padding-y 12px (<code>py-3</code>); mail disc 36&times;36 (<code>w-9 h-9</code>) rounded-full slate-100, Lucide <code>mail</code> 16&times;16 slate-500. Email 14px weight 600 <code>#121A21</code>; date 12px slate-400. Status pill padding 8px/2px rounded-full 10px weight 700 &mdash; Joined bg <code>#E4F5EE</code> text <code>#29A37A</code>, Pending bg slate-100 text slate-500. Resend link 12px weight 700 <code>#DC183C</code>.' },
   notifpage:{ title:'Notifications (page)', sub:'Full activity inbox',
     purpose:'The standalone Notifications page (distinct from the header dropdown). Filterable by Ask/Win/Share/Mentions, with mark-all-read. Mirrors the BuddyBoss notifications component.',
     data:'<code>notifications[] { id, actor_id, type, verb, target, read_at, created_at }</code>. type maps to the Ask/Win/Share taxonomy where relevant.',
@@ -2402,19 +2401,19 @@ const BRIEFS = {
     data:'Plan, status, next_billing, usage counters. Sourced from <b>MemberPress</b>; SME HUB stores no card data.',
     logic:'Upgrade/cancel hand off to MemberPress hosted flows. Usage counters read from platform meta. Gating (funding apps, event discounts) enforced by MemberPress rules.',
     components:'Plan banner · usage bars · plan comparison · upgrade CTA.',
-    specs:'<b>Container:</b> <code>settingsCard</code> (see Settings shell in the Profile brief).<br/><b>Plan banner:</b> rounded-2xl 1px slate-100, inner bg <code>#0C1F31</code> padding 20px (<code>px-5 py-5</code>) + radial <code>#DC183C</code> 40%. Kicker 10px weight 700 uppercase tracking-widest <code>#FF9900</code>; plan name Plus Jakarta 800 24px (<code>text-2xl</code>) white + status chip 10px bg <code>rgba(255,255,255,0.15)</code> white rounded-full; meta 12px white/60. Upgrade CTA bg <code>#DC183C</code> hover <code>#B0142F</code> rounded-full padding 20px/10px Plus Jakarta 700 14px + Lucide <code>crown</code> 16&times;16.<br/><b>Usage bars:</b> 16px apart (<code>space-y-4</code>); label 14px weight 600 <code>#121A21</code>, value 12px weight 700 slate-400; track height 8px (<code>h-2</code>) rounded-full slate-100, fill per-metric colour (<code>#DC183C</code> / <code>#0C1F31</code> / <code>#FF9900</code>).<br/><b>Plan compare:</b> <code>grid sm:grid-cols-2</code> 12px gap; Standard card 1px slate-200 rounded-2xl padding 16px; Premium card 2px border <code>#DC183C</code> bg <code>#FDECEF</code>/40, heading <code>#DC183C</code> + Lucide <code>crown</code>. Bullets 14px slate-500/600.<br/><b>Footnote:</b> 12px slate-400, MemberPress in <code>font-mono</code>.' },
+    specs:'<b>Container:</b> <code>settingsCard</code> (see Settings shell in the Profile brief).<br/><b>Plan banner:</b> rounded-2xl 1px slate-100, inner bg <code>#0C1F31</code> padding 20px (<code>px-5 py-5</code>) + radial <code>#DC183C</code> 40%. Kicker 10px weight 700 uppercase tracking-widest <code>#FF9900</code>; plan name Plus Jakarta 800 24px (<code>text-2xl</code>) white + status chip 10px bg <code>rgba(255,255,255,0.15)</code> white rounded-full; meta 12px white/60. Upgrade CTA bg <code>#DC183C</code> hover <code>#B0142F</code> rounded-full padding 20px/10px Plus Jakarta 700 14px + Lucide <code>crown</code> 16&times;16.<br/><b>Usage bars:</b> 16px apart (<code>space-y-4</code>); label 14px weight 600 <code>#121A21</code>, value 12px weight 700 slate-400; track height 8px (<code>h-2</code>) rounded-full slate-100, fill per-metric colour (<code>#DC183C</code> / <code>#0C1F31</code> / <code>#FF9900</code>).<br/><b>Plan compare:</b> <code>grid sm:grid-cols-2</code> 12px gap; Standard card 1px slate-200 rounded-2xl padding 16px; Premium card 2px border <code>#DC183C</code> bg <code>#FDECEF</code>/40, heading <code>#DC183C</code> + Lucide <code>crown</code>. Bullets 14px slate-500/600.<br/><b>Footnote:</b> 12px slate-400, MemberPress in <code>font-jakarta</code>.' },
   set_orders:{ title:'Settings · My Orders', sub:'WooCommerce store integration',
     purpose:'Surfaces the member\'s WooCommerce purchase history, digital downloads and links to address/payment management — all inside the SME HUB member account, so members never need to visit a separate store account page. This is the "one place" goal in action.',
     data:'Pulled live from WooCommerce via its REST API: <code>orders[]</code>, <code>downloads[]</code>, <code>addresses</code>. Scoped to the authenticated WordPress user (same user record shared by BuddyBoss, MemberPress and WooCommerce — no separate login).',
     logic:'Order history and downloads render inline. Addresses and payment methods hand off to the WooCommerce My Account secure page (never rebuild card-handling UI in custom code). Download links use WooCommerce\'s own signed URLs with expiry. Order data falls under POPIA and is included in the data export scope — the data-export endpoint already covers this.',
     components:'Order history rows · status pills · download buttons · address & payment quick-links.',
-    specs:'<b>Container:</b> <code>settingsCard</code> (see Settings shell in the Profile brief).<br/><b>Tracking banner:</b> rounded-2xl 1px border <code>#E4F5EE</code> bg <code>#E4F5EE</code>/30 padding 16px flex; icon disc 40&times;40 (<code>w-10 h-10</code>) rounded-full <code>#29A37A</code>, Lucide <code>truck</code> 20&times;20 white; title Plus Jakarta 700 14px; Track link 12px weight 700 <code>#29A37A</code>.<br/><b>Order-history card:</b> rounded-2xl 1px slate-100 padding 16px; heading Plus Jakarta 700 uppercase 14px; Full-history link 12px weight 700 <code>#DC183C</code> + Lucide <code>external-link</code> 14&times;14.<br/><b>Order row:</b> flex, padding-y 16px (<code>py-4</code>) bottom border slate-100; product thumb 48&times;48 (<code>w-12 h-12</code>) rounded-xl slate-100, Lucide <code>shirt</code> 24&times;24 slate-400; order id 12px <code>font-mono</code> slate-400; status pill padding 8px/2px rounded-full 10px weight 700 &mdash; Delivered bg <code>#E4F5EE</code> text <code>#29A37A</code>, Refunded bg <code>#FDECEF</code> text <code>#DC183C</code>. Product 14px weight 600 <code>#121A21</code>; variant/date 12px slate-400, total weight 600 <code>#121A21</code>; tracking 11px slate-400 + Lucide <code>package</code> 14&times;14 <code>#29A37A</code>. View-order button 1px slate-200 outline hover border/text <code>#DC183C</code> rounded-full padding 16px/6px 12px weight 700.<br/><b>Quick-links:</b> <code>grid sm:grid-cols-2</code> 12px gap; buttons 1px slate-200 rounded-2xl padding 16px hover border/text <code>#DC183C</code>, icon tile 36&times;36 (<code>w-9 h-9</code>) rounded-lg slate-100 (Lucide <code>map-pin</code> / <code>credit-card</code> 16&times;16), Lucide <code>chevron-right</code> 16&times;16.' },
+    specs:'<b>Container:</b> <code>settingsCard</code> (see Settings shell in the Profile brief).<br/><b>Tracking banner:</b> rounded-2xl 1px border <code>#E4F5EE</code> bg <code>#E4F5EE</code>/30 padding 16px flex; icon disc 40&times;40 (<code>w-10 h-10</code>) rounded-full <code>#29A37A</code>, Lucide <code>truck</code> 20&times;20 white; title Plus Jakarta 700 14px; Track link 12px weight 700 <code>#29A37A</code>.<br/><b>Order-history card:</b> rounded-2xl 1px slate-100 padding 16px; heading Plus Jakarta 700 uppercase 14px; Full-history link 12px weight 700 <code>#DC183C</code> + Lucide <code>external-link</code> 14&times;14.<br/><b>Order row:</b> flex, padding-y 16px (<code>py-4</code>) bottom border slate-100; product thumb 48&times;48 (<code>w-12 h-12</code>) rounded-xl slate-100, Lucide <code>shirt</code> 24&times;24 slate-400; order id 12px <code>font-jakarta</code> slate-400; status pill padding 8px/2px rounded-full 10px weight 700 &mdash; Delivered bg <code>#E4F5EE</code> text <code>#29A37A</code>, Refunded bg <code>#FDECEF</code> text <code>#DC183C</code>. Product 14px weight 600 <code>#121A21</code>; variant/date 12px slate-400, total weight 600 <code>#121A21</code>; tracking 11px slate-400 + Lucide <code>package</code> 14&times;14 <code>#29A37A</code>. View-order button 1px slate-200 outline hover border/text <code>#DC183C</code> rounded-full padding 16px/6px 12px weight 700.<br/><b>Quick-links:</b> <code>grid sm:grid-cols-2</code> 12px gap; buttons 1px slate-200 rounded-2xl padding 16px hover border/text <code>#DC183C</code>, icon tile 36&times;36 (<code>w-9 h-9</code>) rounded-lg slate-100 (Lucide <code>map-pin</code> / <code>credit-card</code> 16&times;16), Lucide <code>chevron-right</code> 16&times;16.' },
   set_downloads:{ title:'Settings · Downloads', sub:'Resource download history',
     purpose:'A persistent record of every resource the member has pulled from the Resources library — so a guide, template or report a founder grabbed three months ago is one click away, instead of buried in their email. Re-download fires a fresh signed URL; nothing is stored client-side. Counts and filters are read-only here; the actual storage lives in the Resources / WP media library, gated by the member\'s active subscription.',
     data:'<code>downloads[] { id, resource_id, title, type: ebook|template|guide|report, format, size, downloaded_at, last_accessed_at, access_count }</code>. Joined to <code>wp_posts</code> for the resource record. Type taxonomy mirrors the public Resources filter.',
     logic:'Server logs every download event from the Resources detail page (public-resource.html) — the click that triggers a download writes a row here. Re-download generates a new short-lived signed URL (S3/WP-media signed). Filters and search run client-side over the prefetched list (typically &lt;200 rows per member). When an entitlement lapses (membership downgrade) the row stays but the re-download CTA flips to an upgrade prompt.',
     components:'Header band · stat strip (3) · search + type chips + sort · scannable row list with type tile, title, tag, date, format, re-download CTA, kebab menu · empty state · soft CTA card to Resources.',
-    specs:'<b>Container:</b> rendered inside <code>settingsCard</code> (see Settings shell).<br/><b>Hero band:</b> rounded-2xl 1px slate-100, inner bg <code>#0C1F31</code> padding 20px (<code>px-5 py-5</code>) + radial <code>#FF9900</code> 40%. Kicker 10px weight 700 uppercase tracking-widest <code>#FF9900</code>; h3 Plus Jakarta 800 24px white; sub 12px white/60.<br/><b>Stat strip:</b> <code>grid-cols-3</code> 12px gap; card bg white rounded-2xl border slate-100 padding 16px, label 10px weight 700 uppercase tracking-widest slate-400, value Plus Jakarta 800 24px (Total <code>#DC183C</code>, This month <code>#29A37A</code>, Storage <code>#0C1F31</code>).<br/><b>Filter card:</b> rounded-2xl border slate-100 padding 16px; search bg slate-50 1px slate-200 rounded-full padding-l 36px; sort select rounded-full; type chips padding 14px/6px rounded-full 12px weight 700 1px slate-200, active bg <code>#DC183C</code> white.<br/><b>List:</b> bg white rounded-2xl border slate-100; row padding 16px/14px (<code>px-4 py-3.5</code>) bottom border slate-100, zebra <code>bg-slate-50/50</code>. Type tile 44&times;44 (<code>w-11 h-11</code>) rounded-xl (12px) tinted (per-type bg/colour); title Plus Jakarta 700 14px <code>#121A21</code> hover <code>#DC183C</code>; type tag pill 10px weight 700; meta 11px slate-400 (date + <code>font-mono</code> format/size). Re-download CTA 12px weight 700 <code>#DC183C</code> hover bg <code>#FDECEF</code>/60 rounded-full; kebab 32&times;32 (<code>w-8 h-8</code>).<br/><b>Empty state:</b> centered 48px vertical, icon disc 56&times;56 slate-100, heading Plus Jakarta 700, CTA bg <code>#DC183C</code> rounded-full.<br/><b>Footer CTA card:</b> gradient <code>#FDECEF</code>/40 &rarr; <code>#FFF1E0</code>/40 rounded-2xl padding 20px, icon disc 48&times;48 white shadow.' },
+    specs:'<b>Container:</b> rendered inside <code>settingsCard</code> (see Settings shell).<br/><b>Hero band:</b> rounded-2xl 1px slate-100, inner bg <code>#0C1F31</code> padding 20px (<code>px-5 py-5</code>) + radial <code>#FF9900</code> 40%. Kicker 10px weight 700 uppercase tracking-widest <code>#FF9900</code>; h3 Plus Jakarta 800 24px white; sub 12px white/60.<br/><b>Stat strip:</b> <code>grid-cols-3</code> 12px gap; card bg white rounded-2xl border slate-100 padding 16px, label 10px weight 700 uppercase tracking-widest slate-400, value Plus Jakarta 800 24px (Total <code>#DC183C</code>, This month <code>#29A37A</code>, Storage <code>#0C1F31</code>).<br/><b>Filter card:</b> rounded-2xl border slate-100 padding 16px; search bg slate-50 1px slate-200 rounded-full padding-l 36px; sort select rounded-full; type chips padding 14px/6px rounded-full 12px weight 700 1px slate-200, active bg <code>#DC183C</code> white.<br/><b>List:</b> bg white rounded-2xl border slate-100; row padding 16px/14px (<code>px-4 py-3.5</code>) bottom border slate-100, zebra <code>bg-slate-50/50</code>. Type tile 44&times;44 (<code>w-11 h-11</code>) rounded-xl (12px) tinted (per-type bg/colour); title Plus Jakarta 700 14px <code>#121A21</code> hover <code>#DC183C</code>; type tag pill 10px weight 700; meta 11px slate-400 (date + <code>font-jakarta</code> format/size). Re-download CTA 12px weight 700 <code>#DC183C</code> hover bg <code>#FDECEF</code>/60 rounded-full; kebab 32&times;32 (<code>w-8 h-8</code>).<br/><b>Empty state:</b> centered 48px vertical, icon disc 56&times;56 slate-100, heading Plus Jakarta 700, CTA bg <code>#DC183C</code> rounded-full.<br/><b>Footer CTA card:</b> gradient <code>#FDECEF</code>/40 &rarr; <code>#FFF1E0</code>/40 rounded-2xl padding 20px, icon disc 48&times;48 white shadow.' },
   set_funding:{ title:'Settings · Funding applications', sub:'Full funding application tracker',
     purpose:'<b>The robust funding-tracking surface the platform was missing.</b> Every application a member submits through SME Hub (Asset Finance, Working Capital, Invoice Finance, Bridging) lives here with full status, lender match, document checklist and timeline. Replaces the email-thread approach with a single source of truth — for both the founder and the support team.',
     data:'<code>applications[] { id, product, amount_zar, term, purpose, status: draft|submitted|review|docs|approved|declined|funded, step, submitted_at, updated_at, status_at, lender:{ name, contact_name, contact_email, contact_phone }, documents[]{ name, state: pending|provided|reupload, file_name, file_size }, timeline[]{ date, text, icon, actor: system|lender|user } }</code>. Linked to <code>users.id</code> and the public funding form (public-funding.html).',

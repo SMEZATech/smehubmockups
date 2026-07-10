@@ -43,6 +43,7 @@ window.MOCKUP_STATUS = {
   "member-hub.html": "under-review",
   "members.html": "under-review",
   "single-post.html": "under-review",
+  "groups.html": "under-review",
   "single-group.html": "under-review",
   "forums.html": "under-review",
   "member-account.html": "under-review",
