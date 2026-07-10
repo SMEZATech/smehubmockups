@@ -13,7 +13,6 @@
   <script src="status.js"></script>
   <script src="shared-notes.js"></script>
   <script src="feedback.js"></script>
-  <script src="suggestions.js"></script>
   <script>
     tailwind.config = { theme: { extend: { fontFamily: {
       jakarta: ['Plus Jakarta Sans', 'sans-serif'], inter: ['Inter', 'system-ui', 'sans-serif'], mono:['monospace']
@@ -100,8 +99,7 @@
           <button onclick="setVP('mobile')" id="vp-mobile" class="vp-btn px-3 h-8 rounded-full text-xs font-bold flex items-center gap-1.5" title="Mobile"><i data-lucide="smartphone" class="w-4 h-4"></i></button>
         </div>
         <div id="devBar" class="hidden items-center gap-2"></div>
-        <button onclick="openSuggestForCurrent()" class="hidden sm:inline-flex items-center gap-1.5 px-3 h-9 rounded-full bg-[#3B82F6]/10 hover:bg-[#3B82F6]/20 text-[#3B82F6] text-xs font-bold transition" title="Suggest a change on this mockup — becomes a GitHub Issue for Tshepho to review"><i data-lucide="git-pull-request" class="w-4 h-4"></i><span>Suggest</span></button>
-        <button onclick="openCurrentNotes()" class="hidden sm:inline-flex items-center gap-1.5 px-3 h-9 rounded-full bg-slate-100 hover:bg-slate-200 text-[#121A21] text-xs font-bold transition" title="Add review notes for this mockup"><i data-lucide="message-square-text" class="w-4 h-4"></i><span id="topNotesLbl">Notes</span></button>
+        <button onclick="openCurrentNotes()" class="hidden sm:inline-flex items-center gap-1.5 px-3 h-9 rounded-full bg-slate-100 hover:bg-slate-200 text-[#121A21] text-xs font-bold transition" title="Review notes for this mockup"><i data-lucide="message-square-text" class="w-4 h-4"></i><span id="topNotesLbl">Notes</span></button>
         <button onclick="reloadFrame()" class="w-9 h-9 grid place-items-center rounded-full hover:bg-slate-100 text-slate-600" title="Reload"><i data-lucide="rotate-cw" class="w-4 h-4"></i></button>
         <a id="openTab" href="public-home.html" target="_blank" class="inline-flex items-center gap-1.5 px-3.5 h-9 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white text-sm font-bold transition"><i data-lucide="external-link" class="w-4 h-4"></i><span class="hidden sm:inline">Open standalone</span></a>
       </div>
@@ -129,16 +127,7 @@
   .np-h button{background:transparent;border:0;color:rgba(255,255,255,.7);cursor:pointer;padding:4px}
   .np-h button:hover{color:#fff}
   .np-b{flex:1;overflow-y:auto;padding:6px 0}
-  .np-sec{padding:14px 22px;border-bottom:1px solid #F0F2F5}
-  .np-sec:last-child{border-bottom:0}
-  .np-sec .lab{font:700 11px/1 'Plus Jakarta Sans',sans-serif;text-transform:uppercase;letter-spacing:.1em;color:#6A7581;margin-bottom:8px}
-  .np-sec textarea{width:100%;min-height:64px;padding:10px 12px;border:1px solid #E7EBEF;border-radius:8px;font:14px/1.5 Inter,sans-serif;color:#121A21;background:#FCFCFC;resize:vertical;outline:none;transition:border-color .15s ease,box-shadow .15s ease}
-  .np-sec textarea:focus{border-color:#DC183C;box-shadow:0 0 0 3px rgba(220,24,60,.12);background:#fff}
-  .np-sec textarea.has{border-color:#DC183C;background:#fff}
-  .np-sec .meta{display:flex;align-items:center;justify-content:space-between;margin-top:6px;font-size:11px;color:#9aa3ac}
-  .np-sec .meta button{background:transparent;border:0;color:#9aa3ac;cursor:pointer;font-size:11px;text-decoration:underline}
-  .np-sec .meta button:hover{color:#DC183C}
-  /* Shared notes — visible to everyone (ship with repo) */
+  /* Shared notes — read-only, authored in Mission Control, shipped with the repo */
   .np-shared{padding:14px 22px;border-bottom:1px solid #F0F2F5;background:#FFF8E1;border-left:4px solid #AE6B0A}
   .np-shared .head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:8px}
   .np-shared .lab{font:700 11px/1 'Plus Jakarta Sans',sans-serif;text-transform:uppercase;letter-spacing:.1em;color:#5C3A00}
@@ -153,9 +142,8 @@
   .np-f button:hover{background:#F4F6F8}
   .np-f button.primary{background:#0C1F31;color:#fff;border-color:#0C1F31}
   .np-f button.primary:hover{background:#16314a}
-  .np-f button.danger{color:#DC183C;border-color:#FDECEF}
-  .np-f button.danger:hover{background:#FDECEF}
   .np-loading{padding:30px 22px;text-align:center;color:#9aa3ac;font-size:13px}
+  .np-empty{padding:30px 22px;text-align:center;color:#9aa3ac;font-size:13px}
 
   /* Red note pill on nav items */
   .note-pill{display:inline-flex;align-items:center;gap:4px;background:#DC183C;color:#fff;font:800 9px/1 'Plus Jakarta Sans',sans-serif;text-transform:uppercase;letter-spacing:.06em;padding:3px 7px;border-radius:999px;cursor:pointer;transition:transform .12s ease,background .12s ease;border:0}
@@ -172,26 +160,24 @@
     </div>
     <button onclick="closeNotes()" title="Close" aria-label="Close">✕</button>
   </div>
-  <div class="np-b" id="npBody"><div class="np-loading">Loading sections…</div></div>
+  <div class="np-b" id="npBody"><div class="np-loading">Loading notes…</div></div>
   <div class="np-f">
     <button class="primary" onclick="copyNotesMd()">Copy as Markdown</button>
-    <button class="danger" onclick="clearAllNotes()">Clear all</button>
   </div>
 </aside>
 <script>
   // ---- Side panel state ----
-  let _npFile = null, _npLabel = null, _npSections = [];
+  // Read-only: shared notes are authored in Mission Control and shipped in
+  // shared-notes.js. Nothing on this hub writes notes.
+  let _npFile = null, _npLabel = null;
 
   function escHtml(s){ return String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
-  function debounce(fn, ms){ let t; return function(){ const a=arguments; clearTimeout(t); t=setTimeout(()=>fn.apply(null,a), ms); }; }
 
-  async function openNotes(file, label){
+  function openNotes(file, label){
     _npFile = file; _npLabel = label || (FILE_INDEX[file] && FILE_INDEX[file].label) || file;
     document.getElementById('npFile').textContent = file;
-    document.getElementById('npBody').innerHTML = '<div class="np-loading">Loading sections…</div>';
     document.getElementById('notesPanel').classList.add('open');
     document.getElementById('notesBackdrop').classList.add('open');
-    _npSections = await Feedback.loadSections(file);
     renderNotesPanel();
   }
   function closeNotes(){
@@ -208,57 +194,26 @@
   }
   function renderNotesPanel(){
     if(!_npFile) return;
-    const rec = Feedback.get(_npFile);
-    const secs = rec.sections || {};
     const shared = Feedback.getShared(_npFile);
-    const sharedKeys = Object.keys(shared);
-    // Shared block (read-only, visible to everyone)
-    const sharedHtml = sharedKeys.map(k=>{
+    const keys = Object.keys(shared);
+    if(!keys.length){
+      document.getElementById('npBody').innerHTML = '<div class="np-empty">No review notes on this mockup yet.</div>';
+      document.getElementById('npSub').textContent = '0 notes';
+      return;
+    }
+    document.getElementById('npBody').innerHTML = keys.map(k=>{
       const s = shared[k];
       const ts = s.ts ? new Date(s.ts).toLocaleDateString('en-ZA',{day:'numeric',month:'short',year:'numeric'}) : '';
       return `<div class="np-shared">
         <div class="head">
           <span class="lab">${escHtml(s.label||k)}</span>
-          <span class="chip"><span class="d"></span>Shared · ${escHtml(s.author||'team')}</span>
+          <span class="chip"><span class="d"></span>${escHtml(s.author||'team')}</span>
         </div>
         <div class="body">${renderNoteBody(s.text)}</div>
         ${ts?`<p class="ts">${ts}</p>`:''}
       </div>`;
     }).join('');
-    // Local block (editable, browser-local)
-    const localHtml = _npSections.map(s=>{
-      const v = secs[s.id]; const text = v ? v.text : ''; const ts = v ? new Date(v.ts).toLocaleString('en-ZA') : '';
-      return `<div class="np-sec" data-sid="${escHtml(s.id)}" data-label="${escHtml(s.label)}">
-        <div class="lab">${escHtml(s.label)}</div>
-        <textarea placeholder="Note for this section…" class="${text?'has':''}">${escHtml(text)}</textarea>
-        <div class="meta"><span class="ts">${ts?'Saved '+ts:''}</span>${text?'<button class="clr">Clear</button>':'<span></span>'}</div>
-      </div>`;
-    }).join('');
-    document.getElementById('npBody').innerHTML = sharedHtml + localHtml;
-    const localTotal = Object.keys(secs).length;
-    const grand = localTotal + sharedKeys.length;
-    const parts = [];
-    if(sharedKeys.length) parts.push(sharedKeys.length+' shared');
-    if(localTotal) parts.push(localTotal+' yours');
-    if(!parts.length) parts.push('0 notes');
-    document.getElementById('npSub').textContent = grand+' note'+(grand===1?'':'s')+' ('+parts.join(' · ')+') · '+_npSections.length+' section'+(_npSections.length===1?'':'s');
-    wireNpRows();
-  }
-  function wireNpRows(){
-    document.querySelectorAll('#notesPanel .np-sec').forEach(row=>{
-      const sid = row.dataset.sid, label = row.dataset.label;
-      const ta = row.querySelector('textarea');
-      const clr = row.querySelector('.clr');
-      const save = debounce(()=>{
-        Feedback.set(_npFile, sid, label, ta.value);
-        row.querySelector('.ts').textContent = ta.value.trim() ? 'Saved '+new Date().toLocaleString('en-ZA') : '';
-        ta.classList.toggle('has', !!ta.value.trim());
-        refreshPills();
-      }, 400);
-      ta.addEventListener('input', save);
-      ta.addEventListener('blur', save);
-      if(clr) clr.addEventListener('click', ()=>{ ta.value=''; Feedback.clear(_npFile, sid); renderNotesPanel(); refreshPills(); });
-    });
+    document.getElementById('npSub').textContent = keys.length+' note'+(keys.length===1?'':'s');
   }
   function copyNotesMd(){
     if(!_npFile) return;
@@ -269,15 +224,10 @@
       setTimeout(()=> btn.textContent = orig, 1500);
     }).catch(()=> alert('Copy failed — open devtools to copy manually.'));
   }
-  function clearAllNotes(){
-    if(!_npFile) return;
-    if(!confirm('Clear all notes for '+_npLabel+'?')) return;
-    Feedback.clearFile(_npFile); renderNotesPanel(); refreshPills();
-  }
 
   // ---- Pills on nav items ----
   function refreshPills(){
-    const counts = Feedback.countTotalByFile();
+    const counts = Feedback.countSharedByFile();
     document.querySelectorAll('.nav-item').forEach(btn=>{
       const file = btn.dataset.file || btn.dataset.devfile;
       const existing = btn.querySelector('.note-pill');
@@ -294,44 +244,11 @@
     });
   }
 
-  // Re-render pills whenever notes change (this window, other tabs, or iframe via postMessage)
-  window.addEventListener('sme-feedback-changed', refreshPills);
-  window.addEventListener('message', (e)=>{ if(e.data && e.data.type==='sme-feedback-changed'){ refreshPills(); if(_npFile===e.data.file && document.getElementById('notesPanel').classList.contains('open')) renderNotesPanel(); } });
-
-  // Open the Suggest modal for the currently-loaded mockup
-  function openSuggestForCurrent(){
-    if(!window.SmeSuggest) return;
-    const f = (location.hash||'').replace('#','') || (document.querySelector('.nav-item.active') && (document.querySelector('.nav-item.active').dataset.file || document.querySelector('.nav-item.active').dataset.devfile)) || 'public-home.html';
-    window.SmeSuggest.open(f);
-  }
-
   // Open the panel for the currently-loaded mockup
   function openCurrentNotes(){
     const f = (location.hash||'').replace('#','') || (document.querySelector('.nav-item.active') && (document.querySelector('.nav-item.active').dataset.file || document.querySelector('.nav-item.active').dataset.devfile));
     if(f) openNotes(f);
   }
-
-  // ---- Inject widget into iframe on load ----
-  (function setupIframeWidget(){
-    const frame = document.getElementById('frame');
-    if(!frame) return;
-    frame.addEventListener('load', ()=>{
-      try {
-        const doc = frame.contentDocument;
-        if(!doc) return;
-        if(doc.getElementById('sme-notes-widget')) return; // already injected
-        // Load suggestions.js first so notes-widget can wire the Suggest button
-        const sug = doc.createElement('script');
-        sug.src = 'suggestions.js';
-        sug.async = false;
-        doc.body.appendChild(sug);
-        const s = doc.createElement('script');
-        s.src = 'notes-widget.js';
-        s.async = false;
-        doc.body.appendChild(s);
-      } catch(_){ /* cross-origin (dev URLs) — skip; widget only works on local mockups */ }
-    });
-  })();
 </script>
 
 <script>
