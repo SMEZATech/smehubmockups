@@ -20,6 +20,7 @@
     .font-jakarta { font-family: 'Plus Jakarta Sans', sans-serif; letter-spacing: 0.005em; }
     .hero-bg { background:linear-gradient(115deg,#0C1F31 0%,#0C1F31 50%,#2b1626 80%,#5e1a2c 115%); }
     .dot-pattern { background-image:radial-gradient(rgba(255,255,255,.07) 1px,transparent 1.5px); background-size:22px 22px; }
+    .blob { position:absolute; border-radius:50%; filter:blur(80px); opacity:.35; pointer-events:none; }
     .field { width:100%; background:#fff; border:1px solid #E7EBEF; border-radius:.75rem; height:3rem; padding:0 1rem; font-size:.9rem; outline:none; transition:border-color .15s,box-shadow .15s; } .field:focus { border-color:#DC183C; box-shadow:0 0 0 3px rgba(220,24,60,.12); }
     .no-scrollbar::-webkit-scrollbar { display:none; } .no-scrollbar { -ms-overflow-style:none; scrollbar-width:none; }
     @keyframes fadeUp { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
@@ -59,17 +60,94 @@
   </div>
 </header>
 
-<!-- ===================== HERO ===================== -->
-<section class="text-white relative overflow-hidden" style="background:radial-gradient(800px 360px at 10% 0%,rgba(255,153,0,.22),transparent 55%),#0C1F31">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-16 sm:py-20 text-center">
-    <!-- Breadcrumb (global pattern) -->
-    <nav aria-label="Breadcrumb" class="text-xs text-white/55 flex items-center justify-center flex-wrap gap-x-1.5 mb-5"><a href="public-home.html" class="hover:text-white transition">Home</a><span class="text-white/30">›</span><span class="text-white/85 font-medium truncate">Solutions</span></nav>
-    <div class="flex items-center justify-center gap-2">
-      <h1 class="font-jakarta font-extrabold text-4xl sm:text-5xl tracking-tight">Top small business solutions</h1>
-      <button onclick="openBrief('solutions')" class="dev-badge w-6 h-6 rounded-full bg-[#FF9900] text-[#121A21] items-center justify-center text-[11px] font-bold" title="Implementation notes">i</button>
+<!-- ===================== HERO — split layout, gradient + side graphic (house pattern) ===================== -->
+<section id="hero" data-section-label="Hero" class="hero-bg text-white relative overflow-hidden">
+  <div class="absolute inset-0 dot-pattern opacity-70 pointer-events-none"></div>
+  <!-- Colour blobs for depth -->
+  <div class="blob" style="width:520px;height:520px;background:#DC183C;top:-150px;right:-130px;"></div>
+  <div class="blob" style="width:420px;height:420px;background:#FF9900;bottom:-170px;left:-130px;opacity:.18;"></div>
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 pt-10 sm:pt-14 pb-16 sm:pb-20 relative grid lg:grid-cols-12 gap-10 lg:gap-8 items-center">
+
+    <!-- LEFT — copy + CTAs -->
+    <div class="lg:col-span-7 relative">
+      <nav aria-label="Breadcrumb" class="text-xs text-white/55 flex items-center flex-wrap gap-x-1.5 mb-5"><a href="public-home.html" class="hover:text-white transition">Home</a><span class="text-white/30">›</span><span class="text-white/85 font-medium truncate">Solutions</span></nav>
+
+      <div class="flex flex-wrap items-center gap-2 mb-6">
+        <span class="inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-widest bg-[#FF9900]/12 border border-[#FF9900]/30 text-[#FF9900] px-3 py-1.5 rounded-full">
+          <i data-lucide="layout-grid" class="w-3.5 h-3.5"></i> 8 categories
+        </span>
+        <span class="inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-widest bg-white/10 border border-white/15 text-white/90 px-3 py-1.5 rounded-full">
+          <i data-lucide="calendar-check" class="w-3.5 h-3.5 text-[#29A37A]"></i> Updated June 2026
+        </span>
+      </div>
+
+      <h1 class="font-jakarta font-extrabold text-4xl sm:text-5xl lg:text-6xl leading-[1.04] tracking-tight">
+        Top small business
+        <span class="bg-gradient-to-r from-[#DC183C] via-[#FF6B00] to-[#FF9900] bg-clip-text text-transparent">solutions</span>
+        <button onclick="openBrief('solutions')" class="dev-badge align-middle ml-1 w-6 h-6 rounded-full bg-[#FF9900] text-[#0C1F31] items-center justify-center text-[11px] font-bold" title="Implementation notes">i</button>
+      </h1>
+      <p class="mt-5 text-white/75 max-w-xl text-lg leading-relaxed">
+        <b class="text-white">Compare before you commit.</b> Side-by-side pricing, features and honest reviews of the tools South African SMEs actually run on.
+      </p>
+
+      <div class="mt-8 flex flex-wrap items-center gap-3">
+        <a href="#categories" class="inline-flex items-center gap-2 px-6 h-12 rounded-full bg-[#FF9900] hover:bg-[#e08a00] text-[#121A21] font-bold transition">Browse categories <i data-lucide="arrow-down" class="w-4 h-4"></i></a>
+        <a href="#quote" class="inline-flex items-center gap-2 px-6 h-12 rounded-full border border-white/25 hover:border-white text-white font-bold transition">Request quotes <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
+      </div>
     </div>
-    <p class="mt-4 text-lg text-white/75 max-w-2xl mx-auto">Compare solutions and make an informed decision with our data-driven reviews.</p>
-    <a href="#categories" class="mt-7 inline-flex items-center gap-2 px-6 h-12 rounded-full bg-[#FF9900] hover:bg-[#e08a00] text-[#121A21] font-bold transition">Browse categories <i data-lucide="arrow-down" class="w-4 h-4"></i></a>
+
+    <!-- RIGHT — compare preview (hidden on mobile; copy carries the hero there) -->
+    <div class="hidden lg:block lg:col-span-5 relative">
+      <div class="bg-white text-[#121A21] rounded-2xl overflow-hidden shadow-2xl">
+        <div class="px-5 py-3 bg-[#0C1F31] text-white flex items-center justify-between">
+          <div class="flex items-center gap-2">
+            <div class="w-6 h-6 rounded-md bg-[#DC183C] grid place-items-center"><i data-lucide="scale" class="w-3.5 h-3.5"></i></div>
+            <span class="font-jakarta font-extrabold text-[11px] tracking-tight uppercase">Compare providers</span>
+          </div>
+          <span class="text-[10px] font-bold text-[#FF9900]">Payments</span>
+        </div>
+
+        <div class="divide-y divide-[#E7EBEF]">
+          <div class="flex items-center gap-3 px-5 py-4">
+            <div class="w-10 h-10 rounded-xl bg-[#FDECEF] text-[#DC183C] grid place-items-center font-jakarta font-extrabold text-sm shrink-0">Yo</div>
+            <div class="min-w-0 flex-1">
+              <p class="font-jakarta font-bold text-[14px] leading-tight">Yoco</p>
+              <p class="text-[11px] text-[#6A7581]">Card machines · from R349</p>
+            </div>
+            <span class="shrink-0 text-[10px] font-bold uppercase tracking-wider bg-[#E4F5EE] text-[#29A37A] px-2 py-1 rounded-full">Best value</span>
+          </div>
+          <div class="flex items-center gap-3 px-5 py-4">
+            <div class="w-10 h-10 rounded-xl bg-[#FFF1E0] text-[#AE6B0A] grid place-items-center font-jakarta font-extrabold text-sm shrink-0">Zo</div>
+            <div class="min-w-0 flex-1">
+              <p class="font-jakarta font-bold text-[14px] leading-tight">Zoho CRM</p>
+              <p class="text-[11px] text-[#6A7581]">Billed in ZAR · from R150/mo</p>
+            </div>
+            <span class="shrink-0 inline-flex items-center gap-1 text-[11px] font-bold text-[#121A21]"><i data-lucide="star" class="w-3.5 h-3.5" style="color:#FF9900;fill:#FF9900"></i>4.6</span>
+          </div>
+          <div class="flex items-center gap-3 px-5 py-4">
+            <div class="w-10 h-10 rounded-xl bg-[#F0F5F9] text-[#0C1F31] grid place-items-center font-jakarta font-extrabold text-sm shrink-0">1G</div>
+            <div class="min-w-0 flex-1">
+              <p class="font-jakarta font-bold text-[14px] leading-tight">1-Grid</p>
+              <p class="text-[11px] text-[#6A7581]">Local hosting · from R79/mo</p>
+            </div>
+            <span class="shrink-0 inline-flex items-center gap-1 text-[11px] font-bold text-[#121A21]"><i data-lucide="star" class="w-3.5 h-3.5" style="color:#FF9900;fill:#FF9900"></i>4.5</span>
+          </div>
+        </div>
+
+        <div class="px-5 py-3 bg-[#FCFCFC] border-t border-[#E7EBEF] flex items-center justify-between">
+          <span class="text-[11px] text-[#6A7581]">3 of 18 providers</span>
+          <a href="#categories" class="inline-flex items-center gap-1 text-[11px] font-bold text-[#DC183C] hover:gap-2 transition-all">Compare all <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i></a>
+        </div>
+      </div>
+
+      <!-- Floating stat card -->
+      <div class="absolute -bottom-6 -left-6 bg-white text-[#121A21] rounded-xl shadow-xl px-4 py-3 border border-[#E7EBEF]">
+        <p class="text-[9px] uppercase font-bold tracking-widest text-[#6A7581]">Avg. saving</p>
+        <p class="font-jakarta font-extrabold text-xl leading-tight">R1,240<span class="text-[11px] text-[#6A7581] font-semibold"> /mo</span></p>
+      </div>
+    </div>
+
   </div>
 </section>
 
@@ -88,12 +166,12 @@
   </section>
 
   <!-- ===================== LEAD-GEN CTA ===================== -->
-  <section class="py-12">
+  <section id="quote" class="py-12 scroll-mt-6">
     <div class="rounded-3xl hero-bg text-white relative overflow-hidden">
       <div class="absolute inset-0 dot-pattern opacity-70 pointer-events-none"></div>
       <div class="relative grid lg:grid-cols-2 gap-8 p-8 sm:p-12 items-center">
         <div>
-          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 text-[#FF9900] text-[11px] font-bold uppercase tracking-widest"><i data-lucide="sparkles" class="w-3.5 h-3.5"></i> Free matching</span>
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 text-[#FF9900] text-[11px] font-bold uppercase tracking-widest"><i data-lucide="sparkles" class="w-3.5 h-3.5"></i> No-cost matching</span>
           <h2 class="font-jakarta font-extrabold text-3xl sm:text-4xl mt-4 leading-tight">Not sure which solution fits? <span class="text-[#FF9900]">Get matched.</span></h2>
           <p class="mt-4 text-white/75 max-w-md">Tell us what your business needs and we'll connect you with vetted providers — and pull competitive quotes — at no cost to you.</p>
           <ul class="mt-6 space-y-2.5 text-sm text-white/80">
