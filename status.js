@@ -18,7 +18,7 @@ window.MOCKUP_STATUS = {
   "public-funding-category.html": "finalised",
   "public-loan-option.html": "finalised",
   "public-solutions.html": "finalised",
-  "public-solution-category.html": "under-review",
+  "public-solution-category.html": "finalised",
   "public-sustainability.html": "finalised",
   "public-pricing.html": "under-review",
   "public-brands.html": "finalised",
@@ -61,7 +61,7 @@ window.MOCKUP_STATUS = {
   "public-search.html": "finalised",
   "public-404.html": "finalised"
 };
-window.MOCKUP_STATUS_PUBLISHED = "2026-07-10T09:10:12.452Z";
+window.MOCKUP_STATUS_PUBLISHED = "2026-07-10T09:33:30.998Z";
 /* Developer builds (staging) — { mockup file: { url, status } }; status: "pending-review" | "reviewed" | "approved" */
 window.MOCKUP_DEV = {
   "public-home.html": {"url":"https://smesastg.wpengine.com/","status":"reviewed"},
@@ -69,7 +69,7 @@ window.MOCKUP_DEV = {
   "public-article-categories.html": {"url":"https://smesastg.wpengine.com/article-categories/","status":"reviewed"},
   "public-category.html": {"url":"https://smesastg.wpengine.com/starting-a-business","status":"reviewed"},
   "public-subcategory.html": {"url":"https://smesastg.wpengine.com/starting-a-business/agriculture-and-farming/","status":"reviewed"},
-  "public-article.html": {"url":"https://smesastg.wpengine.com/how-to-find-your-brands-tone-of-voice/","status":"pending-review"},
+  "public-article.html": {"url":"https://smesastg.wpengine.com/how-to-find-your-brands-tone-of-voice/","status":"reviewed"},
   "public-resources.html": {"url":"https://smesastg.wpengine.com/sme-resources/","status":"pending-review"},
   "public-resource-category.html": {"url":"https://smesastg.wpengine.com/sme-resources/e-books/","status":"pending-review"},
   "public-resource.html": {"url":"https://smesastg.wpengine.com/sme-resource/your-guide-to-ai-prompting/","status":"pending-review"},
