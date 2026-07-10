@@ -62,7 +62,7 @@ window.MOCKUP_STATUS = {
   "public-search.html": "finalised",
   "public-404.html": "finalised"
 };
-window.MOCKUP_STATUS_PUBLISHED = "2026-07-10T13:23:44.621Z";
+window.MOCKUP_STATUS_PUBLISHED = "2026-07-10T13:28:39.824Z";
 /* Developer builds (staging) — { mockup file: { url, status } }; status: "pending-review" | "reviewed" | "approved" */
 window.MOCKUP_DEV = {
   "public-home.html": {"url":"https://smesastg.wpengine.com/","status":"reviewed"},
@@ -84,7 +84,7 @@ window.MOCKUP_DEV = {
   "public-terms.html": {"url":"https://smesastg.wpengine.com/terms-of-use/","status":"reviewed"},
   "public-refunds.html": {"url":"https://smesastg.wpengine.com/refund-and-cancellation/","status":"reviewed"},
   "public-popia.html": {"url":"https://smesastg.wpengine.com/popia/","status":"reviewed"},
-  "public-advertising-disclosure.html": {"url":"https://smesastg.wpengine.com/advertising-disclosure/","status":"pending-review"}
+  "public-advertising-disclosure.html": {"url":"https://smesastg.wpengine.com/advertising-disclosure/","status":"reviewed"}
 };
 /* Group overrides — { mockup file: "Group name" }; overrides default NAV grouping in index.html */
 window.MOCKUP_GROUPS = {
