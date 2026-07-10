@@ -52,7 +52,7 @@
     img { display: block; max-width: 100%; height: auto; }
 
     /* CI Typography & Backgrounds */
-    .font-jakarta { font-family: 'Plus Jakarta Sans', sans-serif; letter-spacing: -0.01em; }
+    .font-jakarta { font-family: 'Plus Jakarta Sans', sans-serif; letter-spacing: 0.005em; }
     .hero-bg { background: linear-gradient(115deg, #0C1F31 0%, #0C1F31 50%, #2b1626 80%, #5e1a2c 115%); }
     .dot-pattern { background-image: radial-gradient(rgba(255,255,255,0.07) 1px, transparent 1.5px); background-size: 22px 22px; }
     
@@ -88,19 +88,19 @@
 </head>
 <body class="bg-background text-ink antialiased">
 
-<header class="bg-white border-b border-border sticky top-0 z-50 shadow-sm">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
-    <div class="flex items-center gap-8">
-      <a href="public-home.html" class="flex items-center gap-2 group">
-        <div class="w-8 h-8 rounded-lg bg-primary grid place-items-center text-white font-jakarta font-extrabold text-xs group-hover:scale-105 transition-transform">SME</div>
-        <span class="font-jakarta font-extrabold text-[15px] tracking-tight text-ink hidden sm:block">SME South Africa</span>
-      </a>
-      <span class="mx-1 hidden sm:inline w-px h-5 bg-border"></span>
-      <p class="text-[10px] sm:text-[11px] font-bold uppercase tracking-widest text-muted flex items-center gap-1.5"><i data-lucide="construction" class="w-3.5 h-3.5 text-muted"></i>Header placeholder</p>
-    </div>
-    <div class="flex items-center gap-2">
-      <button id="devToggle" onclick="toggleDevMode()" class="inline-flex items-center gap-1.5 px-3 h-9 rounded-full bg-secondary border border-border hover:border-primary hover:text-primary text-[11px] font-bold uppercase tracking-wider text-muted transition" title="Toggle implementation notes"><i data-lucide="code-2" class="w-3.5 h-3.5"></i><span class="hidden sm:inline">Dev</span></button>
-      <a href="index.html" class="inline-flex items-center justify-center px-5 py-2 h-9 rounded-full bg-primary text-white font-jakarta font-bold text-[12px] hover:bg-[#B0142F] transition-colors"><i data-lucide="arrow-left" class="w-3.5 h-3.5 mr-1.5"></i>Launcher</a>
+<!-- Standard hub placeholder header (identical across every mockup) -->
+<header class="bg-slate-100 border-b-2 border-dashed border-slate-400 relative overflow-hidden">
+  <div class="absolute inset-0 opacity-30 pointer-events-none" style="background:repeating-linear-gradient(45deg,transparent,transparent 8px,rgba(100,116,139,.18) 8px,rgba(100,116,139,.18) 16px)"></div>
+  <div class="relative max-w-7xl mx-auto px-4 sm:px-6 h-14 flex items-center gap-3 sm:gap-4">
+    <a href="public-home.html" class="flex items-center gap-2 shrink-0 opacity-70 hover:opacity-100 transition">
+      <img src="assets/logo-icon.png" alt="SME South Africa" class="w-7 h-7" />
+      <span class="font-jakarta font-extrabold text-[13px] tracking-tight text-slate-700 hidden sm:inline">SME South Africa</span>
+    </a>
+    <span class="mx-1 hidden sm:inline w-px h-5 bg-slate-300"></span>
+    <p class="text-[10px] sm:text-[11px] font-bold uppercase tracking-widest text-slate-600 flex items-center gap-1.5"><i data-lucide="construction" class="w-3.5 h-3.5 text-slate-500"></i>Header placeholder &middot; design pending</p>
+    <div class="ml-auto flex items-center gap-2">
+      <button id="devToggle" onclick="toggleDevMode()" class="inline-flex items-center gap-1.5 px-2.5 h-8 rounded-full bg-white border border-slate-300 hover:border-[#DC183C] hover:text-[#DC183C] text-[11px] font-bold uppercase tracking-wider text-slate-600 transition" title="Toggle implementation notes"><i data-lucide="code-2" class="w-3.5 h-3.5"></i><span class="hidden sm:inline">Dev</span></button>
+      <a href="index.html" class="inline-flex items-center gap-1.5 px-3 h-8 rounded-full bg-white border border-slate-300 hover:border-slate-500 text-[11px] font-bold text-slate-700 transition"><i data-lucide="arrow-left" class="w-3.5 h-3.5"></i><span class="hidden sm:inline">Launcher</span></a>
     </div>
   </div>
 </header>
@@ -186,14 +186,12 @@
   </div>
 </main>
 
-<footer class="bg-navy border-t border-[#1a2d40] relative overflow-hidden mt-12">
-  <div class="absolute inset-0 opacity-10 pointer-events-none" style="background:repeating-linear-gradient(45deg,transparent,transparent 8px,rgba(255,255,255,.18) 8px,rgba(255,255,255,.18) 16px)"></div>
-  <div class="relative max-w-7xl mx-auto px-4 sm:px-6 py-10 flex flex-col md:flex-row items-center justify-between gap-6">
-    <div class="flex items-center gap-2">
-      <div class="w-8 h-8 rounded-lg bg-primary grid place-items-center text-white font-jakarta font-extrabold text-xs">SME</div>
-      <span class="font-jakarta font-extrabold text-[15px] text-white">SME South Africa</span>
-    </div>
-    <p class="text-[12px] text-white/50">&copy; 2026 SME South Africa. All rights reserved.</p>
+<!-- Standard hub placeholder footer (identical across every mockup) -->
+<footer class="bg-slate-100 border-t-2 border-dashed border-slate-400 relative overflow-hidden">
+  <div class="absolute inset-0 opacity-30 pointer-events-none" style="background:repeating-linear-gradient(45deg,transparent,transparent 8px,rgba(100,116,139,.18) 8px,rgba(100,116,139,.18) 16px)"></div>
+  <div class="relative max-w-7xl mx-auto px-4 sm:px-6 py-6 text-center">
+    <p class="text-[10px] sm:text-[11px] font-bold uppercase tracking-widest text-slate-600 flex items-center justify-center gap-1.5"><i data-lucide="construction" class="w-3.5 h-3.5 text-slate-500"></i>Footer placeholder &middot; design pending</p>
+    <p class="text-[11px] text-slate-500 mt-2">&copy; 2026 SME South Africa</p>
   </div>
 </footer>
 
