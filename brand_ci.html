@@ -266,6 +266,7 @@
       <a href="#nav">Nav</a>
       <a href="#cta">CTAs</a>
       <a href="#content">Content</a>
+      <a href="#helpcenter">Help Center</a>
       <a href="#footer">Footer</a>
       <a href="#ads">Ads</a>
       <a href="#code">Code</a>
@@ -463,6 +464,41 @@
       <div class="grad-card"><div class="grad-band" style="background:var(--gradient-accent)"></div><div class="info"><div class="name">--gradient-accent</div><div class="role">Red → orange, 135° · headline words, key CTAs, badges</div></div></div>
       <div class="grad-card"><div class="grad-band" style="background:var(--gradient-warm); border-bottom:1px solid hsl(var(--border))"></div><div class="info"><div class="name">--gradient-warm</div><div class="role">Cream → pink, 135° · light section backgrounds</div></div></div>
     </div>
+
+    <div class="subhead">Hero surface — ratified</div>
+    <p class="sec-desc" style="margin-bottom:16px;">Every module hero already uses this exact treatment. It shipped across the whole site before it was ever written down. It is now canon — match it, do not re-mix it.</p>
+    <div style="border:1px solid hsl(var(--border)); border-radius:12px; overflow:hidden; margin-bottom:26px;">
+      <div style="height:110px; background:linear-gradient(115deg,#0C1F31 0%,#0C1F31 50%,#2b1626 80%,#5e1a2c 115%); position:relative;">
+        <div style="position:absolute; inset:0; background-image:radial-gradient(rgba(255,255,255,.07) 1px,transparent 1.5px); background-size:22px 22px; opacity:.7;"></div>
+      </div>
+      <div style="padding:14px 16px; font-size:12.5px; line-height:1.75; color:hsl(var(--muted-foreground));">
+        <b style="color:hsl(var(--foreground))">Gradient:</b> <code>linear-gradient(115deg, #0C1F31 0%, #0C1F31 50%, #2b1626 80%, #5e1a2c 115%)</code><br/>
+        <b style="color:hsl(var(--foreground))">Dot overlay:</b> <code>radial-gradient(rgba(255,255,255,.07) 1px, transparent 1.5px)</code> · 22×22px tile · 70% opacity<br/>
+        <b style="color:hsl(var(--foreground))">Optional blobs:</b> circle, 80px blur, 35% opacity — red <code>#DC183C</code> top-right, orange <code>#FF9900</code> bottom-left at 18%
+      </div>
+    </div>
+
+    <div class="subhead">Neutrals — the only legal values</div>
+    <p class="sec-desc" style="margin-bottom:16px;">Neutral drift is our most common CI failure. Body text has appeared as four different greys and the slate tint as five. These are the only permitted neutrals.</p>
+    <div style="border:1px solid hsl(var(--border)); border-radius:12px; overflow:hidden; font-size:12.5px;">
+      <div style="display:grid; grid-template-columns:118px 1fr;">
+        <div style="padding:11px 14px; border-bottom:1px solid hsl(var(--border)); background:#121A21; color:#fff; font-weight:700;">#121A21</div>
+        <div style="padding:11px 14px; border-bottom:1px solid hsl(var(--border)); color:hsl(var(--muted-foreground));"><b style="color:hsl(var(--foreground))">Ink</b> — headings and body copy on light surfaces.</div>
+        <div style="padding:11px 14px; border-bottom:1px solid hsl(var(--border)); background:#6A7581; color:#fff; font-weight:700;">#6A7581</div>
+        <div style="padding:11px 14px; border-bottom:1px solid hsl(var(--border)); color:hsl(var(--muted-foreground));"><b style="color:hsl(var(--foreground))">Muted</b> — secondary copy, captions, meta, field labels.</div>
+        <div style="padding:11px 14px; border-bottom:1px solid hsl(var(--border)); background:#E7EBEF; color:#121A21; font-weight:700;">#E7EBEF</div>
+        <div style="padding:11px 14px; border-bottom:1px solid hsl(var(--border)); color:hsl(var(--muted-foreground));"><b style="color:hsl(var(--foreground))">Border</b> — every 1px card, table and divider rule.</div>
+        <div style="padding:11px 14px; border-bottom:1px solid hsl(var(--border)); background:#F0F5F9; color:#121A21; font-weight:700;">#F0F5F9</div>
+        <div style="padding:11px 14px; border-bottom:1px solid hsl(var(--border)); color:hsl(var(--muted-foreground));"><b style="color:hsl(var(--foreground))">Slate tint</b> — inset surfaces, table headers, icon tiles.</div>
+        <div style="padding:11px 14px; background:#FCFCFC; color:#121A21; font-weight:700; border-right:1px solid hsl(var(--border));">#FCFCFC</div>
+        <div style="padding:11px 14px; color:hsl(var(--muted-foreground));"><b style="color:hsl(var(--foreground))">Page background</b> — the default canvas.</div>
+      </div>
+    </div>
+    <p class="sec-desc" style="margin-top:14px; font-size:12.5px;">
+      <b style="color:#DC183C">Never</b> use for body text: <code>#374151</code> · <code>#475569</code> · <code>#384450</code> · <code>#1F2A37</code>.<br/>
+      <b style="color:#DC183C">Never</b> use as the slate tint: <code>#F1F5F9</code> · <code>#F0F2F5</code> · <code>#E6EEF5</code> · <code>#F2F4F7</code> · <code>#F4F6F8</code>.<br/>
+      Third-party brand colours (LinkedIn <code>#0A66C2</code>, Spotify <code>#1ED760</code>, YouTube <code>#FF0000</code>) are permitted <i>only</i> on that platform's own icon — never as UI colour.
+    </p>
   </div>
 </section>
 
@@ -900,10 +936,85 @@
   </div>
 </section>
 
+<!-- HELP CENTER & SUPPORT -->
+<section id="helpcenter">
+  <div class="wrap">
+    <p class="sec-label">08 · Help Center &amp; Support</p>
+    <h2 class="sec-title">Knowledge Base &amp; ticketing</h2>
+    <p class="sec-desc">Two separate surfaces, linked by one tab bar. The <b>Knowledge Base</b> runs on <b>BetterDocs</b>; <b>Support Tickets</b> run on <b>Fluent Support</b>. Both must read as one product.</p>
+
+    <div class="subhead">KB / Support tab bar</div>
+    <p class="sec-desc" style="margin-bottom:14px; font-size:13px;">The only bridge between the two surfaces. Appears at the top of the Help Center and the ticket portal.</p>
+    <div style="border:1px solid hsl(var(--border)); border-radius:12px; padding:14px 16px; font-size:12.5px; line-height:1.75; color:hsl(var(--muted-foreground)); margin-bottom:26px;">
+      <b style="color:hsl(var(--foreground))">Tab:</b> 13.6px (0.85rem) weight 700, padding 6.4px / 14.4px, radius 9.6px, colour <code>#6A7581</code>.<br/>
+      <b style="color:hsl(var(--foreground))">Active tab:</b> background <code>#FFFFFF</code>, colour <code>#121A21</code>, shadow <code>0 1px 2px rgba(12,31,49,.08)</code>.<br/>
+      <b style="color:hsl(var(--foreground))">Wrapper:</b> background <code>#F0F5F9</code>, radius 12px, padding 6px, 1px border <code>#E7EBEF</code>.
+    </div>
+
+    <div class="subhead">KB sidebar tree</div>
+    <p class="sec-desc" style="margin-bottom:14px; font-size:13px;">Used on the category archive <i>and</i> the single article — an article always opens inside this tree, never on its own page.</p>
+    <div style="border:1px solid hsl(var(--border)); border-radius:12px; padding:14px 16px; font-size:12.5px; line-height:1.75; color:hsl(var(--muted-foreground)); margin-bottom:26px;">
+      <b style="color:hsl(var(--foreground))">Layout:</b> grid <code>300px</code> sidebar + 32px gap + fluid main. Container 1152px.<br/>
+      <b style="color:hsl(var(--foreground))">Container:</b> sticky, top offset 24px; white, radius 16px, 1px border <code>#E7EBEF</code>.<br/>
+      <b style="color:hsl(var(--foreground))">Header row:</b> padding 16px / 12px, 1px bottom border <code>#E7EBEF</code>; <code>library</code> icon 16×16 <code>#DC183C</code>; label Plus Jakarta Sans weight 800, 13px.<br/>
+      <b style="color:hsl(var(--foreground))">Category row:</b> padding 16px / 10px, 13.5px Plus Jakarta Sans weight 700. Active <code>#DC183C</code>, inactive <code>#121A21</code>, hover bg <code>#FCFCFC</code>. Chevron 16×16 <code>#6A7581</code>, rotates 90° when open (.18s).<br/>
+      <b style="color:hsl(var(--foreground))">Category icon tile:</b> 24×24, radius 6px, icon 14×14. Tint / text pairs — <code>#FDECEF</code>/<code>#DC183C</code>, <code>#E4F5EE</code>/<code>#29A37A</code>, <code>#FFF1E0</code>/<code>#AE6B0A</code>. Count badge 10px weight 600 <code>#6A7581</code>.<br/>
+      <b style="color:hsl(var(--foreground))">Article row:</b> 13.5px, padding 7.2px top+bottom, 12px right, <b>32px left</b>; 2px transparent left border; <code>file-text</code> icon 14×14 <code>#6A7581</code>.<br/>
+      <b style="color:hsl(var(--foreground))">Article hover / current:</b> colour <code>#DC183C</code>, background <code>#FDECEF</code>, left border <code>#DC183C</code>. Current also weight 600.<br/>
+      <b style="color:hsl(var(--foreground))">Back link:</b> padding 16px / 12px, 1px top border, 13px weight 700 <code>#DC183C</code>, hover bg <code>#FDECEF</code>.
+    </div>
+
+    <div class="subhead">KB category cards &amp; search hero</div>
+    <div style="border:1px solid hsl(var(--border)); border-radius:12px; padding:14px 16px; font-size:12.5px; line-height:1.75; color:hsl(var(--muted-foreground)); margin-bottom:26px;">
+      <b style="color:hsl(var(--foreground))">Category card:</b> white, radius 16px, 1px border <code>#E7EBEF</code>, padding 24px; hover lift −3px, shadow <code>0 14px 30px -12px rgba(10,44,61,.22)</code>.<br/>
+      <b style="color:hsl(var(--foreground))">Card icon tile:</b> 44×44, radius 12px, icon 20×20, using the three tint / text pairs above.<br/>
+      <b style="color:hsl(var(--foreground))">Card title:</b> Plus Jakarta Sans weight 800, 17px, hover <code>#DC183C</code>. “N articles” 12px <code>#6A7581</code>.<br/>
+      <b style="color:hsl(var(--foreground))">Hero search field:</b> height 56px, radius 9999px, white, text 15px; focus ring 4px <code>#DC183C</code> at 25%. Inline submit pill height 40px, padding-x 20px, bg <code>#DC183C</code> hover <code>#B0142F</code>.<br/>
+      <b style="color:hsl(var(--foreground))">Global <code>.field</code>:</b> height 48px, radius 12px, 1px border <code>#E7EBEF</code>; focus border <code>#DC183C</code> + shadow <code>0 0 0 3px rgba(220,24,60,.12)</code>.
+    </div>
+
+    <div class="subhead">Article prose scale</div>
+    <div style="border:1px solid hsl(var(--border)); border-radius:12px; padding:14px 16px; font-size:12.5px; line-height:1.75; color:hsl(var(--muted-foreground)); margin-bottom:26px;">
+      <b style="color:hsl(var(--foreground))">H1:</b> Plus Jakarta Sans weight 800 — 30px mobile / 38.4px desktop — line-height 1.12.<br/>
+      <b style="color:hsl(var(--foreground))">H2:</b> Plus Jakarta Sans weight 800, 22.4px, <code>#121A21</code>, margin 30.4px top / 9.6px bottom, scroll-margin-top 96px.<br/>
+      <b style="color:hsl(var(--foreground))">Body:</b> 16.3px, line-height 1.8, 16px bottom margin. Inline links <code>#DC183C</code> weight 600, underline on hover.<br/>
+      <b style="color:hsl(var(--foreground))">Was this helpful:</b> card radius 16px, 1px border <code>#E7EBEF</code>, padding 24px, centered. Buttons height 40px, padding-x 20px, radius 9999px. Yes → <code>#29A37A</code> on <code>#E4F5EE</code>; No → <code>#DC183C</code> on <code>#FDECEF</code>.
+    </div>
+
+    <div class="subhead">Ticket status chips</div>
+    <div style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:12px;">
+      <span style="display:inline-flex; align-items:center; gap:6px; background:#E4F5EE; color:#29A37A; font-size:11px; font-weight:800; text-transform:uppercase; letter-spacing:.08em; padding:5px 10px; border-radius:8px;"><span style="width:6px;height:6px;border-radius:50%;background:#29A37A;"></span>Open</span>
+      <span style="display:inline-flex; align-items:center; gap:6px; background:#F0F5F9; color:#6A7581; font-size:11px; font-weight:800; text-transform:uppercase; letter-spacing:.08em; padding:5px 10px; border-radius:8px; border:1px solid #E7EBEF;"><span style="width:6px;height:6px;border-radius:50%;background:#6A7581;"></span>Closed</span>
+    </div>
+    <div style="border:1px solid hsl(var(--border)); border-radius:12px; padding:14px 16px; font-size:12.5px; line-height:1.75; color:hsl(var(--muted-foreground)); margin-bottom:26px;">
+      <b style="color:hsl(var(--foreground))">Open:</b> bg <code>#E4F5EE</code>, text <code>#29A37A</code>, 11px weight 700 uppercase tracking-widest, 6×6 dot. The live/hero variant pulses the dot.<br/>
+      <b style="color:hsl(var(--foreground))">Closed:</b> bg <code>#F0F5F9</code>, text <code>#6A7581</code>, 1px border <code>#E7EBEF</code>.
+    </div>
+
+    <div class="subhead">Ticket table &amp; create-ticket modal</div>
+    <div style="border:1px solid hsl(var(--border)); border-radius:12px; padding:14px 16px; font-size:12.5px; line-height:1.75; color:hsl(var(--muted-foreground)); margin-bottom:26px;">
+      <b style="color:hsl(var(--foreground))">Header row:</b> grid <code>1fr / 140px / 120px</code> (Conversation · Date · Status), padding 20px / 12px, bg <code>#F0F5F9</code>, 11px weight 700 uppercase <code>#6A7581</code>.<br/>
+      <b style="color:hsl(var(--foreground))">Body row:</b> padding 20px / 16px, hover bg <code>#F0F5F9</code>. Subject Plus Jakarta Sans weight 700, 16px; excerpt 14px <code>#6A7581</code>.<br/>
+      <b style="color:hsl(var(--foreground))">Empty state:</b> 64×64 tile radius 16px, bg <code>#FDECEF</code>, <code>inbox</code> icon <code>#DC183C</code>.<br/>
+      <b style="color:hsl(var(--foreground))">Modal:</b> backdrop <code>#0C1F31</code> at 55% + 4px blur. Panel white, radius 24px, max-width 512px. Sticky header with 10px red eyebrow + 18px Plus Jakarta Sans weight 800 title. Footer buttons height 48px, radius 9999px — Cancel outlined, Submit <code>#DC183C</code>.
+    </div>
+
+    <div class="subhead">Ticket conversation thread</div>
+    <div style="border:1px solid hsl(var(--border)); border-radius:12px; padding:14px 16px; font-size:12.5px; line-height:1.75; color:hsl(var(--muted-foreground));">
+      <b style="color:hsl(var(--foreground))">Connector:</b> 2px vertical rule <code>#E7EBEF</code> at left 32px, hidden on the last message.<br/>
+      <b style="color:hsl(var(--foreground))">Member message:</b> white card, radius 16px, 1px border <code>#E7EBEF</code>, padding 24–32px. Avatar 48×48 round, gradient <code>#DC183C</code> → <code>#FF9900</code>.<br/>
+      <b style="color:hsl(var(--foreground))">Agent message:</b> bg <code>#F0F5F9</code> and a <b>4px solid <code>#DC183C</code> left border</b> — this is the signal that separates staff from member. Avatar 48×48 round navy <code>#0C1F31</code>. Agent badge: bg <code>#DC183C</code> at 10%, text <code>#DC183C</code>, 10px uppercase.<br/>
+      <b style="color:hsl(var(--foreground))">Attachment chip:</b> radius 12px, white, 1px border <code>#E7EBEF</code>; 40×40 file tile radius 8px, bg <code>#E4F5EE</code>, icon <code>#29A37A</code>.<br/>
+      <b style="color:hsl(var(--foreground))">Reply composer:</b> white, radius 16px, padding 8px; focus-within border <code>#DC183C</code> + 2px ring at 15%. Send pill height 40px, padding-x 24px, bg <code>#DC183C</code> hover <code>#B0142F</code>.<br/>
+      <b style="color:hsl(var(--foreground))">Details sidebar:</b> white card radius 16px, sticky top 96px. Labels 11px weight 700 uppercase <code>#6A7581</code>; rows split by 1px <code>#E7EBEF</code> rules.
+    </div>
+  </div>
+</section>
+
 <!-- FOOTER PATTERN -->
 <section id="footer">
   <div class="wrap">
-    <p class="sec-label">08 · Footer</p>
+    <p class="sec-label">09 · Footer</p>
     <h2 class="sec-title">Footer pattern</h2>
     <p class="sec-desc">Navy base, white text, organised link columns. The footer carries the boilerplate, contact, and social links across all properties.</p>
 
@@ -942,7 +1053,7 @@
 <!-- AD SIZES -->
 <section id="ads">
   <div class="wrap">
-    <p class="sec-label">09 · Advertising</p>
+    <p class="sec-label">10 · Advertising</p>
     <h2 class="sec-title">Ad sizes</h2>
     <p class="sec-desc">Standard IAB display units. Ad templates use the brand palette — accent gradient for impact, primary red for the CTA. Dimensions are fixed; only the creative changes.</p>
 
@@ -965,7 +1076,7 @@
 <!-- ILLUSTRATION -->
 <section id="illustration">
   <div class="wrap">
-    <p class="sec-label">10 · Illustration &amp; icons</p>
+    <p class="sec-label">11 · Illustration &amp; icons</p>
     <h2 class="sec-title">Illustration &amp; iconography</h2>
     <p class="sec-desc">Illustrations feature real South African founders in warm, optimistic scenes. Icons are clean line icons (Lucide), consistent 2px stroke, used in tinted rounded containers.</p>
 
@@ -1002,7 +1113,7 @@
 <!-- IMPLEMENTATION -->
 <section id="code">
   <div class="wrap">
-    <p class="sec-label">11 · Implementation</p>
+    <p class="sec-label">12 · Implementation</p>
     <h2 class="sec-title">Drop-in code</h2>
     <p class="sec-desc">For the developer. These three blocks reproduce everything above, exactly. They work in the Lovable app, WordPress, and the standalone Claude-built modules (events, member hub).</p>
 
