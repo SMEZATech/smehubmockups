@@ -62,7 +62,7 @@ window.MOCKUP_STATUS = {
   "public-search.html": "finalised",
   "public-404.html": "finalised"
 };
-window.MOCKUP_STATUS_PUBLISHED = "2026-07-15T12:16:07.028Z";
+window.MOCKUP_STATUS_PUBLISHED = "2026-07-15T14:49:40.189Z";
 /* Developer builds (staging) — { mockup file: { url, status } }; status: "pending-review" | "reviewed" | "approved" */
 window.MOCKUP_DEV = {
   "public-home.html": {"url":"https://smesastg.wpengine.com/","status":"reviewed"},
@@ -71,15 +71,15 @@ window.MOCKUP_DEV = {
   "public-category.html": {"url":"https://smesastg.wpengine.com/starting-a-business","status":"reviewed"},
   "public-subcategory.html": {"url":"https://smesastg.wpengine.com/starting-a-business/agriculture-and-farming/","status":"reviewed"},
   "public-article.html": {"url":"https://smesastg.wpengine.com/how-to-find-your-brands-tone-of-voice/","status":"reviewed"},
-  "public-resources.html": {"url":"https://smesastg.wpengine.com/sme-resources/","status":"pending-review"},
-  "public-resource-category.html": {"url":"https://smesastg.wpengine.com/sme-resources/e-books/","status":"pending-review"},
-  "public-resource.html": {"url":"https://smesastg.wpengine.com/sme-resource/your-guide-to-ai-prompting/","status":"pending-review"},
+  "public-resources.html": {"url":"https://smesastg.wpengine.com/sme-resources/","status":"reviewed"},
+  "public-resource-category.html": {"url":"https://smesastg.wpengine.com/sme-resources/e-books/","status":"reviewed"},
+  "public-resource.html": {"url":"https://smesastg.wpengine.com/sme-resource/your-guide-to-ai-prompting/","status":"reviewed"},
   "public-funding.html": {"url":"https://smesastg.wpengine.com/sme-funding/","status":"pending-review"},
   "public-funding-category.html": {"url":"https://smesastg.wpengine.com/funding-articles/","status":"pending-review"},
   "public-loan-option.html": {"url":"https://smesastg.wpengine.com/sme-funding/inventory-finance/","status":"pending-review"},
   "public-sustainability.html": {"url":"https://smesastg.wpengine.com/sustainability-solutions/","status":"reviewed"},
-  "public-guides.html": {"url":"https://smesastg.wpengine.com/sme-resources/guides/","status":"pending-review"},
-  "public-guide.html": {"url":"https://smesastg.wpengine.com/sme-resource/test-guide/","status":"pending-review"},
+  "public-guides.html": {"url":"https://smesastg.wpengine.com/sme-resources/guides/","status":"reviewed"},
+  "public-guide.html": {"url":"https://smesastg.wpengine.com/sme-resource/test-guide/","status":"reviewed"},
   "public-shop.html": {"url":"https://smesouthafrica.co.za/shop/","status":""},
   "public-about.html": {"url":"https://smesastg.wpengine.com/about/","status":"reviewed"},
   "public-contact.html": {"url":"https://smesastg.wpengine.com/contact-us/","status":"reviewed"},
