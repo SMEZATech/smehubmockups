@@ -82,7 +82,7 @@ window.SHARED_NOTES = {
       "author": "Tshepho",
       "ts": "2026-07-03",
       "pending": true,
-      "text": "**Note: this hero sits on a LIGHT background, not the navy hero. Text colour is ink `#121A21`, not white.**\n\nContainer: max-width 1152px, padding 40px top.\n\nTypography:\n- Category pill above H1: 11px uppercase, `bg #FDECEF`, colour `#DC183C`, rounded-full.\n- H1: **30px mobile / 41.6px desktop** (custom 2.6rem), Plus Jakarta Sans weight 800, colour `#121A21` (ink), line-height 1.1, tracking-tight.\n- Max-width on H1: 768px (max-w-3xl). Don't stretch across the full container.\n\nByline row (below H1):\n- Avatar: 40 ÃÂÃÂ 40, gradient (`#DC183C` ÃÂ¢ÃÂÃÂ `#FF9900`).\n- Author name: 15px, weight 700, `#121A21`.\n- Date ÃÂÃÂ· read time: 14px, `#6A7581` (muted).\n- 'Updated <date>' chip: 14px, `#6A7581`, with calendar icon.\n\nSocial share buttons: 36 ÃÂÃÂ 36, 1px border `#E7EBEF`, rounded-full, hover state red `#DC183C`. Icons: 16 ÃÂÃÂ 16."
+      "text": "**Note: this hero sits on a LIGHT background, not the navy hero. Text colour is ink `#121A21`, not white.**\n\nContainer: max-width 1152px, padding 40px top.\n\nTypography:\n- Category pill above H1: 11px uppercase, `bg #FDECEF`, colour `#DC183C`, rounded-full.\n- H1: **30px mobile / 41.6px desktop** (custom 2.6rem), Plus Jakarta Sans weight 800, colour `#121A21` (ink), line-height 1.1, tracking-tight.\n- Max-width on H1: 768px (max-w-3xl). Don't stretch across the full container.\n\nByline row (below H1):\n- Avatar: 40 ÃÂÃÂÃÂÃÂ 40, gradient (`#DC183C` ÃÂÃÂ¢ÃÂÃÂÃÂÃÂ `#FF9900`).\n- Author name: 15px, weight 700, `#121A21`.\n- Date ÃÂÃÂÃÂÃÂ· read time: 14px, `#6A7581` (muted).\n- 'Updated <date>' chip: 14px, `#6A7581`, with calendar icon.\n\nSocial share buttons: 36 ÃÂÃÂÃÂÃÂ 36, 1px border `#E7EBEF`, rounded-full, hover state red `#DC183C`. Icons: 16 ÃÂÃÂÃÂÃÂ 16."
     },
     "header-details-first-section": {
       "label": "Header Details - First Section",
@@ -218,6 +218,33 @@ window.SHARED_NOTES = {
       "author": "Tshepho",
       "ts": "2026-07-10",
       "text": "Work on how the Contact details design show as per mockup, right now the icons are pulling the text below them and not showing along side."
+    }
+  },
+
+  "public-guide.html": {
+    "breadcrumbs": {
+      "label": "Breadcrumbs",
+      "author": "Tshepho",
+      "ts": "2026-07-15",
+      "text": "- Please replace that SME Resources to Guides. the flow from page should be from the guides/category page, so the revised details should be Home>Guides>current-page"
+    },
+    "first-section": {
+      "label": "First Section",
+      "author": "Tshepho",
+      "ts": "2026-07-15",
+      "text": "- Include the tag name and design as per the mockup"
+    },
+    "body-content": {
+      "label": "Body Content",
+      "author": "Tshepho",
+      "ts": "2026-07-15",
+      "text": "- Please update the body content text colour to use our primary text colour here: #121a21"
+    },
+    "apply-for-funding-widget": {
+      "label": "Apply for Funding Widget",
+      "author": "Tshepho",
+      "ts": "2026-07-15",
+      "text": "- Please updat ethe Apply Now Button size to 291x44 as per the mockup"
     }
   },
 
