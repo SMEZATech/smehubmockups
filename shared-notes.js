@@ -82,7 +82,7 @@ window.SHARED_NOTES = {
       "author": "Tshepho",
       "ts": "2026-07-03",
       "pending": true,
-      "text": "**Note: this hero sits on a LIGHT background, not the navy hero. Text colour is ink `#121A21`, not white.**\n\nContainer: max-width 1152px, padding 40px top.\n\nTypography:\n- Category pill above H1: 11px uppercase, `bg #FDECEF`, colour `#DC183C`, rounded-full.\n- H1: **30px mobile / 41.6px desktop** (custom 2.6rem), Plus Jakarta Sans weight 800, colour `#121A21` (ink), line-height 1.1, tracking-tight.\n- Max-width on H1: 768px (max-w-3xl). Don't stretch across the full container.\n\nByline row (below H1):\n- Avatar: 40 ÃÂÃÂÃÂÃÂ 40, gradient (`#DC183C` ÃÂÃÂ¢ÃÂÃÂÃÂÃÂ `#FF9900`).\n- Author name: 15px, weight 700, `#121A21`.\n- Date ÃÂÃÂÃÂÃÂ· read time: 14px, `#6A7581` (muted).\n- 'Updated <date>' chip: 14px, `#6A7581`, with calendar icon.\n\nSocial share buttons: 36 ÃÂÃÂÃÂÃÂ 36, 1px border `#E7EBEF`, rounded-full, hover state red `#DC183C`. Icons: 16 ÃÂÃÂÃÂÃÂ 16."
+      "text": "**Note: this hero sits on a LIGHT background, not the navy hero. Text colour is ink `#121A21`, not white.**\n\nContainer: max-width 1152px, padding 40px top.\n\nTypography:\n- Category pill above H1: 11px uppercase, `bg #FDECEF`, colour `#DC183C`, rounded-full.\n- H1: **30px mobile / 41.6px desktop** (custom 2.6rem), Plus Jakarta Sans weight 800, colour `#121A21` (ink), line-height 1.1, tracking-tight.\n- Max-width on H1: 768px (max-w-3xl). Don't stretch across the full container.\n\nByline row (below H1):\n- Avatar: 40 ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ 40, gradient (`#DC183C` ÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ `#FF9900`).\n- Author name: 15px, weight 700, `#121A21`.\n- Date ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ· read time: 14px, `#6A7581` (muted).\n- 'Updated <date>' chip: 14px, `#6A7581`, with calendar icon.\n\nSocial share buttons: 36 ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ 36, 1px border `#E7EBEF`, rounded-full, hover state red `#DC183C`. Icons: 16 ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ 16."
     },
     "header-details-first-section": {
       "label": "Header Details - First Section",
@@ -146,14 +146,14 @@ window.SHARED_NOTES = {
       "author": "Tshepho",
       "ts": "2026-07-03",
       "pending": true,
-      "text": "**Please match the mockup on padding Ã¢ÂÂ dev looks too tall.**\n\nSpec:\n- Container: max-width 1280px.\n- Padding: **48px top / 56px bottom** (pt-12 pb-14). Not py-16 or py-20.\n\nTypography:\n- H1 'SME Insights': **36px mobile / 48px desktop**, Plus Jakarta Sans weight 800, colour `#FFFFFF`, tracking-tight.\n- Sub: 18px, `rgba(255,255,255,0.70)`, max-width ~672px.\n- Content aligned LEFT (not centered).\n- Breadcrumb: 12px in `rgba(255,255,255,0.55)`.\n\nBackground: navy Ã¢ÂÂ maroon gradient with dot pattern at 70% opacity."
+      "text": "**Please match the mockup on padding ÃÂ¢ÃÂÃÂ dev looks too tall.**\n\nSpec:\n- Container: max-width 1280px.\n- Padding: **48px top / 56px bottom** (pt-12 pb-14). Not py-16 or py-20.\n\nTypography:\n- H1 'SME Insights': **36px mobile / 48px desktop**, Plus Jakarta Sans weight 800, colour `#FFFFFF`, tracking-tight.\n- Sub: 18px, `rgba(255,255,255,0.70)`, max-width ~672px.\n- Content aligned LEFT (not centered).\n- Breadcrumb: 12px in `rgba(255,255,255,0.55)`.\n\nBackground: navy ÃÂ¢ÃÂÃÂ maroon gradient with dot pattern at 70% opacity."
     },
     "article-grid": {
       "label": "Article grid",
       "author": "Tshepho",
       "ts": "2026-07-03",
       "pending": true,
-      "text": "Grid: 1 column mobile, 2 columns sm, 3 columns lg. Gap: **24px** between cards.\n\nEach card: `bg #FFFFFF`, border `#E7EBEF`, border-radius 1rem (16px), overflow-hidden.\n\nCard image: aspect 16/10, object-cover.\nCategory pill (top-left overlay): 10px uppercase, `bg #FDECEF`, colour `#DC183C`, 4px vertical / 10px horizontal padding, rounded-full.\nTitle: 18px, Plus Jakarta Sans weight 700, colour `#121A21` (ink).\nExcerpt: 14px, colour `#6A7581` (muted), 2-line clamp.\nByline avatar: 32 ÃÂ 32, gradient (red Ã¢ÂÂ orange).\nAuthor name: 13px, weight 600, `#121A21`.\nDate ÃÂ· read time: 12px, `#6A7581`."
+      "text": "Grid: 1 column mobile, 2 columns sm, 3 columns lg. Gap: **24px** between cards.\n\nEach card: `bg #FFFFFF`, border `#E7EBEF`, border-radius 1rem (16px), overflow-hidden.\n\nCard image: aspect 16/10, object-cover.\nCategory pill (top-left overlay): 10px uppercase, `bg #FDECEF`, colour `#DC183C`, 4px vertical / 10px horizontal padding, rounded-full.\nTitle: 18px, Plus Jakarta Sans weight 700, colour `#121A21` (ink).\nExcerpt: 14px, colour `#6A7581` (muted), 2-line clamp.\nByline avatar: 32 ÃÂÃÂ 32, gradient (red ÃÂ¢ÃÂÃÂ orange).\nAuthor name: 13px, weight 600, `#121A21`.\nDate ÃÂÃÂ· read time: 12px, `#6A7581`."
     }
   },
 
@@ -181,14 +181,14 @@ window.SHARED_NOTES = {
       "author": "Tshepho",
       "ts": "2026-07-03",
       "pending": true,
-      "text": "**Featured card overlaps upward into this hero ÃÂ¢ÃÂÃÂ please match the overlap exactly.**\n\nSpec:\n- Container: max-width 1280px, LEFT-aligned content (not centered).\n- Padding: **48px top / 112px bottom** (pt-12 pb-28). The extra bottom space is intentional ÃÂ¢ÃÂÃÂ it makes room for the featured card that overlaps upward with `margin-top: -64px`.\n\nTypography:\n- H1: **36px mobile / 48px desktop**, Plus Jakarta Sans weight 800, colour `#FFFFFF`, tracking-tight.\n- Sub: 18px, `rgba(255,255,255,0.70)`, max-width ~672px.\n- Breadcrumb: 12px, `rgba(255,255,255,0.55)`.\n- 'Browse all categories' link: 14px, weight 700, white, with layout-grid icon.\n\n**Do not shorten the bottom padding of the hero ÃÂ¢ÃÂÃÂ the featured card needs room to sit half-in / half-out of the hero band.**"
+      "text": "**Featured card overlaps upward into this hero ÃÂÃÂ¢ÃÂÃÂÃÂÃÂ please match the overlap exactly.**\n\nSpec:\n- Container: max-width 1280px, LEFT-aligned content (not centered).\n- Padding: **48px top / 112px bottom** (pt-12 pb-28). The extra bottom space is intentional ÃÂÃÂ¢ÃÂÃÂÃÂÃÂ it makes room for the featured card that overlaps upward with `margin-top: -64px`.\n\nTypography:\n- H1: **36px mobile / 48px desktop**, Plus Jakarta Sans weight 800, colour `#FFFFFF`, tracking-tight.\n- Sub: 18px, `rgba(255,255,255,0.70)`, max-width ~672px.\n- Breadcrumb: 12px, `rgba(255,255,255,0.55)`.\n- 'Browse all categories' link: 14px, weight 700, white, with layout-grid icon.\n\n**Do not shorten the bottom padding of the hero ÃÂÃÂ¢ÃÂÃÂÃÂÃÂ the featured card needs room to sit half-in / half-out of the hero band.**"
     },
     "featured-card": {
       "label": "Featured card (overlaps hero)",
       "author": "Tshepho",
       "ts": "2026-07-03",
       "pending": true,
-      "text": "Card: `bg #FFFFFF`, border `#E7EBEF`, border-radius **1.5rem (24px)**, shadow-xl, margin-top **-64px** (this is what makes it overlap the hero above).\n\nLayout: 2-column grid on md+, 1 column mobile. Left column is image, right is content.\n\nImage: aspect 16/11, object-cover. FEATURED pill top-left: 11px uppercase, `bg #FF9900`, colour `#0C1F31` (navy on orange), rounded-full.\n\nContent right:\n- Category pill: 11px uppercase, `bg #FDECEF`, colour `#DC183C`.\n- Title: 24px mobile / 32px desktop, Plus Jakarta Sans weight 800, colour `#121A21` (ink), line-height 1.15.\n- Excerpt: 16px, colour `#6A7581`.\n- Byline avatar: 40 ÃÂÃÂ 40 gradient. Name 14px weight 700 ink. Date ÃÂÃÂ· read time 14px muted."
+      "text": "Card: `bg #FFFFFF`, border `#E7EBEF`, border-radius **1.5rem (24px)**, shadow-xl, margin-top **-64px** (this is what makes it overlap the hero above).\n\nLayout: 2-column grid on md+, 1 column mobile. Left column is image, right is content.\n\nImage: aspect 16/11, object-cover. FEATURED pill top-left: 11px uppercase, `bg #FF9900`, colour `#0C1F31` (navy on orange), rounded-full.\n\nContent right:\n- Category pill: 11px uppercase, `bg #FDECEF`, colour `#DC183C`.\n- Title: 24px mobile / 32px desktop, Plus Jakarta Sans weight 800, colour `#121A21` (ink), line-height 1.15.\n- Excerpt: 16px, colour `#6A7581`.\n- Byline avatar: 40 ÃÂÃÂÃÂÃÂ 40 gradient. Name 14px weight 700 ink. Date ÃÂÃÂÃÂÃÂ· read time 14px muted."
     }
   },
 
@@ -245,6 +245,21 @@ window.SHARED_NOTES = {
       "author": "Tshepho",
       "ts": "2026-07-15",
       "text": "- Please updat ethe Apply Now Button size to 291x44 as per the mockup"
+    },
+    "related-guides-section": {
+      "label": "Related Guides Section",
+      "author": "Tshepho",
+      "ts": "2026-07-15",
+      "text": "- Show only the guide category name\n- The Character limit on the related guides preview card should be 100."
+    }
+  },
+
+  "public-guides.html": {
+    "missing-designs": {
+      "label": "Missing Designs",
+      "author": "Tshepho",
+      "ts": "2026-07-15",
+      "text": "- The Categories design are mising.\n- Max category name to show on the guides listing grid should be one and the max character limit should be 150"
     }
   },
 
@@ -293,6 +308,63 @@ window.SHARED_NOTES = {
       "author": "Tshepho",
       "ts": "2026-07-01",
       "text": "The first section is way too tall — please bring it down to the mockup's spec.\n\nSpacing to hit:\n- Section padding: ~48px top / ~64px bottom (roughly py-12 sm:py-16).\n- Container: max-width 1280px, centered.\n\nTypography to hit:\n- H1: Plus Jakarta Sans, weight 800, 36px on mobile / 48px on desktop, tight tracking.\n- Breadcrumb above H1: 12px, white at 55% opacity, `›` separator at white 30%.\n- 'Last updated' line under H1: 14px, white at 55% opacity, ~12px top margin.\n\nBackground: navy gradient — starts `#0C1F31` top-left, transitions through `#2b1626` toward `#5e1a2c` bottom-right — with the subtle dot pattern overlaid at ~70% opacity.\n\nNo CTAs in this hero. It's a legal doc header, keep it clean.\n\n**All five legal pages (refunds, terms, privacy, popia, advertising disclosure) share this exact same design — please reuse ONE template.**"
+    }
+  },
+
+  "public-resource-category.html": {
+    "resource-types": {
+      "label": "Top Filters",
+      "author": "Tshepho",
+      "ts": "2026-07-15",
+      "text": "- The Resource Types filtering design is missing\n- The Topics  Filtering is missing"
+    },
+    "listing-grid": {
+      "label": "Listing Grid",
+      "author": "Tshepho",
+      "ts": "2026-07-15",
+      "text": "- Show the resources post excerpts and the characterlimit should be 75"
+    }
+  },
+
+  "public-resource.html": {
+    "first-section": {
+      "label": "First Section",
+      "author": "Tshepho",
+      "ts": "2026-07-15",
+      "text": "- The button size should be 586x48\n- Please doublecheck your What's Inside Design, is not showing properly as per the mockup"
+    },
+    "related-resources": {
+      "label": "Related resources",
+      "author": "Tshepho",
+      "ts": "2026-07-15",
+      "text": "- The related resources should include the post excerpts, and the character limit on that should be 55."
+    }
+  },
+
+  "public-resources.html": {
+    "resource-types-containers": {
+      "label": "Resource Types Containers",
+      "author": "Tshepho",
+      "ts": "2026-07-15",
+      "text": "- Please update the Resource Types Container sizes to 296x170"
+    },
+    "featured-resource": {
+      "label": "Featured Resource",
+      "author": "Tshepho",
+      "ts": "2026-07-15",
+      "text": "- Update the Featured Resource Heading to 30px as per mockup\n- Update the Featured Resource Tag size to 144x25\n- Update the button size to 190x48"
+    },
+    "listing-grid": {
+      "label": "Listing Grid",
+      "author": "Tshepho",
+      "ts": "2026-07-15",
+      "text": "- The Listing Grid for these resource types, posts excerpt should be 75 characters"
+    },
+    "mobile": {
+      "label": "Mobile",
+      "author": "Tshepho",
+      "ts": "2026-07-15",
+      "text": "- Show the Resource types in 2 columns view"
     }
   },
 
