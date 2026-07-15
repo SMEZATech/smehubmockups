@@ -20,7 +20,7 @@ window.MOCKUP_STATUS = {
   "public-solutions.html": "finalised",
   "public-solution-category.html": "finalised",
   "public-sustainability.html": "finalised",
-  "public-pricing.html": "under-review",
+  "public-pricing.html": "not-started",
   "public-brands.html": "finalised",
   "public-brand.html": "finalised",
   "public-deals.html": "not-started",
@@ -62,7 +62,7 @@ window.MOCKUP_STATUS = {
   "public-search.html": "finalised",
   "public-404.html": "finalised"
 };
-window.MOCKUP_STATUS_PUBLISHED = "2026-07-10T13:28:39.824Z";
+window.MOCKUP_STATUS_PUBLISHED = "2026-07-15T11:00:38.431Z";
 /* Developer builds (staging) — { mockup file: { url, status } }; status: "pending-review" | "reviewed" | "approved" */
 window.MOCKUP_DEV = {
   "public-home.html": {"url":"https://smesastg.wpengine.com/","status":"reviewed"},
@@ -75,7 +75,8 @@ window.MOCKUP_DEV = {
   "public-resource-category.html": {"url":"https://smesastg.wpengine.com/sme-resources/e-books/","status":"pending-review"},
   "public-resource.html": {"url":"https://smesastg.wpengine.com/sme-resource/your-guide-to-ai-prompting/","status":"pending-review"},
   "public-sustainability.html": {"url":"https://smesastg.wpengine.com/sustainability-solutions/","status":"reviewed"},
-  "public-guides.html": {"url":"https://smesastg.wpengine.com/sme-resource/test-guide/","status":"pending-review"},
+  "public-guides.html": {"url":"https://smesastg.wpengine.com/sme-resources/guides/","status":"pending-review"},
+  "public-guide.html": {"url":"https://smesastg.wpengine.com/sme-resource/test-guide/","status":"pending-review"},
   "public-shop.html": {"url":"https://smesouthafrica.co.za/shop/","status":""},
   "public-about.html": {"url":"https://smesastg.wpengine.com/about/","status":"reviewed"},
   "public-contact.html": {"url":"https://smesastg.wpengine.com/contact-us/","status":"reviewed"},
