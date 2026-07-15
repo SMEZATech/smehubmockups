@@ -62,7 +62,7 @@ window.MOCKUP_STATUS = {
   "public-search.html": "finalised",
   "public-404.html": "finalised"
 };
-window.MOCKUP_STATUS_PUBLISHED = "2026-07-15T11:00:38.431Z";
+window.MOCKUP_STATUS_PUBLISHED = "2026-07-15T12:16:07.028Z";
 /* Developer builds (staging) — { mockup file: { url, status } }; status: "pending-review" | "reviewed" | "approved" */
 window.MOCKUP_DEV = {
   "public-home.html": {"url":"https://smesastg.wpengine.com/","status":"reviewed"},
@@ -74,6 +74,9 @@ window.MOCKUP_DEV = {
   "public-resources.html": {"url":"https://smesastg.wpengine.com/sme-resources/","status":"pending-review"},
   "public-resource-category.html": {"url":"https://smesastg.wpengine.com/sme-resources/e-books/","status":"pending-review"},
   "public-resource.html": {"url":"https://smesastg.wpengine.com/sme-resource/your-guide-to-ai-prompting/","status":"pending-review"},
+  "public-funding.html": {"url":"https://smesastg.wpengine.com/sme-funding/","status":"pending-review"},
+  "public-funding-category.html": {"url":"https://smesastg.wpengine.com/funding-articles/","status":"pending-review"},
+  "public-loan-option.html": {"url":"https://smesastg.wpengine.com/sme-funding/inventory-finance/","status":"pending-review"},
   "public-sustainability.html": {"url":"https://smesastg.wpengine.com/sustainability-solutions/","status":"reviewed"},
   "public-guides.html": {"url":"https://smesastg.wpengine.com/sme-resources/guides/","status":"pending-review"},
   "public-guide.html": {"url":"https://smesastg.wpengine.com/sme-resource/test-guide/","status":"pending-review"},
