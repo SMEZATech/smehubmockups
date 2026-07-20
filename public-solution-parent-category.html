@@ -56,11 +56,6 @@
         <p class="mt-4 text-white/70 max-w-2xl text-lg" id="catDesc">Compare lenders and funding routes &mdash; from working capital to purchase order finance.</p>
       </div>
     </div>
-    <div class="flex flex-wrap items-center gap-x-6 gap-y-2 mt-6 text-sm text-white/60">
-      <span class="flex items-center gap-1.5"><i data-lucide="list" class="w-4 h-4 text-white/40"></i> <b class="text-white/85 font-semibold" id="subCount">7</b>&nbsp;sub-categories</span>
-      <span class="w-px h-5 bg-white/15 hidden sm:block"></span>
-      <span class="flex items-center gap-1.5"><i data-lucide="calendar" class="w-4 h-4 text-white/40"></i> Updated 12 June 2026</span>
-    </div>
   </div>
 </section>
 
@@ -74,9 +69,7 @@
   <!-- Sub-category grid — the actual payload of this page -->
   <section>
     <p class="text-[11px] font-bold uppercase tracking-widest text-[#DC183C]">In this category</p>
-    <h2 class="font-jakarta font-extrabold text-2xl sm:text-3xl mt-1.5 tracking-tight">Sub-categories</h2>
-    <p class="text-sm text-[#6A7581] mt-2 max-w-2xl">Each sub-category opens a ranked comparison of the providers we have reviewed.</p>
-    <div id="subGrid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 mt-6"></div>
+    <div id="subGrid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 mt-4"></div>
   </section>
 </main>
 
@@ -96,48 +89,49 @@
   function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
   function showToast(m){const el=document.getElementById('toast');el.classList.remove('hidden');el.innerHTML=`<div class="bg-[#0C1F31] text-white rounded-full pl-3 pr-5 py-2.5 shadow-2xl flex items-center gap-2 text-sm font-semibold" style="border-left:4px solid #29A37A"><i data-lucide="check-circle" class="w-4 h-4" style="color:#29A37A"></i><span>${esc(m)}</span></div>`;lucide.createIcons();setTimeout(()=>{el.classList.add('hidden');el.innerHTML='';},2400);}
 
-  // SOLUTION TAXONOMY — mirrors the live sme-reviews structure. Each sub has a provider count for the card badge.
+  // SOLUTION TAXONOMY — mirrors the live sme-reviews structure.
+  // NOTE: provider/brand counts are deliberately NOT stored or rendered — we do not expose how many brands sit in a category.
   const CATEGORIES=[
     {icon:'banknote',    name:'Funding',              desc:'Compare lenders and funding routes — from working capital to purchase order finance.', subs:[
-      {name:'Business Loans',          desc:'General-purpose term loans for established businesses.',            n:12},
-      {name:'Working Capital Loans',   desc:'Short-term cover for stock, salaries and the day-to-day gap.',      n:9},
-      {name:'Invoicing Finance',       desc:'Unlock cash tied up in unpaid customer invoices.',                  n:8},
-      {name:'Bridging Finance',        desc:'Short-term cover while a confirmed payout clears.',                 n:7},
-      {name:'Inventory Loans',         desc:'Finance stock ahead of your peak trading season.',                  n:6},
-      {name:'Purchase Order Funding',  desc:'Fund a confirmed order you do not yet have the cash to deliver.',   n:6},
-      {name:'Crowdfunding Platforms',  desc:'Raise from a crowd of backers instead of a single lender.',         n:5}
+      {name:'Business Loans',          desc:'General-purpose term loans for established businesses.'},
+      {name:'Working Capital Loans',   desc:'Short-term cover for stock, salaries and the day-to-day gap.'},
+      {name:'Invoicing Finance',       desc:'Unlock cash tied up in unpaid customer invoices.'},
+      {name:'Bridging Finance',        desc:'Short-term cover while a confirmed payout clears.'},
+      {name:'Inventory Loans',         desc:'Finance stock ahead of your peak trading season.'},
+      {name:'Purchase Order Funding',  desc:'Fund a confirmed order you do not yet have the cash to deliver.'},
+      {name:'Crowdfunding Platforms',  desc:'Raise from a crowd of backers instead of a single lender.'}
     ]},
     {icon:'calculator',  name:'Finance & Accounting', desc:'Keep the books clean and get paid faster with the right financial stack.', subs:[
-      {name:'Accounting Software',     desc:'Ledgers, tax and reporting built for small teams.',                 n:10},
-      {name:'Payment Gateways',        desc:'Take card and EFT payments online and in person.',                  n:9},
-      {name:'Business Banking',        desc:'Business accounts compared on fees and features.',                  n:7},
-      {name:'POS Systems',             desc:'Till, card and stock in one counter-top system.',                   n:8}
+      {name:'Accounting Software',     desc:'Ledgers, tax and reporting built for small teams.'},
+      {name:'Payment Gateways',        desc:'Take card and EFT payments online and in person.'},
+      {name:'Business Banking',        desc:'Business accounts compared on fees and features.'},
+      {name:'POS Systems',             desc:'Till, card and stock in one counter-top system.'}
     ]},
     {icon:'megaphone',   name:'Marketing & Sales',    desc:'Win and keep customers — from first touch to closed deal.', subs:[
-      {name:'CRM Platforms',           desc:'Track leads, deals and customer history in one place.',             n:11},
-      {name:'E-mail Marketing Software', desc:'Build a list and send campaigns that convert.',                   n:9},
-      {name:'Social Media Management', desc:'Schedule, publish and measure across channels.',                    n:8},
-      {name:'Affiliate Networks',      desc:'Earn or drive commission through partner programmes.',              n:5}
+      {name:'CRM Platforms',           desc:'Track leads, deals and customer history in one place.'},
+      {name:'E-mail Marketing Software', desc:'Build a list and send campaigns that convert.'},
+      {name:'Social Media Management', desc:'Schedule, publish and measure across channels.'},
+      {name:'Affiliate Networks',      desc:'Earn or drive commission through partner programmes.'}
     ]},
     {icon:'globe',       name:'Web & IT',             desc:'Get online and stay online with hosting, connectivity and build tools.', subs:[
-      {name:'AI App & Website Builders', desc:'Stand up a site or app without a developer.',                     n:9},
-      {name:'Web Hosting',             desc:'Local and international hosting compared on uptime and price.',     n:10},
-      {name:'E-commerce Website Builders', desc:'Sell online with cart, checkout and shipping built in.',        n:8},
-      {name:'Business Fibre',          desc:'Business-grade connectivity with real support SLAs.',               n:7}
+      {name:'AI App & Website Builders', desc:'Stand up a site or app without a developer.'},
+      {name:'Web Hosting',             desc:'Local and international hosting compared on uptime and price.'},
+      {name:'E-commerce Website Builders', desc:'Sell online with cart, checkout and shipping built in.'},
+      {name:'Business Fibre',          desc:'Business-grade connectivity with real support SLAs.'}
     ]},
     {icon:'users-round', name:'HR & Team',            desc:'Hire, pay and develop your people without the admin drag.', subs:[
-      {name:'Payroll & HR Software',   desc:'Run payroll and stay compliant with SARS and UIF.',                 n:9},
-      {name:'Time & Attendance Software', desc:'Track hours, leave and shifts accurately.',                      n:6},
-      {name:'E-Learning Platforms',    desc:'Upskill your team without pulling them off the floor.',             n:6}
+      {name:'Payroll & HR Software',   desc:'Run payroll and stay compliant with SARS and UIF.'},
+      {name:'Time & Attendance Software', desc:'Track hours, leave and shifts accurately.'},
+      {name:'E-Learning Platforms',    desc:'Upskill your team without pulling them off the floor.'}
     ]},
     {icon:'scale',       name:'Legal & Compliance',   desc:'Register, protect and insure the business the right way.', subs:[
-      {name:'Company Registration',    desc:'CIPC registration and the paperwork around it.',                    n:7},
-      {name:'Commercial Law Services', desc:'Contracts, disputes and commercial advice.',                        n:5},
-      {name:'Business Insurance',      desc:'Cover for assets, liability and business interruption.',            n:8}
+      {name:'Company Registration',    desc:'CIPC registration and the paperwork around it.'},
+      {name:'Commercial Law Services', desc:'Contracts, disputes and commercial advice.'},
+      {name:'Business Insurance',      desc:'Cover for assets, liability and business interruption.'}
     ]},
     {icon:'headset',     name:'Operations & Support', desc:'Run the day-to-day — bookings, tickets and customer support.', subs:[
-      {name:'Booking & Scheduling Software', desc:'Let customers book themselves in, around your diary.',        n:7},
-      {name:'Help Desk Software',      desc:'Turn support requests into tracked, answerable tickets.',           n:6}
+      {name:'Booking & Scheduling Software', desc:'Let customers book themselves in, around your diary.'},
+      {name:'Help Desk Software',      desc:'Turn support requests into tracked, answerable tickets.'}
     ]}
   ];
 
@@ -150,7 +144,6 @@
   document.getElementById('catName').firstChild.textContent = current.name + ' ';
   document.getElementById('crumbName').textContent = current.name;
   document.getElementById('catDesc').textContent   = current.desc;
-  document.getElementById('subCount').textContent  = current.subs.length;
   document.getElementById('catIcon').innerHTML     = `<i data-lucide="${current.icon}" class="w-7 h-7 text-white"></i>`;
   document.title = `${current.name} — Solution Categories | SME South Africa`;
 
@@ -163,16 +156,15 @@
   // Sub-category cards
   document.getElementById('subGrid').innerHTML = current.subs.map(s=>`
     <a href="public-solution-category.html" class="bg-white rounded-2xl border border-[#E7EBEF] p-6 card-lift flex flex-col group">
-      <div class="flex items-center justify-between gap-3 mb-3">
-        <span class="text-[11px] font-bold text-[#6A7581] bg-[#FCFCFC] border border-[#E7EBEF] rounded-full px-2.5 py-1">${s.n} providers</span>
-        <i data-lucide="arrow-up-right" class="w-4 h-4 text-slate-300 group-hover:text-[#DC183C] transition"></i>
+      <div class="flex items-start justify-between gap-3">
+        <p class="font-jakarta font-extrabold text-lg leading-tight group-hover:text-[#DC183C] transition">${esc(s.name)}</p>
+        <i data-lucide="arrow-up-right" class="w-4 h-4 text-slate-300 group-hover:text-[#DC183C] transition shrink-0 mt-1"></i>
       </div>
-      <p class="font-jakarta font-extrabold text-lg leading-tight group-hover:text-[#DC183C] transition">${esc(s.name)}</p>
       <p class="text-sm text-[#6A7581] mt-1.5 leading-relaxed flex-1">${esc(s.desc)}</p>
       <span class="inline-flex items-center gap-1 text-sm font-bold text-[#DC183C] mt-5 pt-4 border-t border-[#E7EBEF]">Compare providers <i data-lucide="arrow-right" class="w-4 h-4"></i></span>
     </a>`).join('');
 
-  const BRIEF={title:'Solution Parent Category',sub:'One main category \\u2014 lists its sub-categories \\u00b7 driven by ?cat=',purpose:'The middle tier of the Solutions ladder. <code>public-solutions.html</code> is the archive, <code>public-solution-categories.html</code> is the full directory, this page is a single <b>main</b> category (for example Funding) listing the sub-categories inside it, and <code>public-solution-category.html</code> is the sub-category page where providers are actually ranked. This page deliberately does <b>not</b> rank providers \\u2014 it is a routing layer that gets the visitor to the right sub-category.',data:'One array, <b>CATEGORIES</b>: <code>{name, desc, icon, subs[]}</code> where each sub is <code>{name, desc, n}</code> and <code>n</code> is the provider count shown on the card badge. Mirrors the live <code>sme_review_categories</code> taxonomy \\u2014 7 parents, 27 sub-categories. Provider counts are placeholder numbers in the mockup and must come from a real term count on build.',logic:'Which category renders is resolved from the <code>?cat=</code> query string, matched case-insensitively against the array, falling back to the first entry. On WordPress this becomes the term archive template for a top-level <code>sme_review_categories</code> term \\u2014 the query string is a mockup-only device. Hero title, breadcrumb, description, icon, sub-count and <code>document.title</code> are all set from the resolved record. The sibling switcher renders all 7 parents with the current one flagged <code>chip-active</code>. Sub-categories with no published providers should be omitted, not shown with a zero badge.',components:'page hero (icon tile + H1 + description + sub-count + updated date) \\u00b7 <b>Other categories</b> sibling switcher row \\u00b7 <b>Sub-categories</b> section (label + H2 + intro + 3-col grid) \\u00b7 sub-category card = provider-count badge + arrow + name + description + Compare-providers link.',specs:'<b>Container:</b> <code>max-w-7xl</code> = 1280px, <code>px-4 sm:px-6</code>.<br/><b>Padding:</b> hero <code>py-14</code> (56px), main <code>py-12</code> (48px), section gap <code>space-y-12</code> = 48px.<br/><b>Background:</b> hero navy gradient (<code>#0C1F31</code>) + dot-pattern 70%; main <code>#FCFCFC</code>.<br/><br/><b>H1 (category name):</b> Jakarta weight 800 \\u2014 36px mobile / 48px desktop (<code>text-4xl sm:text-5xl</code>), colour <code>#FFFFFF</code>, tracking-tight. <b>Must be H1</b>.<br/><b>Hero icon tile:</b> <b>56 \\u00d7 56px</b> (<code>w-14 h-14</code>), <code>rounded-2xl</code>, <code>bg-white/10</code>, border <code>rgba(255,255,255,0.15)</code>; icon <b>28 \\u00d7 28px</b> (<code>w-7 h-7</code>).<br/><b>Hero sub:</b> 18px, <code>rgba(255,255,255,0.70)</code>, <code>max-w-2xl</code>.<br/><b>Hero meta row:</b> 14px, <code>rgba(255,255,255,0.60)</code>, divider <code>w-px h-5 bg-white/15</code>.<br/><br/><b>Sibling chip:</b> 12px weight 600, <code>bg #FFFFFF</code>, border <code>#E7EBEF</code>, <code>px-3.5 py-2</code> rounded-full, icon <code>w-3.5 h-3.5</code>; active state <code>bg #DC183C</code> / white text; hover tint <code>#FDECEF</code> / <code>#B0142F</code>.<br/><br/><b>Section label:</b> 11px uppercase weight 700 tracking widest, colour <code>#DC183C</code>.<br/><b>Section H2:</b> 24px / 30px (<code>text-2xl sm:text-3xl</code>), Jakarta weight 800, colour <code>#121A21</code>.<br/><br/><b>Sub-category card:</b> <code>bg #FFFFFF</code>, border <code>#E7EBEF</code>, <code>rounded-2xl</code> = 16px, <code>p-6</code> = 24px, whole card is the link, card-lift hover (border <code>#DC183C</code>).<br/><b>Provider badge:</b> 11px weight 700, colour <code>#6A7581</code>, <code>bg #FCFCFC</code>, border <code>#E7EBEF</code>, <code>px-2.5 py-1</code> rounded-full.<br/><b>Sub-category name:</b> <b>18px</b> (<code>text-lg</code>), Jakarta weight 800, colour <code>#121A21</code>, hover <code>#DC183C</code>.<br/><b>Description:</b> 14px, colour <code>#6A7581</code>.<br/><b>Compare link:</b> 14px weight 700, colour <code>#DC183C</code>, top-border <code>#E7EBEF</code>.<br/><b>Grid:</b> <code>sm:grid-cols-2 lg:grid-cols-3</code>, <code>gap-5</code> = 20px.'};
+  const BRIEF={title:'Solution Parent Category',sub:'One main category \\u2014 lists its sub-categories \\u00b7 driven by ?cat=',purpose:'The middle tier of the Solutions ladder. <code>public-solutions.html</code> is the archive, <code>public-solution-categories.html</code> is the full directory, this page is a single <b>main</b> category (for example Funding) listing the sub-categories inside it, and <code>public-solution-category.html</code> is the sub-category page where providers are actually ranked. This page deliberately does <b>not</b> rank providers \\u2014 it is a routing layer that gets the visitor to the right sub-category.',data:'One array, <b>CATEGORIES</b>: <code>{name, desc, icon, subs[]}</code> where each sub is <code>{name, desc}</code>. Mirrors the live <code>sme_review_categories</code> taxonomy \\u2014 7 parents, 27 sub-categories. <b>Provider/brand counts are deliberately absent</b> \\u2014 not stored on the record and not rendered anywhere. We do not expose how many brands sit inside a category, so do not reintroduce a count badge or a results total on build.',logic:'Which category renders is resolved from the <code>?cat=</code> query string, matched case-insensitively against the array, falling back to the first entry. On WordPress this becomes the term archive template for a top-level <code>sme_review_categories</code> term \\u2014 the query string is a mockup-only device. Hero title, breadcrumb, description, icon and <code>document.title</code> are all set from the resolved record. The sibling switcher renders all 7 parents with the current one flagged <code>chip-active</code>. Sub-categories with no published providers should be omitted entirely. <b>No date on this page</b> \\u2014 category archives are evergreen listings, so no published or updated date is shown.',components:'page hero (icon tile + H1 + description \\u2014 <b>no meta/count/date row</b>) \\u00b7 <b>Other categories</b> sibling switcher row \\u00b7 <b>In this category</b> section (eyebrow label only, no H2 or intro line) + 3-col grid \\u00b7 sub-category card = name + arrow + description + Compare-providers link.',specs:'<b>Container:</b> <code>max-w-7xl</code> = 1280px, <code>px-4 sm:px-6</code>.<br/><b>Padding:</b> hero <code>py-14</code> (56px), main <code>py-12</code> (48px), section gap <code>space-y-12</code> = 48px.<br/><b>Background:</b> hero navy gradient (<code>#0C1F31</code>) + dot-pattern 70%; main <code>#FCFCFC</code>.<br/><br/><b>H1 (category name):</b> Jakarta weight 800 \\u2014 36px mobile / 48px desktop (<code>text-4xl sm:text-5xl</code>), colour <code>#FFFFFF</code>, tracking-tight. <b>Must be H1</b>.<br/><b>Hero icon tile:</b> <b>56 \\u00d7 56px</b> (<code>w-14 h-14</code>), <code>rounded-2xl</code>, <code>bg-white/10</code>, border <code>rgba(255,255,255,0.15)</code>; icon <b>28 \\u00d7 28px</b> (<code>w-7 h-7</code>).<br/><b>Hero sub:</b> 18px, <code>rgba(255,255,255,0.70)</code>, <code>max-w-2xl</code>. Nothing sits below it \\u2014 <b>no meta row, no counts, no date</b>.<br/><br/><b>Sibling chip:</b> 12px weight 600, <code>bg #FFFFFF</code>, border <code>#E7EBEF</code>, <code>px-3.5 py-2</code> rounded-full, icon <code>w-3.5 h-3.5</code>; active state <code>bg #DC183C</code> / white text; hover tint <code>#FDECEF</code> / <code>#B0142F</code>.<br/><br/><b>Section label:</b> 11px uppercase weight 700 tracking widest, colour <code>#DC183C</code>. This eyebrow stands alone \\u2014 <b>no H2 and no intro paragraph</b> beneath it; grid starts at <code>mt-4</code> = 16px.<br/><br/><b>Sub-category card:</b> <code>bg #FFFFFF</code>, border <code>#E7EBEF</code>, <code>rounded-2xl</code> = 16px, <code>p-6</code> = 24px, whole card is the link, card-lift hover (border <code>#DC183C</code>). Name and arrow share the top row (<code>justify-between</code>, arrow <code>w-4 h-4</code> <code>#CBD5E1</code> \\u2192 <code>#DC183C</code> on hover).<br/><b>Sub-category name:</b> <b>18px</b> (<code>text-lg</code>), Jakarta weight 800, colour <code>#121A21</code>, hover <code>#DC183C</code>.<br/><b>Description:</b> 14px, colour <code>#6A7581</code>.<br/><b>Compare link:</b> 14px weight 700, colour <code>#DC183C</code>, top-border <code>#E7EBEF</code>.<br/><b>Grid:</b> <code>sm:grid-cols-2 lg:grid-cols-3</code>, <code>gap-5</code> = 20px.'};
   function toggleDevMode(){const on=document.body.classList.toggle('dev-on');const b=document.getElementById('devToggle');if(b)b.classList.toggle('on',on);if(on)showToast('Dev Mode on — tap any ⓘ for implementation notes.');lucide.createIcons();}
   function closeOverlay(id){const el=document.getElementById(id);if(!el)return;el.classList.remove('open');setTimeout(()=>{if(el&&el.parentNode)el.remove();},300);}
   function openBrief(){const b=BRIEF;const sec=(i,l,h)=>`<div class="px-6 py-4 border-t border-slate-100"><p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] flex items-center gap-1.5 mb-2"><i data-lucide="${i}" class="w-3.5 h-3.5"></i>${l}</p><div class="text-sm text-slate-600 leading-relaxed">${h}</div></div>`;document.getElementById('overlay-root').innerHTML=`<div class="ov" id="ov"><div class="ov-bg" onclick="closeOverlay('ov')"></div><div class="drawer"><div class="sticky top-0 z-10 bg-[#0C1F31] text-white px-6 py-5 flex items-start justify-between"><div><p class="text-[10px] font-bold uppercase tracking-widest text-[#FF9900] mb-1">Dev Brief</p><h3 class="font-jakarta font-extrabold text-lg leading-tight">${b.title}</h3><p class="text-xs text-white/60 mt-1">${b.sub}</p></div><button onclick="closeOverlay('ov')" class="text-white/60 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button></div>${sec('target','Purpose',b.purpose)}${sec('database','Data model',b.data)}${sec('git-branch','Logic',b.logic)}${sec('ruler','Spec values',b.specs)}${sec('boxes','Components',b.components)}</div></div>`;requestAnimationFrame(()=>{const o=document.getElementById('ov');if(o)o.classList.add('open');});lucide.createIcons();}
