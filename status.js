@@ -19,7 +19,6 @@ window.MOCKUP_STATUS = {
   "public-loan-option.html": "finalised",
   "public-solutions.html": "finalised",
   "public-solution-categories.html": "finalised",
-  "public-solution-parent-category.html": "finalised",
   "public-solution-category.html": "finalised",
   "public-sustainability.html": "finalised",
   "public-pricing.html": "not-started",
