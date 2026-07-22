@@ -221,6 +221,30 @@ window.SHARED_NOTES = {
     }
   },
 
+  "public-funding-category.html": {
+    "funding-guides-section": {
+      "label": "Funding Guides Section",
+      "author": "Tshepho",
+      "ts": "2026-07-22",
+      "text": "- The Max category on the guides ot show should be one.\n- The Funding Guides post excerpts and the characterlimit should be 75"
+    }
+  },
+
+  "public-funding.html": {
+    "first-section": {
+      "label": "First Section",
+      "author": "Tshepho",
+      "ts": "2026-07-22",
+      "text": "- Please reduce the \"Apply Now\" button size to 165x56 and the \"Funding Options\" button size to 215x56"
+    },
+    "mobile-first-section": {
+      "label": "Mobile - First Section",
+      "author": "Tshepho",
+      "ts": "2026-07-22",
+      "text": "- Adjust the x number of SMEs Funded tage design size to it shows on the side with the amount facilitated instead of showing below."
+    }
+  },
+
   "public-guide.html": {
     "breadcrumbs": {
       "label": "Breadcrumbs",
@@ -281,6 +305,15 @@ window.SHARED_NOTES = {
       "author": "Tshepho",
       "ts": "2026-07-02",
       "text": "Remove the category tag overlay from the featured images. The card title and byline carry the category context — no need for the red pill on the image."
+    }
+  },
+
+  "public-loan-option.html": {
+    "breadcrumbs": {
+      "label": "Breadcrumbs",
+      "author": "Tshepho",
+      "ts": "2026-07-22",
+      "text": "- Add the funding nav to the breadcrumbs"
     }
   },
 
