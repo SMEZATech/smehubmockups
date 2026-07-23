@@ -63,7 +63,7 @@ window.MOCKUP_STATUS = {
   "public-search.html": "finalised",
   "public-404.html": "finalised"
 };
-window.MOCKUP_STATUS_PUBLISHED = "2026-07-22T10:57:59.645Z";
+window.MOCKUP_STATUS_PUBLISHED = "2026-07-23T13:23:15.693Z";
 /* Developer builds (staging) — { mockup file: { url, status } }; status: "pending-review" | "reviewed" | "approved" */
 window.MOCKUP_DEV = {
   "public-home.html": {"url":"https://smesastg.wpengine.com/","status":"reviewed"},
@@ -78,7 +78,12 @@ window.MOCKUP_DEV = {
   "public-funding.html": {"url":"https://smesastg.wpengine.com/sme-funding/","status":"reviewed"},
   "public-funding-category.html": {"url":"https://smesastg.wpengine.com/funding-articles/","status":"reviewed"},
   "public-loan-option.html": {"url":"https://smesastg.wpengine.com/sme-funding/inventory-finance/","status":"reviewed"},
+  "public-solutions.html": {"url":"https://smesastg.wpengine.com/reviews/","status":"pending-review"},
+  "public-solution-categories.html": {"url":"https://smesastg.wpengine.com/review-category/","status":"pending-review"},
+  "public-solution-category.html": {"url":"https://smesastg.wpengine.com/review-category/marketing-sales/","status":"pending-review"},
   "public-sustainability.html": {"url":"https://smesastg.wpengine.com/sustainability-solutions/","status":"reviewed"},
+  "public-brands.html": {"url":"https://smesastg.wpengine.com/brands/","status":"pending-review"},
+  "public-brand.html": {"url":"https://smesastg.wpengine.com/brands/partnerstack/","status":"pending-review"},
   "public-guides.html": {"url":"https://smesastg.wpengine.com/sme-resources/guides/","status":"reviewed"},
   "public-guide.html": {"url":"https://smesastg.wpengine.com/sme-resource/test-guide/","status":"reviewed"},
   "public-shop.html": {"url":"https://smesouthafrica.co.za/shop/","status":""},
