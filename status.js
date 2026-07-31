@@ -63,7 +63,7 @@ window.MOCKUP_STATUS = {
   "public-search.html": "finalised",
   "public-404.html": "finalised"
 };
-window.MOCKUP_STATUS_PUBLISHED = "2026-07-23T13:26:02.404Z";
+window.MOCKUP_STATUS_PUBLISHED = "2026-07-31T12:15:54.633Z";
 /* Developer builds (staging) — { mockup file: { url, status } }; status: "pending-review" | "reviewed" | "approved" */
 window.MOCKUP_DEV = {
   "public-home.html": {"url":"https://smesastg.wpengine.com/","status":"reviewed"},
@@ -71,6 +71,7 @@ window.MOCKUP_DEV = {
   "public-article-categories.html": {"url":"https://smesastg.wpengine.com/article-categories/","status":"reviewed"},
   "public-category.html": {"url":"https://smesastg.wpengine.com/starting-a-business","status":"reviewed"},
   "public-subcategory.html": {"url":"https://smesastg.wpengine.com/starting-a-business/agriculture-and-farming/","status":"reviewed"},
+  "public-author.html": {"url":"https://smesastg.wpengine.com/author/maryna-steyn/","status":"pending-review"},
   "public-article.html": {"url":"https://smesastg.wpengine.com/how-to-find-your-brands-tone-of-voice/","status":"reviewed"},
   "public-resources.html": {"url":"https://smesastg.wpengine.com/sme-resources/","status":"reviewed"},
   "public-resource-category.html": {"url":"https://smesastg.wpengine.com/sme-resources/e-books/","status":"reviewed"},
@@ -79,7 +80,7 @@ window.MOCKUP_DEV = {
   "public-funding-category.html": {"url":"https://smesastg.wpengine.com/funding-articles/","status":"reviewed"},
   "public-loan-option.html": {"url":"https://smesastg.wpengine.com/sme-funding/inventory-finance/","status":"reviewed"},
   "public-solutions.html": {"url":"https://smesastg.wpengine.com/reviews/","status":"pending-review"},
-  "public-solution-categories.html": {"url":"https://smesastg.wpengine.com/review-category/","status":"pending-review"},
+  "public-solution-categories.html": {"url":"https://smesastg.wpengine.com/review-category/","status":"approved"},
   "public-solution-category.html": {"url":"https://smesastg.wpengine.com/reviews/affiliate-networks/","status":"pending-review"},
   "public-sustainability.html": {"url":"https://smesastg.wpengine.com/sustainability-solutions/","status":"reviewed"},
   "public-brands.html": {"url":"https://smesastg.wpengine.com/brands/","status":"pending-review"},
