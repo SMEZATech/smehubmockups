@@ -28,6 +28,8 @@ window.MOCKUP_STATUS = {
   "public-deal.html": "not-started",
   "public-guides.html": "finalised",
   "public-guide.html": "finalised",
+  "public-glossary.html": "under-review",
+  "public-glossary-term.html": "under-review",
   "public-founder-focus-category.html": "finalised",
   "public-funding-summit-category.html": "finalised",
   "public-shop.html": "not-started",
