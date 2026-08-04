@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Event Library — Replays &amp; Shorts — SME South Africa</title>
+  <meta name="description" content="Watch full replays, keynote clips and short highlights from past SME South Africa events and webinars." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script><script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  <script>tailwind.config={theme:{extend:{fontFamily:{jakarta:['Plus Jakarta Sans','sans-serif'],inter:['Inter','system-ui','sans-serif']}}}};</script>
+  <style>
+    html,body{font-family:'Inter',system-ui,sans-serif;} .font-jakarta{font-family:'Plus Jakarta Sans',sans-serif;letter-spacing:.005em;}
+    .hero-bg{background:linear-gradient(115deg,#0C1F31 0%,#0C1F31 50%,#2b1626 80%,#5e1a2c 115%);}
+    .dot-pattern{background-image:radial-gradient(rgba(255,255,255,.07) 1px,transparent 1.5px);background-size:22px 22px;}
+    .no-scrollbar::-webkit-scrollbar{display:none} .no-scrollbar{-ms-overflow-style:none;scrollbar-width:none;}
+    .video-card{background:#fff;border:1px solid #E7EBEF;border-radius:1rem;overflow:hidden;transition:all .25s;cursor:pointer;}
+    .video-card:hover{box-shadow:0 14px 30px -12px rgba(10,44,61,.22);transform:translateY(-3px);}
+    .thumb{position:relative;background:#0C1F31;overflow:hidden;aspect-ratio:16/9;}
+    .thumb img{width:100%;height:100%;object-fit:cover;transition:transform .5s;}
+    .video-card:hover .thumb img{transform:scale(1.05);}
+    .thumb .play{position:absolute;inset:0;margin:auto;width:56px;height:56px;border-radius:999px;background:rgba(220,24,60,.95);color:#fff;display:grid;place-items:center;transition:transform .25s;box-shadow:0 8px 30px rgba(0,0,0,.4);}
+    .video-card:hover .thumb .play{transform:scale(1.08);}
+    .thumb .duration{position:absolute;bottom:.55rem;right:.55rem;background:rgba(0,0,0,.75);color:#fff;padding:.15rem .5rem;border-radius:.4rem;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:.72rem;}
+    .thumb .type-pill{position:absolute;top:.55rem;left:.55rem;padding:.2rem .55rem;border-radius:999px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:.65rem;letter-spacing:.06em;text-transform:uppercase;}
+    .thumb .type-pill.replay{background:rgba(220,24,60,.95);color:#fff;}
+    .thumb .type-pill.short{background:rgba(255,153,0,.95);color:#0C1F31;}
+    .thumb .type-pill.keynote{background:rgba(255,255,255,.9);color:#0C1F31;}
+    .short-card{aspect-ratio:9/16;background:#0C1F31;border-radius:1rem;overflow:hidden;position:relative;cursor:pointer;transition:transform .25s;}
+    .short-card:hover{transform:translateY(-3px);}
+    .short-card img{width:100%;height:100%;object-fit:cover;}
+    .short-card .overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0) 40%,rgba(0,0,0,.85) 100%);color:#fff;display:flex;flex-direction:column;justify-content:flex-end;padding:.85rem;}
+    .short-card .play-s{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:44px;height:44px;border-radius:999px;background:rgba(255,255,255,.15);backdrop-filter:blur(6px);display:grid;place-items:center;}
+    /* Player modal */
+    .player-modal{position:fixed;inset:0;z-index:80;background:rgba(0,0,0,.92);display:none;align-items:center;justify-content:center;padding:1rem;}
+    .player-modal.open{display:flex;}
+    .player-modal .player-wrap{width:100%;max-width:900px;background:#0C1F31;border-radius:1rem;overflow:hidden;position:relative;}
+    .player-modal iframe{width:100%;aspect-ratio:16/9;display:block;border:0;}
+    .player-modal .pl-close{position:absolute;top:.75rem;right:.75rem;width:36px;height:36px;background:rgba(0,0,0,.5);color:#fff;border-radius:999px;display:grid;place-items:center;cursor:pointer;z-index:2;}
+    .player-modal .pl-meta{padding:1rem 1.25rem;color:#fff;}
+    .dev-badge{display:none;} body.dev-on .dev-badge{display:inline-flex;} #devToggle.on{background:#DC183C;color:#fff;border-color:#DC183C;}
+    .ov{position:fixed;inset:0;z-index:90;} .ov-bg{position:absolute;inset:0;background:rgba(12,31,49,.45);backdrop-filter:blur(2px);opacity:0;transition:opacity .3s;} .ov.open .ov-bg{opacity:1;}
+    .drawer{position:absolute;right:0;top:0;height:100%;width:100%;max-width:440px;background:#fff;box-shadow:-12px 0 40px rgba(12,31,49,.25);overflow-y:auto;transform:translateX(100%);transition:transform .3s cubic-bezier(.2,.7,.2,1);} .ov.open .drawer{transform:translateX(0);}
+  </style>
+</head>
+<body class="bg-[#FCFCFC] text-[#121A21] antialiased">
+<header class="bg-slate-100 border-b-2 border-dashed border-slate-400 relative overflow-hidden">
+  <div class="absolute inset-0 opacity-30 pointer-events-none" style="background:repeating-linear-gradient(45deg,transparent,transparent 8px,rgba(100,116,139,.18) 8px,rgba(100,116,139,.18) 16px)"></div>
+  <div class="relative max-w-7xl mx-auto px-4 sm:px-6 h-14 flex items-center gap-3 sm:gap-4">
+    <a href="public-home.html" class="flex items-center gap-2 shrink-0 opacity-70 hover:opacity-100 transition">
+      <img src="assets/logo-icon.png" alt="SME South Africa" class="w-7 h-7" />
+      <span class="font-jakarta font-extrabold text-[13px] tracking-tight text-slate-700 hidden sm:inline">SME South Africa</span>
+    </a>
+    <span class="mx-1 hidden sm:inline w-px h-5 bg-slate-300"></span>
+    <p class="text-[10px] sm:text-[11px] font-bold uppercase tracking-widest text-slate-600 flex items-center gap-1.5"><i data-lucide="construction" class="w-3.5 h-3.5 text-slate-500"></i> Header placeholder &middot; design pending</p>
+    <div class="ml-auto flex items-center gap-2">
+      <button id="devToggle" onclick="toggleDevMode()" class="inline-flex items-center gap-1.5 px-2.5 h-8 rounded-full bg-white border border-slate-300 hover:border-[#DC183C] hover:text-[#DC183C] text-[11px] font-bold uppercase tracking-wider text-slate-600 transition"><i data-lucide="code-2" class="w-3.5 h-3.5"></i><span class="hidden sm:inline">Dev</span></button>
+      <a href="index.html" class="inline-flex items-center gap-1.5 px-3 h-8 rounded-full bg-white border border-slate-300 hover:border-slate-500 text-[11px] font-bold text-slate-700 transition"><i data-lucide="arrow-left" class="w-3.5 h-3.5"></i><span class="hidden sm:inline">Launcher</span></a>
+    </div>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero-bg text-white relative overflow-hidden">
+  <div class="absolute inset-0 dot-pattern opacity-70 pointer-events-none"></div>
+  <div class="max-w-[1200px] mx-auto px-4 sm:px-6 py-12 relative">
+    <nav aria-label="Breadcrumb" class="text-xs text-white/55 flex items-center flex-wrap gap-x-1.5 mb-4"><a href="public-home.html" class="hover:text-white transition">Home</a><span class="text-white/30">›</span><a href="events.html" class="hover:text-white transition">Events</a><span class="text-white/30">›</span><span class="text-white/85 font-medium truncate">Library</span></nav>
+    <p class="inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-widest text-[#FF9900] mb-3"><i data-lucide="play-circle" class="w-3.5 h-3.5"></i> Replays &amp; shorts</p>
+    <h1 class="font-jakarta font-extrabold text-3xl sm:text-5xl leading-[1.05] tracking-tight">Event Library
+      <button onclick="openBrief()" class="dev-badge align-middle ml-2 w-7 h-7 rounded-full bg-[#FF9900] text-[#0C1F31] items-center justify-center text-[12px] font-bold">i</button>
+    </h1>
+    <p class="mt-3 text-white/70 max-w-2xl text-lg">Watch full replays of past webinars and summits, or grab the 60-second shorts from the keynote highlights.</p>
+    <form onsubmit="return false" class="mt-6 relative max-w-lg">
+      <i data-lucide="search" class="w-5 h-5 absolute left-4 top-1/2 -translate-y-1/2 text-white/60"></i>
+      <input id="libSearch" oninput="applyFilters()" placeholder="Search by title, speaker, topic…" class="w-full h-12 rounded-full bg-white/10 border border-white/20 pl-11 pr-4 text-white placeholder:text-white/50 outline-none focus:border-[#FF9900]" />
+    </form>
+  </div>
+</section>
+
+<!-- STICKY FILTER BAR -->
+<div class="sticky top-0 z-30 bg-white/95 backdrop-blur border-b border-[#E7EBEF]">
+  <div class="max-w-[1200px] mx-auto px-4 sm:px-6 py-3 flex flex-col md:flex-row md:items-center gap-3">
+    <div id="typeChips" class="flex items-center gap-2 overflow-x-auto no-scrollbar"></div>
+    <div class="md:ml-auto flex items-center gap-2 overflow-x-auto no-scrollbar">
+      <span class="text-xs font-bold uppercase tracking-wider text-slate-400 shrink-0">Topic</span>
+      <select id="topicSel" onchange="applyFilters()" class="h-9 px-3 rounded-lg border border-[#E7EBEF] bg-white text-sm font-semibold text-slate-700">
+        <option value="All">All topics</option><option>Funding Summit</option><option>Tech &amp; Innovation</option><option>Business Planning</option><option>Strategy</option><option>Marketing</option><option>Operations</option>
+      </select>
+    </div>
+  </div>
+</div>
+
+<main class="max-w-[1200px] mx-auto px-4 sm:px-6 py-10">
+  <!-- FEATURED REPLAY -->
+  <section id="featuredWrap" class="mb-14">
+    <p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] mb-3">Featured replay</p>
+    <div class="grid lg:grid-cols-[1.4fr,1fr] gap-6">
+      <div onclick="openPlayer('featured')" class="video-card">
+        <div class="thumb" style="aspect-ratio:16/9;">
+          <img src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&q=80&w=1200" alt="Featured replay thumbnail" />
+          <span class="type-pill replay">Full replay</span>
+          <span class="duration">1:12:04</span>
+          <span class="play"><i data-lucide="play" class="w-6 h-6" style="margin-left:2px"></i></span>
+        </div>
+      </div>
+      <div class="flex flex-col justify-center">
+        <p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] mb-2">Funding Summit · 27 Sep 2025</p>
+        <h2 class="font-jakarta font-extrabold text-2xl sm:text-3xl leading-tight text-[#0C1F31]">The State of SA Funding — 2025 keynote</h2>
+        <p class="text-[#6A7581] mt-3 leading-relaxed">Dineo Molefe unpacks where the R2.3 billion in SME funding actually landed in 2025, and which sectors saw the biggest movement.</p>
+        <div class="flex items-center gap-3 mt-5">
+          <button onclick="openPlayer('featured')" class="inline-flex items-center gap-1.5 h-11 px-5 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold text-sm transition">Watch full replay <i data-lucide="play" class="w-4 h-4"></i></button>
+          <button onclick="showToast('Added to your watchlist.')" class="inline-flex items-center gap-1.5 h-11 px-5 rounded-full bg-slate-100 hover:bg-slate-200 text-[#121A21] font-bold text-sm transition"><i data-lucide="bookmark" class="w-4 h-4"></i> Save</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- REPLAY GRID -->
+  <section id="replaySection" class="mb-14">
+    <div class="flex items-baseline justify-between mb-5">
+      <h2 class="font-jakarta font-extrabold text-2xl text-[#0C1F31]">Full replays</h2>
+      <p class="text-sm text-[#6A7581]"><span id="replayCount">–</span> videos</p>
+    </div>
+    <div id="replayGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+  </section>
+
+  <!-- SHORTS -->
+  <section id="shortsSection" class="mb-14">
+    <div class="flex items-baseline justify-between mb-5">
+      <div>
+        <h2 class="font-jakarta font-extrabold text-2xl text-[#0C1F31]">Shorts &amp; keynote clips</h2>
+        <p class="text-sm text-[#6A7581] mt-1">Vertical 60-second clips for the road.</p>
+      </div>
+      <p class="text-sm text-[#6A7581]"><span id="shortsCount">–</span> shorts</p>
+    </div>
+    <div id="shortsRow" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4"></div>
+  </section>
+
+  <!-- EMPTY STATE -->
+  <div id="emptyState" class="hidden text-center py-16 bg-white border border-dashed border-[#E7EBEF] rounded-2xl">
+    <div class="w-14 h-14 rounded-2xl bg-[#FDECEF] grid place-items-center mx-auto mb-4"><i data-lucide="search-x" class="w-6 h-6 text-[#DC183C]"></i></div>
+    <p class="font-jakarta font-extrabold text-lg text-[#0C1F31]">No videos match your search</p>
+    <p class="text-sm text-[#6A7581] mt-2 max-w-sm mx-auto">Try a different keyword or clear the filters.</p>
+    <button onclick="clearFilters()" class="mt-5 inline-flex items-center gap-1.5 h-10 px-5 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold text-sm transition">Clear filters</button>
+  </div>
+
+  <!-- LINK TO PHOTO GALLERIES -->
+  <section class="mt-16">
+    <div class="rounded-3xl bg-white border border-[#E7EBEF] p-8 flex flex-col sm:flex-row items-center gap-6 sm:gap-8">
+      <div class="w-16 h-16 rounded-2xl bg-[#FFF1E0] grid place-items-center shrink-0"><i data-lucide="images" class="w-8 h-8 text-[#AE6B0A]"></i></div>
+      <div class="flex-1 text-center sm:text-left">
+        <p class="text-[10px] font-bold uppercase tracking-widest text-[#AE6B0A] mb-1">Looking for photos?</p>
+        <h3 class="font-jakarta font-extrabold text-xl text-[#0C1F31]">Photo galleries live in the Event Gallery</h3>
+        <p class="text-sm text-[#6A7581] mt-1 leading-relaxed max-w-lg">Every past event has its own photo album — download or share.</p>
+      </div>
+      <a href="event-gallery.html" class="inline-flex items-center gap-1.5 h-11 px-5 rounded-full bg-[#0C1F31] hover:bg-[#091621] text-white font-bold text-sm transition shrink-0">Open galleries <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
+    </div>
+  </section>
+</main>
+
+<footer class="bg-slate-100 border-t-2 border-dashed border-slate-400 relative overflow-hidden">
+  <div class="absolute inset-0 opacity-30 pointer-events-none" style="background:repeating-linear-gradient(45deg,transparent,transparent 8px,rgba(100,116,139,.18) 8px,rgba(100,116,139,.18) 16px)"></div>
+  <div class="relative max-w-7xl mx-auto px-4 sm:px-6 py-6 text-center">
+    <p class="text-[10px] sm:text-[11px] font-bold uppercase tracking-widest text-slate-600 flex items-center justify-center gap-1.5"><i data-lucide="construction" class="w-3.5 h-3.5 text-slate-500"></i> Footer placeholder &middot; design pending</p>
+    <p class="text-[11px] text-slate-500 mt-2">&copy; 2026 SME South Africa</p>
+  </div>
+</footer>
+
+<!-- PLAYER MODAL -->
+<div id="playerModal" class="player-modal" onclick="if(event.target===this)closePlayer()">
+  <div class="player-wrap">
+    <button class="pl-close" onclick="closePlayer()"><i data-lucide="x" class="w-4 h-4"></i></button>
+    <div id="playerFrame" class="bg-[#0C1F31]" style="aspect-ratio:16/9;display:grid;place-items:center;color:#fff;text-align:center;padding:2rem;">
+      <div>
+        <i data-lucide="play-circle" class="w-14 h-14 mx-auto mb-3 text-[#DC183C]"></i>
+        <p class="font-jakarta font-extrabold text-xl">Player placeholder</p>
+        <p id="playerTitle" class="text-sm text-white/60 mt-1">Video plays here (YouTube/Vimeo/Mux embed at build).</p>
+      </div>
+    </div>
+    <div class="pl-meta">
+      <p id="playerMeta" class="text-[10px] font-bold uppercase tracking-widest text-[#FF9900] mb-1">Now playing</p>
+      <p id="playerName" class="font-jakarta font-extrabold">—</p>
+    </div>
+  </div>
+</div>
+
+<div id="overlay-root"></div>
+<div id="toast" class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-[95]"></div>
+
+<script>
+  function showToast(m){const el=document.getElementById('toast');el.classList.remove('hidden');el.innerHTML=`<div class="bg-[#0C1F31] text-white rounded-full pl-3 pr-5 py-2.5 shadow-2xl flex items-center gap-2 text-sm font-semibold" style="border-left:4px solid #29A37A"><i data-lucide="check-circle" class="w-4 h-4" style="color:#29A37A"></i><span>${m}</span></div>`;lucide.createIcons();setTimeout(()=>{el.classList.add('hidden');el.innerHTML='';},2400);}
+
+  const VIDEOS = [
+    {id:'replay',   type:'Replay',  topic:'Funding Summit',     title:'Founder pitches — three companies raising',        speaker:'Panel · Base Capital, 4Di, Angel Circle', event:'Funding Gala 2025', dur:'42:18', thumb:'https://images.unsplash.com/photo-1511795409834-ef04bbd61622'},
+    {id:'r2',       type:'Replay',  topic:'Business Planning',  title:'How to forecast growth on light data',            speaker:'Dr. Dineo Molefe',                       event:'Predictive Analytics Webinar', dur:'1:04:22', thumb:'https://images.unsplash.com/photo-1551288049-bebda4e38f71'},
+    {id:'r3',       type:'Replay',  topic:'Marketing',          title:'The Township Economy Playbook — panel',           speaker:'Sipho Ndlovu + panel',                   event:'Township Economy 2025',        dur:'56:00', thumb:'https://images.unsplash.com/photo-1600880292203-757bb62b4baf'},
+    {id:'r4',       type:'Keynote', topic:'Strategy',           title:'Alternative finance in 2025 — SEFA keynote',      speaker:'Sipho Mabaso',                           event:'Funding Summit 2025',          dur:'38:45', thumb:'https://images.unsplash.com/photo-1552664730-d307ca884978'},
+    {id:'r5',       type:'Replay',  topic:'Operations',         title:'Managing cash flow in a downturn',                speaker:'Karabo Kgophane',                        event:'Ops Roundtable',               dur:'48:03', thumb:'https://images.unsplash.com/photo-1554224155-6726b3ff858f'},
+    {id:'r6',       type:'Keynote', topic:'Tech & Innovation',  title:'AI for SA SMEs — where to actually start',        speaker:'Naledi Sithole',                         event:'Tech Summit 2025',             dur:'27:12', thumb:'https://images.unsplash.com/photo-1542744173-8e7e53415bb0'},
+    {id:'s1', type:'Short', topic:'Funding Summit',    title:'"Bring a specific ask." — Thandi Ngwenya',      speaker:'Thandi Ngwenya',   event:'Funding Gala 2025',    dur:'0:58', thumb:'https://images.unsplash.com/photo-1559523161-0fc0d8b38a7a'},
+    {id:'s2', type:'Short', topic:'Business Planning', title:'The one number every founder should track',     speaker:'Dineo Molefe',     event:'Analytics Webinar',    dur:'1:14', thumb:'https://images.unsplash.com/photo-1553729459-efe14ef6055d'},
+    {id:'s3', type:'Short', topic:'Marketing',         title:'Why paid ads aren\'t saving your SME',           speaker:'Karabo Kgophane',  event:'Marketing Summit',     dur:'0:47', thumb:'https://images.unsplash.com/photo-1611162617474-5b21e879e113'},
+    {id:'s4', type:'Short', topic:'Strategy',          title:'Township vs suburb pricing — 3 takeaways',      speaker:'Sipho Ndlovu',     event:'Township Economy 2025', dur:'1:02', thumb:'https://images.unsplash.com/photo-1522071820081-009f0129c71c'},
+    {id:'s5', type:'Short', topic:'Tech & Innovation', title:'One prompt that fixed my customer emails',      speaker:'Naledi Sithole',   event:'AI for SMEs',          dur:'0:52', thumb:'https://images.unsplash.com/photo-1505373877841-8d25f7d46678'}
+  ].map(v=> ({...v, thumb: v.thumb + '?auto=format&fit=crop&q=80&w=600'}));
+
+  const TYPES = ['All','Replay','Keynote','Short'];
+  let filterState = { type:'All', topic:'All', q:'' };
+
+  function renderTypeChips(){
+    document.getElementById('typeChips').innerHTML = TYPES.map(t=>{
+      const active = t===filterState.type;
+      return `<button onclick="setType('${t}')" class="shrink-0 px-4 py-2 rounded-full text-sm font-semibold border transition-colors ${active?'bg-[#DC183C] text-white border-[#DC183C]':'bg-white text-slate-600 border-[#E7EBEF] hover:bg-slate-50'}">${t}</button>`;
+    }).join('');
+  }
+  function setType(t){ filterState.type=t; renderTypeChips(); applyFilters(); }
+
+  function match(v){
+    if(filterState.type!=='All' && v.type!==filterState.type) return false;
+    if(filterState.topic!=='All' && v.topic!==filterState.topic) return false;
+    const q = filterState.q.toLowerCase();
+    if(q && !(`${v.title} ${v.speaker} ${v.event}`.toLowerCase().includes(q))) return false;
+    return true;
+  }
+
+  function renderReplays(){
+    const list = VIDEOS.filter(v=> v.type!=='Short').filter(match);
+    document.getElementById('replayCount').textContent = list.length;
+    document.getElementById('replaySection').style.display = list.length ? '' : 'none';
+    document.getElementById('replayGrid').innerHTML = list.map(v=>`
+      <article onclick="openPlayer('${v.id}')" class="video-card">
+        <div class="thumb">
+          <img src="${v.thumb}" alt="${v.title}" onerror="this.onerror=null;this.src='https://placehold.co/600x400/0C1F31/476472?text=Video'"/>
+          <span class="type-pill ${v.type==='Keynote'?'keynote':'replay'}">${v.type}</span>
+          <span class="duration">${v.dur}</span>
+          <span class="play"><i data-lucide="play" class="w-6 h-6" style="margin-left:2px"></i></span>
+        </div>
+        <div class="p-4">
+          <p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] mb-1">${v.topic}</p>
+          <h3 class="font-jakarta font-extrabold text-[#0C1F31] leading-tight">${v.title}</h3>
+          <p class="text-xs text-[#6A7581] mt-2 flex items-center gap-1.5"><i data-lucide="mic" class="w-3 h-3"></i> ${v.speaker}</p>
+          <p class="text-xs text-[#6A7581] mt-1 flex items-center gap-1.5"><i data-lucide="calendar" class="w-3 h-3"></i> ${v.event}</p>
+        </div>
+      </article>`).join('');
+  }
+
+  function renderShorts(){
+    const list = VIDEOS.filter(v=> v.type==='Short').filter(match);
+    document.getElementById('shortsCount').textContent = list.length;
+    document.getElementById('shortsSection').style.display = list.length ? '' : 'none';
+    document.getElementById('shortsRow').innerHTML = list.map(v=>`
+      <div onclick="openPlayer('${v.id}')" class="short-card">
+        <img src="${v.thumb}" alt="${v.title}" onerror="this.onerror=null;this.src='https://placehold.co/400x700/0C1F31/476472?text=Short'"/>
+        <span class="play-s"><i data-lucide="play" class="w-5 h-5 text-white" style="margin-left:2px"></i></span>
+        <div class="overlay">
+          <span class="text-[10px] font-bold uppercase tracking-widest text-[#FF9900] mb-1">${v.dur} · ${v.topic}</span>
+          <p class="font-jakarta font-extrabold text-sm leading-tight line-clamp-3">${v.title}</p>
+        </div>
+      </div>`).join('');
+  }
+
+  function applyFilters(){
+    filterState.q = document.getElementById('libSearch').value.trim();
+    filterState.topic = document.getElementById('topicSel').value;
+    renderReplays();
+    renderShorts();
+    // featured hides on non-'All' or search
+    document.getElementById('featuredWrap').style.display = (filterState.type==='All' && filterState.topic==='All' && !filterState.q) ? '' : 'none';
+    // empty state
+    const total = VIDEOS.filter(match).length;
+    document.getElementById('emptyState').classList.toggle('hidden', total>0);
+    lucide.createIcons();
+  }
+  function clearFilters(){
+    filterState = { type:'All', topic:'All', q:'' };
+    document.getElementById('libSearch').value='';
+    document.getElementById('topicSel').value='All';
+    renderTypeChips(); applyFilters();
+  }
+
+  function openPlayer(id){
+    const v = id==='featured'
+      ? { title:'The State of SA Funding — 2025 keynote', event:'Funding Gala · 27 Sep 2025' }
+      : (VIDEOS.find(x=>x.id===id) ? { title: VIDEOS.find(x=>x.id===id).title, event: VIDEOS.find(x=>x.id===id).event + ' · ' + VIDEOS.find(x=>x.id===id).dur } : null);
+    if(!v) return;
+    document.getElementById('playerName').textContent = v.title;
+    document.getElementById('playerTitle').textContent = 'Video plays here (YouTube/Vimeo/Mux embed at build).';
+    document.getElementById('playerMeta').textContent = v.event;
+    document.getElementById('playerModal').classList.add('open');
+    document.body.style.overflow='hidden';
+    lucide.createIcons();
+  }
+  function closePlayer(){ document.getElementById('playerModal').classList.remove('open'); document.body.style.overflow=''; }
+  document.addEventListener('keydown', e=>{ if(e.key==='Escape') closePlayer(); });
+
+  renderTypeChips(); applyFilters();
+
+  const BRIEF = {
+    title:'Event Library — Replays &amp; Shorts',
+    sub:'CPT <code>video_library</code> (or a taxonomy on past events)',
+    purpose:'A single browseable video library across all past events and webinars. Two content shapes: <b>full replays / keynote clips</b> (16:9) and <b>shorts</b> (9:16 vertical for social-native clips). Filter by type + topic; featured replay drives the top of the page when no filter is active.',
+    data:'Video (CPT <code>video_library</code>): <code>{ post_title, post_name, meta_type ("Replay"|"Keynote"|"Short"), meta_topic (taxonomy), meta_speaker, meta_event_ref (parent event), meta_duration_seconds, meta_thumb, meta_source ("youtube"|"vimeo"|"mux"), meta_source_id, meta_transcript?, meta_slides_url? }</code>. Featured flag on one replay drives the hero.',
+    logic:'Template = <code>archive-video-library.php</code>. Type chips + topic select + text search filter client-side against a full pre-rendered list. Player modal loads the source iframe on click (YouTube/Vimeo/Mux privacy-mode embed). Shorts open in the same modal but the wrap swaps to 9:16 aspect ratio. Photos live in <code>event-gallery.html</code> — a callout at the bottom points people there when they land here looking for images.',
+    components:'Hero (breadcrumb + eyebrow + title + subtitle + big search) · Sticky filter bar (type chips + topic select) · Featured replay (16:9 card + side copy + CTA) · Full replays grid (3-col lg card with thumb + type/duration pills + title + speaker + event) · Shorts row (vertical 9:16 cards, 5-col lg, overlay gradient text) · Empty state · Pointer to Event Gallery for photos · Player modal (16:9 or 9:16 iframe placeholder).',
+    specs:'<b>Video card:</b> rounded-2xl border #E7EBEF hover shadow + translateY(-3px). Thumb aspect 16/9, hover img scale 1.05. Play pill 56×56 rounded-full #DC183C/95 shadow, hover scale 1.08. Duration pill bottom-right rgba(0,0,0,.75) 11.5px Jakarta 700 white. Type pill top-left: replay (#DC183C/95 white), keynote (white/90 #0C1F31), short (#FF9900/95 #0C1F31).<br/><b>Short card:</b> aspect 9/16 rounded-2xl bg #0C1F31. Play 44×44 centered white/15 backdrop-blur. Overlay gradient from transparent 40% → rgba(0,0,0,.85). Meta pill 10px uppercase #FF9900; title Jakarta 800 14px line-clamp-3.<br/><b>Filter bar:</b> sticky top-0 white/95 backdrop-blur py-3 border-b #E7EBEF. Type chips h-9 rounded-full same as events archive. Topic select h-9 px-3 rounded-lg border #E7EBEF.<br/><b>Featured:</b> 2-col lg 1.4fr/1fr. Left = 16/9 thumb, right = eyebrow + Plus Jakarta 800 24/32px title + slate-500 body + primary + save CTAs.<br/><b>Player modal:</b> rgba(0,0,0,.92) fullscreen. Wrap max-w-900 rounded-2xl bg #0C1F31. 16/9 embed. Close 36×36 top-right rgba(0,0,0,.5). Meta strip below: eyebrow 10px uppercase #FF9900 + Jakarta 800 title white.'
+  };
+
+  function toggleDevMode(){const on=document.body.classList.toggle('dev-on');const b=document.getElementById('devToggle');if(b)b.classList.toggle('on',on);lucide.createIcons();}
+  function closeOverlay(id){const el=document.getElementById(id);if(!el)return;el.classList.remove('open');setTimeout(()=>{if(el&&el.parentNode)el.remove();},300);}
+  function openBrief(){
+    const b=BRIEF;
+    const sec=(i,l,h)=>`<div class="px-6 py-4 border-t border-slate-100"><p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] flex items-center gap-1.5 mb-2"><i data-lucide="${i}" class="w-3.5 h-3.5"></i>${l}</p><div class="text-sm text-slate-600 leading-relaxed">${h}</div></div>`;
+    document.getElementById('overlay-root').innerHTML=`<div class="ov" id="ov"><div class="ov-bg" onclick="closeOverlay('ov')"></div><div class="drawer"><div class="sticky top-0 z-10 bg-[#0C1F31] text-white px-6 py-5 flex items-start justify-between"><div><p class="text-[10px] font-bold uppercase tracking-widest text-[#FF9900] mb-1">Dev Brief</p><h3 class="font-jakarta font-extrabold text-lg leading-tight">${b.title}</h3><p class="text-xs text-white/60 mt-1">${b.sub}</p></div><button onclick="closeOverlay('ov')" class="text-white/60 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button></div>${sec('target','Purpose',b.purpose)}${sec('database','Data model',b.data)}${sec('git-branch','Logic',b.logic)}${sec('boxes','Components',b.components)}${sec('ruler','Spec values',b.specs)}</div></div>`;
+    requestAnimationFrame(()=>{const o=document.getElementById('ov');if(o)o.classList.add('open');});
+    lucide.createIcons();
+  }
+
+  lucide.createIcons();
+</script>
+</body>
+</html>

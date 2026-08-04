@@ -51,6 +51,10 @@ window.MOCKUP_STATUS = {
   "forums.html": "under-review",
   "member-account.html": "under-review",
   "events.html": "under-review",
+  "event-single-in-person.html": "under-review",
+  "event-single-online.html": "under-review",
+  "event-library.html": "under-review",
+  "event-gallery.html": "under-review",
   "newsletter.html": "finalised",
   "newsletter-issue.html": "finalised",
   "podcast.html": "finalised",
@@ -89,6 +93,8 @@ window.MOCKUP_DEV = {
   "public-brand.html": {"url":"https://smesastg.wpengine.com/brands/partnerstack/","status":"pending-review"},
   "public-guides.html": {"url":"https://smesastg.wpengine.com/sme-resources/guides/","status":"reviewed"},
   "public-guide.html": {"url":"https://smesastg.wpengine.com/sme-resource/test-guide/","status":"reviewed"},
+  "public-glossary.html": {"url":"https://smesouthafrica.co.za/glossary/","status":"pending-review"},
+  "public-glossary-term.html": {"url":"https://smesouthafrica.co.za/glossary/revenue-streams/","status":"pending-review"},
   "public-shop.html": {"url":"https://smesouthafrica.co.za/shop/","status":""},
   "public-about.html": {"url":"https://smesastg.wpengine.com/about/","status":"reviewed"},
   "public-contact.html": {"url":"https://smesastg.wpengine.com/contact-us/","status":"reviewed"},
@@ -101,6 +107,5 @@ window.MOCKUP_DEV = {
 };
 /* Group overrides — { mockup file: "Group name" }; overrides default NAV grouping in index.html */
 window.MOCKUP_GROUPS = {
-  "podcast.html": "Public site",
-  "public-funding-summit-category.html": "Content modules"
+  "podcast.html": "Public site"
 };
