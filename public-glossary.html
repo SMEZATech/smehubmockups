@@ -52,14 +52,13 @@
 
 <!-- HERO -->
 <section class="hero-bg text-white relative overflow-hidden"><div class="absolute inset-0 dot-pattern opacity-70 pointer-events-none"></div>
-  <div class="max-w-3xl mx-auto px-4 sm:px-6 py-14 sm:py-16 relative text-center">
-    <nav aria-label="Breadcrumb" class="text-xs text-white/55 flex items-center flex-wrap gap-x-1.5 mb-4 justify-center"><a href="public-home.html" class="hover:text-white transition">Home</a><span class="text-white/30">›</span><span class="text-white/85 font-medium truncate">Glossary</span></nav>
-    <p class="inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-widest text-[#FF9900] mb-3"><i data-lucide="book-marked" class="w-3.5 h-3.5"></i> Glossary</p>
-    <h1 class="font-jakarta font-extrabold text-3xl sm:text-[2.6rem] leading-tight">Business Terms Glossary
+  <div class="max-w-3xl mx-auto px-4 sm:px-6 py-10 sm:py-12 relative text-center">
+    <nav aria-label="Breadcrumb" class="text-xs text-white/55 flex items-center flex-wrap gap-x-1.5 mb-3 justify-center"><a href="public-home.html" class="hover:text-white transition">Home</a><span class="text-white/30">›</span><span class="text-white/85 font-medium truncate">Glossary</span></nav>
+    <h1 class="font-jakarta font-extrabold text-3xl sm:text-[2.6rem] leading-tight">Business Terms <span class="bg-gradient-to-r from-[#DC183C] to-[#FF9900] bg-clip-text text-transparent">Glossary</span>
       <button onclick="openBrief()" class="dev-badge align-middle ml-1 w-6 h-6 rounded-full bg-[#FF9900] text-[#0C1F31] items-center justify-center text-[11px] font-bold">i</button>
     </h1>
     <p class="mt-3 text-white/70 max-w-xl mx-auto">Plain-English definitions of the business, funding, legal and marketing terms every South African SME owner should know.</p>
-    <form onsubmit="return false" class="mt-7 relative max-w-2xl mx-auto">
+    <form onsubmit="return false" class="mt-6 relative max-w-2xl mx-auto">
       <i data-lucide="search" class="w-5 h-5 absolute left-5 top-1/2 -translate-y-1/2 text-[#6A7581]"></i>
       <input id="termSearch" oninput="filterTerms()" class="w-full h-14 rounded-full bg-white text-[#121A21] pl-13 pr-32 text-[15px] outline-none shadow-xl focus:ring-4 focus:ring-[#DC183C]/25 transition" style="padding-left:3.25rem" placeholder="Search a term, e.g. “SWOT”, “bootstrapping”…" />
       <button type="button" id="clearBtn" onclick="clearSearch()" class="hidden absolute right-2 top-1/2 -translate-y-1/2 inline-flex items-center gap-1.5 h-10 px-4 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-sm transition">Clear <i data-lucide="x" class="w-4 h-4"></i></button>
@@ -93,11 +92,34 @@
         <div class="w-12 h-12 rounded-2xl bg-white/10 grid place-items-center mx-auto mb-4"><i data-lucide="lightbulb" class="w-6 h-6 text-[#FF9900]"></i></div>
         <h2 class="font-jakarta font-extrabold text-2xl">Term you couldn't find?</h2>
         <p class="text-white/70 mt-2 max-w-md mx-auto">Suggest a business term and we'll add a plain-English definition to the glossary.</p>
-        <a href="public-contact.html" class="inline-flex items-center gap-2 mt-5 h-12 px-6 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold transition">Suggest a term <i data-lucide="send" class="w-4 h-4"></i></a>
+        <button onclick="openSuggestModal()" class="inline-flex items-center gap-2 mt-5 h-12 px-6 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold transition">Suggest a term <i data-lucide="send" class="w-4 h-4"></i></button>
       </div>
     </div>
   </section>
 </main>
+
+<!-- SUGGEST A TERM MODAL -->
+<div id="suggestModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4">
+  <div class="absolute inset-0 bg-[#0C1F31]/60 backdrop-blur-sm" onclick="closeSuggestModal()"></div>
+  <div class="relative bg-white rounded-3xl w-full max-w-md shadow-2xl p-6 sm:p-8 z-10 transform scale-95 opacity-0 transition-all duration-200" id="suggestModalContent">
+    <div class="flex items-start justify-between mb-5">
+      <div>
+        <h3 class="font-jakarta font-extrabold text-xl text-[#0C1F31]">Suggest a term</h3>
+        <p class="text-sm text-[#6A7581] mt-1">Help us expand the SME glossary.</p>
+      </div>
+      <button onclick="closeSuggestModal()" class="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 hover:bg-slate-200 hover:text-slate-800 transition">
+        <i data-lucide="x" class="w-4 h-4"></i>
+      </button>
+    </div>
+    <form onsubmit="submitSuggestForm(event)" class="space-y-4">
+      <div><label class="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1.5">Term Name</label><input required class="w-full bg-white border border-[#E7EBEF] rounded-xl h-11 px-3.5 text-sm outline-none focus:border-[#DC183C] focus:ring-2 focus:ring-[#DC183C]/10 transition" placeholder="e.g. Mezzanine Financing" /></div>
+      <div><label class="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1.5">Your Name</label><input required class="w-full bg-white border border-[#E7EBEF] rounded-xl h-11 px-3.5 text-sm outline-none focus:border-[#DC183C] focus:ring-2 focus:ring-[#DC183C]/10 transition" placeholder="Thabo Mokoena" /></div>
+      <div><label class="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1.5">Email Address</label><input type="email" required class="w-full bg-white border border-[#E7EBEF] rounded-xl h-11 px-3.5 text-sm outline-none focus:border-[#DC183C] focus:ring-2 focus:ring-[#DC183C]/10 transition" placeholder="you@business.co.za" /></div>
+      <div><label class="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1.5">Job Position</label><input required class="w-full bg-white border border-[#E7EBEF] rounded-xl h-11 px-3.5 text-sm outline-none focus:border-[#DC183C] focus:ring-2 focus:ring-[#DC183C]/10 transition" placeholder="e.g. Founder, CEO" /></div>
+      <button type="submit" class="w-full h-12 mt-2 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold text-sm transition flex items-center justify-center gap-2 shadow-md">Submit suggestion <i data-lucide="send" class="w-4 h-4"></i></button>
+    </form>
+  </div>
+</div>
 
 <footer class="bg-slate-100 border-t-2 border-dashed border-slate-400 relative overflow-hidden">
   <div class="absolute inset-0 opacity-30 pointer-events-none" style="background:repeating-linear-gradient(45deg,transparent,transparent 8px,rgba(100,116,139,.18) 8px,rgba(100,116,139,.18) 16px)"></div>
@@ -110,9 +132,37 @@
   </div>
 </footer>
 
+<div id="toast" class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-[70]"></div>
 <div id="overlay-root"></div>
 <script>
   function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+  function showToast(m){const el=document.getElementById('toast');el.classList.remove('hidden');el.innerHTML=`<div class="bg-[#0C1F31] text-white rounded-full pl-3 pr-5 py-2.5 shadow-2xl flex items-center gap-2 text-sm font-semibold" style="border-left:4px solid #29A37A"><i data-lucide="check-circle" class="w-4 h-4" style="color:#29A37A"></i><span>${esc(m)}</span></div>`;lucide.createIcons();setTimeout(()=>{el.classList.add('hidden');el.innerHTML='';},3000);}
+
+  function openSuggestModal() {
+    const modal = document.getElementById('suggestModal');
+    const content = document.getElementById('suggestModalContent');
+    modal.classList.remove('hidden');
+    requestAnimationFrame(() => {
+      content.classList.remove('scale-95', 'opacity-0');
+      content.classList.add('scale-100', 'opacity-100');
+    });
+  }
+
+  function closeSuggestModal() {
+    const modal = document.getElementById('suggestModal');
+    const content = document.getElementById('suggestModalContent');
+    content.classList.remove('scale-100', 'opacity-100');
+    content.classList.add('scale-95', 'opacity-0');
+    setTimeout(() => { modal.classList.add('hidden'); }, 200);
+  }
+
+  function submitSuggestForm(e) {
+    e.preventDefault();
+    closeSuggestModal();
+    e.target.reset();
+    showToast('Thanks! Your term suggestion has been submitted.');
+  }
+
   function slugify(s){return String(s).toLowerCase().replace(/&/g,'and').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');}
 
   // Seed terms — mirrors the live /glossary/ CPT set + realistic SA-SME coverage.
@@ -169,7 +219,6 @@
     <section id="letter-${L}" class="letter-heading" data-letter="${L}">
       <div class="flex items-baseline gap-3 mb-4 pb-2 border-b border-[#E7EBEF]">
         <h2 class="font-jakarta font-extrabold text-3xl text-[#DC183C]">${L}</h2>
-        <span class="text-xs font-bold uppercase tracking-widest text-[#6A7581]">${grouped[L].length} term${grouped[L].length===1?'':'s'}</span>
       </div>
       <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-1">
         ${grouped[L].map(t=>{

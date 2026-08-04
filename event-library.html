@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>Event Library — Replays &amp; Shorts — SME South Africa</title>
-  <meta name="description" content="Watch full replays, keynote clips and short highlights from past SME South Africa events and webinars." />
+  <title>Event Library — Presentations &amp; Photos — SME South Africa</title>
+  <meta name="description" content="Watch keynote and speaker presentations, and browse photo galleries from past SME South Africa events." />
   <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <script src="https://cdn.tailwindcss.com"></script><script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
@@ -13,7 +13,7 @@
     .hero-bg{background:linear-gradient(115deg,#0C1F31 0%,#0C1F31 50%,#2b1626 80%,#5e1a2c 115%);}
     .dot-pattern{background-image:radial-gradient(rgba(255,255,255,.07) 1px,transparent 1.5px);background-size:22px 22px;}
     .no-scrollbar::-webkit-scrollbar{display:none} .no-scrollbar{-ms-overflow-style:none;scrollbar-width:none;}
-    .video-card{background:#fff;border:1px solid #E7EBEF;border-radius:1rem;overflow:hidden;transition:all .25s;cursor:pointer;}
+    .video-card{background:#fff;border:1px solid #E7EBEF;border-radius:1rem;overflow:hidden;transition:all .25s;cursor:pointer;display:block;color:inherit;}
     .video-card:hover{box-shadow:0 14px 30px -12px rgba(10,44,61,.22);transform:translateY(-3px);}
     .thumb{position:relative;background:#0C1F31;overflow:hidden;aspect-ratio:16/9;}
     .thumb img{width:100%;height:100%;object-fit:cover;transition:transform .5s;}
@@ -21,22 +21,26 @@
     .thumb .play{position:absolute;inset:0;margin:auto;width:56px;height:56px;border-radius:999px;background:rgba(220,24,60,.95);color:#fff;display:grid;place-items:center;transition:transform .25s;box-shadow:0 8px 30px rgba(0,0,0,.4);}
     .video-card:hover .thumb .play{transform:scale(1.08);}
     .thumb .duration{position:absolute;bottom:.55rem;right:.55rem;background:rgba(0,0,0,.75);color:#fff;padding:.15rem .5rem;border-radius:.4rem;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:.72rem;}
-    .thumb .type-pill{position:absolute;top:.55rem;left:.55rem;padding:.2rem .55rem;border-radius:999px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:.65rem;letter-spacing:.06em;text-transform:uppercase;}
-    .thumb .type-pill.replay{background:rgba(220,24,60,.95);color:#fff;}
-    .thumb .type-pill.short{background:rgba(255,153,0,.95);color:#0C1F31;}
-    .thumb .type-pill.keynote{background:rgba(255,255,255,.9);color:#0C1F31;}
-    .short-card{aspect-ratio:9/16;background:#0C1F31;border-radius:1rem;overflow:hidden;position:relative;cursor:pointer;transition:transform .25s;}
-    .short-card:hover{transform:translateY(-3px);}
-    .short-card img{width:100%;height:100%;object-fit:cover;}
-    .short-card .overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0) 40%,rgba(0,0,0,.85) 100%);color:#fff;display:flex;flex-direction:column;justify-content:flex-end;padding:.85rem;}
-    .short-card .play-s{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:44px;height:44px;border-radius:999px;background:rgba(255,255,255,.15);backdrop-filter:blur(6px);display:grid;place-items:center;}
-    /* Player modal */
-    .player-modal{position:fixed;inset:0;z-index:80;background:rgba(0,0,0,.92);display:none;align-items:center;justify-content:center;padding:1rem;}
-    .player-modal.open{display:flex;}
-    .player-modal .player-wrap{width:100%;max-width:900px;background:#0C1F31;border-radius:1rem;overflow:hidden;position:relative;}
-    .player-modal iframe{width:100%;aspect-ratio:16/9;display:block;border:0;}
-    .player-modal .pl-close{position:absolute;top:.75rem;right:.75rem;width:36px;height:36px;background:rgba(0,0,0,.5);color:#fff;border-radius:999px;display:grid;place-items:center;cursor:pointer;z-index:2;}
-    .player-modal .pl-meta{padding:1rem 1.25rem;color:#fff;}
+    .tab-btn{padding:.55rem 1.1rem;border-radius:.75rem;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:.85rem;transition:all .15s;background:#fff;color:#4a5563;border:1px solid #E7EBEF;display:inline-flex;align-items:center;gap:.5rem;}
+    .tab-btn.active{background:#0C1F31;color:#fff;border-color:#0C1F31;}
+    .tab-btn.active .tail{background:rgba(255,255,255,.16);color:#fff;}
+    .tab-btn .tail{background:#F1F4F7;color:#6A7581;font-size:.7rem;padding:.1rem .45rem;border-radius:999px;font-weight:700;}
+    /* Photos masonry */
+    .masonry{column-count:1;column-gap:1rem;}
+    @media (min-width:640px){ .masonry{column-count:2;} }
+    @media (min-width:1024px){ .masonry{column-count:3;} }
+    .masonry .photo{break-inside:avoid;margin-bottom:1rem;border-radius:1rem;overflow:hidden;position:relative;cursor:zoom-in;background:#0C1F31;}
+    .masonry .photo img{width:100%;display:block;transition:transform .5s;}
+    .masonry .photo:hover img{transform:scale(1.04);}
+    .masonry .photo .zoom{position:absolute;top:.6rem;right:.6rem;width:32px;height:32px;background:rgba(0,0,0,.5);color:#fff;border-radius:999px;display:grid;place-items:center;opacity:0;transition:opacity .2s;}
+    .masonry .photo:hover .zoom{opacity:1;}
+    .lightbox{position:fixed;inset:0;z-index:80;background:rgba(0,0,0,.92);display:none;align-items:center;justify-content:center;padding:1rem;}
+    .lightbox.open{display:flex;}
+    .lightbox img{max-width:96vw;max-height:88vh;border-radius:.75rem;}
+    .lightbox .lb-btn{position:absolute;top:1.25rem;right:1.25rem;width:44px;height:44px;background:rgba(255,255,255,.1);color:#fff;border-radius:999px;display:grid;place-items:center;cursor:pointer;}
+    .lightbox .lb-prev,.lightbox .lb-next{position:absolute;top:50%;transform:translateY(-50%);width:52px;height:52px;background:rgba(255,255,255,.1);color:#fff;border-radius:999px;display:grid;place-items:center;cursor:pointer;}
+    .lightbox .lb-prev{left:1.5rem;} .lightbox .lb-next{right:1.5rem;}
+    .lightbox .caption{position:absolute;bottom:1.5rem;left:50%;transform:translateX(-50%);color:#fff;font-size:.9rem;background:rgba(0,0,0,.5);padding:.5rem 1rem;border-radius:999px;}
     .dev-badge{display:none;} body.dev-on .dev-badge{display:inline-flex;} #devToggle.on{background:#DC183C;color:#fff;border-color:#DC183C;}
     .ov{position:fixed;inset:0;z-index:90;} .ov-bg{position:absolute;inset:0;background:rgba(12,31,49,.45);backdrop-filter:blur(2px);opacity:0;transition:opacity .3s;} .ov.open .ov-bg{opacity:1;}
     .drawer{position:absolute;right:0;top:0;height:100%;width:100%;max-width:440px;background:#fff;box-shadow:-12px 0 40px rgba(12,31,49,.25);overflow-y:auto;transform:translateX(100%);transition:transform .3s cubic-bezier(.2,.7,.2,1);} .ov.open .drawer{transform:translateX(0);}
@@ -64,97 +68,86 @@
   <div class="absolute inset-0 dot-pattern opacity-70 pointer-events-none"></div>
   <div class="max-w-[1200px] mx-auto px-4 sm:px-6 py-12 relative">
     <nav aria-label="Breadcrumb" class="text-xs text-white/55 flex items-center flex-wrap gap-x-1.5 mb-4"><a href="public-home.html" class="hover:text-white transition">Home</a><span class="text-white/30">›</span><a href="events.html" class="hover:text-white transition">Events</a><span class="text-white/30">›</span><span class="text-white/85 font-medium truncate">Library</span></nav>
-    <p class="inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-widest text-[#FF9900] mb-3"><i data-lucide="play-circle" class="w-3.5 h-3.5"></i> Replays &amp; shorts</p>
+    <p class="inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-widest text-[#FF9900] mb-3"><i data-lucide="library" class="w-3.5 h-3.5"></i> Event Library</p>
     <h1 class="font-jakarta font-extrabold text-3xl sm:text-5xl leading-[1.05] tracking-tight">Event Library
       <button onclick="openBrief()" class="dev-badge align-middle ml-2 w-7 h-7 rounded-full bg-[#FF9900] text-[#0C1F31] items-center justify-center text-[12px] font-bold">i</button>
     </h1>
-    <p class="mt-3 text-white/70 max-w-2xl text-lg">Watch full replays of past webinars and summits, or grab the 60-second shorts from the keynote highlights.</p>
+    <p class="mt-3 text-white/70 max-w-2xl text-lg">Watch keynote and speaker presentations from past events, and browse the photo albums from every in-person summit.</p>
     <form onsubmit="return false" class="mt-6 relative max-w-lg">
       <i data-lucide="search" class="w-5 h-5 absolute left-4 top-1/2 -translate-y-1/2 text-white/60"></i>
-      <input id="libSearch" oninput="applyFilters()" placeholder="Search by title, speaker, topic…" class="w-full h-12 rounded-full bg-white/10 border border-white/20 pl-11 pr-4 text-white placeholder:text-white/50 outline-none focus:border-[#FF9900]" />
+      <input id="libSearch" oninput="applyFilters()" placeholder="Search by title, speaker or event…" class="w-full h-12 rounded-full bg-white/10 border border-white/20 pl-11 pr-4 text-white placeholder:text-white/50 outline-none focus:border-[#FF9900]" />
     </form>
   </div>
 </section>
 
-<!-- STICKY FILTER BAR -->
+<!-- STICKY TAB + FILTER BAR -->
 <div class="sticky top-0 z-30 bg-white/95 backdrop-blur border-b border-[#E7EBEF]">
   <div class="max-w-[1200px] mx-auto px-4 sm:px-6 py-3 flex flex-col md:flex-row md:items-center gap-3">
-    <div id="typeChips" class="flex items-center gap-2 overflow-x-auto no-scrollbar"></div>
-    <div class="md:ml-auto flex items-center gap-2 overflow-x-auto no-scrollbar">
-      <span class="text-xs font-bold uppercase tracking-wider text-slate-400 shrink-0">Topic</span>
-      <select id="topicSel" onchange="applyFilters()" class="h-9 px-3 rounded-lg border border-[#E7EBEF] bg-white text-sm font-semibold text-slate-700">
-        <option value="All">All topics</option><option>Funding Summit</option><option>Tech &amp; Innovation</option><option>Business Planning</option><option>Strategy</option><option>Marketing</option><option>Operations</option>
-      </select>
+    <div class="flex items-center gap-2">
+      <button onclick="setTab('videos')" id="tab-videos" class="tab-btn active"><i data-lucide="play-circle" class="w-4 h-4"></i> Presentations <span class="tail" id="videosCount">–</span></button>
+      <button onclick="setTab('photos')" id="tab-photos" class="tab-btn"><i data-lucide="images" class="w-4 h-4"></i> Photos <span class="tail" id="photosCount">–</span></button>
     </div>
+    <div id="filterRow" class="md:ml-auto flex items-center gap-2 overflow-x-auto no-scrollbar"></div>
   </div>
 </div>
 
 <main class="max-w-[1200px] mx-auto px-4 sm:px-6 py-10">
-  <!-- FEATURED REPLAY -->
-  <section id="featuredWrap" class="mb-14">
-    <p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] mb-3">Featured replay</p>
-    <div class="grid lg:grid-cols-[1.4fr,1fr] gap-6">
-      <div onclick="openPlayer('featured')" class="video-card">
-        <div class="thumb" style="aspect-ratio:16/9;">
-          <img src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&q=80&w=1200" alt="Featured replay thumbnail" />
-          <span class="type-pill replay">Full replay</span>
-          <span class="duration">1:12:04</span>
-          <span class="play"><i data-lucide="play" class="w-6 h-6" style="margin-left:2px"></i></span>
+
+  <!-- VIDEOS TAB -->
+  <div id="videosPane">
+    <section id="featuredWrap" class="mb-14">
+      <p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] mb-3">Featured presentation</p>
+      <div class="grid lg:grid-cols-[1.4fr,1fr] gap-6">
+        <a href="event-presentation.html" class="video-card">
+          <div class="thumb" style="aspect-ratio:16/9;">
+            <img src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&q=80&w=1200" alt="Featured presentation thumbnail" />
+            <span class="duration">42:18</span>
+            <span class="play"><i data-lucide="play" class="w-6 h-6" style="margin-left:2px"></i></span>
+          </div>
+        </a>
+        <div class="flex flex-col justify-center">
+          <p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] mb-2">Keynote · Funding Summit 2025</p>
+          <h2 class="font-jakarta font-extrabold text-2xl sm:text-3xl leading-tight text-[#0C1F31]">The State of SA Funding — 2025 keynote</h2>
+          <p class="text-[#6A7581] mt-3 leading-relaxed">Dr. Dineo Molefe unpacks where the R2.3 billion in SME funding actually landed in 2025, and which sectors saw the biggest movement.</p>
+          <div class="flex items-center gap-3 mt-5">
+            <a href="event-presentation.html" class="inline-flex items-center gap-1.5 h-11 px-5 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold text-sm transition">Watch presentation <i data-lucide="play" class="w-4 h-4"></i></a>
+            <button onclick="showToast('Added to your watchlist.')" class="inline-flex items-center gap-1.5 h-11 px-5 rounded-full bg-slate-100 hover:bg-slate-200 text-[#121A21] font-bold text-sm transition"><i data-lucide="bookmark" class="w-4 h-4"></i> Save</button>
+          </div>
         </div>
       </div>
-      <div class="flex flex-col justify-center">
-        <p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] mb-2">Funding Summit · 27 Sep 2025</p>
-        <h2 class="font-jakarta font-extrabold text-2xl sm:text-3xl leading-tight text-[#0C1F31]">The State of SA Funding — 2025 keynote</h2>
-        <p class="text-[#6A7581] mt-3 leading-relaxed">Dineo Molefe unpacks where the R2.3 billion in SME funding actually landed in 2025, and which sectors saw the biggest movement.</p>
-        <div class="flex items-center gap-3 mt-5">
-          <button onclick="openPlayer('featured')" class="inline-flex items-center gap-1.5 h-11 px-5 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold text-sm transition">Watch full replay <i data-lucide="play" class="w-4 h-4"></i></button>
-          <button onclick="showToast('Added to your watchlist.')" class="inline-flex items-center gap-1.5 h-11 px-5 rounded-full bg-slate-100 hover:bg-slate-200 text-[#121A21] font-bold text-sm transition"><i data-lucide="bookmark" class="w-4 h-4"></i> Save</button>
-        </div>
+    </section>
+
+    <section id="videosSection" class="mb-8">
+      <div class="flex items-baseline justify-between mb-5">
+        <h2 class="font-jakarta font-extrabold text-2xl text-[#0C1F31]">All presentations</h2>
+        <p class="text-sm text-[#6A7581]"><span id="videosCountBody">–</span> videos</p>
       </div>
-    </div>
-  </section>
+      <div id="videoGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+    </section>
+  </div>
 
-  <!-- REPLAY GRID -->
-  <section id="replaySection" class="mb-14">
-    <div class="flex items-baseline justify-between mb-5">
-      <h2 class="font-jakarta font-extrabold text-2xl text-[#0C1F31]">Full replays</h2>
-      <p class="text-sm text-[#6A7581]"><span id="replayCount">–</span> videos</p>
-    </div>
-    <div id="replayGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
-  </section>
-
-  <!-- SHORTS -->
-  <section id="shortsSection" class="mb-14">
+  <!-- PHOTOS TAB -->
+  <div id="photosPane" class="hidden">
     <div class="flex items-baseline justify-between mb-5">
       <div>
-        <h2 class="font-jakarta font-extrabold text-2xl text-[#0C1F31]">Shorts &amp; keynote clips</h2>
-        <p class="text-sm text-[#6A7581] mt-1">Vertical 60-second clips for the road.</p>
+        <h2 class="font-jakarta font-extrabold text-2xl text-[#0C1F31]" id="photosHeading">Funding Summit 2026 · Photos</h2>
+        <p class="text-sm text-[#6A7581] mt-1" id="photosSub">Photos from the 25 September 2026 summit</p>
       </div>
-      <p class="text-sm text-[#6A7581]"><span id="shortsCount">–</span> shorts</p>
+      <div class="flex items-center gap-2">
+        <button onclick="downloadAlbum()" class="inline-flex items-center gap-1.5 h-10 px-4 rounded-full bg-[#0C1F31] hover:bg-[#091621] text-white font-bold text-sm transition"><i data-lucide="download" class="w-4 h-4"></i> Album</button>
+        <button onclick="shareAlbum()" class="inline-flex items-center gap-1.5 h-10 px-4 rounded-full bg-slate-100 hover:bg-slate-200 text-[#121A21] font-bold text-sm transition"><i data-lucide="share-2" class="w-4 h-4"></i> Share</button>
+      </div>
     </div>
-    <div id="shortsRow" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4"></div>
-  </section>
+    <div id="masonry" class="masonry"></div>
+  </div>
 
   <!-- EMPTY STATE -->
   <div id="emptyState" class="hidden text-center py-16 bg-white border border-dashed border-[#E7EBEF] rounded-2xl">
     <div class="w-14 h-14 rounded-2xl bg-[#FDECEF] grid place-items-center mx-auto mb-4"><i data-lucide="search-x" class="w-6 h-6 text-[#DC183C]"></i></div>
-    <p class="font-jakarta font-extrabold text-lg text-[#0C1F31]">No videos match your search</p>
+    <p class="font-jakarta font-extrabold text-lg text-[#0C1F31]">No results match your search</p>
     <p class="text-sm text-[#6A7581] mt-2 max-w-sm mx-auto">Try a different keyword or clear the filters.</p>
-    <button onclick="clearFilters()" class="mt-5 inline-flex items-center gap-1.5 h-10 px-5 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold text-sm transition">Clear filters</button>
+    <button onclick="clearAll()" class="mt-5 inline-flex items-center gap-1.5 h-10 px-5 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold text-sm transition">Clear</button>
   </div>
-
-  <!-- LINK TO PHOTO GALLERIES -->
-  <section class="mt-16">
-    <div class="rounded-3xl bg-white border border-[#E7EBEF] p-8 flex flex-col sm:flex-row items-center gap-6 sm:gap-8">
-      <div class="w-16 h-16 rounded-2xl bg-[#FFF1E0] grid place-items-center shrink-0"><i data-lucide="images" class="w-8 h-8 text-[#AE6B0A]"></i></div>
-      <div class="flex-1 text-center sm:text-left">
-        <p class="text-[10px] font-bold uppercase tracking-widest text-[#AE6B0A] mb-1">Looking for photos?</p>
-        <h3 class="font-jakarta font-extrabold text-xl text-[#0C1F31]">Photo galleries live in the Event Gallery</h3>
-        <p class="text-sm text-[#6A7581] mt-1 leading-relaxed max-w-lg">Every past event has its own photo album — download or share.</p>
-      </div>
-      <a href="event-gallery.html" class="inline-flex items-center gap-1.5 h-11 px-5 rounded-full bg-[#0C1F31] hover:bg-[#091621] text-white font-bold text-sm transition shrink-0">Open galleries <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
-    </div>
-  </section>
 </main>
 
 <footer class="bg-slate-100 border-t-2 border-dashed border-slate-400 relative overflow-hidden">
@@ -165,22 +158,13 @@
   </div>
 </footer>
 
-<!-- PLAYER MODAL -->
-<div id="playerModal" class="player-modal" onclick="if(event.target===this)closePlayer()">
-  <div class="player-wrap">
-    <button class="pl-close" onclick="closePlayer()"><i data-lucide="x" class="w-4 h-4"></i></button>
-    <div id="playerFrame" class="bg-[#0C1F31]" style="aspect-ratio:16/9;display:grid;place-items:center;color:#fff;text-align:center;padding:2rem;">
-      <div>
-        <i data-lucide="play-circle" class="w-14 h-14 mx-auto mb-3 text-[#DC183C]"></i>
-        <p class="font-jakarta font-extrabold text-xl">Player placeholder</p>
-        <p id="playerTitle" class="text-sm text-white/60 mt-1">Video plays here (YouTube/Vimeo/Mux embed at build).</p>
-      </div>
-    </div>
-    <div class="pl-meta">
-      <p id="playerMeta" class="text-[10px] font-bold uppercase tracking-widest text-[#FF9900] mb-1">Now playing</p>
-      <p id="playerName" class="font-jakarta font-extrabold">—</p>
-    </div>
-  </div>
+<!-- LIGHTBOX -->
+<div id="lightbox" class="lightbox" onclick="if(event.target===this)closeLightbox()">
+  <button class="lb-btn" onclick="closeLightbox()"><i data-lucide="x" class="w-5 h-5"></i></button>
+  <button class="lb-prev" onclick="navLightbox(-1)"><i data-lucide="chevron-left" class="w-5 h-5"></i></button>
+  <button class="lb-next" onclick="navLightbox(1)"><i data-lucide="chevron-right" class="w-5 h-5"></i></button>
+  <img id="lbImg" src="" alt="" />
+  <p id="lbCaption" class="caption"></p>
 </div>
 
 <div id="overlay-root"></div>
@@ -189,119 +173,168 @@
 <script>
   function showToast(m){const el=document.getElementById('toast');el.classList.remove('hidden');el.innerHTML=`<div class="bg-[#0C1F31] text-white rounded-full pl-3 pr-5 py-2.5 shadow-2xl flex items-center gap-2 text-sm font-semibold" style="border-left:4px solid #29A37A"><i data-lucide="check-circle" class="w-4 h-4" style="color:#29A37A"></i><span>${m}</span></div>`;lucide.createIcons();setTimeout(()=>{el.classList.add('hidden');el.innerHTML='';},2400);}
 
+  // -- VIDEOS (Keynote & Speaker presentations only — no shorts) --
   const VIDEOS = [
-    {id:'replay',   type:'Replay',  topic:'Funding Summit',     title:'Founder pitches — three companies raising',        speaker:'Panel · Base Capital, 4Di, Angel Circle', event:'Funding Gala 2025', dur:'42:18', thumb:'https://images.unsplash.com/photo-1511795409834-ef04bbd61622'},
-    {id:'r2',       type:'Replay',  topic:'Business Planning',  title:'How to forecast growth on light data',            speaker:'Dr. Dineo Molefe',                       event:'Predictive Analytics Webinar', dur:'1:04:22', thumb:'https://images.unsplash.com/photo-1551288049-bebda4e38f71'},
-    {id:'r3',       type:'Replay',  topic:'Marketing',          title:'The Township Economy Playbook — panel',           speaker:'Sipho Ndlovu + panel',                   event:'Township Economy 2025',        dur:'56:00', thumb:'https://images.unsplash.com/photo-1600880292203-757bb62b4baf'},
-    {id:'r4',       type:'Keynote', topic:'Strategy',           title:'Alternative finance in 2025 — SEFA keynote',      speaker:'Sipho Mabaso',                           event:'Funding Summit 2025',          dur:'38:45', thumb:'https://images.unsplash.com/photo-1552664730-d307ca884978'},
-    {id:'r5',       type:'Replay',  topic:'Operations',         title:'Managing cash flow in a downturn',                speaker:'Karabo Kgophane',                        event:'Ops Roundtable',               dur:'48:03', thumb:'https://images.unsplash.com/photo-1554224155-6726b3ff858f'},
-    {id:'r6',       type:'Keynote', topic:'Tech & Innovation',  title:'AI for SA SMEs — where to actually start',        speaker:'Naledi Sithole',                         event:'Tech Summit 2025',             dur:'27:12', thumb:'https://images.unsplash.com/photo-1542744173-8e7e53415bb0'},
-    {id:'s1', type:'Short', topic:'Funding Summit',    title:'"Bring a specific ask." — Thandi Ngwenya',      speaker:'Thandi Ngwenya',   event:'Funding Gala 2025',    dur:'0:58', thumb:'https://images.unsplash.com/photo-1559523161-0fc0d8b38a7a'},
-    {id:'s2', type:'Short', topic:'Business Planning', title:'The one number every founder should track',     speaker:'Dineo Molefe',     event:'Analytics Webinar',    dur:'1:14', thumb:'https://images.unsplash.com/photo-1553729459-efe14ef6055d'},
-    {id:'s3', type:'Short', topic:'Marketing',         title:'Why paid ads aren\'t saving your SME',           speaker:'Karabo Kgophane',  event:'Marketing Summit',     dur:'0:47', thumb:'https://images.unsplash.com/photo-1611162617474-5b21e879e113'},
-    {id:'s4', type:'Short', topic:'Strategy',          title:'Township vs suburb pricing — 3 takeaways',      speaker:'Sipho Ndlovu',     event:'Township Economy 2025', dur:'1:02', thumb:'https://images.unsplash.com/photo-1522071820081-009f0129c71c'},
-    {id:'s5', type:'Short', topic:'Tech & Innovation', title:'One prompt that fixed my customer emails',      speaker:'Naledi Sithole',   event:'AI for SMEs',          dur:'0:52', thumb:'https://images.unsplash.com/photo-1505373877841-8d25f7d46678'}
+    {title:'The State of SA Funding — 2025 keynote', speaker:'Dr. Dineo Molefe',   event:'Funding Summit 2025', dur:'42:18', thumb:'https://images.unsplash.com/photo-1556761175-5973dc0f32e7'},
+    {title:'Forecasting growth on light data',       speaker:'Dr. Dineo Molefe',   event:'Analytics Webinar',   dur:'1:04:22', thumb:'https://images.unsplash.com/photo-1551288049-bebda4e38f71'},
+    {title:'The Township Economy Playbook',          speaker:'Sipho Ndlovu + panel', event:'Township Economy 2025', dur:'56:00', thumb:'https://images.unsplash.com/photo-1600880292203-757bb62b4baf'},
+    {title:'Alternative finance in 2025',            speaker:'Sipho Mabaso · SEFA',  event:'Funding Summit 2025', dur:'38:45', thumb:'https://images.unsplash.com/photo-1552664730-d307ca884978'},
+    {title:'Managing cash flow in a downturn',       speaker:'Karabo Kgophane',     event:'Ops Roundtable',      dur:'48:03', thumb:'https://images.unsplash.com/photo-1554224155-6726b3ff858f'},
+    {title:'AI for SA SMEs — where to actually start', speaker:'Naledi Sithole',    event:'Tech Summit 2025',    dur:'27:12', thumb:'https://images.unsplash.com/photo-1542744173-8e7e53415bb0'},
+    {title:'Pitching to Venture Capitalists',        speaker:'Thandi Ngwenya · Base Capital', event:'Funding Summit 2025', dur:'34:08', thumb:'https://images.unsplash.com/photo-1559523161-0fc0d8b38a7a'},
+    {title:'B-BBEE compliance without the fluff',    speaker:'Lerato Kgomo',        event:'B-BBEE Summit 2025',  dur:'52:14', thumb:'https://images.unsplash.com/photo-1450101499163-c8848c66ca85'},
+    {title:'Legal structuring for early startups',   speaker:'Jared Roberts',       event:'Legal 101 Webinar',   dur:'46:39', thumb:'https://images.unsplash.com/photo-1589829085413-56de8ae18c73'}
   ].map(v=> ({...v, thumb: v.thumb + '?auto=format&fit=crop&q=80&w=600'}));
 
-  const TYPES = ['All','Replay','Keynote','Short'];
-  let filterState = { type:'All', topic:'All', q:'' };
+  // -- PHOTOS (In-person events only) --
+  const EVENTS_WITH_PHOTOS = [
+    { key:'fs2026', label:'Funding Summit 2026', sub:'Photos from the 25 September 2026 summit',    date:'25 Sep 2026' },
+    { key:'fs2025', label:'Funding Summit 2025', sub:'Photos from the 27 September 2025 summit',    date:'27 Sep 2025' },
+    { key:'te2025', label:'Township Economy 2025', sub:'Photos from the Braamfontein workshop',     date:'14 Jun 2025' },
+    { key:'bbee25', label:'B-BBEE Summit 2025',  sub:'Photos from the Sandton compliance summit',   date:'18 Mar 2025' }
+  ];
+  const PHOTOS_BY_EVENT = {
+    fs2026: [], // upcoming — empty state
+    fs2025: [
+      {cat:'Stage',      cap:'Opening keynote', src:'https://images.unsplash.com/photo-1556761175-5973dc0f32e7'},
+      {cat:'Stage',      cap:'Founder pitch session', src:'https://images.unsplash.com/photo-1511795409834-ef04bbd61622'},
+      {cat:'Networking', cap:'Foyer arrival', src:'https://images.unsplash.com/photo-1559523161-0fc0d8b38a7a'},
+      {cat:'Networking', cap:'Investor meet & greet', src:'https://images.unsplash.com/photo-1552664730-d307ca884978'},
+      {cat:'Awards',     cap:'Founder of the Year', src:'https://images.unsplash.com/photo-1600880292203-757bb62b4baf'},
+      {cat:'Dinner',     cap:'Dinner service', src:'https://images.unsplash.com/photo-1554224155-6726b3ff858f'},
+      {cat:'Networking', cap:'Networking window II', src:'https://images.unsplash.com/photo-1611162617474-5b21e879e113'},
+      {cat:'Panel',      cap:'The LP fireside', src:'https://images.unsplash.com/photo-1522071820081-009f0129c71c'},
+      {cat:'Dinner',     cap:'Toasts and speeches', src:'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40'},
+      {cat:'Awards',     cap:'Rising Star 2025', src:'https://images.unsplash.com/photo-1553729459-efe14ef6055d'}
+    ],
+    te2025: [
+      {cat:'Workshop',   cap:'Opening', src:'https://images.unsplash.com/photo-1511795409834-ef04bbd61622'},
+      {cat:'Workshop',   cap:'Group discussion', src:'https://images.unsplash.com/photo-1542744173-8e7e53415bb0'},
+      {cat:'Networking', cap:'Coffee break', src:'https://images.unsplash.com/photo-1505373877841-8d25f7d46678'},
+      {cat:'Awards',     cap:'Certificate ceremony', src:'https://images.unsplash.com/photo-1450101499163-c8848c66ca85'}
+    ],
+    bbee25: [
+      {cat:'Panel',      cap:'Compliance panel', src:'https://images.unsplash.com/photo-1551288049-bebda4e38f71'},
+      {cat:'Networking', cap:'Lunch service', src:'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d'},
+      {cat:'Stage',      cap:'Closing remarks', src:'https://images.unsplash.com/photo-1589829085413-56de8ae18c73'}
+    ]
+  };
+  Object.keys(PHOTOS_BY_EVENT).forEach(k=> PHOTOS_BY_EVENT[k] = PHOTOS_BY_EVENT[k].map(p=>({...p, src: p.src+'?auto=format&fit=crop&q=80&w=800'})));
 
-  function renderTypeChips(){
-    document.getElementById('typeChips').innerHTML = TYPES.map(t=>{
-      const active = t===filterState.type;
-      return `<button onclick="setType('${t}')" class="shrink-0 px-4 py-2 rounded-full text-sm font-semibold border transition-colors ${active?'bg-[#DC183C] text-white border-[#DC183C]':'bg-white text-slate-600 border-[#E7EBEF] hover:bg-slate-50'}">${t}</button>`;
-    }).join('');
+  const TOTAL_PHOTOS = Object.values(PHOTOS_BY_EVENT).reduce((n,arr)=>n+arr.length, 0);
+
+  // -- STATE --
+  let currentTab = 'videos';
+  let q = '';
+  let currentEventKey = 'fs2025'; // default — most recent event with photos
+
+  // Update tab counts in the sticky bar
+  document.getElementById('videosCount').textContent = VIDEOS.length;
+  document.getElementById('photosCount').textContent = TOTAL_PHOTOS;
+
+  function setTab(t){
+    currentTab = t;
+    document.getElementById('tab-videos').classList.toggle('active', t==='videos');
+    document.getElementById('tab-photos').classList.toggle('active', t==='photos');
+    document.getElementById('videosPane').classList.toggle('hidden', t!=='videos');
+    document.getElementById('photosPane').classList.toggle('hidden', t!=='photos');
+    applyFilters();
   }
-  function setType(t){ filterState.type=t; renderTypeChips(); applyFilters(); }
 
-  function match(v){
-    if(filterState.type!=='All' && v.type!==filterState.type) return false;
-    if(filterState.topic!=='All' && v.topic!==filterState.topic) return false;
-    const q = filterState.q.toLowerCase();
-    if(q && !(`${v.title} ${v.speaker} ${v.event}`.toLowerCase().includes(q))) return false;
-    return true;
+  function renderFilterRow(){
+    const row = document.getElementById('filterRow');
+    if(currentTab==='videos'){
+      row.innerHTML = ''; // no side filters — just the search in hero
+    } else {
+      // Photos: chips per in-person event
+      row.innerHTML = `<span class="text-xs font-bold uppercase tracking-wider text-slate-400 shrink-0 pr-1">In-person event</span>` +
+        EVENTS_WITH_PHOTOS.map(e=>{
+          const count = PHOTOS_BY_EVENT[e.key].length;
+          const active = e.key===currentEventKey;
+          return `<button onclick="setEvent('${e.key}')" class="shrink-0 px-3.5 py-2 rounded-full text-[13px] font-semibold border transition-colors ${active?'bg-[#DC183C] text-white border-[#DC183C]':'bg-white text-slate-600 border-[#E7EBEF] hover:bg-slate-50'}">${e.label} <span class="ml-1 opacity-70">${count}</span></button>`;
+        }).join('');
+    }
   }
 
-  function renderReplays(){
-    const list = VIDEOS.filter(v=> v.type!=='Short').filter(match);
-    document.getElementById('replayCount').textContent = list.length;
-    document.getElementById('replaySection').style.display = list.length ? '' : 'none';
-    document.getElementById('replayGrid').innerHTML = list.map(v=>`
-      <article onclick="openPlayer('${v.id}')" class="video-card">
+  function setEvent(k){ currentEventKey = k; applyFilters(); }
+
+  function renderVideos(){
+    q = document.getElementById('libSearch').value.trim().toLowerCase();
+    const list = VIDEOS.filter(v=> !q || `${v.title} ${v.speaker} ${v.event}`.toLowerCase().includes(q));
+    document.getElementById('videosCountBody').textContent = list.length;
+    document.getElementById('featuredWrap').style.display = q ? 'none' : '';
+    document.getElementById('videoGrid').innerHTML = list.map(v=>`
+      <a href="event-presentation.html" class="video-card">
         <div class="thumb">
           <img src="${v.thumb}" alt="${v.title}" onerror="this.onerror=null;this.src='https://placehold.co/600x400/0C1F31/476472?text=Video'"/>
-          <span class="type-pill ${v.type==='Keynote'?'keynote':'replay'}">${v.type}</span>
           <span class="duration">${v.dur}</span>
           <span class="play"><i data-lucide="play" class="w-6 h-6" style="margin-left:2px"></i></span>
         </div>
         <div class="p-4">
-          <p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] mb-1">${v.topic}</p>
+          <p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] mb-1">${v.event}</p>
           <h3 class="font-jakarta font-extrabold text-[#0C1F31] leading-tight">${v.title}</h3>
           <p class="text-xs text-[#6A7581] mt-2 flex items-center gap-1.5"><i data-lucide="mic" class="w-3 h-3"></i> ${v.speaker}</p>
-          <p class="text-xs text-[#6A7581] mt-1 flex items-center gap-1.5"><i data-lucide="calendar" class="w-3 h-3"></i> ${v.event}</p>
         </div>
-      </article>`).join('');
+      </a>`).join('');
+    document.getElementById('emptyState').classList.toggle('hidden', list.length>0);
+    lucide.createIcons();
   }
 
-  function renderShorts(){
-    const list = VIDEOS.filter(v=> v.type==='Short').filter(match);
-    document.getElementById('shortsCount').textContent = list.length;
-    document.getElementById('shortsSection').style.display = list.length ? '' : 'none';
-    document.getElementById('shortsRow').innerHTML = list.map(v=>`
-      <div onclick="openPlayer('${v.id}')" class="short-card">
-        <img src="${v.thumb}" alt="${v.title}" onerror="this.onerror=null;this.src='https://placehold.co/400x700/0C1F31/476472?text=Short'"/>
-        <span class="play-s"><i data-lucide="play" class="w-5 h-5 text-white" style="margin-left:2px"></i></span>
-        <div class="overlay">
-          <span class="text-[10px] font-bold uppercase tracking-widest text-[#FF9900] mb-1">${v.dur} · ${v.topic}</span>
-          <p class="font-jakarta font-extrabold text-sm leading-tight line-clamp-3">${v.title}</p>
-        </div>
-      </div>`).join('');
+  function renderPhotos(){
+    q = document.getElementById('libSearch').value.trim().toLowerCase();
+    const evt = EVENTS_WITH_PHOTOS.find(e=>e.key===currentEventKey);
+    document.getElementById('photosHeading').textContent = `${evt.label} · Photos`;
+    document.getElementById('photosSub').textContent = evt.sub;
+    let list = PHOTOS_BY_EVENT[currentEventKey] || [];
+    if(q) list = list.filter(p=> `${p.cat} ${p.cap}`.toLowerCase().includes(q));
+    const m = document.getElementById('masonry');
+    if(!list.length){
+      m.innerHTML = `<div class="col-span-full bg-white border border-dashed border-[#E7EBEF] rounded-2xl py-16 px-6 text-center" style="column-span:all;">
+        <div class="w-14 h-14 rounded-2xl bg-[#FFF1E0] grid place-items-center mx-auto mb-4"><i data-lucide="camera-off" class="w-6 h-6 text-[#AE6B0A]"></i></div>
+        <p class="font-jakarta font-extrabold text-lg text-[#0C1F31]">No photos yet</p>
+        <p class="text-sm text-[#6A7581] mt-2 max-w-sm mx-auto">Photos will be uploaded within a week of the event.</p>
+      </div>`;
+      lucide.createIcons();
+      return;
+    }
+    m.innerHTML = list.map((p,i)=>`
+      <div class="photo" onclick="openLightbox(${i})">
+        <img src="${p.src}" alt="${p.cap}" loading="lazy" onerror="this.onerror=null;this.src='https://placehold.co/800x600/0C1F31/476472?text=Photo'"/>
+        <span class="zoom"><i data-lucide="maximize-2" class="w-3.5 h-3.5"></i></span>
+      </div>
+    `).join('');
+    lucide.createIcons();
   }
 
   function applyFilters(){
-    filterState.q = document.getElementById('libSearch').value.trim();
-    filterState.topic = document.getElementById('topicSel').value;
-    renderReplays();
-    renderShorts();
-    // featured hides on non-'All' or search
-    document.getElementById('featuredWrap').style.display = (filterState.type==='All' && filterState.topic==='All' && !filterState.q) ? '' : 'none';
-    // empty state
-    const total = VIDEOS.filter(match).length;
-    document.getElementById('emptyState').classList.toggle('hidden', total>0);
-    lucide.createIcons();
+    renderFilterRow();
+    if(currentTab==='videos') renderVideos();
+    else renderPhotos();
   }
-  function clearFilters(){
-    filterState = { type:'All', topic:'All', q:'' };
-    document.getElementById('libSearch').value='';
-    document.getElementById('topicSel').value='All';
-    renderTypeChips(); applyFilters();
-  }
+  function clearAll(){ document.getElementById('libSearch').value=''; applyFilters(); }
 
-  function openPlayer(id){
-    const v = id==='featured'
-      ? { title:'The State of SA Funding — 2025 keynote', event:'Funding Gala · 27 Sep 2025' }
-      : (VIDEOS.find(x=>x.id===id) ? { title: VIDEOS.find(x=>x.id===id).title, event: VIDEOS.find(x=>x.id===id).event + ' · ' + VIDEOS.find(x=>x.id===id).dur } : null);
-    if(!v) return;
-    document.getElementById('playerName').textContent = v.title;
-    document.getElementById('playerTitle').textContent = 'Video plays here (YouTube/Vimeo/Mux embed at build).';
-    document.getElementById('playerMeta').textContent = v.event;
-    document.getElementById('playerModal').classList.add('open');
-    document.body.style.overflow='hidden';
-    lucide.createIcons();
-  }
-  function closePlayer(){ document.getElementById('playerModal').classList.remove('open'); document.body.style.overflow=''; }
-  document.addEventListener('keydown', e=>{ if(e.key==='Escape') closePlayer(); });
+  // Lightbox — indexes into current filtered photo list
+  let lbIndex = 0;
+  function currentPhotoList(){ return (PHOTOS_BY_EVENT[currentEventKey] || []).filter(p=> !q || `${p.cat} ${p.cap}`.toLowerCase().includes(q)); }
+  function openLightbox(i){ lbIndex=i; updateLightbox(); document.getElementById('lightbox').classList.add('open'); document.body.style.overflow='hidden'; }
+  function closeLightbox(){ document.getElementById('lightbox').classList.remove('open'); document.body.style.overflow=''; }
+  function navLightbox(d){ const L = currentPhotoList(); lbIndex = (lbIndex + d + L.length) % L.length; updateLightbox(); }
+  function updateLightbox(){ const L=currentPhotoList(); if(!L.length) return; const p=L[lbIndex]; document.getElementById('lbImg').src = p.src; document.getElementById('lbCaption').textContent = `${lbIndex+1} / ${L.length} — ${p.cap}`; }
+  document.addEventListener('keydown', e=>{ if(!document.getElementById('lightbox').classList.contains('open')) return; if(e.key==='ArrowLeft') navLightbox(-1); else if(e.key==='ArrowRight') navLightbox(1); else if(e.key==='Escape') closeLightbox(); });
 
-  renderTypeChips(); applyFilters();
+  function downloadAlbum(){ showToast('Album ZIP will generate server-side.'); }
+  function shareAlbum(){ navigator.clipboard?.writeText(location.href); showToast('Album link copied.'); }
+
+  applyFilters();
 
   const BRIEF = {
-    title:'Event Library — Replays &amp; Shorts',
-    sub:'CPT <code>video_library</code> (or a taxonomy on past events)',
-    purpose:'A single browseable video library across all past events and webinars. Two content shapes: <b>full replays / keynote clips</b> (16:9) and <b>shorts</b> (9:16 vertical for social-native clips). Filter by type + topic; featured replay drives the top of the page when no filter is active.',
-    data:'Video (CPT <code>video_library</code>): <code>{ post_title, post_name, meta_type ("Replay"|"Keynote"|"Short"), meta_topic (taxonomy), meta_speaker, meta_event_ref (parent event), meta_duration_seconds, meta_thumb, meta_source ("youtube"|"vimeo"|"mux"), meta_source_id, meta_transcript?, meta_slides_url? }</code>. Featured flag on one replay drives the hero.',
-    logic:'Template = <code>archive-video-library.php</code>. Type chips + topic select + text search filter client-side against a full pre-rendered list. Player modal loads the source iframe on click (YouTube/Vimeo/Mux privacy-mode embed). Shorts open in the same modal but the wrap swaps to 9:16 aspect ratio. Photos live in <code>event-gallery.html</code> — a callout at the bottom points people there when they land here looking for images.',
-    components:'Hero (breadcrumb + eyebrow + title + subtitle + big search) · Sticky filter bar (type chips + topic select) · Featured replay (16:9 card + side copy + CTA) · Full replays grid (3-col lg card with thumb + type/duration pills + title + speaker + event) · Shorts row (vertical 9:16 cards, 5-col lg, overlay gradient text) · Empty state · Pointer to Event Gallery for photos · Player modal (16:9 or 9:16 iframe placeholder).',
-    specs:'<b>Video card:</b> rounded-2xl border #E7EBEF hover shadow + translateY(-3px). Thumb aspect 16/9, hover img scale 1.05. Play pill 56×56 rounded-full #DC183C/95 shadow, hover scale 1.08. Duration pill bottom-right rgba(0,0,0,.75) 11.5px Jakarta 700 white. Type pill top-left: replay (#DC183C/95 white), keynote (white/90 #0C1F31), short (#FF9900/95 #0C1F31).<br/><b>Short card:</b> aspect 9/16 rounded-2xl bg #0C1F31. Play 44×44 centered white/15 backdrop-blur. Overlay gradient from transparent 40% → rgba(0,0,0,.85). Meta pill 10px uppercase #FF9900; title Jakarta 800 14px line-clamp-3.<br/><b>Filter bar:</b> sticky top-0 white/95 backdrop-blur py-3 border-b #E7EBEF. Type chips h-9 rounded-full same as events archive. Topic select h-9 px-3 rounded-lg border #E7EBEF.<br/><b>Featured:</b> 2-col lg 1.4fr/1fr. Left = 16/9 thumb, right = eyebrow + Plus Jakarta 800 24/32px title + slate-500 body + primary + save CTAs.<br/><b>Player modal:</b> rgba(0,0,0,.92) fullscreen. Wrap max-w-900 rounded-2xl bg #0C1F31. 16/9 embed. Close 36×36 top-right rgba(0,0,0,.5). Meta strip below: eyebrow 10px uppercase #FF9900 + Jakarta 800 title white.'
+    title:'Event Library',
+    sub:'CPT <code>video_library</code> + past-event <code>meta_gallery</code>',
+    purpose:'Single library page across all past events. Two tabs: <b>Presentations</b> (keynote &amp; speaker recordings) and <b>Photos</b> (in-person events only). Photos are grouped per in-person event because we do not photograph online webinars. Presentation cards link to <code>event-presentation.html</code> for the single-video reading view.',
+    data:'<b>Video</b> (CPT <code>video_library</code>): <code>{ post_title, post_name, meta_speaker, meta_event_ref (parent event), meta_duration_seconds, meta_thumb, meta_yt_id, meta_description, meta_slides_pdf? (OPTIONAL) }</code>. No type field &mdash; every entry is a keynote/speaker presentation.<br/><b>Photo album</b>: <code>meta_gallery [{ src, srcset?, category, caption, alt }]</code> attached to a past event post where <code>meta_type = "IN-PERSON"</code>. ONLINE events have no gallery.',
+    logic:'Template = <code>archive-event-library.php</code>. Tabs switch pane; single hero search filters within the active tab. Photos tab shows a chip strip of in-person events (query: <code>meta_type = "IN-PERSON"</code>), default = most recent event with photos. Each video card is an <code>&lt;a&gt;</code> to <code>event-presentation.html?slug={post_name}</code>. Photos open in a vanilla lightbox with keyboard nav. Album ZIP download is a signed URL generated server-side.',
+    components:'Hero (breadcrumb + eyebrow + title + subtitle + wide search) · Sticky tab bar (Presentations count / Photos count) + filter row (per-event chips on Photos tab) · Videos pane (featured + all presentations 3-col grid) · Photos pane (per-event header + Album/Share buttons + masonry) · Lightbox with keyboard nav · Empty states (no results / no photos yet).',
+    specs:'<b>Tabs:</b> h-9 rounded-xl border #E7EBEF Jakarta 700 14px. Active bg #0C1F31 white; tail count pill 11px rounded-full bg white/16 on active, bg #F1F4F7 grey when inactive.<br/><b>Video card:</b> rounded-2xl border #E7EBEF hover shadow + translateY(-3px). Thumb 16/9, img scale 1.05 on hover. Duration pill bottom-right rgba(0,0,0,.75). Play pill 56×56 rounded-full #DC183C/95 shadow, hover scale 1.08. Body: eyebrow 10px uppercase #DC183C = event name; title Jakarta 800 leading-tight; speaker 12px slate-500 with mic icon.<br/><b>Featured:</b> 2-col lg 1.4fr/1fr. Left = same video card 16/9. Right = eyebrow + Jakarta 800 24/32px title + slate-500 body + primary + save CTAs.<br/><b>Photos pane:</b> per-event heading Jakarta 800 24px + slate-500 sub; Album download and Share pills h-10 rounded-full (dark + slate). Filter chips 13px h-9 rounded-full with count tail.<br/><b>Masonry:</b> column-count 1/2/3 at 640/1024. Photo tile rounded-2xl, hover img scale 1.04.<br/><b>Lightbox:</b> full-screen black/92 img max 96vw/88vh. Close 44×44 top-right; prev/next 52×52 side-center; caption pill bottom-center bg black/50.'
   };
 
   function toggleDevMode(){const on=document.body.classList.toggle('dev-on');const b=document.getElementById('devToggle');if(b)b.classList.toggle('on',on);lucide.createIcons();}
