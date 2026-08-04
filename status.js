@@ -28,8 +28,6 @@ window.MOCKUP_STATUS = {
   "public-deal.html": "not-started",
   "public-guides.html": "finalised",
   "public-guide.html": "finalised",
-  "public-glossary.html": "under-review",
-  "public-glossary-term.html": "under-review",
   "public-founder-focus-category.html": "finalised",
   "public-funding-summit-category.html": "finalised",
   "public-shop.html": "not-started",
@@ -65,7 +63,7 @@ window.MOCKUP_STATUS = {
   "public-search.html": "finalised",
   "public-404.html": "finalised"
 };
-window.MOCKUP_STATUS_PUBLISHED = "2026-07-31T12:15:54.633Z";
+window.MOCKUP_STATUS_PUBLISHED = "2026-08-04T08:16:10.065Z";
 /* Developer builds (staging) — { mockup file: { url, status } }; status: "pending-review" | "reviewed" | "approved" */
 window.MOCKUP_DEV = {
   "public-home.html": {"url":"https://smesastg.wpengine.com/","status":"reviewed"},
@@ -101,6 +99,5 @@ window.MOCKUP_DEV = {
 };
 /* Group overrides — { mockup file: "Group name" }; overrides default NAV grouping in index.html */
 window.MOCKUP_GROUPS = {
-  "podcast.html": "Public site",
-  "public-funding-summit-category.html": "Content modules"
+  "podcast.html": "Public site"
 };
