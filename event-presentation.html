@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>The State of SA Funding — 2025 Keynote — SME South Africa</title>
+  <meta name="description" content="Dr. Dineo Molefe's 2025 keynote on where R2.3bn in SME funding actually landed, and which sectors moved the most." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script><script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  <script>tailwind.config={theme:{extend:{fontFamily:{jakarta:['Plus Jakarta Sans','sans-serif'],inter:['Inter','system-ui','sans-serif']}}}};</script>
+  <style>
+    html,body{font-family:'Inter',system-ui,sans-serif;} .font-jakarta{font-family:'Plus Jakarta Sans',sans-serif;letter-spacing:.005em;}
+    html{scroll-behavior:smooth;}
+    .hero-bg{background:linear-gradient(115deg,#0C1F31 0%,#0C1F31 50%,#2b1626 80%,#5e1a2c 115%);}
+    .dot-pattern{background-image:radial-gradient(rgba(255,255,255,.07) 1px,transparent 1.5px);background-size:22px 22px;}
+    .yt-wrap{position:relative;background:#0C1F31;border-radius:1rem;overflow:hidden;aspect-ratio:16/9;box-shadow:0 20px 40px -20px rgba(0,0,0,.3);}
+    .yt-wrap .play-c{position:absolute;inset:0;margin:auto;width:80px;height:80px;border-radius:999px;background:rgba(220,24,60,.95);color:#fff;display:grid;place-items:center;box-shadow:0 12px 40px rgba(0,0,0,.4);transition:transform .2s;}
+    .yt-wrap:hover .play-c{transform:scale(1.06);}
+    .yt-wrap img{width:100%;height:100%;object-fit:cover;opacity:.85;}
+    .yt-wrap .yt-brand{position:absolute;top:1rem;left:1rem;font-size:.68rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;background:rgba(255,255,255,.9);color:#0C1F31;padding:.2rem .5rem;border-radius:.35rem;}
+    .prose p{color:#121A21;line-height:1.8;font-size:1.02rem;margin-bottom:1rem;}
+    .prose h2{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.5rem;color:#0C1F31;margin:2rem 0 .6rem;}
+    .prose ul{list-style:disc;padding-left:1.3rem;margin-bottom:1rem;color:#121A21;line-height:1.8;}
+    .dev-badge{display:none;} body.dev-on .dev-badge{display:inline-flex;} #devToggle.on{background:#DC183C;color:#fff;border-color:#DC183C;}
+    .ov{position:fixed;inset:0;z-index:80;} .ov-bg{position:absolute;inset:0;background:rgba(12,31,49,.45);backdrop-filter:blur(2px);opacity:0;transition:opacity .3s;} .ov.open .ov-bg{opacity:1;}
+    .drawer{position:absolute;right:0;top:0;height:100%;width:100%;max-width:440px;background:#fff;box-shadow:-12px 0 40px rgba(12,31,49,.25);overflow-y:auto;transform:translateX(100%);transition:transform .3s cubic-bezier(.2,.7,.2,1);} .ov.open .drawer{transform:translateX(0);}
+    .dev-note{background:linear-gradient(135deg,rgba(255,153,0,.12),rgba(255,153,0,.04));border:1px dashed rgba(255,153,0,.5);display:none;}
+    body.dev-on .dev-note{display:flex;}
+  </style>
+</head>
+<body class="bg-[#FCFCFC] text-[#121A21] antialiased">
+<header class="bg-slate-100 border-b-2 border-dashed border-slate-400 relative overflow-hidden">
+  <div class="absolute inset-0 opacity-30 pointer-events-none" style="background:repeating-linear-gradient(45deg,transparent,transparent 8px,rgba(100,116,139,.18) 8px,rgba(100,116,139,.18) 16px)"></div>
+  <div class="relative max-w-7xl mx-auto px-4 sm:px-6 h-14 flex items-center gap-3 sm:gap-4">
+    <a href="public-home.html" class="flex items-center gap-2 shrink-0 opacity-70 hover:opacity-100 transition">
+      <img src="assets/logo-icon.png" alt="SME South Africa" class="w-7 h-7" />
+      <span class="font-jakarta font-extrabold text-[13px] tracking-tight text-slate-700 hidden sm:inline">SME South Africa</span>
+    </a>
+    <span class="mx-1 hidden sm:inline w-px h-5 bg-slate-300"></span>
+    <p class="text-[10px] sm:text-[11px] font-bold uppercase tracking-widest text-slate-600 flex items-center gap-1.5"><i data-lucide="construction" class="w-3.5 h-3.5 text-slate-500"></i> Header placeholder &middot; design pending</p>
+    <div class="ml-auto flex items-center gap-2">
+      <button id="devToggle" onclick="toggleDevMode()" class="inline-flex items-center gap-1.5 px-2.5 h-8 rounded-full bg-white border border-slate-300 hover:border-[#DC183C] hover:text-[#DC183C] text-[11px] font-bold uppercase tracking-wider text-slate-600 transition"><i data-lucide="code-2" class="w-3.5 h-3.5"></i><span class="hidden sm:inline">Dev</span></button>
+      <a href="index.html" class="inline-flex items-center gap-1.5 px-3 h-8 rounded-full bg-white border border-slate-300 hover:border-slate-500 text-[11px] font-bold text-slate-700 transition"><i data-lucide="arrow-left" class="w-3.5 h-3.5"></i><span class="hidden sm:inline">Launcher</span></a>
+    </div>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero-bg text-white relative overflow-hidden">
+  <div class="absolute inset-0 dot-pattern opacity-70 pointer-events-none"></div>
+  <div class="max-w-[1200px] mx-auto px-4 sm:px-6 py-12 relative">
+    <nav aria-label="Breadcrumb" class="text-xs text-white/55 flex items-center flex-wrap gap-x-1.5 mb-4"><a href="public-home.html" class="hover:text-white transition">Home</a><span class="text-white/30">›</span><a href="events.html" class="hover:text-white transition">Events</a><span class="text-white/30">›</span><a href="event-library.html" class="hover:text-white transition">Library</a><span class="text-white/30">›</span><span class="text-white/85 font-medium truncate">The State of SA Funding — 2025 keynote</span></nav>
+    <div class="flex items-center gap-2 flex-wrap mb-4">
+      <span class="px-3 py-1.5 rounded-full text-[10px] font-bold bg-[#FDECEF] text-[#DC183C] uppercase tracking-wider">Keynote</span>
+      <span class="px-3 py-1.5 rounded-full text-[10px] font-bold bg-white/10 text-white uppercase tracking-wider">Funding Summit 2025</span>
+      <span class="text-white/60 text-sm inline-flex items-center gap-1.5"><i data-lucide="clock" class="w-3.5 h-3.5"></i> 42:18</span>
+      <span class="text-white/60 text-sm inline-flex items-center gap-1.5"><i data-lucide="calendar" class="w-3.5 h-3.5"></i> 27 September 2025</span>
+    </div>
+    <h1 class="font-jakarta font-extrabold text-3xl sm:text-5xl leading-[1.05] tracking-tight">The State of SA Funding — 2025 Keynote
+      <button onclick="openBrief()" class="dev-badge align-middle ml-2 w-7 h-7 rounded-full bg-[#FF9900] text-[#0C1F31] items-center justify-center text-[12px] font-bold">i</button>
+    </h1>
+    <p class="mt-3 text-white/75 text-lg max-w-3xl">Where the R2.3 billion in SME funding actually landed in 2025 — and which sectors saw the biggest movement.</p>
+  </div>
+</section>
+
+<!-- BODY -->
+<main class="max-w-[1200px] mx-auto px-4 sm:px-6 py-12 grid lg:grid-cols-[1fr,340px] gap-10">
+  <article>
+    <!-- VIDEO EMBED -->
+    <div class="yt-wrap mb-10" onclick="playVideo()">
+      <img src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&q=80&w=1200" alt="Video thumbnail" />
+      <span class="yt-brand">YouTube embed</span>
+      <button class="play-c" aria-label="Play video"><i data-lucide="play" class="w-8 h-8" style="margin-left:3px"></i></button>
+    </div>
+
+    <div class="dev-note rounded-xl px-4 py-3 mb-8 items-start gap-3">
+      <i data-lucide="info" class="w-4 h-4 text-[#AE6B0A] shrink-0 mt-0.5"></i>
+      <div>
+        <p class="text-[11px] font-bold uppercase tracking-widest text-[#AE6B0A] mb-1">Dev note</p>
+        <p class="text-sm text-slate-700 leading-relaxed">Video wrap embeds a YouTube <code>iframe</code> at build (<code>https://www.youtube-nocookie.com/embed/{yt_id}</code>). Thumb + click-to-play here reduces initial load; swap to autoplay embed if we ever want inline autoplay.</p>
+      </div>
+    </div>
+
+    <!-- ABOUT -->
+    <section class="mb-10">
+      <h2 class="font-jakarta font-extrabold text-2xl sm:text-3xl text-[#0C1F31] mb-4">About this presentation</h2>
+      <div class="prose">
+        <p>Dr. Dineo Molefe walks through where the R2.3 billion in reported SME funding actually landed across South Africa in 2025 — by sector, by province, and by deal size — and pulls out the three counter-intuitive shifts founders should pay attention to going into 2026.</p>
+        <p>The talk closes with a live Q&amp;A on the panel-selected questions: what's changed in DFI mandates, which grant lines are actually paying out, and how much runway a founder needs to survive the current diligence cycle.</p>
+        <p><b>You'll take away:</b> a data-backed view of where capital is flowing, three specific mistakes to avoid in your next raise, and the full slide deck to share with your board.</p>
+      </div>
+    </section>
+
+    <!-- KEY TAKEAWAYS -->
+    <section class="mb-10">
+      <h2 class="font-jakarta font-extrabold text-2xl text-[#0C1F31] mb-4">Key takeaways</h2>
+      <ul class="prose">
+        <li>66% of 2025's committed capital landed in three sectors — fintech, agri and clean energy.</li>
+        <li>Grant lines from IDC and NEF are paying out faster than debt in 2025 — median 71 days vs 118.</li>
+        <li>The typical seed round in SA grew from R2.4m to R3.1m median, but diligence cycles also stretched by ~3 weeks.</li>
+        <li>Township-facing consumer businesses raised 2.1× more than in 2024 — but exits stayed flat.</li>
+      </ul>
+    </section>
+
+    <!-- RELATED -->
+    <section class="mt-14">
+      <div class="flex items-baseline justify-between mb-5">
+        <h2 class="font-jakarta font-extrabold text-2xl text-[#0C1F31]">More from this event</h2>
+        <a href="event-library.html" class="text-sm font-bold text-[#DC183C] inline-flex items-center gap-1.5">Full library <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i></a>
+      </div>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        <a href="event-presentation.html" class="group bg-white rounded-2xl border border-[#E7EBEF] overflow-hidden hover:shadow-lg hover:-translate-y-0.5 transition">
+          <div class="relative aspect-video bg-[#0C1F31]">
+            <img src="https://images.unsplash.com/photo-1559523161-0fc0d8b38a7a?auto=format&fit=crop&q=80&w=600" alt="" class="w-full h-full object-cover"/>
+            <span class="absolute bottom-2 right-2 bg-black/75 text-white text-xs font-bold px-2 py-0.5 rounded">34:08</span>
+          </div>
+          <div class="p-4">
+            <p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C]">Funding Summit 2025</p>
+            <p class="font-jakarta font-extrabold text-[#0C1F31] mt-1 group-hover:text-[#DC183C] transition">Pitching to Venture Capitalists</p>
+            <p class="text-xs text-[#6A7581] mt-1 flex items-center gap-1"><i data-lucide="mic" class="w-3 h-3"></i> Thandi Ngwenya</p>
+          </div>
+        </a>
+        <a href="event-presentation.html" class="group bg-white rounded-2xl border border-[#E7EBEF] overflow-hidden hover:shadow-lg hover:-translate-y-0.5 transition">
+          <div class="relative aspect-video bg-[#0C1F31]">
+            <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&q=80&w=600" alt="" class="w-full h-full object-cover"/>
+            <span class="absolute bottom-2 right-2 bg-black/75 text-white text-xs font-bold px-2 py-0.5 rounded">38:45</span>
+          </div>
+          <div class="p-4">
+            <p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C]">Funding Summit 2025</p>
+            <p class="font-jakarta font-extrabold text-[#0C1F31] mt-1 group-hover:text-[#DC183C] transition">Alternative finance in 2025</p>
+            <p class="text-xs text-[#6A7581] mt-1 flex items-center gap-1"><i data-lucide="mic" class="w-3 h-3"></i> Sipho Mabaso · SEFA</p>
+          </div>
+        </a>
+        <a href="event-library.html" class="group bg-white rounded-2xl border border-dashed border-[#E7EBEF] p-5 flex items-center gap-4 hover:border-[#DC183C] transition">
+          <div class="w-12 h-12 rounded-xl bg-[#FDECEF] grid place-items-center shrink-0"><i data-lucide="library" class="w-6 h-6 text-[#DC183C]"></i></div>
+          <div>
+            <p class="font-jakarta font-extrabold text-[#0C1F31] group-hover:text-[#DC183C] transition">Browse the full library</p>
+            <p class="text-xs text-[#6A7581] mt-1">All presentations + photo albums.</p>
+          </div>
+        </a>
+      </div>
+    </section>
+  </article>
+
+  <!-- SIDEBAR: speaker + slides download + reg form -->
+  <aside>
+    <div class="lg:sticky lg:top-6 space-y-5">
+
+      <!-- SPEAKER CARD (author-preview design) -->
+      <div class="bg-white rounded-2xl border border-[#E7EBEF] p-5">
+        <p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] mb-3">Speaker</p>
+        <div class="flex items-start gap-4">
+          <div class="relative w-16 h-16 rounded-full shrink-0 shadow-sm overflow-hidden">
+            <div class="absolute inset-0 bg-gradient-to-br from-[#DC183C] to-[#FF9900] grid place-items-center font-jakarta font-extrabold text-white text-xl">DM</div>
+          </div>
+          <div class="min-w-0">
+            <p class="font-jakarta font-extrabold text-[#0C1F31] leading-tight">Dr. Dineo Molefe</p>
+            <p class="text-[13px] text-[#DC183C] font-semibold mt-0.5">Head of Advisory · SME South Africa</p>
+            <div class="flex items-center gap-1.5 mt-2">
+              <a href="#" class="w-7 h-7 rounded-full bg-slate-100 hover:bg-[#FDECEF] hover:text-[#DC183C] grid place-items-center transition" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor" class="w-3.5 h-3.5"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.42v1.56h.05c.47-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.07 2.07 0 1 1 0-4.14 2.07 2.07 0 0 1 0 4.14zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.8 0 0 .78 0 1.73v20.54C0 23.22.8 24 1.77 24h20.45C23.2 24 24 23.22 24 22.27V1.73C24 .78 23.2 0 22.22 0z"/></svg></a>
+              <a href="#" class="w-7 h-7 rounded-full bg-slate-100 hover:bg-[#FDECEF] hover:text-[#DC183C] grid place-items-center transition" aria-label="X"><svg viewBox="0 0 24 24" fill="currentColor" class="w-3.5 h-3.5"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- REG FORM — gates the slides download -->
+      <div id="regBlock" class="rounded-2xl border border-[#E7EBEF] bg-white p-5">
+        <p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] mb-1">Get the slides</p>
+        <h3 class="font-jakarta font-extrabold text-[17px] text-[#0C1F31] leading-tight">Download the presentation</h3>
+        <p class="text-[13px] text-[#6A7581] mt-1 leading-relaxed">Enter your details to unlock the PDF deck for this session.</p>
+        <form onsubmit="submitReg(event)" class="mt-4 space-y-2">
+          <input type="text"  required placeholder="Full name" class="w-full h-11 rounded-lg border border-[#E7EBEF] px-3 text-sm bg-slate-50 outline-none focus:border-[#DC183C]" />
+          <input type="email" required placeholder="Work email" class="w-full h-11 rounded-lg border border-[#E7EBEF] px-3 text-sm bg-slate-50 outline-none focus:border-[#DC183C]" />
+          <input type="text"  placeholder="Company (optional)" class="w-full h-11 rounded-lg border border-[#E7EBEF] px-3 text-sm bg-slate-50 outline-none focus:border-[#DC183C]" />
+          <button type="submit" class="w-full h-12 rounded-xl bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold text-sm transition inline-flex items-center justify-center gap-1.5"><i data-lucide="download" class="w-4 h-4"></i> Download slides (PDF)</button>
+        </form>
+        <p class="text-[11px] text-center text-[#6A7581] mt-3">We'll email the deck &amp; add you to the events list. Unsubscribe any time.</p>
+      </div>
+
+      <div id="slidesUnlocked" class="hidden rounded-2xl border border-[#29A37A]/40 bg-gradient-to-br from-[#29A37A]/15 to-[#29A37A]/5 p-5">
+        <div class="flex items-start gap-3">
+          <div class="w-9 h-9 rounded-xl bg-white grid place-items-center shrink-0 shadow-sm"><i data-lucide="check-circle-2" class="w-5 h-5 text-[#29A37A]"></i></div>
+          <div>
+            <p class="text-[10px] font-bold uppercase tracking-widest text-[#29A37A] mb-1">You're in</p>
+            <p class="font-jakarta font-extrabold text-[#0C1F31]">Slides ready</p>
+            <p class="text-[13px] text-[#6A7581] mt-1">Check your inbox — or grab the direct download below.</p>
+            <a href="#" class="inline-flex items-center gap-1.5 mt-3 h-10 px-4 rounded-full bg-[#0C1F31] hover:bg-[#091621] text-white font-bold text-[13px] transition"><i data-lucide="download" class="w-3.5 h-3.5"></i> Download deck.pdf</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="dev-note rounded-xl px-4 py-3 items-start gap-3">
+        <i data-lucide="info" class="w-4 h-4 text-[#AE6B0A] shrink-0 mt-0.5"></i>
+        <div>
+          <p class="text-[11px] font-bold uppercase tracking-widest text-[#AE6B0A] mb-1">Optional field</p>
+          <p class="text-sm text-slate-700 leading-relaxed">The whole "Get the slides" block is <b>OPTIONAL per presentation</b>. If <code>meta_slides_pdf</code> is empty on the video post, hide this card entirely and show a simple "Slides not shared for this session" note in its place.</p>
+        </div>
+      </div>
+
+      <!-- POINTER -->
+      <div class="rounded-2xl border border-[#E7EBEF] bg-[#FDECEF] p-5">
+        <p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] mb-1">Coming up</p>
+        <p class="font-jakarta font-extrabold text-[15px] text-[#0C1F31] leading-snug">Funding Summit 2026</p>
+        <p class="text-xs text-[#6A7581] mt-1 leading-relaxed">25 September 2026 · Sandton. Reserve your seat while they last.</p>
+        <a href="event-single-in-person.html" class="inline-flex w-full items-center justify-center gap-1.5 mt-3 h-10 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold text-[13px] transition">See the event <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i></a>
+      </div>
+    </div>
+  </aside>
+</main>
+
+<footer class="bg-slate-100 border-t-2 border-dashed border-slate-400 relative overflow-hidden">
+  <div class="absolute inset-0 opacity-30 pointer-events-none" style="background:repeating-linear-gradient(45deg,transparent,transparent 8px,rgba(100,116,139,.18) 8px,rgba(100,116,139,.18) 16px)"></div>
+  <div class="relative max-w-7xl mx-auto px-4 sm:px-6 py-6 text-center">
+    <p class="text-[10px] sm:text-[11px] font-bold uppercase tracking-widest text-slate-600 flex items-center justify-center gap-1.5"><i data-lucide="construction" class="w-3.5 h-3.5 text-slate-500"></i> Footer placeholder &middot; design pending</p>
+    <p class="text-[11px] text-slate-500 mt-2">&copy; 2026 SME South Africa</p>
+  </div>
+</footer>
+
+<div id="overlay-root"></div>
+<div id="toast" class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-[95]"></div>
+
+<script>
+  function showToast(m){const el=document.getElementById('toast');el.classList.remove('hidden');el.innerHTML=`<div class="bg-[#0C1F31] text-white rounded-full pl-3 pr-5 py-2.5 shadow-2xl flex items-center gap-2 text-sm font-semibold" style="border-left:4px solid #29A37A"><i data-lucide="check-circle" class="w-4 h-4" style="color:#29A37A"></i><span>${m}</span></div>`;lucide.createIcons();setTimeout(()=>{el.classList.add('hidden');el.innerHTML='';},2400);}
+
+  function playVideo(){ showToast('YouTube iframe swaps in at build.'); }
+  function submitReg(e){
+    e.preventDefault();
+    document.getElementById('regBlock').classList.add('hidden');
+    document.getElementById('slidesUnlocked').classList.remove('hidden');
+    lucide.createIcons();
+    showToast('Slides emailed — download unlocked below.');
+  }
+
+  const BRIEF = {
+    title:'Keynote / Speaker Presentation (Single)',
+    sub:'CPT <code>video_library</code>',
+    purpose:'Standalone reading view for a single keynote or speaker recording. Same chrome as an event page, but the primary object is the video (not the room). Reg form is a lead-capture that gates the slide-deck download — nothing is unlocked without it.',
+    data:'Video (CPT <code>video_library</code>): <code>{ post_title, post_name, post_excerpt (description), meta_speaker, meta_speaker_role, meta_speaker_avatar, meta_speaker_socials { linkedin, x }, meta_event_ref (parent event), meta_duration ("42:18"), meta_date (ISO), meta_yt_id (required), meta_slides_pdf (OPTIONAL), meta_takeaways [] }</code>. The whole "Get the slides" sidebar block is conditional on <code>meta_slides_pdf</code> being present.',
+    logic:'Template = <code>single-video-library.php</code>. Thumbnail is displayed initially; on click swap to YouTube <code>iframe</code> (privacy-mode <code>youtube-nocookie.com/embed/{id}?autoplay=1</code>) — cuts first-paint weight. Reg form POSTs to <code>/wp-json/sme/v1/slides-request</code> with <code>{ video_slug, name, email, company? }</code>; server records the lead + emails the signed slides URL + toggles the client to the "unlocked" state showing the direct download.',
+    components:'Hero (breadcrumb + chip row: Keynote type / event / duration / date + title + subtitle) · Video wrap (thumb + YT play overlay) · About prose · Key takeaways bullet list · Related presentations grid (3-col) · Sidebar: Speaker card (author-preview design), Reg form or Unlocked download state, "Coming up" pointer to the next in-person event.',
+    specs:'<b>Hero:</b> hero-bg gradient max-w-[1200px] py-12. Chip row: Keynote (#FDECEF/#DC183C), Event pill (white/10 white), duration + date with muted icon text. H1 Plus Jakarta 800 30/48px leading 1.05.<br/><b>Video wrap:</b> rounded-2xl aspect 16/9 bg #0C1F31 shadow 0 20px 40px -20px rgba(0,0,0,.3). Thumb opacity .85. Play 80×80 rounded-full #DC183C/95 shadow 0 12px 40px black/.4 — hover scale 1.06. YT-brand pill top-left rgba(255,255,255,.9) #0C1F31 uppercase 10.9px.<br/><b>Prose:</b> H2 Plus Jakarta 800 24px #0C1F31 mt-2rem. P 16.3px line-height 1.8 #121A21. UL disc pl-1.3rem.<br/><b>Speaker card:</b> rounded-2xl border #E7EBEF p-5. Eyebrow 10px uppercase #DC183C. Avatar 64×64 rounded-full gradient #DC183C→#FF9900 (photo overlay when present). Name Jakarta 800; role #DC183C 13px 600; social pills 28×28 rounded-full slate-100 hover #FDECEF/#DC183C.<br/><b>Reg form:</b> rounded-2xl border #E7EBEF bg white p-5. Inputs h-11 bg slate-50 border #E7EBEF focus border #DC183C. Submit h-12 rounded-xl #DC183C hover #B0142F white 700 with download icon. On submit → hide form, reveal green Unlocked card (border #29A37A/40, bg gradient #29A37A/15→05) with check icon + direct download button (h-10 rounded-full #0C1F31).<br/><b>Dev-only notes:</b> two dashed #FF9900/50 blocks — one under the video (explains the YT-embed swap), one under the reg form (flags <code>meta_slides_pdf</code> as OPTIONAL per presentation).'
+  };
+
+  function toggleDevMode(){const on=document.body.classList.toggle('dev-on');const b=document.getElementById('devToggle');if(b)b.classList.toggle('on',on);lucide.createIcons();}
+  function closeOverlay(id){const el=document.getElementById(id);if(!el)return;el.classList.remove('open');setTimeout(()=>{if(el&&el.parentNode)el.remove();},300);}
+  function openBrief(){
+    const b=BRIEF;
+    const sec=(i,l,h)=>`<div class="px-6 py-4 border-t border-slate-100"><p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] flex items-center gap-1.5 mb-2"><i data-lucide="${i}" class="w-3.5 h-3.5"></i>${l}</p><div class="text-sm text-slate-600 leading-relaxed">${h}</div></div>`;
+    document.getElementById('overlay-root').innerHTML=`<div class="ov" id="ov"><div class="ov-bg" onclick="closeOverlay('ov')"></div><div class="drawer"><div class="sticky top-0 z-10 bg-[#0C1F31] text-white px-6 py-5 flex items-start justify-between"><div><p class="text-[10px] font-bold uppercase tracking-widest text-[#FF9900] mb-1">Dev Brief</p><h3 class="font-jakarta font-extrabold text-lg leading-tight">${b.title}</h3><p class="text-xs text-white/60 mt-1">${b.sub}</p></div><button onclick="closeOverlay('ov')" class="text-white/60 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button></div>${sec('target','Purpose',b.purpose)}${sec('database','Data model',b.data)}${sec('git-branch','Logic',b.logic)}${sec('boxes','Components',b.components)}${sec('ruler','Spec values',b.specs)}</div></div>`;
+    requestAnimationFrame(()=>{const o=document.getElementById('ov');if(o)o.classList.add('open');});
+    lucide.createIcons();
+  }
+
+  lucide.createIcons();
+</script>
+</body>
+</html>
