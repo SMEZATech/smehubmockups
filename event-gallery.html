@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Annual SME Funding Gala 2025 — Photo Gallery — SME South Africa</title>
+  <meta name="description" content="Photos from the 2025 Annual SME Funding Gala — 180 founders, 32 investors, one late night." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script><script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  <script>tailwind.config={theme:{extend:{fontFamily:{jakarta:['Plus Jakarta Sans','sans-serif'],inter:['Inter','system-ui','sans-serif']}}}};</script>
+  <style>
+    html,body{font-family:'Inter',system-ui,sans-serif;} .font-jakarta{font-family:'Plus Jakarta Sans',sans-serif;letter-spacing:.005em;}
+    .hero-bg{background:linear-gradient(115deg,#0C1F31 0%,#0C1F31 50%,#2b1626 80%,#5e1a2c 115%);}
+    .dot-pattern{background-image:radial-gradient(rgba(255,255,255,.07) 1px,transparent 1.5px);background-size:22px 22px;}
+    .masonry{column-count:1;column-gap:1rem;}
+    @media (min-width:640px){ .masonry{column-count:2;} }
+    @media (min-width:1024px){ .masonry{column-count:3;} }
+    .masonry .photo{break-inside:avoid;margin-bottom:1rem;border-radius:1rem;overflow:hidden;position:relative;cursor:zoom-in;background:#0C1F31;}
+    .masonry .photo img{width:100%;display:block;transition:transform .5s;}
+    .masonry .photo:hover img{transform:scale(1.04);}
+    .masonry .photo .zoom{position:absolute;top:.6rem;right:.6rem;width:32px;height:32px;background:rgba(0,0,0,.5);color:#fff;border-radius:999px;display:grid;place-items:center;opacity:0;transition:opacity .2s;}
+    .masonry .photo:hover .zoom{opacity:1;}
+    .lightbox{position:fixed;inset:0;z-index:80;background:rgba(0,0,0,.92);display:none;align-items:center;justify-content:center;padding:1rem;}
+    .lightbox.open{display:flex;}
+    .lightbox img{max-width:96vw;max-height:88vh;border-radius:.75rem;}
+    .lightbox .lb-btn{position:absolute;top:1.25rem;right:1.25rem;width:44px;height:44px;background:rgba(255,255,255,.1);color:#fff;border-radius:999px;display:grid;place-items:center;cursor:pointer;}
+    .lightbox .lb-prev,.lightbox .lb-next{position:absolute;top:50%;transform:translateY(-50%);width:52px;height:52px;background:rgba(255,255,255,.1);color:#fff;border-radius:999px;display:grid;place-items:center;cursor:pointer;}
+    .lightbox .lb-prev{left:1.5rem;} .lightbox .lb-next{right:1.5rem;}
+    .lightbox .caption{position:absolute;bottom:1.5rem;left:50%;transform:translateX(-50%);color:#fff;font-size:.9rem;background:rgba(0,0,0,.5);padding:.5rem 1rem;border-radius:999px;}
+    .dev-badge{display:none;} body.dev-on .dev-badge{display:inline-flex;} #devToggle.on{background:#DC183C;color:#fff;border-color:#DC183C;}
+    .ov{position:fixed;inset:0;z-index:90;} .ov-bg{position:absolute;inset:0;background:rgba(12,31,49,.45);backdrop-filter:blur(2px);opacity:0;transition:opacity .3s;} .ov.open .ov-bg{opacity:1;}
+    .drawer{position:absolute;right:0;top:0;height:100%;width:100%;max-width:440px;background:#fff;box-shadow:-12px 0 40px rgba(12,31,49,.25);overflow-y:auto;transform:translateX(100%);transition:transform .3s cubic-bezier(.2,.7,.2,1);} .ov.open .drawer{transform:translateX(0);}
+  </style>
+</head>
+<body class="bg-[#FCFCFC] text-[#121A21] antialiased">
+<header class="bg-slate-100 border-b-2 border-dashed border-slate-400 relative overflow-hidden">
+  <div class="absolute inset-0 opacity-30 pointer-events-none" style="background:repeating-linear-gradient(45deg,transparent,transparent 8px,rgba(100,116,139,.18) 8px,rgba(100,116,139,.18) 16px)"></div>
+  <div class="relative max-w-7xl mx-auto px-4 sm:px-6 h-14 flex items-center gap-3 sm:gap-4">
+    <a href="public-home.html" class="flex items-center gap-2 shrink-0 opacity-70 hover:opacity-100 transition">
+      <img src="assets/logo-icon.png" alt="SME South Africa" class="w-7 h-7" />
+      <span class="font-jakarta font-extrabold text-[13px] tracking-tight text-slate-700 hidden sm:inline">SME South Africa</span>
+    </a>
+    <span class="mx-1 hidden sm:inline w-px h-5 bg-slate-300"></span>
+    <p class="text-[10px] sm:text-[11px] font-bold uppercase tracking-widest text-slate-600 flex items-center gap-1.5"><i data-lucide="construction" class="w-3.5 h-3.5 text-slate-500"></i> Header placeholder &middot; design pending</p>
+    <div class="ml-auto flex items-center gap-2">
+      <button id="devToggle" onclick="toggleDevMode()" class="inline-flex items-center gap-1.5 px-2.5 h-8 rounded-full bg-white border border-slate-300 hover:border-[#DC183C] hover:text-[#DC183C] text-[11px] font-bold uppercase tracking-wider text-slate-600 transition"><i data-lucide="code-2" class="w-3.5 h-3.5"></i><span class="hidden sm:inline">Dev</span></button>
+      <a href="index.html" class="inline-flex items-center gap-1.5 px-3 h-8 rounded-full bg-white border border-slate-300 hover:border-slate-500 text-[11px] font-bold text-slate-700 transition"><i data-lucide="arrow-left" class="w-3.5 h-3.5"></i><span class="hidden sm:inline">Launcher</span></a>
+    </div>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero-bg text-white relative overflow-hidden">
+  <div class="absolute inset-0 dot-pattern opacity-70 pointer-events-none"></div>
+  <div class="max-w-[1200px] mx-auto px-4 sm:px-6 py-12 relative">
+    <nav aria-label="Breadcrumb" class="text-xs text-white/55 flex items-center flex-wrap gap-x-1.5 mb-4"><a href="public-home.html" class="hover:text-white transition">Home</a><span class="text-white/30">›</span><a href="events.html" class="hover:text-white transition">Events</a><span class="text-white/30">›</span><a href="event-library.html" class="hover:text-white transition">Library</a><span class="text-white/30">›</span><span class="text-white/85 font-medium truncate">Gala 2025 Gallery</span></nav>
+    <p class="inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-widest text-[#FF9900] mb-3"><i data-lucide="images" class="w-3.5 h-3.5"></i> Photo gallery</p>
+    <h1 class="font-jakarta font-extrabold text-3xl sm:text-5xl leading-[1.05] tracking-tight">Annual SME Funding Gala 2025
+      <button onclick="openBrief()" class="dev-badge align-middle ml-2 w-7 h-7 rounded-full bg-[#FF9900] text-[#0C1F31] items-center justify-center text-[12px] font-bold">i</button>
+    </h1>
+    <p class="mt-3 text-white/70 max-w-2xl text-lg">27 September 2025 · Focus Rooms, Sandton · Photos by Naledi Studio</p>
+    <div class="mt-6 flex flex-wrap items-center gap-3">
+      <button onclick="downloadAll()" class="inline-flex items-center gap-1.5 h-10 px-4 rounded-full bg-white text-[#0C1F31] hover:bg-slate-100 font-bold text-sm transition"><i data-lucide="download" class="w-4 h-4"></i> Download album</button>
+      <button onclick="shareAlbum()" class="inline-flex items-center gap-1.5 h-10 px-4 rounded-full bg-white/10 hover:bg-white/15 text-white font-bold text-sm transition"><i data-lucide="share-2" class="w-4 h-4"></i> Share</button>
+      <span class="ml-2 text-sm text-white/50"><span id="photoCount">–</span> photos · high-res</span>
+    </div>
+  </div>
+</section>
+
+<!-- CATEGORY CHIPS -->
+<div class="sticky top-0 z-30 bg-white/95 backdrop-blur border-b border-[#E7EBEF]">
+  <div class="max-w-[1200px] mx-auto px-4 sm:px-6 py-3 overflow-x-auto no-scrollbar">
+    <div id="catChips" class="flex items-center gap-2 min-w-max"></div>
+  </div>
+</div>
+
+<!-- MASONRY -->
+<main class="max-w-[1200px] mx-auto px-4 sm:px-6 py-10">
+  <div id="masonry" class="masonry"></div>
+
+  <!-- RELATED PAST EVENTS -->
+  <section class="mt-16">
+    <div class="flex items-baseline justify-between mb-5">
+      <h2 class="font-jakarta font-extrabold text-2xl text-[#0C1F31]">Other past events</h2>
+      <a href="event-library.html" class="text-sm font-bold text-[#DC183C] inline-flex items-center gap-1.5">View library <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i></a>
+    </div>
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+      <a href="event-gallery.html" class="group bg-white rounded-2xl border border-[#E7EBEF] overflow-hidden hover:shadow-lg hover:-translate-y-0.5 transition">
+        <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&q=80&w=600" alt="" class="w-full h-40 object-cover" onerror="this.onerror=null;this.src='https://placehold.co/600x400/0C1F31/476472?text=SME'"/>
+        <div class="p-4">
+          <p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C]">14 photos</p>
+          <p class="font-jakarta font-extrabold text-[#0C1F31] mt-1 group-hover:text-[#DC183C] transition">Township Economy Playbook</p>
+          <p class="text-xs text-[#6A7581] mt-1">14 Jun 2025 · Braamfontein</p>
+        </div>
+      </a>
+      <a href="event-gallery.html" class="group bg-white rounded-2xl border border-[#E7EBEF] overflow-hidden hover:shadow-lg hover:-translate-y-0.5 transition">
+        <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&q=80&w=600" alt="" class="w-full h-40 object-cover" onerror="this.onerror=null;this.src='https://placehold.co/600x400/0C1F31/476472?text=SME'"/>
+        <div class="p-4">
+          <p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C]">22 photos</p>
+          <p class="font-jakarta font-extrabold text-[#0C1F31] mt-1 group-hover:text-[#DC183C] transition">Founders' Networking Evening</p>
+          <p class="text-xs text-[#6A7581] mt-1">2 May 2025 · Cape Town</p>
+        </div>
+      </a>
+      <a href="event-gallery.html" class="group bg-white rounded-2xl border border-[#E7EBEF] overflow-hidden hover:shadow-lg hover:-translate-y-0.5 transition">
+        <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&q=80&w=600" alt="" class="w-full h-40 object-cover" onerror="this.onerror=null;this.src='https://placehold.co/600x400/0C1F31/476472?text=SME'"/>
+        <div class="p-4">
+          <p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C]">30 photos</p>
+          <p class="font-jakarta font-extrabold text-[#0C1F31] mt-1 group-hover:text-[#DC183C] transition">B-BBEE Compliance Summit</p>
+          <p class="text-xs text-[#6A7581] mt-1">18 Mar 2025 · Sandton</p>
+        </div>
+      </a>
+    </div>
+  </section>
+</main>
+
+<footer class="bg-slate-100 border-t-2 border-dashed border-slate-400 relative overflow-hidden">
+  <div class="absolute inset-0 opacity-30 pointer-events-none" style="background:repeating-linear-gradient(45deg,transparent,transparent 8px,rgba(100,116,139,.18) 8px,rgba(100,116,139,.18) 16px)"></div>
+  <div class="relative max-w-7xl mx-auto px-4 sm:px-6 py-6 text-center">
+    <p class="text-[10px] sm:text-[11px] font-bold uppercase tracking-widest text-slate-600 flex items-center justify-center gap-1.5"><i data-lucide="construction" class="w-3.5 h-3.5 text-slate-500"></i> Footer placeholder &middot; design pending</p>
+    <p class="text-[11px] text-slate-500 mt-2">&copy; 2026 SME South Africa</p>
+  </div>
+</footer>
+
+<!-- LIGHTBOX -->
+<div id="lightbox" class="lightbox" onclick="if(event.target===this)closeLightbox()">
+  <button class="lb-btn" onclick="closeLightbox()"><i data-lucide="x" class="w-5 h-5"></i></button>
+  <button class="lb-prev" onclick="navLightbox(-1)"><i data-lucide="chevron-left" class="w-5 h-5"></i></button>
+  <button class="lb-next" onclick="navLightbox(1)"><i data-lucide="chevron-right" class="w-5 h-5"></i></button>
+  <img id="lbImg" src="" alt="" />
+  <p id="lbCaption" class="caption"></p>
+</div>
+
+<div id="overlay-root"></div>
+<div id="toast" class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-[95]"></div>
+
+<script>
+  function showToast(m){const el=document.getElementById('toast');el.classList.remove('hidden');el.innerHTML=`<div class="bg-[#0C1F31] text-white rounded-full pl-3 pr-5 py-2.5 shadow-2xl flex items-center gap-2 text-sm font-semibold" style="border-left:4px solid #29A37A"><i data-lucide="check-circle" class="w-4 h-4" style="color:#29A37A"></i><span>${m}</span></div>`;lucide.createIcons();setTimeout(()=>{el.classList.add('hidden');el.innerHTML='';},2400);}
+
+  const PHOTOS = [
+    {src:'https://images.unsplash.com/photo-1556761175-5973dc0f32e7', cat:'Stage',       cap:'Opening keynote — State of SA Funding'},
+    {src:'https://images.unsplash.com/photo-1511795409834-ef04bbd61622', cat:'Stage',    cap:'Founder pitch session'},
+    {src:'https://images.unsplash.com/photo-1559523161-0fc0d8b38a7a', cat:'Networking', cap:'Foyer arrival'},
+    {src:'https://images.unsplash.com/photo-1552664730-d307ca884978', cat:'Networking', cap:'Investor meet & greet'},
+    {src:'https://images.unsplash.com/photo-1600880292203-757bb62b4baf', cat:'Awards',   cap:'2025 Founder of the Year'},
+    {src:'https://images.unsplash.com/photo-1554224155-6726b3ff858f', cat:'Dinner',     cap:'Dinner service — table 12'},
+    {src:'https://images.unsplash.com/photo-1611162617474-5b21e879e113', cat:'Networking', cap:'Networking window II'},
+    {src:'https://images.unsplash.com/photo-1522071820081-009f0129c71c', cat:'Panel',    cap:'The LP fireside chat'},
+    {src:'https://images.unsplash.com/photo-1542744173-8e7e53415bb0', cat:'Stage',      cap:'Q&A with the audience'},
+    {src:'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40', cat:'Dinner',   cap:'Toasts and speeches'},
+    {src:'https://images.unsplash.com/photo-1505373877841-8d25f7d46678', cat:'Networking', cap:'Founders exchanging cards'},
+    {src:'https://images.unsplash.com/photo-1553729459-efe14ef6055d', cat:'Awards',     cap:'Rising Star of the Year 2025'},
+    {src:'https://images.unsplash.com/photo-1551288049-bebda4e38f71', cat:'Panel',      cap:'Panel discussion'},
+    {src:'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d', cat:'Networking', cap:'The bar at 9:30 pm'},
+    {src:'https://images.unsplash.com/photo-1589829085413-56de8ae18c73', cat:'Stage',   cap:'Closing thoughts'},
+    {src:'https://images.unsplash.com/photo-1450101499163-c8848c66ca85', cat:'Dinner',  cap:'Table 8 celebration'}
+  ].map(p=> ({...p, src: p.src + '?auto=format&fit=crop&q=80&w=800'}));
+
+  document.getElementById('photoCount').textContent = PHOTOS.length;
+
+  const CATS = ['All', ...new Set(PHOTOS.map(p=>p.cat))];
+  let activeCat = 'All';
+
+  function renderChips(){
+    document.getElementById('catChips').innerHTML = CATS.map(c=>{
+      const count = c==='All' ? PHOTOS.length : PHOTOS.filter(p=>p.cat===c).length;
+      const active = c===activeCat;
+      return `<button onclick="setCat('${c}')" class="shrink-0 px-4 py-2 rounded-full text-sm font-semibold border transition-colors ${active?'bg-[#DC183C] text-white border-[#DC183C]':'bg-white text-slate-600 border-[#E7EBEF] hover:bg-slate-50'}">${c} <span class="ml-1 opacity-60">${count}</span></button>`;
+    }).join('');
+  }
+
+  function renderMasonry(){
+    const filtered = activeCat==='All' ? PHOTOS : PHOTOS.filter(p=>p.cat===activeCat);
+    document.getElementById('masonry').innerHTML = filtered.map((p,i)=>`
+      <div class="photo" onclick="openLightbox(${PHOTOS.indexOf(p)})">
+        <img src="${p.src}" alt="${p.cap}" loading="lazy" onerror="this.onerror=null;this.src='https://placehold.co/800x600/0C1F31/476472?text=Photo'"/>
+        <span class="zoom"><i data-lucide="maximize-2" class="w-3.5 h-3.5"></i></span>
+      </div>
+    `).join('');
+    lucide.createIcons();
+  }
+  function setCat(c){ activeCat=c; renderChips(); renderMasonry(); }
+
+  let lbIndex = 0;
+  function openLightbox(i){ lbIndex=i; updateLightbox(); document.getElementById('lightbox').classList.add('open'); document.body.style.overflow='hidden'; }
+  function closeLightbox(){ document.getElementById('lightbox').classList.remove('open'); document.body.style.overflow=''; }
+  function navLightbox(dir){ lbIndex = (lbIndex + dir + PHOTOS.length) % PHOTOS.length; updateLightbox(); }
+  function updateLightbox(){ document.getElementById('lbImg').src = PHOTOS[lbIndex].src; document.getElementById('lbCaption').textContent = `${lbIndex+1} / ${PHOTOS.length} — ${PHOTOS[lbIndex].cap}`; }
+  document.addEventListener('keydown', e=>{
+    if(!document.getElementById('lightbox').classList.contains('open')) return;
+    if(e.key==='ArrowLeft') navLightbox(-1);
+    else if(e.key==='ArrowRight') navLightbox(1);
+    else if(e.key==='Escape') closeLightbox();
+  });
+
+  function downloadAll(){ showToast('Album ZIP will generate server-side.'); }
+  function shareAlbum(){ navigator.clipboard?.writeText(location.href); showToast('Album link copied.'); }
+
+  renderChips(); renderMasonry();
+
+  const BRIEF = {
+    title:'Event Photo Gallery',
+    sub:'CPT <code>event</code> (past) + <code>meta_gallery</code>',
+    purpose:'Post-event photo archive for a single past event. Standalone URL per event so the marketing team can share to attendees and to social. Doubles as a proof-point on the pre-event pages ("look at last year").',
+    data:'Reads <code>meta_gallery [{ src, srcset?, category, caption, alt, w, h }]</code> attached to a past event post. Optional <code>meta_photo_credit</code> ("Photos by …") + <code>meta_download_zip_url</code> (S3-generated). Categories are free-text tags per photo (Stage / Networking / Awards / Dinner / Panel).',
+    logic:'Template = <code>single-event-gallery.php</code>, or route <code>/events/{slug}/gallery/</code>. Masonry: CSS <code>column-count</code> 1/2/3 responsive; images <code>loading="lazy"</code>. Category chips filter client-side. Lightbox is vanilla JS — click, arrow keys, Esc, prev/next buttons. Download album triggers a signed ZIP URL (server-generated). Related-events row surfaces up to 3 sibling past-event galleries.',
+    components:'Hero (breadcrumb + eyebrow + title + subtitle w/ credit + Download/Share buttons + photo count) · Sticky category chip bar · Masonry grid · Lightbox with keyboard nav · Related-events grid.',
+    specs:'<b>Masonry:</b> column-count 1/2/3 at 640/1024. Photo tile rounded-2xl, hover img scale 1.04 (500ms), zoom pill 32×32 rgba(0,0,0,.5) top-right fades in on hover.<br/><b>Chip bar:</b> sticky top-0 white/95 backdrop-blur border-b #E7EBEF py-3. Chips h-9 rounded-full active #DC183C white, inactive white slate-600 border #E7EBEF; count in opacity-60 tail.<br/><b>Lightbox:</b> rgba(0,0,0,.92) fullscreen, img max 96vw / 88vh rounded-xl. Prev/Next 52×52 rounded-full white/10 at left/right center. Close 44×44 top-right. Caption pill bottom-center bg black/50 rounded-full.<br/><b>Related:</b> 3-col lg, rounded-2xl border #E7EBEF, thumbnail 160px cover, eyebrow "N photos" 10px uppercase #DC183C, title Jakarta 800 hover #DC183C, meta 12px #6A7581.'
+  };
+
+  function toggleDevMode(){const on=document.body.classList.toggle('dev-on');const b=document.getElementById('devToggle');if(b)b.classList.toggle('on',on);lucide.createIcons();}
+  function closeOverlay(id){const el=document.getElementById(id);if(!el)return;el.classList.remove('open');setTimeout(()=>{if(el&&el.parentNode)el.remove();},300);}
+  function openBrief(){
+    const b=BRIEF;
+    const sec=(i,l,h)=>`<div class="px-6 py-4 border-t border-slate-100"><p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] flex items-center gap-1.5 mb-2"><i data-lucide="${i}" class="w-3.5 h-3.5"></i>${l}</p><div class="text-sm text-slate-600 leading-relaxed">${h}</div></div>`;
+    document.getElementById('overlay-root').innerHTML=`<div class="ov" id="ov"><div class="ov-bg" onclick="closeOverlay('ov')"></div><div class="drawer"><div class="sticky top-0 z-10 bg-[#0C1F31] text-white px-6 py-5 flex items-start justify-between"><div><p class="text-[10px] font-bold uppercase tracking-widest text-[#FF9900] mb-1">Dev Brief</p><h3 class="font-jakarta font-extrabold text-lg leading-tight">${b.title}</h3><p class="text-xs text-white/60 mt-1">${b.sub}</p></div><button onclick="closeOverlay('ov')" class="text-white/60 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button></div>${sec('target','Purpose',b.purpose)}${sec('database','Data model',b.data)}${sec('git-branch','Logic',b.logic)}${sec('boxes','Components',b.components)}${sec('ruler','Spec values',b.specs)}</div></div>`;
+    requestAnimationFrame(()=>{const o=document.getElementById('ov');if(o)o.classList.add('open');});
+    lucide.createIcons();
+  }
+
+  lucide.createIcons();
+</script>
+</body>
+</html>
