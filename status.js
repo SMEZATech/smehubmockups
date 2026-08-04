@@ -63,7 +63,7 @@ window.MOCKUP_STATUS = {
   "public-search.html": "finalised",
   "public-404.html": "finalised"
 };
-window.MOCKUP_STATUS_PUBLISHED = "2026-08-04T08:16:10.065Z";
+window.MOCKUP_STATUS_PUBLISHED = "2026-08-04T08:36:27.496Z";
 /* Developer builds (staging) — { mockup file: { url, status } }; status: "pending-review" | "reviewed" | "approved" */
 window.MOCKUP_DEV = {
   "public-home.html": {"url":"https://smesastg.wpengine.com/","status":"reviewed"},
@@ -95,7 +95,12 @@ window.MOCKUP_DEV = {
   "public-terms.html": {"url":"https://smesastg.wpengine.com/terms-of-use/","status":"reviewed"},
   "public-refunds.html": {"url":"https://smesastg.wpengine.com/refund-and-cancellation/","status":"reviewed"},
   "public-popia.html": {"url":"https://smesastg.wpengine.com/popia/","status":"reviewed"},
-  "public-advertising-disclosure.html": {"url":"https://smesastg.wpengine.com/advertising-disclosure/","status":"reviewed"}
+  "public-advertising-disclosure.html": {"url":"https://smesastg.wpengine.com/advertising-disclosure/","status":"reviewed"},
+  "public-help.html": {"url":"https://smesastg.wpengine.com/help/","status":"pending-review"},
+  "public-help-category.html": {"url":"https://smesastg.wpengine.com/help-category/getting-started/","status":"pending-review"},
+  "public-help-article.html": {"url":"https://smesastg.wpengine.com/help/how-to-change-email-or-password/","status":"pending-review"},
+  "public-support-ticket.html": {"url":"https://smesastg.wpengine.com/tickets/","status":"pending-review"},
+  "public-404.html": {"url":"https://smesastg.wpengine.com/404","status":"pending-review"}
 };
 /* Group overrides — { mockup file: "Group name" }; overrides default NAV grouping in index.html */
 window.MOCKUP_GROUPS = {
