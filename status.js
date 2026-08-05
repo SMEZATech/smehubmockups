@@ -53,6 +53,8 @@ window.MOCKUP_STATUS = {
   "event-single-online.html": "under-review",
   "event-library.html": "under-review",
   "event-presentation.html": "under-review",
+  "public-glossary.html": "finalised",
+  "public-glossary-term.html": "finalised",
   "newsletter.html": "finalised",
   "newsletter-issue.html": "finalised",
   "podcast.html": "finalised",
@@ -67,7 +69,7 @@ window.MOCKUP_STATUS = {
   "public-search.html": "finalised",
   "public-404.html": "finalised"
 };
-window.MOCKUP_STATUS_PUBLISHED = "2026-08-04T08:36:27.496Z";
+window.MOCKUP_STATUS_PUBLISHED = "2026-08-05T08:16:48.190Z";
 /* Developer builds (staging) — { mockup file: { url, status } }; status: "pending-review" | "reviewed" | "approved" */
 window.MOCKUP_DEV = {
   "public-home.html": {"url":"https://smesastg.wpengine.com/","status":"reviewed"},
@@ -91,8 +93,6 @@ window.MOCKUP_DEV = {
   "public-brand.html": {"url":"https://smesastg.wpengine.com/brands/partnerstack/","status":"pending-review"},
   "public-guides.html": {"url":"https://smesastg.wpengine.com/sme-resources/guides/","status":"reviewed"},
   "public-guide.html": {"url":"https://smesastg.wpengine.com/sme-resource/test-guide/","status":"reviewed"},
-  "public-glossary.html": {"url":"https://smesouthafrica.co.za/glossary/","status":"pending-review"},
-  "public-glossary-term.html": {"url":"https://smesouthafrica.co.za/glossary/revenue-streams/","status":"pending-review"},
   "public-shop.html": {"url":"https://smesouthafrica.co.za/shop/","status":""},
   "public-about.html": {"url":"https://smesastg.wpengine.com/about/","status":"reviewed"},
   "public-contact.html": {"url":"https://smesastg.wpengine.com/contact-us/","status":"reviewed"},
@@ -102,6 +102,8 @@ window.MOCKUP_DEV = {
   "public-refunds.html": {"url":"https://smesastg.wpengine.com/refund-and-cancellation/","status":"reviewed"},
   "public-popia.html": {"url":"https://smesastg.wpengine.com/popia/","status":"reviewed"},
   "public-advertising-disclosure.html": {"url":"https://smesastg.wpengine.com/advertising-disclosure/","status":"reviewed"},
+  "public-glossary.html": {"url":"https://smesouthafrica.co.za/glossary/","status":"pending-review"},
+  "public-glossary-term.html": {"url":"https://smesouthafrica.co.za/glossary/revenue-streams/","status":"pending-review"},
   "public-help.html": {"url":"https://smesastg.wpengine.com/help/","status":"pending-review"},
   "public-help-category.html": {"url":"https://smesastg.wpengine.com/help-category/getting-started/","status":"pending-review"},
   "public-help-article.html": {"url":"https://smesastg.wpengine.com/help/how-to-change-email-or-password/","status":"pending-review"},
