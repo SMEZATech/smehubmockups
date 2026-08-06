@@ -53,7 +53,9 @@ window.MOCKUP_STATUS = {
   "event-single-online.html": "under-review",
   "event-library.html": "under-review",
   "event-presentation.html": "under-review",
+  "public-glossary.html": "finalised",
   "public-glossary-category.html": "under-review",
+  "public-glossary-term.html": "finalised",
   "newsletter.html": "finalised",
   "newsletter-issue.html": "finalised",
   "podcast.html": "finalised",
@@ -68,7 +70,7 @@ window.MOCKUP_STATUS = {
   "public-search.html": "finalised",
   "public-404.html": "finalised"
 };
-window.MOCKUP_STATUS_PUBLISHED = "2026-08-04T08:36:27.496Z";
+window.MOCKUP_STATUS_PUBLISHED = "2026-08-06T06:33:14.461Z";
 /* Developer builds (staging) — { mockup file: { url, status } }; status: "pending-review" | "reviewed" | "approved" */
 window.MOCKUP_DEV = {
   "public-home.html": {"url":"https://smesastg.wpengine.com/","status":"reviewed"},
@@ -92,8 +94,6 @@ window.MOCKUP_DEV = {
   "public-brand.html": {"url":"https://smesastg.wpengine.com/brands/partnerstack/","status":"pending-review"},
   "public-guides.html": {"url":"https://smesastg.wpengine.com/sme-resources/guides/","status":"reviewed"},
   "public-guide.html": {"url":"https://smesastg.wpengine.com/sme-resource/test-guide/","status":"reviewed"},
-  "public-glossary.html": {"url":"https://smesouthafrica.co.za/glossary/","status":"pending-review"},
-  "public-glossary-term.html": {"url":"https://smesouthafrica.co.za/glossary/revenue-streams/","status":"pending-review"},
   "public-shop.html": {"url":"https://smesouthafrica.co.za/shop/","status":""},
   "public-about.html": {"url":"https://smesastg.wpengine.com/about/","status":"reviewed"},
   "public-contact.html": {"url":"https://smesastg.wpengine.com/contact-us/","status":"reviewed"},
@@ -107,6 +107,7 @@ window.MOCKUP_DEV = {
   "public-help-category.html": {"url":"https://smesastg.wpengine.com/help-category/getting-started/","status":"pending-review"},
   "public-help-article.html": {"url":"https://smesastg.wpengine.com/help/how-to-change-email-or-password/","status":"pending-review"},
   "public-support-ticket.html": {"url":"https://smesastg.wpengine.com/tickets/","status":"pending-review"},
+  "public-search.html": {"url":"https://smesastg.wpengine.com/search/","status":"pending-review"},
   "public-404.html": {"url":"https://smesastg.wpengine.com/404","status":"pending-review"}
 };
 /* Group overrides — { mockup file: "Group name" }; overrides default NAV grouping in index.html */
