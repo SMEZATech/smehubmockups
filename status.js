@@ -69,7 +69,7 @@ window.MOCKUP_STATUS = {
   "public-search.html": "finalised",
   "public-404.html": "finalised"
 };
-window.MOCKUP_STATUS_PUBLISHED = "2026-08-05T08:28:30.500Z";
+window.MOCKUP_STATUS_PUBLISHED = "2026-08-06T06:33:14.461Z";
 /* Developer builds (staging) — { mockup file: { url, status } }; status: "pending-review" | "reviewed" | "approved" */
 window.MOCKUP_DEV = {
   "public-home.html": {"url":"https://smesastg.wpengine.com/","status":"reviewed"},
@@ -102,8 +102,6 @@ window.MOCKUP_DEV = {
   "public-refunds.html": {"url":"https://smesastg.wpengine.com/refund-and-cancellation/","status":"reviewed"},
   "public-popia.html": {"url":"https://smesastg.wpengine.com/popia/","status":"reviewed"},
   "public-advertising-disclosure.html": {"url":"https://smesastg.wpengine.com/advertising-disclosure/","status":"reviewed"},
-  "public-glossary.html": {"url":"https://smesouthafrica.co.za/glossary/","status":"pending-review"},
-  "public-glossary-term.html": {"url":"https://smesouthafrica.co.za/glossary/revenue-streams/","status":"pending-review"},
   "public-help.html": {"url":"https://smesastg.wpengine.com/help/","status":"pending-review"},
   "public-help-category.html": {"url":"https://smesastg.wpengine.com/help-category/getting-started/","status":"pending-review"},
   "public-help-article.html": {"url":"https://smesastg.wpengine.com/help/how-to-change-email-or-password/","status":"pending-review"},
