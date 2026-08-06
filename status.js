@@ -53,6 +53,7 @@ window.MOCKUP_STATUS = {
   "event-single-online.html": "under-review",
   "event-library.html": "under-review",
   "event-presentation.html": "under-review",
+  "public-glossary-category.html": "under-review",
   "newsletter.html": "finalised",
   "newsletter-issue.html": "finalised",
   "podcast.html": "finalised",
