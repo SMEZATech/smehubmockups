@@ -22,9 +22,23 @@
     .faq-row .chev{margin-left:auto;transition:transform .2s;}
     .faq-row[open] .chev{transform:rotate(180deg);}
     .faq-row p{padding:0 0 1rem;color:#4a5563;line-height:1.7;font-size:.95rem;}
+    .yt-wrap{position:relative;background:#0C1F31;border-radius:1rem;overflow:hidden;aspect-ratio:16/9;box-shadow:0 20px 40px -20px rgba(0,0,0,.3);cursor:pointer;}
+    .yt-wrap .play-c{position:absolute;inset:0;margin:auto;width:80px;height:80px;border-radius:999px;background:rgba(220,24,60,.95);color:#fff;display:grid;place-items:center;box-shadow:0 12px 40px rgba(0,0,0,.4);transition:transform .2s;}
+    .yt-wrap:hover .play-c{transform:scale(1.06);}
+    .yt-wrap img{width:100%;height:100%;object-fit:cover;opacity:.85;}
+    .yt-wrap .yt-brand{position:absolute;top:1rem;left:1rem;font-size:.68rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;background:rgba(255,255,255,.9);color:#0C1F31;padding:.2rem .5rem;border-radius:.35rem;}
+    .gallery-track{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none;}
+    .gallery-track::-webkit-scrollbar{display:none;}
+    .gallery-track img{scroll-snap-align:start;border-radius:12px;height:220px;min-width:300px;object-fit:cover;flex-shrink:0;cursor:pointer;transition:opacity .15s;}
+    .gallery-track img:hover{opacity:.85;}
     .dev-badge{display:none;} body.dev-on .dev-badge{display:inline-flex;} #devToggle.on{background:#DC183C;color:#fff;border-color:#DC183C;}
     .ov{position:fixed;inset:0;z-index:80;} .ov-bg{position:absolute;inset:0;background:rgba(12,31,49,.45);backdrop-filter:blur(2px);opacity:0;transition:opacity .3s;} .ov.open .ov-bg{opacity:1;}
     .drawer{position:absolute;right:0;top:0;height:100%;width:100%;max-width:440px;background:#fff;box-shadow:-12px 0 40px rgba(12,31,49,.25);overflow-y:auto;transform:translateX(100%);transition:transform .3s cubic-bezier(.2,.7,.2,1);} .ov.open .drawer{transform:translateX(0);}
+    .lb{position:fixed;inset:0;z-index:90;background:rgba(0,0,0,.92);display:none;place-items:center;}
+    .lb.open{display:grid;}
+    .lb img{max-width:90vw;max-height:85vh;object-fit:contain;border-radius:12px;}
+    .dev-note{background:linear-gradient(135deg,rgba(255,153,0,.12),rgba(255,153,0,.04));border:1px dashed rgba(255,153,0,.5);display:none;}
+    body.dev-on .dev-note{display:flex;}
   </style>
 </head>
 <body class="bg-[#FCFCFC] text-[#121A21] antialiased">
@@ -54,7 +68,7 @@
         <div class="flex items-center gap-2 flex-wrap mb-4">
           <span class="px-3 py-1.5 rounded-full text-[10px] font-bold bg-[#FF9900] text-[#0C1F31] uppercase tracking-wider">Upcoming</span>
           <span class="px-3 py-1.5 rounded-full text-[10px] font-bold bg-white/10 text-white uppercase tracking-wider inline-flex items-center gap-1.5"><i data-lucide="map-pin" class="w-3.5 h-3.5"></i> In-person</span>
-          <span class="px-3 py-1.5 rounded-full text-[10px] font-bold bg-[#FDECEF] text-[#DC183C] uppercase tracking-wider">Funding Summit</span>
+          <span class="px-3 py-1.5 rounded-full text-[10px] font-bold bg-[#FDECEF] text-[#DC183C] uppercase tracking-wider">Funding & Investment</span>
         </div>
         <h1 class="font-jakarta font-extrabold text-3xl sm:text-5xl leading-[1.05] tracking-tight">Annual SME Funding Gala 2026
           <button onclick="openBrief()" class="dev-badge align-middle ml-2 w-7 h-7 rounded-full bg-[#FF9900] text-[#0C1F31] items-center justify-center text-[12px] font-bold">i</button>
@@ -86,8 +100,19 @@
 <!-- BODY -->
 <main class="max-w-[1200px] mx-auto px-4 sm:px-6 py-12 grid lg:grid-cols-[1fr,320px] gap-10">
   <article>
-    <!-- HERO IMAGE -->
-    <img src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&q=80&w=1200" alt="Funding Gala 2025 stage" class="w-full h-72 sm:h-96 object-cover rounded-2xl mb-10 shadow-lg" />
+
+    <!-- TRAILER VIDEO -->
+    <section class="mb-10">
+      <div class="yt-wrap" onclick="playTrailer()">
+        <img src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&q=80&w=1200" alt="Funding Gala 2025 trailer" />
+        <span class="yt-brand">YouTube</span>
+        <div class="play-c"><i data-lucide="play" class="w-8 h-8 ml-1"></i></div>
+      </div>
+      <div class="dev-note rounded-xl px-4 py-3 items-start gap-3 mt-3">
+        <i data-lucide="info" class="w-4 h-4 text-[#AE6B0A] shrink-0 mt-0.5"></i>
+        <p class="text-sm text-slate-700 leading-relaxed"><b>Trailer/recap video</b> — optional per event. If <code>meta_yt_trailer_id</code> is set, render a YouTube embed (privacy-mode <code>youtube-nocookie.com/embed/{id}</code>). For upcoming events this is a hype trailer; for past events it becomes a recap reel. If empty, fall back to the hero image below.</p>
+      </div>
+    </section>
 
     <!-- ABOUT -->
     <section class="mb-12">
@@ -105,7 +130,7 @@
       <p class="text-sm text-[#6A7581] mb-6">Times are SAST. Programme subject to minor changes.</p>
       <div class="bg-white rounded-2xl border border-[#E7EBEF] p-6">
         <div class="agenda-row"><div class="agenda-time">6:00 pm</div><div><p class="font-jakarta font-extrabold text-[#0C1F31]">Registration &amp; welcome drink</p><p class="text-sm text-[#6A7581] mt-1">Focus Rooms foyer — check in at the SME desk.</p></div></div>
-        <div class="agenda-row"><div class="agenda-time">6:45 pm</div><div><p class="font-jakarta font-extrabold text-[#0C1F31]">Opening keynote — State of SA Funding 2026</p><p class="text-sm text-[#6A7581] mt-1">Featured speaker to be announced. 40 minutes + audience Q&amp;A.</p></div></div>
+        <div class="agenda-row"><div class="agenda-time">6:45 pm</div><div><p class="font-jakarta font-extrabold text-[#0C1F31]">Opening keynote — State of SA Funding 2026</p><p class="text-sm text-[#6A7581] mt-1">Dr. Dineo Molefe. 40 minutes + audience Q&amp;A.</p></div></div>
         <div class="agenda-row"><div class="agenda-time">7:30 pm</div><div><p class="font-jakarta font-extrabold text-[#0C1F31]">Founder pitches — three companies raising now</p><p class="text-sm text-[#6A7581] mt-1">7-minute pitches, 5-minute investor panel response.</p></div></div>
         <div class="agenda-row"><div class="agenda-time">8:15 pm</div><div><p class="font-jakarta font-extrabold text-[#0C1F31]">Networking window I &amp; dinner service</p><p class="text-sm text-[#6A7581] mt-1">Pre-matched introductions delivered via the event app.</p></div></div>
         <div class="agenda-row"><div class="agenda-time">9:15 pm</div><div><p class="font-jakarta font-extrabold text-[#0C1F31]">Fireside — the LP perspective</p><p class="text-sm text-[#6A7581] mt-1">On-stage conversation with a South African LP allocator.</p></div></div>
@@ -113,14 +138,121 @@
       </div>
     </section>
 
-    <!-- SPEAKERS -->
+    <!-- KEYNOTE SPEAKERS -->
     <section class="mb-12">
-      <h2 class="font-jakarta font-extrabold text-2xl sm:text-3xl text-[#0C1F31] mb-6">Speakers &amp; panelists</h2>
-      <div class="grid sm:grid-cols-2 gap-4">
-        <div class="bg-white rounded-2xl border border-[#E7EBEF] p-5 flex items-center gap-4"><div class="w-14 h-14 rounded-full bg-[#0C1F31] text-white grid place-items-center font-jakarta font-extrabold shrink-0">TN</div><div class="min-w-0"><p class="font-jakarta font-extrabold text-[#0C1F31]">Thandi Ngwenya</p><p class="text-sm text-[#6A7581]">Partner — Base Capital</p></div></div>
-        <div class="bg-white rounded-2xl border border-[#E7EBEF] p-5 flex items-center gap-4"><div class="w-14 h-14 rounded-full bg-[#0C1F31] text-white grid place-items-center font-jakarta font-extrabold shrink-0">SM</div><div class="min-w-0"><p class="font-jakarta font-extrabold text-[#0C1F31]">Sipho Mabaso</p><p class="text-sm text-[#6A7581]">Investment Lead — SEFA</p></div></div>
-        <div class="bg-white rounded-2xl border border-[#E7EBEF] p-5 flex items-center gap-4"><div class="w-14 h-14 rounded-full bg-[#0C1F31] text-white grid place-items-center font-jakarta font-extrabold shrink-0">LK</div><div class="min-w-0"><p class="font-jakarta font-extrabold text-[#0C1F31]">Lerato Kgomo</p><p class="text-sm text-[#6A7581]">Angel Investor</p></div></div>
-        <div class="bg-white rounded-2xl border border-[#E7EBEF] p-5 flex items-center gap-4"><div class="w-14 h-14 rounded-full bg-[#0C1F31] text-white grid place-items-center font-jakarta font-extrabold shrink-0">JR</div><div class="min-w-0"><p class="font-jakarta font-extrabold text-[#0C1F31]">Jared Roberts</p><p class="text-sm text-[#6A7581]">Head of Deals — 4Di</p></div></div>
+      <h2 class="font-jakarta font-extrabold text-2xl sm:text-3xl text-[#0C1F31] mb-6">Keynote speakers</h2>
+      <div class="space-y-5">
+
+        <!-- Speaker 1 — with presentation deck -->
+        <div class="bg-white rounded-2xl border border-[#E7EBEF] p-6">
+          <div class="flex flex-col sm:flex-row gap-5">
+            <a href="event-speaker.html" class="relative w-20 h-20 sm:w-24 sm:h-24 rounded-full shrink-0 shadow-lg overflow-hidden block">
+              <div class="absolute inset-0 bg-gradient-to-br from-[#0C1F31] to-[#5e1a2c] grid place-items-center font-jakarta font-extrabold text-white text-2xl" aria-hidden="true">DM</div>
+            </a>
+            <div class="min-w-0 flex-1">
+              <a href="event-speaker.html" class="font-jakarta font-extrabold text-xl text-[#0C1F31] hover:text-[#DC183C] transition">Dr. Dineo Molefe</a>
+              <p class="text-[#DC183C] font-semibold mt-0.5">Head of Advisory &middot; Base Capital</p>
+              <p class="text-sm text-[#6A7581] mt-2 leading-relaxed">Dineo has led financial-modelling workshops with more than 800 SA founders since 2020. She'll deliver the opening keynote on where SA funding actually landed in 2026.</p>
+              <div class="flex items-center gap-2 mt-3">
+                <a href="#" class="w-7 h-7 rounded-full bg-slate-100 hover:bg-[#FDECEF] hover:text-[#DC183C] grid place-items-center transition" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor" class="w-3.5 h-3.5"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.42v1.56h.05c.47-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.07 2.07 0 1 1 0-4.14 2.07 2.07 0 0 1 0 4.14zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.8 0 0 .78 0 1.73v20.54C0 23.22.8 24 1.77 24h20.45C23.2 24 24 23.22 24 22.27V1.73C24 .78 23.2 0 22.22 0z"/></svg></a>
+                <a href="#" class="w-7 h-7 rounded-full bg-slate-100 hover:bg-[#FDECEF] hover:text-[#DC183C] grid place-items-center transition" aria-label="X"><svg viewBox="0 0 24 24" fill="currentColor" class="w-3.5 h-3.5"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+              </div>
+              <div class="mt-4 p-3 rounded-xl bg-slate-50 border border-[#E7EBEF] inline-flex items-center gap-3">
+                <div class="w-9 h-9 rounded-lg bg-[#DC183C]/10 grid place-items-center shrink-0"><i data-lucide="file-down" class="w-4 h-4 text-[#DC183C]"></i></div>
+                <div>
+                  <p class="text-xs font-bold text-[#0C1F31]">State of SA Funding 2026 — slides</p>
+                  <p class="text-[11px] text-[#6A7581]">PDF · 2.4 MB</p>
+                </div>
+                <button onclick="showToast('Slide deck download — gated by reg form at build.')" class="ml-auto px-3 h-8 rounded-lg bg-[#0C1F31] hover:bg-[#091621] text-white text-xs font-bold transition">Download</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Speaker 2 — no deck -->
+        <div class="bg-white rounded-2xl border border-[#E7EBEF] p-6">
+          <div class="flex flex-col sm:flex-row gap-5">
+            <a href="event-speaker.html" class="relative w-20 h-20 sm:w-24 sm:h-24 rounded-full shrink-0 shadow-lg overflow-hidden block">
+              <div class="absolute inset-0 bg-gradient-to-br from-[#DC183C] to-[#FF9900] grid place-items-center font-jakarta font-extrabold text-white text-2xl" aria-hidden="true">TN</div>
+            </a>
+            <div class="min-w-0 flex-1">
+              <a href="event-speaker.html" class="font-jakarta font-extrabold text-xl text-[#0C1F31] hover:text-[#DC183C] transition">Thandi Ngwenya</a>
+              <p class="text-[#DC183C] font-semibold mt-0.5">Partner &middot; Base Capital</p>
+              <p class="text-sm text-[#6A7581] mt-2 leading-relaxed">Thandi leads the early-stage portfolio at Base Capital — R380m under management across 14 SA startups. She'll join the founder-pitch panel response.</p>
+              <div class="flex items-center gap-2 mt-3">
+                <a href="#" class="w-7 h-7 rounded-full bg-slate-100 hover:bg-[#FDECEF] hover:text-[#DC183C] grid place-items-center transition" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor" class="w-3.5 h-3.5"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.42v1.56h.05c.47-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.07 2.07 0 1 1 0-4.14 2.07 2.07 0 0 1 0 4.14zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.8 0 0 .78 0 1.73v20.54C0 23.22.8 24 1.77 24h20.45C23.2 24 24 23.22 24 22.27V1.73C24 .78 23.2 0 22.22 0z"/></svg></a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Speaker 3 -->
+        <div class="bg-white rounded-2xl border border-[#E7EBEF] p-6">
+          <div class="flex flex-col sm:flex-row gap-5">
+            <a href="event-speaker.html" class="relative w-20 h-20 sm:w-24 sm:h-24 rounded-full shrink-0 shadow-lg overflow-hidden block">
+              <div class="absolute inset-0 bg-gradient-to-br from-[#29A37A] to-[#0C1F31] grid place-items-center font-jakarta font-extrabold text-white text-2xl" aria-hidden="true">SM</div>
+            </a>
+            <div class="min-w-0 flex-1">
+              <a href="event-speaker.html" class="font-jakarta font-extrabold text-xl text-[#0C1F31] hover:text-[#DC183C] transition">Sipho Mabaso</a>
+              <p class="text-[#DC183C] font-semibold mt-0.5">Investment Lead &middot; SEFA</p>
+              <p class="text-sm text-[#6A7581] mt-2 leading-relaxed">Sipho manages SEFA's Western Cape SME book — R120m in active facilities. He'll walk through what's changed in DFI diligence this year during the fireside.</p>
+              <div class="flex items-center gap-2 mt-3">
+                <a href="#" class="w-7 h-7 rounded-full bg-slate-100 hover:bg-[#FDECEF] hover:text-[#DC183C] grid place-items-center transition" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor" class="w-3.5 h-3.5"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.42v1.56h.05c.47-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.07 2.07 0 1 1 0-4.14 2.07 2.07 0 0 1 0 4.14zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.8 0 0 .78 0 1.73v20.54C0 23.22.8 24 1.77 24h20.45C23.2 24 24 23.22 24 22.27V1.73C24 .78 23.2 0 22.22 0z"/></svg></a>
+              </div>
+              <div class="mt-4 p-3 rounded-xl bg-slate-50 border border-[#E7EBEF] inline-flex items-center gap-3">
+                <div class="w-9 h-9 rounded-lg bg-[#DC183C]/10 grid place-items-center shrink-0"><i data-lucide="file-down" class="w-4 h-4 text-[#DC183C]"></i></div>
+                <div>
+                  <p class="text-xs font-bold text-[#0C1F31]">DFI Diligence — what changed in 2026</p>
+                  <p class="text-[11px] text-[#6A7581]">PDF · 1.8 MB</p>
+                </div>
+                <button onclick="showToast('Slide deck download — gated by reg form at build.')" class="ml-auto px-3 h-8 rounded-lg bg-[#0C1F31] hover:bg-[#091621] text-white text-xs font-bold transition">Download</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Speaker 4 -->
+        <div class="bg-white rounded-2xl border border-[#E7EBEF] p-6">
+          <div class="flex flex-col sm:flex-row gap-5">
+            <a href="event-speaker.html" class="relative w-20 h-20 sm:w-24 sm:h-24 rounded-full shrink-0 shadow-lg overflow-hidden block">
+              <div class="absolute inset-0 bg-gradient-to-br from-[#FF9900] to-[#DC183C] grid place-items-center font-jakarta font-extrabold text-white text-2xl" aria-hidden="true">LK</div>
+            </a>
+            <div class="min-w-0 flex-1">
+              <a href="event-speaker.html" class="font-jakarta font-extrabold text-xl text-[#0C1F31] hover:text-[#DC183C] transition">Lerato Kgomo</a>
+              <p class="text-[#DC183C] font-semibold mt-0.5">Angel Investor</p>
+              <p class="text-sm text-[#6A7581] mt-2 leading-relaxed">Lerato is a solo angel with 8 active tickets across fintech, health-tech and agri. She'll share what makes a first meeting land from the LP perspective.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="dev-note rounded-xl px-4 py-3 items-start gap-3 mt-4">
+        <i data-lucide="info" class="w-4 h-4 text-[#AE6B0A] shrink-0 mt-0.5"></i>
+        <p class="text-sm text-slate-700 leading-relaxed"><b>Keynote Speakers repeater:</b> each entry = <code>{ speaker_ref (→ speaker CPT), meta_slides_pdf (OPTIONAL), meta_role_at_event }</code>. The slide-deck download per speaker is <b>optional</b> — if <code>meta_slides_pdf</code> is empty for a speaker, hide the download row. Speaker name links to <code>event-speaker.html</code> (their profile page).</p>
+      </div>
+    </section>
+
+    <!-- EVENT GALLERY (in-page slider) -->
+    <section class="mb-12">
+      <div class="flex items-center justify-between mb-4">
+        <h2 class="font-jakarta font-extrabold text-2xl sm:text-3xl text-[#0C1F31]">Event gallery</h2>
+        <div class="flex items-center gap-2">
+          <button onclick="scrollGallery(-1)" class="w-9 h-9 rounded-full border border-[#E7EBEF] grid place-items-center text-slate-500 hover:bg-slate-50 transition"><i data-lucide="chevron-left" class="w-4 h-4"></i></button>
+          <button onclick="scrollGallery(1)" class="w-9 h-9 rounded-full border border-[#E7EBEF] grid place-items-center text-slate-500 hover:bg-slate-50 transition"><i data-lucide="chevron-right" class="w-4 h-4"></i></button>
+        </div>
+      </div>
+      <div id="galleryTrack" class="gallery-track">
+        <img src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&q=80&w=500" alt="Gala photo 1" onclick="openLightbox(0)" />
+        <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&q=80&w=500" alt="Gala photo 2" onclick="openLightbox(1)" />
+        <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&q=80&w=500" alt="Gala photo 3" onclick="openLightbox(2)" />
+        <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&q=80&w=500" alt="Gala photo 4" onclick="openLightbox(3)" />
+        <img src="https://images.unsplash.com/photo-1505373877841-8d25f7d46678?auto=format&fit=crop&q=80&w=500" alt="Gala photo 5" onclick="openLightbox(4)" />
+        <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&q=80&w=500" alt="Gala photo 6" onclick="openLightbox(5)" />
+      </div>
+      <p class="text-xs text-[#6A7581] mt-3 flex items-center gap-1.5"><i data-lucide="image" class="w-3.5 h-3.5"></i> 6 photos from Funding Gala 2025 &middot; scroll or use arrows</p>
+      <div class="dev-note rounded-xl px-4 py-3 items-start gap-3 mt-3">
+        <i data-lucide="info" class="w-4 h-4 text-[#AE6B0A] shrink-0 mt-0.5"></i>
+        <p class="text-sm text-slate-700 leading-relaxed"><b>Gallery slider</b> — repeater field <code>meta_gallery []</code> (array of image IDs). Only rendered for past in-person events that have uploaded photos. Horizontal scroll with snap, left/right arrows, click-to-lightbox. No separate gallery page.</p>
       </div>
     </section>
 
@@ -133,7 +265,7 @@
         </div>
         <div class="p-6 grid sm:grid-cols-3 gap-5">
           <div><p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] mb-1">Address</p><p class="text-sm text-[#121A21] leading-relaxed">Focus Rooms<br/>1 Design Blvd, Illovo<br/>Johannesburg, 2196</p></div>
-          <div><p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] mb-1">Parking</p><p class="text-sm text-[#121A21] leading-relaxed">Free basement parking. Enter via Boundary Road. Overflow at Wanderers Office Park.</p></div>
+          <div><p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] mb-1">Parking</p><p class="text-sm text-[#121A21] leading-relaxed">Basement parking available. Enter via Boundary Road. Overflow at Wanderers Office Park.</p></div>
           <div><p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] mb-1">Getting there</p><p class="text-sm text-[#121A21] leading-relaxed">Gautrain: 8 min drive from Sandton station. Uber pickup at gate 3.</p></div>
         </div>
       </div>
@@ -161,16 +293,16 @@
     </section>
   </article>
 
-  <!-- SIDEBAR: quick facts + related -->
+  <!-- SIDEBAR -->
   <aside>
     <div class="lg:sticky lg:top-6 space-y-5">
       <div class="bg-white rounded-2xl border border-[#E7EBEF] p-5">
         <p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] mb-3">Quick facts</p>
         <ul class="space-y-3 text-sm">
           <li class="flex items-center gap-2.5 text-[#121A21]"><i data-lucide="users" class="w-4 h-4 text-[#6A7581]"></i> 180 attendees expected</li>
-          <li class="flex items-center gap-2.5 text-[#121A21]"><i data-lucide="mic" class="w-4 h-4 text-[#6A7581]"></i> 4 confirmed panelists</li>
+          <li class="flex items-center gap-2.5 text-[#121A21]"><i data-lucide="mic" class="w-4 h-4 text-[#6A7581]"></i> 4 keynote speakers</li>
           <li class="flex items-center gap-2.5 text-[#121A21]"><i data-lucide="utensils" class="w-4 h-4 text-[#6A7581]"></i> Dinner &amp; drinks included</li>
-          <li class="flex items-center gap-2.5 text-[#121A21]"><i data-lucide="car" class="w-4 h-4 text-[#6A7581]"></i> Free basement parking</li>
+          <li class="flex items-center gap-2.5 text-[#121A21]"><i data-lucide="car" class="w-4 h-4 text-[#6A7581]"></i> Basement parking</li>
           <li class="flex items-center gap-2.5 text-[#121A21]"><i data-lucide="accessibility" class="w-4 h-4 text-[#6A7581]"></i> Wheelchair accessible</li>
         </ul>
       </div>
@@ -183,14 +315,22 @@
         </div>
       </div>
       <div class="rounded-2xl border border-[#E7EBEF] bg-[#FDECEF] p-5">
-        <p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] mb-2">Missed an event?</p>
-        <p class="font-jakarta font-extrabold text-[15px] text-[#0C1F31] leading-snug">Watch past events</p>
-        <p class="text-xs text-[#6A7581] mt-1 leading-relaxed">Replays and photo galleries from previous Galas and summits.</p>
-        <a href="event-library.html" class="inline-flex w-full items-center justify-center gap-1.5 mt-3 h-10 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold text-[13px] transition">Open event library <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i></a>
+        <p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] mb-2">Browse all events</p>
+        <p class="font-jakarta font-extrabold text-[15px] text-[#0C1F31] leading-snug">See what's coming up</p>
+        <p class="text-xs text-[#6A7581] mt-1 leading-relaxed">In-person summits, online webinars and replays.</p>
+        <a href="events.html" class="inline-flex w-full items-center justify-center gap-1.5 mt-3 h-10 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold text-[13px] transition">All events <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i></a>
       </div>
     </div>
   </aside>
 </main>
+
+<!-- LIGHTBOX -->
+<div id="lightbox" class="lb" onclick="closeLightbox()">
+  <button class="absolute top-4 right-4 text-white/70 hover:text-white z-10"><i data-lucide="x" class="w-8 h-8"></i></button>
+  <button onclick="event.stopPropagation();navLB(-1)" class="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 text-white grid place-items-center"><i data-lucide="chevron-left" class="w-5 h-5"></i></button>
+  <button onclick="event.stopPropagation();navLB(1)" class="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 text-white grid place-items-center"><i data-lucide="chevron-right" class="w-5 h-5"></i></button>
+  <img id="lbImg" src="" alt="" />
+</div>
 
 <footer class="bg-slate-100 border-t-2 border-dashed border-slate-400 relative overflow-hidden">
   <div class="absolute inset-0 opacity-30 pointer-events-none" style="background:repeating-linear-gradient(45deg,transparent,transparent 8px,rgba(100,116,139,.18) 8px,rgba(100,116,139,.18) 16px)"></div>
@@ -206,18 +346,15 @@
 <script>
   function showToast(m){const el=document.getElementById('toast');el.classList.remove('hidden');el.innerHTML=`<div class="bg-[#0C1F31] text-white rounded-full pl-3 pr-5 py-2.5 shadow-2xl flex items-center gap-2 text-sm font-semibold" style="border-left:4px solid #29A37A"><i data-lucide="check-circle" class="w-4 h-4" style="color:#29A37A"></i><span>${m}</span></div>`;lucide.createIcons();setTimeout(()=>{el.classList.add('hidden');el.innerHTML='';},2400);}
 
-  // Countdown to event date
+  // Countdown
   (function tickCountdown(){
-    const target = new Date(2026, 8, 25, 18, 0, 0); // 25 Sep 2026 18:00 SAST
+    const target = new Date(2026, 8, 25, 18, 0, 0);
     function tick(){
       const diff = target - new Date();
-      if(diff <= 0){ document.getElementById('d1').textContent='LIVE'; document.getElementById('h1').textContent=''; document.getElementById('m1').textContent=''; return; }
-      const d = Math.floor(diff/86400000);
-      const h = Math.floor((diff%86400000)/3600000);
-      const m = Math.floor((diff%3600000)/60000);
-      document.getElementById('d1').textContent=d;
-      document.getElementById('h1').textContent=h;
-      document.getElementById('m1').textContent=m;
+      if(diff <= 0){ document.getElementById('d1').textContent='LIVE'; return; }
+      document.getElementById('d1').textContent=Math.floor(diff/86400000);
+      document.getElementById('h1').textContent=Math.floor((diff%86400000)/3600000);
+      document.getElementById('m1').textContent=Math.floor((diff%3600000)/60000);
     }
     tick(); setInterval(tick, 30000);
   })();
@@ -225,15 +362,37 @@
   function openRegister(){ showToast('Registration flow will route to Woo/EventPrime checkout.'); }
   function addToCalendar(){ showToast('Added — .ics generated at build.'); }
   function copyLink(){ navigator.clipboard?.writeText(location.href); showToast('Link copied.'); }
+  function playTrailer(){ showToast('YouTube iframe swaps in at build (youtube-nocookie.com/embed/{id}).'); }
+
+  // Gallery slider
+  function scrollGallery(dir){
+    const track = document.getElementById('galleryTrack');
+    track.scrollBy({ left: dir * 320, behavior: 'smooth' });
+  }
+
+  // Lightbox
+  const GALLERY_IMGS = [
+    'https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&q=80&w=1200',
+    'https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&q=80&w=1200',
+    'https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&q=80&w=1200',
+    'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&q=80&w=1200',
+    'https://images.unsplash.com/photo-1505373877841-8d25f7d46678?auto=format&fit=crop&q=80&w=1200',
+    'https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&q=80&w=1200'
+  ];
+  let lbIdx = 0;
+  function openLightbox(i){ lbIdx=i; document.getElementById('lbImg').src=GALLERY_IMGS[i]; document.getElementById('lightbox').classList.add('open'); lucide.createIcons(); }
+  function closeLightbox(){ document.getElementById('lightbox').classList.remove('open'); }
+  function navLB(dir){ lbIdx = (lbIdx+dir+GALLERY_IMGS.length) % GALLERY_IMGS.length; document.getElementById('lbImg').src=GALLERY_IMGS[lbIdx]; }
+  document.addEventListener('keydown', e=>{ if(!document.getElementById('lightbox').classList.contains('open')) return; if(e.key==='Escape') closeLightbox(); if(e.key==='ArrowLeft') navLB(-1); if(e.key==='ArrowRight') navLB(1); });
 
   const BRIEF = {
     title:'Single In-person Event',
     sub:'CPT <code>event</code> · meta_type = "IN-PERSON"',
-    purpose:'Dedicated template for in-person events (summits, galas, workshops). Sells the seat: what, when, where, who, why. Live countdown drives urgency; sticky booking card converts.',
-    data:'Extends the base event CPT with in-person fields: <code>meta_venue { name, address, lat, lng, parking_notes, transit_notes, accessibility }</code>, <code>meta_capacity</code>, <code>meta_seats_remaining</code> (computed), <code>meta_ticket_price</code> (ZAR), <code>meta_agenda [{ time, title, notes }]</code>, <code>meta_speakers [{ name, role, avatar, bio }]</code>, <code>meta_faq [{ q, a }]</code>. Seats remaining is queried from the ticketing plugin (Woo/EventPrime).',
-    logic:'Template = <code>single-event.php</code> with a switch on <code>meta_type === "IN-PERSON"</code>. Countdown ticks client-side against <code>meta_start</code>. Booking CTA opens the Woo product tied to the event (SKU on <code>meta_ticket_sku</code>). Add-to-calendar generates a signed .ics from a REST endpoint. Reveals a "Watch past events" side card for non-buyers → event-library.html.',
-    components:'Hero (breadcrumb + status/type/category chips + title + subtitle + 3-tile countdown) · Sticky booking card (date, venue, seats-remaining, price, Reserve/AddToCalendar) · Hero image · About · Agenda (time+title+notes) · Speakers grid · Venue+directions (map placeholder + address, parking, transit) · FAQ (native details/summary) · Final CTA band · Sidebar (quick facts, share, past-events pointer).',
-    specs:'<b>Hero:</b> hero-bg gradient, py-12/16. 2-col at lg: content + 380px sticky booking card. H1 Plus Jakarta 800, 30/48px, leading 1.05. Chip row: Upcoming (#FF9900/#0C1F31), In-person (white/10 + white text), Category (#FDECEF/#DC183C). Countdown tiles 76px min-width, bg white/6 border white/12.<br/><b>Booking card:</b> rounded-2xl bg-white p-5 shadow-2xl. Facts row w/ #DC183C 16px icon + Jakarta 800 15px title + slate-500 13px sub. Price Plus Jakarta 800 24px. Reserve CTA h-12 rounded-xl #DC183C hover #B0142F. Secondary h-11 rounded-xl white border #E7EBEF.<br/><b>Agenda:</b> rounded-2xl border #E7EBEF p-6. Row grid 100px+1fr, py-4 border-t #E7EBEF. Time Plus Jakarta 800 14.4px #DC183C. Title Plus Jakarta 800 #0C1F31, sub 14px #6A7581.<br/><b>Speakers card:</b> rounded-2xl border #E7EBEF p-5. Avatar 56×56 rounded-full #0C1F31 white monogram Jakarta 800.<br/><b>Venue block:</b> map placeholder h-56 diagonal-stripe pattern (build: Google Maps embed). Info grid 3-col sm, eyebrow 10px uppercase #DC183C + 14px address.<br/><b>FAQ:</b> details/summary; row py-4.4 border-t #E7EBEF; chevron rotates 180 on open; body 15.2px #4a5563 line-1.7.'
+    purpose:'Dedicated template for in-person events (summits, galas, workshops). Sells the seat: what, when, where, who, why. Live countdown drives urgency; sticky booking card converts. Includes trailer/recap video (YouTube), keynote speakers with per-speaker deck downloads, and an in-page photo gallery slider. No standalone library or presentation pages — everything lives on this template.',
+    data:'Extends the base event CPT with in-person fields: <code>meta_venue { name, address, lat, lng, parking_notes, transit_notes, accessibility }</code>, <code>meta_capacity</code>, <code>meta_seats_remaining</code> (computed), <code>meta_ticket_price</code> (ZAR), <code>meta_yt_trailer_id</code> (OPTIONAL — YouTube trailer/recap video), <code>meta_agenda [{ time, title, notes }]</code>, <code>meta_speakers [{ speaker_ref, meta_slides_pdf (OPTIONAL), meta_role_at_event }]</code> (repeater — links to speaker CPT, each with optional deck), <code>meta_gallery []</code> (image IDs — in-page slider, past events only), <code>meta_faq [{ q, a }]</code>. Speaker names link to their profile page (<code>event-speaker.html</code>).',
+    logic:'Template = <code>single-event.php</code> with a switch on <code>meta_type === "IN-PERSON"</code>. Countdown ticks client-side against <code>meta_start</code>. Booking CTA opens the Woo product tied to the event. Add-to-calendar generates a signed .ics. Trailer video: if <code>meta_yt_trailer_id</code> is set, render YouTube embed; otherwise fall back to hero image. Speakers section is a repeater that pulls from the speaker CPT — each row shows avatar, name (links to speaker page), role, bio, social links, and optionally a slide-deck download. Gallery slider is a horizontal scroll of images from <code>meta_gallery</code>, with lightbox on click and keyboard nav.',
+    components:'Hero (breadcrumb + status/type/category chips + title + subtitle + 3-tile countdown) · Sticky booking card (date, venue, seats-remaining, price, Reserve/AddToCalendar) · Trailer/recap video (YouTube embed, optional) · About · Agenda · Keynote Speakers repeater (avatar + name → speaker page + role + bio + socials + optional slides download) · Event gallery slider (horizontal scroll + lightbox) · Venue+directions (map + address/parking/transit) · FAQ · Final CTA band · Sidebar (quick facts, share, browse-events pointer).',
+    specs:'<b>Hero:</b> hero-bg gradient, py-12/16. 2-col at lg: content + 380px sticky booking card. H1 Plus Jakarta 800, 30/48px, leading 1.05. Chip row: Upcoming (#FF9900/#0C1F31), In-person (white/10 + white text), Category (#FDECEF/#DC183C). Countdown tiles 76px min-width, bg white/6 border white/12.<br/><b>Trailer video:</b> yt-wrap aspect 16/9 rounded-2xl shadow. Play overlay 80×80 rounded-full #DC183C/95. YouTube-nocookie embed on click.<br/><b>Speaker card:</b> rounded-2xl border #E7EBEF p-6. Avatar 80/96px rounded-full shadow-lg with gradient monogram (different gradient per speaker). Name Plus Jakarta 800 20px → links to speaker profile. Role #DC183C 600. Bio 14px #6A7581. Social pills 28×28 rounded-full. Deck download: p-3 rounded-xl bg slate-50 border #E7EBEF, icon tile 36×36 rounded-lg #DC183C/10, filename 12px 700, size 11px #6A7581, Download btn h-8 rounded-lg #0C1F31.<br/><b>Gallery slider:</b> horizontal scroll with snap, gap 12px, images h-220px min-w-300px rounded-xl object-cover. Left/right arrow buttons 36×36 rounded-full border #E7EBEF. Lightbox: fixed overlay bg black/92, img max 90vw/85vh rounded-xl, arrow nav + Esc to close.'
   };
 
   function toggleDevMode(){const on=document.body.classList.toggle('dev-on');const b=document.getElementById('devToggle');if(b)b.classList.toggle('on',on);lucide.createIcons();}
