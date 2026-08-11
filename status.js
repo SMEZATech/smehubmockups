@@ -48,9 +48,9 @@ window.MOCKUP_STATUS = {
   "single-group.html": "under-review",
   "forums.html": "under-review",
   "member-account.html": "under-review",
-  "events.html": "under-review",
-  "event-single-in-person.html": "under-review",
-  "event-single-online.html": "under-review",
+  "events.html": "finalised",
+  "event-single-in-person.html": "finalised",
+  "event-single-online.html": "finalised",
   "event-speaker.html": "under-review",
   "public-glossary.html": "finalised",
   "public-glossary-category.html": "finalised",
@@ -69,7 +69,7 @@ window.MOCKUP_STATUS = {
   "public-search.html": "finalised",
   "public-404.html": "finalised"
 };
-window.MOCKUP_STATUS_PUBLISHED = "2026-08-11T09:20:35.684Z";
+window.MOCKUP_STATUS_PUBLISHED = "2026-08-11T13:28:46.368Z";
 /* Developer builds (staging) — { mockup file: { url, status } }; status: "pending-review" | "reviewed" | "approved" */
 window.MOCKUP_DEV = {
   "public-home.html": {"url":"https://smesastg.wpengine.com/","status":"reviewed"},
