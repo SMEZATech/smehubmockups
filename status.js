@@ -31,6 +31,7 @@ window.MOCKUP_STATUS = {
   "public-founder-focus-category.html": "finalised",
   "public-funding-summit-category.html": "finalised",
   "public-shop.html": "finalised",
+  "public-product.html": "under-review",
   "public-checkout.html": "finalised",
   "public-auth.html": "finalised",
   "public-about.html": "finalised",
