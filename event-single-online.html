@@ -20,11 +20,6 @@
     .step .num{width:2rem;height:2rem;border-radius:999px;background:#FDECEF;color:#DC183C;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:.85rem;display:grid;place-items:center;}
     .step .step-title{font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;color:#0C1F31;font-size:.92rem;line-height:1.35;}
     .step .step-sub{font-size:.78rem;color:#6A7581;line-height:1.5;margin-top:.15rem;}
-    .yt-wrap{position:relative;background:#0C1F31;border-radius:1rem;overflow:hidden;aspect-ratio:16/9;box-shadow:0 20px 40px -20px rgba(0,0,0,.3);cursor:pointer;}
-    .yt-wrap .play-c{position:absolute;inset:0;margin:auto;width:72px;height:72px;border-radius:999px;background:rgba(220,24,60,.95);color:#fff;display:grid;place-items:center;box-shadow:0 12px 40px rgba(0,0,0,.4);transition:transform .2s;}
-    .yt-wrap:hover .play-c{transform:scale(1.06);}
-    .yt-wrap img{width:100%;height:100%;object-fit:cover;opacity:.85;}
-    .yt-wrap .yt-brand{position:absolute;top:.75rem;left:.75rem;font-size:.68rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;background:rgba(255,255,255,.9);color:#0C1F31;padding:.2rem .5rem;border-radius:.35rem;}
     .dev-badge{display:none;} body.dev-on .dev-badge{display:inline-flex;} #devToggle.on{background:#DC183C;color:#fff;border-color:#DC183C;}
     .dev-note{background:linear-gradient(135deg,rgba(255,153,0,.12),rgba(255,153,0,.04));border:1px dashed rgba(255,153,0,.5);display:none;}
     body.dev-on .dev-note{display:flex;}
@@ -54,64 +49,103 @@
   <div class="absolute inset-0 dot-pattern opacity-70 pointer-events-none"></div>
   <div class="max-w-[1200px] mx-auto px-4 sm:px-6 py-12 sm:py-16 relative">
     <nav aria-label="Breadcrumb" class="text-xs text-white/55 flex items-center flex-wrap gap-x-1.5 mb-5"><a href="public-home.html" class="hover:text-white transition">Home</a><span class="text-white/30">›</span><a href="events.html" class="hover:text-white transition">Events</a><span class="text-white/30">›</span><span class="text-white/85 font-medium truncate">Predictive Analytics for Growth</span></nav>
-    <div class="grid lg:grid-cols-[1fr,380px] gap-8 items-start">
-      <div>
-        <div class="flex items-center gap-2 flex-wrap mb-4">
-          <span class="px-3 py-1.5 rounded-full text-[10px] font-bold bg-[#FF9900] text-[#0C1F31] uppercase tracking-wider">Upcoming</span>
-          <span class="px-3 py-1.5 rounded-full text-[10px] font-bold bg-white/10 text-white uppercase tracking-wider inline-flex items-center gap-1.5"><i data-lucide="video" class="w-3.5 h-3.5"></i> Online webinar</span>
-          <span class="px-3 py-1.5 rounded-full text-[10px] font-bold bg-[#FDECEF] text-[#DC183C] uppercase tracking-wider">Tech &amp; Innovation</span>
-        </div>
-        <h1 class="font-jakarta font-extrabold text-3xl sm:text-5xl leading-[1.05] tracking-tight">How to Use Predictive Analytics to Forecast Growth
-          <button onclick="openBrief()" class="dev-badge align-middle ml-2 w-7 h-7 rounded-full bg-[#FF9900] text-[#0C1F31] items-center justify-center text-[12px] font-bold">i</button>
-        </h1>
+    <div class="max-w-4xl items-start">
+      <div class="flex items-center gap-2 flex-wrap mb-4">
+        <span class="px-3 py-1.5 rounded-full text-[10px] font-bold bg-[#FF9900] text-[#0C1F31] uppercase tracking-wider">Upcoming</span>
+        <span class="px-3 py-1.5 rounded-full text-[10px] font-bold bg-white/10 text-white uppercase tracking-wider inline-flex items-center gap-1.5"><i data-lucide="video" class="w-3.5 h-3.5"></i> Online webinar</span>
+        <span class="px-3 py-1.5 rounded-full text-[10px] font-bold bg-[#FDECEF] text-[#DC183C] uppercase tracking-wider">Tech &amp; Innovation</span>
       </div>
-      <!-- STICKY REGISTER CARD -->
-      <aside class="bg-white text-[#121A21] rounded-2xl p-5 shadow-2xl">
-        <p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] mb-2">Register — no cost</p>
-        <div class="space-y-3 mb-4">
-          <div class="flex items-start gap-2.5"><i data-lucide="calendar" class="w-4 h-4 text-[#DC183C] mt-0.5 shrink-0"></i><div><p class="font-jakarta font-extrabold text-[15px] leading-tight">Thu, 20 Aug 2026</p><p class="text-[13px] text-[#6A7581]">1:00 pm – 2:15 pm (SAST)</p></div></div>
-          <div class="flex items-start gap-2.5"><i data-lucide="video" class="w-4 h-4 text-[#DC183C] mt-0.5 shrink-0"></i><div><p class="font-jakarta font-extrabold text-[15px] leading-tight">Webinar link</p><p class="text-[13px] text-[#6A7581]">Sent 1 hour before start. Also going live on YouTube.</p></div></div>
-          <div class="flex items-start gap-2.5"><i data-lucide="rotate-cw" class="w-4 h-4 text-[#DC183C] mt-0.5 shrink-0"></i><div><p class="font-jakarta font-extrabold text-[15px] leading-tight">Replay available</p><p class="text-[13px] text-[#6A7581]">Registered attendees get the recording + slides.</p></div></div>
-        </div>
-        <form onsubmit="submitRegister(event)" class="space-y-2 mb-1">
-          <input type="text" required placeholder="Full name" class="w-full h-11 rounded-lg border border-[#E7EBEF] px-3 text-sm bg-slate-50 outline-none focus:border-[#DC183C]" />
-          <input type="email" required placeholder="Work email" class="w-full h-11 rounded-lg border border-[#E7EBEF] px-3 text-sm bg-slate-50 outline-none focus:border-[#DC183C]" />
-          <button type="submit" class="w-full h-12 rounded-xl bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold text-sm transition inline-flex items-center justify-center gap-1.5">Save my seat <i data-lucide="arrow-right" class="w-4 h-4"></i></button>
-        </form>
-      </aside>
+      <h1 class="font-jakarta font-extrabold text-3xl sm:text-5xl leading-[1.05] tracking-tight">How to Use Predictive Analytics to Forecast Growth
+        <button onclick="openBrief()" class="dev-badge align-middle ml-2 w-7 h-7 rounded-full bg-[#FF9900] text-[#0C1F31] items-center justify-center text-[12px] font-bold">i</button>
+      </h1>
     </div>
   </div>
 </section>
 
 <!-- BODY -->
-<main class="max-w-[1200px] mx-auto px-4 sm:px-6 py-12 grid lg:grid-cols-[1fr,320px] gap-10">
-  <article>
+<main class="max-w-[1200px] mx-auto px-4 sm:px-6 py-12 flex flex-col lg:grid lg:grid-cols-[1fr,320px] lg:grid-rows-[auto_1fr] gap-10 items-start">
+  
+  <!-- TOP SIDEBAR: Reg Widgets (Mobile: 1st, Desktop: Right Col Top) -->
+  <div class="order-1 lg:col-start-2 lg:row-start-1 w-full space-y-5">
+    
+    <!-- UI TOGGLE (Visible control for switching states) -->
+    <div class="flex items-center gap-1 bg-slate-100 p-1.5 rounded-xl w-full border border-slate-200">
+      <button onclick="setWidgetState('upcoming')" id="btn-upcoming" class="flex-1 py-1.5 rounded-lg text-xs font-bold bg-white shadow-sm text-slate-800 transition">Upcoming</button>
+      <button onclick="setWidgetState('past')" id="btn-past" class="flex-1 py-1.5 rounded-lg text-xs font-bold text-slate-500 hover:text-slate-800 transition">Past</button>
+      <button onclick="setWidgetState('member')" id="btn-member" class="flex-1 py-1.5 rounded-lg text-xs font-bold text-slate-500 hover:text-slate-800 transition">Member</button>
+    </div>
 
-    <!-- REPLAY VIDEO -->
-    <section class="mb-10">
-      <div class="yt-wrap" onclick="playReplay()">
-        <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&q=80&w=1200" alt="Webinar replay thumbnail" />
-        <span class="yt-brand">YouTube</span>
-        <div class="play-c"><i data-lucide="play" class="w-7 h-7 ml-0.5"></i></div>
+    <!-- REGISTER CARD (UPCOMING) -->
+    <div id="upcomingWidget" class="bg-white rounded-2xl border border-[#E7EBEF] p-5 shadow-xl">
+      <p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] mb-2">Register — no cost</p>
+      <div class="space-y-3 mb-4">
+        <div class="flex items-start gap-2.5"><i data-lucide="calendar" class="w-4 h-4 text-[#DC183C] mt-0.5 shrink-0"></i><div><p class="font-jakarta font-extrabold text-[15px] leading-tight">Thu, 20 Aug 2026</p><p class="text-[13px] text-[#6A7581]">1:00 pm – 2:15 pm (SAST)</p></div></div>
+        <div class="flex items-start gap-2.5"><i data-lucide="video" class="w-4 h-4 text-[#DC183C] mt-0.5 shrink-0"></i><div><p class="font-jakarta font-extrabold text-[15px] leading-tight">Webinar link</p><p class="text-[13px] text-[#6A7581]">Sent 1 hour before start. Also going live on YouTube.</p></div></div>
+        <div class="flex items-start gap-2.5"><i data-lucide="rotate-cw" class="w-4 h-4 text-[#DC183C] mt-0.5 shrink-0"></i><div><p class="font-jakarta font-extrabold text-[15px] leading-tight">Replay available</p><p class="text-[13px] text-[#6A7581]">Registered attendees get the recording + slides.</p></div></div>
       </div>
-      <div class="dev-note rounded-xl px-4 py-3 items-start gap-3 mt-3">
-        <i data-lucide="info" class="w-4 h-4 text-[#AE6B0A] shrink-0 mt-0.5"></i>
-        <p class="text-sm text-slate-700 leading-relaxed"><b>Replay video</b> — if <code>meta_replay_url</code> is set (past event), render YouTube embed. If upcoming, this section is hidden entirely. Embed uses <code>youtube-nocookie.com/embed/{id}</code> privacy mode.</p>
+      
+      <div id="upcoming-step-1">
+        <button type="button" onclick="document.getElementById('upcoming-step-1').classList.add('hidden'); document.getElementById('upcoming-step-2').classList.remove('hidden');" class="w-full h-12 rounded-xl bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold text-sm transition inline-flex items-center justify-center gap-1.5">Register now <i data-lucide="arrow-right" class="w-4 h-4"></i></button>
+      </div>
+      <form id="upcoming-step-2" onsubmit="submitRegister(event)" class="hidden space-y-2 mb-1">
+        <input type="text" required placeholder="Full name" class="w-full h-11 rounded-lg border border-[#E7EBEF] px-3 text-sm bg-slate-50 outline-none focus:border-[#DC183C]" />
+        <input type="email" required placeholder="Work email" class="w-full h-11 rounded-lg border border-[#E7EBEF] px-3 text-sm bg-slate-50 outline-none focus:border-[#DC183C]" />
+        <button type="submit" class="w-full h-12 rounded-xl bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold text-sm transition inline-flex items-center justify-center gap-1.5">Save my seat <i data-lucide="check" class="w-4 h-4"></i></button>
+      </form>
+    </div>
+
+    <!-- REGISTER CARD (PAST / ON-DEMAND) -->
+    <div id="pastWidget" class="hidden bg-white rounded-2xl border border-[#E7EBEF] p-5 shadow-xl">
+      <p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] mb-2">On-Demand Replay</p>
+      <div class="space-y-3 mb-4">
+        <div class="flex items-start gap-2.5"><i data-lucide="calendar" class="w-4 h-4 text-[#DC183C] mt-0.5 shrink-0"></i><div><p class="font-jakarta font-extrabold text-[15px] leading-tight">Recorded 20 Aug 2026</p><p class="text-[13px] text-[#6A7581]">75-minute session</p></div></div>
+        <div class="flex items-start gap-2.5"><i data-lucide="play-circle" class="w-4 h-4 text-[#DC183C] mt-0.5 shrink-0"></i><div><p class="font-jakarta font-extrabold text-[15px] leading-tight">Full video replay</p><p class="text-[13px] text-[#6A7581]">Instant access to the recording.</p></div></div>
+        <div class="flex items-start gap-2.5"><i data-lucide="file-down" class="w-4 h-4 text-[#DC183C] mt-0.5 shrink-0"></i><div><p class="font-jakarta font-extrabold text-[15px] leading-tight">Included resources</p><p class="text-[13px] text-[#6A7581]">Slide deck and financial templates.</p></div></div>
+      </div>
+
+      <div id="past-step-1">
+        <button type="button" onclick="document.getElementById('past-step-1').classList.add('hidden'); document.getElementById('past-step-2').classList.remove('hidden');" class="w-full h-12 rounded-xl bg-[#0C1F31] hover:bg-[#091621] text-white font-bold text-sm transition inline-flex items-center justify-center gap-1.5"><i data-lucide="play" class="w-4 h-4"></i> Watch replay</button>
+      </div>
+      <form id="past-step-2" onsubmit="submitReplay(event)" class="hidden space-y-2 mb-1">
+        <input type="text" required placeholder="Full name" class="w-full h-11 rounded-lg border border-[#E7EBEF] px-3 text-sm bg-slate-50 outline-none focus:border-[#DC183C]" />
+        <input type="email" required placeholder="Work email" class="w-full h-11 rounded-lg border border-[#E7EBEF] px-3 text-sm bg-slate-50 outline-none focus:border-[#DC183C]" />
+        <button type="submit" class="w-full h-12 rounded-xl bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold text-sm transition inline-flex items-center justify-center gap-1.5"><i data-lucide="play" class="w-4 h-4"></i> Access video</button>
+      </form>
+    </div>
+
+    <!-- MEMBER CARD (LOGGED IN) -->
+    <div id="memberWidget" class="hidden bg-white rounded-2xl border border-[#E7EBEF] p-6 shadow-xl text-center">
+      <div class="w-16 h-16 mx-auto rounded-full shadow-md overflow-hidden mb-3 border-2 border-white relative">
+         <div class="absolute inset-0 bg-gradient-to-br from-[#DC183C] to-[#FF9900] grid place-items-center font-jakarta font-extrabold text-white text-xl">
+           TJ
+         </div>
+      </div>
+      <p class="text-[10px] font-bold uppercase tracking-widest text-[#29A37A] mb-1">Access Granted</p>
+      <p class="font-jakarta font-extrabold text-[16px] text-[#0C1F31]">You're all set</p>
+      <p class="text-[13px] text-[#6A7581] mt-2 mb-6 leading-relaxed">Your active SME South Africa membership unlocks this session automatically. Enjoy the webinar!</p>
+      <button onclick="copyShareLink()" class="w-full h-11 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-[13px] transition inline-flex items-center justify-center gap-1.5"><i data-lucide="share-2" class="w-4 h-4"></i> Share with a founder</button>
+    </div>
+
+  </div>
+
+  <!-- ARTICLE CONTENT (Mobile: 2nd, Desktop: Left Col Span 2 Rows) -->
+  <article class="order-2 lg:col-start-1 lg:row-start-1 lg:row-span-2 w-full min-w-0">
+
+    <!-- FEATURE IMAGE / VIDEO TRAILER -->
+    <section class="mb-10">
+      <div class="relative rounded-2xl overflow-hidden aspect-[16/9] shadow-lg bg-[#0C1F31] group cursor-pointer" onclick="showToast('YouTube video plays here')">
+        <img src="https://i9.ytimg.com/vi/La3lctj_rIo/maxresdefault.jpg?time=1786441500000&sqp=CJze69MG&rs=AOn4CLBJtomeWpeubxzfm8VQPJMtFO4fNQ" alt="Webinar trailer" class="w-full h-full object-cover opacity-85 group-hover:scale-105 transition duration-500" />
+        <div class="absolute inset-0 m-auto w-20 h-20 rounded-full bg-[#DC183C]/95 text-white grid place-items-center shadow-2xl group-hover:scale-110 transition-transform"><i data-lucide="play" class="w-8 h-8 ml-1"></i></div>
       </div>
     </section>
 
     <!-- ABOUT -->
     <section class="mb-10">
       <h2 class="font-jakarta font-extrabold text-2xl sm:text-3xl text-[#0C1F31] mb-4">About this webinar</h2>
-      <div class="prose">
-        <p>Most SA SME founders skip forecasting because "we don't have enough data." Then they hire the wrong number of people, sit on the wrong inventory, or run out of cash 4 weeks earlier than expected.</p>
-        <p>In 75 minutes we'll walk through the exact 3-model stack our advisors use with founders in the first 24 months of operation — a top-line revenue forecast, a staffing forecast tied to revenue, and an inventory / working-capital forecast tied to both.</p>
-        <p><b>You'll leave with:</b> a spreadsheet template, a checklist of what data to start capturing today, and a recorded run-through you can share with your finance lead.</p>
+      <div class="prose mb-6">
+        <p>In this practical 75-minute live webinar, we explore how South African SME founders can build accurate revenue, staffing, and working capital forecasts with limited historical data.</p>
+        <p>Whether you're preparing for your next funding round, planning headcount for Q4, or managing inventory cash lock-up, learn how to turn light data into actionable growth predictions using bottom-up unit economics.</p>
       </div>
-    </section>
-
-    <!-- WHAT YOU'LL LEARN — plain text -->
-    <section class="mb-10">
       <h2 class="font-jakarta font-extrabold text-2xl sm:text-3xl text-[#0C1F31] mb-4">What you'll learn</h2>
       <div class="prose">
         <ul>
@@ -139,6 +173,7 @@
               <a href="#" class="w-8 h-8 rounded-full bg-slate-100 hover:bg-[#FDECEF] hover:text-[#DC183C] grid place-items-center transition" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.42v1.56h.05c.47-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.07 2.07 0 1 1 0-4.14 2.07 2.07 0 0 1 0 4.14zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.8 0 0 .78 0 1.73v20.54C0 23.22.8 24 1.77 24h20.45C23.2 24 24 23.22 24 22.27V1.73C24 .78 23.2 0 22.22 0z"/></svg></a>
               <a href="#" class="w-8 h-8 rounded-full bg-slate-100 hover:bg-[#FDECEF] hover:text-[#DC183C] grid place-items-center transition" aria-label="X"><svg viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
               <a href="#" class="w-8 h-8 rounded-full bg-slate-100 hover:bg-[#FDECEF] hover:text-[#DC183C] grid place-items-center transition" aria-label="Email"><i data-lucide="mail" class="w-4 h-4"></i></a>
+            </span>
             </div>
             <p class="text-[#6A7581] leading-relaxed mt-4">Karabo has a background in journalism and film &amp; television, and over four years of experience curating content for SA entrepreneurs. He hosts our monthly webinars and works with founders on brand voice and content strategy.</p>
           </div>
@@ -152,7 +187,7 @@
       <div class="bg-white rounded-2xl border border-[#E7EBEF] p-6">
         <div class="flex flex-col sm:flex-row gap-5 sm:gap-6">
           <div class="relative w-24 h-24 sm:w-28 sm:h-28 rounded-full shrink-0 shadow-lg overflow-hidden">
-            <div class="absolute inset-0 bg-gradient-to-br from-[#0C1F31] to-[#5e1a2c] grid place-items-center font-jakarta font-extrabold text-white text-3xl" aria-hidden="true">DM</div>
+            <div class="absolute inset-0 bg-gradient-to-br from-[#DC183C] to-[#FF9900] grid place-items-center font-jakarta font-extrabold text-white text-3xl" aria-hidden="true">DM</div>
           </div>
           <div class="min-w-0">
             <h3 class="font-jakarta font-extrabold text-2xl text-[#0C1F31] tracking-tight">Dr. Dineo Molefe</h3>
@@ -160,6 +195,7 @@
             <div class="flex items-center gap-2 mt-3">
               <a href="#" class="w-8 h-8 rounded-full bg-slate-100 hover:bg-[#FDECEF] hover:text-[#DC183C] grid place-items-center transition" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.42v1.56h.05c.47-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.07 2.07 0 1 1 0-4.14 2.07 2.07 0 0 1 0 4.14zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.8 0 0 .78 0 1.73v20.54C0 23.22.8 24 1.77 24h20.45C23.2 24 24 23.22 24 22.27V1.73C24 .78 23.2 0 22.22 0z"/></svg></a>
               <a href="#" class="w-8 h-8 rounded-full bg-slate-100 hover:bg-[#FDECEF] hover:text-[#DC183C] grid place-items-center transition" aria-label="X"><svg viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+            </span>
             </div>
             <p class="text-[#6A7581] leading-relaxed mt-4">Dineo has led financial-modelling workshops with more than 800 SA founders since 2020, and previously ran analytics at a Jozi fintech unicorn. She'll walk us through the three-model stack live.</p>
           </div>
@@ -167,56 +203,46 @@
       </div>
     </section>
 
-    <!-- PRESENTATION DOWNLOAD -->
-    <section class="mb-10">
-      <h2 class="font-jakarta font-extrabold text-2xl sm:text-3xl text-[#0C1F31] mb-4">Presentation &amp; resources</h2>
-      <div class="bg-white rounded-2xl border border-[#E7EBEF] p-6 space-y-3">
-        <div class="flex items-center gap-4 p-3 rounded-xl bg-slate-50 border border-[#E7EBEF]">
-          <div class="w-10 h-10 rounded-lg bg-[#DC183C]/10 grid place-items-center shrink-0"><i data-lucide="file-down" class="w-5 h-5 text-[#DC183C]"></i></div>
-          <div class="min-w-0 flex-1">
-            <p class="text-sm font-bold text-[#0C1F31] truncate">Predictive Analytics for Growth — slide deck</p>
-            <p class="text-[11px] text-[#6A7581]">PDF · 3.1 MB</p>
-          </div>
-          <button onclick="showToast('Download gated by registration form at build.')" class="shrink-0 px-3 h-8 rounded-lg bg-[#0C1F31] hover:bg-[#091621] text-white text-xs font-bold transition">Download</button>
-        </div>
-        <div class="flex items-center gap-4 p-3 rounded-xl bg-slate-50 border border-[#E7EBEF]">
-          <div class="w-10 h-10 rounded-lg bg-[#29A37A]/10 grid place-items-center shrink-0"><i data-lucide="table" class="w-5 h-5 text-[#29A37A]"></i></div>
-          <div class="min-w-0 flex-1">
-            <p class="text-sm font-bold text-[#0C1F31] truncate">3-Model Forecast — spreadsheet template</p>
-            <p class="text-[11px] text-[#6A7581]">XLSX · 420 KB</p>
-          </div>
-          <button onclick="showToast('Download gated by registration form at build.')" class="shrink-0 px-3 h-8 rounded-lg bg-[#0C1F31] hover:bg-[#091621] text-white text-xs font-bold transition">Download</button>
-        </div>
-      </div>
-      <div class="dev-note rounded-xl px-4 py-3 items-start gap-3 mt-3">
-        <i data-lucide="info" class="w-4 h-4 text-[#AE6B0A] shrink-0 mt-0.5"></i>
-        <p class="text-sm text-slate-700 leading-relaxed"><b>Presentation downloads</b> — repeater field <code>meta_resource_downloads [{ label, file, file_type, file_size }]</code>. Gated: only visible after registration (or for past events, after email capture). Icon colour varies by type: PDF = #DC183C, XLSX/CSV = #29A37A, PPTX = #FF9900. No separate presentation page — downloads live here on the event.</p>
-      </div>
-    </section>
-
   </article>
 
-  <!-- SIDEBAR: How to join widget (replaces quick facts) + past events pointer -->
-  <aside>
-    <div class="lg:sticky lg:top-6 space-y-5">
-      <div class="bg-white rounded-2xl border border-[#E7EBEF] p-5">
-        <p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] mb-4">How to join</p>
-        <div class="space-y-4">
-          <div class="step"><div class="num">1</div><div><p class="step-title">Register in the sidebar</p><p class="step-sub">Name + work email. You'll get an instant confirmation with the calendar file attached.</p></div></div>
-          <div class="step"><div class="num">2</div><div><p class="step-title">One-hour reminder email</p><p class="step-sub">Your webinar link lands 60 minutes before start. Test your audio.</p></div></div>
-          <div class="step"><div class="num">3</div><div><p class="step-title">Join 5 minutes early</p><p class="step-sub">The webinar link activates 30 minutes before start. We also stream live on YouTube.</p></div></div>
-          <div class="step"><div class="num">4</div><div><p class="step-title">Replay + resources</p><p class="step-sub">Recording, slides and the spreadsheet template arrive within 24 hours in your inbox.</p></div></div>
-        </div>
-      </div>
+  <!-- BOTTOM SIDEBAR (Mobile: 3rd, Desktop: Right Col Bottom) -->
+  <aside class="order-3 lg:col-start-2 lg:row-start-2 w-full space-y-5 lg:sticky lg:top-6">
+    
+    <!-- PRESENTATION BLOCK -->
+    <div class="bg-white rounded-2xl border border-[#E7EBEF] p-5">
+      <p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] mb-1">Get the slides</p>
+      <p class="font-jakarta font-extrabold text-[16px] text-[#0C1F31]">Presentation</p>
+      <p class="text-[13px] text-[#6A7581] mt-1 mb-4 leading-relaxed">Download the slide deck and financial templates used in this session.</p>
+      <button onclick="showToast('Slide deck download initialized.')" class="w-full h-10 rounded-lg bg-[#0C1F31] hover:bg-[#091621] text-white text-xs font-bold transition inline-flex items-center justify-center gap-1.5"><i data-lucide="download" class="w-4 h-4"></i> Download PDF</button>
+    </div>
+    
+    <div class="dev-note rounded-xl px-4 py-3 items-start gap-3">
+      <i data-lucide="info" class="w-4 h-4 text-[#AE6B0A] shrink-0 mt-0.5"></i>
+      <p class="text-xs text-slate-700 leading-relaxed"><b>Dev Note:</b> This presentation upload should be optional per webinar. Hide the Presentation block if no file is attached.</p>
+    </div>
 
-      <div class="rounded-2xl border border-[#E7EBEF] bg-[#FDECEF] p-5">
-        <p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] mb-2">Browse all events</p>
-        <p class="font-jakarta font-extrabold text-[15px] text-[#0C1F31] leading-snug">See what's coming up</p>
-        <p class="text-xs text-[#6A7581] mt-1 leading-relaxed">In-person summits, online webinars and replays.</p>
-        <a href="events.html" class="inline-flex w-full items-center justify-center gap-1.5 mt-3 h-10 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold text-[13px] transition">All events <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i></a>
+    <!-- RELATED EVENTS -->
+    <div class="bg-white rounded-2xl border border-[#E7EBEF] p-5">
+      <h3 class="font-jakarta font-extrabold text-[15px] text-[#0C1F31] mb-4">Related webinars</h3>
+      <div class="space-y-4">
+        <a href="#" class="group block">
+          <p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] mb-1">12 Sep 2026</p>
+          <p class="font-jakarta font-extrabold text-[#0C1F31] text-[13px] leading-tight group-hover:text-[#DC183C] transition">E-commerce Expansion Workshop</p>
+        </a>
+        <div class="w-full h-px bg-[#E7EBEF]"></div>
+        <a href="#" class="group block">
+          <p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] mb-1">05 Oct 2026</p>
+          <p class="font-jakarta font-extrabold text-[#0C1F31] text-[13px] leading-tight group-hover:text-[#DC183C] transition">Marketing Your Event Management Business</p>
+        </a>
+        <div class="w-full h-px bg-[#E7EBEF]"></div>
+        <a href="#" class="group block">
+          <p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] mb-1">18 Nov 2026</p>
+          <p class="font-jakarta font-extrabold text-[#0C1F31] text-[13px] leading-tight group-hover:text-[#DC183C] transition">The Township Economy Playbook</p>
+        </a>
       </div>
     </div>
   </aside>
+
 </main>
 
 <footer class="bg-slate-100 border-t-2 border-dashed border-slate-400 relative overflow-hidden">
@@ -234,16 +260,30 @@
   function showToast(m){const el=document.getElementById('toast');el.classList.remove('hidden');el.innerHTML=`<div class="bg-[#0C1F31] text-white rounded-full pl-3 pr-5 py-2.5 shadow-2xl flex items-center gap-2 text-sm font-semibold" style="border-left:4px solid #29A37A"><i data-lucide="check-circle" class="w-4 h-4" style="color:#29A37A"></i><span>${m}</span></div>`;lucide.createIcons();setTimeout(()=>{el.classList.add('hidden');el.innerHTML='';},2400);}
 
   function submitRegister(e){ e.preventDefault(); showToast('Registered — check your inbox for the calendar file.'); e.target.reset(); }
-  function playReplay(){ showToast('YouTube iframe swaps in at build (youtube-nocookie.com/embed/{id}).'); }
+  function submitReplay(e){ e.preventDefault(); showToast('Access granted — video replay unlocked.'); e.target.reset(); }
+  function copyShareLink(){ navigator.clipboard?.writeText(location.href); showToast('Link copied to clipboard.'); }
+
+  function setWidgetState(state) {
+    document.getElementById('upcomingWidget').classList.toggle('hidden', state !== 'upcoming');
+    document.getElementById('pastWidget').classList.toggle('hidden', state !== 'past');
+    document.getElementById('memberWidget').classList.toggle('hidden', state !== 'member');
+
+    const activeCls = 'flex-1 py-1.5 rounded-lg text-xs font-bold bg-white shadow-sm text-slate-800 transition';
+    const inactiveCls = 'flex-1 py-1.5 rounded-lg text-xs font-bold text-slate-500 hover:text-slate-800 transition';
+
+    document.getElementById('btn-upcoming').className = state === 'upcoming' ? activeCls : inactiveCls;
+    document.getElementById('btn-past').className = state === 'past' ? activeCls : inactiveCls;
+    document.getElementById('btn-member').className = state === 'member' ? activeCls : inactiveCls;
+  }
 
   const BRIEF = {
     title:'Single Online Event (Webinar)',
     sub:'CPT <code>event</code> · meta_type = "ONLINE"',
-    purpose:'Dedicated template for online/webinar events. Register-first UX (email capture in the hero sidebar). Also streamed live on YouTube. The right sidebar walks the attendee through how to join. Doubles as a replay-landing page when <code>event_ended = true</code> — the replay video appears at the top, presentation downloads become visible, and the sidebar CTA flips to "Watch replay". No standalone presentation or library pages — everything lives on this template.',
-    data:'Extends the base event CPT with online fields: <code>meta_stream_platform</code> (kept internal — do NOT surface a specific vendor name on the front-end; copy always says "webinar link"), <code>meta_join_url</code> (secret — server-side only, emailed in reminder), <code>meta_join_link_activates_at</code> (default 30min before start), <code>meta_youtube_url</code> (public simulcast), <code>meta_replay_url</code> (YouTube video ID — renders embed for past events), <code>meta_resource_downloads [{ label, file, file_type, file_size }]</code> (repeater — slide deck, spreadsheet, etc.; gated by registration), <code>meta_host</code> and <code>meta_guest</code> (both use the same shape as author records: <code>{ name, role, avatar, bio, socials { linkedin, x, email } }</code>), <code>meta_learning_outcomes []</code>.',
-    logic:'Template = <code>single-event.php</code> with a switch on <code>meta_type === "ONLINE"</code>. Registration writes to the mail-list integration server-side, which returns a signed .ics attachment. Never render <code>meta_join_url</code> client-side — the reminder email is the only surface for it. Replay video: if <code>meta_replay_url</code> is set (past event), render YouTube embed at top of article; hidden for upcoming events. Presentation downloads: repeater gated by registration — only visible after sign-up or for past events. Host/Guest cards reuse the author-preview component. The How-to-join widget in the right rail replaces what would otherwise be a quick-facts card. Sidebar past-events pointer links to <code>events.html</code> (no standalone library page).',
-    components:'Hero (breadcrumb + chip row + title + sticky register card w/ inline name+email form) · Replay video (YouTube embed, past events only) · About prose · What you\'ll learn (plain UL, no card grid) · Host card (author-preview design, staff) · Guest card (author-preview design, external speaker) · Presentation &amp; resources (download repeater, gated) · Right sidebar (How-to-join 4-step widget + browse-events pointer).',
-    specs:'<b>Hero:</b> hero-bg gradient max-w-[1200px], 2-col at lg: content + 380px sticky register card. Chip row: Upcoming (#FF9900/#0C1F31), Online (white/10 white with video icon), Category (#FDECEF/#DC183C). H1 Plus Jakarta 800 30/48px leading 1.05. <b>No countdown, no subtext under the title.</b><br/><b>Register card:</b> rounded-2xl bg-white p-5 shadow-2xl. Facts row: Date (calendar icon), Webinar link (video icon — never "Zoom", "Teams" etc.), Replay (rotate-cw icon). Sub-text on the webinar-link row mentions "Also going live on YouTube". Inline form 2 inputs h-11 rounded-lg bg slate-50; submit h-12 rounded-xl #DC183C hover #B0142F.<br/><b>Replay video:</b> yt-wrap aspect 16/9 rounded-2xl shadow. Play overlay 72×72 rounded-full #DC183C/95. YouTube-nocookie embed on click. Hidden for upcoming events.<br/><b>About + What you\'ll learn:</b> prose class only. UL is disc-bullet, no card grid. Line-height 1.85, font-size 16.3px.<br/><b>Host/Guest cards:</b> rounded-2xl border #E7EBEF p-6. Avatar 96–112px rounded-full shadow-lg. Fallback gradient monogram: Host uses #DC183C→#FF9900, Guest uses #0C1F31→#5e1a2c to visually distinguish. Real photo overlaid via absolute img with <code>onerror="this.remove()"</code>. Name Plus Jakarta 800 24px. Role #DC183C 600. Social pills 32×32 rounded-full slate-100 hover #FDECEF/#DC183C. Bio 15px slate-500 line-1.7 max-w-3xl.<br/><b>Presentation downloads:</b> rounded-2xl border #E7EBEF p-6. Each row: p-3 rounded-xl bg slate-50 border #E7EBEF. Icon tile 40×40 rounded-lg (PDF=#DC183C/10, XLSX=#29A37A/10, PPTX=#FF9900/10). Filename 14px 700, size 11px #6A7581. Download btn h-8 rounded-lg #0C1F31.<br/><b>How-to-join widget:</b> rounded-2xl border #E7EBEF p-5 (right rail, replaces quick facts). Eyebrow 10px uppercase #DC183C. Each step 2rem #FDECEF/#DC183C monogram + title Plus Jakarta 700 14.7px #0C1F31 + sub 12.5px #6A7581 line-1.5.'
+    purpose:'Dedicated template for online/webinar events. Register-first UX (email capture in the hero sidebar). Also streamed live on YouTube. The right sidebar walks the attendee through how to join. Doubles as a replay-landing page when <code>event_ended = true</code> — the sidebar CTA flips to "Watch replay".',
+    data:'Extends the base event CPT with online fields: <code>meta_stream_platform</code> (kept internal — do NOT surface a specific vendor name on the front-end; copy always says "webinar link"), <code>meta_join_url</code> (secret — server-side only, emailed in reminder), <code>meta_join_link_activates_at</code> (default 30min before start), <code>meta_youtube_url</code> (public simulcast), <code>meta_replay_url</code>, <code>meta_resource_downloads [{ label, file }]</code>, <code>meta_host</code> and <code>meta_guest</code> (both use the same shape as author records: <code>{ name, role, avatar, bio, socials { linkedin, x, email } }</code>), <code>meta_learning_outcomes []</code>.',
+    logic:'Template = <code>single-event.php</code> with a switch on <code>meta_type === "ONLINE"</code>. Registration writes to the mail-list integration server-side, which returns a signed .ics attachment. Never render <code>meta_join_url</code> client-side — the reminder email is the only surface for it. Host/Guest cards reuse the author-preview component from <code>public-author.html</code>. The How-to-join widget in the right rail replaces what would otherwise be a quick-facts card.',
+    components:'Hero (breadcrumb + chip row + title + sticky register card w/ inline name+email form) · About prose · What you\'ll learn (plain UL, no card grid) · Host card (author-preview design, staff) · Guest card (author-preview design, external speaker) · Right sidebar (How-to-join 4-step widget + past-events pointer).',
+    specs:'<b>Hero:</b> hero-bg gradient max-w-[1200px], 2-col at lg: content + 380px sticky register card. Chip row: Upcoming (#FF9900/#0C1F31), Online (white/10 white with video icon), Category (#FDECEF/#DC183C). H1 Plus Jakarta 800 30/48px leading 1.05. <b>No countdown, no subtext under the title.</b><br/><b>Register card:</b> rounded-2xl bg-white p-5 shadow-2xl. Facts row: Date (calendar icon), Webinar link (video icon — never "Zoom", "Teams" etc.), Replay (rotate-cw icon). Sub-text on the webinar-link row mentions "Also going live on YouTube". Inline form 2 inputs h-11 rounded-lg bg slate-50; submit h-12 rounded-xl #DC183C hover #B0142F.<br/><b>About + What you\'ll learn:</b> prose class only. UL is disc-bullet, no card grid. Line-height 1.85, font-size 16.3px.<br/><b>Host/Guest cards:</b> rounded-2xl border #E7EBEF p-6. Avatar 96–112px rounded-full shadow-lg. Fallback gradient monogram: Host uses #DC183C→#FF9900, Guest uses #0C1F31→#5e1a2c to visually distinguish. Real photo overlaid via absolute img with <code>onerror="this.remove()"</code>. Name Plus Jakarta 800 24px. Role #DC183C 600. Social pills 32×32 rounded-full slate-100 hover #FDECEF/#DC183C. Bio 15px slate-500 line-1.7 max-w-3xl.<br/><b>How-to-join widget:</b> rounded-2xl border #E7EBEF p-5 (right rail, replaces quick facts). Eyebrow 10px uppercase #DC183C. Each step 2rem #FDECEF/#DC183C monogram + title Plus Jakarta 700 14.7px #0C1F31 + sub 12.5px #6A7581 line-1.5.<br/><b>Removed:</b> countdown, hero image inside the article, hero subtitle paragraph, agenda, FAQ, "Register now" final CTA, any Zoom/Teams naming, sidebar Quick-facts card.'
   };
 
   function toggleDevMode(){const on=document.body.classList.toggle('dev-on');const b=document.getElementById('devToggle');if(b)b.classList.toggle('on',on);lucide.createIcons();}

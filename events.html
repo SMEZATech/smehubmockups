@@ -132,8 +132,8 @@
           return;
         }
         let d;
-        if (i % 4 === 0) d = plus(-10 - i); // Past events
-        else d = plus(5 + i*2);              // Upcoming events
+        if (i === 2 || i === 3) d = plus(5 + i*2); // Exactly two Upcoming events
+        else d = plus(-10 - i); // Past events
         applyTimes(ev, atTime(d, 10, 0), atTime(d, 12, 0));
       });
     }
@@ -226,7 +226,7 @@
 
       ${list.length > 0 ? `
       <div class="flex flex-col sm:flex-row items-center justify-between gap-4 pt-8 mt-8 border-t border-[#E7EBEF]">
-        <span class="text-sm text-slate-500 font-medium">Showing <b class="text-[#121A21]">${startIdx+1}–${startIdx+list.length}</b> of ${allList.length} events</span>
+        <span class="text-sm text-slate-500 font-medium">Showing <b class="text-[#121A21]">${startIdx+1}–${startIdx+list.length}</b></span>
         <div class="flex items-center gap-2">
           <button ${state.page===1?'disabled':''} onclick="goPage(${state.page-1})" class="w-10 h-10 rounded-lg border border-[#E7EBEF] ${state.page===1?'text-slate-300 cursor-not-allowed':'text-slate-600 hover:bg-slate-50'} grid place-items-center transition"><i data-lucide="chevron-left" class="w-4 h-4"></i></button>
           ${Array.from({length: totalPages}, (_, i)=>{
@@ -243,7 +243,7 @@
         <div class="absolute inset-0 dot-pattern opacity-70 pointer-events-none"></div>
         <div class="max-w-[1200px] mx-auto px-4 sm:px-6 py-14 relative">
           <nav aria-label="Breadcrumb" class="text-xs text-white/55 flex items-center flex-wrap gap-x-1.5 mb-4"><a href="public-home.html" class="hover:text-white transition">Home</a><span class="text-white/30">›</span><span class="text-white/85 font-medium truncate">Events</span></nav>
-          <h1 class="font-jakarta font-extrabold text-3xl sm:text-5xl mt-1 tracking-tight">Learn, network &amp; grow <button onclick="openBrief()" class="dev-badge align-middle ml-1 w-6 h-6 rounded-full bg-[#FF9900] text-[#0C1F31] items-center justify-center text-[11px] font-bold">i</button></h1>
+          <h1 class="font-jakarta font-extrabold text-3xl sm:text-5xl mt-1 tracking-tight">Learn, <span class="bg-gradient-to-r from-[#DC183C] to-[#FF9900] bg-clip-text text-transparent">network &amp; grow</span> <button onclick="openBrief()" class="dev-badge align-middle ml-1 w-6 h-6 rounded-full bg-[#FF9900] text-[#0C1F31] items-center justify-center text-[11px] font-bold">i</button></h1>
           <p class="mt-3 text-white/70 max-w-2xl text-lg">Explore our upcoming and past events. Join in-person summits, live webinars and on-demand replays built for South African SMEs.</p>
         </div>
       </section>

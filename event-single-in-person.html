@@ -2,46 +2,51 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>Annual SME Funding Gala 2026 — SME South Africa</title>
-  <meta name="description" content="Annual SME Funding Gala 2026 — the year's biggest funding & networking evening for South African SME founders." />
+  <title>Funding Summit 2027 — SME South Africa</title>
+  <meta name="description" content="Funding Summit 2027 — the year's biggest funding & networking event for South African SME founders." />
   <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <script src="https://cdn.tailwindcss.com"></script><script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
   <script>tailwind.config={theme:{extend:{fontFamily:{jakarta:['Plus Jakarta Sans','sans-serif'],inter:['Inter','system-ui','sans-serif']}}}};</script>
+  
   <style>
-    html,body{font-family:'Inter',system-ui,sans-serif;} .font-jakarta{font-family:'Plus Jakarta Sans',sans-serif;letter-spacing:.005em;}
-    html{scroll-behavior:smooth;}
+    html,body{font-family:'Inter',system-ui,sans-serif; scroll-behavior:smooth;}
+    .font-jakarta{font-family:'Plus Jakarta Sans',sans-serif;letter-spacing:-0.01em;}
     .hero-bg{background:linear-gradient(115deg,#0C1F31 0%,#0C1F31 50%,#2b1626 80%,#5e1a2c 115%);}
     .dot-pattern{background-image:radial-gradient(rgba(255,255,255,.07) 1px,transparent 1.5px);background-size:22px 22px;}
-    .cd-tile{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:.85rem;padding:.9rem .5rem;text-align:center;min-width:76px;}
-    .agenda-row{display:grid;grid-template-columns:100px 1fr;gap:1rem;padding:1rem 0;border-top:1px solid #E7EBEF;}
-    .agenda-row:first-of-type{border-top:0;}
-    .agenda-time{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;color:#DC183C;font-size:.9rem;}
+    .cd-tile{background:rgba(255,255,255,.08);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.16);border-radius:1rem;padding:.85rem .6rem;text-align:center;min-width:80px;box-shadow:0 8px 24px rgba(0,0,0,.25);position:relative;overflow:hidden;transition:transform .2s,border-color .2s;}
+    .cd-tile:hover{transform:translateY(-2px);border-color:rgba(255,153,0,.5);}
+    .cd-tile::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,#DC183C,#FF9900);}
+    
+    .agenda-row{display:grid;grid-template-columns:90px 1fr;gap:1rem;padding:1.1rem 0;border-top:1px solid #E7EBEF;align-items:start;}
+    .agenda-row:first-of-type{border-top:0; padding-top:0.5rem;}
+    @media (min-width: 640px) { .agenda-row{align-items:center;} }
+    .agenda-time{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;color:#DC183C;font-size:.85rem; margin-top:0.1rem;}
+    
     .faq-row summary{list-style:none;cursor:pointer;padding:1.1rem 0;border-top:1px solid #E7EBEF;display:flex;align-items:center;gap:1rem;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;color:#0C1F31;}
     .faq-row summary::-webkit-details-marker{display:none;}
     .faq-row .chev{margin-left:auto;transition:transform .2s;}
     .faq-row[open] .chev{transform:rotate(180deg);}
     .faq-row p{padding:0 0 1rem;color:#4a5563;line-height:1.7;font-size:.95rem;}
-    .yt-wrap{position:relative;background:#0C1F31;border-radius:1rem;overflow:hidden;aspect-ratio:16/9;box-shadow:0 20px 40px -20px rgba(0,0,0,.3);cursor:pointer;}
+    
+    .yt-wrap{position:relative;background:#0C1F31;border-radius:1.25rem;overflow:hidden;width:100%;box-shadow:0 20px 40px -20px rgba(0,0,0,.3);cursor:pointer;}
     .yt-wrap .play-c{position:absolute;inset:0;margin:auto;width:80px;height:80px;border-radius:999px;background:rgba(220,24,60,.95);color:#fff;display:grid;place-items:center;box-shadow:0 12px 40px rgba(0,0,0,.4);transition:transform .2s;}
     .yt-wrap:hover .play-c{transform:scale(1.06);}
     .yt-wrap img{width:100%;height:100%;object-fit:cover;opacity:.85;}
     .yt-wrap .yt-brand{position:absolute;top:1rem;left:1rem;font-size:.68rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;background:rgba(255,255,255,.9);color:#0C1F31;padding:.2rem .5rem;border-radius:.35rem;}
-    .gallery-track{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none;}
-    .gallery-track::-webkit-scrollbar{display:none;}
-    .gallery-track img{scroll-snap-align:start;border-radius:12px;height:220px;min-width:300px;object-fit:cover;flex-shrink:0;cursor:pointer;transition:opacity .15s;}
-    .gallery-track img:hover{opacity:.85;}
+    
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
     .dev-badge{display:none;} body.dev-on .dev-badge{display:inline-flex;} #devToggle.on{background:#DC183C;color:#fff;border-color:#DC183C;}
-    .ov{position:fixed;inset:0;z-index:80;} .ov-bg{position:absolute;inset:0;background:rgba(12,31,49,.45);backdrop-filter:blur(2px);opacity:0;transition:opacity .3s;} .ov.open .ov-bg{opacity:1;}
-    .drawer{position:absolute;right:0;top:0;height:100%;width:100%;max-width:440px;background:#fff;box-shadow:-12px 0 40px rgba(12,31,49,.25);overflow-y:auto;transform:translateX(100%);transition:transform .3s cubic-bezier(.2,.7,.2,1);} .ov.open .drawer{transform:translateX(0);}
-    .lb{position:fixed;inset:0;z-index:90;background:rgba(0,0,0,.92);display:none;place-items:center;}
-    .lb.open{display:grid;}
-    .lb img{max-width:90vw;max-height:85vh;object-fit:contain;border-radius:12px;}
     .dev-note{background:linear-gradient(135deg,rgba(255,153,0,.12),rgba(255,153,0,.04));border:1px dashed rgba(255,153,0,.5);display:none;}
     body.dev-on .dev-note{display:flex;}
+    .ov{position:fixed;inset:0;z-index:80;} .ov-bg{position:absolute;inset:0;background:rgba(12,31,49,.45);backdrop-filter:blur(2px);opacity:0;transition:opacity .3s;} .ov.open .ov-bg{opacity:1;}
+    .drawer{position:absolute;right:0;top:0;height:100%;width:100%;max-width:440px;background:#fff;box-shadow:-12px 0 40px rgba(12,31,49,.25);overflow-y:auto;transform:translateX(100%);transition:transform .3s cubic-bezier(.2,.7,.2,1);} .ov.open .drawer{transform:translateX(0);}
   </style>
 </head>
 <body class="bg-[#FCFCFC] text-[#121A21] antialiased">
+
 <header class="bg-slate-100 border-b-2 border-dashed border-slate-400 relative overflow-hidden">
   <div class="absolute inset-0 opacity-30 pointer-events-none" style="background:repeating-linear-gradient(45deg,transparent,transparent 8px,rgba(100,116,139,.18) 8px,rgba(100,116,139,.18) 16px)"></div>
   <div class="relative max-w-7xl mx-auto px-4 sm:px-6 h-14 flex items-center gap-3 sm:gap-4">
@@ -58,237 +63,390 @@
   </div>
 </header>
 
-<!-- HERO -->
 <section class="hero-bg text-white relative overflow-hidden">
   <div class="absolute inset-0 dot-pattern opacity-70 pointer-events-none"></div>
-  <div class="max-w-[1200px] mx-auto px-4 sm:px-6 py-12 sm:py-16 relative">
-    <nav aria-label="Breadcrumb" class="text-xs text-white/55 flex items-center flex-wrap gap-x-1.5 mb-5"><a href="public-home.html" class="hover:text-white transition">Home</a><span class="text-white/30">›</span><a href="events.html" class="hover:text-white transition">Events</a><span class="text-white/30">›</span><span class="text-white/85 font-medium truncate">Annual SME Funding Gala 2026</span></nav>
-    <div class="grid lg:grid-cols-[1fr,380px] gap-8 items-start">
-      <div>
+  <div class="max-w-[1200px] mx-auto px-4 sm:px-6 pt-10 pb-12 sm:pt-12 sm:pb-16 relative">
+    <nav aria-label="Breadcrumb" class="text-xs text-white/55 flex items-center flex-wrap gap-x-1.5 mb-5"><a href="public-home.html" class="hover:text-white transition">Home</a><span class="text-white/30">›</span><a href="events.html" class="hover:text-white transition">Events</a><span class="text-white/30">›</span><span class="text-white/85 font-medium truncate">Funding Summit 2027</span></nav>
+    
+    <div class="grid lg:grid-cols-[1fr,360px] gap-8 lg:gap-12 items-start min-w-0">
+      <div class="min-w-0">
         <div class="flex items-center gap-2 flex-wrap mb-4">
           <span class="px-3 py-1.5 rounded-full text-[10px] font-bold bg-[#FF9900] text-[#0C1F31] uppercase tracking-wider">Upcoming</span>
           <span class="px-3 py-1.5 rounded-full text-[10px] font-bold bg-white/10 text-white uppercase tracking-wider inline-flex items-center gap-1.5"><i data-lucide="map-pin" class="w-3.5 h-3.5"></i> In-person</span>
           <span class="px-3 py-1.5 rounded-full text-[10px] font-bold bg-[#FDECEF] text-[#DC183C] uppercase tracking-wider">Funding & Investment</span>
         </div>
-        <h1 class="font-jakarta font-extrabold text-3xl sm:text-5xl leading-[1.05] tracking-tight">Annual SME Funding Gala 2026
+        <h1 class="font-jakarta font-extrabold text-4xl sm:text-5xl lg:text-[3.5rem] leading-[1.05] tracking-tight">
+          Funding Summit 2027
           <button onclick="openBrief()" class="dev-badge align-middle ml-2 w-7 h-7 rounded-full bg-[#FF9900] text-[#0C1F31] items-center justify-center text-[12px] font-bold">i</button>
         </h1>
-        <p class="mt-4 text-white/75 text-lg max-w-2xl">A single evening. Every angel, VC and grant fund that matters in SA. Meet the founders they're backing next.</p>
-        <div class="mt-6 grid grid-cols-3 gap-3 max-w-lg">
-          <div class="cd-tile"><p id="d1" class="font-jakarta font-extrabold text-2xl">–</p><p class="text-[10px] uppercase tracking-widest text-white/50">Days</p></div>
-          <div class="cd-tile"><p id="h1" class="font-jakarta font-extrabold text-2xl">–</p><p class="text-[10px] uppercase tracking-widest text-white/50">Hours</p></div>
-          <div class="cd-tile"><p id="m1" class="font-jakarta font-extrabold text-2xl">–</p><p class="text-[10px] uppercase tracking-widest text-white/50">Minutes</p></div>
+        <p class="mt-5 text-white/80 text-lg leading-relaxed max-w-2xl">
+          The definitive event where South Africa's most active angel investors, venture capital partners, DFI teams, and grant officers converge. Connect directly with the allocators deploying capital into the SME sector over the next 12 months.
+        </p>
+        
+        <div class="mt-6 sm:mt-8 grid grid-cols-3 gap-3 max-w-[310px]">
+          <div class="cd-tile">
+            <p id="d1" class="font-jakarta font-extrabold text-2xl sm:text-3xl text-white tracking-tight">–</p>
+            <p class="text-[10px] font-bold uppercase tracking-widest text-[#FF9900] mt-0.5">Days</p>
+          </div>
+          <div class="cd-tile">
+            <p id="h1" class="font-jakarta font-extrabold text-2xl sm:text-3xl text-white tracking-tight">–</p>
+            <p class="text-[10px] font-bold uppercase tracking-widest text-[#FF9900] mt-0.5">Hours</p>
+          </div>
+          <div class="cd-tile">
+            <p id="m1" class="font-jakarta font-extrabold text-2xl sm:text-3xl text-white tracking-tight">–</p>
+            <p class="text-[10px] font-bold uppercase tracking-widest text-[#FF9900] mt-0.5">Minutes</p>
+          </div>
         </div>
       </div>
-      <!-- STICKY BOOKING CARD -->
-      <aside class="bg-white text-[#121A21] rounded-2xl p-5 shadow-2xl">
-        <p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] mb-2">Reserve your seat</p>
-        <div class="space-y-3 mb-4">
-          <div class="flex items-start gap-2.5"><i data-lucide="calendar" class="w-4 h-4 text-[#DC183C] mt-0.5 shrink-0"></i><div><p class="font-jakarta font-extrabold text-[15px] leading-tight">Fri, 25 Sep 2026</p><p class="text-[13px] text-[#6A7581]">6:00 pm – 10:00 pm (SAST)</p></div></div>
-          <div class="flex items-start gap-2.5"><i data-lucide="map-pin" class="w-4 h-4 text-[#DC183C] mt-0.5 shrink-0"></i><div><p class="font-jakarta font-extrabold text-[15px] leading-tight">Focus Rooms, Sandton</p><p class="text-[13px] text-[#6A7581]">1 Design Blvd, Illovo, Johannesburg</p></div></div>
-          <div class="flex items-start gap-2.5"><i data-lucide="users" class="w-4 h-4 text-[#DC183C] mt-0.5 shrink-0"></i><div><p class="font-jakarta font-extrabold text-[15px] leading-tight">180 seats total</p><p class="text-[13px] text-[#6A7581]"><span class="text-[#DC183C] font-bold">72 remaining</span> · dietary options on checkout</p></div></div>
+      
+      <!-- STICKY BOOKING WIZARD -->
+      <aside class="bg-white text-[#121A21] rounded-2xl p-6 shadow-2xl w-full">
+        <!-- Step 1: Ticket Details -->
+        <div id="bookingStep1">
+          <p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] mb-3">Reserve your seat</p>
+          <div class="space-y-4 mb-5">
+            <div class="flex items-start gap-3"><i data-lucide="calendar" class="w-4 h-4 text-[#DC183C] mt-0.5 shrink-0"></i><div><p class="font-jakarta font-extrabold text-[15px] leading-tight">Fri, 25 Sep 2027</p><p class="text-[13px] text-[#6A7581] mt-0.5">8:30 am – 5:00 pm</p></div></div>
+            <div class="flex items-start gap-3"><i data-lucide="map-pin" class="w-4 h-4 text-[#DC183C] mt-0.5 shrink-0"></i><div><p class="font-jakarta font-extrabold text-[15px] leading-tight">Focus Rooms, Sandton</p><p class="text-[13px] text-[#6A7581] mt-0.5">Johannesburg</p></div></div>
+          </div>
+          
+          <div class="flex items-center justify-between p-3 rounded-xl border border-[#E7EBEF] mb-5 bg-[#FCFCFC]">
+            <div>
+              <p class="font-jakarta font-bold text-sm text-[#0C1F31]">General Admission</p>
+              <p class="text-xs text-[#6A7581]">Includes lunch & drinks</p>
+            </div>
+            <p class="font-jakarta font-extrabold text-lg text-[#0C1F31]">R 1,250</p>
+          </div>
+          
+          <button onclick="navBooking(2)" class="w-full h-12 rounded-xl bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold text-sm transition inline-flex items-center justify-center gap-1.5 shadow-md hover:shadow-lg">Select Tickets <i data-lucide="arrow-right" class="w-4 h-4"></i></button>
+          <button onclick="addToCalendar()" class="w-full h-11 mt-2 rounded-xl bg-white hover:bg-slate-50 border border-[#E7EBEF] text-[#121A21] font-bold text-sm transition inline-flex items-center justify-center gap-1.5"><i data-lucide="calendar-plus" class="w-4 h-4"></i> Add to calendar</button>
         </div>
-        <div class="flex items-baseline justify-between mb-4 pb-4 border-b border-[#E7EBEF]"><p class="text-xs uppercase tracking-widest text-[#6A7581]">Ticket</p><p class="font-jakarta font-extrabold text-2xl text-[#0C1F31]">R 850</p></div>
-        <button onclick="openRegister()" class="w-full h-12 rounded-xl bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold text-sm transition inline-flex items-center justify-center gap-1.5">Reserve your seat <i data-lucide="arrow-right" class="w-4 h-4"></i></button>
-        <button onclick="addToCalendar()" class="w-full h-11 mt-2 rounded-xl bg-white hover:bg-slate-50 border border-[#E7EBEF] text-[#121A21] font-bold text-sm transition inline-flex items-center justify-center gap-1.5"><i data-lucide="calendar-plus" class="w-4 h-4"></i> Add to calendar</button>
-        <p class="text-[11px] text-center text-[#6A7581] mt-3">Bookings close 22 Sep or when full.</p>
+
+        <!-- Step 2: Attendee Info -->
+        <div id="bookingStep2" class="hidden">
+          <div class="flex items-center gap-2 mb-4">
+            <button onclick="navBooking(1)" class="w-6 h-6 rounded-full bg-slate-100 grid place-items-center text-slate-500 hover:text-slate-800"><i data-lucide="chevron-left" class="w-3.5 h-3.5"></i></button>
+            <p class="text-[11px] font-bold uppercase tracking-widest text-[#6A7581]">Attendee Details</p>
+          </div>
+          <div class="space-y-3 mb-5">
+            <div><label class="block text-[10px] font-bold uppercase tracking-wider text-slate-500 mb-1">Full Name</label><input type="text" class="w-full bg-[#FCFCFC] border border-[#E7EBEF] rounded-xl h-11 px-3 text-sm outline-none focus:border-[#DC183C]" placeholder="Thabo Mokoena" /></div>
+            <div><label class="block text-[10px] font-bold uppercase tracking-wider text-slate-500 mb-1">Email Address</label><input type="email" class="w-full bg-[#FCFCFC] border border-[#E7EBEF] rounded-xl h-11 px-3 text-sm outline-none focus:border-[#DC183C]" placeholder="thabo@company.com" /></div>
+            <div><label class="block text-[10px] font-bold uppercase tracking-wider text-slate-500 mb-1">Dietary Requirements</label>
+              <select class="w-full bg-[#FCFCFC] border border-[#E7EBEF] rounded-xl h-11 px-3 text-sm outline-none focus:border-[#DC183C] appearance-none" style="background-image:url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2216%22 height=%2216%22 fill=%22none%22 stroke=%22%236A7581%22 stroke-width=%222%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22><path d=%22M6 9l6 6 6-6%22/></svg>');background-repeat:no-repeat;background-position:right 1rem center;">
+                <option>None</option><option>Vegetarian</option><option>Vegan</option><option>Halaal</option><option>Kosher</option>
+              </select>
+            </div>
+          </div>
+          <button onclick="navBooking(3)" class="w-full h-12 rounded-xl bg-[#0C1F31] hover:bg-[#091621] text-white font-bold text-sm transition inline-flex items-center justify-center gap-1.5 shadow-md">Continue to Payment <i data-lucide="arrow-right" class="w-4 h-4"></i></button>
+        </div>
+
+        <!-- Step 3: Checkout -->
+        <div id="bookingStep3" class="hidden">
+          <div class="flex items-center gap-2 mb-4">
+            <button onclick="navBooking(2)" class="w-6 h-6 rounded-full bg-slate-100 grid place-items-center text-slate-500 hover:text-slate-800"><i data-lucide="chevron-left" class="w-3.5 h-3.5"></i></button>
+            <p class="text-[11px] font-bold uppercase tracking-widest text-[#6A7581]">Secure Checkout</p>
+          </div>
+          <div class="bg-[#F8FAFC] rounded-xl border border-[#E7EBEF] p-4 mb-5">
+            <div class="flex justify-between text-sm font-semibold text-[#0C1F31] mb-2"><p>1x General Admission</p><p>R 1,250</p></div>
+            <div class="flex justify-between text-xs text-[#6A7581] pb-3 border-b border-[#E7EBEF] mb-3"><p>Service Fee</p><p>Included</p></div>
+            <div class="flex justify-between text-lg font-jakarta font-extrabold text-[#0C1F31]"><p>Total</p><p>R 1,250</p></div>
+          </div>
+          <button onclick="showToast('Processing payment via secure gateway...')" class="w-full h-12 rounded-xl bg-[#29A37A] hover:bg-[#228765] text-white font-bold text-sm transition inline-flex items-center justify-center gap-1.5 shadow-md"><i data-lucide="lock" class="w-4 h-4"></i> Pay Securely</button>
+          <p class="text-[10px] text-center text-[#6A7581] mt-3 flex items-center justify-center gap-1"><i data-lucide="shield-check" class="w-3 h-3 text-[#29A37A]"></i> 256-bit SSL encrypted checkout</p>
+        </div>
+        
       </aside>
     </div>
   </div>
 </section>
 
-<!-- BODY -->
-<main class="max-w-[1200px] mx-auto px-4 sm:px-6 py-12 grid lg:grid-cols-[1fr,320px] gap-10">
-  <article>
+<main class="max-w-[1200px] mx-auto px-4 sm:px-6 py-10 sm:py-14 grid lg:grid-cols-[1fr,320px] gap-10 min-w-0">
+  <article class="min-w-0 overflow-hidden">
 
     <!-- TRAILER VIDEO -->
-    <section class="mb-10">
-      <div class="yt-wrap" onclick="playTrailer()">
-        <img src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&q=80&w=1200" alt="Funding Gala 2025 trailer" />
-        <span class="yt-brand">YouTube</span>
+    <section class="mb-14">
+      <div class="yt-wrap aspect-video" onclick="playTrailer()">
+        <img src="https://smesouthafrica.co.za/wp-content/uploads/2025/12/SME-Funding-Summit-Returns-for-Second-Year.jpg" alt="Funding Summit 2027 recap" />
         <div class="play-c"><i data-lucide="play" class="w-8 h-8 ml-1"></i></div>
       </div>
       <div class="dev-note rounded-xl px-4 py-3 items-start gap-3 mt-3">
         <i data-lucide="info" class="w-4 h-4 text-[#AE6B0A] shrink-0 mt-0.5"></i>
-        <p class="text-sm text-slate-700 leading-relaxed"><b>Trailer/recap video</b> — optional per event. If <code>meta_yt_trailer_id</code> is set, render a YouTube embed (privacy-mode <code>youtube-nocookie.com/embed/{id}</code>). For upcoming events this is a hype trailer; for past events it becomes a recap reel. If empty, fall back to the hero image below.</p>
+        <p class="text-sm text-slate-700 leading-relaxed"><b>Trailer video</b> — perfectly responsive <code>aspect-video</code> container ensuring no horizontal scroll.</p>
       </div>
     </section>
 
     <!-- ABOUT -->
-    <section class="mb-12">
-      <h2 class="font-jakarta font-extrabold text-2xl sm:text-3xl text-[#0C1F31] mb-4">About the Gala</h2>
-      <div class="prose text-[#121A21] leading-[1.75] space-y-4">
-        <p>The Funding Gala is the single evening every year where SA's angel investors, VC partners, DFI teams and grant officers land in one room — with 180 founders they've been asked to meet.</p>
-        <p>Expect four hours of tight programming: a 40-minute state-of-funding keynote, three moderated founder pitches, an on-stage LP Q&amp;A, and — the point of the night — two long, structured networking windows with pre-matched investor introductions in your app.</p>
-        <p>Bring a business card, bring a one-liner, and bring a specific ask. This is not a mixer.</p>
+    <section class="mb-14">
+      <h2 class="font-jakarta font-extrabold text-2xl sm:text-3xl text-[#0C1F31] mb-4">About the Event</h2>
+      <div class="prose text-[#121A21] leading-[1.75] space-y-4 max-w-3xl">
+        <p>The Funding Summit is the single day every year where SA's angel investors, VC partners, DFI teams and grant officers land in one room — with 250 founders they've been asked to meet.</p>
+        <p>Expect a full day of tight programming: data-backed keynotes, live pitch teardowns, LP panel discussions, and two structured networking windows with pre-matched investor introductions pushed directly to your event app.</p>
+        <p>Bring a business card, bring a one-liner, and bring a specific ask. This is where capital gets deployed.</p>
+      </div>
+    </section>
+
+    <!-- KEY TOPICS -->
+    <section class="mb-14">
+      <h2 class="font-jakarta font-extrabold text-2xl sm:text-3xl text-[#0C1F31] mb-6">Key Topics</h2>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div class="bg-slate-50 border border-[#E7EBEF] rounded-xl p-5 flex flex-col gap-3 hover:border-slate-300 transition-colors">
+          <div class="w-10 h-10 rounded-lg bg-white border border-[#E7EBEF] text-[#DC183C] grid place-items-center shadow-sm"><i data-lucide="trending-up" class="w-5 h-5"></i></div>
+          <div><p class="font-jakarta font-extrabold text-[#0C1F31] text-[15px]">State of SA Funding</p><p class="text-[13px] text-slate-500 mt-1 leading-relaxed">Exclusive data on exactly where capital is flowing across sectors in 2027.</p></div>
+        </div>
+        <div class="bg-slate-50 border border-[#E7EBEF] rounded-xl p-5 flex flex-col gap-3 hover:border-slate-300 transition-colors">
+          <div class="w-10 h-10 rounded-lg bg-white border border-[#E7EBEF] text-[#DC183C] grid place-items-center shadow-sm"><i data-lucide="presentation" class="w-5 h-5"></i></div>
+          <div><p class="font-jakarta font-extrabold text-[#0C1F31] text-[15px]">Pitch Teardowns</p><p class="text-[13px] text-slate-500 mt-1 leading-relaxed">Live, brutally honest feedback from active VC partners on three real startup pitches.</p></div>
+        </div>
+        <div class="bg-slate-50 border border-[#E7EBEF] rounded-xl p-5 flex flex-col gap-3 hover:border-slate-300 transition-colors">
+          <div class="w-10 h-10 rounded-lg bg-white border border-[#E7EBEF] text-[#DC183C] grid place-items-center shadow-sm"><i data-lucide="eye" class="w-5 h-5"></i></div>
+          <div><p class="font-jakarta font-extrabold text-[#0C1F31] text-[15px]">LP Perspectives</p><p class="text-[13px] text-slate-500 mt-1 leading-relaxed">Hear directly from the limited partners who fund the venture capitalists themselves.</p></div>
+        </div>
+        <div class="bg-slate-50 border border-[#E7EBEF] rounded-xl p-5 flex flex-col gap-3 hover:border-slate-300 transition-colors">
+          <div class="w-10 h-10 rounded-lg bg-white border border-[#E7EBEF] text-[#DC183C] grid place-items-center shadow-sm"><i data-lucide="landmark" class="w-5 h-5"></i></div>
+          <div><p class="font-jakarta font-extrabold text-[#0C1F31] text-[15px]">Alternative Finance</p><p class="text-[13px] text-slate-500 mt-1 leading-relaxed">Explore revenue-based financing, purchase order funding, and grant structures.</p></div>
+        </div>
+        <div class="bg-slate-50 border border-[#E7EBEF] rounded-xl p-5 flex flex-col gap-3 hover:border-slate-300 transition-colors">
+          <div class="w-10 h-10 rounded-lg bg-white border border-[#E7EBEF] text-[#DC183C] grid place-items-center shadow-sm"><i data-lucide="file-signature" class="w-5 h-5"></i></div>
+          <div><p class="font-jakarta font-extrabold text-[#0C1F31] text-[15px]">Term Sheet Negotiation</p><p class="text-[13px] text-slate-500 mt-1 leading-relaxed">Master the clauses that kill startups and learn what terms you must always negotiate.</p></div>
+        </div>
+        <div class="bg-slate-50 border border-[#E7EBEF] rounded-xl p-5 flex flex-col gap-3 hover:border-slate-300 transition-colors">
+          <div class="w-10 h-10 rounded-lg bg-white border border-[#E7EBEF] text-[#DC183C] grid place-items-center shadow-sm"><i data-lucide="rocket" class="w-5 h-5"></i></div>
+          <div><p class="font-jakarta font-extrabold text-[#0C1F31] text-[15px]">Post-Investment Growth</p><p class="text-[13px] text-slate-500 mt-1 leading-relaxed">You closed the round—now what? Building board relations and executing the plan.</p></div>
+        </div>
       </div>
     </section>
 
     <!-- AGENDA -->
-    <section class="mb-12">
+    <section id="agendaSection" class="mb-14">
       <h2 class="font-jakarta font-extrabold text-2xl sm:text-3xl text-[#0C1F31] mb-2">Agenda</h2>
-      <p class="text-sm text-[#6A7581] mb-6">Times are SAST. Programme subject to minor changes.</p>
-      <div class="bg-white rounded-2xl border border-[#E7EBEF] p-6">
-        <div class="agenda-row"><div class="agenda-time">6:00 pm</div><div><p class="font-jakarta font-extrabold text-[#0C1F31]">Registration &amp; welcome drink</p><p class="text-sm text-[#6A7581] mt-1">Focus Rooms foyer — check in at the SME desk.</p></div></div>
-        <div class="agenda-row"><div class="agenda-time">6:45 pm</div><div><p class="font-jakarta font-extrabold text-[#0C1F31]">Opening keynote — State of SA Funding 2026</p><p class="text-sm text-[#6A7581] mt-1">Dr. Dineo Molefe. 40 minutes + audience Q&amp;A.</p></div></div>
-        <div class="agenda-row"><div class="agenda-time">7:30 pm</div><div><p class="font-jakarta font-extrabold text-[#0C1F31]">Founder pitches — three companies raising now</p><p class="text-sm text-[#6A7581] mt-1">7-minute pitches, 5-minute investor panel response.</p></div></div>
-        <div class="agenda-row"><div class="agenda-time">8:15 pm</div><div><p class="font-jakarta font-extrabold text-[#0C1F31]">Networking window I &amp; dinner service</p><p class="text-sm text-[#6A7581] mt-1">Pre-matched introductions delivered via the event app.</p></div></div>
-        <div class="agenda-row"><div class="agenda-time">9:15 pm</div><div><p class="font-jakarta font-extrabold text-[#0C1F31]">Fireside — the LP perspective</p><p class="text-sm text-[#6A7581] mt-1">On-stage conversation with a South African LP allocator.</p></div></div>
-        <div class="agenda-row"><div class="agenda-time">9:45 pm</div><div><p class="font-jakarta font-extrabold text-[#0C1F31]">Networking window II &amp; close</p><p class="text-sm text-[#6A7581] mt-1">Free-form. Bar open until 10:30.</p></div></div>
+      <p class="text-sm text-[#6A7581] mb-6">Programme subject to minor changes.</p>
+      
+      <div class="bg-white rounded-2xl border border-[#E7EBEF] p-6 sm:p-8">
+        <div class="agenda-row">
+          <div class="agenda-time">08:30 am</div>
+          <p class="font-jakarta font-extrabold text-[#0C1F31]">Registration &amp; Welcome Coffee</p>
+        </div>
+        <div class="agenda-row">
+          <div class="agenda-time">09:00 am</div>
+          <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:justify-between w-full">
+            <p class="font-jakarta font-extrabold text-[#0C1F31]">Opening Keynote: State of SA Funding</p>
+            <p class="text-sm text-[#6A7581] font-medium shrink-0 flex items-center"><i data-lucide="mic" class="w-3.5 h-3.5 mr-1.5 text-[#DC183C]"></i>Dr. Dineo Molefe</p>
+          </div>
+        </div>
+        <div class="agenda-row">
+          <div class="agenda-time">10:00 am</div>
+          <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:justify-between w-full">
+            <p class="font-jakarta font-extrabold text-[#0C1F31]">Masterclass: Structuring for VC</p>
+            <p class="text-sm text-[#6A7581] font-medium shrink-0 flex items-center"><i data-lucide="mic" class="w-3.5 h-3.5 mr-1.5 text-[#DC183C]"></i>Thandi Ngwenya</p>
+          </div>
+        </div>
+        <div class="agenda-row">
+          <div class="agenda-time">11:30 am</div>
+          <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:justify-between w-full">
+            <p class="font-jakarta font-extrabold text-[#0C1F31]">Panel: Alternative Finance &amp; Grants</p>
+            <p class="text-sm text-[#6A7581] font-medium shrink-0 flex items-center"><i data-lucide="users" class="w-3.5 h-3.5 mr-1.5 text-[#DC183C]"></i>Sipho Mabaso &amp; Guests</p>
+          </div>
+        </div>
+        <div class="agenda-row">
+          <div class="agenda-time">01:00 pm</div>
+          <p class="font-jakarta font-extrabold text-[#0C1F31]">Networking Lunch</p>
+        </div>
+        <div class="agenda-row">
+          <div class="agenda-time">02:00 pm</div>
+          <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:justify-between w-full">
+            <p class="font-jakarta font-extrabold text-[#0C1F31]">Live Pitch Teardowns</p>
+            <p class="text-sm text-[#6A7581] font-medium shrink-0 flex items-center"><i data-lucide="users" class="w-3.5 h-3.5 mr-1.5 text-[#DC183C]"></i>Lerato Kgomo &amp; Panel</p>
+          </div>
+        </div>
+        <div class="agenda-row">
+          <div class="agenda-time">04:00 pm</div>
+          <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:justify-between w-full">
+            <p class="font-jakarta font-extrabold text-[#0C1F31]">LP Perspectives: What Funders Want</p>
+            <p class="text-sm text-[#6A7581] font-medium shrink-0 flex items-center"><i data-lucide="mic" class="w-3.5 h-3.5 mr-1.5 text-[#DC183C]"></i>Surprise Guest LP</p>
+          </div>
+        </div>
+        <div class="agenda-row">
+          <div class="agenda-time">05:00 pm</div>
+          <p class="font-jakarta font-extrabold text-[#0C1F31]">Closing Remarks &amp; Networking Drinks</p>
+        </div>
       </div>
-    </section>
-
-    <!-- KEYNOTE SPEAKERS -->
-    <section class="mb-12">
-      <h2 class="font-jakarta font-extrabold text-2xl sm:text-3xl text-[#0C1F31] mb-6">Keynote speakers</h2>
-      <div class="space-y-5">
-
-        <!-- Speaker 1 — with presentation deck -->
-        <div class="bg-white rounded-2xl border border-[#E7EBEF] p-6">
-          <div class="flex flex-col sm:flex-row gap-5">
-            <a href="event-speaker.html" class="relative w-20 h-20 sm:w-24 sm:h-24 rounded-full shrink-0 shadow-lg overflow-hidden block">
-              <div class="absolute inset-0 bg-gradient-to-br from-[#0C1F31] to-[#5e1a2c] grid place-items-center font-jakarta font-extrabold text-white text-2xl" aria-hidden="true">DM</div>
-            </a>
-            <div class="min-w-0 flex-1">
-              <a href="event-speaker.html" class="font-jakarta font-extrabold text-xl text-[#0C1F31] hover:text-[#DC183C] transition">Dr. Dineo Molefe</a>
-              <p class="text-[#DC183C] font-semibold mt-0.5">Head of Advisory &middot; Base Capital</p>
-              <p class="text-sm text-[#6A7581] mt-2 leading-relaxed">Dineo has led financial-modelling workshops with more than 800 SA founders since 2020. She'll deliver the opening keynote on where SA funding actually landed in 2026.</p>
-              <div class="flex items-center gap-2 mt-3">
-                <a href="#" class="w-7 h-7 rounded-full bg-slate-100 hover:bg-[#FDECEF] hover:text-[#DC183C] grid place-items-center transition" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor" class="w-3.5 h-3.5"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.42v1.56h.05c.47-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.07 2.07 0 1 1 0-4.14 2.07 2.07 0 0 1 0 4.14zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.8 0 0 .78 0 1.73v20.54C0 23.22.8 24 1.77 24h20.45C23.2 24 24 23.22 24 22.27V1.73C24 .78 23.2 0 22.22 0z"/></svg></a>
-                <a href="#" class="w-7 h-7 rounded-full bg-slate-100 hover:bg-[#FDECEF] hover:text-[#DC183C] grid place-items-center transition" aria-label="X"><svg viewBox="0 0 24 24" fill="currentColor" class="w-3.5 h-3.5"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
-              </div>
-              <div class="mt-4 p-3 rounded-xl bg-slate-50 border border-[#E7EBEF] inline-flex items-center gap-3">
-                <div class="w-9 h-9 rounded-lg bg-[#DC183C]/10 grid place-items-center shrink-0"><i data-lucide="file-down" class="w-4 h-4 text-[#DC183C]"></i></div>
-                <div>
-                  <p class="text-xs font-bold text-[#0C1F31]">State of SA Funding 2026 — slides</p>
-                  <p class="text-[11px] text-[#6A7581]">PDF · 2.4 MB</p>
-                </div>
-                <button onclick="showToast('Slide deck download — gated by reg form at build.')" class="ml-auto px-3 h-8 rounded-lg bg-[#0C1F31] hover:bg-[#091621] text-white text-xs font-bold transition">Download</button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Speaker 2 — no deck -->
-        <div class="bg-white rounded-2xl border border-[#E7EBEF] p-6">
-          <div class="flex flex-col sm:flex-row gap-5">
-            <a href="event-speaker.html" class="relative w-20 h-20 sm:w-24 sm:h-24 rounded-full shrink-0 shadow-lg overflow-hidden block">
-              <div class="absolute inset-0 bg-gradient-to-br from-[#DC183C] to-[#FF9900] grid place-items-center font-jakarta font-extrabold text-white text-2xl" aria-hidden="true">TN</div>
-            </a>
-            <div class="min-w-0 flex-1">
-              <a href="event-speaker.html" class="font-jakarta font-extrabold text-xl text-[#0C1F31] hover:text-[#DC183C] transition">Thandi Ngwenya</a>
-              <p class="text-[#DC183C] font-semibold mt-0.5">Partner &middot; Base Capital</p>
-              <p class="text-sm text-[#6A7581] mt-2 leading-relaxed">Thandi leads the early-stage portfolio at Base Capital — R380m under management across 14 SA startups. She'll join the founder-pitch panel response.</p>
-              <div class="flex items-center gap-2 mt-3">
-                <a href="#" class="w-7 h-7 rounded-full bg-slate-100 hover:bg-[#FDECEF] hover:text-[#DC183C] grid place-items-center transition" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor" class="w-3.5 h-3.5"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.42v1.56h.05c.47-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.07 2.07 0 1 1 0-4.14 2.07 2.07 0 0 1 0 4.14zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.8 0 0 .78 0 1.73v20.54C0 23.22.8 24 1.77 24h20.45C23.2 24 24 23.22 24 22.27V1.73C24 .78 23.2 0 22.22 0z"/></svg></a>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Speaker 3 -->
-        <div class="bg-white rounded-2xl border border-[#E7EBEF] p-6">
-          <div class="flex flex-col sm:flex-row gap-5">
-            <a href="event-speaker.html" class="relative w-20 h-20 sm:w-24 sm:h-24 rounded-full shrink-0 shadow-lg overflow-hidden block">
-              <div class="absolute inset-0 bg-gradient-to-br from-[#29A37A] to-[#0C1F31] grid place-items-center font-jakarta font-extrabold text-white text-2xl" aria-hidden="true">SM</div>
-            </a>
-            <div class="min-w-0 flex-1">
-              <a href="event-speaker.html" class="font-jakarta font-extrabold text-xl text-[#0C1F31] hover:text-[#DC183C] transition">Sipho Mabaso</a>
-              <p class="text-[#DC183C] font-semibold mt-0.5">Investment Lead &middot; SEFA</p>
-              <p class="text-sm text-[#6A7581] mt-2 leading-relaxed">Sipho manages SEFA's Western Cape SME book — R120m in active facilities. He'll walk through what's changed in DFI diligence this year during the fireside.</p>
-              <div class="flex items-center gap-2 mt-3">
-                <a href="#" class="w-7 h-7 rounded-full bg-slate-100 hover:bg-[#FDECEF] hover:text-[#DC183C] grid place-items-center transition" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor" class="w-3.5 h-3.5"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.42v1.56h.05c.47-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.07 2.07 0 1 1 0-4.14 2.07 2.07 0 0 1 0 4.14zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.8 0 0 .78 0 1.73v20.54C0 23.22.8 24 1.77 24h20.45C23.2 24 24 23.22 24 22.27V1.73C24 .78 23.2 0 22.22 0z"/></svg></a>
-              </div>
-              <div class="mt-4 p-3 rounded-xl bg-slate-50 border border-[#E7EBEF] inline-flex items-center gap-3">
-                <div class="w-9 h-9 rounded-lg bg-[#DC183C]/10 grid place-items-center shrink-0"><i data-lucide="file-down" class="w-4 h-4 text-[#DC183C]"></i></div>
-                <div>
-                  <p class="text-xs font-bold text-[#0C1F31]">DFI Diligence — what changed in 2026</p>
-                  <p class="text-[11px] text-[#6A7581]">PDF · 1.8 MB</p>
-                </div>
-                <button onclick="showToast('Slide deck download — gated by reg form at build.')" class="ml-auto px-3 h-8 rounded-lg bg-[#0C1F31] hover:bg-[#091621] text-white text-xs font-bold transition">Download</button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Speaker 4 -->
-        <div class="bg-white rounded-2xl border border-[#E7EBEF] p-6">
-          <div class="flex flex-col sm:flex-row gap-5">
-            <a href="event-speaker.html" class="relative w-20 h-20 sm:w-24 sm:h-24 rounded-full shrink-0 shadow-lg overflow-hidden block">
-              <div class="absolute inset-0 bg-gradient-to-br from-[#FF9900] to-[#DC183C] grid place-items-center font-jakarta font-extrabold text-white text-2xl" aria-hidden="true">LK</div>
-            </a>
-            <div class="min-w-0 flex-1">
-              <a href="event-speaker.html" class="font-jakarta font-extrabold text-xl text-[#0C1F31] hover:text-[#DC183C] transition">Lerato Kgomo</a>
-              <p class="text-[#DC183C] font-semibold mt-0.5">Angel Investor</p>
-              <p class="text-sm text-[#6A7581] mt-2 leading-relaxed">Lerato is a solo angel with 8 active tickets across fintech, health-tech and agri. She'll share what makes a first meeting land from the LP perspective.</p>
-            </div>
-          </div>
-        </div>
-
-      </div>
+      
       <div class="dev-note rounded-xl px-4 py-3 items-start gap-3 mt-4">
         <i data-lucide="info" class="w-4 h-4 text-[#AE6B0A] shrink-0 mt-0.5"></i>
-        <p class="text-sm text-slate-700 leading-relaxed"><b>Keynote Speakers repeater:</b> each entry = <code>{ speaker_ref (→ speaker CPT), meta_slides_pdf (OPTIONAL), meta_role_at_event }</code>. The slide-deck download per speaker is <b>optional</b> — if <code>meta_slides_pdf</code> is empty for a speaker, hide the download row. Speaker name links to <code>event-speaker.html</code> (their profile page).</p>
+        <div>
+          <p class="text-sm text-slate-700 leading-relaxed"><b>Agenda Toggle:</b> The agenda is often added closer to the event date. Click below to preview the layout without the agenda section.</p>
+          <button onclick="document.getElementById('agendaSection').classList.toggle('hidden')" class="mt-2 px-3 h-8 rounded-lg bg-[#FF9900]/20 text-[#AE6B0A] hover:bg-[#FF9900]/30 text-xs font-bold transition">Toggle Agenda Visibility</button>
+        </div>
       </div>
     </section>
 
-    <!-- EVENT GALLERY (in-page slider) -->
-    <section class="mb-12">
-      <div class="flex items-center justify-between mb-4">
-        <h2 class="font-jakarta font-extrabold text-2xl sm:text-3xl text-[#0C1F31]">Event gallery</h2>
-        <div class="flex items-center gap-2">
-          <button onclick="scrollGallery(-1)" class="w-9 h-9 rounded-full border border-[#E7EBEF] grid place-items-center text-slate-500 hover:bg-slate-50 transition"><i data-lucide="chevron-left" class="w-4 h-4"></i></button>
-          <button onclick="scrollGallery(1)" class="w-9 h-9 rounded-full border border-[#E7EBEF] grid place-items-center text-slate-500 hover:bg-slate-50 transition"><i data-lucide="chevron-right" class="w-4 h-4"></i></button>
-        </div>
-      </div>
-      <div id="galleryTrack" class="gallery-track">
-        <img src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&q=80&w=500" alt="Gala photo 1" onclick="openLightbox(0)" />
-        <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&q=80&w=500" alt="Gala photo 2" onclick="openLightbox(1)" />
-        <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&q=80&w=500" alt="Gala photo 3" onclick="openLightbox(2)" />
-        <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&q=80&w=500" alt="Gala photo 4" onclick="openLightbox(3)" />
-        <img src="https://images.unsplash.com/photo-1505373877841-8d25f7d46678?auto=format&fit=crop&q=80&w=500" alt="Gala photo 5" onclick="openLightbox(4)" />
-        <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&q=80&w=500" alt="Gala photo 6" onclick="openLightbox(5)" />
-      </div>
-      <p class="text-xs text-[#6A7581] mt-3 flex items-center gap-1.5"><i data-lucide="image" class="w-3.5 h-3.5"></i> 6 photos from Funding Gala 2025 &middot; scroll or use arrows</p>
-      <div class="dev-note rounded-xl px-4 py-3 items-start gap-3 mt-3">
-        <i data-lucide="info" class="w-4 h-4 text-[#AE6B0A] shrink-0 mt-0.5"></i>
-        <p class="text-sm text-slate-700 leading-relaxed"><b>Gallery slider</b> — repeater field <code>meta_gallery []</code> (array of image IDs). Only rendered for past in-person events that have uploaded photos. Horizontal scroll with snap, left/right arrows, click-to-lightbox. No separate gallery page.</p>
+    <!-- SPEAKERS GRID -->
+    <section class="mb-14">
+      <h2 class="font-jakarta font-extrabold text-2xl sm:text-3xl text-[#0C1F31] mb-6">Speakers &amp; Panelists</h2>
+      
+      <div class="grid grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+        <!-- Sp 1 -->
+        <a href="event-speaker.html" class="group bg-white border border-[#E7EBEF] rounded-2xl p-5 text-center flex flex-col items-center hover:shadow-lg hover:-translate-y-1 transition-all">
+          <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-gradient-to-br from-[#0C1F31] to-[#5e1a2c] grid place-items-center font-jakarta font-extrabold text-white text-xl mb-3 shadow-md">DM</div>
+          <h3 class="font-jakarta font-extrabold text-[#0C1F31] text-[15px] group-hover:text-[#DC183C] transition">Dr. Dineo Molefe</h3>
+          <p class="text-[12px] text-[#DC183C] font-semibold mt-0.5 mb-1">Head of Advisory</p>
+          <p class="text-[11px] text-[#6A7581] uppercase tracking-wide font-bold">Base Capital</p>
+        </a>
+        <!-- Sp 2 -->
+        <a href="event-speaker.html" class="group bg-white border border-[#E7EBEF] rounded-2xl p-5 text-center flex flex-col items-center hover:shadow-lg hover:-translate-y-1 transition-all">
+          <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-gradient-to-br from-[#DC183C] to-[#FF9900] grid place-items-center font-jakarta font-extrabold text-white text-xl mb-3 shadow-md">TN</div>
+          <h3 class="font-jakarta font-extrabold text-[#0C1F31] text-[15px] group-hover:text-[#DC183C] transition">Thandi Ngwenya</h3>
+          <p class="text-[12px] text-[#DC183C] font-semibold mt-0.5 mb-1">General Partner</p>
+          <p class="text-[11px] text-[#6A7581] uppercase tracking-wide font-bold">Horizon Ventures</p>
+        </a>
+        <!-- Sp 3 -->
+        <a href="event-speaker.html" class="group bg-white border border-[#E7EBEF] rounded-2xl p-5 text-center flex flex-col items-center hover:shadow-lg hover:-translate-y-1 transition-all">
+          <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-gradient-to-br from-[#29A37A] to-[#0C1F31] grid place-items-center font-jakarta font-extrabold text-white text-xl mb-3 shadow-md">SM</div>
+          <h3 class="font-jakarta font-extrabold text-[#0C1F31] text-[15px] group-hover:text-[#DC183C] transition">Sipho Mabaso</h3>
+          <p class="text-[12px] text-[#DC183C] font-semibold mt-0.5 mb-1">Investment Lead</p>
+          <p class="text-[11px] text-[#6A7581] uppercase tracking-wide font-bold">SEFA</p>
+        </a>
+        <!-- Sp 4 -->
+        <a href="event-speaker.html" class="group bg-white border border-[#E7EBEF] rounded-2xl p-5 text-center flex flex-col items-center hover:shadow-lg hover:-translate-y-1 transition-all">
+          <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-gradient-to-br from-[#FF9900] to-[#DC183C] grid place-items-center font-jakarta font-extrabold text-white text-xl mb-3 shadow-md">LK</div>
+          <h3 class="font-jakarta font-extrabold text-[#0C1F31] text-[15px] group-hover:text-[#DC183C] transition">Lerato Kgomo</h3>
+          <p class="text-[12px] text-[#DC183C] font-semibold mt-0.5 mb-1">Angel Investor</p>
+          <p class="text-[11px] text-[#6A7581] uppercase tracking-wide font-bold">Jozi Angels</p>
+        </a>
+        <!-- Sp 5 -->
+        <a href="event-speaker.html" class="group bg-white border border-[#E7EBEF] rounded-2xl p-5 text-center flex flex-col items-center hover:shadow-lg hover:-translate-y-1 transition-all">
+          <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-slate-200 grid place-items-center font-jakarta font-extrabold text-slate-500 text-xl mb-3 shadow-md">JM</div>
+          <h3 class="font-jakarta font-extrabold text-[#0C1F31] text-[15px] group-hover:text-[#DC183C] transition">Jaco van der Merwe</h3>
+          <p class="text-[12px] text-[#DC183C] font-semibold mt-0.5 mb-1">Managing Director</p>
+          <p class="text-[11px] text-[#6A7581] uppercase tracking-wide font-bold">FinGrowth SA</p>
+        </a>
+        <!-- Sp 6 -->
+        <a href="event-speaker.html" class="group bg-white border border-[#E7EBEF] rounded-2xl p-5 text-center flex flex-col items-center hover:shadow-lg hover:-translate-y-1 transition-all">
+          <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-slate-200 grid place-items-center font-jakarta font-extrabold text-slate-500 text-xl mb-3 shadow-md">AN</div>
+          <h3 class="font-jakarta font-extrabold text-[#0C1F31] text-[15px] group-hover:text-[#DC183C] transition">Aisha Naidoo</h3>
+          <p class="text-[12px] text-[#DC183C] font-semibold mt-0.5 mb-1">CEO & Founder</p>
+          <p class="text-[11px] text-[#6A7581] uppercase tracking-wide font-bold">TechHealth</p>
+        </a>
+        <!-- Sp 7 -->
+        <a href="event-speaker.html" class="group bg-white border border-[#E7EBEF] rounded-2xl p-5 text-center flex flex-col items-center hover:shadow-lg hover:-translate-y-1 transition-all">
+          <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-slate-200 grid place-items-center font-jakarta font-extrabold text-slate-500 text-xl mb-3 shadow-md">KD</div>
+          <h3 class="font-jakarta font-extrabold text-[#0C1F31] text-[15px] group-hover:text-[#DC183C] transition">Kabelo Dube</h3>
+          <p class="text-[12px] text-[#DC183C] font-semibold mt-0.5 mb-1">Partner</p>
+          <p class="text-[11px] text-[#6A7581] uppercase tracking-wide font-bold">Savannah Fund</p>
+        </a>
+        <!-- Sp 8 -->
+        <a href="event-speaker.html" class="group bg-white border border-[#E7EBEF] rounded-2xl p-5 text-center flex flex-col items-center hover:shadow-lg hover:-translate-y-1 transition-all">
+          <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-slate-200 grid place-items-center font-jakarta font-extrabold text-slate-500 text-xl mb-3 shadow-md">SJ</div>
+          <h3 class="font-jakarta font-extrabold text-[#0C1F31] text-[15px] group-hover:text-[#DC183C] transition">Sarah Jones</h3>
+          <p class="text-[12px] text-[#DC183C] font-semibold mt-0.5 mb-1">Head of SME</p>
+          <p class="text-[11px] text-[#6A7581] uppercase tracking-wide font-bold">Standard Bank</p>
+        </a>
+        <!-- Sp 9 -->
+        <a href="event-speaker.html" class="group bg-white border border-[#E7EBEF] rounded-2xl p-5 text-center flex flex-col items-center hover:shadow-lg hover:-translate-y-1 transition-all">
+          <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-slate-200 grid place-items-center font-jakarta font-extrabold text-slate-500 text-xl mb-3 shadow-md">BM</div>
+          <h3 class="font-jakarta font-extrabold text-[#0C1F31] text-[15px] group-hover:text-[#DC183C] transition">Bheki Mthembu</h3>
+          <p class="text-[12px] text-[#DC183C] font-semibold mt-0.5 mb-1">Principal</p>
+          <p class="text-[11px] text-[#6A7581] uppercase tracking-wide font-bold">Enygma Ventures</p>
+        </a>
+        <!-- Sp 10 -->
+        <a href="event-speaker.html" class="group bg-white border border-[#E7EBEF] rounded-2xl p-5 text-center flex flex-col items-center hover:shadow-lg hover:-translate-y-1 transition-all">
+          <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-slate-200 grid place-items-center font-jakarta font-extrabold text-slate-500 text-xl mb-3 shadow-md">GW</div>
+          <h3 class="font-jakarta font-extrabold text-[#0C1F31] text-[15px] group-hover:text-[#DC183C] transition">Grant Williams</h3>
+          <p class="text-[12px] text-[#DC183C] font-semibold mt-0.5 mb-1">Co-Founder</p>
+          <p class="text-[11px] text-[#6A7581] uppercase tracking-wide font-bold">PayFast</p>
+        </a>
+        <!-- Sp 11 -->
+        <a href="event-speaker.html" class="group bg-white border border-[#E7EBEF] rounded-2xl p-5 text-center flex flex-col items-center hover:shadow-lg hover:-translate-y-1 transition-all">
+          <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-slate-200 grid place-items-center font-jakarta font-extrabold text-slate-500 text-xl mb-3 shadow-md">MB</div>
+          <h3 class="font-jakarta font-extrabold text-[#0C1F31] text-[15px] group-hover:text-[#DC183C] transition">Michelle Botha</h3>
+          <p class="text-[12px] text-[#DC183C] font-semibold mt-0.5 mb-1">Chief Legal Officer</p>
+          <p class="text-[11px] text-[#6A7581] uppercase tracking-wide font-bold">SME South Africa</p>
+        </a>
+        <!-- Sp 12 -->
+        <a href="event-speaker.html" class="group bg-white border border-[#E7EBEF] rounded-2xl p-5 text-center flex flex-col items-center hover:shadow-lg hover:-translate-y-1 transition-all">
+          <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-slate-200 grid place-items-center font-jakarta font-extrabold text-slate-500 text-xl mb-3 shadow-md">ZM</div>
+          <h3 class="font-jakarta font-extrabold text-[#0C1F31] text-[15px] group-hover:text-[#DC183C] transition">Zola Matsapola</h3>
+          <p class="text-[12px] text-[#DC183C] font-semibold mt-0.5 mb-1">Director</p>
+          <p class="text-[11px] text-[#6A7581] uppercase tracking-wide font-bold">IDC Innovation Fund</p>
+        </a>
       </div>
     </section>
 
-    <!-- VENUE / DIRECTIONS -->
-    <section class="mb-12">
-      <h2 class="font-jakarta font-extrabold text-2xl sm:text-3xl text-[#0C1F31] mb-4">Venue &amp; directions</h2>
-      <div class="bg-white rounded-2xl border border-[#E7EBEF] overflow-hidden">
-        <div class="h-56 bg-slate-200 grid place-items-center" style="background:repeating-linear-gradient(45deg,#e2e8f0,#e2e8f0 12px,#cbd5e1 12px,#cbd5e1 24px);">
-          <div class="text-center"><i data-lucide="map" class="w-10 h-10 text-slate-500 mx-auto mb-2"></i><p class="text-sm font-bold text-slate-600">Map embed placeholder · Google Maps at build</p></div>
+    <!-- SPONSORS -->
+    <section class="mb-14">
+      <h2 class="font-jakarta font-extrabold text-2xl sm:text-3xl text-[#0C1F31] mb-6">Partners &amp; Sponsors</h2>
+      <div class="bg-white rounded-2xl border border-[#E7EBEF] p-8 overflow-hidden">
+        <div class="flex gap-6 overflow-x-auto no-scrollbar pb-2">
+           <div class="h-16 px-8 bg-slate-50 rounded-xl border border-[#E7EBEF] flex items-center justify-center shrink-0"><span class="font-jakarta font-bold text-slate-400 text-lg">Standard Bank</span></div>
+           <div class="h-16 px-8 bg-slate-50 rounded-xl border border-[#E7EBEF] flex items-center justify-center shrink-0"><span class="font-jakarta font-bold text-slate-400 text-lg">PayFast</span></div>
+           <div class="h-16 px-8 bg-slate-50 rounded-xl border border-[#E7EBEF] flex items-center justify-center shrink-0"><span class="font-jakarta font-bold text-slate-400 text-lg">Xero</span></div>
+           <div class="h-16 px-8 bg-slate-50 rounded-xl border border-[#E7EBEF] flex items-center justify-center shrink-0"><span class="font-jakarta font-bold text-slate-400 text-lg">MTN Business</span></div>
+           <div class="h-16 px-8 bg-slate-50 rounded-xl border border-[#E7EBEF] flex items-center justify-center shrink-0"><span class="font-jakarta font-bold text-slate-400 text-lg">AWS</span></div>
         </div>
-        <div class="p-6 grid sm:grid-cols-3 gap-5">
-          <div><p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] mb-1">Address</p><p class="text-sm text-[#121A21] leading-relaxed">Focus Rooms<br/>1 Design Blvd, Illovo<br/>Johannesburg, 2196</p></div>
-          <div><p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] mb-1">Parking</p><p class="text-sm text-[#121A21] leading-relaxed">Basement parking available. Enter via Boundary Road. Overflow at Wanderers Office Park.</p></div>
-          <div><p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] mb-1">Getting there</p><p class="text-sm text-[#121A21] leading-relaxed">Gautrain: 8 min drive from Sandton station. Uber pickup at gate 3.</p></div>
+      </div>
+    </section>
+
+    <!-- VENUE (Updated to match CI reference) -->
+    <section class="mb-14">
+      <h2 class="font-jakarta font-extrabold text-2xl sm:text-3xl text-[#0C1F31] mb-6">Venue &amp; directions</h2>
+      <div class="bg-white rounded-2xl border border-[#E7EBEF] flex flex-col md:flex-row overflow-hidden shadow-sm">
+        
+        <!-- Left Side: Cover Image -->
+        <div class="relative w-full md:w-1/2 min-h-[280px] md:min-h-full bg-slate-200">
+          <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80&w=800" alt="Focus Rooms Venue" class="absolute inset-0 w-full h-full object-cover" />
+          <div class="absolute inset-0 bg-gradient-to-t from-[#0C1F31]/90 via-[#0C1F31]/30 to-transparent"></div>
+          
+          <div class="absolute top-4 left-4 bg-[#DC183C] text-white text-[10px] font-bold uppercase tracking-widest px-3 py-1.5 rounded-full shadow-md">
+            The Venue
+          </div>
+          
+          <div class="absolute bottom-6 left-6 text-white pr-6">
+            <h3 class="font-jakarta font-extrabold text-3xl tracking-tight mb-1">FOCUS ROOMS</h3>
+            <p class="text-sm font-bold tracking-widest uppercase text-white/80">Sandton, Johannesburg</p>
+          </div>
+        </div>
+        
+        <!-- Right Side: Details -->
+        <div class="p-6 md:p-8 flex flex-col justify-center w-full md:w-1/2">
+          <div class="flex flex-wrap gap-2 mb-5">
+            <span class="bg-slate-100 text-slate-700 text-[11px] font-bold px-3 py-1.5 rounded-full flex items-center gap-1.5"><i data-lucide="briefcase" class="w-3.5 h-3.5 text-[#DC183C]"></i> Executive Setting</span>
+            <span class="bg-slate-100 text-slate-700 text-[11px] font-bold px-3 py-1.5 rounded-full flex items-center gap-1.5"><i data-lucide="shield-check" class="w-3.5 h-3.5 text-[#DC183C]"></i> Private & Secure</span>
+            <span class="bg-slate-100 text-slate-700 text-[11px] font-bold px-3 py-1.5 rounded-full flex items-center gap-1.5"><i data-lucide="car" class="w-3.5 h-3.5 text-[#DC183C]"></i> Ample Parking</span>
+          </div>
+          
+          <p class="text-[14px] text-slate-600 leading-relaxed mb-6">
+            A premier executive conferencing venue providing a private, secure environment for high-level funding discussions and structured networking.
+          </p>
+          
+          <div class="flex items-start gap-2.5 text-sm font-bold text-[#0C1F31] mb-6">
+            <i data-lucide="map-pin" class="w-4 h-4 text-[#DC183C] mt-0.5 shrink-0"></i>
+            <p class="leading-relaxed">Heaton Lane Longlake 20, Modderfontein Lethabong, Sandton, 1609</p>
+          </div>
+          
+          <a href="#" class="inline-flex items-center justify-center gap-2 bg-[#0C1F31] hover:bg-[#091621] text-white font-bold text-[13px] px-6 h-11 rounded-full w-max transition shadow-md">
+            <i data-lucide="navigation" class="w-4 h-4"></i> Get Directions
+          </a>
         </div>
       </div>
     </section>
 
     <!-- FAQ -->
-    <section class="mb-12">
-      <h2 class="font-jakarta font-extrabold text-2xl sm:text-3xl text-[#0C1F31] mb-4">FAQ</h2>
-      <div class="bg-white rounded-2xl border border-[#E7EBEF] px-6">
+    <section class="mb-14">
+      <h2 class="font-jakarta font-extrabold text-2xl sm:text-3xl text-[#0C1F31] mb-6">FAQ</h2>
+      <div class="bg-white rounded-2xl border border-[#E7EBEF] px-6 shadow-sm">
         <details class="faq-row"><summary>What's the dress code?<i data-lucide="chevron-down" class="chev w-5 h-5 text-[#DC183C]"></i></summary><p>Smart cocktail. No suits required. Represent your brand.</p></details>
         <details class="faq-row"><summary>Can I bring a plus-one?<i data-lucide="chevron-down" class="chev w-5 h-5 text-[#DC183C]"></i></summary><p>Every ticket is single-seat. Buy a second ticket if you'd like a partner or team-mate along — introductions are matched per-attendee.</p></details>
         <details class="faq-row"><summary>How do investor intros work?<i data-lucide="chevron-down" class="chev w-5 h-5 text-[#DC183C]"></i></summary><p>You'll fill a short "who you'd like to meet" form 5 days before. We match, then push confirmed introductions to the event app on the night.</p></details>
-        <details class="faq-row"><summary>Refunds?<i data-lucide="chevron-down" class="chev w-5 h-5 text-[#DC183C]"></i></summary><p>Full refund up to 7 days before the event, 50% up to 48 hours before, none thereafter. Transferable to another attendee at no charge.</p></details>
+        <details class="faq-row"><summary>What is the refund policy?<i data-lucide="chevron-down" class="chev w-5 h-5 text-[#DC183C]"></i></summary><p>Full refund up to 7 days before the event, 50% up to 48 hours before, none thereafter. Tickets are fully transferable to another attendee at no charge.</p></details>
       </div>
     </section>
 
     <!-- FINAL CTA -->
-    <section class="rounded-3xl hero-bg text-white relative overflow-hidden px-8 py-10 text-center">
+    <section class="rounded-3xl hero-bg text-white relative overflow-hidden px-8 py-12 text-center shadow-xl">
       <div class="absolute inset-0 dot-pattern opacity-60 pointer-events-none"></div>
       <div class="relative">
-        <h3 class="font-jakarta font-extrabold text-2xl sm:text-3xl">Room fills up fast.</h3>
-        <p class="text-white/70 mt-2 max-w-md mx-auto">Last year sold out 11 days before the door.</p>
-        <button onclick="openRegister()" class="inline-flex items-center gap-2 mt-5 h-12 px-6 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold transition">Reserve your seat <i data-lucide="arrow-right" class="w-4 h-4"></i></button>
+        <h3 class="font-jakarta font-extrabold text-3xl sm:text-4xl tracking-tight">Room fills up fast.</h3>
+        <p class="text-white/70 mt-3 text-[15px] max-w-md mx-auto leading-relaxed">Last year sold out 11 days before the doors opened. Don't miss out on securing your seat.</p>
+        <button onclick="window.scrollTo({top:0, behavior:'smooth'})" class="inline-flex items-center gap-2 mt-6 h-12 px-8 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold transition shadow-lg">Reserve your seat <i data-lucide="arrow-up" class="w-4 h-4"></i></button>
       </div>
     </section>
   </article>
@@ -296,43 +454,55 @@
   <!-- SIDEBAR -->
   <aside>
     <div class="lg:sticky lg:top-6 space-y-5">
-      <div class="bg-white rounded-2xl border border-[#E7EBEF] p-5">
-        <p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] mb-3">Quick facts</p>
-        <ul class="space-y-3 text-sm">
-          <li class="flex items-center gap-2.5 text-[#121A21]"><i data-lucide="users" class="w-4 h-4 text-[#6A7581]"></i> 180 attendees expected</li>
-          <li class="flex items-center gap-2.5 text-[#121A21]"><i data-lucide="mic" class="w-4 h-4 text-[#6A7581]"></i> 4 keynote speakers</li>
-          <li class="flex items-center gap-2.5 text-[#121A21]"><i data-lucide="utensils" class="w-4 h-4 text-[#6A7581]"></i> Dinner &amp; drinks included</li>
-          <li class="flex items-center gap-2.5 text-[#121A21]"><i data-lucide="car" class="w-4 h-4 text-[#6A7581]"></i> Basement parking</li>
-          <li class="flex items-center gap-2.5 text-[#121A21]"><i data-lucide="accessibility" class="w-4 h-4 text-[#6A7581]"></i> Wheelchair accessible</li>
+      <div class="bg-white rounded-2xl border border-[#E7EBEF] p-5 shadow-sm">
+        <p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] mb-4">Quick facts</p>
+        <ul class="space-y-4 text-[14px]">
+          <li class="flex items-start gap-3 text-[#121A21]"><div class="mt-0.5 text-[#6A7581]"><i data-lucide="users" class="w-4 h-4"></i></div> <span class="font-medium">250 attendees expected</span></li>
+          <li class="flex items-start gap-3 text-[#121A21]"><div class="mt-0.5 text-[#6A7581]"><i data-lucide="mic" class="w-4 h-4"></i></div> <span class="font-medium">12 keynote speakers</span></li>
+          <li class="flex items-start gap-3 text-[#121A21]"><div class="mt-0.5 text-[#6A7581]"><i data-lucide="utensils" class="w-4 h-4"></i></div> <span class="font-medium">Lunch &amp; drinks included</span></li>
+          <li class="flex items-start gap-3 text-[#121A21]"><div class="mt-0.5 text-[#6A7581]"><i data-lucide="car" class="w-4 h-4"></i></div> <span class="font-medium">Ample secure parking</span></li>
+          <li class="flex items-start gap-3 text-[#121A21]"><div class="mt-0.5 text-[#6A7581]"><i data-lucide="accessibility" class="w-4 h-4"></i></div> <span class="font-medium">Wheelchair accessible</span></li>
         </ul>
       </div>
-      <div class="bg-white rounded-2xl border border-[#E7EBEF] p-5">
+      
+      <div class="bg-white rounded-2xl border border-[#E7EBEF] p-5 shadow-sm">
         <p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] mb-3">Share</p>
         <div class="flex items-center gap-2">
-          <button class="w-10 h-10 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 grid place-items-center transition"><svg viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4"><path d="M17 3h3.5l-7.6 8.7L22 21h-6.9l-5.4-6.5L3.4 21H0l8.2-9.4L0 3h7l4.9 5.9L17 3zm-1.2 15.6h1.9L6.3 5.3H4.2l11.6 13.3z"/></svg></button>
-          <button class="w-10 h-10 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 grid place-items-center transition"><svg viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4"><path d="M20.5 2h-17A1.5 1.5 0 002 3.5v17A1.5 1.5 0 003.5 22h17a1.5 1.5 0 001.5-1.5v-17A1.5 1.5 0 0020.5 2zM8 19H5v-9h3v9zM6.5 8.7a1.75 1.75 0 110-3.5 1.75 1.75 0 010 3.5zM19 19h-3v-4.7c0-1.1-.4-1.8-1.4-1.8-.8 0-1.3.5-1.5 1-.1.2-.1.5-.1.7V19h-3v-9h3v1.3c.4-.6 1.2-1.5 2.8-1.5 2 0 3.5 1.3 3.5 4.1V19z"/></svg></button>
-          <button onclick="copyLink()" class="flex-1 h-10 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition inline-flex items-center justify-center gap-1.5"><i data-lucide="link" class="w-3.5 h-3.5"></i> Copy link</button>
+          <button class="w-9 h-9 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 grid place-items-center transition"><svg viewBox="0 0 24 24" fill="currentColor" class="w-3.5 h-3.5"><path d="M17 3h3.5l-7.6 8.7L22 21h-6.9l-5.4-6.5L3.4 21H0l8.2-9.4L0 3h7l4.9 5.9L17 3zm-1.2 15.6h1.9L6.3 5.3H4.2l11.6 13.3z"/></svg></button>
+          <button class="w-9 h-9 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 grid place-items-center transition"><svg viewBox="0 0 24 24" fill="currentColor" class="w-3.5 h-3.5"><path d="M20.5 2h-17A1.5 1.5 0 002 3.5v17A1.5 1.5 0 003.5 22h17a1.5 1.5 0 001.5-1.5v-17A1.5 1.5 0 0020.5 2zM8 19H5v-9h3v9zM6.5 8.7a1.75 1.75 0 110-3.5 1.75 1.75 0 010 3.5zM19 19h-3v-4.7c0-1.1-.4-1.8-1.4-1.8-.8 0-1.3.5-1.5 1-.1.2-.1.5-.1.7V19h-3v-9h3v1.3c.4-.6 1.2-1.5 2.8-1.5 2 0 3.5 1.3 3.5 4.1V19z"/></svg></button>
+          <!-- Explicit Instagram SVG to guarantee visibility -->
+          <button class="w-9 h-9 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 grid place-items-center transition">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-3.5 h-3.5"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+          </button>
+          <!-- WhatsApp SVG -->
+          <button class="w-9 h-9 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 grid place-items-center transition">
+             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-3.5 h-3.5"><path d="M3 21l1.65-3.8a9 9 0 1 1 3.4 2.9L3 21"/><path d="M9 10a.5.5 0 0 0 1 0V9a.5.5 0 0 0-1 0v1a5 5 0 0 0 5 5h1a.5.5 0 0 0 0-1h-1a.5.5 0 0 0 0 1"/></svg>
+          </button>
+          <button onclick="copyLink()" class="flex-1 h-9 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition inline-flex items-center justify-center gap-1.5"><i data-lucide="link" class="w-3.5 h-3.5"></i> Copy link</button>
         </div>
       </div>
-      <div class="rounded-2xl border border-[#E7EBEF] bg-[#FDECEF] p-5">
-        <p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] mb-2">Browse all events</p>
-        <p class="font-jakarta font-extrabold text-[15px] text-[#0C1F31] leading-snug">See what's coming up</p>
-        <p class="text-xs text-[#6A7581] mt-1 leading-relaxed">In-person summits, online webinars and replays.</p>
-        <a href="events.html" class="inline-flex w-full items-center justify-center gap-1.5 mt-3 h-10 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold text-[13px] transition">All events <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i></a>
+      
+      <!-- RELATED EVENTS -->
+      <div class="bg-white rounded-2xl border border-[#E7EBEF] p-5 shadow-sm">
+        <h3 class="font-jakarta font-extrabold text-[15px] text-[#0C1F31] mb-4">Related events</h3>
+        <div class="space-y-4">
+          <a href="#" class="group block">
+            <p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] mb-1">10 Sep 2026</p>
+            <p class="font-jakarta font-extrabold text-[#0C1F31] text-[13px] leading-tight group-hover:text-[#DC183C] transition">Funding Summit 2026</p>
+          </a>
+          <div class="w-full h-px bg-[#E7EBEF]"></div>
+          <a href="#" class="group block">
+            <p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] mb-1">15 Sep 2025</p>
+            <p class="font-jakarta font-extrabold text-[#0C1F31] text-[13px] leading-tight group-hover:text-[#DC183C] transition">Funding Summit 2025</p>
+          </a>
+        </div>
       </div>
+      
     </div>
   </aside>
 </main>
 
-<!-- LIGHTBOX -->
-<div id="lightbox" class="lb" onclick="closeLightbox()">
-  <button class="absolute top-4 right-4 text-white/70 hover:text-white z-10"><i data-lucide="x" class="w-8 h-8"></i></button>
-  <button onclick="event.stopPropagation();navLB(-1)" class="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 text-white grid place-items-center"><i data-lucide="chevron-left" class="w-5 h-5"></i></button>
-  <button onclick="event.stopPropagation();navLB(1)" class="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 text-white grid place-items-center"><i data-lucide="chevron-right" class="w-5 h-5"></i></button>
-  <img id="lbImg" src="" alt="" />
-</div>
-
-<footer class="bg-slate-100 border-t-2 border-dashed border-slate-400 relative overflow-hidden">
+<footer class="bg-slate-100 border-t-2 border-dashed border-slate-400 relative overflow-hidden mt-10">
   <div class="absolute inset-0 opacity-30 pointer-events-none" style="background:repeating-linear-gradient(45deg,transparent,transparent 8px,rgba(100,116,139,.18) 8px,rgba(100,116,139,.18) 16px)"></div>
   <div class="relative max-w-7xl mx-auto px-4 sm:px-6 py-6 text-center">
     <p class="text-[10px] sm:text-[11px] font-bold uppercase tracking-widest text-slate-600 flex items-center justify-center gap-1.5"><i data-lucide="construction" class="w-3.5 h-3.5 text-slate-500"></i> Footer placeholder &middot; design pending</p>
@@ -341,62 +511,53 @@
 </footer>
 
 <div id="overlay-root"></div>
-<div id="toast" class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-[90]"></div>
+<div id="toast" class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-[100]"></div>
 
 <script>
-  function showToast(m){const el=document.getElementById('toast');el.classList.remove('hidden');el.innerHTML=`<div class="bg-[#0C1F31] text-white rounded-full pl-3 pr-5 py-2.5 shadow-2xl flex items-center gap-2 text-sm font-semibold" style="border-left:4px solid #29A37A"><i data-lucide="check-circle" class="w-4 h-4" style="color:#29A37A"></i><span>${m}</span></div>`;lucide.createIcons();setTimeout(()=>{el.classList.add('hidden');el.innerHTML='';},2400);}
+  function showToast(m){const el=document.getElementById('toast');el.classList.remove('hidden');el.innerHTML=`<div class="bg-[#0C1F31] text-white rounded-full pl-4 pr-5 py-3 shadow-2xl flex items-center gap-2.5 text-sm font-semibold" style="border-left:4px solid #29A37A"><i data-lucide="check-circle" class="w-4 h-4" style="color:#29A37A"></i><span>${m}</span></div>`;lucide.createIcons();setTimeout(()=>{el.classList.add('hidden');el.innerHTML='';},2600);}
+
+  // Multi-step Booking Flow
+  function navBooking(step) {
+    document.getElementById('bookingStep1').classList.toggle('hidden', step !== 1);
+    document.getElementById('bookingStep2').classList.toggle('hidden', step !== 2);
+    document.getElementById('bookingStep3').classList.toggle('hidden', step !== 3);
+  }
+
+  function addToCalendar(){ showToast('Added to calendar (ICS generated).'); }
+  function copyLink(){ navigator.clipboard?.writeText(location.href); showToast('Link copied to clipboard.'); }
+  function playTrailer(){ showToast('YouTube iframe swaps in at build.'); }
 
   // Countdown
   (function tickCountdown(){
-    const target = new Date(2026, 8, 25, 18, 0, 0);
+    const target = new Date(2027, 8, 25, 8, 30, 0); // 25 Sep 2027
     function tick(){
       const diff = target - new Date();
-      if(diff <= 0){ document.getElementById('d1').textContent='LIVE'; return; }
-      document.getElementById('d1').textContent=Math.floor(diff/86400000);
-      document.getElementById('h1').textContent=Math.floor((diff%86400000)/3600000);
-      document.getElementById('m1').textContent=Math.floor((diff%3600000)/60000);
+      if(diff <= 0){ 
+        if(document.getElementById('d1')) document.getElementById('d1').textContent='LIVE'; 
+        return; 
+      }
+      if(document.getElementById('d1')) {
+        document.getElementById('d1').textContent=Math.floor(diff/86400000);
+        document.getElementById('h1').textContent=Math.floor((diff%86400000)/3600000);
+        document.getElementById('m1').textContent=Math.floor((diff%3600000)/60000);
+      }
     }
-    tick(); setInterval(tick, 30000);
+    tick(); setInterval(tick, 60000);
   })();
-
-  function openRegister(){ showToast('Registration flow will route to Woo/EventPrime checkout.'); }
-  function addToCalendar(){ showToast('Added — .ics generated at build.'); }
-  function copyLink(){ navigator.clipboard?.writeText(location.href); showToast('Link copied.'); }
-  function playTrailer(){ showToast('YouTube iframe swaps in at build (youtube-nocookie.com/embed/{id}).'); }
-
-  // Gallery slider
-  function scrollGallery(dir){
-    const track = document.getElementById('galleryTrack');
-    track.scrollBy({ left: dir * 320, behavior: 'smooth' });
-  }
-
-  // Lightbox
-  const GALLERY_IMGS = [
-    'https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&q=80&w=1200',
-    'https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&q=80&w=1200',
-    'https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&q=80&w=1200',
-    'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&q=80&w=1200',
-    'https://images.unsplash.com/photo-1505373877841-8d25f7d46678?auto=format&fit=crop&q=80&w=1200',
-    'https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&q=80&w=1200'
-  ];
-  let lbIdx = 0;
-  function openLightbox(i){ lbIdx=i; document.getElementById('lbImg').src=GALLERY_IMGS[i]; document.getElementById('lightbox').classList.add('open'); lucide.createIcons(); }
-  function closeLightbox(){ document.getElementById('lightbox').classList.remove('open'); }
-  function navLB(dir){ lbIdx = (lbIdx+dir+GALLERY_IMGS.length) % GALLERY_IMGS.length; document.getElementById('lbImg').src=GALLERY_IMGS[lbIdx]; }
-  document.addEventListener('keydown', e=>{ if(!document.getElementById('lightbox').classList.contains('open')) return; if(e.key==='Escape') closeLightbox(); if(e.key==='ArrowLeft') navLB(-1); if(e.key==='ArrowRight') navLB(1); });
-
-  const BRIEF = {
-    title:'Single In-person Event',
-    sub:'CPT <code>event</code> · meta_type = "IN-PERSON"',
-    purpose:'Dedicated template for in-person events (summits, galas, workshops). Sells the seat: what, when, where, who, why. Live countdown drives urgency; sticky booking card converts. Includes trailer/recap video (YouTube), keynote speakers with per-speaker deck downloads, and an in-page photo gallery slider. No standalone library or presentation pages — everything lives on this template.',
-    data:'Extends the base event CPT with in-person fields: <code>meta_venue { name, address, lat, lng, parking_notes, transit_notes, accessibility }</code>, <code>meta_capacity</code>, <code>meta_seats_remaining</code> (computed), <code>meta_ticket_price</code> (ZAR), <code>meta_yt_trailer_id</code> (OPTIONAL — YouTube trailer/recap video), <code>meta_agenda [{ time, title, notes }]</code>, <code>meta_speakers [{ speaker_ref, meta_slides_pdf (OPTIONAL), meta_role_at_event }]</code> (repeater — links to speaker CPT, each with optional deck), <code>meta_gallery []</code> (image IDs — in-page slider, past events only), <code>meta_faq [{ q, a }]</code>. Speaker names link to their profile page (<code>event-speaker.html</code>).',
-    logic:'Template = <code>single-event.php</code> with a switch on <code>meta_type === "IN-PERSON"</code>. Countdown ticks client-side against <code>meta_start</code>. Booking CTA opens the Woo product tied to the event. Add-to-calendar generates a signed .ics. Trailer video: if <code>meta_yt_trailer_id</code> is set, render YouTube embed; otherwise fall back to hero image. Speakers section is a repeater that pulls from the speaker CPT — each row shows avatar, name (links to speaker page), role, bio, social links, and optionally a slide-deck download. Gallery slider is a horizontal scroll of images from <code>meta_gallery</code>, with lightbox on click and keyboard nav.',
-    components:'Hero (breadcrumb + status/type/category chips + title + subtitle + 3-tile countdown) · Sticky booking card (date, venue, seats-remaining, price, Reserve/AddToCalendar) · Trailer/recap video (YouTube embed, optional) · About · Agenda · Keynote Speakers repeater (avatar + name → speaker page + role + bio + socials + optional slides download) · Event gallery slider (horizontal scroll + lightbox) · Venue+directions (map + address/parking/transit) · FAQ · Final CTA band · Sidebar (quick facts, share, browse-events pointer).',
-    specs:'<b>Hero:</b> hero-bg gradient, py-12/16. 2-col at lg: content + 380px sticky booking card. H1 Plus Jakarta 800, 30/48px, leading 1.05. Chip row: Upcoming (#FF9900/#0C1F31), In-person (white/10 + white text), Category (#FDECEF/#DC183C). Countdown tiles 76px min-width, bg white/6 border white/12.<br/><b>Trailer video:</b> yt-wrap aspect 16/9 rounded-2xl shadow. Play overlay 80×80 rounded-full #DC183C/95. YouTube-nocookie embed on click.<br/><b>Speaker card:</b> rounded-2xl border #E7EBEF p-6. Avatar 80/96px rounded-full shadow-lg with gradient monogram (different gradient per speaker). Name Plus Jakarta 800 20px → links to speaker profile. Role #DC183C 600. Bio 14px #6A7581. Social pills 28×28 rounded-full. Deck download: p-3 rounded-xl bg slate-50 border #E7EBEF, icon tile 36×36 rounded-lg #DC183C/10, filename 12px 700, size 11px #6A7581, Download btn h-8 rounded-lg #0C1F31.<br/><b>Gallery slider:</b> horizontal scroll with snap, gap 12px, images h-220px min-w-300px rounded-xl object-cover. Left/right arrow buttons 36×36 rounded-full border #E7EBEF. Lightbox: fixed overlay bg black/92, img max 90vw/85vh rounded-xl, arrow nav + Esc to close.'
-  };
 
   function toggleDevMode(){const on=document.body.classList.toggle('dev-on');const b=document.getElementById('devToggle');if(b)b.classList.toggle('on',on);lucide.createIcons();}
   function closeOverlay(id){const el=document.getElementById(id);if(!el)return;el.classList.remove('open');setTimeout(()=>{if(el&&el.parentNode)el.remove();},300);}
+  
+  const BRIEF = {
+    title:'Single In-person Event',
+    sub:'CPT <code>event</code> · meta_type = "IN-PERSON"',
+    purpose:'Dedicated template for in-person events (summits, galas). Designed to sell the seat with a multi-step sidebar booking widget, agenda timeline, 12-speaker grid, and sponsor rows.',
+    data:'Extends event CPT with: <code>meta_venue {name, address, lat, lng, parking, transit}</code>, <code>meta_capacity</code>, <code>meta_ticket_price</code>, <code>meta_agenda [{time, title}]</code>, <code>meta_speakers []</code>, <code>meta_sponsors []</code>.',
+    logic:'Template = <code>single-event.php</code>. Multi-step sidebar pushes user through selection -> details -> checkout cleanly without leaving the page. "Toggle Agenda Visibility" button simulates pre-agenda marketing phase.',
+    components:'Expanded Hero + 3-step sticky booking card · Responsive video trailer · About + Key Topics split · Timeline Agenda · 12-Speaker Grid · Sponsor Logo Row · Venue details card · FAQ · Bottom CTA · Sidebar quick facts.',
+    specs:'<b>Containers:</b> <code>max-w-7xl</code> everywhere. <b>Hero:</b> max-w-[1200px] + <code>min-w-0</code> on grid children to fix horizontal scroll. <b>Speakers:</b> <code>lg:grid-cols-3</code> compact cards. <b>Venue:</b> Custom split design.'
+  };
+
   function openBrief(){
     const b=BRIEF;
     const sec=(i,l,h)=>`<div class="px-6 py-4 border-t border-slate-100"><p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] flex items-center gap-1.5 mb-2"><i data-lucide="${i}" class="w-3.5 h-3.5"></i>${l}</p><div class="text-sm text-slate-600 leading-relaxed">${h}</div></div>`;

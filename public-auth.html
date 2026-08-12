@@ -29,9 +29,32 @@
     .ov.open .drawer { transform:translateX(0); }
   </style>
 </head>
-<body class="bg-[#F1F4F7] text-[#121A21] antialiased">
+<body class="bg-white text-[#121A21] antialiased">
 
-<div class="min-h-screen max-w-7xl mx-auto px-4 sm:px-6 py-8 lg:py-0 grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+<!-- HEADER PLACEHOLDER -->
+<header class="bg-slate-100 border-b-2 border-dashed border-slate-400 relative overflow-hidden">
+  <div class="absolute inset-0 opacity-30 pointer-events-none" style="background:repeating-linear-gradient(45deg,transparent,transparent 8px,rgba(100,116,139,.18) 8px,rgba(100,116,139,.18) 16px)"></div>
+  <div class="relative max-w-7xl mx-auto px-4 sm:px-6 h-14 flex items-center gap-3 sm:gap-4">
+    <a href="public-home.html" class="flex items-center gap-2 shrink-0 opacity-70 hover:opacity-100 transition">
+      <img src="assets/logo-icon.png" alt="SME South Africa" class="w-7 h-7" />
+      <span class="font-jakarta font-extrabold text-[13px] tracking-tight text-slate-700 hidden sm:inline">SME South Africa</span>
+    </a>
+    <span class="mx-1 hidden sm:inline w-px h-5 bg-slate-300"></span>
+    <p class="text-[10px] sm:text-[11px] font-bold uppercase tracking-widest text-slate-600 flex items-center gap-1.5">
+      <i data-lucide="construction" class="w-3.5 h-3.5 text-slate-500"></i>
+      Header placeholder &middot; design pending
+    </p>
+    <div class="ml-auto flex items-center gap-2">
+      <button id="devToggle" onclick="toggleDevMode()" class="inline-flex items-center gap-1.5 px-2.5 h-8 rounded-full bg-white border border-slate-300 hover:border-[#DC183C] hover:text-[#DC183C] text-[11px] font-bold uppercase tracking-wider text-slate-600 transition" title="Toggle implementation notes"><i data-lucide="code-2" class="w-3.5 h-3.5"></i><span class="hidden sm:inline">Dev</span></button>
+      <a href="index.html" class="inline-flex items-center gap-1.5 px-3 h-8 rounded-full bg-white border border-slate-300 hover:border-slate-500 text-[11px] font-bold text-slate-700 transition">
+        <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i><span class="hidden sm:inline">Launcher</span>
+      </a>
+    </div>
+  </div>
+</header>
+
+<div class="min-h-[calc(100vh-140px)] max-w-7xl mx-auto px-4 sm:px-6 py-12 lg:py-0 grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+  
   <!-- ===== Left: value props (desktop only) ===== -->
   <div class="hidden lg:block order-2 lg:order-1">
     <span class="inline-flex items-center gap-2 px-3.5 h-8 rounded-full bg-[#0C1F31] text-white text-[11px] font-bold uppercase tracking-widest">Premium Network</span>
@@ -59,16 +82,13 @@
       <span class="inline-flex items-center gap-2 px-3.5 h-8 rounded-full bg-[#0C1F31] text-white text-[11px] font-bold uppercase tracking-widest">Premium Network</span>
       <h1 class="font-jakarta font-extrabold text-2xl leading-tight tracking-tight mt-4">Join South Africa's <span class="text-[#DC183C]">Leading SME Community</span></h1>
     </div>
+    
     <div class="bg-white rounded-3xl shadow-xl border border-[#E7EBEF] p-7 sm:p-9">
-      <div class="flex items-center justify-between mb-1">
-        <a href="public-home.html" class="flex items-center gap-2"><img src="assets/logo-icon.png" alt="SME South Africa" class="w-8 h-8" /></a>
-        <button id="devToggle" onclick="toggleDevMode()" class="flex items-center gap-1.5 px-2.5 h-8 rounded-full border border-slate-200 text-slate-400 hover:border-[#DC183C] hover:text-[#DC183C] transition text-[10px] font-bold uppercase tracking-wider" title="Dev"><i data-lucide="code-2" class="w-3.5 h-3.5"></i></button>
-      </div>
-
-      <h2 id="authTitle" class="font-jakarta font-extrabold text-2xl sm:text-3xl text-center text-[#0C1F31] mt-3">Welcome Back to Your SME Hub
+      
+      <h2 id="authTitle" class="font-jakarta font-extrabold text-2xl sm:text-3xl text-center text-[#0C1F31]">Welcome Back to Your SME Hub
         <button onclick="openBrief('auth')" class="dev-badge align-middle ml-1 w-5 h-5 rounded-full bg-[#DC183C] text-white items-center justify-center text-[10px] font-bold" title="Implementation notes">i</button>
       </h2>
-      <p id="authSub" class="text-center text-sm text-[#6A7581] mt-2">Access your resources, funding opportunities, and community updates.</p>
+      <p id="authSub" class="text-center text-sm text-[#6A7581] mt-2" style="display: none;"></p>
 
       <!-- SSO -->
       <div class="flex items-center justify-center gap-3 mt-6">
@@ -101,30 +121,53 @@
           <p id="stepLabel" class="text-sm font-bold text-[#0C1F31]">Step 1 of 3 — Personal Information</p>
           <div class="h-2 rounded-full bg-slate-100 mt-2 overflow-hidden"><div id="progress" class="h-full bg-[#DC183C] transition-all" style="width:33%"></div></div>
         </div>
+        
         <!-- step 1 -->
         <div id="step1" class="space-y-4">
           <div class="grid grid-cols-2 gap-3">
             <div><label class="block text-[11px] font-bold uppercase tracking-wider text-[#6A7581] mb-1.5">First name *</label><input required class="field" placeholder="First name" /></div>
             <div><label class="block text-[11px] font-bold uppercase tracking-wider text-[#6A7581] mb-1.5">Last name *</label><input required class="field" placeholder="Last name" /></div>
           </div>
+          <div><label class="block text-[11px] font-bold uppercase tracking-wider text-[#6A7581] mb-1.5">Job position *</label><input required class="field" placeholder="e.g. Founder, CEO" /></div>
+        </div>
+        
+        <!-- step 2 -->
+        <div id="step2" class="space-y-4 hidden">
+          <div class="grid grid-cols-2 gap-3">
+            <div><label class="block text-[11px] font-bold uppercase tracking-wider text-[#6A7581] mb-1.5">City</label><input class="field" placeholder="e.g. Johannesburg" /></div>
+            <div><label class="block text-[11px] font-bold uppercase tracking-wider text-[#6A7581] mb-1.5">Province</label>
+              <select class="field"><option>Select province</option><option>Eastern Cape</option><option>Free State</option><option>Gauteng</option><option>KwaZulu-Natal</option><option>Limpopo</option><option>Mpumalanga</option><option>Northern Cape</option><option>North West</option><option>Western Cape</option></select></div>
+          </div>
+          <div class="grid grid-cols-2 gap-3">
+            <div><label class="block text-[11px] font-bold uppercase tracking-wider text-[#6A7581] mb-1.5">Company Industry</label>
+              <select class="field"><option>Select industry</option><option>Retail</option><option>Fintech</option><option>Agriculture</option><option>Manufacturing</option><option>Services</option><option>Other</option></select></div>
+            <div><label class="block text-[11px] font-bold uppercase tracking-wider text-[#6A7581] mb-1.5">Company name *</label><input required class="field" placeholder="Company name" /></div>
+          </div>
+          <div><label class="block text-[11px] font-bold uppercase tracking-wider text-[#6A7581] mb-1.5">Monthly Turnover</label>
+            <select class="field"><option>Select turnover</option><option>Under R50k</option><option>R50k - R100k</option><option>R100k - R500k</option><option>R500k+</option></select></div>
+        </div>
+        
+        <!-- step 3 -->
+        <div id="step3" class="space-y-4 hidden">
+          <div><label class="block text-[11px] font-bold uppercase tracking-wider text-[#6A7581] mb-1.5">Email address *</label>
+            <div class="relative"><i data-lucide="mail" class="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400"></i><input required type="email" class="field pl-10" placeholder="Email address" /></div>
+          </div>
           <div><label class="block text-[11px] font-bold uppercase tracking-wider text-[#6A7581] mb-1.5">Phone number *</label>
             <div class="flex gap-2"><span class="inline-flex items-center gap-1.5 px-3 rounded-xl border border-[#E7EBEF] bg-slate-50 text-sm font-semibold shrink-0">🇿🇦 +27</span><input required type="tel" class="field" placeholder="Phone number" /></div>
           </div>
-        </div>
-        <!-- step 2 -->
-        <div id="step2" class="space-y-4 hidden">
-          <div><label class="block text-[11px] font-bold uppercase tracking-wider text-[#6A7581] mb-1.5">Business name *</label><input class="field" placeholder="Your business" /></div>
-          <div><label class="block text-[11px] font-bold uppercase tracking-wider text-[#6A7581] mb-1.5">Sector</label>
-            <select class="field"><option>Select sector</option><option>Retail</option><option>Fintech</option><option>Agriculture</option><option>Manufacturing</option><option>Services</option><option>Other</option></select></div>
-          <div><label class="block text-[11px] font-bold uppercase tracking-wider text-[#6A7581] mb-1.5">Stage</label>
-            <select class="field"><option>Select stage</option><option>Idea</option><option>Startup</option><option>Growth</option><option>Established</option></select></div>
-        </div>
-        <!-- step 3 -->
-        <div id="step3" class="space-y-4 hidden">
-          <div class="relative"><i data-lucide="mail" class="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400"></i><input type="email" class="field pl-10" placeholder="Email address" /></div>
-          <div class="relative"><i data-lucide="key-round" class="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400"></i>
-            <input id="pw2" type="password" class="field pl-10 pr-11" placeholder="Create a password" />
-            <button type="button" onclick="togglePw('pw2','eye2')" class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"><i id="eye2" data-lucide="eye" class="w-4 h-4"></i></button>
+          <div class="grid grid-cols-2 gap-3">
+            <div><label class="block text-[11px] font-bold uppercase tracking-wider text-[#6A7581] mb-1.5">Create password *</label>
+              <div class="relative"><i data-lucide="key-round" class="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400"></i>
+                <input id="pw2" required type="password" class="field pl-10 pr-11" placeholder="Password" />
+                <button type="button" onclick="togglePw('pw2','eye2')" class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"><i id="eye2" data-lucide="eye" class="w-4 h-4"></i></button>
+              </div>
+            </div>
+            <div><label class="block text-[11px] font-bold uppercase tracking-wider text-[#6A7581] mb-1.5">Confirm password *</label>
+              <div class="relative"><i data-lucide="key-round" class="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400"></i>
+                <input id="pw3" required type="password" class="field pl-10 pr-11" placeholder="Confirm" />
+                <button type="button" onclick="togglePw('pw3','eye3')" class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"><i id="eye3" data-lucide="eye" class="w-4 h-4"></i></button>
+              </div>
+            </div>
           </div>
           <label class="flex items-start gap-2.5 text-sm text-[#6A7581]"><input type="checkbox" required class="mt-0.5 w-4 h-4 rounded border-slate-300 text-[#DC183C] focus:ring-[#DC183C]" /><span>I agree to the <a href="public-terms.html" class="font-semibold text-[#DC183C] hover:underline">Terms</a> and the <a href="public-popia.html" class="font-semibold text-[#DC183C] hover:underline">POPIA notice</a>.</span></label>
         </div>
@@ -141,6 +184,18 @@
   </div>
 </div>
 
+<!-- FOOTER PLACEHOLDER -->
+<footer class="bg-slate-100 border-t-2 border-dashed border-slate-400 relative overflow-hidden mt-auto">
+  <div class="absolute inset-0 opacity-30 pointer-events-none" style="background:repeating-linear-gradient(45deg,transparent,transparent 8px,rgba(100,116,139,.18) 8px,rgba(100,116,139,.18) 16px)"></div>
+  <div class="relative max-w-7xl mx-auto px-4 sm:px-6 py-6 text-center">
+    <p class="text-[10px] sm:text-[11px] font-bold uppercase tracking-widest text-slate-600 flex items-center justify-center gap-1.5">
+      <i data-lucide="construction" class="w-3.5 h-3.5 text-slate-500"></i>
+      Footer placeholder &middot; design pending
+    </p>
+    <p class="text-[11px] text-slate-500 mt-2">&copy; 2026 SME South Africa</p>
+  </div>
+</footer>
+
 <div id="overlay-root"></div>
 <div id="toast" class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-50"></div>
 
@@ -155,7 +210,11 @@
     document.getElementById('loginForm').classList.toggle('hidden', up);
     document.getElementById('signupForm').classList.toggle('hidden', !up);
     document.getElementById('authTitle').childNodes[0].nodeValue = up ? 'Create your account ' : 'Welcome Back to Your SME Hub ';
-    document.getElementById('authSub').textContent = up ? 'Join 100,000+ South African founders — it’s at no cost.' : 'Access your resources, funding opportunities, and community updates.';
+    
+    const sub = document.getElementById('authSub');
+    if(up) { sub.style.display = 'block'; sub.textContent = 'Join 100,000+ South African founders — it’s at no cost.'; }
+    else { sub.style.display = 'none'; sub.textContent = ''; }
+
     document.getElementById('orLabel').textContent = up ? 'Or sign up with email' : 'Or sign in with email';
     document.getElementById('switchLine').innerHTML = up
       ? 'Already a subscriber? <button onclick="setMode(\'in\')" class="text-[#DC183C] hover:underline">Sign in</button>'
@@ -179,9 +238,9 @@
   const BRIEFS = { auth: {
     title:'Authentication', sub:'MemberPress — never rebuild auth',
     purpose:'Single sign-in / join surface, mirroring the live SME South Africa design. Conversion-focused: value props on the left, a minimal card on the right. <b>All auth, billing and gating is owned by MemberPress</b>; this mockup is UI only — do not build a custom auth/session system.',
-    data:'Login: <code>{ identifier, password, remember }</code>. Signup wizard: Step 1 <code>{first,last,phone}</code> · Step 2 <code>{business,sector,stage}</code> · Step 3 <code>{email,password,consent}</code>. One WP user record across MemberPress + BuddyBoss + WooCommerce.',
+    data:'Login: <code>{ identifier, password, remember }</code>. Signup wizard: Step 1 <code>{first,last,job}</code> · Step 2 <code>{city,province,industry,company,turnover}</code> · Step 3 <code>{email,phone,password,confirm_password,consent}</code>. One WP user record across MemberPress + BuddyBoss + WooCommerce.',
     logic:'SSO (Google/LinkedIn) via identity provider. Email flow → MemberPress register/login. The 3-step wizard reduces drop-off; sector/stage personalise the hub after signup. POPIA consent required + timestamped. Success → member-hub.html.',
-    specs:'<b>Page background:</b> flat fill <code>#F1F4F7</code> (blue-grey tint), no pattern or blobs.<br/><b>Layout:</b> centred container <code>max-w-7xl</code> 1280px, padding 16px mobile / 24px small / 32px vertical, two-column <code>lg:grid-cols-2</code> split with 40px gap (64px desktop), vertically centred.<br/><br/><b>Value-prop panel (left, desktop only):</b> eyebrow pill <code>#0C1F31</code> navy 32px tall, white 11px bold uppercase. Heading <code>font-jakarta</code> extrabold 36px / 48px desktop, line-height 1.05, key phrase <code>#DC183C</code> red. Body <code>#6A7581</code> 16px. Feature icons in 44px <code>rounded-xl</code> tiles bg <code>#FDECEF</code> red-tint, icon <code>#DC183C</code> 20px; titles jakarta bold <code>#0C1F31</code>, captions 14px <code>#6A7581</code>, rows 20px apart.<br/><br/><b>Auth card:</b> width <code>max-w-md</code> 448px, bg white <code>rounded-3xl</code> 24px, 1px border <code>#E7EBEF</code>, shadow-xl, padding 28px mobile / 36px desktop.<br/><b>Logo &amp; headings:</b> logo icon 32px. Title <code>#authTitle</code> jakarta extrabold 24px / 30px desktop centred <code>#0C1F31</code>. Sub-line 14px centred <code>#6A7581</code>.<br/><br/><b>SSO buttons:</b> two side-by-side, each height 48px <code>rounded-xl</code> 12px, 12px gap. Google 1px border <code>#E7EBEF</code>, hover bg <code>#F8FAFC</code>; LinkedIn solid <code>#0A66C2</code>, hover 90% opacity. Brand SVG icons 20px.<br/><b>Divider:</b> 1px rule <code>#E7EBEF</code> with 11px slate-400 bold uppercase label, 20px vertical margin.<br/><br/><b>Form fields:</b> height 48px, bg white, 1px border <code>#E7EBEF</code>, radius 12px, padding 16px horizontal, text ~14px. Focus border <code>#DC183C</code> plus 3px glow <code>rgba(220,24,60,0.12)</code>. Leading icons 16px slate-400 inset 14px (Lucide <code>user</code>, <code>key-round</code>, <code>mail</code>); password reveal uses <code>eye</code> / <code>eye-off</code> 16px.<br/><b>Login controls:</b> 16px checkbox tinted <code>#DC183C</code>, Remember label 14px <code>#6A7581</code>; Forgot link 14px bold <code>#DC183C</code>.<br/><b>Primary button:</b> full-width height 48px <code>rounded-full</code>, bg <code>#DC183C</code>, hover <code>#B0142F</code>, white bold text.<br/><br/><b>Signup wizard:</b> step label 14px bold <code>#0C1F31</code>; progress track 8px <code>rounded-full</code> bg <code>#F0F5F9</code> with <code>#DC183C</code> fill. Field labels 11px bold uppercase <code>#6A7581</code>, 6px below. Phone prefix chip <code>rounded-xl</code> 1px border <code>#E7EBEF</code> bg <code>#F8FAFC</code> 14px semibold; sector/stage use the same 48px field. Consent links jakarta/semibold <code>#DC183C</code>.<br/><b>Wizard buttons:</b> Next full-width 48px <code>rounded-full</code> bg <code>#0C1F31</code> navy, hover <code>#1B3247</code>, white bold; Create account same shape bg <code>#DC183C</code> hover <code>#B0142F</code>; Back 48px <code>rounded-full</code> 1px border <code>#E7EBEF</code> bg white 14px bold, 20px horizontal padding.<br/><br/><b>Small print &amp; links:</b> switch line 14px semibold <code>#6A7581</code> with <code>#DC183C</code> action link; all inline links <code>#DC183C</code> underline-on-hover.',
+    specs:'<b>Page background:</b> flat fill <code>#FFFFFF</code>.<br/><b>Layout:</b> centred container <code>max-w-7xl</code> 1280px, padding 16px mobile / 24px small / 32px vertical, two-column <code>lg:grid-cols-2</code> split with 40px gap (64px desktop), vertically centred.<br/><br/><b>Value-prop panel (left, desktop only):</b> eyebrow pill <code>#0C1F31</code> navy 32px tall, white 11px bold uppercase. Heading <code>font-jakarta</code> extrabold 36px / 48px desktop, line-height 1.05, key phrase <code>#DC183C</code> red. Body <code>#6A7581</code> 16px. Feature icons in 44px <code>rounded-xl</code> tiles bg <code>#FDECEF</code> red-tint, icon <code>#DC183C</code> 20px; titles jakarta bold <code>#0C1F31</code>, captions 14px <code>#6A7581</code>, rows 20px apart.<br/><br/><b>Auth card:</b> width <code>max-w-md</code> 448px, bg white <code>rounded-3xl</code> 24px, 1px border <code>#E7EBEF</code>, shadow-xl, padding 28px mobile / 36px desktop.<br/><b>Logo &amp; headings:</b> Title <code>#authTitle</code> jakarta extrabold 24px / 30px desktop centred <code>#0C1F31</code>. Sub-line 14px centred <code>#6A7581</code>.<br/><br/><b>SSO buttons:</b> two side-by-side, each height 48px <code>rounded-xl</code> 12px, 12px gap. Google 1px border <code>#E7EBEF</code>, hover bg <code>#F8FAFC</code>; LinkedIn solid <code>#0A66C2</code>, hover 90% opacity. Brand SVG icons 20px.<br/><b>Divider:</b> 1px rule <code>#E7EBEF</code> with 11px slate-400 bold uppercase label, 20px vertical margin.<br/><br/><b>Form fields:</b> height 48px, bg white, 1px border <code>#E7EBEF</code>, radius 12px, padding 16px horizontal, text ~14px. Focus border <code>#DC183C</code> plus 3px glow <code>rgba(220,24,60,0.12)</code>. Leading icons 16px slate-400 inset 14px (Lucide <code>user</code>, <code>key-round</code>, <code>mail</code>); password reveal uses <code>eye</code> / <code>eye-off</code> 16px.<br/><b>Login controls:</b> 16px checkbox tinted <code>#DC183C</code>, Remember label 14px <code>#6A7581</code>; Forgot link 14px bold <code>#DC183C</code>.<br/><b>Primary button:</b> full-width height 48px <code>rounded-full</code>, bg <code>#DC183C</code>, hover <code>#B0142F</code>, white bold text.<br/><br/><b>Signup wizard:</b> step label 14px bold <code>#0C1F31</code>; progress track 8px <code>rounded-full</code> bg <code>#F0F5F9</code> with <code>#DC183C</code> fill. Field labels 11px bold uppercase <code>#6A7581</code>, 6px below. Phone prefix chip <code>rounded-xl</code> 1px border <code>#E7EBEF</code> bg <code>#F8FAFC</code> 14px semibold; sector/stage use the same 48px field. Consent links jakarta/semibold <code>#DC183C</code>.<br/><b>Wizard buttons:</b> Next full-width 48px <code>rounded-full</code> bg <code>#0C1F31</code> navy, hover <code>#1B3247</code>, white bold; Create account same shape bg <code>#DC183C</code> hover <code>#B0142F</code>; Back 48px <code>rounded-full</code> 1px border <code>#E7EBEF</code> bg white 14px bold, 20px horizontal padding.<br/><br/><b>Small print &amp; links:</b> switch line 14px semibold <code>#6A7581</code> with <code>#DC183C</code> action link; all inline links <code>#DC183C</code> underline-on-hover.',
     components:'Value-prop panel · SSO buttons · login form (remember + forgot) · 3-step signup wizard with progress bar.'
   } };
   function toggleDevMode(){ const on=document.body.classList.toggle('dev-on'); const b=document.getElementById('devToggle'); if(b)b.classList.toggle('on',on); if(on)showToast('Dev Mode on — tap any ⓘ for implementation notes.'); lucide.createIcons(); }
@@ -195,7 +254,5 @@
   if(location.hash==='#join') setMode('up');
   lucide.createIcons();
 </script>
-<script src="status.js"></script>
-<script src="gate-links.js"></script>
 </body>
 </html>
