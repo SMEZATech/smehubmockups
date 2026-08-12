@@ -100,10 +100,10 @@
 
       <!-- LEFT — Image gallery -->
       <div>
-        <div class="relative bg-[#F4F6F8] rounded-[24px] border border-[#E7EBEF] aspect-square flex items-center justify-center p-10 overflow-hidden">
-          <img id="mainImage" src="https://smesouthafrica.co.za/wp-content/uploads/2026/05/1.png" alt="Founder's Edition White T-Shirt" class="max-w-full max-h-full object-contain drop-shadow-2xl transition-transform duration-500" />
-          <span class="absolute top-4 left-4 px-3 py-1 rounded-full text-[10px] font-bold bg-[#FDECEF] text-primary uppercase tracking-widest">Apparel</span>
-          <button onclick="showToast('Wishlist saved (mock).')" class="absolute top-4 right-4 w-10 h-10 rounded-full bg-white border border-[#E7EBEF] flex items-center justify-center text-[#6A7581] hover:text-primary hover:border-primary transition" aria-label="Save to wishlist">
+        <!-- Main image container with full view/cover, no padding, no apparel tag -->
+        <div class="relative bg-[#F4F6F8] rounded-[24px] border border-[#E7EBEF] aspect-square flex items-center justify-center overflow-hidden">
+          <img id="mainImage" src="https://smesouthafrica.co.za/wp-content/uploads/2026/05/1.png" alt="Founder's Edition White T-Shirt" class="w-full h-full object-cover transition-transform duration-500" />
+          <button onclick="showToast('Wishlist saved (mock).')" class="absolute top-4 right-4 w-10 h-10 rounded-full bg-white border border-[#E7EBEF] flex items-center justify-center text-[#6A7581] hover:text-primary hover:border-primary transition shadow-sm" aria-label="Save to wishlist">
             <i data-lucide="heart" class="w-4 h-4"></i>
           </button>
         </div>
@@ -129,7 +129,7 @@
         <p class="text-[11px] font-bold text-[#6A7581] uppercase tracking-widest mb-3">The Founder's Collection</p>
         <h1 class="font-jakarta font-extrabold text-3xl sm:text-4xl leading-tight text-[#0C1F31] tracking-tight">Founder's Edition White T-Shirt</h1>
 
-        <!-- Rating -->
+        <!-- Rating (In stock removed) -->
         <div class="flex items-center gap-2 mt-3">
           <div class="flex text-[#FF9900]">
             <i data-lucide="star" class="w-4 h-4 fill-current"></i>
@@ -139,7 +139,6 @@
             <i data-lucide="star" class="w-4 h-4 fill-current"></i>
           </div>
           <span class="text-[13px] text-[#6A7581]">4.9 · 128 reviews</span>
-          <span class="text-[13px] text-[#29A37A] font-semibold inline-flex items-center gap-1"><i data-lucide="check-circle" class="w-3.5 h-3.5"></i> In stock</span>
         </div>
 
         <!-- Price -->
@@ -155,11 +154,10 @@
           Crafted from ultra-soft, 100% combed cotton with a tailored regular fit. Premium comfort that moves perfectly from the boardroom to the weekend. Subtle embroidered SME crest at the chest.
         </p>
 
-        <!-- Size selector -->
+        <!-- Size selector (Size guide removed) -->
         <div class="mt-8">
           <div class="flex items-center justify-between mb-3">
             <p class="text-[13px] font-bold text-[#0C1F31] uppercase tracking-wider">Size</p>
-            <button onclick="showToast('Size guide opens in modal at build.')" class="text-[12px] text-[#DC183C] font-semibold hover:underline inline-flex items-center gap-1"><i data-lucide="ruler" class="w-3.5 h-3.5"></i> Size guide</button>
           </div>
           <div class="flex flex-wrap gap-2">
             <button class="size-pill h-11 min-w-[52px] px-4 rounded-xl border border-[#E7EBEF] font-jakarta font-bold text-sm bg-white" onclick="pickSize(this)">XS</button>
@@ -213,13 +211,22 @@
           </div>
         </div>
 
-        <!-- Share row -->
+        <!-- Updated Share row matching the screenshot -->
         <div class="mt-6 flex items-center gap-3 text-[13px] text-[#6A7581]">
-          <span class="font-semibold text-[#0C1F31]">Share</span>
-          <button class="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 grid place-items-center transition" aria-label="X"><svg viewBox="0 0 24 24" fill="currentColor" class="w-3.5 h-3.5"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></button>
-          <button class="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 grid place-items-center transition" aria-label="Facebook"><i data-lucide="facebook" class="w-3.5 h-3.5"></i></button>
-          <button class="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 grid place-items-center transition" aria-label="WhatsApp"><i data-lucide="message-circle" class="w-3.5 h-3.5"></i></button>
-          <button onclick="copyLink()" class="ml-auto inline-flex items-center gap-1.5 h-8 px-3 rounded-full bg-slate-100 hover:bg-slate-200 text-[12px] font-semibold text-slate-700 transition"><i data-lucide="link" class="w-3.5 h-3.5"></i> Copy link</button>
+          <span class="font-semibold text-[#0C1F31] mr-2">Share</span>
+          <button class="w-9 h-9 rounded-full bg-[#F4F6F8] hover:bg-[#E7EBEF] text-[#0C1F31] grid place-items-center transition" aria-label="X">
+            <svg viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          </button>
+          <button class="w-9 h-9 rounded-full bg-[#F4F6F8] hover:bg-[#E7EBEF] text-[#0C1F31] grid place-items-center transition" aria-label="Instagram">
+            <i data-lucide="instagram" class="w-4 h-4"></i>
+          </button>
+          <button class="w-9 h-9 rounded-full bg-[#F4F6F8] hover:bg-[#E7EBEF] text-[#0C1F31] grid place-items-center transition" aria-label="WhatsApp">
+            <i data-lucide="message-circle" class="w-4 h-4"></i>
+          </button>
+          <!-- Copy link pill right-aligned -->
+          <button onclick="copyLink()" class="ml-auto inline-flex items-center gap-2 h-9 px-4 rounded-full bg-[#F4F6F8] hover:bg-[#E7EBEF] text-[13px] font-semibold text-[#0C1F31] transition">
+            <i data-lucide="link" class="w-4 h-4"></i> Copy link
+          </button>
         </div>
       </div>
     </div>
@@ -230,10 +237,10 @@
 <section class="pb-14">
   <div class="max-w-7xl mx-auto px-4 sm:px-6">
     <div class="bg-white rounded-[24px] border border-[#E7EBEF] overflow-hidden">
+      <!-- Removed the Reviews tab -->
       <div class="border-b border-[#E7EBEF] flex items-center gap-6 px-6 sm:px-8 overflow-x-auto">
         <button class="tab-btn active py-4 border-b-2 border-transparent font-jakarta font-bold text-sm text-[#6A7581] whitespace-nowrap" onclick="pickTab(this,'description')">Description</button>
         <button class="tab-btn py-4 border-b-2 border-transparent font-jakarta font-bold text-sm text-[#6A7581] whitespace-nowrap" onclick="pickTab(this,'specs')">Specs &amp; care</button>
-        <button class="tab-btn py-4 border-b-2 border-transparent font-jakarta font-bold text-sm text-[#6A7581] whitespace-nowrap" onclick="pickTab(this,'reviews')">Reviews (128)</button>
         <button class="tab-btn py-4 border-b-2 border-transparent font-jakarta font-bold text-sm text-[#6A7581] whitespace-nowrap" onclick="pickTab(this,'shipping')">Shipping &amp; returns</button>
       </div>
 
@@ -274,49 +281,6 @@
         </div>
       </div>
 
-      <div id="tabReviews" class="tab-panel p-6 sm:p-8 hidden">
-        <div class="grid lg:grid-cols-[280px,1fr] gap-8">
-          <div class="rounded-2xl bg-[#F4F6F8] p-6 text-center">
-            <p class="font-jakarta font-extrabold text-5xl text-[#0C1F31]">4.9</p>
-            <div class="flex justify-center text-[#FF9900] mt-1">
-              <i data-lucide="star" class="w-4 h-4 fill-current"></i>
-              <i data-lucide="star" class="w-4 h-4 fill-current"></i>
-              <i data-lucide="star" class="w-4 h-4 fill-current"></i>
-              <i data-lucide="star" class="w-4 h-4 fill-current"></i>
-              <i data-lucide="star" class="w-4 h-4 fill-current"></i>
-            </div>
-            <p class="text-[13px] text-[#6A7581] mt-2">Based on 128 reviews</p>
-            <button onclick="showToast('Review form opens at build.')" class="mt-4 w-full h-11 rounded-xl bg-white border border-[#E7EBEF] font-bold text-sm text-[#0C1F31] hover:border-primary hover:text-primary transition">Write a review</button>
-          </div>
-          <div class="space-y-5">
-            <div class="pb-5 border-b border-[#E7EBEF]">
-              <div class="flex items-center gap-3 mb-2">
-                <div class="w-9 h-9 rounded-full bg-gradient-to-br from-primary to-accent grid place-items-center text-white font-jakarta font-extrabold text-sm">TM</div>
-                <div><p class="font-jakarta font-bold text-sm text-[#0C1F31]">Thabo M.</p><p class="text-[11px] text-[#6A7581]">Verified buyer · 3 weeks ago</p></div>
-                <div class="ml-auto flex text-[#FF9900]"><i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i></div>
-              </div>
-              <p class="text-[14px] text-[#4a5563] leading-relaxed">Fit is spot-on and the fabric feels seriously premium. Wore it to a client pitch and got two "where's that from?" questions. Ordering another one in black when it lands.</p>
-            </div>
-            <div class="pb-5 border-b border-[#E7EBEF]">
-              <div class="flex items-center gap-3 mb-2">
-                <div class="w-9 h-9 rounded-full bg-gradient-to-br from-navy to-[#5e1a2c] grid place-items-center text-white font-jakarta font-extrabold text-sm">LN</div>
-                <div><p class="font-jakarta font-bold text-sm text-[#0C1F31]">Lerato N.</p><p class="text-[11px] text-[#6A7581]">Verified buyer · 1 month ago</p></div>
-                <div class="ml-auto flex text-[#FF9900]"><i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i></div>
-              </div>
-              <p class="text-[14px] text-[#4a5563] leading-relaxed">Washed 4 times, still crisp. Delivered in 4 days to PE. Small SME crest is a really nice touch — you notice it, but it's not shouty.</p>
-            </div>
-            <div>
-              <div class="flex items-center gap-3 mb-2">
-                <div class="w-9 h-9 rounded-full bg-gradient-to-br from-[#29A37A] to-navy grid place-items-center text-white font-jakarta font-extrabold text-sm">SK</div>
-                <div><p class="font-jakarta font-bold text-sm text-[#0C1F31]">Sipho K.</p><p class="text-[11px] text-[#6A7581]">Verified buyer · 2 months ago</p></div>
-                <div class="ml-auto flex text-[#FF9900]"><i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i></div>
-              </div>
-              <p class="text-[14px] text-[#4a5563] leading-relaxed">Runs a hair large — I sized down and it's perfect. Cotton doesn't feel cheap at all. Solid buy.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-
       <div id="tabShipping" class="tab-panel p-6 sm:p-8 hidden">
         <div class="grid md:grid-cols-2 gap-6 text-[14px] text-[#4a5563] leading-relaxed">
           <div>
@@ -353,23 +317,26 @@
     </div>
 
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <!-- Related Item 1: Hat -->
       <a href="public-product.html" class="bg-white rounded-[20px] border border-[#E7EBEF] overflow-hidden card-lift flex flex-col group">
         <div class="relative bg-[#F4F6F8] aspect-square flex items-center justify-center p-6 border-b border-[#E7EBEF] overflow-hidden">
-          <img src="https://smesouthafrica.co.za/wp-content/uploads/2026/05/1.png" alt="Founder's Edition Black T-Shirt" class="max-w-full max-h-full object-contain group-hover:scale-105 transition-transform duration-500 drop-shadow-xl" />
+          <img src="https://smesouthafrica.co.za/wp-content/uploads/2026/05/3.png" alt="Signature Red Cap" class="max-w-full max-h-full object-contain group-hover:scale-105 transition-transform duration-500 drop-shadow-xl" />
         </div>
         <div class="p-6 flex flex-col flex-1">
           <p class="text-[10px] font-bold text-[#6A7581] uppercase tracking-widest mb-1.5">Apparel</p>
-          <h3 class="font-jakarta font-bold text-[17px] text-[#0C1F31] mb-1 leading-tight">Founder's Edition Black T-Shirt</h3>
-          <p class="text-[13px] text-[#6A7581] leading-relaxed line-clamp-2 mb-5 flex-1">Same premium build, in the everyday black that goes with everything.</p>
+          <h3 class="font-jakarta font-bold text-[17px] text-[#0C1F31] mb-1 leading-tight">Signature Red Cap</h3>
+          <p class="text-[13px] text-[#6A7581] leading-relaxed line-clamp-2 mb-5 flex-1">Classic, comfortable, and unmistakably entrepreneurial.</p>
           <div class="flex items-center justify-between mt-auto">
-            <span class="font-jakarta font-extrabold text-[17px] text-[#0C1F31]">R 230.00</span>
+            <span class="font-jakarta font-extrabold text-[17px] text-[#0C1F31]">R 120.00</span>
             <span class="w-9 h-9 rounded-full bg-[#FDECEF] text-primary flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-colors"><i data-lucide="arrow-up-right" class="w-4 h-4"></i></span>
           </div>
         </div>
       </a>
+      
+      <!-- Related Item 2: Bottle -->
       <a href="public-product.html" class="bg-white rounded-[20px] border border-[#E7EBEF] overflow-hidden card-lift flex flex-col group">
         <div class="relative bg-[#F4F6F8] aspect-square flex items-center justify-center p-6 border-b border-[#E7EBEF] overflow-hidden">
-          <img src="https://smesouthafrica.co.za/wp-content/uploads/2026/05/1.png" alt="Founder's Insulated Bottle" class="max-w-full max-h-full object-contain group-hover:scale-105 transition-transform duration-500 drop-shadow-xl opacity-80" />
+          <img src="https://smesouthafrica.co.za/wp-content/uploads/2026/05/4.png" alt="Premium Insulated Water Bottle" class="max-w-full max-h-full object-contain group-hover:scale-105 transition-transform duration-500 drop-shadow-xl opacity-80" />
         </div>
         <div class="p-6 flex flex-col flex-1">
           <p class="text-[10px] font-bold text-[#6A7581] uppercase tracking-widest mb-1.5">Accessories</p>
@@ -381,16 +348,18 @@
           </div>
         </div>
       </a>
+      
+      <!-- Related Item 3: T-Shirt -->
       <a href="public-product.html" class="bg-white rounded-[20px] border border-[#E7EBEF] overflow-hidden card-lift flex flex-col group">
         <div class="relative bg-[#F4F6F8] aspect-square flex items-center justify-center p-6 border-b border-[#E7EBEF] overflow-hidden">
-          <img src="https://smesouthafrica.co.za/wp-content/uploads/2026/05/1.png" alt="Founder's Notebook" class="max-w-full max-h-full object-contain group-hover:scale-105 transition-transform duration-500 drop-shadow-xl opacity-70" />
+          <img src="https://smesouthafrica.co.za/wp-content/uploads/2026/05/1.png" alt="Founder's Edition Black T-Shirt" class="max-w-full max-h-full object-contain group-hover:scale-105 transition-transform duration-500 drop-shadow-xl opacity-90" />
         </div>
         <div class="p-6 flex flex-col flex-1">
-          <p class="text-[10px] font-bold text-[#6A7581] uppercase tracking-widest mb-1.5">Stationery</p>
-          <h3 class="font-jakarta font-bold text-[17px] text-[#0C1F31] mb-1 leading-tight">Founder's Weekly Planner</h3>
-          <p class="text-[13px] text-[#6A7581] leading-relaxed line-clamp-2 mb-5 flex-1">A 52-week planner built around the SA financial year.</p>
+          <p class="text-[10px] font-bold text-[#6A7581] uppercase tracking-widest mb-1.5">Apparel</p>
+          <h3 class="font-jakarta font-bold text-[17px] text-[#0C1F31] mb-1 leading-tight">Founder's Edition Black T-Shirt</h3>
+          <p class="text-[13px] text-[#6A7581] leading-relaxed line-clamp-2 mb-5 flex-1">Same premium build, in the everyday black that goes with everything.</p>
           <div class="flex items-center justify-between mt-auto">
-            <span class="font-jakarta font-extrabold text-[17px] text-[#0C1F31]">R 180.00</span>
+            <span class="font-jakarta font-extrabold text-[17px] text-[#0C1F31]">R 230.00</span>
             <span class="w-9 h-9 rounded-full bg-[#FDECEF] text-primary flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-colors"><i data-lucide="arrow-up-right" class="w-4 h-4"></i></span>
           </div>
         </div>
@@ -458,7 +427,7 @@
   function pickTab(btn, name){
     document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
-    ['description','specs','reviews','shipping'].forEach(n => {
+    ['description','specs','shipping'].forEach(n => {
       const p = document.getElementById('tab' + n.charAt(0).toUpperCase() + n.slice(1));
       if(p) p.classList.toggle('hidden', n !== name);
     });
@@ -469,11 +438,11 @@
     product: {
       title:'Single Product — Founder\'s Collection',
       sub:'WooCommerce Single Product Template',
-      purpose:'The single-product page for merchandise. Sells the item: image, price, size, quantity, add-to-cart. Includes review social proof, spec detail and a related-products row to keep browsing on-site. Mirrors the storefront style so it never feels like a different site.',
-      data:'WooCommerce Product: <code>{ product_title, product_price, product_sale_price, product_gallery [], product_short_description, product_description, product_category, product_sku, product_stock_status, product_attributes { size, colour, material, weight }, product_reviews [] }</code>. Related products pulled from same <code>product_category</code> or via WooCommerce\'s built-in cross-sells taxonomy.',
-      logic:'Template = <code>single-product.php</code>. Uses standard Woo hooks so the "Add to cart" button and cart counter wire into Woo natively. Gallery thumbnails swap the main image client-side; size selector writes the variation to the cart line. Reviews tab pulls from the Woo comments store, filtered by verified-buyer flag. If <code>sale_price</code> is empty, hide the strike-through and "Save %" badge.',
-      components:'Breadcrumb · Product gallery (main image + 4 thumbs + wishlist button) · Product info (eyebrow, title, rating, stock, price + sale, description, size selector, quantity + add-to-cart, Buy now, feature row, share row) · Details tabs (Description, Specs &amp; care, Reviews, Shipping &amp; returns) · Related products grid (3 cards, cross-sells).',
-      specs:'<b>Layout:</b> 2-col at lg (1.05fr / 1fr), 40px gap. Full-width on mobile.<br/><b>Main image:</b> aspect-square, bg <code>#F4F6F8</code>, rounded 24px, border <code>#E7EBEF</code>, product drop-shadow-2xl. Category chip absolute top-left (<code>#FDECEF/#DC183C</code>). Wishlist button absolute top-right, 40&times;40 rounded-full.<br/><b>Thumbnails:</b> 4-col grid, active border-2 <code>#DC183C</code> + ring <code>#DC183C/15</code>.<br/><b>Price:</b> font-jakarta 800, 36px <code>#0C1F31</code>. Sale strike-through 15px slate. "Save %" chip <code>#FDECEF/#DC183C</code>.<br/><b>Size pills:</b> h-11 min-w-52, rounded-xl. Active bg <code>#0C1F31</code> white. Disabled: strike-through, muted.<br/><b>Qty + CTA:</b> qty stepper h-14 rounded-2xl bordered. Primary "Add to cart" flex-1 h-14 rounded-2xl <code>#DC183C</code> (hover <code>#B0142F</code>) shadow-lg tinted primary. Secondary "Buy now" h-14 rounded-2xl <code>#0C1F31</code>.<br/><b>Tabs:</b> border-b <code>#E7EBEF</code>, active tab underline + text <code>#DC183C</code>, inactive slate-500.<br/><b>Related grid:</b> same card style as shop archive (rounded 20px, aspect-square image container, category eyebrow, title, price, arrow chip).'
+      purpose:'The single-product page for merchandise. Sells the item: image, price, size, quantity, add-to-cart. Includes spec detail and a related-products row to keep browsing on-site. Mirrors the storefront style so it never feels like a different site.',
+      data:'WooCommerce Product: <code>{ product_title, product_price, product_sale_price, product_gallery [], product_short_description, product_description, product_category, product_sku, product_stock_status, product_attributes { size, colour, material, weight } }</code>. Related products pulled from same <code>product_category</code> or via WooCommerce\'s built-in cross-sells taxonomy.',
+      logic:'Template = <code>single-product.php</code>. Uses standard Woo hooks so the "Add to cart" button and cart counter wire into Woo natively. Gallery thumbnails swap the main image client-side; size selector writes the variation to the cart line. If <code>sale_price</code> is empty, hide the strike-through and "Save %" badge.',
+      components:'Breadcrumb · Product gallery (main image + 4 thumbs + wishlist button) · Product info (eyebrow, title, rating, price + sale, description, size selector, quantity + add-to-cart, Buy now, feature row, share row) · Details tabs (Description, Specs &amp; care, Shipping &amp; returns) · Related products grid (3 cards, cross-sells).',
+      specs:'<b>Layout:</b> 2-col at lg (1.05fr / 1fr), 40px gap. Full-width on mobile.<br/><b>Main image:</b> aspect-square, bg <code>#F4F6F8</code>, rounded 24px, border <code>#E7EBEF</code>. Full view <code>object-cover</code>. Wishlist button absolute top-right, 40&times;40 rounded-full.<br/><b>Thumbnails:</b> 4-col grid, active border-2 <code>#DC183C</code> + ring <code>#DC183C/15</code>.<br/><b>Price:</b> font-jakarta 800, 36px <code>#0C1F31</code>. Sale strike-through 15px slate. "Save %" chip <code>#FDECEF/#DC183C</code>.<br/><b>Size pills:</b> h-11 min-w-52, rounded-xl. Active bg <code>#0C1F31</code> white. Disabled: strike-through, muted.<br/><b>Qty + CTA:</b> qty stepper h-14 rounded-2xl bordered. Primary "Add to cart" flex-1 h-14 rounded-2xl <code>#DC183C</code> (hover <code>#B0142F</code>) shadow-lg tinted primary. Secondary "Buy now" h-14 rounded-2xl <code>#0C1F31</code>.<br/><b>Tabs:</b> border-b <code>#E7EBEF</code>, active tab underline + text <code>#DC183C</code>, inactive slate-500.<br/><b>Related grid:</b> same card style as shop archive (rounded 20px, aspect-square image container, category eyebrow, title, price, arrow chip).'
     }
   };
 
