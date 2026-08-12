@@ -436,10 +436,13 @@
 
   function buildNav(currentFile){
     let total=0, totalFinalised=0;
-    NAV.forEach(sec=> sec.items.forEach(it=>{
-      if(it.file === 'chrome-preview.html') return;
-      total++; if(isLive(it.file)) totalFinalised++;
-    }));
+    NAV.forEach(sec=> {
+      if(sec.group === 'Reference') return;
+      sec.items.forEach(it=>{
+        if(it.file === 'chrome-preview.html') return;
+        total++; if(isLive(it.file)) totalFinalised++;
+      });
+    });
 
     const devFiles = Object.keys(DEV || {});
     let html='';

@@ -152,9 +152,10 @@
       return ev.type === 'IN-PERSON' ? 'event-single-in-person.html' : 'event-single-online.html';
     }
 
-    let state = { view:'directory', params:{}, statusFilter:'All', typeFilter:'All', categoryFilter:'All', sort:'priority', search:'', page:1, perPage:12 };
+    let state = { view:'directory', params:{}, statusFilter:'All', typeFilter:'All', categoryFilter:'All', topicOpen:false, sort:'priority', search:'', page:1, perPage:12 };
     function setState(patch){ Object.assign(state, patch); renderApp(); }
     function goPage(p){ setState({page:p}); window.scrollTo({top:document.getElementById('feedTop').offsetTop-80,behavior:'smooth'}); }
+    function toggleTopicDropdown(e){ e.stopPropagation(); state.topicOpen = !state.topicOpen; renderApp(); }
 
     function statusChip(status){
       if(status==='LIVE NOW') return `<span class="px-3 py-1.5 rounded-full text-[10px] font-bold bg-[#DC183C] text-white shadow-lg inline-flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-white animate-pulse"></span> LIVE NOW</span>`;
@@ -226,7 +227,7 @@
 
       ${list.length > 0 ? `
       <div class="flex flex-col sm:flex-row items-center justify-between gap-4 pt-8 mt-8 border-t border-[#E7EBEF]">
-        <span class="text-sm text-slate-500 font-medium">Showing <b class="text-[#121A21]">${startIdx+1}–${startIdx+list.length}</b></span>
+        <span class="text-sm text-slate-500 font-medium">Showing <b class="text-[#121A21]">${startIdx+1}–${Math.min(startIdx+list.length, allList.length)}</b></span>
         <div class="flex items-center gap-2">
           <button ${state.page===1?'disabled':''} onclick="goPage(${state.page-1})" class="w-10 h-10 rounded-lg border border-[#E7EBEF] ${state.page===1?'text-slate-300 cursor-not-allowed':'text-slate-600 hover:bg-slate-50'} grid place-items-center transition"><i data-lucide="chevron-left" class="w-4 h-4"></i></button>
           ${Array.from({length: totalPages}, (_, i)=>{
@@ -248,23 +249,28 @@
         </div>
       </section>
 
-      <main id="feedTop" class="max-w-[1200px] mx-auto px-4 sm:px-6 py-8 md:py-12">
-        <div class="reveal bg-white rounded-2xl shadow-sm border border-[#E7EBEF] p-4 sm:p-5 mb-8" style="animation-delay:120ms">
-          <div class="flex flex-col gap-4">
-            <div class="flex flex-col lg:flex-row lg:items-center gap-4">
-              <div class="flex items-center gap-2 overflow-x-auto no-scrollbar -mx-1 px-1">
-                <span class="shrink-0 text-xs font-bold text-slate-400 uppercase tracking-wide pr-1">Type</span>
-                ${['All','ONLINE','IN-PERSON'].map(t=>chip(t, state.typeFilter===t, `setState({typeFilter:'${t}',page:1})`)).join('')}
-              </div>
-              <div class="hidden lg:block w-px h-7 bg-[#E7EBEF]"></div>
-              <div class="flex items-center gap-2 lg:ml-auto">
-                <div class="relative flex-1 lg:flex-initial lg:w-56"><i data-lucide="search" class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 w-4 h-4"></i><input id="searchInput" type="text" placeholder="Search events…" value="${esc(state.search)}" oninput="state.search=this.value; state.page=1; renderApp();" class="w-full pl-9 pr-3 py-2.5 rounded-lg border border-[#E7EBEF] text-sm bg-slate-50 outline-none focus:border-[#DC183C]" /></div>
-                <button onclick="setState({typeFilter:'All',categoryFilter:'All',search:'',page:1})" aria-label="Reset filters" class="shrink-0 w-11 h-11 grid place-items-center rounded-lg text-slate-500 bg-white border border-[#E7EBEF] hover:bg-slate-50"><i data-lucide="rotate-ccw" class="w-4 h-4"></i></button>
-              </div>
+      <main id="feedTop" class="max-w-[1200px] mx-auto px-4 sm:px-6 py-8 md:py-12 relative z-10">
+        <div class="reveal bg-white rounded-2xl shadow-sm border border-[#E7EBEF] p-4 sm:p-5 mb-8 relative z-20" style="animation-delay:120ms; overflow:visible;">
+          <div class="flex flex-col lg:flex-row lg:items-center gap-3 relative z-30">
+            <div class="flex items-center gap-2 overflow-x-auto no-scrollbar -mx-1 px-1">
+              <span class="shrink-0 text-xs font-bold text-slate-400 uppercase tracking-wide pr-1">Type</span>
+              ${['All','ONLINE','IN-PERSON'].map(t=>chip(t, state.typeFilter===t, `setState({typeFilter:'${t}',page:1})`)).join('')}
             </div>
-            <div class="border-t border-[#E7EBEF] pt-3 flex items-center gap-2 overflow-x-auto no-scrollbar -mx-1 px-1">
-              <span class="shrink-0 text-xs font-bold text-slate-400 uppercase tracking-wide pr-1">Topic</span>
-              ${['All',...CATEGORIES].map(c=>chip(c, state.categoryFilter===c, `setState({categoryFilter:'${c.replace(/'/g,"\\'")}',page:1})`)).join('')}
+            <div class="hidden lg:block w-px h-7 bg-[#E7EBEF]"></div>
+            <div class="relative shrink-0 z-40" id="topicDropdownWrap">
+              <button onclick="toggleTopicDropdown(event)" class="inline-flex items-center gap-2 pl-4 pr-3 h-9 rounded-full text-sm font-semibold border transition-colors ${state.categoryFilter!=='All'?'bg-[#FDECEF] text-[#DC183C] border-[#F6C7D3]':'bg-white text-slate-600 border-[#E7EBEF] hover:bg-slate-50'}">
+                <i data-lucide="tag" class="w-3.5 h-3.5"></i>
+                <span>${state.categoryFilter==='All' ? 'Topic' : state.categoryFilter}</span>
+                <i data-lucide="chevron-down" class="w-3.5 h-3.5 transition-transform ${state.topicOpen?'rotate-180':''}"></i>
+              </button>
+              ${state.topicOpen ? `
+              <div class="absolute z-50 top-full left-0 mt-2 w-64 bg-white rounded-xl border border-[#E7EBEF] shadow-xl py-1.5 max-h-80 overflow-y-auto">
+                ${['All',...CATEGORIES].map(c=>`<button onclick="event.stopPropagation(); setState({categoryFilter:'${c.replace(/'/g,"\\'")}',page:1,topicOpen:false})" class="w-full text-left px-4 py-2.5 text-sm flex items-center justify-between gap-2 hover:bg-slate-50 transition-colors ${state.categoryFilter===c?'text-[#DC183C] font-bold':'text-slate-600 font-medium'}"><span>${c}</span>${state.categoryFilter===c?'<i data-lucide="check" class="w-4 h-4 shrink-0"></i>':''}</button>`).join('')}
+              </div>` : ''}
+            </div>
+            <div class="flex items-center gap-2 lg:ml-auto">
+              <div class="relative flex-1 lg:flex-initial lg:w-56"><i data-lucide="search" class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 w-4 h-4"></i><input id="searchInput" type="text" placeholder="Search events…" value="${esc(state.search)}" oninput="state.search=this.value; state.page=1; renderApp();" class="w-full pl-9 pr-3 py-2.5 rounded-lg border border-[#E7EBEF] text-sm bg-slate-50 outline-none focus:border-[#DC183C]" /></div>
+              <button onclick="setState({typeFilter:'All',categoryFilter:'All',search:'',page:1,topicOpen:false})" aria-label="Reset filters" class="shrink-0 w-11 h-11 grid place-items-center rounded-lg text-slate-500 bg-white border border-[#E7EBEF] hover:bg-slate-50"><i data-lucide="rotate-ccw" class="w-4 h-4"></i></button>
             </div>
           </div>
         </div>
@@ -285,8 +291,8 @@
       purpose:'Public archive of upcoming, live and past events (in-person summits + online webinars). Feed grid + filters + search + 12/page pagination. Filterable by <b>type</b> (Online / In-Person) and by <b>topic</b> (8 categories). Default sort: <b>LIVE NOW → Upcoming (soonest first) → Past (most recent first)</b>. Presentations and photo galleries live inside each event page — no standalone library template.',
       data:'Event (CPT <code>event</code>): <code>{ post_title, post_name, post_excerpt, meta_type ("IN-PERSON"|"ONLINE"), meta_start (datetime), meta_end (datetime), meta_venue (name/address for IN-PERSON) or meta_platform ("Zoom"/"Teams"…), taxonomy_category, meta_hero_image, meta_featured (bool) }</code>. Status computed at render — Upcoming / LIVE NOW / Past.',
       logic:'Archive template = <code>archive-event.php</code>. Query all published events, sort featured→date-asc. Filter chips (type, category), search string. "Learn more" routes to <code>event-single-in-person.html</code> or <code>event-single-online.html</code> based on <code>meta_type</code>. Past-event replays and photo galleries are separate templates — see BRIEFs in those files.',
-      components:'hero + breadcrumb · filter/search bar (type chips row + topic chips row + search + reset) · event card grid (image + category chip + status chip + type + title + date/time + Learn more) · pagination · empty state.',
-      specs:'<b>Hero:</b> hero-bg gradient, max-w-[1200px], py-14. H1 Plus Jakarta 800, 30/48px, leading-tight. Sub 18px white/70.<br/><b>Filter bar:</b> rounded-2xl border #E7EBEF p-5. Chips h-9 px-4 rounded-full, active #DC183C white, inactive white/slate-500 border #E7EBEF. Search input h-11 pl-9 pr-3 rounded-lg bg slate-50 border #E7EBEF, focus border #DC183C.<br/><b>Event card:</b> rounded-2xl border #E7EBEF shadow-sm; hover shadow-xl + translateY(-4px). Image 224px cover, category chip absolute top-3 left-3 (#FDECEF/#DC183C). Type row 12px uppercase slate-500 with map-pin/video icon. Title Plus Jakarta 800 18px #0C1F31 hover #DC183C. Description slate-500 line-clamp-3. Date/time weight 800 14px #121A21. CTA h-12 rounded-xl #0C1F31 hover #091621.<br/><b>Past-events band:</b> 2-col md, rounded-2xl border #E7EBEF p-6. 48&times;48 rounded-xl icon tile. Eyebrow 10px uppercase (#DC183C or #AE6B0A) + title 18px 800 + description slate-500.'
+      components:'hero + breadcrumb · filter/search bar (type chips + topic dropdown + search + reset, single row) · event card grid (image + category chip + status chip + type + title + date/time + Learn more) · pagination · empty state.',
+      specs:'<b>Hero:</b> hero-bg gradient, max-w-[1200px], py-14. H1 Plus Jakarta 800, 30/48px, leading-tight. Sub 18px white/70.<br/><b>Filter bar:</b> rounded-2xl border #E7EBEF p-5, overflow visible (for dropdown). Type chips h-9 px-4 rounded-full, active #DC183C white, inactive white/slate-500 border #E7EBEF. Topic dropdown: h-9 pill button (tag icon + label + chevron), active state #FDECEF/#DC183C border #F6C7D3; opens an absolute panel (w-64, rounded-xl, shadow-xl, z-30) listing All + 8 categories with a check mark on the active row; closes on selection or outside click. Search input h-11 pl-9 pr-3 rounded-lg bg slate-50 border #E7EBEF, focus border #DC183C.<br/><b>Event card:</b> rounded-2xl border #E7EBEF shadow-sm; hover shadow-xl + translateY(-4px). Image 224px cover, category chip absolute top-3 left-3 (#FDECEF/#DC183C). Type row 12px uppercase slate-500 with map-pin/video icon. Title Plus Jakarta 800 18px #0C1F31 hover #DC183C. Description slate-500 line-clamp-3. Date/time weight 800 14px #121A21. CTA h-12 rounded-xl #0C1F31 hover #091621.<br/><b>Past-events band:</b> 2-col md, rounded-2xl border #E7EBEF p-6. 48&times;48 rounded-xl icon tile. Eyebrow 10px uppercase (#DC183C or #AE6B0A) + title 18px 800 + description slate-500.'
     };
 
     function toggleDevMode(){const on=document.body.classList.toggle('dev-on');const b=document.getElementById('devToggle');if(b)b.classList.toggle('on',on);if(on)showToast('Dev Mode on — tap ⓘ for the BRIEF.');if(window.lucide)lucide.createIcons();}
@@ -302,6 +308,9 @@
     document.addEventListener('DOMContentLoaded', ()=>{
       seedDemoDates();
       renderApp();
+    });
+    document.addEventListener('click', (e)=>{
+      if(state.topicOpen && !e.target.closest('#topicDropdownWrap')){ state.topicOpen = false; renderApp(); }
     });
   </script>
 </body>
