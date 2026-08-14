@@ -70,7 +70,7 @@ window.MOCKUP_STATUS = {
   "public-search.html": "finalised",
   "public-404.html": "finalised"
 };
-window.MOCKUP_STATUS_PUBLISHED = "2026-08-12T15:05:54.813Z";
+window.MOCKUP_STATUS_PUBLISHED = "2026-08-14T05:36:26.716Z";
 /* Developer builds (staging) — { mockup file: { url, status } }; status: "pending-review" | "reviewed" | "approved" */
 window.MOCKUP_DEV = {
   "public-home.html": {"url":"https://smesastg.wpengine.com/","status":"reviewed"},
@@ -94,6 +94,7 @@ window.MOCKUP_DEV = {
   "public-brand.html": {"url":"https://smesastg.wpengine.com/brands/partnerstack/","status":"pending-review"},
   "public-guides.html": {"url":"https://smesastg.wpengine.com/sme-resources/guides/","status":"reviewed"},
   "public-guide.html": {"url":"https://smesastg.wpengine.com/sme-resource/test-guide/","status":"reviewed"},
+  "public-shop.html": {"url":"https://smesouthafrica.co.za/shop/","status":""},
   "public-about.html": {"url":"https://smesastg.wpengine.com/about/","status":"reviewed"},
   "public-contact.html": {"url":"https://smesastg.wpengine.com/contact-us/","status":"reviewed"},
   "public-advertise.html": {"url":"https://smesastg.wpengine.com/advertise-with-us/","status":"reviewed"},
@@ -105,6 +106,8 @@ window.MOCKUP_DEV = {
   "public-glossary.html": {"url":"https://smesastg.wpengine.com/glossary/","status":"pending-review"},
   "public-glossary-category.html": {"url":"https://smesastg.wpengine.com/glossary-categories/glossary-category-one/","status":"pending-review"},
   "public-glossary-term.html": {"url":"https://smesastg.wpengine.com/glossary/administrative-law/","status":"pending-review"},
+  "newsletter.html": {"url":"https://smesastg.wpengine.com/newsletters/","status":"pending-review"},
+  "newsletter-issue.html": {"url":"https://smesastg.wpengine.com/newsletters/back-from-the-long-weekend-heres-what-you-missed/","status":"pending-review"},
   "public-help.html": {"url":"https://smesastg.wpengine.com/help/","status":"pending-review"},
   "public-help-category.html": {"url":"https://smesastg.wpengine.com/help-category/getting-started/","status":"pending-review"},
   "public-help-article.html": {"url":"https://smesastg.wpengine.com/help/how-to-change-email-or-password/","status":"pending-review"},
