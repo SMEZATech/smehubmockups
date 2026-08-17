@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Naledi Mokoena · Member Profile | SME HUB</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  <script>
+    tailwind.config = { theme:{ extend:{ fontFamily:{ jakarta:['Plus Jakarta Sans','sans-serif'], inter:['Inter','system-ui','sans-serif'], mono:['ui-monospace','monospace'] }, colors:{ primary:'#DC183C', accent:'#FF9900', navy:'#0C1F31', success:'#29A37A', ink:'#121A21' } } } };
+  </script>
+  <style>
+    html, body { font-family:'Inter', system-ui, sans-serif; }
+    .font-jakarta { font-family:'Plus Jakarta Sans', sans-serif; letter-spacing:.005em; }
+    .no-scrollbar::-webkit-scrollbar { display:none; } .no-scrollbar { -ms-overflow-style:none; scrollbar-width:none; }
+    @keyframes fadeUp { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+    .reveal { animation: fadeUp .45s cubic-bezier(.2,.7,.2,1) backwards; }
+    @keyframes toastIn { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
+    @keyframes toastOut { to { opacity:0; transform:translateY(20px); } }
+    .toast-in { animation: toastIn .25s ease forwards; } .toast-out { animation: toastOut .25s ease forwards; }
+    .stripe-ask{box-shadow:inset 4px 0 0 0 #DC183C;} .stripe-win{box-shadow:inset 4px 0 0 0 #29A37A;} .stripe-share{box-shadow:inset 4px 0 0 0 #FF9900;} .stripe-activity{box-shadow:inset 4px 0 0 0 #6A7581;}
+    .card-lift{transition:box-shadow .2s, transform .2s;} .card-lift:hover{box-shadow:0 8px 20px -8px rgba(10,44,61,.12); transform:translateY(-1px);}
+    .gtab{position:relative; transition:color .15s;} .gtab.active{color:#DC183C;} .gtab.active::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:3px;border-radius:3px 3px 0 0;background:#DC183C;}
+    #overlay-root:empty{display:none;}
+    .ov{position:fixed;inset:0;z-index:60;} .ov-bg{position:absolute;inset:0;background:rgba(12,31,49,.45);backdrop-filter:blur(2px);opacity:0;transition:opacity .3s;} .ov.open .ov-bg{opacity:1;}
+    .drawer{position:absolute;right:0;top:0;height:100%;width:100%;max-width:440px;background:#fff;box-shadow:-12px 0 40px rgba(12,31,49,.25);overflow-y:auto;transform:translateX(100%);transition:transform .3s cubic-bezier(.2,.7,.2,1);} .ov.open .drawer{transform:translateX(0);}
+    .dev-badge{display:none;} body.dev-on .dev-badge{display:inline-flex;} #devToggle.on{background:#DC183C;color:#fff;border-color:#DC183C;}
+  </style>
+</head>
+<body class="bg-[#FCFCFC] text-[#121A21] font-inter">
+
+<!-- HEADER (shared, cross-linked) -->
+<header class="bg-slate-100 border-b-2 border-dashed border-slate-400 relative overflow-hidden">
+  <div class="absolute inset-0 opacity-30 pointer-events-none" style="background:repeating-linear-gradient(45deg,transparent,transparent 8px,rgba(100,116,139,.18) 8px,rgba(100,116,139,.18) 16px)"></div>
+  <div class="relative max-w-7xl mx-auto px-4 sm:px-6 h-14 flex items-center gap-3 sm:gap-4">
+    <a href="public-home.html" class="flex items-center gap-2 shrink-0 opacity-70 hover:opacity-100 transition">
+      <img src="assets/logo-icon.png" alt="SME South Africa" class="w-7 h-7" />
+      <span class="font-jakarta font-extrabold text-[13px] tracking-tight text-slate-700 hidden sm:inline">SME South Africa</span>
+    </a>
+    <span class="mx-1 hidden sm:inline w-px h-5 bg-slate-300"></span>
+    <p class="text-[10px] sm:text-[11px] font-bold uppercase tracking-widest text-slate-600 flex items-center gap-1.5">
+      <i data-lucide="construction" class="w-3.5 h-3.5 text-slate-500"></i>
+      Header placeholder &middot; design pending
+    </p>
+    <div class="ml-auto flex items-center gap-2">
+      <button id="devToggle" onclick="toggleDevMode()" class="inline-flex items-center gap-1.5 px-2.5 h-8 rounded-full bg-white border border-slate-300 hover:border-[#DC183C] hover:text-[#DC183C] text-[11px] font-bold uppercase tracking-wider text-slate-600 transition" title="Toggle implementation notes"><i data-lucide="code-2" class="w-3.5 h-3.5"></i><span class="hidden sm:inline">Dev</span></button>
+      <a href="index.html" class="inline-flex items-center gap-1.5 px-3 h-8 rounded-full bg-white border border-slate-300 hover:border-slate-500 text-[11px] font-bold text-slate-700 transition">
+        <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i><span class="hidden sm:inline">Launcher</span>
+      </a>
+    </div>
+  </div>
+</header>
+
+<main class="max-w-6xl mx-auto px-4 sm:px-6 py-8">
+  <!-- PROFILE HERO -->
+  <div id="profile-hero"></div>
+
+  <div class="mt-6 grid grid-cols-1 lg:grid-cols-12 gap-6">
+    <div class="lg:col-span-8 min-w-0">
+      <div class="bg-white rounded-2xl border border-slate-100 overflow-hidden">
+        <div id="profile-subnav" class="flex gap-1 px-2 border-b border-slate-100 overflow-x-auto no-scrollbar"></div>
+        <div id="profile-content" class="p-4 sm:p-5 bg-slate-50/50"></div>
+      </div>
+    </div>
+
+    <!-- SIDEBAR: hidden on mobile/tablet -->
+    <aside class="hidden lg:block lg:col-span-4 space-y-5">
+      <div class="bg-white rounded-2xl border border-slate-100 p-5 reveal">
+        <h4 class="font-jakarta font-bold uppercase text-sm text-[#121A21] tracking-wide mb-3">Quick facts</h4>
+        <div class="space-y-2.5 text-sm">
+          <div class="flex items-center gap-2 text-slate-600"><i data-lucide="briefcase" class="w-4 h-4 text-slate-400 shrink-0"></i> Founder at GreenTrace</div>
+          <div class="flex items-center gap-2 text-slate-600"><i data-lucide="map-pin" class="w-4 h-4 text-slate-400 shrink-0"></i> Western Cape, South Africa</div>
+          <div class="flex items-center gap-2 text-slate-600"><i data-lucide="layers" class="w-4 h-4 text-slate-400 shrink-0"></i> Agri-Tech &middot; Growth stage</div>
+          <div class="flex items-center gap-2 text-slate-600"><i data-lucide="calendar" class="w-4 h-4 text-slate-400 shrink-0"></i> Member since Mar 2023</div>
+          <div class="flex items-center gap-2 text-slate-600"><i data-lucide="clock" class="w-4 h-4 text-slate-400 shrink-0"></i> Active 25 minutes ago</div>
+        </div>
+      </div>
+      <div class="bg-white rounded-2xl border border-slate-100 overflow-hidden reveal" style="animation-delay:80ms">
+        <div class="px-5 py-3 border-b border-slate-100 flex items-center gap-4">
+          <h4 class="font-jakarta font-bold uppercase text-sm text-[#121A21] tracking-wide">Groups in common</h4>
+        </div>
+        <div id="mutual-groups"></div>
+      </div>
+    </aside>
+  </div>
+</main>
+
+<footer class="bg-slate-100 border-t-2 border-dashed border-slate-400 relative overflow-hidden">
+  <div class="absolute inset-0 opacity-30 pointer-events-none" style="background:repeating-linear-gradient(45deg,transparent,transparent 8px,rgba(100,116,139,.18) 8px,rgba(100,116,139,.18) 16px)"></div>
+  <div class="relative max-w-7xl mx-auto px-4 sm:px-6 py-6 text-center">
+    <p class="text-[10px] sm:text-[11px] font-bold uppercase tracking-widest text-slate-600 flex items-center justify-center gap-1.5"><i data-lucide="construction" class="w-3.5 h-3.5 text-slate-500"></i> Footer placeholder &middot; design pending</p>
+    <p class="text-[11px] text-slate-500 mt-2">&copy; 2026 SME South Africa</p>
+  </div>
+</footer>
+
+<div id="overlay-root"></div>
+<div id="toast" class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-50"></div>
+
+<script>
+/* ===== helpers ===== */
+function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+function monogram(initials,size=44,grad){ const fs=Math.max(10,Math.floor(size*0.38)); return `<div class="rounded-full bg-gradient-to-br ${grad||'from-[#DC183C] to-[#FF9900]'} grid place-items-center font-jakarta font-bold text-white shrink-0" style="width:${size}px;height:${size}px;font-size:${fs}px">${esc(initials)}</div>`; }
+const TYPES = {
+  ask:{color:'#DC183C',text:'text-[#DC183C]',label:'Ask',icon:'help-circle'},
+  win:{color:'#29A37A',text:'text-[#29A37A]',label:'Win',icon:'trophy'},
+  share:{color:'#FF9900',text:'text-[#AE6B0A]',label:'Share',icon:'megaphone'},
+  activity:{color:'#6A7581',text:'text-slate-500',label:'Activity',icon:'sparkles'}
+};
+
+/* ===== data ===== */
+const MEMBER = {
+  name:'Naledi Mokoena', initials:'NM', role:'Founder', company:'GreenTrace',
+  sector:'Agri-Tech', stage:'Growth', province:'Western Cape',
+  bio:"Naledi founded GreenTrace in 2021 to help SA agri-exporters track sustainability compliance without the spreadsheet chaos. Fourteen months after launch, GreenTrace crossed its 50th enterprise customer. She's active across three groups and shows up in Discussions with detailed, generous answers — ask her about export compliance or early hiring.",
+  joined:'Mar 2023', lastActive:'25 minutes ago', contribTotal:142, connectionsCount:86,
+  complete:true, connectionStatus:'none', // none | pending | connected
+  website:'greentrace.co.za', linkedin:'#'
+};
+
+const M_POSTS = [
+  { id:1, type:'win', action:'shared a photo', time:'5 days ago',
+    content:"Signed our 50th enterprise customer today. 14 months ago we had two. Huge milestone for the team! Thank you to this group for the pitch practice 🙌",
+    image:'https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&q=80&w=800',
+    likes:86, comments:22, liked:true, group:'General' },
+  { id:2, type:'activity', action:'joined the group', time:'2 weeks ago', content:'', likes:0, comments:0, liked:false, group:'Cape Town SMEs' },
+  { id:3, type:'share', action:'posted an update', time:'3 weeks ago',
+    title:'What we changed after our first failed compliance audit',
+    content:"Short version: we were tracking the right data in the wrong place. Wrote up the full breakdown for anyone exporting into the EU.",
+    link:{ url:'#', title:'Read the full breakdown on SME South Africa', domain:'smesouthafrica.co.za' },
+    likes:31, comments:6, liked:false, group:'General' }
+];
+
+const M_GROUPS = [
+  { name:'General', members:1284, role:'Member' },
+  { name:'Fintech Founders', members:889, role:'Member' },
+  { name:'Cape Town SMEs', members:516, role:'Moderator' }
+];
+
+const M_CONNECTIONS = [
+  { name:'Tshepho Joel',    initials:'TJ', role:'Founder',    company:'Langa Holdings' },
+  { name:'Sello Monare',    initials:'SM', role:'MD',         company:'TechSolve RSA' },
+  { name:'Karabo Kgophane', initials:'KK', role:'E-comm Lead',company:'Mzansi Cart' },
+  { name:'Mandla Dlamini',  initials:'MD', role:'Co-founder', company:'PesaPay' },
+  { name:'Refiloe Sithole', initials:'RS', role:'Founder',    company:'Skhokho' }
+];
+
+const state = { tab:'timeline' };
+
+/* ===== hero ===== */
+function connectBtn(){
+  if(MEMBER.connectionStatus==='connected') return `<button onclick="setConnection('none')" class="border border-[#29A37A] text-[#29A37A] rounded-full px-5 py-2.5 font-jakarta font-bold text-sm flex items-center gap-2 hover:bg-[#E4F5EE] transition"><i data-lucide="check" class="w-4 h-4"></i> Connected</button>`;
+  if(MEMBER.connectionStatus==='pending') return `<button onclick="setConnection('none')" class="border border-slate-200 text-slate-500 rounded-full px-5 py-2.5 font-jakarta font-bold text-sm flex items-center gap-2 hover:bg-slate-50 transition"><i data-lucide="clock" class="w-4 h-4"></i> Pending</button>`;
+  return `<button onclick="setConnection('pending')" class="bg-[#DC183C] hover:bg-[#B0142F] text-white rounded-full px-5 py-2.5 font-jakarta font-bold text-sm transition flex items-center gap-2"><i data-lucide="user-plus" class="w-4 h-4"></i> Connect</button>`;
+}
+function renderHero(){
+  const m = MEMBER;
+  document.getElementById('profile-hero').innerHTML = `
+    <div class="bg-white rounded-2xl border border-slate-100 overflow-hidden reveal shadow-sm">
+      <div class="h-32 sm:h-40 relative bg-gradient-to-br from-[#0C1F31] to-[#5e1a2c]">
+        <div class="absolute inset-0 opacity-40" style="background:radial-gradient(circle at 70% 30%, #FF9900 0%, transparent 55%);"></div>
+        <button onclick="openBrief('profile')" class="dev-badge absolute top-3 left-3 w-5 h-5 rounded-full bg-[#DC183C] text-white items-center justify-center text-[10px] font-bold leading-none animate-pulse">i</button>
+      </div>
+      <div class="px-5 sm:px-7 pb-6">
+        <div class="relative shrink-0 inline-block -mt-12 sm:-mt-14">
+          <div class="ring-4 ring-white rounded-full shadow-lg">${monogram(m.initials,96,'from-[#DC183C] to-[#FF9900]')}</div>
+          <span class="absolute bottom-1 right-1 w-4 h-4 rounded-full bg-[#29A37A] ring-2 ring-white" title="Active now"></span>
+        </div>
+        <div class="mt-3 flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
+          <div class="min-w-0 flex-1">
+            <div class="flex items-center gap-2 flex-wrap">
+              <h1 class="font-jakarta font-extrabold text-2xl sm:text-3xl text-[#121A21] tracking-tight">${esc(m.name)}</h1>
+              ${m.complete ? '<i data-lucide="badge-check" class="w-5 h-5 text-[#29A37A]" title="Complete profile"></i>' : ''}
+            </div>
+            <p class="text-sm text-slate-500 mt-1">${esc(m.role)} at <span class="font-semibold text-[#121A21]">${esc(m.company)}</span></p>
+            <div class="flex flex-wrap gap-1.5 mt-2.5">
+              <span class="px-2 py-0.5 rounded-full text-[11px] font-semibold bg-slate-100 text-slate-600">${esc(m.sector)}</span>
+              <span class="px-2 py-0.5 rounded-full text-[11px] font-semibold bg-slate-100 text-slate-600">${esc(m.stage)}</span>
+              <span class="px-2 py-0.5 rounded-full text-[11px] font-semibold bg-slate-100 text-slate-600">${esc(m.province)}</span>
+            </div>
+            <p class="text-sm text-slate-500 mt-3 flex items-center gap-1.5 flex-wrap">
+              <i data-lucide="hand-heart" class="w-4 h-4 text-[#29A37A]"></i> ${m.contribTotal} contributions
+              <span class="text-slate-300">&middot;</span>
+              <i data-lucide="users" class="w-4 h-4"></i> ${m.connectionsCount} connections
+              <span class="text-slate-300">&middot;</span> active ${esc(m.lastActive)}
+            </p>
+          </div>
+          <div class="flex items-center gap-2 shrink-0">
+            <span id="connect-btn">${connectBtn()}</span>
+            <button onclick="showToast('Message composer opens here (mockup).',null)" class="border border-slate-200 hover:border-[#DC183C] hover:text-[#DC183C] text-slate-600 rounded-full w-11 h-11 grid place-items-center transition" title="Message"><i data-lucide="mail" class="w-4 h-4"></i></button>
+            <button onclick="showToast('Profile options',null)" class="border border-slate-200 hover:border-[#DC183C] hover:text-[#DC183C] text-slate-600 rounded-full w-11 h-11 grid place-items-center transition"><i data-lucide="more-horizontal" class="w-4 h-4"></i></button>
+          </div>
+        </div>
+      </div>
+    </div>`;
+}
+function setConnection(status){
+  MEMBER.connectionStatus = status==='none' && MEMBER.connectionStatus==='pending' ? 'none' : status;
+  if(status==='pending') showToast(`Connection request sent to ${MEMBER.name.split(' ')[0]}.`,'win');
+  if(status==='none' && MEMBER.connectionStatus==='none') showToast('Connection removed.',null);
+  document.getElementById('connect-btn').innerHTML = connectBtn();
+  lucide.createIcons();
+}
+
+/* ===== sub-nav ===== */
+const P_TABS = [
+  { id:'timeline', label:'Timeline', icon:'rss' },
+  { id:'about', label:'About', icon:'user' },
+  { id:'groups', label:'Groups', icon:'layout-grid' },
+  { id:'connections', label:'Connections', icon:'users' }
+];
+function renderSubnav(){
+  document.getElementById('profile-subnav').innerHTML = P_TABS.map(t=>`
+    <button onclick="setTab('${t.id}')" class="gtab ${state.tab===t.id?'active':'text-slate-500 hover:text-[#121A21]'} shrink-0 px-4 py-3.5 text-sm font-bold font-jakarta flex items-center gap-2">
+      <i data-lucide="${t.icon}" class="w-4 h-4"></i> ${t.label}
+    </button>`).join('');
+}
+function setTab(id){ state.tab=id; renderSubnav(); renderTab(); lucide.createIcons(); }
+function renderTab(){
+  const map = { timeline:tabTimeline, about:tabAbout, groups:tabGroups, connections:tabConnections };
+  document.getElementById('profile-content').innerHTML = (map[state.tab]||tabTimeline)();
+  lucide.createIcons();
+}
+function sectionLabel(t, brief){ const b = brief?`<button onclick="openBrief('${brief}')" class="dev-badge w-4 h-4 rounded-full bg-[#DC183C] text-white items-center justify-center text-[9px] font-bold leading-none animate-pulse ml-1.5">i</button>`:''; return `<h3 class="font-jakarta font-bold uppercase text-sm text-[#121A21] tracking-wide flex items-center">${esc(t)}${b}</h3>`; }
+
+/* ===== TIMELINE ===== */
+function tabTimeline(){
+  const rows = M_POSTS.map(p=>postCard(p)).join('');
+  return `<div class="flex items-center justify-between mb-3">${sectionLabel('Timeline','timeline')}</div><div class="space-y-4">${rows}</div>`;
+}
+function postCard(p){
+  const t = TYPES[p.type];
+  if(p.type==='activity'){
+    return `<div class="flex items-center gap-3 px-1 py-2 text-sm text-slate-500">
+      <i data-lucide="sparkles" class="w-4 h-4 text-slate-400 shrink-0"></i>
+      <span><span class="font-bold text-[#121A21]">${esc(MEMBER.name)}</span> ${esc(p.action)} <a href="single-group.html" class="font-semibold text-[#0C1F31] hover:text-[#DC183C]">${esc(p.group)}</a></span>
+      <span class="ml-auto text-xs text-slate-400 shrink-0">${esc(p.time)}</span>
+    </div>`;
+  }
+  let media = '';
+  if(p.image) media = `<div class="mt-4 rounded-xl overflow-hidden border border-slate-100"><img src="${p.image}" class="w-full h-auto max-h-[400px] object-cover" alt="Post attachment"></div>`;
+  else if(p.link) media = `<a href="${p.link.url}" class="mt-4 block rounded-xl border border-slate-200 bg-slate-50 hover:bg-slate-100 transition p-4">
+      <p class="font-jakarta font-bold text-sm text-[#0C1F31] line-clamp-1">${esc(p.link.title)}</p>
+      <p class="text-[11px] text-slate-500 mt-1 uppercase tracking-wider font-semibold flex items-center gap-1"><i data-lucide="link" class="w-3 h-3"></i> ${esc(p.link.domain)}</p>
+    </a>`;
+
+  return `<article class="bg-white rounded-2xl border border-slate-200 shadow-sm stripe-${p.type} card-lift">
+    <div class="p-5">
+      <div class="flex items-start gap-3 mb-4">
+        ${monogram(MEMBER.initials, 44)}
+        <div class="min-w-0 flex-1">
+          <p class="text-[14px] text-[#121A21] leading-snug"><span class="font-bold">${esc(MEMBER.name)}</span> <span class="text-slate-500">${esc(p.action)}</span></p>
+          <div class="flex items-center gap-1.5 mt-0.5 text-[12px] text-slate-400 font-medium flex-wrap">
+            <span>${esc(p.time)}</span><span>&middot;</span>
+            <a href="single-group.html" class="hover:text-[#DC183C]">in ${esc(p.group)}</a>
+            <span class="ml-1 uppercase tracking-wider text-[9px] font-extrabold ${t.text} bg-slate-50 px-1.5 py-0.5 rounded border border-slate-100">${t.label}</span>
+          </div>
+        </div>
+        <button class="text-slate-400 hover:text-slate-600 p-1 rounded-md hover:bg-slate-50 transition"><i data-lucide="more-horizontal" class="w-5 h-5"></i></button>
+      </div>
+      ${p.title ? `<h4 class="font-jakarta font-bold text-[16px] text-[#0C1F31] mb-2 leading-snug">${esc(p.title)}</h4>` : ''}
+      <p class="text-[14.5px] text-[#121A21] leading-relaxed whitespace-pre-line">${esc(p.content)}</p>
+      ${media}
+      ${p.likes > 0 ? `<div class="flex items-center gap-2 mt-4 pt-4 border-t border-slate-100"><div class="w-5 h-5 rounded-full bg-[#1877F2] grid place-items-center text-white shrink-0"><i data-lucide="thumbs-up" class="w-3 h-3"></i></div><p class="text-[13px] text-slate-500 truncate">Sipho M., Tshepho J. and ${p.likes > 2 ? p.likes - 2 : p.likes} others</p></div>` : ''}
+    </div>
+    <div class="px-2 py-1 border-t border-slate-100 flex">
+      <button onclick="like(${p.id})" class="flex-1 flex items-center justify-center gap-2 py-3 rounded-lg hover:bg-slate-50 ${p.liked?'text-[#1877F2]':'text-slate-500'} text-[13.5px] font-bold transition"><i data-lucide="thumbs-up" class="w-4 h-4 ${p.liked?'fill-current':''}"></i><span>Like</span></button>
+      <button class="flex-1 flex items-center justify-center gap-2 py-3 rounded-lg hover:bg-slate-50 text-slate-500 text-[13.5px] font-bold transition"><i data-lucide="message-square" class="w-4 h-4"></i><span>Comment</span></button>
+      <button class="flex-1 flex items-center justify-center gap-2 py-3 rounded-lg hover:bg-slate-50 text-slate-500 text-[13.5px] font-bold transition"><i data-lucide="share-2" class="w-4 h-4"></i><span>Share</span></button>
+    </div>
+  </article>`;
+}
+function like(id){ const p=M_POSTS.find(x=>x.id===id); if(!p) return; p.liked=!p.liked; p.likes+=p.liked?1:-1; renderTab(); }
+
+/* ===== ABOUT ===== */
+function tabAbout(){
+  return `<div class="flex items-center justify-between mb-3">${sectionLabel('About','about')}</div>
+    <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm">
+      <p class="text-[14.5px] text-[#121A21] leading-relaxed">${esc(MEMBER.bio)}</p>
+      <div class="mt-5 pt-5 border-t border-slate-100 grid sm:grid-cols-2 gap-x-6 gap-y-3 text-sm">
+        <div class="flex items-center gap-2 text-slate-600"><i data-lucide="briefcase" class="w-4 h-4 text-slate-400"></i> ${esc(MEMBER.role)} at ${esc(MEMBER.company)}</div>
+        <div class="flex items-center gap-2 text-slate-600"><i data-lucide="map-pin" class="w-4 h-4 text-slate-400"></i> ${esc(MEMBER.province)}</div>
+        <div class="flex items-center gap-2 text-slate-600"><i data-lucide="layers" class="w-4 h-4 text-slate-400"></i> ${esc(MEMBER.sector)} &middot; ${esc(MEMBER.stage)} stage</div>
+        <div class="flex items-center gap-2 text-slate-600"><i data-lucide="calendar" class="w-4 h-4 text-slate-400"></i> Member since ${esc(MEMBER.joined)}</div>
+        <a href="#" class="flex items-center gap-2 text-[#DC183C] hover:underline"><i data-lucide="globe" class="w-4 h-4"></i> ${esc(MEMBER.website)}</a>
+        <a href="#" class="flex items-center gap-2 text-[#DC183C] hover:underline"><i data-lucide="linkedin" class="w-4 h-4"></i> LinkedIn profile</a>
+      </div>
+    </div>`;
+}
+
+/* ===== GROUPS ===== */
+function tabGroups(){
+  const rows = M_GROUPS.map(g=>`
+    <a href="single-group.html" class="flex items-center gap-3 border border-slate-100 rounded-2xl p-4 hover:shadow-md transition bg-white">
+      <div class="w-11 h-11 rounded-lg bg-[#0C1F31] grid place-items-center shrink-0"><i data-lucide="users" class="w-5 h-5 text-[#FF9900]"></i></div>
+      <div class="min-w-0 flex-1"><p class="font-jakarta font-bold text-[#121A21] truncate">${esc(g.name)}</p><p class="text-xs text-slate-500">${g.members.toLocaleString()} members</p></div>
+      ${g.role==='Moderator' ? '<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#FFF1E0] text-[#AE6B0A] shrink-0">Moderator</span>' : '<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-slate-100 text-slate-500 shrink-0">Member</span>'}
+      <i data-lucide="chevron-right" class="w-4 h-4 text-slate-300 shrink-0"></i>
+    </a>`).join('');
+  return `<div class="flex items-center justify-between mb-3">${sectionLabel('Groups','groups')}<span class="text-xs font-bold text-slate-400">${M_GROUPS.length} groups</span></div><div class="space-y-3">${rows}</div>`;
+}
+
+/* ===== CONNECTIONS ===== */
+function tabConnections(){
+  const cards = M_CONNECTIONS.map(c=>`
+    <a href="single-member.html" class="flex flex-col items-center text-center border border-slate-100 rounded-2xl p-4 hover:shadow-md transition bg-white">
+      ${monogram(c.initials,56)}
+      <p class="font-jakarta font-bold text-sm text-[#121A21] mt-3">${esc(c.name)}</p>
+      <p class="text-[11px] text-slate-500 mt-0.5">${esc(c.role)} &middot; ${esc(c.company)}</p>
+    </a>`).join('');
+  return `<div class="flex items-center justify-between mb-3">${sectionLabel('Connections','connections')}<span class="text-xs font-bold text-slate-400">${MEMBER.connectionsCount} total</span></div>
+    <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">${cards}</div>
+    <button onclick="showToast('Loading more connections…',null)" class="w-full mt-4 py-2.5 rounded-full border border-slate-200 text-slate-600 hover:bg-slate-50 text-sm font-bold transition">Show all connections</button>`;
+}
+
+/* ===== aside ===== */
+function renderAside(){
+  document.getElementById('mutual-groups').innerHTML = M_GROUPS.slice(0,3).map(g=>`
+    <a href="single-group.html" class="flex items-center gap-3 px-5 py-3 hover:bg-slate-50 transition border-b border-slate-50 last:border-0">
+      <div class="w-9 h-9 rounded-lg bg-[#0C1F31] grid place-items-center shrink-0"><i data-lucide="users" class="w-4 h-4 text-[#FF9900]"></i></div>
+      <div class="min-w-0"><p class="font-jakarta font-bold text-sm text-[#121A21] truncate">${esc(g.name)}</p><p class="text-[11px] text-slate-400">${g.members.toLocaleString()} members</p></div>
+    </a>`).join('');
+}
+
+/* ===== dev mode ===== */
+const BRIEFS = {
+  profile:{ title:'Single Member Profile', sub:'BuddyBoss public profile', purpose:'The public profile any member sees when they click another member\'s name or avatar — from the directory, a group\'s member list, a post author, or a discussion reply. Mirrors the single-group.html container pattern (hero + tabs + rail) so the community section reads as one system. Distinct from member-account.html, which is the signed-in user\'s own editable settings page.', data:'<code>member { id, name, avatar, role, company, sector, stage, province, bio, website, socials, joined_at, last_active, contribution_total, connection_count, profile_complete }</code> plus per-viewer <code>connection_status</code> (none / pending / connected). Timeline pulls the member\'s own posts and group-join activity items; Groups/Connections are relationship queries scoped to <code>member_id</code>.', logic:'Card avatars/names across the directory, group member lists, post authors and discussion replies all deep-link here with a member id (query string in production; this mockup hardcodes one example member). Connect posts a request (optimistic UI, flips to Pending); the target accepting flips it to Connected. Message opens the DM composer. Tabs render client-side with no page reload, same as single-group.html.', components:'Profile hero (cover + avatar + name/role/company + status pills + stat line + Connect/Message/More) · tab bar (Timeline, About, Groups, Connections) · timeline post cards + join-activity rows · About facts grid · Groups list · Connections grid · right rail (quick facts + groups in common).', specs:'<b>Layout:</b> identical shell to single-group.html — main <code>max-w-6xl</code>, content <code>lg:col-span-8</code> / rail <code>lg:col-span-4</code>, 24px gap.<br/><b>Hero cover:</b> 128/160px height, gradient <code>#0C1F31&rarr;#5e1a2c</code> (vs. group\'s navy&rarr;teal) with a warm radial accent — visually distinguishes a person from a group at a glance.<br/><b>Avatar:</b> 96px circular monogram (vs. group\'s 96px rounded-square icon tile), 4px white ring, pulled up 48/56px, small green &ldquo;active now&rdquo; dot bottom-right.<br/><b>Name row:</b> Plus Jakarta 800 24/30px + a `badge-check` (#29A37A) when <code>profile_complete</code>. Role/company 14px slate-500. Facet pills (sector/stage/province) 11px slate-100/slate-600. Stat line: contributions, connections, last-active, 14px slate-500 with Lucide icons.<br/><b>Actions:</b> Connect button states mirror the directory\'s (red solid &rarr; slate Pending &rarr; green outline Connected). Message + More are 44&times;44 outline icon buttons.<br/><b>Tabs:</b> same `.gtab` treatment as single-group.html (active = red text + red underline).<br/><b>Timeline:</b> reuses the group feed\'s post-card component (colour-striped left edge by post type) plus a lightweight one-line row for join-activity items. Not simply the group feed copy-pasted — filtered to one author, and each post links back to the group it was posted in.<br/><b>Groups/Connections tabs:</b> simple card grids that deep-link to single-group.html / back to single-member.html, matching how single-group.html\'s &ldquo;Similar groups&rdquo; rail links out.' }
+};
+function toggleDevMode(){ const on=document.body.classList.toggle('dev-on'); const b=document.getElementById('devToggle'); if(b) b.classList.toggle('on',on); if(on) showToast('Dev Mode on — tap any ⓘ for implementation notes.', null); lucide.createIcons(); }
+function closeOverlay(id){ const el=document.getElementById(id); if(!el) return; el.classList.remove('open'); setTimeout(()=>{ if(el&&el.parentNode) el.remove(); },300); }
+function openBrief(id){
+  const b = BRIEFS[id]; if(!b) return;
+  const sec = (icon,label,html)=>`<div class="px-6 py-4 border-t border-slate-100"><p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] flex items-center gap-1.5 mb-2"><i data-lucide="${icon}" class="w-3.5 h-3.5"></i>${label}</p><div class="text-sm text-slate-600 leading-relaxed">${html}</div></div>`;
+  document.getElementById('overlay-root').innerHTML = `
+    <div class="ov" id="ov-brief"><div class="ov-bg" onclick="closeOverlay('ov-brief')"></div>
+      <div class="drawer">
+        <div class="sticky top-0 z-10 bg-[#0C1F31] text-white px-6 py-5 flex items-start justify-between"><div class="min-w-0"><p class="text-[10px] font-bold uppercase tracking-widest text-[#FF9900] mb-1">Dev Brief</p><h3 class="font-jakarta font-extrabold text-lg leading-tight">${b.title}</h3><p class="text-xs text-white/60 mt-1">${b.sub}</p></div><button onclick="closeOverlay('ov-brief')" class="text-white/60 hover:text-white shrink-0 ml-3"><i data-lucide="x" class="w-5 h-5"></i></button></div>
+        ${sec('target','Purpose',b.purpose)}${sec('database','Data model',b.data)}${sec('git-branch','Logic',b.logic)}${b.specs ? sec('ruler','Spec values', b.specs) : ''}
+      </div></div>`;
+  requestAnimationFrame(()=>{ const o=document.getElementById('ov-brief'); if(o) o.classList.add('open'); });
+  lucide.createIcons();
+}
+
+/* ===== toast ===== */
+function showToast(msg, kind){
+  const el=document.getElementById('toast'); const t=TYPES[kind]; const color=t?t.color:'#0C1F31';
+  el.classList.remove('hidden');
+  el.innerHTML = `<div class="toast-in bg-[#0C1F31] text-white rounded-full pl-3 pr-5 py-2.5 shadow-2xl flex items-center gap-2 text-sm font-semibold" style="border-left:4px solid ${color}"><i data-lucide="check-circle" class="w-4 h-4" style="color:${color}"></i><span>${esc(msg)}</span></div>`;
+  lucide.createIcons();
+  setTimeout(()=>{ const i=el.firstElementChild; if(i){ i.classList.remove('toast-in'); i.classList.add('toast-out'); } setTimeout(()=>{ el.classList.add('hidden'); el.innerHTML=''; },250); },2400);
+}
+
+/* ===== init ===== */
+document.addEventListener('keydown', e=>{ if(e.key==='Escape') document.querySelectorAll('.ov.open').forEach(o=>closeOverlay(o.id)); });
+renderHero(); renderSubnav(); renderTab(); renderAside(); lucide.createIcons();
+</script>
+</body>
+</html>

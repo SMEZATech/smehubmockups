@@ -73,15 +73,15 @@
     .ov.open .modalbox { transform:translate(-50%,-50%); opacity:1; }
   </style>
 </head>
-<body class="bg-[#FCFCFC] text-[#121A21] antialiased">
+<body class="bg-[#FCFCFC] text-[#121A21] antialiased relative">
 
 <!-- ===================== HEADER ===================== -->
-<header class="bg-white border-b border-slate-200 sticky top-0 z-50 shadow-sm">
+<header class="bg-white border-b border-slate-200 sticky top-0 z-50 shadow-sm relative">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
     
     <!-- Logo (Left) -->
     <a href="public-home.html" class="flex items-center shrink-0 group mr-4">
-      <img src="https://smesouthafrica.co.za/wp-content/uploads/2025/10/Asset-1-1.webp" alt="SME South Africa" class="h-12 w-auto object-contain group-hover:scale-105 transition-transform" />
+      <img src="https://smesouthafrica.co.za/wp-content/uploads/2025/10/Asset-1-1.webp" alt="SME South Africa" class="w-12 h-12 object-contain group-hover:scale-105 transition-transform" />
     </a>
 
     <!-- Primary Navigation (Center - BuddyBoss Style) -->
@@ -95,14 +95,10 @@
     <!-- Utility & Profile (Right) -->
     <div class="flex items-center justify-end gap-4 shrink-0">
       
-      <!-- Expanding Search -->
-      <div class="relative group">
-        <button class="text-slate-500 hover:text-[#121A21] transition-colors p-1.5 peer" aria-label="Search"><i data-lucide="search" class="w-5 h-5"></i></button>
-        <div class="absolute right-0 top-1/2 -translate-y-1/2 w-0 overflow-hidden transition-all duration-300 ease-in-out group-hover:w-64 peer-focus:w-64">
-           <input type="text" placeholder="Search..." class="w-full h-10 pl-10 pr-4 text-sm border border-slate-200 rounded-full focus:outline-none focus:border-[#DC183C] bg-slate-50">
-           <i data-lucide="search" class="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400"></i>
-        </div>
-      </div>
+      <!-- Search Trigger -->
+      <button onclick="toggleHeaderSearch()" class="text-slate-500 hover:text-[#121A21] transition-colors p-1.5" aria-label="Search">
+        <i data-lucide="search" class="w-5 h-5"></i>
+      </button>
       
       <div class="w-px h-6 bg-slate-200 hidden sm:block mx-1"></div>
       
@@ -155,6 +151,19 @@
         </div>
       </div>
       
+    </div>
+  </div>
+
+  <!-- Full Header Search Overlay (Hidden by Default) -->
+  <div id="headerSearchOverlay" class="absolute inset-0 bg-white z-50 flex items-center justify-center px-4 sm:px-6 transition-all duration-300 opacity-0 pointer-events-none scale-y-95 origin-top">
+    <div class="w-full max-w-4xl flex items-center gap-4">
+      <div class="relative flex-1">
+        <i data-lucide="search" class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400"></i>
+        <input type="text" id="headerSearchInput" placeholder="Search members, groups, forums..." class="w-full h-12 pl-12 pr-4 text-base bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:border-[#DC183C] focus:ring-2 focus:ring-[#DC183C]/10 transition-all">
+      </div>
+      <button onclick="toggleHeaderSearch()" class="text-slate-500 hover:text-[#121A21] p-2 transition-colors shrink-0" aria-label="Close search">
+        <i data-lucide="x" class="w-6 h-6"></i>
+      </button>
     </div>
   </div>
 </header>
@@ -249,7 +258,7 @@
         <div id="composer-default" class="p-5">
           <div class="flex items-center gap-3">
             <div class="w-11 h-11 rounded-full bg-gradient-to-br from-[#DC183C] to-[#FF9900] grid place-items-center font-jakarta font-bold text-white shrink-0">TJ</div>
-            <button onclick="openComposer('share')" class="flex-1 text-left bg-slate-50 hover:bg-slate-100 transition px-4 py-3 rounded-full text-sm text-slate-500 font-medium border border-slate-200">
+            <button onclick="openComposer()" class="flex-1 text-left bg-slate-50 hover:bg-slate-100 transition px-4 py-3 rounded-full text-sm text-slate-500 font-medium border border-slate-200">
               What would you like to share, Tshepho?
             </button>
           </div>
@@ -272,7 +281,7 @@
         </div>
         <h3 class="font-jakarta font-bold uppercase text-lg text-[#121A21] mb-1">Be the first to post</h3>
         <p class="text-sm text-slate-500 max-w-sm mx-auto">Nothing in this view yet. Start an Ask and watch the community jump in — most asks get a reply within hours.</p>
-        <button onclick="openComposer('ask')" class="mt-4 bg-[#DC183C] hover:bg-[#B0142F] text-white rounded-full px-5 py-2.5 font-jakarta font-bold text-sm transition inline-flex items-center gap-2"><i data-lucide="help-circle" class="w-4 h-4"></i> Post an Ask</button>
+        <button onclick="openComposer()" class="mt-4 bg-[#DC183C] hover:bg-[#B0142F] text-white rounded-full px-5 py-2.5 font-jakarta font-bold text-sm transition inline-flex items-center gap-2"><i data-lucide="help-circle" class="w-4 h-4"></i> Post an Ask</button>
       </div>
 
     </section>
@@ -280,11 +289,13 @@
     <!-- RIGHT RAIL -->
     <aside class="hidden lg:flex flex-col gap-5 lg:col-span-3">
 
-      <!-- AD BANNER -->
-      <div class="w-full bg-slate-50 rounded-2xl border border-slate-200 flex flex-col items-center justify-center text-slate-400 aspect-[6/5] shadow-inner overflow-hidden">
-        <img src="https://placehold.co/300x250/F8FAFC/94A3B8?text=Advertisement" alt="Ad Placeholder" class="w-full h-full object-cover">
+      <!-- AD BANNER PLACEHOLDER -->
+      <div class="w-full bg-slate-50 rounded-2xl border border-slate-200 flex flex-col items-center justify-center text-slate-400 aspect-[6/5] shadow-inner">
+        <i data-lucide="monitor-play" class="w-8 h-8 mb-2 opacity-50"></i>
+        <p class="text-[10px] font-bold uppercase tracking-widest">Advertisement</p>
+        <p class="text-xs font-medium opacity-70 mt-0.5">300 x 250</p>
       </div>
-
+      
       <!-- Upcoming events -->
       <div class="bg-white rounded-2xl border border-slate-100 overflow-hidden reveal" style="animation-delay:120ms">
         <div class="px-5 py-3 border-b border-slate-100 flex items-center justify-between">
@@ -496,7 +507,7 @@
       }
     ],
     sortBy: 'all',
-    composer: { open:false, content:'' }
+    composer: { open:false, type:null, content:'', topicOpen:false }
   };
 
   // ===== HELPERS ===============================================================
@@ -505,6 +516,34 @@
     const fs = Math.max(10, Math.floor(size * 0.38));
     return `<div class="rounded-full bg-gradient-to-br from-[#DC183C] to-[#FF9900] grid place-items-center font-jakarta font-bold text-white shrink-0" style="width:${size}px;height:${size}px;font-size:${fs}px">${esc(initials)}</div>`;
   }
+
+  // Header Search Toggle Logic
+  function toggleHeaderSearch() {
+    const overlay = document.getElementById('headerSearchOverlay');
+    const input = document.getElementById('headerSearchInput');
+    
+    if (overlay.classList.contains('opacity-0')) {
+      // Open
+      overlay.classList.remove('opacity-0', 'pointer-events-none', 'scale-y-95');
+      overlay.classList.add('opacity-100', 'pointer-events-auto', 'scale-y-100');
+      setTimeout(() => input.focus(), 100); // Focus after animation starts
+    } else {
+      // Close
+      overlay.classList.remove('opacity-100', 'pointer-events-auto', 'scale-y-100');
+      overlay.classList.add('opacity-0', 'pointer-events-none', 'scale-y-95');
+      input.value = ''; // clear on close
+    }
+  }
+
+  // Close search on escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      const overlay = document.getElementById('headerSearchOverlay');
+      if (overlay && overlay.classList.contains('opacity-100')) {
+        toggleHeaderSearch();
+      }
+    }
+  });
 
   // ===== SORT TABS =============================================================
   const SORTS = [
@@ -704,7 +743,31 @@
               </div>
             </div>
             
-            <div class="relative">
+            <div class="relative min-h-[140px] flex flex-col">
+              <textarea id="composer-textarea" oninput="updateComposerContent(this.value)" placeholder="${esc(PLACEHOLDERS[state.composer.type || 'share'])}" class="w-full flex-1 text-[17px] text-[#121A21] placeholder-slate-400 outline-none resize-none border-none p-0 bg-transparent leading-relaxed">${esc(state.composer.content)}</textarea>
+              
+              <!-- Formatting Icons -->
+              <div class="absolute bottom-2 right-2 flex items-center gap-3 text-slate-300">
+                 <button class="hover:text-slate-500 transition-colors font-bold text-lg leading-none" title="Text formatting">Aa</button>
+                 <button class="hover:text-slate-500 transition-colors font-bold text-lg leading-none" title="Mention">@</button>
+                 <button class="hover:text-slate-500 transition-colors" title="Emoji"><i data-lucide="smile" class="w-5 h-5"></i></button>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Footer Actions -->
+          <div class="px-6 py-4 border-t border-slate-100 bg-slate-50 flex items-center justify-between">
+             <!-- Left Tools -->
+             <div class="flex items-center gap-4 text-slate-300">
+                <button class="hover:text-slate-500 transition-colors" title="Add video"><i data-lucide="video" class="w-5 h-5"></i></button>
+                <button class="font-extrabold text-[11px] border-2 border-current rounded px-1.5 hover:text-slate-500 transition-colors" title="Add GIF">GIF</button>
+                <button class="hover:text-slate-500 transition-colors" title="Add poll"><i data-lucide="bar-chart-2" class="w-5 h-5"></i></button>
+             </div>
+             
+             <!-- Right Actions -->
+             <div class="flex items-center gap-2 relative relative-topic-dropdown">
+               <!-- Topic Dropdown -->
+               <div class="relative">
                  <button onclick="toggleComposerTopic(event)" class="h-9 px-3 rounded-md border border-slate-200 text-sm font-medium text-slate-600 hover:bg-slate-50 transition-colors flex items-center gap-2">
                    ${state.composer.type ? TYPES[state.composer.type].label : 'Select Topic'} <i data-lucide="chevron-down" class="w-4 h-4 text-slate-400"></i>
                  </button>

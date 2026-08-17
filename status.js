@@ -44,6 +44,7 @@ window.MOCKUP_STATUS = {
   "public-advertising-disclosure.html": "finalised",
   "member-hub.html": "under-work",
   "members.html": "under-review",
+  "single-member.html": "under-review",
   "single-post.html": "under-review",
   "groups.html": "under-work",
   "single-group.html": "under-review",

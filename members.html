@@ -133,8 +133,8 @@ function completeBadge(m){ return m.complete?`<span class="inline-flex items-cen
 
 function gridCard(m,gi){
   return `<div class="bg-white rounded-2xl border border-slate-100 p-5 text-center card-lift">
-    <a href="member-account.html" class="inline-block">${monogram(m.initials,64)}</a>
-    <div class="flex items-center justify-center gap-1 mt-3"><a href="member-account.html" class="font-jakarta font-bold text-[#121A21] hover:text-[#DC183C] transition">${esc(m.name)}</a>${completeBadge(m)}</div>
+    <a href="single-member.html" class="inline-block">${monogram(m.initials,64)}</a>
+    <div class="flex items-center justify-center gap-1 mt-3"><a href="single-member.html" class="font-jakarta font-bold text-[#121A21] hover:text-[#DC183C] transition">${esc(m.name)}</a>${completeBadge(m)}</div>
     <p class="text-xs text-slate-500">${esc(m.role)} · ${esc(m.company)}</p>
     <div class="flex flex-wrap justify-center gap-1.5 mt-2">${pill(m.stage)}${pill(m.sector)}${pill(m.province)}</div>
     <p class="text-[11px] text-slate-400 mt-2 flex items-center justify-center gap-1"><i data-lucide="hand-heart" class="w-3.5 h-3.5 text-[#29A37A]"></i> ${m.contrib} contributions · active ${esc(m.active)}</p>
@@ -143,8 +143,8 @@ function gridCard(m,gi){
 }
 function listRow(m){
   return `<div class="flex items-center gap-3 py-3 px-4">
-    <a href="member-account.html">${monogram(m.initials,44)}</a>
-    <div class="min-w-0 flex-1"><div class="flex items-center gap-1"><a href="member-account.html" class="font-jakarta font-bold text-sm text-[#121A21] hover:text-[#DC183C]">${esc(m.name)}</a>${completeBadge(m)}</div><p class="text-xs text-slate-500 truncate">${esc(m.role)} at ${esc(m.company)} <span class="text-slate-300">·</span> ${esc(m.sector)} <span class="text-slate-300">·</span> ${esc(m.province)}</p></div>
+    <a href="single-member.html">${monogram(m.initials,44)}</a>
+    <div class="min-w-0 flex-1"><div class="flex items-center gap-1"><a href="single-member.html" class="font-jakarta font-bold text-sm text-[#121A21] hover:text-[#DC183C]">${esc(m.name)}</a>${completeBadge(m)}</div><p class="text-xs text-slate-500 truncate">${esc(m.role)} at ${esc(m.company)} <span class="text-slate-300">·</span> ${esc(m.sector)} <span class="text-slate-300">·</span> ${esc(m.province)}</p></div>
     <span class="hidden sm:flex text-[11px] text-slate-400 items-center gap-1 mr-2"><i data-lucide="hand-heart" class="w-3.5 h-3.5 text-[#29A37A]"></i> ${m.contrib}</span>
     ${connectBtn(m,m._i)}
   </div>`;
