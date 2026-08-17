@@ -133,9 +133,23 @@
 
     <!-- FEATURE IMAGE / VIDEO TRAILER -->
     <section class="mb-10">
-      <div class="relative rounded-2xl overflow-hidden aspect-[16/9] shadow-lg bg-[#0C1F31] group cursor-pointer" onclick="showToast('YouTube video plays here')">
-        <img src="https://i9.ytimg.com/vi/La3lctj_rIo/maxresdefault.jpg?time=1786441500000&sqp=CJze69MG&rs=AOn4CLBJtomeWpeubxzfm8VQPJMtFO4fNQ" alt="Webinar trailer" class="w-full h-full object-cover opacity-85 group-hover:scale-105 transition duration-500" />
-        <div class="absolute inset-0 m-auto w-20 h-20 rounded-full bg-[#DC183C]/95 text-white grid place-items-center shadow-2xl group-hover:scale-110 transition-transform"><i data-lucide="play" class="w-8 h-8 ml-1"></i></div>
+      <div id="videoBlock" class="relative rounded-2xl overflow-hidden aspect-[16/9] shadow-lg bg-[#0C1F31] group cursor-pointer" onclick="handleVideoClick()">
+        <img id="videoThumb" src="https://img.youtube.com/vi/3UdK9NKwhGY/maxresdefault.jpg" alt="Webinar video" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" />
+        <!-- Unlocked state: play button -->
+        <div id="playOverlay" class="absolute inset-0 m-auto w-20 h-20 rounded-full bg-[#DC183C]/95 text-white grid place-items-center shadow-2xl group-hover:scale-110 transition-transform"><i data-lucide="play" class="w-8 h-8 ml-1"></i></div>
+        <!-- Locked state: past webinar, details not yet submitted -->
+        <div id="lockOverlay" class="hidden absolute inset-0 bg-[#0C1F31]/75 flex flex-col items-center justify-center text-center px-6">
+          <div class="w-16 h-16 rounded-full bg-white/10 border border-white/25 grid place-items-center mb-4">
+            <i data-lucide="lock" class="w-6 h-6 text-white"></i>
+          </div>
+          <p class="font-jakarta font-extrabold text-white text-[15px]">This replay is for registered attendees</p>
+          <p class="text-white/70 text-[13px] mt-1 max-w-xs">Add your name and email in the sidebar to unlock the full recording instantly.</p>
+          <span class="mt-4 inline-flex items-center gap-1.5 h-9 px-4 rounded-lg bg-white text-[#0C1F31] text-xs font-bold">Unlock replay <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i></span>
+        </div>
+      </div>
+      <div class="dev-note rounded-xl px-4 py-3 items-start gap-3 mt-3">
+        <i data-lucide="info" class="w-4 h-4 text-[#AE6B0A] shrink-0 mt-0.5"></i>
+        <p class="text-sm text-slate-700 leading-relaxed"><b>Locked replay:</b> for past events, the video thumbnail stays visible underneath a semi-transparent navy scrim (<code>#0C1F31</code> at 75% — not blurred, so the frame is still readable) with a centered lock icon. It's a gate, not a placeholder. Clicking it jumps to the sidebar registration form; submitting unlocks the overlay client-side (server-side this would check a session/cookie or magic-link token). Upcoming and Member states never show the lock — upcoming shows the trailer, members get automatic access.</p>
       </div>
     </section>
 
@@ -260,10 +274,20 @@
   function showToast(m){const el=document.getElementById('toast');el.classList.remove('hidden');el.innerHTML=`<div class="bg-[#0C1F31] text-white rounded-full pl-3 pr-5 py-2.5 shadow-2xl flex items-center gap-2 text-sm font-semibold" style="border-left:4px solid #29A37A"><i data-lucide="check-circle" class="w-4 h-4" style="color:#29A37A"></i><span>${m}</span></div>`;lucide.createIcons();setTimeout(()=>{el.classList.add('hidden');el.innerHTML='';},2400);}
 
   function submitRegister(e){ e.preventDefault(); showToast('Registered — check your inbox for the calendar file.'); e.target.reset(); }
-  function submitReplay(e){ e.preventDefault(); showToast('Access granted — video replay unlocked.'); e.target.reset(); }
+  function submitReplay(e){
+    e.preventDefault();
+    videoUnlocked = true;
+    updateVideoLock();
+    showToast('Access granted — video replay unlocked.');
+    e.target.reset();
+  }
   function copyShareLink(){ navigator.clipboard?.writeText(location.href); showToast('Link copied to clipboard.'); }
 
+  let currentWidgetState = 'upcoming';
+  let videoUnlocked = false;
+
   function setWidgetState(state) {
+    currentWidgetState = state;
     document.getElementById('upcomingWidget').classList.toggle('hidden', state !== 'upcoming');
     document.getElementById('pastWidget').classList.toggle('hidden', state !== 'past');
     document.getElementById('memberWidget').classList.toggle('hidden', state !== 'member');
@@ -274,6 +298,35 @@
     document.getElementById('btn-upcoming').className = state === 'upcoming' ? activeCls : inactiveCls;
     document.getElementById('btn-past').className = state === 'past' ? activeCls : inactiveCls;
     document.getElementById('btn-member').className = state === 'member' ? activeCls : inactiveCls;
+
+    updateVideoLock();
+  }
+
+  function updateVideoLock(){
+    const locked = currentWidgetState === 'past' && !videoUnlocked;
+    document.getElementById('lockOverlay').classList.toggle('hidden', !locked);
+    document.getElementById('playOverlay').classList.toggle('hidden', locked);
+    lucide.createIcons();
+  }
+
+  const YOUTUBE_ID = '3UdK9NKwhGY';
+
+  function handleVideoClick(){
+    if (currentWidgetState === 'past' && !videoUnlocked) {
+      document.getElementById('past-step-1')?.classList.add('hidden');
+      document.getElementById('past-step-2')?.classList.remove('hidden');
+      document.getElementById('pastWidget')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      showToast('Add your details in the sidebar to unlock this replay.');
+      return;
+    }
+    playVideo();
+  }
+
+  function playVideo(){
+    const block = document.getElementById('videoBlock');
+    block.onclick = null;
+    block.classList.remove('cursor-pointer', 'group');
+    block.innerHTML = `<iframe class="w-full h-full" src="https://www.youtube-nocookie.com/embed/${YOUTUBE_ID}?autoplay=1&rel=0" title="Webinar video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
   }
 
   const BRIEF = {

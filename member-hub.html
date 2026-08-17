@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SME South Africa — Member Hub</title>
-  <meta name="description" content="The SME South Africa member community. Ask, win, share — together we build." />
+  <meta name="description" content="The SME South Africa member community. Connect, win, share — together we build." />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -52,18 +52,6 @@
     .stripe-win   { box-shadow: inset 4px 0 0 0 #29A37A; }
     .stripe-share { box-shadow: inset 4px 0 0 0 #FF9900; }
 
-    /* Chip hover/active */
-    .chip { transition: background-color .15s, color .15s, border-color .15s; }
-    .chip-ask:hover, .chip-ask.active     { background:#DC183C; color:white; border-color:#DC183C; }
-    .chip-win:hover, .chip-win.active     { background:#29A37A; color:white; border-color:#29A37A; }
-    .chip-share:hover, .chip-share.active { background:#FF9900; color:#0C1F31; border-color:#FF9900; }
-
-    /* Sort tab active */
-    .tab-active { background:#0C1F31; color:white; border-color:#0C1F31; }
-
-    /* Subtle dotted SA-flag accent */
-    .dot-ink::before { content:""; display:inline-block; width:4px; height:4px; border-radius:9999px; background:#94A3B8; margin:0 8px; vertical-align:middle; }
-
     /* Card hover lift */
     .card-lift { transition: box-shadow .2s, transform .2s; }
     .card-lift:hover { box-shadow: 0 8px 20px -8px rgba(10,44,61,0.12); transform: translateY(-1px); }
@@ -88,56 +76,88 @@
 <body class="bg-[#FCFCFC] text-[#121A21] antialiased">
 
 <!-- ===================== HEADER ===================== -->
-<header class="bg-slate-100 border-b-2 border-dashed border-slate-400 relative overflow-hidden">
-  <div class="absolute inset-0 opacity-30 pointer-events-none" style="background:repeating-linear-gradient(45deg,transparent,transparent 8px,rgba(100,116,139,.18) 8px,rgba(100,116,139,.18) 16px)"></div>
-  <div class="relative max-w-7xl mx-auto px-4 sm:px-6 h-14 flex items-center gap-3 sm:gap-4">
-    <a href="public-home.html" class="flex items-center gap-2 shrink-0 opacity-70 hover:opacity-100 transition">
-      <img src="assets/logo-icon.png" alt="SME South Africa" class="w-7 h-7" />
-      <span class="font-jakarta font-extrabold text-[13px] tracking-tight text-slate-700 hidden sm:inline">SME South Africa</span>
+<header class="bg-white border-b border-slate-200 sticky top-0 z-50 shadow-sm">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+    
+    <!-- Logo (Left) -->
+    <a href="public-home.html" class="flex items-center shrink-0 group mr-4">
+      <img src="https://smesouthafrica.co.za/wp-content/uploads/2025/10/Asset-1-1.webp" alt="SME South Africa" class="h-12 w-auto object-contain group-hover:scale-105 transition-transform" />
     </a>
-    <span class="mx-1 hidden sm:inline w-px h-5 bg-slate-300"></span>
-    <p class="text-[10px] sm:text-[11px] font-bold uppercase tracking-widest text-slate-600 flex items-center gap-1.5">
-      <i data-lucide="construction" class="w-3.5 h-3.5 text-slate-500"></i>
-      Header placeholder &middot; design pending
-    </p>
-    <div class="ml-auto flex items-center gap-2">
-      <button id="devToggle" onclick="toggleDevMode()" class="inline-flex items-center gap-1.5 px-2.5 h-8 rounded-full bg-white border border-slate-300 hover:border-[#DC183C] hover:text-[#DC183C] text-[11px] font-bold uppercase tracking-wider text-slate-600 transition" title="Toggle implementation notes"><i data-lucide="code-2" class="w-3.5 h-3.5"></i><span class="hidden sm:inline">Dev</span></button>
-      <a href="index.html" class="inline-flex items-center gap-1.5 px-3 h-8 rounded-full bg-white border border-slate-300 hover:border-slate-500 text-[11px] font-bold text-slate-700 transition">
-        <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i><span class="hidden sm:inline">Launcher</span>
-      </a>
+
+    <!-- Primary Navigation (Center - BuddyBoss Style) -->
+    <nav class="hidden md:flex items-center justify-center gap-2 flex-1 px-4 h-full">
+      <a href="member-hub.html" class="px-3 h-full text-[14px] font-bold font-jakarta text-[#DC183C] border-b-[3px] border-[#DC183C] flex items-center gap-2 transition-colors"><i data-lucide="activity" class="w-4 h-4 text-[#DC183C]"></i> Home</a>
+      <a href="members.html" class="px-3 h-full text-[14px] font-semibold font-jakarta text-[#6A7581] hover:text-[#DC183C] border-b-[3px] border-transparent flex items-center gap-2 transition-colors"><i data-lucide="user" class="w-4 h-4"></i> Members</a>
+      <a href="public-groups.html" class="px-3 h-full text-[14px] font-semibold font-jakarta text-[#6A7581] hover:text-[#DC183C] border-b-[3px] border-transparent flex items-center gap-2 transition-colors"><i data-lucide="users" class="w-4 h-4"></i> Groups</a>
+      <a href="forums.html" class="px-3 h-full text-[14px] font-semibold font-jakarta text-[#6A7581] hover:text-[#DC183C] border-b-[3px] border-transparent flex items-center gap-2 transition-colors"><i data-lucide="message-square" class="w-4 h-4"></i> Forums <i data-lucide="chevron-down" class="w-3 h-3 ml-[-2px] opacity-50"></i></a>
+    </nav>
+
+    <!-- Utility & Profile (Right) -->
+    <div class="flex items-center justify-end gap-4 shrink-0">
+      
+      <!-- Expanding Search -->
+      <div class="relative group">
+        <button class="text-slate-500 hover:text-[#121A21] transition-colors p-1.5 peer" aria-label="Search"><i data-lucide="search" class="w-5 h-5"></i></button>
+        <div class="absolute right-0 top-1/2 -translate-y-1/2 w-0 overflow-hidden transition-all duration-300 ease-in-out group-hover:w-64 peer-focus:w-64">
+           <input type="text" placeholder="Search..." class="w-full h-10 pl-10 pr-4 text-sm border border-slate-200 rounded-full focus:outline-none focus:border-[#DC183C] bg-slate-50">
+           <i data-lucide="search" class="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400"></i>
+        </div>
+      </div>
+      
+      <div class="w-px h-6 bg-slate-200 hidden sm:block mx-1"></div>
+      
+      <!-- Action Icons -->
+      <div class="hidden sm:flex items-center gap-2">
+        <button class="relative text-slate-500 hover:text-[#121A21] transition-colors p-1.5" aria-label="Messages">
+          <i data-lucide="inbox" class="w-5 h-5"></i>
+          <span class="absolute top-0 right-0 w-4 h-4 bg-[#DC183C] text-white text-[9px] font-bold rounded-full flex items-center justify-center ring-2 ring-white shadow-sm">1</span>
+        </button>
+        <button class="relative text-slate-500 hover:text-[#121A21] transition-colors p-1.5" aria-label="Notifications">
+          <i data-lucide="bell" class="w-5 h-5"></i>
+          <span class="absolute top-0 right-0 w-4 h-4 bg-[#DC183C] text-white text-[9px] font-bold rounded-full flex items-center justify-center ring-2 ring-white shadow-sm">8</span>
+        </button>
+        <button class="relative text-slate-500 hover:text-[#121A21] transition-colors p-1.5" aria-label="Cart">
+          <i data-lucide="shopping-cart" class="w-5 h-5"></i>
+          <span class="absolute top-0 right-0 w-4 h-4 bg-[#DC183C] text-white text-[9px] font-bold rounded-full flex items-center justify-center ring-2 ring-white shadow-sm">4</span>
+        </button>
+      </div>
+
+      <!-- User Profile Dropdown -->
+      <div class="relative ml-1 sm:ml-2 cursor-pointer group">
+        <div class="flex items-center gap-3">
+          <span class="font-jakarta font-bold text-[15px] text-[#121A21] hidden md:block">Tshepho</span>
+          <div class="w-9 h-9 rounded-full bg-gradient-to-br from-[#DC183C] to-[#FF9900] grid place-items-center font-jakarta font-bold text-white text-xs ring-2 ring-white shadow-sm group-hover:scale-105 transition-transform">TJ</div>
+        </div>
+        
+        <!-- Dropdown Menu -->
+        <div class="absolute right-0 top-full mt-3 w-64 bg-white rounded-xl shadow-xl border border-slate-100 overflow-hidden z-50 transform origin-top-right scale-95 opacity-0 pointer-events-none transition-all duration-200 group-hover:scale-100 group-hover:opacity-100 group-hover:pointer-events-auto">
+          <div class="p-4 border-b border-slate-100 flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-gradient-to-br from-[#DC183C] to-[#FF9900] grid place-items-center font-jakarta font-bold text-white text-sm shrink-0">TJ</div>
+            <div class="min-w-0">
+              <p class="font-jakarta font-bold text-sm text-[#121A21] truncate">Tshepho Joel</p>
+              <p class="text-xs text-slate-500 truncate">@tshephojoel</p>
+            </div>
+          </div>
+          <div class="p-2 text-sm text-slate-700 font-medium">
+            <a href="member-account.html" class="block px-3 py-2 rounded-lg hover:bg-slate-50 hover:text-[#DC183C] transition-colors">Profile</a>
+            <a href="member-account.html" class="block px-3 py-2 rounded-lg hover:bg-slate-50 hover:text-[#DC183C] transition-colors">Account Settings</a>
+            <a href="#" class="block px-3 py-2 rounded-lg hover:bg-slate-50 hover:text-[#DC183C] transition-colors flex items-center justify-between">Orders <span class="bg-slate-100 text-slate-500 text-[10px] font-bold px-2 py-0.5 rounded-full">4</span></a>
+          </div>
+          <div class="p-2 border-t border-slate-100">
+            <a href="#" class="block px-3 py-2 text-sm font-semibold text-[#DC183C] hover:bg-[#FDECEF] rounded-lg transition-colors">Sign Out</a>
+          </div>
+          <div class="px-5 py-3 border-t border-slate-100 bg-slate-50 flex items-center justify-between">
+            <span class="text-[10px] font-bold uppercase tracking-widest text-slate-500">Dev Mode</span>
+            <button id="devToggle" onclick="toggleDevMode()" class="w-8 h-4 rounded-full bg-slate-200 relative transition-colors focus:outline-none" aria-pressed="false">
+              <span class="absolute left-0.5 top-0.5 w-3 h-3 rounded-full bg-white shadow-sm transition-transform duration-200"></span>
+            </button>
+          </div>
+        </div>
+      </div>
+      
     </div>
   </div>
 </header>
-
-<!-- ===================== COMMUNITY SUB-NAV ===================== -->
-<div class="bg-white border-b border-slate-100">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 flex gap-1 overflow-x-auto no-scrollbar">
-    <a href="member-hub.html" class="shrink-0 px-4 py-3 text-sm font-bold font-jakarta text-[#DC183C] border-b-2 border-[#DC183C] flex items-center gap-2"><i data-lucide="rss" class="w-4 h-4"></i> Feed</a>
-    <a href="members.html" class="shrink-0 px-4 py-3 text-sm font-bold font-jakarta text-slate-500 hover:text-[#121A21] border-b-2 border-transparent flex items-center gap-2"><i data-lucide="users" class="w-4 h-4"></i> Members</a>
-    <a href="forums.html" class="shrink-0 px-4 py-3 text-sm font-bold font-jakarta text-slate-500 hover:text-[#121A21] border-b-2 border-transparent flex items-center gap-2"><i data-lucide="messages-square" class="w-4 h-4"></i> Forums</a>
-    <a href="#" class="shrink-0 px-4 py-3 text-sm font-bold font-jakarta text-slate-500 hover:text-[#121A21] border-b-2 border-transparent flex items-center gap-2"><i data-lucide="calendar" class="w-4 h-4"></i> Events</a>
-  </div>
-</div>
-
-<!-- ===================== BREADCRUMB ===================== -->
-<div class="max-w-7xl mx-auto px-4 sm:px-6 pt-6">
-  <!-- Breadcrumb (global pattern) -->
-  <nav aria-label="Breadcrumb" class="text-xs text-[#6A7581] flex items-center flex-wrap gap-x-1.5"><a href="public-home.html" class="hover:text-[#DC183C] transition">Home</a><span class="text-slate-300">›</span><span class="text-[#121A21] font-medium truncate">Community</span></nav>
-</div>
-
-<!-- ===================== WELCOME RIBBON ===================== -->
-<div class="bg-white border-b border-slate-100">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex items-center gap-3 text-sm">
-    <i data-lucide="hand-heart" class="w-4 h-4 text-[#DC183C] shrink-0"></i>
-    <p class="text-slate-600 min-w-0 truncate">
-      Good to see you, <span class="font-bold text-[#121A21]">Tshepho</span>.
-      <span class="hidden sm:inline"><span class="font-bold text-[#DC183C]">2 asks in Fintech are still unanswered</span> — your reply could unblock a founder today.</span>
-      <span class="sm:hidden"><span class="font-bold text-[#DC183C]">2 unanswered asks</span> in Fintech.</span>
-    </p>
-    <button onclick="openBrief('ribbon')" class="dev-badge w-4 h-4 rounded-full bg-[#DC183C] text-white items-center justify-center text-[9px] font-bold leading-none animate-pulse shrink-0" title="Implementation notes">i</button>
-    <button onclick="viewNewAsks()" class="ml-auto shrink-0 text-[#DC183C] font-bold text-xs uppercase tracking-wider hover:underline">Help out →</button>
-  </div>
-</div>
 
 <!-- ===================== MAIN ===================== -->
 <main class="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
@@ -161,8 +181,8 @@
         </div>
         <div class="grid grid-cols-3 border-t border-slate-100 text-center">
           <div class="py-3 border-r border-slate-100">
-            <p class="text-[9px] font-bold uppercase tracking-widest text-slate-400">Stage</p>
-            <p class="font-jakarta font-bold text-sm text-[#121A21] mt-1">Growing</p>
+            <p class="text-[9px] font-bold uppercase tracking-widest text-slate-400">Interest</p>
+            <p class="font-jakarta font-bold text-sm text-[#121A21] mt-1">Funding</p>
           </div>
           <div class="py-3 border-r border-slate-100">
             <p class="text-[9px] font-bold uppercase tracking-widest text-slate-400">Sector</p>
@@ -172,20 +192,6 @@
             <p class="text-[9px] font-bold uppercase tracking-widest text-slate-400">Region</p>
             <p class="font-jakarta font-bold text-sm text-[#121A21] mt-1">GP</p>
           </div>
-        </div>
-        <div role="button" tabindex="0" onclick="openContribution()" class="w-full border-t border-slate-100 px-5 py-4 flex items-center justify-between hover:bg-slate-50 transition text-left cursor-pointer">
-          <div class="flex items-center gap-3">
-            <div class="w-9 h-9 rounded-full bg-[#29A37A]/10 grid place-items-center">
-              <i data-lucide="hand-heart" class="w-4 h-4 text-[#29A37A]"></i>
-            </div>
-            <div>
-              <p class="text-[10px] font-bold uppercase tracking-widest text-slate-400 flex items-center gap-1.5">Asks helped with
-                <button onclick="event.stopPropagation();openBrief('contribution')" class="dev-badge w-4 h-4 rounded-full bg-[#DC183C] text-white items-center justify-center text-[9px] font-bold leading-none animate-pulse" title="Implementation notes">i</button>
-              </p>
-              <p class="font-jakarta font-bold text-xl text-[#121A21] leading-none mt-0.5">24</p>
-            </div>
-          </div>
-          <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400"></i>
         </div>
       </div>
 
@@ -216,11 +222,7 @@
             <button onclick="openBrief('activity')" class="dev-badge w-4 h-4 rounded-full bg-[#DC183C] text-white items-center justify-center text-[9px] font-bold leading-none animate-pulse" title="Implementation notes">i</button>
           </h4>
         </div>
-        <button onclick="setSort('asks')" class="w-full px-5 py-3 bg-[#FDECEF]/60 hover:bg-[#FDECEF] transition text-left border-b border-slate-100 flex items-start gap-2">
-          <i data-lucide="clock" class="w-4 h-4 text-[#DC183C] shrink-0 mt-0.5"></i>
-          <span class="text-[13px] font-semibold text-[#121A21] leading-snug"><span class="text-[#DC183C] font-bold">2 of your asks</span> are still waiting for answers — bump them or thank those who helped.</span>
-        </button>
-        <button onclick="setSort('asks')" class="w-full px-5 py-3 flex items-center justify-between hover:bg-slate-50 transition text-left">
+        <button onclick="setSort('asks')" class="w-full px-5 py-3 flex items-center justify-between hover:bg-slate-50 transition text-left border-b border-slate-100">
           <span class="text-sm font-semibold text-[#121A21] flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-[#DC183C]"></span> Open asks</span>
           <span class="text-xs font-bold bg-[#DC183C] text-white rounded-full px-2 py-0.5">3</span>
         </button>
@@ -243,25 +245,13 @@
     <section class="lg:col-span-6 space-y-5">
 
       <!-- Composer -->
-      <div id="composer" class="bg-white rounded-2xl border border-slate-100 overflow-hidden reveal">
+      <div id="composer" class="bg-white rounded-2xl border border-slate-100 overflow-hidden reveal shadow-sm">
         <div id="composer-default" class="p-5">
           <div class="flex items-center gap-3">
             <div class="w-11 h-11 rounded-full bg-gradient-to-br from-[#DC183C] to-[#FF9900] grid place-items-center font-jakarta font-bold text-white shrink-0">TJ</div>
-            <button onclick="openComposer('ask')" class="flex-1 text-left bg-slate-50 hover:bg-slate-100 transition px-4 py-3 rounded-full text-sm text-slate-500 font-medium border border-slate-200">
+            <button onclick="openComposer('share')" class="flex-1 text-left bg-slate-50 hover:bg-slate-100 transition px-4 py-3 rounded-full text-sm text-slate-500 font-medium border border-slate-200">
               What would you like to share, Tshepho?
             </button>
-          </div>
-          <div class="mt-4 flex items-center gap-2 overflow-x-auto no-scrollbar -mx-1 px-1">
-            <button onclick="openComposer('ask')" class="chip chip-ask shrink-0 border border-slate-200 px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider flex items-center gap-1.5 text-[#DC183C]">
-              <i data-lucide="help-circle" class="w-4 h-4"></i> Ask
-            </button>
-            <button onclick="openComposer('win')" class="chip chip-win shrink-0 border border-slate-200 px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider flex items-center gap-1.5 text-[#29A37A]">
-              <i data-lucide="trophy" class="w-4 h-4"></i> Win
-            </button>
-            <button onclick="openComposer('share')" class="chip chip-share shrink-0 border border-slate-200 px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider flex items-center gap-1.5 text-[#AE6B0A]">
-              <i data-lucide="megaphone" class="w-4 h-4"></i> Share
-            </button>
-            <button onclick="openBrief('taxonomy')" class="dev-badge w-5 h-5 rounded-full bg-[#DC183C] text-white items-center justify-center text-[10px] font-bold leading-none animate-pulse shrink-0 self-center" title="How Ask / Win / Share works">i</button>
           </div>
         </div>
         <div id="composer-expanded" class="hidden"></div>
@@ -290,42 +280,9 @@
     <!-- RIGHT RAIL -->
     <aside class="hidden lg:flex flex-col gap-5 lg:col-span-3">
 
-      <!-- Help a founder (unanswered asks — the reply-rate heartbeat) -->
-      <div id="help-founder" class="bg-white rounded-2xl border border-slate-100 overflow-hidden reveal">
-        <div class="bg-[#0C1F31] px-5 py-4 relative">
-          <div class="absolute inset-0 opacity-40" style="background:radial-gradient(circle at 30% 50%, #FFF1E0 0%, transparent 65%);"></div>
-          <p class="relative text-[10px] font-bold uppercase tracking-widest text-[#FF9900] mb-1 flex items-center gap-1.5"><i data-lucide="hand-heart" class="w-3.5 h-3.5"></i> Help a Founder
-            <button onclick="openBrief('help')" class="dev-badge w-4 h-4 rounded-full bg-[#DC183C] text-white items-center justify-center text-[9px] font-bold leading-none animate-pulse" title="Implementation notes">i</button>
-          </p>
-          <p class="relative text-xs text-white/70">These asks have no answers yet. Be the one who replies.</p>
-        </div>
-        <div class="divide-y divide-slate-100">
-          <div class="px-5 py-4">
-            <div class="flex items-center gap-2.5 mb-2">
-              <div class="w-9 h-9 rounded-full bg-gradient-to-br from-[#DC183C] to-[#FF9900] grid place-items-center font-jakarta font-bold text-white text-[11px] shrink-0">SM</div>
-              <div class="min-w-0"><p class="font-bold text-sm text-[#121A21] leading-tight">Sello Monare</p><p class="text-[11px] text-slate-400">Fintech · Gauteng</p></div>
-              <span class="ml-auto text-[10px] font-bold text-[#DC183C] bg-[#FDECEF] px-2 py-0.5 rounded-full shrink-0">0 replies</span>
-            </div>
-            <p class="text-[13px] text-slate-600 leading-snug">&ldquo;A reliable CIPC annual-returns contact that won&rsquo;t charge extortionate fees?&rdquo;</p>
-            <div class="flex items-center justify-between mt-2.5">
-              <span class="text-[11px] text-slate-400 flex items-center gap-1"><i data-lucide="clock" class="w-3 h-3"></i> waiting 2h</span>
-              <button onclick="helpAnswer('Sello')" class="bg-[#DC183C] hover:bg-[#B0142F] text-white rounded-full px-4 py-1.5 text-xs font-bold transition">Answer</button>
-            </div>
-          </div>
-          <div class="px-5 py-4">
-            <div class="flex items-center gap-2.5 mb-2">
-              <div class="w-9 h-9 rounded-full bg-gradient-to-br from-[#DC183C] to-[#FF9900] grid place-items-center font-jakarta font-bold text-white text-[11px] shrink-0">SN</div>
-              <div class="min-w-0"><p class="font-bold text-sm text-[#121A21] leading-tight">Sipho Ngubane</p><p class="text-[11px] text-slate-400">Fintech · KwaZulu-Natal</p></div>
-              <span class="ml-auto text-[10px] font-bold text-[#DC183C] bg-[#FDECEF] px-2 py-0.5 rounded-full shrink-0">0 replies</span>
-            </div>
-            <p class="text-[13px] text-slate-600 leading-snug">&ldquo;Yoco vs Stitch in production — settlement speed and chargeback flow?&rdquo;</p>
-            <div class="flex items-center justify-between mt-2.5">
-              <span class="text-[11px] text-slate-400 flex items-center gap-1"><i data-lucide="clock" class="w-3 h-3"></i> waiting 4h</span>
-              <button onclick="helpAnswer('Sipho')" class="bg-[#DC183C] hover:bg-[#B0142F] text-white rounded-full px-4 py-1.5 text-xs font-bold transition">Answer</button>
-            </div>
-          </div>
-        </div>
-        <button onclick="viewNewAsks()" class="w-full py-3 text-center text-xs font-bold text-[#DC183C] uppercase tracking-wider hover:bg-slate-50 border-t border-slate-100">See all unanswered asks →</button>
+      <!-- AD BANNER -->
+      <div class="w-full bg-slate-50 rounded-2xl border border-slate-200 flex flex-col items-center justify-center text-slate-400 aspect-[6/5] shadow-inner overflow-hidden">
+        <img src="https://placehold.co/300x250/F8FAFC/94A3B8?text=Advertisement" alt="Ad Placeholder" class="w-full h-full object-cover">
       </div>
 
       <!-- Upcoming events -->
@@ -334,7 +291,7 @@
           <h4 class="font-jakarta font-bold uppercase text-sm text-[#121A21] tracking-wide">Upcoming Events</h4>
           <a href="#" class="text-[10px] font-bold uppercase text-[#DC183C] tracking-widest hover:underline">View all</a>
         </div>
-        <a href="#" class="block px-5 py-4 hover:bg-slate-50 transition group">
+        <a href="event-single-in-person.html" class="block px-5 py-4 hover:bg-slate-50 transition group">
           <div class="flex gap-4">
             <div class="shrink-0 w-12 text-center bg-[#FFF1E0] rounded-lg py-1.5 border border-[#FF9900]/20 group-hover:bg-[#DC183C] transition-colors">
               <p class="text-[9px] font-bold uppercase text-[#AE6B0A] tracking-widest group-hover:text-white">Jun</p>
@@ -347,7 +304,7 @@
             </div>
           </div>
         </a>
-        <a href="#" class="block px-5 py-4 hover:bg-slate-50 transition group border-t border-slate-100">
+        <a href="public-webinar.html" class="block px-5 py-4 hover:bg-slate-50 transition group border-t border-slate-100">
           <div class="flex gap-4">
             <div class="shrink-0 w-12 text-center bg-[#FFF1E0] rounded-lg py-1.5 border border-[#FF9900]/20 group-hover:bg-[#DC183C] transition-colors">
               <p class="text-[9px] font-bold uppercase text-[#AE6B0A] tracking-widest group-hover:text-white">Jul</p>
@@ -362,50 +319,10 @@
         </a>
       </div>
 
-      <!-- Latest discussions -->
-      <div class="bg-white rounded-2xl border border-slate-100 overflow-hidden reveal" style="animation-delay:180ms">
-        <div class="px-5 py-3 border-b border-slate-100 flex items-center justify-between">
-          <h4 class="font-jakarta font-bold uppercase text-sm text-[#121A21] tracking-wide">Latest Discussions</h4>
-          <a href="#" class="text-[10px] font-bold uppercase text-[#DC183C] tracking-widest hover:underline">All forums</a>
-        </div>
-        <a href="#" class="block px-5 py-4 hover:bg-slate-50 transition group">
-          <h5 class="font-bold text-sm text-[#121A21] leading-snug group-hover:text-[#DC183C] transition line-clamp-2">Best CRM for service businesses in SA right now?</h5>
-          <div class="flex items-center justify-between mt-2">
-            <div class="flex -space-x-1.5">
-              <div class="w-5 h-5 rounded-full bg-gradient-to-br from-[#DC183C] to-[#FF9900] grid place-items-center font-jakarta font-bold text-white text-[8px] ring-2 ring-white">MD</div>
-              <div class="w-5 h-5 rounded-full bg-gradient-to-br from-[#DC183C] to-[#FF9900] grid place-items-center font-jakarta font-bold text-white text-[8px] ring-2 ring-white">RS</div>
-              <div class="w-5 h-5 rounded-full bg-gradient-to-br from-[#DC183C] to-[#FF9900] grid place-items-center font-jakarta font-bold text-white text-[8px] ring-2 ring-white">KK</div>
-            </div>
-            <p class="text-[11px] text-slate-400">14 replies · 1h</p>
-          </div>
-        </a>
-        <a href="#" class="block px-5 py-4 hover:bg-slate-50 transition group border-t border-slate-100">
-          <h5 class="font-bold text-sm text-[#121A21] leading-snug group-hover:text-[#DC183C] transition line-clamp-2">POPIA compliance audits — is anyone actually doing them?</h5>
-          <div class="flex items-center justify-between mt-2">
-            <div class="flex -space-x-1.5">
-              <div class="w-5 h-5 rounded-full bg-gradient-to-br from-[#DC183C] to-[#FF9900] grid place-items-center font-jakarta font-bold text-white text-[8px] ring-2 ring-white">NM</div>
-              <div class="w-5 h-5 rounded-full bg-gradient-to-br from-[#DC183C] to-[#FF9900] grid place-items-center font-jakarta font-bold text-white text-[8px] ring-2 ring-white">LP</div>
-            </div>
-            <p class="text-[11px] text-slate-400">7 replies · 3h</p>
-          </div>
-        </a>
-        <a href="#" class="block px-5 py-4 hover:bg-slate-50 transition group border-t border-slate-100">
-          <h5 class="font-bold text-sm text-[#121A21] leading-snug group-hover:text-[#DC183C] transition line-clamp-2">Hiring developers in SA — local vs international remote?</h5>
-          <div class="flex items-center justify-between mt-2">
-            <div class="flex -space-x-1.5">
-              <div class="w-5 h-5 rounded-full bg-gradient-to-br from-[#DC183C] to-[#FF9900] grid place-items-center font-jakarta font-bold text-white text-[8px] ring-2 ring-white">SM</div>
-              <div class="w-5 h-5 rounded-full bg-gradient-to-br from-[#DC183C] to-[#FF9900] grid place-items-center font-jakarta font-bold text-white text-[8px] ring-2 ring-white">SN</div>
-              <div class="w-5 h-5 rounded-full bg-gradient-to-br from-[#DC183C] to-[#FF9900] grid place-items-center font-jakarta font-bold text-white text-[8px] ring-2 ring-white">MD</div>
-            </div>
-            <p class="text-[11px] text-slate-400">22 replies · 5h</p>
-          </div>
-        </a>
-      </div>
-
       <!-- Suggested members -->
       <div class="bg-white rounded-2xl border border-slate-100 overflow-hidden reveal" style="animation-delay:240ms">
         <div class="px-5 py-3 border-b border-slate-100 flex items-center justify-between">
-          <h4 class="font-jakarta font-bold uppercase text-sm text-[#121A21] tracking-wide flex items-center gap-1.5">Suggested For You
+          <h4 class="font-jakarta font-bold text-sm text-[#121A21] tracking-wide flex items-center gap-1.5">Entrepreneurs to connect with
             <button onclick="openBrief('suggested')" class="dev-badge w-4 h-4 rounded-full bg-[#DC183C] text-white items-center justify-center text-[9px] font-bold leading-none animate-pulse" title="Implementation notes">i</button>
           </h4>
           <a href="#" class="text-[10px] font-bold uppercase text-[#DC183C] tracking-widest hover:underline">All</a>
@@ -419,10 +336,9 @@
             <div class="min-w-0 flex-1">
               <p class="text-xs font-bold text-[#121A21] group-hover:text-[#DC183C] transition truncate">Mandla Dlamini</p>
               <p class="text-[11px] text-slate-500 mt-0.5 truncate">Fintech · Western Cape</p>
-              <span class="inline-flex items-center gap-1 mt-1.5 text-[9px] font-semibold text-slate-500 bg-slate-100 px-1.5 py-0.5 rounded"><i data-lucide="sparkles" class="w-2.5 h-2.5"></i> Shared interest · Fintech</span>
             </div>
-            <button onclick="event.preventDefault();event.stopPropagation();" class="shrink-0 w-7 h-7 rounded-full bg-slate-100 hover:bg-[#DC183C] hover:text-white text-slate-500 grid place-items-center transition" aria-label="Connect">
-              <i data-lucide="user-plus" class="w-3.5 h-3.5"></i>
+            <button onclick="event.preventDefault();event.stopPropagation();" class="shrink-0 flex items-center gap-1 text-[11px] font-bold text-[#DC183C] hover:bg-[#FDECEF] px-2 py-1 rounded-md transition" aria-label="Connect">
+              <i data-lucide="plus" class="w-3.5 h-3.5"></i> Connect
             </button>
           </div>
         </a>
@@ -435,10 +351,9 @@
             <div class="min-w-0 flex-1">
               <p class="text-xs font-bold text-[#121A21] group-hover:text-[#DC183C] transition truncate">Sipho Ngubane</p>
               <p class="text-[11px] text-slate-500 mt-0.5 truncate">Fintech · KwaZulu-Natal</p>
-              <span class="inline-flex items-center gap-1 mt-1.5 text-[9px] font-semibold text-slate-500 bg-slate-100 px-1.5 py-0.5 rounded"><i data-lucide="sparkles" class="w-2.5 h-2.5"></i> Shared interest · Fintech</span>
             </div>
-            <button onclick="event.preventDefault();event.stopPropagation();" class="shrink-0 w-7 h-7 rounded-full bg-slate-100 hover:bg-[#DC183C] hover:text-white text-slate-500 grid place-items-center transition" aria-label="Connect">
-              <i data-lucide="user-plus" class="w-3.5 h-3.5"></i>
+            <button onclick="event.preventDefault();event.stopPropagation();" class="shrink-0 flex items-center gap-1 text-[11px] font-bold text-[#DC183C] hover:bg-[#FDECEF] px-2 py-1 rounded-md transition" aria-label="Connect">
+              <i data-lucide="plus" class="w-3.5 h-3.5"></i> Connect
             </button>
           </div>
         </a>
@@ -451,21 +366,62 @@
             <div class="min-w-0 flex-1">
               <p class="text-xs font-bold text-[#121A21] group-hover:text-[#DC183C] transition truncate">Refiloe Sithole</p>
               <p class="text-[11px] text-slate-500 mt-0.5 truncate">SaaS · Gauteng</p>
-              <span class="inline-flex items-center gap-1 mt-1.5 text-[9px] font-semibold text-slate-500 bg-slate-100 px-1.5 py-0.5 rounded"><i data-lucide="sparkles" class="w-2.5 h-2.5"></i> Same stage · Growing</span>
             </div>
-            <button onclick="event.preventDefault();event.stopPropagation();" class="shrink-0 w-7 h-7 rounded-full bg-slate-100 hover:bg-[#DC183C] hover:text-white text-slate-500 grid place-items-center transition" aria-label="Connect">
-              <i data-lucide="user-plus" class="w-3.5 h-3.5"></i>
+            <button onclick="event.preventDefault();event.stopPropagation();" class="shrink-0 flex items-center gap-1 text-[11px] font-bold text-[#DC183C] hover:bg-[#FDECEF] px-2 py-1 rounded-md transition" aria-label="Connect">
+              <i data-lucide="plus" class="w-3.5 h-3.5"></i> Connect
             </button>
           </div>
         </a>
-        <div class="px-5 py-2.5 border-t border-slate-100 bg-slate-50/60">
-          <p class="text-[10px] text-slate-400 flex items-center gap-1.5"><i data-lucide="shield-check" class="w-3 h-3 text-[#29A37A]"></i> Matched on shared interests · completed profiles only</p>
-        </div>
+        <a href="#" class="block px-5 py-3 hover:bg-slate-50 transition group border-t border-slate-100">
+          <div class="flex items-start gap-3">
+            <div class="relative shrink-0">
+              <div class="w-9 h-9 rounded-full bg-gradient-to-br from-[#DC183C] to-[#FF9900] grid place-items-center font-jakarta font-bold text-white text-xs">TM</div>
+              <span class="absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 rounded-full bg-[#29A37A] ring-2 ring-white grid place-items-center" title="Completed profile"><i data-lucide="check" class="w-2 h-2 text-white"></i></span>
+            </div>
+            <div class="min-w-0 flex-1">
+              <p class="text-xs font-bold text-[#121A21] group-hover:text-[#DC183C] transition truncate">Thabo Mokoena</p>
+              <p class="text-[11px] text-slate-500 mt-0.5 truncate">Retail · Western Cape</p>
+            </div>
+            <button onclick="event.preventDefault();event.stopPropagation();" class="shrink-0 flex items-center gap-1 text-[11px] font-bold text-[#DC183C] hover:bg-[#FDECEF] px-2 py-1 rounded-md transition" aria-label="Connect">
+              <i data-lucide="plus" class="w-3.5 h-3.5"></i> Connect
+            </button>
+          </div>
+        </a>
+        <a href="#" class="block px-5 py-3 hover:bg-slate-50 transition group border-t border-slate-100">
+          <div class="flex items-start gap-3">
+            <div class="relative shrink-0">
+              <div class="w-9 h-9 rounded-full bg-gradient-to-br from-[#DC183C] to-[#FF9900] grid place-items-center font-jakarta font-bold text-white text-xs">LP</div>
+              <span class="absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 rounded-full bg-[#29A37A] ring-2 ring-white grid place-items-center" title="Completed profile"><i data-lucide="check" class="w-2 h-2 text-white"></i></span>
+            </div>
+            <div class="min-w-0 flex-1">
+              <p class="text-xs font-bold text-[#121A21] group-hover:text-[#DC183C] transition truncate">Lerato Phakathi</p>
+              <p class="text-[11px] text-slate-500 mt-0.5 truncate">AI · Gauteng</p>
+            </div>
+            <button onclick="event.preventDefault();event.stopPropagation();" class="shrink-0 flex items-center gap-1 text-[11px] font-bold text-[#DC183C] hover:bg-[#FDECEF] px-2 py-1 rounded-md transition" aria-label="Connect">
+              <i data-lucide="plus" class="w-3.5 h-3.5"></i> Connect
+            </button>
+          </div>
+        </a>
       </div>
 
-      <div class="text-center text-[11px] text-slate-400 leading-relaxed">
-        <span>About</span> <span class="mx-1">·</span> <span>Help</span> <span class="mx-1">·</span> <span>Privacy</span> <span class="mx-1">·</span> <span>Terms</span>
-        <p class="mt-2">SME South Africa © 2026</p>
+      <!-- Links & Footer -->
+      <div class="text-center">
+        <div class="flex flex-wrap items-center justify-center gap-x-3 gap-y-2 text-[11px] text-slate-400 leading-relaxed px-2">
+            <a href="#" class="hover:text-slate-600">Advertising</a>
+            <a href="#" class="hover:text-slate-600">Funding</a>
+            <a href="#" class="hover:text-slate-600">Resources</a>
+            <a href="#" class="hover:text-slate-600">Founder Focus</a>
+            <a href="#" class="hover:text-slate-600">Insights</a>
+            <a href="#" class="hover:text-slate-600">Event</a>
+            <a href="#" class="hover:text-slate-600">Podcast</a>
+            <a href="#" class="hover:text-slate-600">Solutions</a>
+            <a href="#" class="hover:text-slate-600">Shop</a>
+            <a href="#" class="hover:text-slate-600">About</a>
+            <a href="#" class="hover:text-slate-600">Help</a>
+            <a href="#" class="hover:text-slate-600">Privacy</a>
+            <a href="#" class="hover:text-slate-600">Terms</a>
+        </div>
+        <p class="text-[11px] text-slate-400 mt-4">SME South Africa © 2026</p>
       </div>
     </aside>
 
@@ -476,73 +432,71 @@
 <div id="overlay-root"></div>
 
 <!-- Toast container -->
-<div id="toast" class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-50"></div>
+<div id="toast" class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-[100]"></div>
 
 <script>
   // ===== TYPE CONFIG ===========================================================
   const TYPES = {
-    ask:   { color:'#DC183C', bgTint:'bg-[#DC183C]/10', text:'text-[#DC183C]', label:'Ask',   icon:'help-circle', headerBg:'#FDECEF' },
-    win:   { color:'#29A37A', bgTint:'bg-[#29A37A]/10', text:'text-[#29A37A]', label:'Win',   icon:'trophy',      headerBg:'#E4F5EE' },
-    share: { color:'#FF9900', bgTint:'bg-[#FF9900]/15', text:'text-[#AE6B0A]', label:'Share', icon:'megaphone',   headerBg:'#FFF1E0' }
+    ask:   { color:'#DC183C', bgTint:'bg-[#DC183C]/10', text:'text-[#DC183C]', label:'Ask',   icon:'help-circle' },
+    win:   { color:'#29A37A', bgTint:'bg-[#29A37A]/10', text:'text-[#29A37A]', label:'Win',   icon:'trophy' },
+    share: { color:'#FF9900', bgTint:'bg-[#FF9900]/15', text:'text-[#AE6B0A]', label:'Share', icon:'megaphone' }
   };
 
   const PLACEHOLDERS = {
-    ask:   "What do you need? Be specific — advice, intro, hire, customer, capital… the community is listening.",
-    win:   "What did you achieve? Raised, launched, hired, signed, hit a milestone — celebrate it and inspire others.",
-    share: "What's worth sharing? An opportunity, a resource you'd recommend, a hard-earned lesson, or a heads-up for the community."
+    ask:   "What do you need? Be specific — advice, intro, hire, customer, capital... the community is listening.",
+    win:   "What did you achieve? Raised, launched, hired, signed, hit a milestone — celebrate it.",
+    share: "Share what's on your mind, Tshepho Joel..."
   };
 
   // ===== DEMO DATA =============================================================
-  const ME = { name:'Tshepho Joel', initials:'TJ', role:'Founder', company:'Langa Holdings', stage:'Growing', sector:'Fintech', province:'Gauteng' };
+  const ME = { name:'Tshepho Joel', initials:'TJ', role:'Founder', company:'Langa Holdings', interest:'Funding', sector:'Fintech', province:'Gauteng' };
 
   let nextId = 100;
   let state = {
     posts: [
       {
-        id: 1, type:'ask', timeAgo:'2h ago', tsMin: 120,
-        author:{ name:'Sello Monare', initials:'SM', role:'MD', company:'TechSolve RSA', stage:'Growing', sector:'Fintech', province:'Gauteng' },
-        content:"Does anyone have a reliable contact for CIPC annual returns that doesn't charge extortionate fees? I've done it myself for 3 years but I'm out of bandwidth this quarter. Gauteng-based preferred.",
+        id: 1, type:'ask', timeAgo:'2h ago', tsMin: 120, action: 'asked a question',
+        author:{ name:'Sello Monare', initials:'SM', role:'MD', company:'TechSolve RSA', interest:'Funding', sector:'Fintech', province:'Gauteng' },
+        content:"Does anyone have a reliable contact for CIPC annual returns that doesn't charge extortionate fees? I've done it myself for 3 years but I'm out of bandwidth this quarter.",
         likes: 14, comments: 4, liked: false
       },
       {
-        id: 2, type:'win', timeAgo:'5h ago', tsMin: 300,
-        author:{ name:'Naledi Mokoena', initials:'NM', role:'Founder', company:'GreenTrace', stage:'Established', sector:'Cleantech', province:'Western Cape' },
-        content:"Hit a huge milestone today — we signed our 50th enterprise customer. 14 months ago we had two. Thank you to everyone in this group who let me practice my pitch — you know who you are. 🙌",
-        likes: 86, comments: 22, liked: true
-      },
-      {
-        id: 3, type:'share', timeAgo:'8h ago', tsMin: 480,
-        author:{ name:'Karabo Kgophane', initials:'KK', role:'E-comm Lead', company:'Mzansi Cart', stage:'Established', sector:'Retail', province:'Gauteng' },
-        content:"PSA: SARS just updated the small-business turnover tax threshold. If you're under R1M turnover, the new bracket could save you serious money. Drop a 🚀 if you want me to share the breakdown I made.",
+        id: 2, type:'share', timeAgo:'5h ago', tsMin: 300, action: 'shared a link',
+        author:{ name:'Karabo Kgophane', initials:'KK', role:'E-comm Lead', company:'Mzansi Cart', interest:'Marketing', sector:'Retail', province:'Gauteng' },
+        content:"PSA: SARS just updated the small-business turnover tax threshold. If you're under R1M turnover, the new bracket could save you serious money.",
+        link: { url:'#', title:'SARS Turnover Tax Thresholds 2026', domain:'sars.gov.za' },
         likes: 47, comments: 9, liked: false
       },
       {
-        id: 4, type:'ask', timeAgo:'12h ago', tsMin: 720,
-        author:{ name:'Mandla Dlamini', initials:'MD', role:'Co-founder', company:'PesaPay', stage:'Just Launched', sector:'Fintech', province:'Western Cape' },
-        content:"Looking for a technical co-founder. We're building merchant payment infra for informal retailers. Cape Town-based, fintech experience preferred, equity-led. Serious DMs only.",
-        likes: 23, comments: 11, liked: false
+        id: 3, type:'win', timeAgo:'8h ago', tsMin: 480, action: 'shared a photo',
+        author:{ name:'Naledi Mokoena', initials:'NM', role:'Founder', company:'GreenTrace', interest:'Operations', sector:'Cleantech', province:'Western Cape' },
+        content:"Hit a huge milestone today — we signed our 50th enterprise customer! Thank you to everyone in this group who let me practice my pitch 🙌",
+        image: 'https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&q=80&w=800',
+        likes: 86, comments: 22, liked: true
       },
       {
-        id: 5, type:'win', timeAgo:'1d ago', tsMin: 1440,
-        author:{ name:'Refiloe Sithole', initials:'RS', role:'Founder', company:'Skhokho', stage:'Growing', sector:'SaaS', province:'Gauteng' },
-        content:"We just crossed 1,000 paying customers. 18 months in, fully bootstrapped. The thing nobody tells you: your first 100 customers will tell you exactly what to build. Listen harder than you pitch.",
+        id: 4, type:'share', timeAgo:'12h ago', tsMin: 720, action: 'posted a video',
+        author:{ name:'Lerato Phakathi', initials:'LP', role:'Founder', company:'Inkundla AI', interest:'Tech', sector:'AI', province:'Gauteng' },
+        content:"I recorded a quick 5-minute teardown on how we reduced our cloud infrastructure costs by 40% using local caching. Hope this helps someone!",
+        video: 'https://i9.ytimg.com/vi/La3lctj_rIo/maxresdefault.jpg?time=1786441500000&sqp=CJze69MG&rs=AOn4CLBJtomeWpeubxzfm8VQPJMtFO4fNQ',
+        likes: 92, comments: 18, liked: false
+      },
+      {
+        id: 5, type:'win', timeAgo:'1d ago', tsMin: 1440, action: 'shared a GIF',
+        author:{ name:'Refiloe Sithole', initials:'RS', role:'Founder', company:'Skhokho', interest:'Sales', sector:'SaaS', province:'Gauteng' },
+        content:"That feeling when the final signature lands on the Series A term sheet! 🥂",
+        gif: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=800',
         likes: 134, comments: 31, liked: false
       },
       {
-        id: 6, type:'ask', timeAgo:'1d ago', tsMin: 1500,
-        author:{ name:'Sipho Ngubane', initials:'SN', role:'Founder', company:'TapWallet', stage:'Just Launched', sector:'Fintech', province:'KwaZulu-Natal' },
-        content:"Yoco vs Stitch for payment integration — has anyone actually run both in production? Specifically interested in settlement speed and chargeback flow. Building for SMEs that hate waiting 3 days for cash.",
+        id: 6, type:'ask', timeAgo:'1d ago', tsMin: 1500, action: 'posted an update',
+        author:{ name:'Sipho Ngubane', initials:'SN', role:'Founder', company:'TapWallet', interest:'Tech', sector:'Fintech', province:'KwaZulu-Natal' },
+        content:"Yoco vs Stitch for payment integration — has anyone actually run both in production? Specifically interested in settlement speed and chargeback flow.",
         likes: 18, comments: 7, liked: false
-      },
-      {
-        id: 7, type:'share', timeAgo:'2d ago', tsMin: 2880,
-        author:{ name:'Lerato Phakathi', initials:'LP', role:'Founder', company:'Inkundla AI', stage:'Growing', sector:'AI', province:'Gauteng' },
-        content:"Hard lesson worth sharing: don't sign a long-term contract with a supplier who won't give you a 30-day exit clause. Lost 8 months locked into a CRM that didn't fit. Time you can't get back.",
-        likes: 92, comments: 18, liked: false
       }
     ],
     sortBy: 'all',
-    composer: { open:false, type:null, content:'' }
+    composer: { open:false, content:'' }
   };
 
   // ===== HELPERS ===============================================================
@@ -599,40 +553,71 @@
   function renderPost(p, i){
     const t = TYPES[p.type];
     const delay = Math.min(i, 5) * 40;
+    
+    let media = '';
+    if(p.image || p.gif) {
+      const src = p.image || p.gif;
+      const isGif = !!p.gif;
+      media = `<div class="mt-4 rounded-xl overflow-hidden border border-slate-100 relative">
+                 <img src="${src}" class="w-full h-auto max-h-[400px] object-cover" alt="Post attachment">
+                 ${isGif ? `<div class="absolute bottom-2 left-2 bg-black/70 text-white text-[10px] font-bold px-1.5 py-0.5 rounded uppercase tracking-widest">GIF</div>` : ''}
+               </div>`;
+    } else if (p.video) {
+      media = `<div class="mt-4 relative rounded-xl overflow-hidden aspect-video bg-[#0C1F31] cursor-pointer group" onclick="showToast('Video player opens', null)">
+        <img src="${p.video}" class="w-full h-full object-cover opacity-85 group-hover:scale-105 transition duration-500">
+        <div class="absolute inset-0 m-auto w-12 h-12 rounded-full bg-[#DC183C]/90 text-white grid place-items-center shadow-lg group-hover:scale-110 transition-transform"><i data-lucide="play" class="w-5 h-5 ml-0.5"></i></div>
+      </div>`;
+    } else if (p.link) {
+      media = `<a href="${p.link.url}" class="mt-4 block rounded-xl border border-slate-200 bg-slate-50 hover:bg-slate-100 transition p-4">
+        <p class="font-jakarta font-bold text-sm text-[#0C1F31] line-clamp-1">${esc(p.link.title)}</p>
+        <p class="text-[11px] text-slate-500 mt-1 uppercase tracking-wider font-semibold flex items-center gap-1"><i data-lucide="link" class="w-3 h-3"></i> ${esc(p.link.domain)}</p>
+      </a>`;
+    }
+
     return `
       <article class="bg-white rounded-2xl border border-slate-100 stripe-${p.type} card-lift reveal" style="animation-delay:${delay}ms">
         <div class="p-5">
-          <div class="flex items-center justify-between mb-3">
-            <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full ${t.bgTint} ${t.text} text-[10px] font-extrabold uppercase tracking-widest">
-              <i data-lucide="${t.icon}" class="w-3 h-3"></i>
-              ${t.label}
-            </span>
-            <div class="flex items-center gap-1 text-[11px] text-slate-400">
-              <span>${esc(p.timeAgo)}</span>
-              <button class="ml-1 text-slate-300 hover:text-slate-600 p-1"><i data-lucide="more-horizontal" class="w-4 h-4"></i></button>
-            </div>
-          </div>
-          <div class="flex gap-3 mb-4">
+          <!-- BuddyBoss Style Header -->
+          <div class="flex items-start gap-3 mb-4">
             ${monogram(p.author.initials, 44)}
-            <div class="min-w-0">
-              <h4 class="font-bold text-[15px] text-[#121A21] leading-tight">${esc(p.author.name)}</h4>
-              <p class="text-xs text-slate-500 mt-0.5">${esc(p.author.role)} at <span class="font-semibold text-slate-700">${esc(p.author.company)}</span></p>
-              <p class="text-[11px] text-slate-400 mt-0.5">${esc(p.author.stage)} <span class="text-slate-300 mx-0.5">·</span> ${esc(p.author.sector)} <span class="text-slate-300 mx-0.5">·</span> ${esc(p.author.province)}</p>
+            <div class="min-w-0 flex-1">
+              <p class="text-[14px] text-[#121A21] leading-snug">
+                <span class="font-bold">${esc(p.author.name)}</span> <span class="text-slate-500">${esc(p.action)}</span>
+              </p>
+              <div class="flex items-center gap-1.5 mt-0.5 text-[11px] text-slate-400 font-medium">
+                <span>${esc(p.timeAgo)}</span>
+                <span>·</span>
+                <i data-lucide="users" class="w-3 h-3"></i>
+                <span class="ml-1 uppercase tracking-wider text-[9px] font-extrabold ${t.text} bg-slate-50 px-1.5 py-0.5 rounded border border-slate-100">${t.label}</span>
+              </div>
             </div>
+            <button class="text-slate-400 hover:text-slate-600 p-1 rounded-md hover:bg-slate-50 transition"><i data-lucide="more-horizontal" class="w-4 h-4"></i></button>
           </div>
+          
           <p class="text-[15px] text-[#121A21] leading-relaxed whitespace-pre-line">${esc(p.content)}</p>
+          
+          ${media}
+          
+          <!-- Reactions Summary -->
+          ${p.likes > 0 ? `
+          <div class="flex items-center gap-2 mt-4 pt-4 border-t border-slate-100">
+            <div class="w-5 h-5 rounded-full bg-[#1877F2] grid place-items-center text-white shrink-0"><i data-lucide="thumbs-up" class="w-3 h-3"></i></div>
+            <p class="text-[13px] text-slate-500 truncate">Sipho M., Naledi M. and ${p.likes > 2 ? p.likes - 2 : p.likes} others</p>
+          </div>` : ''}
         </div>
+        
+        <!-- Action Bar -->
         <div class="px-2 py-1 border-t border-slate-100 flex">
-          <button onclick="toggleLike(${p.id})" class="flex-1 flex items-center justify-center gap-2 py-3 rounded-lg hover:bg-slate-50 ${p.liked ? 'text-[#DC183C]' : 'text-slate-500'} text-sm font-semibold transition">
-            <i data-lucide="heart" class="w-4 h-4 ${p.liked ? 'fill-current' : ''}"></i>
-            <span>${p.likes}</span>
+          <button onclick="toggleLike(${p.id})" class="flex-1 flex items-center justify-center gap-2 py-3 rounded-lg hover:bg-slate-50 ${p.liked ? 'text-[#DC183C]' : 'text-slate-500'} text-[13.5px] font-bold transition">
+            <i data-lucide="thumbs-up" class="w-4 h-4 ${p.liked ? 'fill-current' : ''}"></i>
+            <span>Like</span>
           </button>
-          <button class="flex-1 flex items-center justify-center gap-2 py-3 rounded-lg hover:bg-slate-50 text-slate-500 text-sm font-semibold transition">
-            <i data-lucide="message-circle" class="w-4 h-4"></i>
-            <span>${p.comments}</span>
+          <button class="flex-1 flex items-center justify-center gap-2 py-3 rounded-lg hover:bg-slate-50 text-slate-500 text-[13.5px] font-bold transition">
+            <i data-lucide="message-square" class="w-4 h-4"></i>
+            <span>Comment</span>
           </button>
-          <button class="flex-1 flex items-center justify-center gap-2 py-3 rounded-lg hover:bg-slate-50 text-slate-500 text-sm font-semibold transition">
-            <i data-lucide="share-2" class="w-4 h-4"></i>
+          <button class="flex-1 flex items-center justify-center gap-2 py-3 rounded-lg hover:bg-slate-50 text-slate-500 text-[13.5px] font-bold transition">
+            <i data-lucide="forward" class="w-4 h-4"></i>
             <span class="hidden sm:inline">Share</span>
           </button>
         </div>
@@ -649,19 +634,39 @@
   }
 
   // ===== COMPOSER ==============================================================
-  function openComposer(type){
-    state.composer = { open:true, type, content:'' };
+  function openComposer(type = 'share'){
+    state.composer = { open:true, content:'', type: type, topicOpen: false };
     renderComposer();
   }
 
   function closeComposer(){
-    state.composer = { open:false, type:null, content:'' };
+    state.composer = { open:false, content:'', type: 'share', topicOpen: false };
     renderComposer();
   }
 
   function updateComposerContent(val){
     state.composer.content = val;
   }
+  
+  function toggleComposerTopic(e) {
+    e.stopPropagation();
+    state.composer.topicOpen = !state.composer.topicOpen;
+    renderComposer();
+  }
+
+  function selectComposerTopic(type) {
+    state.composer.type = type;
+    state.composer.topicOpen = false;
+    renderComposer();
+  }
+
+  // Close dropdown if clicked outside
+  document.addEventListener('click', (e)=>{
+    if(state.composer && state.composer.topicOpen && !e.target.closest('.relative-topic-dropdown')) {
+      state.composer.topicOpen = false;
+      renderComposer();
+    }
+  });
 
   function renderComposer(){
     const defaultEl = document.getElementById('composer-default');
@@ -672,37 +677,57 @@
       expandedEl.innerHTML = '';
       return;
     }
-    const t = TYPES[state.composer.type];
+    
     defaultEl.classList.add('hidden');
     expandedEl.classList.remove('hidden');
+    
+    // Updated to match exactly the "Create a post" screenshot layout
     expandedEl.innerHTML = `
-      <div class="expand-down">
-        <div class="px-5 py-3 border-b border-slate-100 flex items-center justify-between" style="background:${t.headerBg}">
-          <span class="inline-flex items-center gap-2 ${t.text} font-extrabold uppercase tracking-widest text-xs">
-            <i data-lucide="${t.icon}" class="w-3.5 h-3.5"></i>
-            New ${t.label}
-          </span>
-          <button onclick="closeComposer()" aria-label="Close" class="text-slate-500 hover:text-[#121A21] w-7 h-7 grid place-items-center rounded-full hover:bg-white/50"><i data-lucide="x" class="w-4 h-4"></i></button>
-        </div>
-        <div class="p-5">
-          <div class="flex items-center gap-3 mb-3">
-            ${monogram('TJ', 40)}
-            <div>
-              <p class="font-bold text-sm text-[#121A21]">${esc(ME.name)}</p>
-              <p class="text-[11px] text-slate-400">${esc(ME.stage)} <span class="text-slate-300 mx-0.5">·</span> ${esc(ME.sector)} <span class="text-slate-300 mx-0.5">·</span> ${esc(ME.province)}</p>
+      <div class="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-[#0C1F31]/60 backdrop-blur-sm" onclick="closeComposer()">
+        <div class="bg-white rounded-[12px] w-full max-w-2xl shadow-2xl overflow-hidden flex flex-col" onclick="event.stopPropagation()">
+          
+          <!-- Header -->
+          <div class="px-5 py-4 border-b border-slate-100 flex items-center justify-between bg-white">
+            <h3 class="font-jakarta font-bold text-lg text-[#121A21]">Create a post</h3>
+            <div class="flex items-center gap-2">
+               <button onclick="closeComposer()" aria-label="Close" class="w-8 h-8 rounded-full hover:bg-slate-100 grid place-items-center text-slate-500 transition-colors"><i data-lucide="x" class="w-5 h-5"></i></button>
             </div>
           </div>
-          <textarea id="composer-textarea" oninput="updateComposerContent(this.value)" placeholder="${esc(PLACEHOLDERS[state.composer.type])}" rows="4" class="w-full border border-slate-200 rounded-lg p-3 text-[15px] outline-none focus:border-[#DC183C] focus:ring-2 focus:ring-[#DC183C]/10 resize-none leading-relaxed">${esc(state.composer.content)}</textarea>
-          <p class="text-[11px] text-slate-400 mt-2 flex items-center gap-1.5">
-            <i data-lucide="info" class="w-3 h-3"></i>
-            Posts tagged <span class="font-bold ${t.text}">${t.label}</span> are routed to members likely to engage.
-          </p>
-        </div>
-        <div class="px-5 py-3 border-t border-slate-100 bg-slate-50 flex items-center justify-end gap-2">
-          <button onclick="closeComposer()" class="text-sm font-bold text-slate-500 hover:text-[#121A21] uppercase tracking-wider px-3 py-2.5">Cancel</button>
-          <button onclick="submitPost()" class="bg-[#DC183C] hover:bg-[#B0142F] text-white text-sm font-bold uppercase tracking-wider px-5 py-2.5 rounded-lg flex items-center gap-1.5">
-            Post <i data-lucide="send" class="w-4 h-4"></i>
-          </button>
+          
+          <!-- Body -->
+          <div class="p-6">
+            <div class="flex items-center gap-3 mb-4">
+              ${monogram('TJ', 48)}
+              <div>
+                <p class="font-bold text-[15px] text-[#121A21] leading-tight">${esc(ME.name)}</p>
+                <p class="text-[12px] text-slate-400 mt-0.5">${esc(ME.interest)} <span class="text-slate-300 mx-0.5">·</span> ${esc(ME.sector)} <span class="text-slate-300 mx-0.5">·</span> ${esc(ME.province)}</p>
+              </div>
+            </div>
+            
+            <div class="relative">
+                 <button onclick="toggleComposerTopic(event)" class="h-9 px-3 rounded-md border border-slate-200 text-sm font-medium text-slate-600 hover:bg-slate-50 transition-colors flex items-center gap-2">
+                   ${state.composer.type ? TYPES[state.composer.type].label : 'Select Topic'} <i data-lucide="chevron-down" class="w-4 h-4 text-slate-400"></i>
+                 </button>
+                 ${state.composer.topicOpen ? `
+                 <div class="absolute bottom-full right-0 mb-2 w-32 bg-white rounded-lg border border-slate-200 shadow-xl overflow-hidden z-50">
+                   <button onclick="event.stopPropagation(); selectComposerTopic('ask')" class="w-full text-left px-4 py-2 text-sm flex items-center gap-2 hover:bg-slate-50 text-[#DC183C] font-semibold"><i data-lucide="help-circle" class="w-4 h-4"></i> Ask</button>
+                   <button onclick="event.stopPropagation(); selectComposerTopic('win')" class="w-full text-left px-4 py-2 text-sm flex items-center gap-2 hover:bg-slate-50 text-[#29A37A] font-semibold"><i data-lucide="trophy" class="w-4 h-4"></i> Win</button>
+                   <button onclick="event.stopPropagation(); selectComposerTopic('share')" class="w-full text-left px-4 py-2 text-sm flex items-center gap-2 hover:bg-slate-50 text-[#AE6B0A] font-semibold"><i data-lucide="megaphone" class="w-4 h-4"></i> Share</button>
+                 </div>` : ''}
+               </div>
+               
+               <!-- Schedule -->
+               <button class="h-9 px-2 rounded-md border border-slate-200 text-slate-500 hover:bg-slate-50 transition-colors flex items-center gap-1" title="Schedule post">
+                 <i data-lucide="clock" class="w-4 h-4"></i> <i data-lucide="chevron-down" class="w-3 h-3 text-slate-400"></i>
+               </button>
+               
+               <!-- Post Button -->
+               <button onclick="submitPost()" class="h-9 px-6 rounded-md bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold text-sm transition-colors shadow-sm">
+                 Post
+               </button>
+             </div>
+          </div>
+          
         </div>
       </div>
     `;
@@ -713,17 +738,16 @@
   function submitPost(){
     const content = (state.composer.content || '').trim();
     if(!content){
-      const ta = document.getElementById('composer-textarea');
-      if(ta){ ta.classList.add('border-[#DC183C]','ring-2','ring-[#DC183C]/20'); ta.focus(); }
       showToast('Add some content first.', 'error');
       return;
     }
     const newPost = {
       id: ++nextId,
-      type: state.composer.type,
+      type: state.composer.type || 'share',
       timeAgo: 'Just now',
       tsMin: 0,
-      author: { name: ME.name, initials: ME.initials, role: ME.role, company: ME.company, stage: ME.stage, sector: ME.sector, province: ME.province },
+      action: 'posted an update',
+      author: { name: ME.name, initials: ME.initials, role: ME.role, company: ME.company, interest: ME.interest, sector: ME.sector, province: ME.province },
       content,
       likes: 0,
       comments: 0,
@@ -734,14 +758,13 @@
     state.sortBy = 'all';
     renderSortTabs();
     renderFeed();
-    showToast(`Your ${TYPES[newPost.type].label} is live.`, newPost.type);
+    showToast(`Your post is live.`, 'share');
   }
 
   // ===== TOAST =================================================================
   function showToast(msg, kind){
     const el = document.getElementById('toast');
-    const t = TYPES[kind];
-    const color = t ? t.color : '#0C1F31';
+    const color = '#29A37A'; // Default success green for toasts
     el.classList.remove('hidden');
     el.innerHTML = `<div class="toast-in bg-[#0C1F31] text-white rounded-full pl-3 pr-5 py-2.5 shadow-2xl flex items-center gap-2 text-sm font-semibold" style="border-left:4px solid ${color}">
       <i data-lucide="check-circle" class="w-4 h-4" style="color:${color}"></i>
@@ -757,38 +780,6 @@
 
   // ===== DEV MODE + IMPLEMENTATION BRIEFS ======================================
   const BRIEFS = {
-    ribbon: {
-      title:'Activity Ribbon', sub:'Reply-rate nudge above the feed',
-      purpose:'Surfaces <b>unanswered</b> Asks in the member&rsquo;s sector — not just new ones. Unanswered Asks are the #1 churn driver in a young community, so the nudge targets <i>reply-rate</i>, the engagement heartbeat. <b>Help out →</b> filters the feed to Asks needing answers.',
-      data:'Asks where <code>type = ask</code> AND <code>reply_count = 0</code>, scoped to the member&rsquo;s sector/community, ordered by age.',
-      logic:'Poll every ~60s (or websocket). Show only when unanswered count &gt; 0. Copy escalates with wait time. <b>Help out →</b> sets the feed filter to unanswered Asks and scrolls to it.',
-      components:'Ribbon bar · unanswered count · deep-link <code>?filter=unanswered</code>.',
-      specs:'<b>App shell (all feed sections):</b> outer container <code>max-w-7xl</code> = 1280px, padding-x 16px mobile / 24px desktop (<code>px-4 sm:px-6</code>). 12-col grid, 24px gap (<code>gap-6</code>) — left rail <code>col-span-3</code> &asymp;290px, centre feed <code>col-span-6</code> &asymp;604px, right rail <code>col-span-3</code> &asymp;290px; single column below <code>lg</code> (1024px).<br/><b>Ribbon bar:</b> white bg, bottom border 1px slate-100 (<code>#F0F5F9</code>), inner <code>max-w-7xl</code>, padding 12px vertical (<code>py-3</code>), flex items-center 12px gap.<br/><b>Icon:</b> Lucide `hand-heart` 16&times;16 (<code>w-4 h-4</code>) <code>#DC183C</code>.<br/><b>Copy:</b> 14px (<code>text-sm</code>) slate-600 (<code>#6A7581</code>); name weight 700 <code>#121A21</code>; unanswered-count highlight weight 700 <code>#DC183C</code>.<br/><b>Help-out CTA:</b> 12px (<code>text-xs</code>) weight 700 uppercase tracking-wider <code>#DC183C</code>, hover underline.'
-    },
-    help: {
-      title:'Help a Founder', sub:'The reply-rate engine, made visible',
-      purpose:'Promotes the open-loop from a thin ribbon to a real module: 2&ndash;3 <b>unanswered</b> Asks in your sector with one-tap <b>Answer</b>. Communities die when Asks go unanswered — this module exists to guarantee they don&rsquo;t. It is the single highest-leverage retention surface.',
-      data:'Asks with <code>reply_count = 0</code>, matched to the viewer by {sector, stage, tags}, ranked by age + match strength. Excludes the viewer&rsquo;s own Asks.',
-      logic:'Refreshes as Asks get answered (they drop off the list). &ldquo;waiting Nh&rdquo; escalates urgency. Seed/ambassador layer should keep this list short — an empty list means a healthy reply-rate.',
-      components:'Navy header · unanswered-ask rows · Answer CTA · waiting timer · &ldquo;see all&rdquo; link.',
-      specs:'<b>Card:</b> right rail, bg white, radius 16px (<code>rounded-2xl</code>), 1px border slate-100 (<code>#F0F5F9</code>), overflow-hidden.<br/><b>Navy header:</b> bg <code>#0C1F31</code>, padding 20px&times;16px (<code>px-5 py-4</code>), radial <code>#FFF1E0</code> glow 40% opacity.<br/><b>Kicker:</b> 10px weight 700 uppercase tracking-widest <code>#FF9900</code>, Lucide `hand-heart` 14&times;14 (<code>w-3.5 h-3.5</code>).<br/><b>Sub:</b> 12px (<code>text-xs</code>) <code>rgba(255,255,255,0.70)</code>.<br/><b>Ask rows:</b> divide-y slate-100, padding 20px&times;16px.<br/><b>Avatar:</b> 36&times;36 (<code>w-9 h-9</code>) rounded-full gradient <code>#DC183C&rarr;#FF9900</code>, 11px white weight 700.<br/><b>Name:</b> 14px weight 700 <code>#121A21</code>; meta 11px slate-400 (<code>#94A3B8</code>).<br/><b>Replies badge:</b> 10px weight 700 <code>#DC183C</code>, bg <code>#FDECEF</code>, padding 8px&times;2px, rounded-full.<br/><b>Quote:</b> 13px slate-600 (<code>#6A7581</code>).<br/><b>Waiting meta:</b> 11px slate-400, Lucide `clock` 12&times;12 (<code>w-3 h-3</code>).<br/><b>Answer button:</b> bg <code>#DC183C</code> hover <code>#B0142F</code>, rounded-full, padding 16px&times;6px (<code>px-4 py-1.5</code>), 12px white weight 700.<br/><b>Footer link:</b> full width, padding 12px vertical, 12px weight 700 uppercase tracking-wider <code>#DC183C</code>, top border 1px slate-100.'
-    },
-    contribution: {
-      title:'Contribution', sub:'How a member gives back — Ask / Win / Share',
-      purpose:'Reputation built on <b>generosity, not vanity metrics</b>. It mirrors the Ask / Win / Share taxonomy: Asks you helped answer, Wins you celebrated, Shares you amplified. Tapping the stat opens the full breakdown.',
-      data:'Per member: <code>asks_helped</code> (answers marked helpful), <code>wins_celebrated</code> (reactions on others&rsquo; Wins), <code>shares_amplified</code> (reshares / saves of Shares).',
-      logic:'Increment on each qualifying action. The card headline shows <code>asks_helped</code> (strongest signal); the modal reveals all three. The total can drive an optional Contributor tier.',
-      components:'Compact stat card → modal with three colour-coded rows (red / green / orange) + summary.',
-      specs:'<b>Stat trigger (profile-card footer):</b> top border 1px slate-100, padding 20px&times;16px (<code>px-5 py-4</code>), hover bg slate-50 (<code>#F8FAFC</code>).<br/><b>Icon tile:</b> 36&times;36 (<code>w-9 h-9</code>) rounded-full bg <code>#29A37A</code>/10, Lucide `hand-heart` 16&times;16 <code>#29A37A</code>.<br/><b>Label:</b> 10px weight 700 uppercase tracking-widest slate-400 (<code>#94A3B8</code>).<br/><b>Value:</b> Plus Jakarta Sans weight 700 20px (<code>text-xl</code>) <code>#121A21</code>.<br/><b>Chevron:</b> Lucide `chevron-right` 16&times;16 slate-400.<br/><br/><b>Modal:</b> centred, max-width 420px, radius 16px (<code>rounded-2xl</code>), shadow <code>0 24px 60px rgba(12,31,49,.3)</code>.<br/><b>Modal header:</b> bg <code>#0C1F31</code> padding 24px&times;20px (<code>px-6 py-5</code>); total Plus Jakarta Sans weight 800 30px (<code>text-3xl</code>) white.<br/><b>Rows:</b> padding 12px (<code>p-3</code>), radius 12px (<code>rounded-xl</code>), tinted bg — Asks <code>#FDECEF</code>, Wins <code>#E4F5EE</code>, Shares <code>#FFF1E0</code>.<br/><b>Row icon:</b> 40&times;40 (<code>w-10 h-10</code>) rounded-full solid <code>#DC183C</code>/<code>#29A37A</code>/<code>#AE6B0A</code>, Lucide icon 20&times;20 white.<br/><b>Row label:</b> Plus Jakarta Sans weight 700 <code>#121A21</code>; sub 11px slate-500 (<code>#64748B</code>).<br/><b>Row number:</b> weight 800 24px (<code>text-2xl</code>) in the row colour.'
-    },
-    activity: {
-      title:'Your Activity', sub:'The member&rsquo;s own posts, by type &amp; status',
-      purpose:'A personal index of what <b>you</b> posted — distinct from Contribution (which is helping others). Every row maps 1:1 to the post taxonomy, so the data model stays consistent platform-wide.',
-      data:'Your posts grouped by type + status: Asks (open vs resolved), Wins, Shares. <code>resolved</code> = an answer was accepted.',
-      logic:'Tapping a row filters the feed to YOUR posts of that type / status (in this mockup it filters the demo feed by type). Counts update live when you post via the composer.',
-      components:'Stat list · colour dot per type (red / grey / green / orange) · click → filtered feed.',
-      specs:'<b>Card:</b> left rail, bg white, radius 16px (<code>rounded-2xl</code>), 1px border slate-100.<br/><b>Header:</b> padding 20px&times;12px (<code>px-5 py-3</code>), bottom border slate-100; title Plus Jakarta Sans weight 700 uppercase 14px (<code>text-sm</code>) <code>#121A21</code> tracking-wide.<br/><b>Highlight row:</b> padding 20px&times;12px, bg <code>#FDECEF</code>/60 hover <code>#FDECEF</code>, Lucide `clock` 16&times;16 <code>#DC183C</code>, copy 13px weight 600 <code>#121A21</code>.<br/><b>Stat rows:</b> padding 20px&times;12px, 1px top border slate-100 between rows; status dot 6&times;6 (<code>w-1.5 h-1.5</code>) rounded-full — Open <code>#DC183C</code>, Resolved slate-300 (<code>#CBD5E1</code>), Wins <code>#29A37A</code>, Shares <code>#FF9900</code>.<br/><b>Row label:</b> 14px (<code>text-sm</code>) — open weight 600 <code>#121A21</code>, rest weight 500 slate-600 (<code>#6A7581</code>).<br/><b>Count badge:</b> open = 12px weight 700 white on <code>#DC183C</code> pill (padding 8px&times;2px rounded-full); others 12px weight 700 slate-400 (<code>#94A3B8</code>).'
-    },
     suggested: {
       title:'Suggested Members', sub:'Smart discovery — replaces &ldquo;New This Week&rdquo;',
       purpose:'Connects founders who can actually help each other. Shows <b>only</b> members who (1) share interests / sector / stage and (2) have a <b>completed profile</b> (green check). Chronological &ldquo;new members&rdquo; was noise — this is signal.',
@@ -797,13 +788,13 @@
       components:'Member row · avatar + completeness badge · match-reason chip · one-tap Connect.',
       specs:'<b>Card:</b> right rail, bg white, radius 16px (<code>rounded-2xl</code>), 1px border slate-100.<br/><b>Header:</b> padding 20px&times;12px (<code>px-5 py-3</code>), bottom border slate-100; title Plus Jakarta Sans weight 700 uppercase 14px <code>#121A21</code>; &ldquo;All&rdquo; link 10px weight 700 uppercase tracking-widest <code>#DC183C</code>.<br/><b>Member row:</b> padding 20px&times;12px, hover bg slate-50, 1px top border slate-100 between rows.<br/><b>Avatar:</b> 36&times;36 (<code>w-9 h-9</code>) rounded-full gradient <code>#DC183C&rarr;#FF9900</code>, 12px white weight 700.<br/><b>Completeness badge:</b> 14&times;14 (<code>w-3.5 h-3.5</code>) rounded-full bg <code>#29A37A</code>, 2px white ring, Lucide `check` 8&times;8 (<code>w-2 h-2</code>) white.<br/><b>Name:</b> 12px (<code>text-xs</code>) weight 700 <code>#121A21</code>; meta 11px slate-500 (<code>#64748B</code>).<br/><b>Match chip:</b> 9px weight 600 slate-500, bg slate-100 (<code>#F0F5F9</code>), padding 6px&times;2px, radius 4px (<code>rounded</code>), Lucide `sparkles` 10&times;10 (<code>w-2.5 h-2.5</code>).<br/><b>Connect button:</b> 28&times;28 (<code>w-7 h-7</code>) rounded-full bg slate-100 hover <code>#DC183C</code> white, Lucide `user-plus` 14&times;14.<br/><b>Footer strip:</b> padding 20px&times;10px (<code>px-5 py-2.5</code>) bg slate-50/60, 10px slate-400, Lucide `shield-check` 12&times;12 <code>#29A37A</code>.'
     },
-    taxonomy: {
-      title:'Ask / Win / Share', sub:'The three post types — the spine of the platform',
-      purpose:'Every post is one of three intents. <b>Ask</b> (red) = request help. <b>Win</b> (green) = celebrate a milestone. <b>Share</b> (orange) = a resource or lesson. Colour + left stripe keep the feed scannable.',
-      data:'Post: <code>{ id, type, author_id, content, created_at, reactions, comments }</code> · type ∈ {ask, win, share}.',
-      logic:'The composer sets <code>type</code>; routing then differs — Asks notify members likely to help, Wins surface in celebration, Shares feed the resource index. Sort tabs filter by type.',
-      components:'Composer chips · type pill + stripe · sort tabs · feed card.',
-      specs:'<b>Composer card:</b> centre feed, bg white, radius 16px (<code>rounded-2xl</code>), 1px border slate-100, padding 20px (<code>p-5</code>).<br/><b>Composer avatar:</b> 44&times;44 (<code>w-11 h-11</code>) rounded-full gradient <code>#DC183C&rarr;#FF9900</code>.<br/><b>Prompt button:</b> bg slate-50 hover slate-100, padding 16px&times;12px (<code>px-4 py-3</code>), rounded-full, 14px slate-500 (<code>#64748B</code>), 1px border slate-200 (<code>#E2E8F0</code>).<br/><b>Type chips:</b> 1px border slate-200, padding 16px&times;8px (<code>px-4 py-2</code>), rounded-full, 12px weight 700 uppercase tracking-wider, Lucide icon 16&times;16 — Ask `help-circle` <code>#DC183C</code>, Win `trophy` <code>#29A37A</code>, Share `megaphone` <code>#AE6B0A</code>. Hover/active fill: Ask <code>#DC183C</code>, Win <code>#29A37A</code>, Share <code>#FF9900</code> (text <code>#0C1F31</code>), white text otherwise.<br/><br/><b>Sort tabs:</b> padding 16px&times;8px, rounded-full, 12px weight 700 uppercase tracking-wider, 1px border slate-200; active bg <code>#0C1F31</code> white.<br/><br/><b>Feed card:</b> bg white, radius 16px, 1px border slate-100, left stripe inset 4px (<code>#DC183C</code>/<code>#29A37A</code>/<code>#FF9900</code> by type), hover lift shadow <code>0 8px 20px -8px rgba(10,44,61,.12)</code>, padding 20px.<br/><b>Type pill:</b> padding 10px&times;4px (<code>px-2.5 py-1</code>) rounded-full, tinted bg (type /10&ndash;/15), 10px weight 800 uppercase tracking-widest, Lucide icon 12&times;12.<br/><b>Author:</b> avatar 44&times;44; name weight 700 15px (<code>text-[15px]</code>) <code>#121A21</code>; role 12px slate-500; meta 11px slate-400.<br/><b>Body:</b> 15px <code>#121A21</code> leading-relaxed.<br/><b>Action bar:</b> top border slate-100, buttons padding-y 12px, 14px weight 600 slate-500, Lucide icons 16&times;16; liked state <code>#DC183C</code>.'
+    activity: {
+      title:'Your Activity', sub:'The member&rsquo;s own posts, by type &amp; status',
+      purpose:'A personal index of what <b>you</b> posted. Every row maps 1:1 to the post taxonomy, so the data model stays consistent platform-wide.',
+      data:'Your posts grouped by type + status: Asks (open vs resolved), Wins, Shares. <code>resolved</code> = an answer was accepted.',
+      logic:'Tapping a row filters the feed to YOUR posts of that type / status (in this mockup it filters the demo feed by type). Counts update live when you post via the composer.',
+      components:'Stat list · colour dot per type (red / grey / green / orange) · click → filtered feed.',
+      specs:'<b>Card:</b> left rail, bg white, radius 16px (<code>rounded-2xl</code>), 1px border slate-100.<br/><b>Header:</b> padding 20px&times;12px (<code>px-5 py-3</code>), bottom border slate-100; title Plus Jakarta Sans weight 700 uppercase 14px (<code>text-sm</code>) <code>#121A21</code> tracking-wide.<br/><b>Highlight row:</b> padding 20px&times;12px, bg <code>#FDECEF</code>/60 hover <code>#FDECEF</code>, Lucide `clock` 16&times;16 <code>#DC183C</code>, copy 13px weight 600 <code>#121A21</code>.<br/><b>Stat rows:</b> padding 20px&times;12px, 1px top border slate-100 between rows; status dot 6&times;6 (<code>w-1.5 h-1.5</code>) rounded-full — Open <code>#DC183C</code>, Resolved slate-300 (<code>#CBD5E1</code>), Wins <code>#29A37A</code>, Shares <code>#FF9900</code>.<br/><b>Row label:</b> 14px (<code>text-sm</code>) — open weight 600 <code>#121A21</code>, rest weight 500 slate-600 (<code>#6A7581</code>).<br/><b>Count badge:</b> open = 12px weight 700 white on <code>#DC183C</code> pill (padding 8px&times;2px rounded-full); others 12px weight 700 slate-400 (<code>#94A3B8</code>).'
     }
   };
 
@@ -854,56 +845,6 @@
       </div>`;
     requestAnimationFrame(()=>{ const o=document.getElementById('ov-brief'); if(o) o.classList.add('open'); });
     lucide.createIcons();
-  }
-
-  function openContribution(){
-    const rows = [
-      { c:'#DC183C', bg:'#FDECEF', icon:'help-circle', label:'Asks helped',      n:24, sub:'answers that moved a founder forward' },
-      { c:'#29A37A', bg:'#E4F5EE', icon:'trophy',      label:'Wins celebrated',  n:10, sub:'milestones you cheered on' },
-      { c:'#AE6B0A', bg:'#FFF1E0', icon:'megaphone',   label:'Shares amplified', n:15, sub:'resources you passed forward' }
-    ];
-    const total = rows.reduce((s,r)=> s + r.n, 0);
-    document.getElementById('overlay-root').innerHTML = `
-      <div class="ov" id="ov-contrib">
-        <div class="ov-bg" onclick="closeOverlay('ov-contrib')"></div>
-        <div class="modalbox overflow-hidden">
-          <div class="bg-[#0C1F31] text-white px-6 py-5 relative">
-            <button onclick="closeOverlay('ov-contrib')" aria-label="Close" class="absolute top-4 right-4 text-white/60 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button>
-            <p class="text-[10px] font-bold uppercase tracking-widest text-[#FF9900] mb-1">Your Contribution</p>
-            <h3 class="font-jakarta font-extrabold text-3xl leading-none">${total}</h3>
-            <p class="text-xs text-white/60 mt-2">Ways you&rsquo;ve shown up for the community. Reputation here is built on generosity — not follower counts.</p>
-          </div>
-          <div class="p-4 space-y-2">
-            ${rows.map(r=>`
-              <div class="flex items-center gap-3 p-3 rounded-xl" style="background:${r.bg}">
-                <div class="w-10 h-10 rounded-full grid place-items-center shrink-0" style="background:${r.c}"><i data-lucide="${r.icon}" class="w-5 h-5 text-white"></i></div>
-                <div class="min-w-0 flex-1">
-                  <p class="font-jakarta font-bold text-[#121A21] leading-none">${r.label}</p>
-                  <p class="text-[11px] text-slate-500 mt-1">${r.sub}</p>
-                </div>
-                <p class="font-jakarta font-extrabold text-2xl shrink-0" style="color:${r.c}">${r.n}</p>
-              </div>`).join('')}
-          </div>
-          <div class="px-6 pb-6 pt-1">
-            <p class="text-[11px] text-slate-500 flex items-center gap-1.5"><i data-lucide="info" class="w-3.5 h-3.5 text-[#DC183C]"></i> Mirrors the Ask / Win / Share taxonomy — one model across the platform.</p>
-          </div>
-        </div>
-      </div>`;
-    requestAnimationFrame(()=>{ const o=document.getElementById('ov-contrib'); if(o) o.classList.add('open'); });
-    lucide.createIcons();
-  }
-
-  function viewNewAsks(){
-    setSort('asks');
-    const el = document.getElementById('sort-tabs');
-    if(el) el.scrollIntoView({ behavior:'smooth', block:'center' });
-  }
-
-  function helpAnswer(name){
-    showToast(`Opening your reply to ${name}'s ask — be specific and kind.`, 'ask');
-    setSort('asks');
-    const el = document.getElementById('sort-tabs');
-    if(el) el.scrollIntoView({ behavior:'smooth', block:'center' });
   }
 
   // ===== INIT ==================================================================

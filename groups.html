@@ -52,27 +52,95 @@
   <nav aria-label="Breadcrumb" class="text-xs text-[#6A7581] flex items-center flex-wrap gap-x-1.5"><a href="public-home.html" class="hover:text-[#DC183C] transition">Home</a><span class="text-slate-300">›</span><a href="member-hub.html" class="hover:text-[#DC183C] transition">Community</a><span class="text-slate-300">›</span><span class="text-[#121A21] font-medium truncate">Groups</span></nav>
 </div>
 
-<main class="max-w-6xl mx-auto px-4 sm:px-6 py-6">
-  <div class="flex items-end justify-between gap-3 mb-5 flex-wrap">
-    <div>
-      <p class="text-[11px] font-bold uppercase tracking-widest text-[#DC183C]">Directory</p>
-      <h1 class="font-jakarta font-extrabold text-2xl text-[#121A21] tracking-tight flex items-center gap-2">Groups
-        <button onclick="openBrief('groupsdir')" class="dev-badge w-4 h-4 rounded-full bg-[#DC183C] text-white items-center justify-center text-[9px] font-bold leading-none animate-pulse" title="Implementation notes">i</button>
-      </h1>
-      <p id="result-count" class="text-sm text-slate-500 mt-0.5"></p>
+<main class="max-w-7xl mx-auto px-4 sm:px-6 py-6 grid lg:grid-cols-[1fr,320px] gap-8 items-start">
+  
+  <!-- Left Column: Content -->
+  <div class="min-w-0">
+    <div class="mb-6 flex items-center gap-3">
+      <h1 class="font-jakarta font-extrabold text-3xl text-[#121A21] tracking-tight">Groups</h1>
+      <button onclick="openBrief('groupsdir')" class="dev-badge w-6 h-6 rounded-full bg-[#DC183C] text-white items-center justify-center text-[12px] font-bold leading-none animate-pulse" title="Implementation notes">i</button>
     </div>
-    <button onclick="showToast('Create a group (mockup).',null)" class="bg-[#DC183C] hover:bg-[#B0142F] text-white rounded-full px-5 py-2.5 font-jakarta font-bold text-sm transition flex items-center gap-2"><i data-lucide="plus" class="w-4 h-4"></i> Create group</button>
+
+    <!-- Controls Row -->
+    <div class="flex flex-col sm:flex-row sm:items-center gap-4 mb-6 pb-2 border-b border-slate-200">
+      <div id="segs" class="flex gap-2 overflow-x-auto no-scrollbar pb-2 sm:pb-0"></div>
+      
+      <div class="sm:ml-auto flex items-center gap-2" id="controls-row">
+        <div class="relative w-full sm:w-64">
+          <i data-lucide="search" class="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400"></i>
+          <input id="g-search" oninput="render()" placeholder="Search groups…" class="bg-white border border-slate-200 rounded-full pl-10 pr-4 h-10 text-[13px] outline-none focus:border-[#DC183C] focus:ring-1 focus:ring-[#DC183C] w-full transition">
+        </div>
+        <select id="g-sort" onchange="render()" class="h-10 text-[13px] font-semibold border border-slate-200 rounded-full px-4 outline-none text-[#121A21] bg-white cursor-pointer hover:bg-slate-50 transition">
+          <option value="active">Active</option>
+          <option value="popular">Popular</option>
+          <option value="newest">Newest</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Create Group Form (Hidden by default) -->
+    <div id="create-group-form" class="hidden bg-white rounded-2xl border border-[#E7EBEF] p-6 sm:p-8">
+      <div class="border-b border-slate-100 flex gap-6 text-sm font-bold text-slate-400 mb-6 pb-3 overflow-x-auto no-scrollbar">
+        <span class="text-[#DC183C] whitespace-nowrap">1. Details</span>
+        <span class="whitespace-nowrap">2. Settings</span>
+        <span class="whitespace-nowrap">3. Forum</span>
+        <span class="whitespace-nowrap">4. Photo</span>
+        <span class="whitespace-nowrap">5. Cover Photo</span>
+        <span class="whitespace-nowrap">6. Invites</span>
+      </div>
+      
+      <div class="space-y-5">
+        <div>
+          <label class="block text-sm font-semibold text-[#0C1F31] mb-2">Group Name (required)</label>
+          <input type="text" class="w-full h-12 rounded-xl border border-slate-200 px-4 focus:border-[#DC183C] focus:ring-1 focus:ring-[#DC183C] outline-none transition" />
+        </div>
+        <div>
+          <label class="block text-sm font-semibold text-[#0C1F31] mb-2">Group Description</label>
+          <textarea rows="4" class="w-full rounded-xl border border-slate-200 p-4 focus:border-[#DC183C] focus:ring-1 focus:ring-[#DC183C] outline-none transition"></textarea>
+        </div>
+        <button onclick="showToast('Proceeds to next step (mock).', 'ask')" class="h-12 px-6 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold text-sm transition mt-2">Create Group and Continue</button>
+      </div>
+    </div>
+
+    <!-- Group List -->
+    <div id="results" class="space-y-3"></div>
   </div>
 
-  <div class="flex flex-col sm:flex-row sm:items-center gap-3 mb-5">
-    <div id="segs" class="flex gap-2 overflow-x-auto no-scrollbar"></div>
-    <div class="sm:ml-auto flex items-center gap-2">
-      <div class="relative"><i data-lucide="search" class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400"></i><input id="g-search" oninput="render()" placeholder="Search groups…" class="bg-white border border-slate-200 rounded-full pl-9 pr-3 py-2 text-sm outline-none focus:border-[#DC183C] w-full sm:w-56"></div>
-      <select id="g-sort" onchange="render()" class="text-xs font-semibold border border-slate-200 rounded-lg px-3 py-2 outline-none text-slate-600"><option value="active">Active</option><option value="popular">Popular</option><option value="newest">Newest</option></select>
+  <aside class="space-y-6">
+    <!-- Community Guidelines Widget -->
+    <div class="bg-white rounded-2xl border border-[#E7EBEF] p-5 shadow-sm">
+      <div class="w-10 h-10 rounded-full bg-[#29A37A]/10 grid place-items-center mb-4">
+        <i data-lucide="shield-check" class="w-5 h-5 text-[#29A37A]"></i>
+      </div>
+      <p class="text-[10px] font-bold uppercase tracking-widest text-[#29A37A] mb-1">Safe Space</p>
+      <h4 class="font-jakarta font-bold text-[15px] text-[#0C1F31] mb-2">Moderated Community</h4>
+      <p class="text-[13px] text-slate-500 leading-relaxed">Groups are private and moderated. Hate speech, self-promotion, and spam result in an immediate ban. Treat this as your trusted inner circle.</p>
     </div>
-  </div>
 
-  <div id="results"></div>
+    <!-- Upcoming Events Widget -->
+    <div class="bg-white rounded-2xl border border-[#E7EBEF] p-5 shadow-sm">
+      <p class="text-[10px] font-bold uppercase tracking-widest text-[#FF9900] mb-3">Community Events</p>
+      <div class="space-y-4">
+        <a href="public-webinar.html" class="block group">
+          <h4 class="font-jakarta font-bold text-sm text-[#0C1F31] group-hover:text-[#DC183C] transition leading-tight">Forecasting Growth with Predictive Analytics</h4>
+          <p class="text-[11px] text-slate-500 mt-1 flex items-center gap-1.5"><i data-lucide="video" class="w-3 h-3"></i> Thu, 20 Aug · Online</p>
+        </a>
+        <a href="event-single-in-person.html" class="block group">
+          <h4 class="font-jakarta font-bold text-sm text-[#0C1F31] group-hover:text-[#DC183C] transition leading-tight">Annual SME Funding Gala 2026</h4>
+          <p class="text-[11px] text-slate-500 mt-1 flex items-center gap-1.5"><i data-lucide="map-pin" class="w-3 h-3"></i> Fri, 25 Sep · Sandton</p>
+        </a>
+        <a href="#" class="block group">
+          <h4 class="font-jakarta font-bold text-sm text-[#0C1F31] group-hover:text-[#DC183C] transition leading-tight">Alternative Finance & Grant Options</h4>
+          <p class="text-[11px] text-slate-500 mt-1 flex items-center gap-1.5"><i data-lucide="video" class="w-3 h-3"></i> Tue, 13 Oct · Online</p>
+        </a>
+        <a href="#" class="block group">
+          <h4 class="font-jakarta font-bold text-sm text-[#0C1F31] group-hover:text-[#DC183C] transition leading-tight">B-BBEE Compliance Strategies</h4>
+          <p class="text-[11px] text-slate-500 mt-1 flex items-center gap-1.5"><i data-lucide="map-pin" class="w-3 h-3"></i> Wed, 28 Oct · Cape Town</p>
+        </a>
+      </div>
+      <a href="public-events.html" class="inline-block mt-4 text-xs font-bold text-[#0C1F31] hover:text-[#DC183C] transition">View all events &rarr;</a>
+    </div>
+  </aside>
 </main>
 
 <div id="overlay-root"></div>
@@ -82,41 +150,82 @@
 function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
 
 const GROUPS = [
-  { name:'General',            members:1284, privacy:'Public',  active:'25m',   created:9,  desc:'Connect, collaborate and grow with fellow South African entrepreneurs.', joined:true,  suggested:false, c1:'#0C1F31', c2:'#1a3a54' },
-  { name:'Fintech Founders',   members:342,  privacy:'Private', active:'1h',    created:14, desc:'For founders building payments, lending and financial infrastructure in SA.', joined:true,  suggested:true,  c1:'#DC183C', c2:'#FF9900' },
-  { name:'Cape Town SMEs',     members:516,  privacy:'Public',  active:'3h',    created:7,  desc:'Regional group for Western Cape based small businesses and startups.', joined:false, suggested:true,  c1:'#29A37A', c2:'#0C1F31' },
-  { name:'Funding & Investors',members:889,  privacy:'Public',  active:'today', created:11, desc:'Capital raises, grants and investor intros for vetted SA founders.', joined:false, suggested:true,  c1:'#FF9900', c2:'#DC183C' },
-  { name:'Women in Business',  members:1102, privacy:'Public',  active:'2h',    created:20, desc:'A network for women founders to share, support and scale together.', joined:false, suggested:false, c1:'#DC183C', c2:'#0C1F31' },
-  { name:'Agritech ZA',        members:271,  privacy:'Public',  active:'6h',    created:5,  desc:'Innovating food, farming and supply-chain across South Africa.', joined:false, suggested:true,  c1:'#29A37A', c2:'#FF9900' },
-  { name:'SaaS & Tech Builders',members:438, privacy:'Private', active:'4h',    created:8,  desc:'Product, engineering and go-to-market for software founders.', joined:true,  suggested:false, c1:'#1a3a54', c2:'#29A37A' },
-  { name:'Retail & E-commerce',members:625,  privacy:'Public',  active:'1d',    created:13, desc:'Selling online and offline — logistics, payments, growth.', joined:false, suggested:false, c1:'#FF9900', c2:'#AE6B0A' }
+  { name:'General',            members:1284, privacy:'Public',  created:9,  desc:'Connect, collaborate and grow with fellow South African entrepreneurs.', joined:true,  c1:'#0C1F31', c2:'#1a3a54' },
+  { name:'Fintech Founders',   members:342,  privacy:'Private', created:14, desc:'For founders building payments, lending and financial infrastructure in SA.', joined:true,  c1:'#DC183C', c2:'#FF9900' },
+  { name:'Cape Town SMEs',     members:516,  privacy:'Public',  created:7,  desc:'Regional group for Western Cape based small businesses and startups.', joined:false, c1:'#29A37A', c2:'#0C1F31' },
+  { name:'Funding & Investors',members:889,  privacy:'Public',  created:11, desc:'Capital raises, grants and investor intros for vetted SA founders.', joined:false, c1:'#FF9900', c2:'#DC183C' },
+  { name:'Women in Business',  members:1102, privacy:'Public',  created:20, desc:'A network for women founders to share, support and scale together.', joined:false, c1:'#DC183C', c2:'#0C1F31' },
+  { name:'Agritech ZA',        members:271,  privacy:'Public',  created:5,  desc:'Innovating food, farming and supply-chain across South Africa.', joined:false, c1:'#29A37A', c2:'#FF9900' },
+  { name:'SaaS & Tech Builders',members:438, privacy:'Private', created:8,  desc:'Product, engineering and go-to-market for software founders.', joined:true,  c1:'#1a3a54', c2:'#29A37A' },
+  { name:'Retail & E-commerce',members:625,  privacy:'Public',  created:13, desc:'Selling online and offline — logistics, payments, growth.', joined:false, c1:'#FF9900', c2:'#AE6B0A' }
 ];
 
-const SEGS = [['all','All groups'],['mine','My groups'],['suggested','Suggested']];
+const SEGS = [['all','All groups'],['mine','My groups']];
 const state = { seg:'all' };
 
-function renderSegs(){ document.getElementById('segs').innerHTML = SEGS.map(([id,l])=>{ const n = id==='all'?GROUPS.length:id==='mine'?GROUPS.filter(g=>g.joined).length:GROUPS.filter(g=>g.suggested&&!g.joined).length; return `<button onclick="setSeg('${id}')" class="seg ${state.seg===id?'active':''} shrink-0 px-4 py-1.5 rounded-full text-xs font-bold border ${state.seg===id?'border-[#0C1F31]':'border-slate-200 text-slate-600 hover:bg-slate-50'}">${l} <span class="opacity-70">${n}</span></button>`; }).join(''); }
-function setSeg(s){ state.seg=s; renderSegs(); render(); }
+function renderSegs(){ 
+  const tabs = SEGS.map(([id,l])=>{ 
+    return `<button onclick="setSeg('${id}')" class="seg ${state.seg===id?'active':''} shrink-0 px-4 py-1.5 rounded-full text-xs font-bold border ${state.seg===id?'border-[#0C1F31]':'border-transparent text-slate-500 hover:bg-slate-50 hover:text-[#121A21]'} transition-colors">${l}</button>`; 
+  }).join(''); 
+  
+  // "Create Group" effectively acts as a tab/action at the end of the strip
+  const createBtn = `<button onclick="setSeg('create')" class="seg ${state.seg==='create'?'active':''} shrink-0 px-4 py-1.5 rounded-full text-xs font-bold border ${state.seg==='create'?'border-[#0C1F31]':'border-transparent text-slate-500 hover:bg-slate-50 hover:text-[#121A21]'} transition-colors flex items-center gap-1.5">Create Group</button>`;
+  
+  document.getElementById('segs').innerHTML = tabs + createBtn;
+}
+
+function setSeg(s){ 
+  state.seg=s; 
+  renderSegs(); 
+  
+  const form = document.getElementById('create-group-form');
+  const results = document.getElementById('results');
+  const controls = document.getElementById('controls-row');
+  
+  if (s === 'create') {
+    form.classList.remove('hidden');
+    results.classList.add('hidden');
+    // We optionally hide search/sort when creating a group
+    controls.style.display = 'none';
+  } else {
+    form.classList.add('hidden');
+    results.classList.remove('hidden');
+    controls.style.display = 'flex';
+    render(); 
+  }
+}
 
 function joinBtn(g,i){
   return g.joined
-    ? `<button onclick="toggleJoin(${i})" class="border border-[#29A37A] text-[#29A37A] rounded-full px-4 py-1.5 text-xs font-bold flex items-center gap-1.5 hover:bg-[#E4F5EE] transition"><i data-lucide="check" class="w-3.5 h-3.5"></i> Joined</button>`
-    : `<button onclick="toggleJoin(${i})" class="bg-[#DC183C] hover:bg-[#B0142F] text-white rounded-full px-4 py-1.5 text-xs font-bold transition flex items-center gap-1.5"><i data-lucide="plus" class="w-3.5 h-3.5"></i> Join</button>`;
+    ? `<button onclick="toggleJoin(${i})" class="border border-[#29A37A] text-[#29A37A] bg-white rounded-full px-5 h-9 text-[12px] font-bold flex items-center gap-1.5 hover:bg-[#E4F5EE] transition whitespace-nowrap"><i data-lucide="check" class="w-3.5 h-3.5"></i> Joined</button>`
+    : `<button onclick="toggleJoin(${i})" class="bg-white border border-[#DC183C] text-[#DC183C] hover:bg-[#DC183C] hover:text-white rounded-full px-5 h-9 text-[12px] font-bold transition flex items-center gap-1.5 whitespace-nowrap"><i data-lucide="plus" class="w-3.5 h-3.5"></i> Join</button>`;
 }
-function toggleJoin(i){ GROUPS[i].joined=!GROUPS[i].joined; renderSegs(); render(); showToast(GROUPS[i].joined?'You joined '+GROUPS[i].name+'.':'You left '+GROUPS[i].name+'.', GROUPS[i].joined?'win':null); }
+
+function toggleJoin(i){ 
+  GROUPS[i].joined=!GROUPS[i].joined; 
+  renderSegs(); 
+  render(); 
+  showToast(GROUPS[i].joined?'You joined '+GROUPS[i].name+'.':'You left '+GROUPS[i].name+'.', GROUPS[i].joined?'win':null); 
+}
 
 function card(g,i){
-  return `<div class="bg-white rounded-2xl border border-slate-100 overflow-hidden card-lift flex flex-col">
-    <a href="single-group.html" class="h-20 relative block" style="background:linear-gradient(135deg, ${g.c1}, ${g.c2})">
-      <div class="absolute inset-0 opacity-30" style="background:radial-gradient(circle at 75% 30%, #fff 0%, transparent 60%);"></div>
-      <span class="absolute top-2.5 right-2.5 inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold ${g.privacy==='Public'?'bg-white/90 text-[#29A37A]':'bg-white/90 text-slate-600'}"><i data-lucide="${g.privacy==='Public'?'globe':'lock'}" class="w-3 h-3"></i> ${g.privacy}</span>
-    </a>
-    <div class="p-5 -mt-8 flex-1 flex flex-col">
-      <div class="w-14 h-14 rounded-xl bg-[#0C1F31] grid place-items-center ring-4 ring-white shadow-sm shrink-0"><i data-lucide="users" class="w-6 h-6 text-[#FF9900]"></i></div>
-      <a href="single-group.html" class="font-jakarta font-bold text-[#121A21] hover:text-[#DC183C] transition mt-3">${esc(g.name)}</a>
-      <p class="text-xs text-slate-500 leading-snug mt-1 flex-1">${esc(g.desc)}</p>
-      <p class="text-[11px] text-slate-400 mt-3 flex items-center gap-1.5"><i data-lucide="users" class="w-3.5 h-3.5"></i> ${g.members.toLocaleString()} members <span class="text-slate-300">·</span> active ${esc(g.active)}</p>
-      <div class="mt-3">${joinBtn(g,i)}</div>
+  return `<div class="bg-white rounded-2xl border border-[#E7EBEF] p-5 flex flex-col sm:flex-row gap-5 items-start sm:items-center card-lift group">
+    <div class="w-20 h-20 rounded-xl relative shrink-0 shadow-inner" style="background:linear-gradient(135deg, ${g.c1}, ${g.c2})">
+      <div class="absolute inset-0 opacity-30 mix-blend-overlay" style="background:radial-gradient(circle at 75% 30%, #fff 0%, transparent 60%);"></div>
+      <div class="absolute inset-0 flex items-center justify-center"><i data-lucide="users" class="w-8 h-8 text-white/90"></i></div>
+    </div>
+    
+    <div class="flex-1 min-w-0">
+      <div class="flex items-center gap-2 mb-1.5">
+        <a href="single-group.html" class="font-jakarta font-bold text-[17px] text-[#0C1F31] group-hover:text-[#DC183C] transition truncate leading-tight">${esc(g.name)}</a>
+        <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[10px] font-bold ${g.privacy==='Public'?'bg-[#F0F5F9] text-[#29A37A]':'bg-slate-100 text-slate-500'}"><i data-lucide="${g.privacy==='Public'?'globe':'lock'}" class="w-3 h-3"></i> ${g.privacy}</span>
+      </div>
+      <p class="text-[13px] text-slate-500 leading-relaxed line-clamp-2 sm:line-clamp-1 mb-2">${esc(g.desc)}</p>
+      <p class="text-[11px] font-semibold text-slate-400 flex items-center gap-1.5"><i data-lucide="users" class="w-3.5 h-3.5 text-slate-300"></i> ${g.members.toLocaleString()} members</p>
+    </div>
+    
+    <div class="shrink-0 mt-2 sm:mt-0 w-full sm:w-auto">
+      ${joinBtn(g,i)}
     </div>
   </div>`;
 }
@@ -125,23 +234,24 @@ function render(){
   const q = document.getElementById('g-search').value.toLowerCase();
   const sort = document.getElementById('g-sort').value;
   let list = GROUPS.map((g,i)=>({ ...g, _i:i }));
+  
   if(state.seg==='mine') list = list.filter(g=>g.joined);
-  else if(state.seg==='suggested') list = list.filter(g=>g.suggested && !g.joined);
   list = list.filter(g => !q || (g.name+' '+g.desc).toLowerCase().includes(q));
+  
   if(sort==='popular') list.sort((a,b)=>b.members-a.members);
   else if(sort==='newest') list.sort((a,b)=>a.created-b.created);
-  document.getElementById('result-count').textContent = `${list.length} group${list.length!==1?'s':''}`;
+  
   const host = document.getElementById('results');
   host.innerHTML = list.length
-    ? `<div class="grid sm:grid-cols-2 xl:grid-cols-3 gap-4">${list.map(g=>card(g,g._i)).join('')}</div>`
-    : `<div class="bg-white rounded-2xl border border-slate-100 py-16 text-center text-slate-400"><i data-lucide="layout-grid" class="w-8 h-8 mx-auto mb-2"></i><p class="font-semibold">No groups here.</p>${state.seg==='mine'?'<a href="#" onclick="setSeg(\'all\');return false;" class="text-xs font-bold text-[#DC183C] uppercase mt-2 inline-block hover:underline">Browse all groups</a>':''}</div>`;
+    ? `${list.map(g=>card(g,g._i)).join('')}`
+    : `<div class="bg-white rounded-2xl border border-[#E7EBEF] py-16 text-center text-slate-400"><i data-lucide="layout-grid" class="w-10 h-10 mx-auto mb-3 text-slate-300"></i><p class="font-semibold text-sm">No groups found.</p>${state.seg==='mine'?'<button onclick="setSeg(\'all\')" class="text-[13px] font-bold text-[#DC183C] mt-3 hover:underline">Browse all groups</button>':''}</div>`;
   lucide.createIcons();
 }
 
-const BRIEFS = { groupsdir:{ title:'Groups Directory', sub:'Browse, filter & join groups', purpose:'Discovery for community groups. Segments (All / My groups / Suggested), search and sort. Suggested is scored by the member&rsquo;s sector/stage overlap. Joining a group multiplies engagement surface — members in groups post far more than those who aren&rsquo;t.', data:'<code>groups[] { id, name, privacy, member_count, last_active, created_at, my_membership, suggested_score }</code>.', logic:'Public groups join instantly; Private create a join request. &ldquo;Suggested&rdquo; ranks by {sector, stage, region} overlap excluding joined groups. Cards deep-link to the single-group page.', components:'Segmented tabs · search · sort · group cards · join toggle · create-group.', specs:'<b>Layout:</b> breadcrumb bar container <code>max-w-7xl</code> = 1280px; main column <code>max-w-6xl</code> = 1152px; both padding-x 16px mobile / 24px desktop (<code>px-4 sm:px-6</code>), main vertical padding 24px (<code>py-6</code>).<br/><b>Breadcrumb:</b> 12px (<code>text-xs</code>) <code>#6A7581</code>, separator <code>›</code> slate-300, current crumb <code>#121A21</code> weight 500.<br/><b>Kicker:</b> 11px weight 700 uppercase tracking widest <code>#DC183C</code>.<br/><b>H1:</b> Plus Jakarta Sans weight 800, 24px (<code>text-2xl</code>), <code>#121A21</code>, tight tracking. Result count 14px (<code>text-sm</code>) slate-500, 2px top margin.<br/><b>Create-group button:</b> bg <code>#DC183C</code> hover <code>#B0142F</code>, rounded-full, padding 20px×10px (<code>px-5 py-2.5</code>), Plus Jakarta Sans weight 700 14px white, Lucide `plus` 16×16.<br/><br/><b>Segmented tabs:</b> padding 16px×6px (<code>px-4 py-1.5</code>), rounded-full, 12px weight 700, 1px border. Active bg <code>#0C1F31</code> white; inactive 1px border slate-200 slate-600, hover bg slate-50; count span 70% opacity.<br/><b>Search field:</b> white bg 1px border slate-200 rounded-full, padding-left 36px / right 12px, 8px vertical, 14px, focus border <code>#DC183C</code>, width 100% mobile / 224px (<code>sm:w-56</code>). Lucide `search` 16×16 slate-400 inset 12px.<br/><b>Sort select:</b> 12px weight 600, 1px border slate-200, rounded-lg (8px), padding 12px×8px, slate-600.<br/><br/><b>Card grid:</b> 1 / 2 / 3 columns (<code>sm:grid-cols-2 xl:grid-cols-3</code>), 16px gap (<code>gap-4</code>).<br/><b>Group card:</b> white bg, rounded-2xl (16px), 1px border slate-100, overflow hidden; hover lifts -1px with shadow <code>0 8px 20px -8px rgba(10,44,61,.12)</code>.<br/><b>Card cover:</b> height 80px (<code>h-20</code>), 135° linear gradient (per-group c1→c2), radial white overlay 30%.<br/><b>Privacy pill:</b> top/right 10px, padding 8px×2px, rounded-full, 10px weight 700, bg white/90 — Public <code>#29A37A</code> Lucide `globe`, Private slate-600 Lucide `lock`, icon 12×12.<br/><b>Card body:</b> padding 20px (<code>p-5</code>), pulled up 32px (<code>-mt-8</code>).<br/><b>Avatar tile:</b> 56×56 (<code>w-14 h-14</code>) rounded-xl (12px) bg <code>#0C1F31</code>, 4px white ring, soft shadow, Lucide `users` 24×24 <code>#FF9900</code>.<br/><b>Group name:</b> Plus Jakarta Sans weight 700 <code>#121A21</code> hover <code>#DC183C</code>, 12px top margin.<br/><b>Description:</b> 12px (<code>text-xs</code>) slate-500 snug leading, 4px top margin.<br/><b>Meta row:</b> 11px slate-400, 12px top margin, Lucide `users` 14×14, `·` slate-300 separator.<br/><b>Join button (joined):</b> 1px border <code>#29A37A</code> text <code>#29A37A</code> rounded-full padding 16px×6px, 12px weight 700, hover bg <code>#E4F5EE</code>, Lucide `check` 14×14.<br/><b>Join button (default):</b> bg <code>#DC183C</code> hover <code>#B0142F</code> white rounded-full padding 16px×6px, 12px weight 700, Lucide `plus` 14×14.<br/><b>Empty state:</b> white rounded-2xl 1px border slate-100, 64px vertical padding, centered slate-400, Lucide `layout-grid` 32×32.' } };
+const BRIEFS = { groupsdir:{ title:'Groups Directory', sub:'Browse, filter & join groups', purpose:'Discovery for community groups. Uses a clean list view for quick scanning. Segments (All / My groups / Create Group), search and sort. Joining a group multiplies engagement surface — members in groups post far more than those who aren&rsquo;t.', data:'<code>groups[] { id, name, privacy, member_count, created_at, my_membership }</code>.', logic:'Public groups join instantly; Private create a join request. "Create Group" acts as a native tab that unmounts the directory and mounts the BuddyBoss multi-step form. Cards deep-link to the single-group page.', components:'Segmented tabs · search · sort · list-view cards · join toggle · create-group form · sidebar with guidelines & events.' } };
 function toggleDevMode(){const on=document.body.classList.toggle('dev-on');const b=document.getElementById('devToggle');if(b)b.classList.toggle('on',on);if(on)showToast('Dev Mode on — tap any ⓘ for implementation notes.',null);lucide.createIcons();}
 function closeOverlay(id){const el=document.getElementById(id);if(!el)return;el.classList.remove('open');setTimeout(()=>{if(el&&el.parentNode)el.remove();},300);}
-function openBrief(id){const b=BRIEFS[id];if(!b)return;const sec=(icon,label,html)=>`<div class="px-6 py-4 border-t border-slate-100"><p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] flex items-center gap-1.5 mb-2"><i data-lucide="${icon}" class="w-3.5 h-3.5"></i>${label}</p><div class="text-sm text-slate-600 leading-relaxed">${html}</div></div>`;document.getElementById('overlay-root').innerHTML=`<div class="ov" id="ov-brief"><div class="ov-bg" onclick="closeOverlay('ov-brief')"></div><div class="drawer"><div class="sticky top-0 z-10 bg-[#0C1F31] text-white px-6 py-5 flex items-start justify-between"><div class="min-w-0"><p class="text-[10px] font-bold uppercase tracking-widest text-[#FF9900] mb-1">Dev Brief</p><h3 class="font-jakarta font-extrabold text-lg leading-tight">${b.title}</h3><p class="text-xs text-white/60 mt-1">${b.sub}</p></div><button onclick="closeOverlay('ov-brief')" class="text-white/60 hover:text-white shrink-0 ml-3"><i data-lucide="x" class="w-5 h-5"></i></button></div>${sec('target','Purpose',b.purpose)}${sec('database','Data model',b.data)}${sec('git-branch','Logic',b.logic)}${b.specs ? sec('ruler','Spec values', b.specs) : ''}${sec('boxes','Components',b.components)}</div></div>`;requestAnimationFrame(()=>{const o=document.getElementById('ov-brief');if(o)o.classList.add('open');});lucide.createIcons();}
+function openBrief(id){const b=BRIEFS[id];if(!b)return;const sec=(icon,label,html)=>`<div class="px-6 py-4 border-t border-slate-100"><p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] flex items-center gap-1.5 mb-2"><i data-lucide="${icon}" class="w-3.5 h-3.5"></i>${label}</p><div class="text-sm text-slate-600 leading-relaxed">${html}</div></div>`;document.getElementById('overlay-root').innerHTML=`<div class="ov" id="ov-brief"><div class="ov-bg" onclick="closeOverlay('ov-brief')"></div><div class="drawer"><div class="sticky top-0 z-10 bg-[#0C1F31] text-white px-6 py-5 flex items-start justify-between"><div class="min-w-0"><p class="text-[10px] font-bold uppercase tracking-widest text-[#FF9900] mb-1">Dev Brief</p><h3 class="font-jakarta font-extrabold text-lg leading-tight">${b.title}</h3><p class="text-xs text-white/60 mt-1">${b.sub}</p></div><button onclick="closeOverlay('ov-brief')" class="text-white/60 hover:text-white shrink-0 ml-3"><i data-lucide="x" class="w-5 h-5"></i></button></div>${sec('target','Purpose',b.purpose)}${sec('database','Data model',b.data)}${sec('git-branch','Logic',b.logic)}${sec('boxes','Components',b.components)}</div></div>`;requestAnimationFrame(()=>{const o=document.getElementById('ov-brief');if(o)o.classList.add('open');});lucide.createIcons();}
 function showToast(msg,kind){const el=document.getElementById('toast');const color=kind==='ask'?'#DC183C':kind==='win'?'#29A37A':kind==='share'?'#FF9900':'#0C1F31';el.classList.remove('hidden');el.innerHTML=`<div class="toast-in bg-[#0C1F31] text-white rounded-full pl-3 pr-5 py-2.5 shadow-2xl flex items-center gap-2 text-sm font-semibold" style="border-left:4px solid ${color}"><i data-lucide="check-circle" class="w-4 h-4" style="color:${color}"></i><span>${esc(msg)}</span></div>`;lucide.createIcons();setTimeout(()=>{const i=el.firstElementChild;if(i){i.classList.remove('toast-in');i.classList.add('toast-out');}setTimeout(()=>{el.classList.add('hidden');el.innerHTML='';},250);},2400);}
 
 document.addEventListener('keydown',e=>{ if(e.key==='Escape') document.querySelectorAll('.ov.open').forEach(o=>closeOverlay(o.id)); });
