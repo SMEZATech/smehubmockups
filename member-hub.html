@@ -71,17 +71,41 @@
     .ov.open .drawer { transform:translateX(0); }
     .modalbox { position:absolute; left:50%; top:50%; transform:translate(-50%,-46%); width:calc(100% - 2rem); max-width:420px; background:#fff; border-radius:1rem; box-shadow:0 24px 60px rgba(12,31,49,.3); opacity:0; transition:transform .25s, opacity .25s; }
     .ov.open .modalbox { transform:translate(-50%,-50%); opacity:1; }
+    
+    /* Full Header Search Overlay */
+    .search-overlay {
+      position: absolute;
+      inset: 0;
+      background: white;
+      z-index: 50;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 1rem;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(-10px);
+      transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+    .search-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+    @media (min-width: 640px) {
+      .search-overlay { padding: 0 1.5rem; }
+    }
   </style>
 </head>
 <body class="bg-[#FCFCFC] text-[#121A21] antialiased relative">
 
 <!-- ===================== HEADER ===================== -->
-<header class="bg-white border-b border-slate-200 sticky top-0 z-50 shadow-sm relative">
+<header class="bg-white border-b border-slate-200 sticky top-0 z-40 shadow-sm relative">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
     
     <!-- Logo (Left) -->
-    <a href="public-home.html" class="flex items-center shrink-0 group mr-4">
-      <img src="https://smesouthafrica.co.za/wp-content/uploads/2025/10/Asset-1-1.webp" alt="SME South Africa" class="w-12 h-12 object-contain group-hover:scale-105 transition-transform" />
+    <a href="public-home.html" class="flex items-center shrink-0 group mr-6 py-2">
+      <img src="https://smesouthafrica.co.za/wp-content/uploads/2025/10/Asset-1-1.webp" alt="SME South Africa" class="h-10 sm:h-11 w-auto object-contain group-hover:scale-105 transition-transform" />
     </a>
 
     <!-- Primary Navigation (Center - BuddyBoss Style) -->
@@ -96,7 +120,8 @@
     <div class="flex items-center justify-end gap-4 shrink-0">
       
       <!-- Search Trigger -->
-      <button onclick="toggleHeaderSearch()" class="text-slate-500 hover:text-[#121A21] transition-colors p-1.5" aria-label="Search">
+
+      <button onclick="toggleHeaderSearch()" class="text-slate-500 hover:text-[#121A21] transition-colors p-1.5" aria-label="Open search">
         <i data-lucide="search" class="w-5 h-5"></i>
       </button>
       
@@ -154,12 +179,12 @@
     </div>
   </div>
 
-  <!-- Full Header Search Overlay (Hidden by Default) -->
-  <div id="headerSearchOverlay" class="absolute inset-0 bg-white z-50 flex items-center justify-center px-4 sm:px-6 transition-all duration-300 opacity-0 pointer-events-none scale-y-95 origin-top">
+  <!-- Full Header Search Overlay -->
+  <div id="headerSearchOverlay" class="search-overlay">
     <div class="w-full max-w-4xl flex items-center gap-4">
       <div class="relative flex-1">
         <i data-lucide="search" class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400"></i>
-        <input type="text" id="headerSearchInput" placeholder="Search members, groups, forums..." class="w-full h-12 pl-12 pr-4 text-base bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:border-[#DC183C] focus:ring-2 focus:ring-[#DC183C]/10 transition-all">
+        <input type="text" id="headerSearchInput" placeholder="Search members, groups, forums..." class="w-full h-12 pl-12 pr-4 text-base bg-slate-50 border border-[#DC183C] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#DC183C]/20 transition-all shadow-sm">
       </div>
       <button onclick="toggleHeaderSearch()" class="text-slate-500 hover:text-[#121A21] p-2 transition-colors shrink-0" aria-label="Close search">
         <i data-lucide="x" class="w-6 h-6"></i>
@@ -188,7 +213,7 @@
           <p class="text-xs text-slate-500 mt-0.5">Founder at <span class="font-bold text-[#121A21]">Langa Holdings</span></p>
           <a href="member-account.html" class="inline-flex items-center gap-1 mt-2 text-xs font-bold text-[#DC183C] uppercase tracking-wide hover:underline">View profile <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i></a>
         </div>
-        <div class="grid grid-cols-3 border-t border-slate-100 text-center">
+        <div class="grid grid-cols-3 border-t border-slate-100 text-center pb-2">
           <div class="py-3 border-r border-slate-100">
             <p class="text-[9px] font-bold uppercase tracking-widest text-slate-400">Interest</p>
             <p class="font-jakarta font-bold text-sm text-[#121A21] mt-1">Funding</p>
@@ -289,18 +314,16 @@
     <!-- RIGHT RAIL -->
     <aside class="hidden lg:flex flex-col gap-5 lg:col-span-3">
 
-      <!-- AD BANNER PLACEHOLDER -->
-      <div class="w-full bg-slate-50 rounded-2xl border border-slate-200 flex flex-col items-center justify-center text-slate-400 aspect-[6/5] shadow-inner">
-        <i data-lucide="monitor-play" class="w-8 h-8 mb-2 opacity-50"></i>
-        <p class="text-[10px] font-bold uppercase tracking-widest">Advertisement</p>
-        <p class="text-xs font-medium opacity-70 mt-0.5">300 x 250</p>
+      <!-- AD BANNER -->
+      <div class="w-full bg-slate-50 rounded-2xl border border-slate-200 flex flex-col items-center justify-center text-slate-400 aspect-[6/5] shadow-inner overflow-hidden">
+        <img src="https://placehold.co/300x250/F8FAFC/94A3B8?text=Advertisement" alt="Ad Placeholder" class="w-full h-full object-cover">
       </div>
-      
+
       <!-- Upcoming events -->
       <div class="bg-white rounded-2xl border border-slate-100 overflow-hidden reveal" style="animation-delay:120ms">
         <div class="px-5 py-3 border-b border-slate-100 flex items-center justify-between">
           <h4 class="font-jakarta font-bold uppercase text-sm text-[#121A21] tracking-wide">Upcoming Events</h4>
-          <a href="#" class="text-[10px] font-bold uppercase text-[#DC183C] tracking-widest hover:underline">View all</a>
+          <a href="events.html" class="text-[10px] font-bold uppercase text-[#DC183C] tracking-widest hover:underline">View all</a>
         </div>
         <a href="event-single-in-person.html" class="block px-5 py-4 hover:bg-slate-50 transition group">
           <div class="flex gap-4">
@@ -336,81 +359,75 @@
           <h4 class="font-jakarta font-bold text-sm text-[#121A21] tracking-wide flex items-center gap-1.5">Entrepreneurs to connect with
             <button onclick="openBrief('suggested')" class="dev-badge w-4 h-4 rounded-full bg-[#DC183C] text-white items-center justify-center text-[9px] font-bold leading-none animate-pulse" title="Implementation notes">i</button>
           </h4>
-          <a href="#" class="text-[10px] font-bold uppercase text-[#DC183C] tracking-widest hover:underline">All</a>
         </div>
-        <a href="#" class="block px-5 py-3 hover:bg-slate-50 transition group">
+        <a href="single-member.html" class="block px-5 py-3 hover:bg-slate-50 transition group">
           <div class="flex items-start gap-3">
             <div class="relative shrink-0">
-              <div class="w-9 h-9 rounded-full bg-gradient-to-br from-[#DC183C] to-[#FF9900] grid place-items-center font-jakarta font-bold text-white text-xs">MD</div>
-              <span class="absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 rounded-full bg-[#29A37A] ring-2 ring-white grid place-items-center" title="Completed profile"><i data-lucide="check" class="w-2 h-2 text-white"></i></span>
+              <img src="https://images.unsplash.com/photo-1506277886164-e25aa3f4ef7f?auto=format&fit=crop&q=80&w=100&h=100" alt="Brent Fisher" class="w-10 h-10 rounded-full object-cover">
             </div>
             <div class="min-w-0 flex-1">
-              <p class="text-xs font-bold text-[#121A21] group-hover:text-[#DC183C] transition truncate">Mandla Dlamini</p>
-              <p class="text-[11px] text-slate-500 mt-0.5 truncate">Fintech · Western Cape</p>
+              <p class="text-[13px] font-bold text-[#121A21] group-hover:text-[#DC183C] transition truncate">Brent Fisher</p>
+              <p class="text-[12px] text-slate-500 mt-0.5 leading-snug">Owner · Africa IT Professionals Pty Ltd</p>
+              <button onclick="event.preventDefault();event.stopPropagation();" class="mt-2 inline-flex items-center gap-1 text-[11px] font-bold text-[#DC183C] bg-white border border-[#DC183C] hover:bg-[#FDECEF] px-3 py-1.5 rounded-full transition" aria-label="Connect">
+                <i data-lucide="plus" class="w-3 h-3"></i> Connect
+              </button>
             </div>
-            <button onclick="event.preventDefault();event.stopPropagation();" class="shrink-0 flex items-center gap-1 text-[11px] font-bold text-[#DC183C] hover:bg-[#FDECEF] px-2 py-1 rounded-md transition" aria-label="Connect">
-              <i data-lucide="plus" class="w-3.5 h-3.5"></i> Connect
-            </button>
           </div>
         </a>
-        <a href="#" class="block px-5 py-3 hover:bg-slate-50 transition group border-t border-slate-100">
+        <a href="single-member.html" class="block px-5 py-3 hover:bg-slate-50 transition group border-t border-slate-100">
           <div class="flex items-start gap-3">
             <div class="relative shrink-0">
-              <div class="w-9 h-9 rounded-full bg-gradient-to-br from-[#DC183C] to-[#FF9900] grid place-items-center font-jakarta font-bold text-white text-xs">SN</div>
-              <span class="absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 rounded-full bg-[#29A37A] ring-2 ring-white grid place-items-center" title="Completed profile"><i data-lucide="check" class="w-2 h-2 text-white"></i></span>
+              <img src="https://images.unsplash.com/photo-1531123897727-8f129e1bfa82?auto=format&fit=crop&q=80&w=100&h=100" alt="Nobom Nini" class="w-10 h-10 rounded-full object-cover">
             </div>
             <div class="min-w-0 flex-1">
-              <p class="text-xs font-bold text-[#121A21] group-hover:text-[#DC183C] transition truncate">Sipho Ngubane</p>
-              <p class="text-[11px] text-slate-500 mt-0.5 truncate">Fintech · KwaZulu-Natal</p>
+              <p class="text-[13px] font-bold text-[#121A21] group-hover:text-[#DC183C] transition truncate">Nobom Nini</p>
+              <p class="text-[12px] text-slate-500 mt-0.5 leading-snug">Owner · SIPHETHUBOMI PTY LTD</p>
+              <button onclick="event.preventDefault();event.stopPropagation();" class="mt-2 inline-flex items-center gap-1 text-[11px] font-bold text-[#DC183C] bg-white border border-[#DC183C] hover:bg-[#FDECEF] px-3 py-1.5 rounded-full transition" aria-label="Connect">
+                <i data-lucide="plus" class="w-3 h-3"></i> Connect
+              </button>
             </div>
-            <button onclick="event.preventDefault();event.stopPropagation();" class="shrink-0 flex items-center gap-1 text-[11px] font-bold text-[#DC183C] hover:bg-[#FDECEF] px-2 py-1 rounded-md transition" aria-label="Connect">
-              <i data-lucide="plus" class="w-3.5 h-3.5"></i> Connect
-            </button>
           </div>
         </a>
-        <a href="#" class="block px-5 py-3 hover:bg-slate-50 transition group border-t border-slate-100">
+        <a href="single-member.html" class="block px-5 py-3 hover:bg-slate-50 transition group border-t border-slate-100">
           <div class="flex items-start gap-3">
             <div class="relative shrink-0">
-              <div class="w-9 h-9 rounded-full bg-gradient-to-br from-[#DC183C] to-[#FF9900] grid place-items-center font-jakarta font-bold text-white text-xs">RS</div>
-              <span class="absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 rounded-full bg-[#29A37A] ring-2 ring-white grid place-items-center" title="Completed profile"><i data-lucide="check" class="w-2 h-2 text-white"></i></span>
+              <img src="https://images.unsplash.com/photo-1534308143481-c55f00be8bd7?auto=format&fit=crop&q=80&w=100&h=100" alt="Marvin Mafa" class="w-10 h-10 rounded-full object-cover">
             </div>
             <div class="min-w-0 flex-1">
-              <p class="text-xs font-bold text-[#121A21] group-hover:text-[#DC183C] transition truncate">Refiloe Sithole</p>
-              <p class="text-[11px] text-slate-500 mt-0.5 truncate">SaaS · Gauteng</p>
+              <p class="text-[13px] font-bold text-[#121A21] group-hover:text-[#DC183C] transition truncate">Marvin Mafa</p>
+              <p class="text-[12px] text-slate-500 mt-0.5 leading-snug">Manager · African cooperative desk</p>
+              <button onclick="event.preventDefault();event.stopPropagation();" class="mt-2 inline-flex items-center gap-1 text-[11px] font-bold text-[#DC183C] bg-white border border-[#DC183C] hover:bg-[#FDECEF] px-3 py-1.5 rounded-full transition" aria-label="Connect">
+                <i data-lucide="plus" class="w-3 h-3"></i> Connect
+              </button>
             </div>
-            <button onclick="event.preventDefault();event.stopPropagation();" class="shrink-0 flex items-center gap-1 text-[11px] font-bold text-[#DC183C] hover:bg-[#FDECEF] px-2 py-1 rounded-md transition" aria-label="Connect">
-              <i data-lucide="plus" class="w-3.5 h-3.5"></i> Connect
-            </button>
           </div>
         </a>
-        <a href="#" class="block px-5 py-3 hover:bg-slate-50 transition group border-t border-slate-100">
+        <a href="single-member.html" class="block px-5 py-3 hover:bg-slate-50 transition group border-t border-slate-100">
           <div class="flex items-start gap-3">
             <div class="relative shrink-0">
-              <div class="w-9 h-9 rounded-full bg-gradient-to-br from-[#DC183C] to-[#FF9900] grid place-items-center font-jakarta font-bold text-white text-xs">TM</div>
-              <span class="absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 rounded-full bg-[#29A37A] ring-2 ring-white grid place-items-center" title="Completed profile"><i data-lucide="check" class="w-2 h-2 text-white"></i></span>
+              <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=100&h=100" alt="Nndivhe Godfrey Marema" class="w-10 h-10 rounded-full object-cover">
             </div>
             <div class="min-w-0 flex-1">
-              <p class="text-xs font-bold text-[#121A21] group-hover:text-[#DC183C] transition truncate">Thabo Mokoena</p>
-              <p class="text-[11px] text-slate-500 mt-0.5 truncate">Retail · Western Cape</p>
+              <p class="text-[13px] font-bold text-[#121A21] group-hover:text-[#DC183C] transition truncate">Nndivhe Godfrey Marema</p>
+              <p class="text-[12px] text-slate-500 mt-0.5 leading-snug">Co-Founder · Arem Enterprises Pty (Ltd)</p>
+              <button onclick="event.preventDefault();event.stopPropagation();" class="mt-2 inline-flex items-center gap-1 text-[11px] font-bold text-[#DC183C] bg-white border border-[#DC183C] hover:bg-[#FDECEF] px-3 py-1.5 rounded-full transition" aria-label="Connect">
+                <i data-lucide="plus" class="w-3 h-3"></i> Connect
+              </button>
             </div>
-            <button onclick="event.preventDefault();event.stopPropagation();" class="shrink-0 flex items-center gap-1 text-[11px] font-bold text-[#DC183C] hover:bg-[#FDECEF] px-2 py-1 rounded-md transition" aria-label="Connect">
-              <i data-lucide="plus" class="w-3.5 h-3.5"></i> Connect
-            </button>
           </div>
         </a>
-        <a href="#" class="block px-5 py-3 hover:bg-slate-50 transition group border-t border-slate-100">
+        <a href="single-member.html" class="block px-5 py-3 hover:bg-slate-50 transition group border-t border-slate-100">
           <div class="flex items-start gap-3">
             <div class="relative shrink-0">
-              <div class="w-9 h-9 rounded-full bg-gradient-to-br from-[#DC183C] to-[#FF9900] grid place-items-center font-jakarta font-bold text-white text-xs">LP</div>
-              <span class="absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 rounded-full bg-[#29A37A] ring-2 ring-white grid place-items-center" title="Completed profile"><i data-lucide="check" class="w-2 h-2 text-white"></i></span>
+              <img src="https://images.unsplash.com/photo-1531384441138-2736e62e0919?auto=format&fit=crop&q=80&w=100&h=100" alt="Aadil Khan" class="w-10 h-10 rounded-full object-cover">
             </div>
             <div class="min-w-0 flex-1">
-              <p class="text-xs font-bold text-[#121A21] group-hover:text-[#DC183C] transition truncate">Lerato Phakathi</p>
-              <p class="text-[11px] text-slate-500 mt-0.5 truncate">AI · Gauteng</p>
+              <p class="text-[13px] font-bold text-[#121A21] group-hover:text-[#DC183C] transition truncate">Aadil Khan</p>
+              <p class="text-[12px] text-slate-500 mt-0.5 leading-snug">Partner · Core Claim Holdings (Pty) Ltd</p>
+              <button onclick="event.preventDefault();event.stopPropagation();" class="mt-2 inline-flex items-center gap-1 text-[11px] font-bold text-[#DC183C] bg-white border border-[#DC183C] hover:bg-[#FDECEF] px-3 py-1.5 rounded-full transition" aria-label="Connect">
+                <i data-lucide="plus" class="w-3 h-3"></i> Connect
+              </button>
             </div>
-            <button onclick="event.preventDefault();event.stopPropagation();" class="shrink-0 flex items-center gap-1 text-[11px] font-bold text-[#DC183C] hover:bg-[#FDECEF] px-2 py-1 rounded-md transition" aria-label="Connect">
-              <i data-lucide="plus" class="w-3.5 h-3.5"></i> Connect
-            </button>
           </div>
         </a>
       </div>
@@ -451,12 +468,6 @@
     ask:   { color:'#DC183C', bgTint:'bg-[#DC183C]/10', text:'text-[#DC183C]', label:'Ask',   icon:'help-circle' },
     win:   { color:'#29A37A', bgTint:'bg-[#29A37A]/10', text:'text-[#29A37A]', label:'Win',   icon:'trophy' },
     share: { color:'#FF9900', bgTint:'bg-[#FF9900]/15', text:'text-[#AE6B0A]', label:'Share', icon:'megaphone' }
-  };
-
-  const PLACEHOLDERS = {
-    ask:   "What do you need? Be specific — advice, intro, hire, customer, capital... the community is listening.",
-    win:   "What did you achieve? Raised, launched, hired, signed, hit a milestone — celebrate it.",
-    share: "Share what's on your mind, Tshepho Joel..."
   };
 
   // ===== DEMO DATA =============================================================
@@ -507,7 +518,7 @@
       }
     ],
     sortBy: 'all',
-    composer: { open:false, type:null, content:'', topicOpen:false }
+    composer: { open:false, content:'', topicOpen:false, type:null }
   };
 
   // ===== HELPERS ===============================================================
@@ -518,22 +529,7 @@
   }
 
   // Header Search Toggle Logic
-  function toggleHeaderSearch() {
-    const overlay = document.getElementById('headerSearchOverlay');
-    const input = document.getElementById('headerSearchInput');
-    
-    if (overlay.classList.contains('opacity-0')) {
-      // Open
-      overlay.classList.remove('opacity-0', 'pointer-events-none', 'scale-y-95');
-      overlay.classList.add('opacity-100', 'pointer-events-auto', 'scale-y-100');
-      setTimeout(() => input.focus(), 100); // Focus after animation starts
-    } else {
-      // Close
-      overlay.classList.remove('opacity-100', 'pointer-events-auto', 'scale-y-100');
-      overlay.classList.add('opacity-0', 'pointer-events-none', 'scale-y-95');
-      input.value = ''; // clear on close
-    }
-  }
+
 
   // Close search on escape key
   document.addEventListener('keydown', (e) => {
@@ -652,7 +648,7 @@
             <span>Like</span>
           </button>
           <button class="flex-1 flex items-center justify-center gap-2 py-3 rounded-lg hover:bg-slate-50 text-slate-500 text-[13.5px] font-bold transition">
-            <i data-lucide="message-square" class="w-4 h-4"></i>
+            <i data-lucide="message-circle" class="w-4 h-4"></i>
             <span>Comment</span>
           </button>
           <button class="flex-1 flex items-center justify-center gap-2 py-3 rounded-lg hover:bg-slate-50 text-slate-500 text-[13.5px] font-bold transition">
@@ -673,13 +669,13 @@
   }
 
   // ===== COMPOSER ==============================================================
-  function openComposer(type = 'share'){
-    state.composer = { open:true, content:'', type: type, topicOpen: false };
+  function openComposer(){
+    state.composer = { open:true, content:'', topicOpen:false, type:null };
     renderComposer();
   }
 
   function closeComposer(){
-    state.composer = { open:false, content:'', type: 'share', topicOpen: false };
+    state.composer = { open:false, content:'', topicOpen:false, type:null };
     renderComposer();
   }
 
@@ -735,16 +731,21 @@
           
           <!-- Body -->
           <div class="p-6">
+            <!-- Simplified Author Info -->
             <div class="flex items-center gap-3 mb-4">
               ${monogram('TJ', 48)}
               <div>
-                <p class="font-bold text-[15px] text-[#121A21] leading-tight">${esc(ME.name)}</p>
-                <p class="text-[12px] text-slate-400 mt-0.5">${esc(ME.interest)} <span class="text-slate-300 mx-0.5">·</span> ${esc(ME.sector)} <span class="text-slate-300 mx-0.5">·</span> ${esc(ME.province)}</p>
+                <p class="font-jakarta font-semibold text-[15px] text-[#121A21] leading-tight mb-1">Tshepho Joel</p>
+                <!-- Privacy Pill -->
+                <button class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-slate-100 hover:bg-slate-200 text-xs font-semibold text-slate-600 border border-slate-200 transition-colors">
+                  <i data-lucide="globe" class="w-3 h-3"></i> Public <i data-lucide="chevron-down" class="w-3 h-3 ml-0.5"></i>
+                </button>
               </div>
             </div>
             
+            <!-- Clean Text Area -->
             <div class="relative min-h-[140px] flex flex-col">
-              <textarea id="composer-textarea" oninput="updateComposerContent(this.value)" placeholder="${esc(PLACEHOLDERS[state.composer.type || 'share'])}" class="w-full flex-1 text-[17px] text-[#121A21] placeholder-slate-400 outline-none resize-none border-none p-0 bg-transparent leading-relaxed">${esc(state.composer.content)}</textarea>
+              <textarea id="composer-textarea" oninput="updateComposerContent(this.value)" placeholder="Share what's on your mind, Tshepho Joel..." class="w-full flex-1 text-[17px] text-[#121A21] placeholder-slate-400 outline-none resize-none border-none p-0 bg-transparent leading-relaxed">${esc(state.composer.content)}</textarea>
               
               <!-- Formatting Icons -->
               <div class="absolute bottom-2 right-2 flex items-center gap-3 text-slate-300">
@@ -806,7 +807,7 @@
     }
     const newPost = {
       id: ++nextId,
-      type: state.composer.type || 'share',
+      type: state.composer.type || 'share', // Default to share if none selected
       timeAgo: 'Just now',
       tsMin: 0,
       action: 'posted an update',
@@ -921,6 +922,15 @@
   renderSortTabs();
   renderFeed();
   lucide.createIcons();
+
+  /* HEADER-SEARCH-JS */
+  function toggleHeaderSearch(){
+    var o=document.getElementById('headerSearchOverlay'); if(!o) return;
+    var open=o.classList.toggle('active');
+    var i=document.getElementById('headerSearchInput');
+    if(open){ if(i) setTimeout(function(){ i.focus(); },100); } else if(i){ i.value=''; }
+  }
+  document.addEventListener('keydown', function(e){ if(e.key==='Escape'){ var o=document.getElementById('headerSearchOverlay'); if(o&&o.classList.contains('active')) toggleHeaderSearch(); } });
 </script>
 <script src="status.js"></script>
 <script src="gate-links.js"></script>

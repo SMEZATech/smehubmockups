@@ -28,28 +28,123 @@
     .ov{position:fixed;inset:0;z-index:60;} .ov-bg{position:absolute;inset:0;background:rgba(12,31,49,.45);backdrop-filter:blur(2px);opacity:0;transition:opacity .3s;} .ov.open .ov-bg{opacity:1;}
     .drawer{position:absolute;right:0;top:0;height:100%;width:100%;max-width:440px;background:#fff;box-shadow:-12px 0 40px rgba(12,31,49,.25);overflow-y:auto;transform:translateX(100%);transition:transform .3s cubic-bezier(.2,.7,.2,1);} .ov.open .drawer{transform:translateX(0);}
     .dev-badge{display:none;} body.dev-on .dev-badge{display:inline-flex;} #devToggle.on{background:#DC183C;color:#fff;border-color:#DC183C;}
+    
+    /* Full Header Search Overlay */
+    .search-overlay {
+      position: absolute;
+      inset: 0;
+      background: white;
+      z-index: 50;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 1rem;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(-10px);
+      transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+    .search-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+    @media (min-width: 640px) {
+      .search-overlay { padding: 0 1.5rem; }
+    }
   </style>
 </head>
 <body class="bg-[#FCFCFC] text-[#121A21] font-inter">
 
-<!-- HEADER (shared, cross-linked) -->
-<header class="bg-slate-100 border-b-2 border-dashed border-slate-400 relative overflow-hidden">
-  <div class="absolute inset-0 opacity-30 pointer-events-none" style="background:repeating-linear-gradient(45deg,transparent,transparent 8px,rgba(100,116,139,.18) 8px,rgba(100,116,139,.18) 16px)"></div>
-  <div class="relative max-w-7xl mx-auto px-4 sm:px-6 h-14 flex items-center gap-3 sm:gap-4">
-    <a href="public-home.html" class="flex items-center gap-2 shrink-0 opacity-70 hover:opacity-100 transition">
-      <img src="assets/logo-icon.png" alt="SME South Africa" class="w-7 h-7" />
-      <span class="font-jakarta font-extrabold text-[13px] tracking-tight text-slate-700 hidden sm:inline">SME South Africa</span>
+<header class="bg-white border-b border-slate-200 sticky top-0 z-40 shadow-sm relative">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+    
+    <!-- Logo (Left) -->
+    <a href="public-home.html" class="flex items-center shrink-0 group mr-6 py-2">
+      <img src="https://smesouthafrica.co.za/wp-content/uploads/2025/10/Asset-1-1.webp" alt="SME South Africa" class="h-10 sm:h-11 w-auto object-contain group-hover:scale-105 transition-transform" />
     </a>
-    <span class="mx-1 hidden sm:inline w-px h-5 bg-slate-300"></span>
-    <p class="text-[10px] sm:text-[11px] font-bold uppercase tracking-widest text-slate-600 flex items-center gap-1.5">
-      <i data-lucide="construction" class="w-3.5 h-3.5 text-slate-500"></i>
-      Header placeholder &middot; design pending
-    </p>
-    <div class="ml-auto flex items-center gap-2">
-      <button id="devToggle" onclick="toggleDevMode()" class="inline-flex items-center gap-1.5 px-2.5 h-8 rounded-full bg-white border border-slate-300 hover:border-[#DC183C] hover:text-[#DC183C] text-[11px] font-bold uppercase tracking-wider text-slate-600 transition" title="Toggle implementation notes"><i data-lucide="code-2" class="w-3.5 h-3.5"></i><span class="hidden sm:inline">Dev</span></button>
-      <a href="index.html" class="inline-flex items-center gap-1.5 px-3 h-8 rounded-full bg-white border border-slate-300 hover:border-slate-500 text-[11px] font-bold text-slate-700 transition">
-        <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i><span class="hidden sm:inline">Launcher</span>
-      </a>
+
+    <!-- Primary Navigation (Center - BuddyBoss Style) -->
+    <nav class="hidden md:flex items-center justify-center gap-2 flex-1 px-4 h-full">
+      <a href="member-hub.html" class="px-3 h-full text-[14px] font-semibold font-jakarta text-[#6A7581] hover:text-[#DC183C] border-b-[3px] border-transparent flex items-center gap-2 transition-colors"><i data-lucide="activity" class="w-4 h-4"></i> Home</a>
+      <a href="members.html" class="px-3 h-full text-[14px] font-bold font-jakarta text-[#DC183C] border-b-[3px] border-[#DC183C] flex items-center gap-2 transition-colors"><i data-lucide="user" class="w-4 h-4 text-[#DC183C]"></i> Members</a>
+      <a href="groups.html" class="px-3 h-full text-[14px] font-semibold font-jakarta text-[#6A7581] hover:text-[#DC183C] border-b-[3px] border-transparent flex items-center gap-2 transition-colors"><i data-lucide="users" class="w-4 h-4"></i> Groups</a>
+      <a href="forums.html" class="px-3 h-full text-[14px] font-semibold font-jakarta text-[#6A7581] hover:text-[#DC183C] border-b-[3px] border-transparent flex items-center gap-2 transition-colors"><i data-lucide="message-square" class="w-4 h-4"></i> Forums <i data-lucide="chevron-down" class="w-3 h-3 ml-[-2px] opacity-50"></i></a>
+    </nav>
+
+    <!-- Utility & Profile (Right) -->
+    <div class="flex items-center justify-end gap-4 shrink-0">
+      
+      <!-- Search Trigger -->
+
+      <button onclick="toggleHeaderSearch()" class="text-slate-500 hover:text-[#121A21] transition-colors p-1.5" aria-label="Open search">
+        <i data-lucide="search" class="w-5 h-5"></i>
+      </button>
+      
+      <div class="w-px h-6 bg-slate-200 hidden sm:block mx-1"></div>
+      
+      <!-- Action Icons -->
+      <div class="hidden sm:flex items-center gap-2">
+        <button class="relative text-slate-500 hover:text-[#121A21] transition-colors p-1.5" aria-label="Messages">
+          <i data-lucide="inbox" class="w-5 h-5"></i>
+          <span class="absolute top-0 right-0 w-4 h-4 bg-[#DC183C] text-white text-[9px] font-bold rounded-full flex items-center justify-center ring-2 ring-white shadow-sm">1</span>
+        </button>
+        <button class="relative text-slate-500 hover:text-[#121A21] transition-colors p-1.5" aria-label="Notifications">
+          <i data-lucide="bell" class="w-5 h-5"></i>
+          <span class="absolute top-0 right-0 w-4 h-4 bg-[#DC183C] text-white text-[9px] font-bold rounded-full flex items-center justify-center ring-2 ring-white shadow-sm">8</span>
+        </button>
+        <button class="relative text-slate-500 hover:text-[#121A21] transition-colors p-1.5" aria-label="Cart">
+          <i data-lucide="shopping-cart" class="w-5 h-5"></i>
+          <span class="absolute top-0 right-0 w-4 h-4 bg-[#DC183C] text-white text-[9px] font-bold rounded-full flex items-center justify-center ring-2 ring-white shadow-sm">4</span>
+        </button>
+      </div>
+
+      <!-- User Profile Dropdown -->
+      <div class="relative ml-1 sm:ml-2 cursor-pointer group">
+        <div class="flex items-center gap-3">
+          <span class="font-jakarta font-bold text-[15px] text-[#121A21] hidden md:block">Tshepho</span>
+          <div class="w-9 h-9 rounded-full bg-gradient-to-br from-[#DC183C] to-[#FF9900] grid place-items-center font-jakarta font-bold text-white text-xs ring-2 ring-white shadow-sm group-hover:scale-105 transition-transform">TJ</div>
+        </div>
+        
+        <!-- Dropdown Menu -->
+        <div class="absolute right-0 top-full mt-3 w-64 bg-white rounded-xl shadow-xl border border-slate-100 overflow-hidden z-50 transform origin-top-right scale-95 opacity-0 pointer-events-none transition-all duration-200 group-hover:scale-100 group-hover:opacity-100 group-hover:pointer-events-auto">
+          <div class="p-4 border-b border-slate-100 flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-gradient-to-br from-[#DC183C] to-[#FF9900] grid place-items-center font-jakarta font-bold text-white text-sm shrink-0">TJ</div>
+            <div class="min-w-0">
+              <p class="font-jakarta font-bold text-sm text-[#121A21] truncate">Tshepho Joel</p>
+              <p class="text-xs text-slate-500 truncate">@tshephojoel</p>
+            </div>
+          </div>
+          <div class="p-2 text-sm text-slate-700 font-medium">
+            <a href="member-account.html" class="block px-3 py-2 rounded-lg hover:bg-slate-50 hover:text-[#DC183C] transition-colors">Profile</a>
+            <a href="member-account.html" class="block px-3 py-2 rounded-lg hover:bg-slate-50 hover:text-[#DC183C] transition-colors">Account Settings</a>
+            <a href="#" class="block px-3 py-2 rounded-lg hover:bg-slate-50 hover:text-[#DC183C] transition-colors flex items-center justify-between">Orders <span class="bg-slate-100 text-slate-500 text-[10px] font-bold px-2 py-0.5 rounded-full">4</span></a>
+          </div>
+          <div class="p-2 border-t border-slate-100">
+            <a href="#" class="block px-3 py-2 text-sm font-semibold text-[#DC183C] hover:bg-[#FDECEF] rounded-lg transition-colors">Sign Out</a>
+          </div>
+          <div class="px-5 py-3 border-t border-slate-100 bg-slate-50 flex items-center justify-between">
+            <span class="text-[10px] font-bold uppercase tracking-widest text-slate-500">Dev Mode</span>
+            <button id="devToggle" onclick="toggleDevMode()" class="w-8 h-4 rounded-full bg-slate-200 relative transition-colors focus:outline-none" aria-pressed="false">
+              <span class="absolute left-0.5 top-0.5 w-3 h-3 rounded-full bg-white shadow-sm transition-transform duration-200"></span>
+            </button>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+
+  <!-- Full Header Search Overlay -->
+  <div id="headerSearchOverlay" class="search-overlay">
+    <div class="w-full max-w-4xl flex items-center gap-4">
+      <div class="relative flex-1">
+        <i data-lucide="search" class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400"></i>
+        <input type="text" id="headerSearchInput" placeholder="Search members, groups, forums..." class="w-full h-12 pl-12 pr-4 text-base bg-slate-50 border border-[#DC183C] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#DC183C]/20 transition-all shadow-sm">
+      </div>
+      <button onclick="toggleHeaderSearch()" class="text-slate-500 hover:text-[#121A21] p-2 transition-colors shrink-0" aria-label="Close search">
+        <i data-lucide="x" class="w-6 h-6"></i>
+      </button>
     </div>
   </div>
 </header>
@@ -68,33 +163,143 @@
 
     <!-- SIDEBAR: hidden on mobile/tablet -->
     <aside class="hidden lg:block lg:col-span-4 space-y-5">
-      <div class="bg-white rounded-2xl border border-slate-100 p-5 reveal">
-        <h4 class="font-jakarta font-bold uppercase text-sm text-[#121A21] tracking-wide mb-3">Quick facts</h4>
-        <div class="space-y-2.5 text-sm">
-          <div class="flex items-center gap-2 text-slate-600"><i data-lucide="briefcase" class="w-4 h-4 text-slate-400 shrink-0"></i> Founder at GreenTrace</div>
-          <div class="flex items-center gap-2 text-slate-600"><i data-lucide="map-pin" class="w-4 h-4 text-slate-400 shrink-0"></i> Western Cape, South Africa</div>
-          <div class="flex items-center gap-2 text-slate-600"><i data-lucide="layers" class="w-4 h-4 text-slate-400 shrink-0"></i> Agri-Tech &middot; Growth stage</div>
-          <div class="flex items-center gap-2 text-slate-600"><i data-lucide="calendar" class="w-4 h-4 text-slate-400 shrink-0"></i> Member since Mar 2023</div>
-          <div class="flex items-center gap-2 text-slate-600"><i data-lucide="clock" class="w-4 h-4 text-slate-400 shrink-0"></i> Active 25 minutes ago</div>
+      
+      <!-- Upcoming events -->
+      <div class="bg-white rounded-2xl border border-slate-100 overflow-hidden reveal" style="animation-delay:120ms">
+        <div class="px-5 py-3 border-b border-slate-100 flex items-center justify-between">
+          <h4 class="font-jakarta font-bold uppercase text-sm text-[#121A21] tracking-wide">Upcoming Events</h4>
+          <a href="#" class="text-[10px] font-bold uppercase text-[#DC183C] tracking-widest hover:underline">View all</a>
         </div>
+        <a href="event-single-in-person.html" class="block px-5 py-4 hover:bg-slate-50 transition group">
+          <div class="flex gap-4">
+            <div class="shrink-0 w-12 text-center bg-[#FFF1E0] rounded-lg py-1.5 border border-[#FF9900]/20 group-hover:bg-[#DC183C] transition-colors">
+              <p class="text-[9px] font-bold uppercase text-[#AE6B0A] tracking-widest group-hover:text-white">Jun</p>
+              <p class="font-jakarta font-extrabold text-xl text-[#121A21] leading-none mt-0.5 group-hover:text-white">23</p>
+            </div>
+            <div class="min-w-0">
+              <h5 class="font-bold text-sm text-[#121A21] leading-tight group-hover:text-[#DC183C] transition">Annual SME Funding Gala 2026</h5>
+              <p class="text-[11px] text-slate-500 mt-1 flex items-center gap-1"><i data-lucide="map-pin" class="w-3 h-3"></i> Focus Rooms, Sandton</p>
+              <p class="text-[11px] text-slate-500 mt-0.5 flex items-center gap-1"><i data-lucide="clock" class="w-3 h-3"></i> 08:30 AM SAST</p>
+            </div>
+          </div>
+        </a>
+        <a href="event-single-online.html" class="block px-5 py-4 hover:bg-slate-50 transition group border-t border-slate-100">
+          <div class="flex gap-4">
+            <div class="shrink-0 w-12 text-center bg-[#FFF1E0] rounded-lg py-1.5 border border-[#FF9900]/20 group-hover:bg-[#DC183C] transition-colors">
+              <p class="text-[9px] font-bold uppercase text-[#AE6B0A] tracking-widest group-hover:text-white">Jul</p>
+              <p class="font-jakarta font-extrabold text-xl text-[#121A21] leading-none mt-0.5 group-hover:text-white">09</p>
+            </div>
+            <div class="min-w-0">
+              <h5 class="font-bold text-sm text-[#121A21] leading-tight group-hover:text-[#DC183C] transition">Funding Without Tears Webinar</h5>
+              <p class="text-[11px] text-slate-500 mt-1 flex items-center gap-1"><i data-lucide="video" class="w-3 h-3"></i> Online · Zoom</p>
+              <p class="text-[11px] text-slate-500 mt-0.5 flex items-center gap-1"><i data-lucide="clock" class="w-3 h-3"></i> 11:00 AM SAST</p>
+            </div>
+          </div>
+        </a>
       </div>
-      <div class="bg-white rounded-2xl border border-slate-100 overflow-hidden reveal" style="animation-delay:80ms">
-        <div class="px-5 py-3 border-b border-slate-100 flex items-center gap-4">
-          <h4 class="font-jakarta font-bold uppercase text-sm text-[#121A21] tracking-wide">Groups in common</h4>
+
+      <!-- Suggested members -->
+      <div class="bg-white rounded-2xl border border-slate-100 overflow-hidden reveal" style="animation-delay:240ms">
+        <div class="px-5 py-3 border-b border-slate-100 flex items-center justify-between">
+          <h4 class="font-jakarta font-bold text-sm text-[#121A21] tracking-wide flex items-center gap-1.5">Entrepreneurs to connect with
+            <button onclick="openBrief('suggested')" class="dev-badge w-4 h-4 rounded-full bg-[#DC183C] text-white items-center justify-center text-[9px] font-bold leading-none animate-pulse" title="Implementation notes">i</button>
+          </h4>
         </div>
-        <div id="mutual-groups"></div>
+        <a href="#" class="block px-5 py-3 hover:bg-slate-50 transition group">
+          <div class="flex items-start gap-3">
+            <div class="relative shrink-0">
+              <img src="https://images.unsplash.com/photo-1506277886164-e25aa3f4ef7f?auto=format&fit=crop&q=80&w=100&h=100" alt="Brent Fisher" class="w-10 h-10 rounded-full object-cover">
+            </div>
+            <div class="min-w-0 flex-1">
+              <p class="text-[13px] font-bold text-[#121A21] group-hover:text-[#DC183C] transition truncate">Brent Fisher</p>
+              <p class="text-[12px] text-slate-500 mt-0.5 leading-snug">Owner · Africa IT Professionals Pty Ltd</p>
+              <button onclick="event.preventDefault();event.stopPropagation();" class="mt-2 inline-flex items-center gap-1 text-[11px] font-bold text-[#DC183C] bg-white border border-[#DC183C] hover:bg-[#FDECEF] px-3 py-1.5 rounded-full transition" aria-label="Connect">
+                <i data-lucide="plus" class="w-3 h-3"></i> Connect
+              </button>
+            </div>
+          </div>
+        </a>
+        <a href="#" class="block px-5 py-3 hover:bg-slate-50 transition group border-t border-slate-100">
+          <div class="flex items-start gap-3">
+            <div class="relative shrink-0">
+              <img src="https://images.unsplash.com/photo-1531123897727-8f129e1bfa82?auto=format&fit=crop&q=80&w=100&h=100" alt="Nobom Nini" class="w-10 h-10 rounded-full object-cover">
+            </div>
+            <div class="min-w-0 flex-1">
+              <p class="text-[13px] font-bold text-[#121A21] group-hover:text-[#DC183C] transition truncate">Nobom Nini</p>
+              <p class="text-[12px] text-slate-500 mt-0.5 leading-snug">Owner · SIPHETHUBOMI PTY LTD</p>
+              <button onclick="event.preventDefault();event.stopPropagation();" class="mt-2 inline-flex items-center gap-1 text-[11px] font-bold text-[#DC183C] bg-white border border-[#DC183C] hover:bg-[#FDECEF] px-3 py-1.5 rounded-full transition" aria-label="Connect">
+                <i data-lucide="plus" class="w-3 h-3"></i> Connect
+              </button>
+            </div>
+          </div>
+        </a>
+        <a href="#" class="block px-5 py-3 hover:bg-slate-50 transition group border-t border-slate-100">
+          <div class="flex items-start gap-3">
+            <div class="relative shrink-0">
+              <img src="https://images.unsplash.com/photo-1534308143481-c55f00be8bd7?auto=format&fit=crop&q=80&w=100&h=100" alt="Marvin Mafa" class="w-10 h-10 rounded-full object-cover">
+            </div>
+            <div class="min-w-0 flex-1">
+              <p class="text-[13px] font-bold text-[#121A21] group-hover:text-[#DC183C] transition truncate">Marvin Mafa</p>
+              <p class="text-[12px] text-slate-500 mt-0.5 leading-snug">Manager · African cooperative desk</p>
+              <button onclick="event.preventDefault();event.stopPropagation();" class="mt-2 inline-flex items-center gap-1 text-[11px] font-bold text-[#DC183C] bg-white border border-[#DC183C] hover:bg-[#FDECEF] px-3 py-1.5 rounded-full transition" aria-label="Connect">
+                <i data-lucide="plus" class="w-3 h-3"></i> Connect
+              </button>
+            </div>
+          </div>
+        </a>
+        <a href="#" class="block px-5 py-3 hover:bg-slate-50 transition group border-t border-slate-100">
+          <div class="flex items-start gap-3">
+            <div class="relative shrink-0">
+              <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=100&h=100" alt="Nndivhe Godfrey Marema" class="w-10 h-10 rounded-full object-cover">
+            </div>
+            <div class="min-w-0 flex-1">
+              <p class="text-[13px] font-bold text-[#121A21] group-hover:text-[#DC183C] transition truncate">Nndivhe Godfrey Marema</p>
+              <p class="text-[12px] text-slate-500 mt-0.5 leading-snug">Co-Founder · Arem Enterprises Pty (Ltd)</p>
+              <button onclick="event.preventDefault();event.stopPropagation();" class="mt-2 inline-flex items-center gap-1 text-[11px] font-bold text-[#DC183C] bg-white border border-[#DC183C] hover:bg-[#FDECEF] px-3 py-1.5 rounded-full transition" aria-label="Connect">
+                <i data-lucide="plus" class="w-3 h-3"></i> Connect
+              </button>
+            </div>
+          </div>
+        </a>
+        <a href="#" class="block px-5 py-3 hover:bg-slate-50 transition group border-t border-slate-100">
+          <div class="flex items-start gap-3">
+            <div class="relative shrink-0">
+              <img src="https://images.unsplash.com/photo-1531384441138-2736e62e0919?auto=format&fit=crop&q=80&w=100&h=100" alt="Aadil Khan" class="w-10 h-10 rounded-full object-cover">
+            </div>
+            <div class="min-w-0 flex-1">
+              <p class="text-[13px] font-bold text-[#121A21] group-hover:text-[#DC183C] transition truncate">Aadil Khan</p>
+              <p class="text-[12px] text-slate-500 mt-0.5 leading-snug">Partner · Core Claim Holdings (Pty) Ltd</p>
+              <button onclick="event.preventDefault();event.stopPropagation();" class="mt-2 inline-flex items-center gap-1 text-[11px] font-bold text-[#DC183C] bg-white border border-[#DC183C] hover:bg-[#FDECEF] px-3 py-1.5 rounded-full transition" aria-label="Connect">
+                <i data-lucide="plus" class="w-3 h-3"></i> Connect
+              </button>
+            </div>
+          </div>
+        </a>
+      </div>
+
+      <!-- Links & Footer -->
+      <div class="text-center">
+        <div class="flex flex-wrap items-center justify-center gap-x-3 gap-y-2 text-[11px] text-slate-400 leading-relaxed px-2">
+            <a href="#" class="hover:text-slate-600">Advertising</a>
+            <a href="#" class="hover:text-slate-600">Funding</a>
+            <a href="#" class="hover:text-slate-600">Resources</a>
+            <a href="#" class="hover:text-slate-600">Founder Focus</a>
+            <a href="#" class="hover:text-slate-600">Insights</a>
+            <a href="#" class="hover:text-slate-600">Event</a>
+            <a href="#" class="hover:text-slate-600">Podcast</a>
+            <a href="#" class="hover:text-slate-600">Solutions</a>
+            <a href="#" class="hover:text-slate-600">Shop</a>
+            <a href="#" class="hover:text-slate-600">About</a>
+            <a href="#" class="hover:text-slate-600">Help</a>
+            <a href="#" class="hover:text-slate-600">Privacy</a>
+            <a href="#" class="hover:text-slate-600">Terms</a>
+        </div>
+        <p class="text-[11px] text-slate-400 mt-4">SME South Africa © 2026</p>
       </div>
     </aside>
+
   </div>
 </main>
-
-<footer class="bg-slate-100 border-t-2 border-dashed border-slate-400 relative overflow-hidden">
-  <div class="absolute inset-0 opacity-30 pointer-events-none" style="background:repeating-linear-gradient(45deg,transparent,transparent 8px,rgba(100,116,139,.18) 8px,rgba(100,116,139,.18) 16px)"></div>
-  <div class="relative max-w-7xl mx-auto px-4 sm:px-6 py-6 text-center">
-    <p class="text-[10px] sm:text-[11px] font-bold uppercase tracking-widest text-slate-600 flex items-center justify-center gap-1.5"><i data-lucide="construction" class="w-3.5 h-3.5 text-slate-500"></i> Footer placeholder &middot; design pending</p>
-    <p class="text-[11px] text-slate-500 mt-2">&copy; 2026 SME South Africa</p>
-  </div>
-</footer>
 
 <div id="overlay-root"></div>
 <div id="toast" class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-50"></div>
@@ -103,6 +308,10 @@
 /* ===== helpers ===== */
 function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
 function monogram(initials,size=44,grad){ const fs=Math.max(10,Math.floor(size*0.38)); return `<div class="rounded-full bg-gradient-to-br ${grad||'from-[#DC183C] to-[#FF9900]'} grid place-items-center font-jakarta font-bold text-white shrink-0" style="width:${size}px;height:${size}px;font-size:${fs}px">${esc(initials)}</div>`; }
+
+// Header Search Toggle Logic
+
+
 const TYPES = {
   ask:{color:'#DC183C',text:'text-[#DC183C]',label:'Ask',icon:'help-circle'},
   win:{color:'#29A37A',text:'text-[#29A37A]',label:'Win',icon:'trophy'},
@@ -112,23 +321,22 @@ const TYPES = {
 
 /* ===== data ===== */
 const MEMBER = {
-  name:'Naledi Mokoena', initials:'NM', role:'Founder', company:'GreenTrace',
-  sector:'Agri-Tech', stage:'Growth', province:'Western Cape',
-  bio:"Naledi founded GreenTrace in 2021 to help SA agri-exporters track sustainability compliance without the spreadsheet chaos. Fourteen months after launch, GreenTrace crossed its 50th enterprise customer. She's active across three groups and shows up in Discussions with detailed, generous answers — ask her about export compliance or early hiring.",
+  name:'Tshepho Joel', initials:'TJ', role:'Founder', company:'Langa Holdings',
+  sector:'Fintech', stage:'Growth', province:'Gauteng', interest:'Funding', linkedin: '#',
+  bio:"Building scalable payment solutions for the informal sector. We just passed R5M in monthly processed volume. Always happy to chat about acquiring your first 100 B2B customers, navigating the regulatory sandbox, or building lean engineering teams in Johannesburg.",
   joined:'Mar 2023', lastActive:'25 minutes ago', contribTotal:142, connectionsCount:86,
   complete:true, connectionStatus:'none', // none | pending | connected
-  website:'greentrace.co.za', linkedin:'#'
+  website:'langaholdings.co.za'
 };
 
 const M_POSTS = [
-  { id:1, type:'win', action:'shared a photo', time:'5 days ago',
-    content:"Signed our 50th enterprise customer today. 14 months ago we had two. Huge milestone for the team! Thank you to this group for the pitch practice 🙌",
-    image:'https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&q=80&w=800',
-    likes:86, comments:22, liked:true, group:'General' },
-  { id:2, type:'activity', action:'joined the group', time:'2 weeks ago', content:'', likes:0, comments:0, liked:false, group:'Cape Town SMEs' },
+  { id:1, type:'ask', action:'asked a question', time:'2h ago',
+    content:"Does anyone have a reliable contact for CIPC annual returns that doesn't charge extortionate fees? I've done it myself for 3 years but I'm out of bandwidth this quarter.",
+    likes:14, comments:4, liked:false, group:'Operations Playbook' },
+  { id:2, type:'activity', action:'joined the group', time:'2 weeks ago', content:'', likes:0, comments:0, liked:false, group:'Fintech Founders' },
   { id:3, type:'share', action:'posted an update', time:'3 weeks ago',
     title:'What we changed after our first failed compliance audit',
-    content:"Short version: we were tracking the right data in the wrong place. Wrote up the full breakdown for anyone exporting into the EU.",
+    content:"Short version: we were tracking the right data in the wrong place. Wrote up the full breakdown for anyone building in the fintech space.",
     link:{ url:'#', title:'Read the full breakdown on SME South Africa', domain:'smesouthafrica.co.za' },
     likes:31, comments:6, liked:false, group:'General' }
 ];
@@ -136,31 +344,27 @@ const M_POSTS = [
 const M_GROUPS = [
   { name:'General', members:1284, role:'Member' },
   { name:'Fintech Founders', members:889, role:'Member' },
-  { name:'Cape Town SMEs', members:516, role:'Moderator' }
+  { name:'Operations Playbook', members:624, role:'Moderator' }
 ];
 
 const M_CONNECTIONS = [
-  { name:'Tshepho Joel',    initials:'TJ', role:'Founder',    company:'Langa Holdings' },
   { name:'Sello Monare',    initials:'SM', role:'MD',         company:'TechSolve RSA' },
   { name:'Karabo Kgophane', initials:'KK', role:'E-comm Lead',company:'Mzansi Cart' },
   { name:'Mandla Dlamini',  initials:'MD', role:'Co-founder', company:'PesaPay' },
-  { name:'Refiloe Sithole', initials:'RS', role:'Founder',    company:'Skhokho' }
+  { name:'Refiloe Sithole', initials:'RS', role:'Founder',    company:'Skhokho' },
+  { name:'Naledi Mokoena',  initials:'NM', role:'Founder',    company:'GreenTrace' }
 ];
 
-const state = { tab:'timeline' };
+// NOTE: We changed the default tab to 'about' per user instructions
+const state = { tab:'about' };
 
 /* ===== hero ===== */
-function connectBtn(){
-  if(MEMBER.connectionStatus==='connected') return `<button onclick="setConnection('none')" class="border border-[#29A37A] text-[#29A37A] rounded-full px-5 py-2.5 font-jakarta font-bold text-sm flex items-center gap-2 hover:bg-[#E4F5EE] transition"><i data-lucide="check" class="w-4 h-4"></i> Connected</button>`;
-  if(MEMBER.connectionStatus==='pending') return `<button onclick="setConnection('none')" class="border border-slate-200 text-slate-500 rounded-full px-5 py-2.5 font-jakarta font-bold text-sm flex items-center gap-2 hover:bg-slate-50 transition"><i data-lucide="clock" class="w-4 h-4"></i> Pending</button>`;
-  return `<button onclick="setConnection('pending')" class="bg-[#DC183C] hover:bg-[#B0142F] text-white rounded-full px-5 py-2.5 font-jakarta font-bold text-sm transition flex items-center gap-2"><i data-lucide="user-plus" class="w-4 h-4"></i> Connect</button>`;
-}
 function renderHero(){
   const m = MEMBER;
   document.getElementById('profile-hero').innerHTML = `
     <div class="bg-white rounded-2xl border border-slate-100 overflow-hidden reveal shadow-sm">
-      <div class="h-32 sm:h-40 relative bg-gradient-to-br from-[#0C1F31] to-[#5e1a2c]">
-        <div class="absolute inset-0 opacity-40" style="background:radial-gradient(circle at 70% 30%, #FF9900 0%, transparent 55%);"></div>
+      <div class="h-32 sm:h-40 relative bg-gradient-to-br from-[#0C1F31] to-[#1a3a54]">
+        <div class="absolute inset-0 opacity-40" style="background:radial-gradient(circle at 30% 50%, #FFF1E0 0%, transparent 65%);"></div>
         <button onclick="openBrief('profile')" class="dev-badge absolute top-3 left-3 w-5 h-5 rounded-full bg-[#DC183C] text-white items-center justify-center text-[10px] font-bold leading-none animate-pulse">i</button>
       </div>
       <div class="px-5 sm:px-7 pb-6">
@@ -187,27 +391,27 @@ function renderHero(){
               <span class="text-slate-300">&middot;</span> active ${esc(m.lastActive)}
             </p>
           </div>
-          <div class="flex items-center gap-2 shrink-0">
-            <span id="connect-btn">${connectBtn()}</span>
-            <button onclick="showToast('Message composer opens here (mockup).',null)" class="border border-slate-200 hover:border-[#DC183C] hover:text-[#DC183C] text-slate-600 rounded-full w-11 h-11 grid place-items-center transition" title="Message"><i data-lucide="mail" class="w-4 h-4"></i></button>
-            <button onclick="showToast('Profile options',null)" class="border border-slate-200 hover:border-[#DC183C] hover:text-[#DC183C] text-slate-600 rounded-full w-11 h-11 grid place-items-center transition"><i data-lucide="more-horizontal" class="w-4 h-4"></i></button>
+          <div class="flex items-center gap-2 shrink-0 flex-wrap sm:flex-nowrap justify-end">
+            <button onclick="copyProfileLink()" class="border border-slate-200 hover:border-[#DC183C] hover:text-[#DC183C] text-slate-600 rounded-full px-4 h-11 text-sm font-bold transition flex items-center gap-1.5 whitespace-nowrap">
+              <i data-lucide="link" class="w-4 h-4"></i> Copy profile link
+            </button>
+            <button onclick="showToast('Edit profile (mockup).',null)" class="bg-[#DC183C] hover:bg-[#B0142F] text-white rounded-full px-5 h-11 font-jakarta font-bold text-sm transition flex items-center gap-2 whitespace-nowrap"><i data-lucide="pencil" class="w-4 h-4"></i> Edit Profile</button>
+            <button onclick="showToast('Profile settings (mockup).',null)" class="border border-slate-200 hover:border-[#0C1F31] hover:text-[#0C1F31] text-slate-600 rounded-full w-11 h-11 grid place-items-center transition"><i data-lucide="settings" class="w-4 h-4"></i></button>
           </div>
         </div>
       </div>
     </div>`;
 }
-function setConnection(status){
-  MEMBER.connectionStatus = status==='none' && MEMBER.connectionStatus==='pending' ? 'none' : status;
-  if(status==='pending') showToast(`Connection request sent to ${MEMBER.name.split(' ')[0]}.`,'win');
-  if(status==='none' && MEMBER.connectionStatus==='none') showToast('Connection removed.',null);
-  document.getElementById('connect-btn').innerHTML = connectBtn();
-  lucide.createIcons();
+
+function copyProfileLink(){
+  navigator.clipboard?.writeText(window.location.href);
+  showToast('Profile link copied.', 'win');
 }
 
 /* ===== sub-nav ===== */
 const P_TABS = [
-  { id:'timeline', label:'Timeline', icon:'rss' },
   { id:'about', label:'About', icon:'user' },
+  { id:'timeline', label:'Timeline', icon:'rss' },
   { id:'groups', label:'Groups', icon:'layout-grid' },
   { id:'connections', label:'Connections', icon:'users' }
 ];
@@ -263,7 +467,7 @@ function postCard(p){
       ${p.title ? `<h4 class="font-jakarta font-bold text-[16px] text-[#0C1F31] mb-2 leading-snug">${esc(p.title)}</h4>` : ''}
       <p class="text-[14.5px] text-[#121A21] leading-relaxed whitespace-pre-line">${esc(p.content)}</p>
       ${media}
-      ${p.likes > 0 ? `<div class="flex items-center gap-2 mt-4 pt-4 border-t border-slate-100"><div class="w-5 h-5 rounded-full bg-[#1877F2] grid place-items-center text-white shrink-0"><i data-lucide="thumbs-up" class="w-3 h-3"></i></div><p class="text-[13px] text-slate-500 truncate">Sipho M., Tshepho J. and ${p.likes > 2 ? p.likes - 2 : p.likes} others</p></div>` : ''}
+      ${p.likes > 0 ? `<div class="flex items-center gap-2 mt-4 pt-4 border-t border-slate-100"><div class="w-5 h-5 rounded-full bg-[#1877F2] grid place-items-center text-white shrink-0"><i data-lucide="thumbs-up" class="w-3 h-3"></i></div><p class="text-[13px] text-slate-500 truncate">Sipho M., Naledi M. and ${p.likes > 2 ? p.likes - 2 : p.likes} others</p></div>` : ''}
     </div>
     <div class="px-2 py-1 border-t border-slate-100 flex">
       <button onclick="like(${p.id})" class="flex-1 flex items-center justify-center gap-2 py-3 rounded-lg hover:bg-slate-50 ${p.liked?'text-[#1877F2]':'text-slate-500'} text-[13.5px] font-bold transition"><i data-lucide="thumbs-up" class="w-4 h-4 ${p.liked?'fill-current':''}"></i><span>Like</span></button>
@@ -277,15 +481,29 @@ function like(id){ const p=M_POSTS.find(x=>x.id===id); if(!p) return; p.liked=!p
 /* ===== ABOUT ===== */
 function tabAbout(){
   return `<div class="flex items-center justify-between mb-3">${sectionLabel('About','about')}</div>
-    <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm">
+    <div class="bg-white rounded-2xl border border-slate-200 p-6 sm:p-8 shadow-sm">
       <p class="text-[14.5px] text-[#121A21] leading-relaxed">${esc(MEMBER.bio)}</p>
-      <div class="mt-5 pt-5 border-t border-slate-100 grid sm:grid-cols-2 gap-x-6 gap-y-3 text-sm">
-        <div class="flex items-center gap-2 text-slate-600"><i data-lucide="briefcase" class="w-4 h-4 text-slate-400"></i> ${esc(MEMBER.role)} at ${esc(MEMBER.company)}</div>
-        <div class="flex items-center gap-2 text-slate-600"><i data-lucide="map-pin" class="w-4 h-4 text-slate-400"></i> ${esc(MEMBER.province)}</div>
-        <div class="flex items-center gap-2 text-slate-600"><i data-lucide="layers" class="w-4 h-4 text-slate-400"></i> ${esc(MEMBER.sector)} &middot; ${esc(MEMBER.stage)} stage</div>
-        <div class="flex items-center gap-2 text-slate-600"><i data-lucide="calendar" class="w-4 h-4 text-slate-400"></i> Member since ${esc(MEMBER.joined)}</div>
-        <a href="#" class="flex items-center gap-2 text-[#DC183C] hover:underline"><i data-lucide="globe" class="w-4 h-4"></i> ${esc(MEMBER.website)}</a>
-        <a href="#" class="flex items-center gap-2 text-[#DC183C] hover:underline"><i data-lucide="linkedin" class="w-4 h-4"></i> LinkedIn profile</a>
+      
+      <div class="mt-8 grid sm:grid-cols-2 gap-8 sm:gap-12">
+        <!-- Company Details -->
+        <div>
+          <h4 class="font-jakarta font-bold text-[11px] uppercase tracking-widest text-[#DC183C] mb-4 flex items-center gap-2"><i data-lucide="building-2" class="w-4 h-4"></i> Company Details</h4>
+          <ul class="space-y-3.5 text-sm">
+            <li class="flex justify-between items-center py-1 border-b border-slate-100"><span class="text-slate-500">Job Position</span><span class="font-semibold text-[#121A21] text-right">${esc(MEMBER.role)}</span></li>
+            <li class="flex justify-between items-center py-1 border-b border-slate-100"><span class="text-slate-500">Company Name</span><span class="font-semibold text-[#121A21] text-right">${esc(MEMBER.company)}</span></li>
+            <li class="flex justify-between items-center py-1"><span class="text-slate-500">Industry</span><span class="font-semibold text-[#121A21] text-right">${esc(MEMBER.sector)}</span></li>
+          </ul>
+        </div>
+        
+        <!-- Personal Details -->
+        <div>
+          <h4 class="font-jakarta font-bold text-[11px] uppercase tracking-widest text-[#DC183C] mb-4 flex items-center gap-2"><i data-lucide="user" class="w-4 h-4"></i> Personal Details</h4>
+          <ul class="space-y-3.5 text-sm">
+            <li class="flex justify-between items-center py-1 border-b border-slate-100"><span class="text-slate-500">Interest</span><span class="font-semibold text-[#121A21] text-right">${esc(MEMBER.interest)}</span></li>
+            <li class="flex justify-between items-center py-1 border-b border-slate-100"><span class="text-slate-500">Location</span><span class="font-semibold text-[#121A21] text-right">${esc(MEMBER.province)}</span></li>
+            <li class="flex justify-between items-center py-1"><span class="text-slate-500">LinkedIn</span><a href="${esc(MEMBER.linkedin)}" class="font-semibold text-[#0A66C2] hover:underline flex items-center gap-1">View Profile <i data-lucide="external-link" class="w-3 h-3"></i></a></li>
+          </ul>
+        </div>
       </div>
     </div>`;
 }
@@ -315,18 +533,10 @@ function tabConnections(){
     <button onclick="showToast('Loading more connections…',null)" class="w-full mt-4 py-2.5 rounded-full border border-slate-200 text-slate-600 hover:bg-slate-50 text-sm font-bold transition">Show all connections</button>`;
 }
 
-/* ===== aside ===== */
-function renderAside(){
-  document.getElementById('mutual-groups').innerHTML = M_GROUPS.slice(0,3).map(g=>`
-    <a href="single-group.html" class="flex items-center gap-3 px-5 py-3 hover:bg-slate-50 transition border-b border-slate-50 last:border-0">
-      <div class="w-9 h-9 rounded-lg bg-[#0C1F31] grid place-items-center shrink-0"><i data-lucide="users" class="w-4 h-4 text-[#FF9900]"></i></div>
-      <div class="min-w-0"><p class="font-jakarta font-bold text-sm text-[#121A21] truncate">${esc(g.name)}</p><p class="text-[11px] text-slate-400">${g.members.toLocaleString()} members</p></div>
-    </a>`).join('');
-}
-
 /* ===== dev mode ===== */
 const BRIEFS = {
-  profile:{ title:'Single Member Profile', sub:'BuddyBoss public profile', purpose:'The public profile any member sees when they click another member\'s name or avatar — from the directory, a group\'s member list, a post author, or a discussion reply. Mirrors the single-group.html container pattern (hero + tabs + rail) so the community section reads as one system. Distinct from member-account.html, which is the signed-in user\'s own editable settings page.', data:'<code>member { id, name, avatar, role, company, sector, stage, province, bio, website, socials, joined_at, last_active, contribution_total, connection_count, profile_complete }</code> plus per-viewer <code>connection_status</code> (none / pending / connected). Timeline pulls the member\'s own posts and group-join activity items; Groups/Connections are relationship queries scoped to <code>member_id</code>.', logic:'Card avatars/names across the directory, group member lists, post authors and discussion replies all deep-link here with a member id (query string in production; this mockup hardcodes one example member). Connect posts a request (optimistic UI, flips to Pending); the target accepting flips it to Connected. Message opens the DM composer. Tabs render client-side with no page reload, same as single-group.html.', components:'Profile hero (cover + avatar + name/role/company + status pills + stat line + Connect/Message/More) · tab bar (Timeline, About, Groups, Connections) · timeline post cards + join-activity rows · About facts grid · Groups list · Connections grid · right rail (quick facts + groups in common).', specs:'<b>Layout:</b> identical shell to single-group.html — main <code>max-w-6xl</code>, content <code>lg:col-span-8</code> / rail <code>lg:col-span-4</code>, 24px gap.<br/><b>Hero cover:</b> 128/160px height, gradient <code>#0C1F31&rarr;#5e1a2c</code> (vs. group\'s navy&rarr;teal) with a warm radial accent — visually distinguishes a person from a group at a glance.<br/><b>Avatar:</b> 96px circular monogram (vs. group\'s 96px rounded-square icon tile), 4px white ring, pulled up 48/56px, small green &ldquo;active now&rdquo; dot bottom-right.<br/><b>Name row:</b> Plus Jakarta 800 24/30px + a `badge-check` (#29A37A) when <code>profile_complete</code>. Role/company 14px slate-500. Facet pills (sector/stage/province) 11px slate-100/slate-600. Stat line: contributions, connections, last-active, 14px slate-500 with Lucide icons.<br/><b>Actions:</b> Connect button states mirror the directory\'s (red solid &rarr; slate Pending &rarr; green outline Connected). Message + More are 44&times;44 outline icon buttons.<br/><b>Tabs:</b> same `.gtab` treatment as single-group.html (active = red text + red underline).<br/><b>Timeline:</b> reuses the group feed\'s post-card component (colour-striped left edge by post type) plus a lightweight one-line row for join-activity items. Not simply the group feed copy-pasted — filtered to one author, and each post links back to the group it was posted in.<br/><b>Groups/Connections tabs:</b> simple card grids that deep-link to single-group.html / back to single-member.html, matching how single-group.html\'s &ldquo;Similar groups&rdquo; rail links out.' }
+  suggested:{ title:'Suggested Members', sub:'Smart discovery — replaces &ldquo;New This Week&rdquo;', purpose:'Connects founders who can actually help each other. Shows <b>only</b> members who (1) share interests / sector / stage and (2) have a <b>completed profile</b> (green check). Same discovery widget as member-hub.html&rsquo;s right rail, kept in sync for consistency.', data:'Candidates = members with <code>profile_complete = true</code>, excluding existing connections. Match on overlap of {sector, stage, province, tags}.', logic:'Score each candidate by weighted overlap → sort descending → take top N. Each card shows its strongest match reason. Recomputed when a profile changes.', components:'Member row · avatar + completeness badge · match-reason chip · one-tap Connect.', specs:'<b>Card:</b> right rail, bg white, radius 16px (<code>rounded-2xl</code>), 1px border slate-100. Identical component to member-hub.html and single-post.html&rsquo;s right rail.' },
+  profile:{ title:'Single Member Profile (Self-View)', sub:'BuddyBoss public profile', purpose:'The signed-in user viewing their own public profile page. This view provides controls to edit settings and copy the public profile link, and omits elements that only apply to viewing other members (like the "Groups in common" widget). Defaulting to the "About" tab creates a more professional, Instagram-style focus on the person rather than just their activity feed.', data:'<code>member { id, name, avatar, role, company, sector, stage, province, bio, website, socials, joined_at, last_active, contribution_total, connection_count, profile_complete }</code>.', logic:'Determines it is the self-view when <code>logged_in_user_id == profile_user_id</code>. Modifies the hero buttons to Edit/Settings. Replaces the right rail context widgets with the standard community discovery widgets (Upcoming Events, Suggested Connections).', components:'Profile hero (cover + avatar + name/role/company + status pills + stat line + Edit/Settings) · tab bar (About, Timeline, Groups, Connections) · About facts grid · Member recognition badges · right rail (Events, Suggestions).', specs:'<b>Layout:</b> identical shell to single-group.html — main <code>max-w-6xl</code>, content <code>lg:col-span-8</code> / rail <code>lg:col-span-4</code>, 24px gap.<br/><b>Hero cover:</b> 128/160px height, gradient <code>#0C1F31&rarr;#1a3a54</code>.<br/><b>Avatar:</b> 96px circular monogram, 4px white ring, pulled up 48/56px, small green &ldquo;active now&rdquo; dot bottom-right.<br/><b>Name row:</b> Plus Jakarta 800 24/30px + a `badge-check` (#29A37A) when <code>profile_complete</code>. Role/company 14px slate-500. Facet pills (sector/stage/province) 11px slate-100/slate-600. Stat line: contributions, connections, last-active, 14px slate-500 with Lucide icons.<br/><b>Actions:</b> "Copy public link" outline button alongside dark "Edit Profile" and gear "Settings" icon.<br/><b>Right Rail:</b> Identical to member-hub.html widgets to maintain a consistent discovery engine across the site.' }
 };
 function toggleDevMode(){ const on=document.body.classList.toggle('dev-on'); const b=document.getElementById('devToggle'); if(b) b.classList.toggle('on',on); if(on) showToast('Dev Mode on — tap any ⓘ for implementation notes.', null); lucide.createIcons(); }
 function closeOverlay(id){ const el=document.getElementById(id); if(!el) return; el.classList.remove('open'); setTimeout(()=>{ if(el&&el.parentNode) el.remove(); },300); }
@@ -354,7 +564,26 @@ function showToast(msg, kind){
 
 /* ===== init ===== */
 document.addEventListener('keydown', e=>{ if(e.key==='Escape') document.querySelectorAll('.ov.open').forEach(o=>closeOverlay(o.id)); });
-renderHero(); renderSubnav(); renderTab(); renderAside(); lucide.createIcons();
+
+// Header Search Toggle Logic
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    const overlay = document.getElementById('headerSearchOverlay');
+    if (overlay && overlay.classList.contains('opacity-100')) {
+      toggleHeaderSearch();
+    }
+  }
+});
+
+renderHero(); renderSubnav(); renderTab(); lucide.createIcons();
+  /* HEADER-SEARCH-JS */
+  function toggleHeaderSearch(){
+    var o=document.getElementById('headerSearchOverlay'); if(!o) return;
+    var open=o.classList.toggle('active');
+    var i=document.getElementById('headerSearchInput');
+    if(open){ if(i) setTimeout(function(){ i.focus(); },100); } else if(i){ i.value=''; }
+  }
+  document.addEventListener('keydown', function(e){ if(e.key==='Escape'){ var o=document.getElementById('headerSearchOverlay'); if(o&&o.classList.contains('active')) toggleHeaderSearch(); } });
 </script>
 </body>
 </html>

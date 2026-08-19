@@ -49,6 +49,7 @@ window.MOCKUP_STATUS = {
   "groups.html": "under-work",
   "single-group.html": "under-review",
   "forums.html": "under-review",
+  "single-discussion.html": "under-review",
   "member-account.html": "under-review",
   "events.html": "finalised",
   "event-single-in-person.html": "finalised",

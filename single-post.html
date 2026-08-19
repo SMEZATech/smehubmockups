@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>The no-show she couldn't charge — Tshepang Sekudisa · SME South Africa</title>
-  <meta name="description" content="A member post on SME South Africa: deposit policies, client trust, and informal risk management in service businesses." />
+  <title>Naledi Mokoena — Single Post · SME South Africa</title>
+  <meta name="description" content="View member post on SME South Africa: Naledi Mokoena shared a win." />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -40,27 +40,14 @@
     .toast-in { animation: toastIn .25s ease forwards; }
     .toast-out { animation: toastOut .25s ease forwards; }
 
-    /* Post prose */
-    .prose-post p { font-size: 16px; line-height: 1.75; color: #121A21; margin-bottom: 1.1em; }
-    .prose-post p:last-child { margin-bottom: 0; }
-    .prose-post strong { color: #121A21; font-weight: 700; }
-    .prose-post ul { margin: 0 0 1.1em 0; padding: 0; list-style: none; }
-    .prose-post ul li { position: relative; padding-left: 1.5rem; margin-bottom: .5em; line-height: 1.65; color: #121A21; }
-    .prose-post ul li::before { content: ""; position: absolute; left: 0; top: .75em; width: 6px; height: 6px; border-radius: 9999px; background: #DC183C; }
-    .pull-quote { border-left: 3px solid #DC183C; padding: .25rem 0 .25rem 1.25rem; font-family: 'Plus Jakarta Sans', sans-serif; font-style: italic; font-size: 19px; line-height: 1.5; color: #0C1F31; margin: 1.5em 0; }
-
-    /* Card lift */
     .card-lift { transition: box-shadow .2s, transform .2s; }
     .card-lift:hover { box-shadow: 0 8px 20px -8px rgba(10,44,61,0.12); transform: translateY(-1px); }
 
-    /* Hashtag chip */
     .hash-chip { transition: background-color .15s, color .15s; }
     .hash-chip:hover { background:#DC183C; color:#fff; }
 
-    /* Sticky sidebar */
-    .sticky-rail { position: sticky; top: 80px; }
+    #overlay-root:empty { display:none; }
 
-    /* Dev */
     .dev-badge { display:none; }
     body.dev-on .dev-badge { display:inline-flex; }
     #devToggle.on { background:#DC183C; color:#fff; border-color:#DC183C; }
@@ -69,342 +56,438 @@
     .ov.open .ov-bg { opacity:1; }
     .drawer { position:absolute; right:0; top:0; height:100%; width:100%; max-width:440px; background:#fff; box-shadow:-12px 0 40px rgba(12,31,49,.25); overflow-y:auto; transform:translateX(100%); transition:transform .3s cubic-bezier(.2,.7,.2,1); }
     .ov.open .drawer { transform:translateX(0); }
-
-    #overlay-root:empty { display:none; }
+    
+    .search-overlay { position: absolute; inset: 0; background: white; z-index: 50; display: flex; align-items: center; justify-content: center; padding: 0 1rem; opacity: 0; pointer-events: none; transform: translateY(-10px); transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1); }
+    .search-overlay.active { opacity: 1; pointer-events: auto; transform: translateY(0); }
+    @media (min-width: 640px) { .search-overlay { padding: 0 1.5rem; } }
   </style>
 </head>
-<body class="bg-[#FCFCFC] text-[#121A21] antialiased">
+<body class="bg-[#FCFCFC] text-[#121A21] antialiased relative">
 
-<!-- ===================== HEADER (reused from member-hub.html) ===================== -->
-<header class="bg-slate-100 border-b-2 border-dashed border-slate-400 relative overflow-hidden">
-  <div class="absolute inset-0 opacity-30 pointer-events-none" style="background:repeating-linear-gradient(45deg,transparent,transparent 8px,rgba(100,116,139,.18) 8px,rgba(100,116,139,.18) 16px)"></div>
-  <div class="relative max-w-7xl mx-auto px-4 sm:px-6 h-14 flex items-center gap-3 sm:gap-4">
-    <a href="public-home.html" class="flex items-center gap-2 shrink-0 opacity-70 hover:opacity-100 transition">
-      <img src="assets/logo-icon.png" alt="SME South Africa" class="w-7 h-7" />
-      <span class="font-jakarta font-extrabold text-[13px] tracking-tight text-slate-700 hidden sm:inline">SME South Africa</span>
+<header class="bg-white border-b border-slate-200 sticky top-0 z-40 shadow-sm relative">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+    
+    <a href="public-home.html" class="flex items-center shrink-0 group mr-6 py-2">
+      <img src="https://smesouthafrica.co.za/wp-content/uploads/2025/10/Asset-1-1.webp" alt="SME South Africa" class="h-10 sm:h-11 w-auto object-contain group-hover:scale-105 transition-transform" />
     </a>
-    <span class="mx-1 hidden sm:inline w-px h-5 bg-slate-300"></span>
-    <p class="text-[10px] sm:text-[11px] font-bold uppercase tracking-widest text-slate-600 flex items-center gap-1.5">
-      <i data-lucide="construction" class="w-3.5 h-3.5 text-slate-500"></i>
-      Header placeholder &middot; design pending
-    </p>
-    <div class="ml-auto flex items-center gap-2">
-      <button id="devToggle" onclick="toggleDevMode()" class="inline-flex items-center gap-1.5 px-2.5 h-8 rounded-full bg-white border border-slate-300 hover:border-[#DC183C] hover:text-[#DC183C] text-[11px] font-bold uppercase tracking-wider text-slate-600 transition" title="Toggle implementation notes"><i data-lucide="code-2" class="w-3.5 h-3.5"></i><span class="hidden sm:inline">Dev</span></button>
-      <a href="index.html" class="inline-flex items-center gap-1.5 px-3 h-8 rounded-full bg-white border border-slate-300 hover:border-slate-500 text-[11px] font-bold text-slate-700 transition">
-        <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i><span class="hidden sm:inline">Launcher</span>
-      </a>
+
+    <nav class="hidden md:flex items-center justify-center gap-2 flex-1 px-4 h-full">
+      <a href="member-hub.html" class="px-3 h-full text-[14px] font-bold font-jakarta text-[#DC183C] border-b-[3px] border-[#DC183C] flex items-center gap-2 transition-colors"><i data-lucide="activity" class="w-4 h-4 text-[#DC183C]"></i> Home</a>
+      <a href="members.html" class="px-3 h-full text-[14px] font-semibold font-jakarta text-[#6A7581] hover:text-[#DC183C] border-b-[3px] border-transparent flex items-center gap-2 transition-colors"><i data-lucide="user" class="w-4 h-4"></i> Members</a>
+      <a href="groups.html" class="px-3 h-full text-[14px] font-semibold font-jakarta text-[#6A7581] hover:text-[#DC183C] border-b-[3px] border-transparent flex items-center gap-2 transition-colors"><i data-lucide="users" class="w-4 h-4"></i> Groups</a>
+      <a href="forums.html" class="px-3 h-full text-[14px] font-semibold font-jakarta text-[#6A7581] hover:text-[#DC183C] border-b-[3px] border-transparent flex items-center gap-2 transition-colors"><i data-lucide="message-square" class="w-4 h-4"></i> Forums <i data-lucide="chevron-down" class="w-3 h-3 ml-[-2px] opacity-50"></i></a>
+    </nav>
+
+    <div class="flex items-center justify-end gap-4 shrink-0">
+
+      <button onclick="toggleHeaderSearch()" class="text-slate-500 hover:text-[#121A21] transition-colors p-1.5" aria-label="Open search">
+        <i data-lucide="search" class="w-5 h-5"></i>
+      </button>
+      
+      <div class="w-px h-6 bg-slate-200 hidden sm:block mx-1"></div>
+      
+      <div class="hidden sm:flex items-center gap-2">
+        <button class="relative text-slate-500 hover:text-[#121A21] transition-colors p-1.5" aria-label="Messages">
+          <i data-lucide="inbox" class="w-5 h-5"></i>
+          <span class="absolute top-0 right-0 w-4 h-4 bg-[#DC183C] text-white text-[9px] font-bold rounded-full flex items-center justify-center ring-2 ring-white shadow-sm">1</span>
+        </button>
+        <button class="relative text-slate-500 hover:text-[#121A21] transition-colors p-1.5" aria-label="Notifications">
+          <i data-lucide="bell" class="w-5 h-5"></i>
+          <span class="absolute top-0 right-0 w-4 h-4 bg-[#DC183C] text-white text-[9px] font-bold rounded-full flex items-center justify-center ring-2 ring-white shadow-sm">8</span>
+        </button>
+        <button class="relative text-slate-500 hover:text-[#121A21] transition-colors p-1.5" aria-label="Cart">
+          <i data-lucide="shopping-cart" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <div class="relative ml-1 sm:ml-2 cursor-pointer group">
+        <div class="flex items-center gap-3">
+          <span class="font-jakarta font-bold text-[15px] text-[#121A21] hidden md:block">Tshepho</span>
+          <div class="w-9 h-9 rounded-full bg-gradient-to-br from-[#DC183C] to-[#FF9900] grid place-items-center font-jakarta font-bold text-white text-xs ring-2 ring-white shadow-sm group-hover:scale-105 transition-transform">TJ</div>
+        </div>
+        
+        <div class="absolute right-0 top-full mt-3 w-64 bg-white rounded-xl shadow-xl border border-slate-100 overflow-hidden z-50 transform origin-top-right scale-95 opacity-0 pointer-events-none transition-all duration-200 group-hover:scale-100 group-hover:opacity-100 group-hover:pointer-events-auto">
+          <div class="p-4 border-b border-slate-100 flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-gradient-to-br from-[#DC183C] to-[#FF9900] grid place-items-center font-jakarta font-bold text-white text-sm shrink-0">TJ</div>
+            <div class="min-w-0">
+              <p class="font-jakarta font-bold text-sm text-[#121A21] truncate">Tshepho Joel</p>
+              <p class="text-xs text-slate-500 truncate">@tshephojoel</p>
+            </div>
+          </div>
+          <div class="p-2 text-sm text-slate-700 font-medium">
+            <a href="member-account.html" class="block px-3 py-2 rounded-lg hover:bg-slate-50 hover:text-[#DC183C] transition-colors">Profile</a>
+            <a href="member-account.html" class="block px-3 py-2 rounded-lg hover:bg-slate-50 hover:text-[#DC183C] transition-colors">Account Settings</a>
+          </div>
+          <div class="p-2 border-t border-slate-100">
+            <a href="#" class="block px-3 py-2 text-sm font-semibold text-[#DC183C] hover:bg-[#FDECEF] rounded-lg transition-colors">Sign Out</a>
+          </div>
+          <div class="px-5 py-3 border-t border-slate-100 bg-slate-50 flex items-center justify-between">
+            <span class="text-[10px] font-bold uppercase tracking-widest text-slate-500">Dev Mode</span>
+            <button id="devToggle" onclick="toggleDevMode()" class="w-8 h-4 rounded-full bg-slate-200 relative transition-colors focus:outline-none" aria-pressed="false">
+              <span class="absolute left-0.5 top-0.5 w-3 h-3 rounded-full bg-white shadow-sm transition-transform duration-200"></span>
+            </button>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+
+  <div id="headerSearchOverlay" class="search-overlay">
+    <div class="w-full max-w-4xl flex items-center gap-4">
+      <div class="relative flex-1">
+        <i data-lucide="search" class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400"></i>
+        <input type="text" id="headerSearchInput" placeholder="Search members, groups, forums..." class="w-full h-12 pl-12 pr-4 text-base bg-slate-50 border border-[#DC183C] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#DC183C]/20 transition-all shadow-sm">
+      </div>
+      <button onclick="toggleHeaderSearch()" class="text-slate-500 hover:text-[#121A21] p-2 transition-colors shrink-0" aria-label="Close search">
+        <i data-lucide="x" class="w-6 h-6"></i>
+      </button>
     </div>
   </div>
 </header>
 
-<!-- ===================== COMMUNITY SUB-NAV ===================== -->
-<div class="bg-white border-b border-slate-100">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 flex gap-1 overflow-x-auto no-scrollbar">
-    <a href="member-hub.html" class="shrink-0 px-4 py-3 text-sm font-bold font-jakarta text-slate-500 hover:text-[#121A21] border-b-2 border-transparent flex items-center gap-2"><i data-lucide="rss" class="w-4 h-4"></i> Feed</a>
-    <a href="members.html" class="shrink-0 px-4 py-3 text-sm font-bold font-jakarta text-[#DC183C] border-b-2 border-[#DC183C] flex items-center gap-2"><i data-lucide="users" class="w-4 h-4"></i> Members</a>
-    <a href="forums.html" class="shrink-0 px-4 py-3 text-sm font-bold font-jakarta text-slate-500 hover:text-[#121A21] border-b-2 border-transparent flex items-center gap-2"><i data-lucide="messages-square" class="w-4 h-4"></i> Forums</a>
-    <a href="#" class="shrink-0 px-4 py-3 text-sm font-bold font-jakarta text-slate-500 hover:text-[#121A21] border-b-2 border-transparent flex items-center gap-2"><i data-lucide="calendar" class="w-4 h-4"></i> Events</a>
-  </div>
-</div>
+<main class="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
+  <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
 
-<div class="max-w-7xl mx-auto px-4 sm:px-6 pt-6">
-  <!-- Breadcrumb (global pattern) -->
-  <nav aria-label="Breadcrumb" class="text-xs text-[#6A7581] flex items-center flex-wrap gap-x-1.5"><a href="public-home.html" class="hover:text-[#DC183C] transition">Home</a><span class="text-slate-300">›</span><a href="member-hub.html" class="hover:text-[#DC183C] transition">Community</a><span class="text-slate-300">›</span><a href="public-author.html" class="hover:text-[#DC183C] transition">Tshepang Sekudisa</a><span class="text-slate-300">›</span><span>Activity</span><span class="text-slate-300">›</span><span class="text-[#121A21] font-medium truncate">#3756</span></nav>
-</div>
-
-<!-- ===================== MAIN ===================== -->
-<main class="max-w-6xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
-  <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8">
-
-    <!-- LEFT: post + comments -->
-    <section class="lg:col-span-8 space-y-5">
-
-      <!-- AUTHOR BAR -->
-      <div class="bg-white rounded-2xl border border-slate-100 p-4 sm:p-5 reveal flex items-center gap-3">
-        <a href="public-author.html" class="shrink-0">
-          <div class="w-12 h-12 rounded-full bg-gradient-to-br from-[#DC183C] to-[#FF9900] grid place-items-center font-jakarta font-bold text-white">TS</div>
-        </a>
-        <div class="min-w-0 flex-1">
-          <div class="flex items-center gap-2 flex-wrap">
-            <a href="public-author.html" class="font-bold text-[15px] text-[#121A21] hover:text-[#DC183C] transition truncate">Tshepang Sekudisa</a>
+    <aside class="hidden lg:flex flex-col gap-5 lg:col-span-3">
+      <div class="bg-white rounded-2xl border border-slate-100 overflow-hidden reveal">
+        <div class="h-20 bg-[#0C1F31] relative">
+          <div class="absolute inset-0 opacity-40" style="background: radial-gradient(circle at 30% 50%, #FFF1E0 0%, transparent 65%);"></div>
+          <div class="absolute -bottom-9 left-1/2 -translate-x-1/2">
+            <div class="w-[72px] h-[72px] rounded-full bg-gradient-to-br from-[#DC183C] to-[#FF9900] grid place-items-center font-jakarta font-extrabold text-white text-2xl ring-4 ring-white">TJ</div>
           </div>
-          <p class="text-[12px] text-slate-500 mt-0.5 flex items-center gap-1.5">
-            <i data-lucide="clock" class="w-3 h-3"></i>
-            <span>a minute ago</span>
-            <span class="text-slate-300">·</span>
-            <i data-lucide="globe" class="w-3 h-3"></i>
-            <span>public</span>
-          </p>
         </div>
-        <div class="relative shrink-0">
-          <button id="menu-btn" onclick="toggleMenu()" aria-label="More options" class="w-9 h-9 grid place-items-center rounded-full hover:bg-slate-100 text-slate-500 transition">
-            <i data-lucide="more-horizontal" class="w-5 h-5"></i>
+        <div class="pt-11 pb-4 px-5 text-center">
+          <a href="member-account.html" class="font-jakarta font-extrabold uppercase text-lg text-[#121A21] tracking-wide hover:text-[#DC183C] transition">Tshepho Joel</a>
+          <p class="text-xs text-slate-500 mt-0.5">Founder at <span class="font-bold text-[#121A21]">Langa Holdings</span></p>
+          <a href="member-account.html" class="inline-flex items-center gap-1 mt-2 text-xs font-bold text-[#DC183C] uppercase tracking-wide hover:underline">View profile <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i></a>
+        </div>
+        <div class="grid grid-cols-3 border-t border-slate-100 text-center pb-2">
+          <div class="py-3 border-r border-slate-100">
+            <p class="text-[9px] font-bold uppercase tracking-widest text-slate-400">Interest</p>
+            <p class="font-jakarta font-bold text-sm text-[#121A21] mt-1">Funding</p>
+          </div>
+          <div class="py-3 border-r border-slate-100">
+            <p class="text-[9px] font-bold uppercase tracking-widest text-slate-400">Sector</p>
+            <p class="font-jakarta font-bold text-sm text-[#121A21] mt-1">Fintech</p>
+          </div>
+          <div class="py-3">
+            <p class="text-[9px] font-bold uppercase tracking-widest text-slate-400">Region</p>
+            <p class="font-jakarta font-bold text-sm text-[#121A21] mt-1">GP</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-2xl border border-slate-100 p-5 reveal" style="animation-delay:80ms">
+        <h4 class="font-jakarta font-bold uppercase text-sm text-[#121A21] mb-4 tracking-wide">Profile Strength</h4>
+        <div class="flex items-center gap-4">
+          <div class="relative w-16 h-16 shrink-0">
+            <svg class="w-full h-full -rotate-90" viewBox="0 0 36 36">
+              <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" stroke="#F0F5F9" stroke-width="3" fill="none"></path>
+              <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" stroke="#DC183C" stroke-width="3" stroke-linecap="round" fill="none" stroke-dasharray="52, 100"></path>
+            </svg>
+            <div class="absolute inset-0 grid place-items-center">
+              <p class="font-jakarta font-extrabold text-base text-[#121A21] leading-none">52<span class="text-[10px] align-top">%</span></p>
+            </div>
+          </div>
+          <div class="min-w-0">
+            <p class="text-xs text-slate-600 leading-snug mb-2">Complete your profile to be <span class="font-bold text-[#121A21]">discoverable in member search</span>.</p>
+            <a href="member-account.html" class="text-xs font-bold text-[#DC183C] uppercase tracking-wide hover:underline">Update →</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-2xl border border-slate-100 overflow-hidden reveal" style="animation-delay:160ms">
+        <div class="px-5 py-3 border-b border-slate-100 flex items-center justify-between">
+          <h4 class="font-jakarta font-bold uppercase text-sm text-[#121A21] tracking-wide flex items-center gap-1.5">Your Activity
+            <button onclick="openBrief('activity')" class="dev-badge w-4 h-4 rounded-full bg-[#DC183C] text-white items-center justify-center text-[9px] font-bold leading-none animate-pulse" title="Implementation notes">i</button>
+          </h4>
+        </div>
+        <button class="w-full px-5 py-3 flex items-center justify-between hover:bg-slate-50 transition text-left border-b border-slate-100">
+          <span class="text-sm font-semibold text-[#121A21] flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-[#DC183C]"></span> Open asks</span>
+          <span class="text-xs font-bold bg-[#DC183C] text-white rounded-full px-2 py-0.5">3</span>
+        </button>
+        <button class="w-full px-5 py-3 flex items-center justify-between hover:bg-slate-50 transition text-left border-t border-slate-100">
+          <span class="text-sm font-medium text-slate-600 flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-slate-300"></span> Resolved asks</span>
+          <span class="text-xs font-bold text-slate-400">11</span>
+        </button>
+        <button class="w-full px-5 py-3 flex items-center justify-between hover:bg-slate-50 transition text-left border-t border-slate-100">
+          <span class="text-sm font-medium text-slate-600 flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-[#29A37A]"></span> Wins shared</span>
+          <span class="text-xs font-bold text-slate-400">4</span>
+        </button>
+      </div>
+    </aside>
+
+    <section class="lg:col-span-6 space-y-5">
+      
+      <!-- Mobile Back Nav -->
+      <a href="member-hub.html" class="inline-flex lg:hidden items-center gap-1.5 text-sm font-bold text-slate-500 hover:text-[#DC183C] transition-colors mb-2">
+        <i data-lucide="arrow-left" class="w-4 h-4"></i> Back to Feed
+      </a>
+
+      <!-- MAIN POST CARD (Exact match to image_59c641.png) -->
+      <article class="bg-white rounded-2xl border border-slate-200 overflow-hidden reveal shadow-sm" style="animation-delay:80ms">
+        <div class="p-5">
+          
+          <!-- Post Author Header -->
+          <div class="flex items-start gap-3 mb-4">
+            <div class="w-11 h-11 rounded-full bg-gradient-to-br from-[#DC183C] to-[#FF9900] grid place-items-center font-jakarta font-extrabold text-white text-base shrink-0 shadow-sm">NM</div>
+            <div class="min-w-0 flex-1">
+              <p class="text-[15px] text-[#121A21] leading-snug">
+                <a href="single-member.html" class="font-bold hover:text-[#DC183C] transition">Naledi Mokoena</a> <span class="text-slate-500 font-normal">shared a photo</span>
+              </p>
+              <div class="flex items-center gap-1.5 mt-0.5 text-[12px] text-slate-400 font-medium">
+                <span>8h ago</span>
+                <span>·</span>
+                <i data-lucide="users" class="w-3.5 h-3.5"></i>
+                <span class="ml-1 uppercase tracking-wider text-[10px] font-extrabold text-[#29A37A] bg-[#29A37A]/10 px-2 py-0.5 rounded border border-[#29A37A]/20">WIN</span>
+              </div>
+            </div>
+            <div class="flex items-center gap-1">
+              <button id="menu-btn" onclick="toggleMenu()" aria-label="More options" class="w-8 h-8 grid place-items-center rounded-full hover:bg-slate-100 text-slate-400 transition">
+                <i data-lucide="more-horizontal" class="w-5 h-5"></i>
+              </button>
+              <button onclick="openBrief('post')" class="dev-badge w-4 h-4 rounded-full bg-[#DC183C] text-white items-center justify-center text-[9px] font-bold leading-none animate-pulse" title="Implementation notes">i</button>
+            </div>
+          </div>
+
+          <!-- Post Content Text -->
+          <p class="text-[15px] text-[#121A21] leading-relaxed">
+            Hit a huge milestone today — we signed our 50th enterprise customer! Thank you to everyone in this group who let me practice my pitch 🙌
+          </p>
+
+          <!-- Attached Photo -->
+          <div class="mt-4 rounded-2xl overflow-hidden border border-slate-100">
+            <img src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&q=80&w=800" alt="Team pitch celebration" class="w-full h-auto max-h-[440px] object-cover" />
+          </div>
+
+          <!-- Reactions Summary -->
+          <div class="flex items-center gap-2 mt-4 pt-4 border-t border-slate-100">
+            <div class="w-6 h-6 rounded-full bg-[#1877F2] grid place-items-center text-white shrink-0 shadow-sm">
+              <i data-lucide="thumbs-up" class="w-3.5 h-3.5 fill-current"></i>
+            </div>
+            <p class="text-[13.5px] text-slate-600 font-medium truncate">Sipho M., Naledi M. and 84 others</p>
+          </div>
+
+        </div>
+
+        <!-- Action Bar (Like, Comment, Share) -->
+        <div class="border-t border-slate-100 px-3 py-1 flex relative">
+          <button id="like-btn" onclick="toggleLike()" class="flex-1 flex items-center justify-center gap-2 py-3 rounded-lg hover:bg-slate-50 text-[#DC183C] text-sm font-bold transition">
+            <i data-lucide="thumbs-up" class="w-4 h-4 fill-current" id="like-icon"></i>
+            <span id="like-label">Like</span>
           </button>
-          <div id="menu-fly" class="hidden absolute right-0 top-10 w-48 bg-white border border-slate-100 rounded-xl shadow-xl z-30 py-1">
-            <button onclick="menuAction('save')" class="w-full text-left px-4 py-2.5 text-sm hover:bg-slate-50 flex items-center gap-2 text-[#121A21]"><i data-lucide="bookmark" class="w-4 h-4"></i> Save post</button>
-            <button onclick="menuAction('copy')" class="w-full text-left px-4 py-2.5 text-sm hover:bg-slate-50 flex items-center gap-2 text-[#121A21]"><i data-lucide="link" class="w-4 h-4"></i> Copy link</button>
+          <button onclick="focusComment()" class="flex-1 flex items-center justify-center gap-2 py-3 rounded-lg hover:bg-slate-50 text-slate-600 text-sm font-semibold transition">
+            <i data-lucide="message-square" class="w-4 h-4"></i>
+            <span>Comment</span>
+          </button>
+          <button id="share-btn" onclick="toggleShare(event)" class="flex-1 flex items-center justify-center gap-2 py-3 rounded-lg hover:bg-slate-50 text-slate-600 text-sm font-semibold transition">
+            <i data-lucide="share-2" class="w-4 h-4"></i>
+            <span>Share</span>
+          </button>
+
+          <div id="share-menu" class="hidden absolute right-2 sm:right-4 bottom-full mb-2 w-56 bg-white border border-slate-100 rounded-xl shadow-xl z-30 py-1.5">
+            <button onclick="shareDo('copy')" class="w-full text-left px-4 py-2.5 text-sm hover:bg-slate-50 flex items-center gap-2.5 text-[#121A21]"><i data-lucide="link" class="w-4 h-4 text-slate-500"></i> Copy link</button>
+            <button onclick="shareDo('linkedin')" class="w-full text-left px-4 py-2.5 text-sm hover:bg-slate-50 flex items-center gap-2.5 text-[#121A21]"><svg viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4 text-[#0A66C2]" aria-hidden="true"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.42v1.56h.05c.47-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.07 2.07 0 1 1 0-4.14 2.07 2.07 0 0 1 0 4.14zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.8 0 0 .78 0 1.73v20.54C0 23.22.8 24 1.77 24h20.45C23.2 24 24 23.22 24 22.27V1.73C24 .78 23.2 0 22.22 0z"/></svg> Share on LinkedIn</button>
+            <button onclick="shareDo('x')" class="w-full text-left px-4 py-2.5 text-sm hover:bg-slate-50 flex items-center gap-2.5 text-[#121A21]"><svg viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4 text-slate-500" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24h-6.66l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg> Share on X</button>
+            <div class="border-t border-slate-100 my-1"></div>
+            <button onclick="shareDo('email')" class="w-full text-left px-4 py-2.5 text-sm hover:bg-slate-50 flex items-center gap-2.5 text-[#121A21]"><i data-lucide="mail" class="w-4 h-4 text-slate-500"></i> Email this post</button>
+          </div>
+          
+          <div id="menu-fly" class="hidden absolute right-2 top-full mt-2 w-48 bg-white border border-slate-100 rounded-xl shadow-xl z-30 py-1">
             <button onclick="menuAction('mute')" class="w-full text-left px-4 py-2.5 text-sm hover:bg-slate-50 flex items-center gap-2 text-[#121A21]"><i data-lucide="bell-off" class="w-4 h-4"></i> Mute notifications</button>
             <div class="border-t border-slate-100 my-1"></div>
             <button onclick="menuAction('report')" class="w-full text-left px-4 py-2.5 text-sm hover:bg-[#FDECEF] flex items-center gap-2 text-[#DC183C]"><i data-lucide="flag" class="w-4 h-4"></i> Report</button>
           </div>
         </div>
-      </div>
-
-      <!-- POST CARD -->
-      <article class="bg-white rounded-2xl border border-slate-100 overflow-hidden reveal" style="animation-delay:80ms">
-        <div class="p-5 sm:p-7">
-          <div class="flex items-center justify-end mb-2">
-            <button onclick="openBrief('post')" class="dev-badge w-4 h-4 rounded-full bg-[#DC183C] text-white items-center justify-center text-[9px] font-bold leading-none animate-pulse" title="Implementation notes">i</button>
-          </div>
-
-          <h1 class="font-jakarta font-extrabold text-2xl sm:text-3xl text-[#121A21] leading-tight mb-5">The no-show she couldn't charge</h1>
-
-          <div class="prose-post">
-            <p>She'd done everything right. Confirmed the booking the day before. Sent the location pin. Even moved her 11am to fit the client in. And at 2:14pm, fourteen minutes into a billed hour, she finally accepted what the silence already knew — the woman wasn't coming.</p>
-
-            <p>No call. No message. No apology in the next 48 hours either. Just a quiet, expensive disappearance.</p>
-
-            <p>The R450 wasn't the problem. The problem was the hour. She'd turned down a paying client to hold that slot. She'd prepped. She'd shown up. And there was no contract, no card on file, no deposit — nothing in the world to make the no-show cost the no-show anything at all.</p>
-
-            <p>So she did what most service founders I work with do: she sent a polite follow-up, got ghosted, and quietly wrote it off. Then she did the more dangerous thing — <strong>she carried the resentment into the next three bookings</strong>, second-guessing every new client, wondering which one would do it next.</p>
-
-            <p class="pull-quote">"I want to charge a deposit. I just don't know how to ask for one without sounding like I don't trust them."</p>
-
-            <p>That sentence is the whole problem in one breath. And it lives at the intersection of three things every founder I've ever sat with eventually trips over:</p>
-
-            <ul>
-              <li><strong>The timing problem</strong> — when do you introduce a deposit policy without losing the booking on the spot?</li>
-              <li><strong>The precedent problem</strong> — your first five clients didn't pay one, so how do you start now without insulting the next five?</li>
-              <li><strong>The justification problem</strong> — you know <em>why</em> you need it, but every script you draft sounds defensive, apologetic, or vaguely accusatory.</li>
-            </ul>
-
-            <p>Here's the reframe that broke the loop for her, and that I want to offer you if you're sitting on the same fence: <strong>a deposit is not a trust test. It is a calendar lock.</strong> You're not asking the client to prove they're not a flake. You're asking them to hold their own chair at the table — because if they don't, you can't sell it to someone else in time.</p>
-
-            <p>Once you say it that way — out loud, to a real client — the conversation stops being about character and starts being about logistics. Logistics, every adult understands.</p>
-
-            <p>She rewrote her booking page that weekend. Two lines. A 30% deposit, refundable up to 24 hours before. The next no-show cost the no-show. The one after that didn't happen at all.</p>
-
-            <p>If you're still reading and you don't yet have a deposit policy — that's the assignment this week. Two lines. Send it to me, I'll workshop it with you.</p>
-          </div>
-
-          <!-- LINK CARD -->
-          <a href="#" onclick="event.preventDefault(); showToast('External link preview — opens in a new tab.', null);" class="block mt-6 border border-slate-200 rounded-xl overflow-hidden hover:border-[#0A66C2] card-lift transition group">
-            <div class="px-4 py-3 bg-slate-50 border-b border-slate-200 flex items-center gap-2">
-              <i data-lucide="linkedin" class="w-4 h-4 text-[#0A66C2]"></i>
-              <span class="text-[11px] font-bold uppercase tracking-widest text-slate-500">linkedin.com</span>
-              <i data-lucide="external-link" class="w-3.5 h-3.5 text-slate-400 ml-auto group-hover:text-[#0A66C2]"></i>
-            </div>
-            <div class="p-4">
-              <p class="font-jakarta font-bold text-[15px] text-[#121A21] leading-tight group-hover:text-[#0A66C2] transition">THE RESERVED HOUR | Tshepang Sekudisa</p>
-              <p class="text-[13px] text-slate-500 mt-1.5 leading-snug">A 12-part essay series on the small, expensive moments that quietly bleed service businesses — and how to plug them without losing the trust that built you.</p>
-            </div>
-          </a>
-
-          <!-- ATTACHED IMAGE -->
-          <figure class="mt-5 rounded-xl overflow-hidden border border-slate-100 bg-slate-50">
-            <div class="aspect-[16/9] bg-cover bg-center" style="background-image:url('assets/article-1.jpg');" role="img" aria-label="A founder reviewing a booking calendar"></div>
-            <figcaption class="px-4 py-2.5 text-[11px] text-slate-500 italic">Image: a quiet hour on the calendar never comes at no cost — it's just unbilled.</figcaption>
-          </figure>
-
-          <!-- HASHTAGS -->
-          <div class="mt-6 flex flex-wrap gap-2">
-            <a href="#" class="hash-chip px-3 py-1 rounded-full bg-[#FDECEF] text-[#DC183C] text-[12px] font-semibold">#TheReservedHour</a>
-            <a href="#" class="hash-chip px-3 py-1 rounded-full bg-[#FDECEF] text-[#DC183C] text-[12px] font-semibold">#GrowthScout</a>
-            <a href="#" class="hash-chip px-3 py-1 rounded-full bg-[#FDECEF] text-[#DC183C] text-[12px] font-semibold">#NoShow</a>
-            <a href="#" class="hash-chip px-3 py-1 rounded-full bg-[#FDECEF] text-[#DC183C] text-[12px] font-semibold">#DepositDilemma</a>
-            <a href="#" class="hash-chip px-3 py-1 rounded-full bg-[#FDECEF] text-[#DC183C] text-[12px] font-semibold">#RelationalRisk</a>
-            <a href="#" class="hash-chip px-3 py-1 rounded-full bg-[#FDECEF] text-[#DC183C] text-[12px] font-semibold">#ServiceBusiness</a>
-            <a href="#" class="hash-chip px-3 py-1 rounded-full bg-[#FDECEF] text-[#DC183C] text-[12px] font-semibold">#CashflowSA</a>
-            <a href="#" class="hash-chip px-3 py-1 rounded-full bg-[#FDECEF] text-[#DC183C] text-[12px] font-semibold">#SMEPlaybook</a>
-            <a href="#" class="hash-chip px-3 py-1 rounded-full bg-[#FDECEF] text-[#DC183C] text-[12px] font-semibold">#FounderNotes</a>
-            <a href="#" class="hash-chip px-3 py-1 rounded-full bg-[#FDECEF] text-[#DC183C] text-[12px] font-semibold">#ClientTrust</a>
-          </div>
-        </div>
-
-        <!-- ACTION BAR -->
-        <div class="border-t border-slate-100 px-2 sm:px-4 py-1 flex relative">
-          <button id="like-btn" onclick="toggleLike()" class="flex-1 flex items-center justify-center gap-2 py-3 rounded-lg hover:bg-slate-50 text-slate-500 text-sm font-semibold transition">
-            <i data-lucide="thumbs-up" class="w-4 h-4" id="like-icon"></i>
-            <span id="like-count">142</span>
-            <span class="hidden sm:inline">Like</span>
-          </button>
-          <button onclick="focusComment()" class="flex-1 flex items-center justify-center gap-2 py-3 rounded-lg hover:bg-slate-50 text-slate-500 text-sm font-semibold transition">
-            <i data-lucide="message-circle" class="w-4 h-4"></i>
-            <span id="comment-count">8</span>
-            <span class="hidden sm:inline">Comment</span>
-          </button>
-          <button id="share-btn" onclick="toggleShare(event)" class="flex-1 flex items-center justify-center gap-2 py-3 rounded-lg hover:bg-slate-50 text-slate-500 text-sm font-semibold transition">
-            <i data-lucide="share-2" class="w-4 h-4"></i>
-            <span id="share-count">23</span>
-            <span class="hidden sm:inline">Share</span>
-          </button>
-          <button id="save-btn" onclick="toggleSave()" class="flex-1 flex items-center justify-center gap-2 py-3 rounded-lg hover:bg-slate-50 text-slate-500 text-sm font-semibold transition">
-            <i data-lucide="bookmark" class="w-4 h-4" id="save-icon"></i>
-            <span class="hidden sm:inline" id="save-label">Save</span>
-          </button>
-
-          <div id="share-menu" class="hidden absolute right-2 sm:right-4 bottom-full mb-2 w-56 bg-white border border-slate-100 rounded-xl shadow-xl z-30 py-1.5">
-            <button onclick="shareDo('copy')" class="w-full text-left px-4 py-2.5 text-sm hover:bg-slate-50 flex items-center gap-2.5 text-[#121A21]"><i data-lucide="link" class="w-4 h-4 text-slate-500"></i> Copy link</button>
-            <button onclick="shareDo('linkedin')" class="w-full text-left px-4 py-2.5 text-sm hover:bg-slate-50 flex items-center gap-2.5 text-[#121A21]"><i data-lucide="linkedin" class="w-4 h-4 text-[#0A66C2]"></i> Share on LinkedIn</button>
-            <button onclick="shareDo('x')" class="w-full text-left px-4 py-2.5 text-sm hover:bg-slate-50 flex items-center gap-2.5 text-[#121A21]"><i data-lucide="twitter" class="w-4 h-4 text-slate-500"></i> Share on X</button>
-            <div class="border-t border-slate-100 my-1"></div>
-            <button onclick="shareDo('email')" class="w-full text-left px-4 py-2.5 text-sm hover:bg-slate-50 flex items-center gap-2.5 text-[#121A21]"><i data-lucide="mail" class="w-4 h-4 text-slate-500"></i> Email this post</button>
-          </div>
-        </div>
       </article>
 
-      <!-- COMMENTS -->
-      <section class="bg-white rounded-2xl border border-slate-100 reveal" style="animation-delay:160ms" id="comments-section">
+      <section class="bg-white rounded-2xl border border-slate-100 reveal shadow-sm" style="animation-delay:160ms" id="comments-section">
         <div class="px-5 sm:px-7 py-4 border-b border-slate-100 flex items-center justify-between">
           <div>
             <h2 class="font-jakarta font-extrabold uppercase text-sm text-[#121A21] tracking-wide flex items-center gap-1.5">
               Comments (<span id="comments-heading-count">8</span>)
               <button onclick="openBrief('comments')" class="dev-badge w-4 h-4 rounded-full bg-[#DC183C] text-white items-center justify-center text-[9px] font-bold leading-none animate-pulse" title="Implementation notes">i</button>
             </h2>
-            <p class="text-[11px] text-slate-500 mt-1 flex items-center gap-1"><i data-lucide="shield-check" class="w-3 h-3 text-[#29A37A]"></i> Be respectful — see <a href="public-terms.html" class="underline hover:text-[#DC183C]">community guidelines</a>.</p>
+            <p class="text-[11px] text-slate-500 mt-1 flex items-center gap-1"><i data-lucide="shield-check" class="w-3 h-3 text-[#29A37A]"></i> Be respectful — see <a href="#" class="underline hover:text-[#DC183C]">community guidelines</a>.</p>
           </div>
           <button id="load-older" onclick="loadOlder()" class="text-[11px] font-bold uppercase tracking-widest text-[#DC183C] hover:underline shrink-0">Load older</button>
         </div>
 
-        <!-- Composer -->
-        <div class="px-5 sm:px-7 py-4 border-b border-slate-100 flex items-start gap-3">
-          <div class="w-10 h-10 rounded-full bg-gradient-to-br from-[#DC183C] to-[#FF9900] grid place-items-center font-jakarta font-bold text-white text-xs shrink-0">TJ</div>
+        <div class="px-5 sm:px-7 py-4 border-b border-slate-100 flex items-start gap-3 bg-slate-50/50">
+          <div class="w-10 h-10 rounded-full bg-gradient-to-br from-[#DC183C] to-[#FF9900] grid place-items-center font-jakarta font-bold text-white text-xs shrink-0 shadow-sm">TJ</div>
           <div class="flex-1 min-w-0">
-            <textarea id="comment-input" rows="2" placeholder="Add a comment — be specific and kind." class="w-full text-sm bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 outline-none focus:bg-white focus:ring-2 focus:ring-[#DC183C]/30 transition resize-none"></textarea>
+            <textarea id="comment-input" rows="2" placeholder="Add a comment — be specific and kind." class="w-full text-sm bg-white border border-slate-200 rounded-xl px-3.5 py-2.5 outline-none focus:border-[#DC183C] focus:ring-1 focus:ring-[#DC183C] transition resize-none shadow-sm"></textarea>
             <div class="flex items-center justify-between mt-2">
               <div class="flex items-center gap-1 text-slate-400">
-                <button class="w-7 h-7 grid place-items-center rounded-full hover:bg-slate-100" title="Attach image"><i data-lucide="image" class="w-4 h-4"></i></button>
-                <button class="w-7 h-7 grid place-items-center rounded-full hover:bg-slate-100" title="Add link"><i data-lucide="link" class="w-4 h-4"></i></button>
-                <button class="w-7 h-7 grid place-items-center rounded-full hover:bg-slate-100" title="Mention"><i data-lucide="at-sign" class="w-4 h-4"></i></button>
+                <button class="w-7 h-7 grid place-items-center rounded-full hover:bg-slate-200 hover:text-slate-600 transition" title="Attach image"><i data-lucide="image" class="w-4 h-4"></i></button>
+                <button class="w-7 h-7 grid place-items-center rounded-full hover:bg-slate-200 hover:text-slate-600 transition" title="Add link"><i data-lucide="link" class="w-4 h-4"></i></button>
+                <button class="w-7 h-7 grid place-items-center rounded-full hover:bg-slate-200 hover:text-slate-600 transition" title="Mention"><i data-lucide="at-sign" class="w-4 h-4"></i></button>
               </div>
-              <button onclick="submitComment()" class="bg-[#DC183C] hover:bg-[#B0142F] text-white rounded-full px-4 py-1.5 text-xs font-bold uppercase tracking-wider transition">Post comment</button>
+              <button onclick="submitComment()" class="bg-[#DC183C] hover:bg-[#B0142F] text-white rounded-full px-5 py-2 text-xs font-bold transition shadow-sm">Post</button>
             </div>
           </div>
         </div>
 
-        <!-- Comment list -->
         <div id="comment-list" class="divide-y divide-slate-100"></div>
       </section>
 
     </section>
 
-    <!-- RIGHT SIDEBAR -->
-    <aside class="lg:col-span-4 space-y-5">
-      <div class="sticky-rail space-y-5">
+    <aside class="hidden lg:flex flex-col gap-5 lg:col-span-3">
 
-        <!-- Member card -->
-        <div class="bg-white rounded-2xl border border-slate-100 overflow-hidden reveal">
-          <div class="p-5">
-            <div class="w-[68px] h-[68px] rounded-full bg-gradient-to-br from-[#DC183C] to-[#FF9900] grid place-items-center font-jakarta font-extrabold text-white text-xl">TS</div>
-            <a href="public-author.html" class="block mt-3 font-jakarta font-extrabold text-[#121A21] hover:text-[#DC183C] transition">Tshepang Sekudisa</a>
-            <p class="text-[12px] text-slate-500 mt-0.5">Operations · Growth Scout founder</p>
-            <p class="text-[13px] text-slate-600 mt-2 leading-snug">Helping service founders plug the small, expensive leaks. 12 years in ops, 4 in coaching.</p>
-            <div class="flex items-center gap-2 mt-4">
-              <button onclick="followAuthor()" id="follow-btn" class="flex-1 bg-[#DC183C] hover:bg-[#B0142F] text-white rounded-full px-4 py-2 text-xs font-bold uppercase tracking-wider transition flex items-center justify-center gap-1.5"><i data-lucide="user-plus" class="w-3.5 h-3.5"></i> <span id="follow-label">Follow</span></button>
-              <button onclick="showToast('Opening direct message…', null)" class="flex-1 border border-slate-200 hover:border-[#121A21] text-[#121A21] rounded-full px-4 py-2 text-xs font-bold uppercase tracking-wider transition flex items-center justify-center gap-1.5"><i data-lucide="message-square" class="w-3.5 h-3.5"></i> Message</button>
-            </div>
-            <div class="grid grid-cols-3 gap-2 mt-4 pt-4 border-t border-slate-100 text-center">
-              <div><p class="font-jakarta font-extrabold text-[15px] text-[#121A21] leading-none">47</p><p class="text-[10px] font-bold uppercase tracking-widest text-slate-400 mt-1">Posts</p></div>
-              <div><p class="font-jakarta font-extrabold text-[15px] text-[#121A21] leading-none">1,284</p><p class="text-[10px] font-bold uppercase tracking-widest text-slate-400 mt-1">Followers</p></div>
-              <div><p class="font-jakarta font-extrabold text-[15px] text-[#121A21] leading-none">92</p><p class="text-[10px] font-bold uppercase tracking-widest text-slate-400 mt-1">Following</p></div>
-            </div>
-          </div>
-        </div>
-
-        <!-- More from Tshepang -->
-        <div class="bg-white rounded-2xl border border-slate-100 overflow-hidden reveal">
-          <div class="px-5 py-3 border-b border-slate-100">
-            <h4 class="font-jakarta font-bold uppercase text-sm text-[#121A21] tracking-wide">More from Tshepang</h4>
-          </div>
-          <a href="single-post.html" class="block px-5 py-3 hover:bg-slate-50 transition group border-b border-slate-100">
-            <div class="flex items-start gap-2">
-              <div class="min-w-0 flex-1">
-                <p class="text-[13px] font-bold text-[#121A21] group-hover:text-[#DC183C] transition leading-snug">The R200 that costs you R20,000</p>
-                <p class="text-[11px] text-slate-400 mt-1">3 days ago · Part 2 of 12</p>
-              </div>
-              <i data-lucide="arrow-up-right" class="w-4 h-4 text-slate-300 group-hover:text-[#DC183C] shrink-0 mt-0.5"></i>
-            </div>
-          </a>
-          <a href="single-post.html" class="block px-5 py-3 hover:bg-slate-50 transition group border-b border-slate-100">
-            <div class="flex items-start gap-2">
-              <div class="min-w-0 flex-1">
-                <p class="text-[13px] font-bold text-[#121A21] group-hover:text-[#DC183C] transition leading-snug">Why your best client is also your biggest risk</p>
-                <p class="text-[11px] text-slate-400 mt-1">1 week ago · Part 1 of 12</p>
-              </div>
-              <i data-lucide="arrow-up-right" class="w-4 h-4 text-slate-300 group-hover:text-[#DC183C] shrink-0 mt-0.5"></i>
-            </div>
-          </a>
-          <a href="single-post.html" class="block px-5 py-3 hover:bg-slate-50 transition group">
-            <div class="flex items-start gap-2">
-              <div class="min-w-0 flex-1">
-                <p class="text-[13px] font-bold text-[#121A21] group-hover:text-[#DC183C] transition leading-snug">The pricing conversation you keep avoiding</p>
-                <p class="text-[11px] text-slate-400 mt-1">2 weeks ago</p>
-              </div>
-              <i data-lucide="arrow-up-right" class="w-4 h-4 text-slate-300 group-hover:text-[#DC183C] shrink-0 mt-0.5"></i>
-            </div>
-          </a>
-        </div>
-
-        <!-- Related groups -->
-        <div class="bg-white rounded-2xl border border-slate-100 overflow-hidden reveal">
-          <div class="px-5 py-3 border-b border-slate-100">
-            <h4 class="font-jakarta font-bold uppercase text-sm text-[#121A21] tracking-wide">Related groups</h4>
-          </div>
-          <a href="single-group.html" class="block px-5 py-3 hover:bg-slate-50 transition group border-b border-slate-100">
-            <div class="flex items-center gap-3">
-              <div class="w-10 h-10 rounded-xl bg-[#FDECEF] grid place-items-center shrink-0"><i data-lucide="banknote" class="w-5 h-5 text-[#DC183C]"></i></div>
-              <div class="min-w-0 flex-1">
-                <p class="text-[13px] font-bold text-[#121A21] group-hover:text-[#DC183C] transition leading-tight">Funding &amp; Investors</p>
-                <p class="text-[11px] text-slate-400 mt-0.5">1,842 members</p>
-              </div>
-              <i data-lucide="chevron-right" class="w-4 h-4 text-slate-300 shrink-0"></i>
-            </div>
-          </a>
-          <a href="single-group.html" class="block px-5 py-3 hover:bg-slate-50 transition group">
-            <div class="flex items-center gap-3">
-              <div class="w-10 h-10 rounded-xl bg-[#E4F5EE] grid place-items-center shrink-0"><i data-lucide="settings-2" class="w-5 h-5 text-[#29A37A]"></i></div>
-              <div class="min-w-0 flex-1">
-                <p class="text-[13px] font-bold text-[#121A21] group-hover:text-[#DC183C] transition leading-tight">Operations Playbook</p>
-                <p class="text-[11px] text-slate-400 mt-0.5">624 members</p>
-              </div>
-              <i data-lucide="chevron-right" class="w-4 h-4 text-slate-300 shrink-0"></i>
-            </div>
-          </a>
-        </div>
-
-        <!-- Newsletter -->
-        <a href="public-pricing.html" class="block bg-[#DC183C] hover:bg-[#B0142F] transition rounded-2xl p-5 text-white reveal card-lift">
-          <p class="text-[10px] font-extrabold uppercase tracking-widest text-white/70 flex items-center gap-1.5"><i data-lucide="mail" class="w-3.5 h-3.5"></i> SME Brief</p>
-          <h4 class="font-jakarta font-extrabold text-lg leading-tight mt-1">The weekly newsletter SA founders open first.</h4>
-          <p class="text-[12px] text-white/80 mt-1.5">One email, every Tuesday — the one thing worth knowing this week.</p>
-          <span class="inline-flex items-center gap-1.5 mt-3 text-[12px] font-bold uppercase tracking-widest">Subscribe <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i></span>
-        </a>
-
-        <div class="text-center text-[11px] text-slate-400 leading-relaxed pt-2">
-          <a href="public-about.html" class="hover:text-[#121A21]">About</a> · <a href="public-help.html" class="hover:text-[#121A21]">Help</a> · <a href="public-privacy.html" class="hover:text-[#121A21]">Privacy</a> · <a href="public-terms.html" class="hover:text-[#121A21]">Terms</a>
-          <p class="mt-2">SME South Africa © 2026</p>
-        </div>
+      <div class="w-full bg-slate-50 rounded-2xl border border-slate-200 flex flex-col items-center justify-center text-slate-400 aspect-[6/5] shadow-inner overflow-hidden">
+        <img src="https://placehold.co/300x250/F8FAFC/94A3B8?text=Advertisement" alt="Ad Placeholder" class="w-full h-full object-cover">
       </div>
-    </aside>
 
-  </div>
+      <div class="bg-white rounded-2xl border border-slate-100 overflow-hidden reveal" style="animation-delay:120ms">
+        <div class="px-5 py-3 border-b border-slate-100 flex items-center justify-between">
+          <h4 class="font-jakarta font-bold uppercase text-sm text-[#121A21] tracking-wide">Upcoming Events</h4>
+          <a href="#" class="text-[10px] font-bold uppercase text-[#DC183C] tracking-widest hover:underline">View all</a>
+        </div>
+        <a href="event-single-in-person.html" class="block px-5 py-4 hover:bg-slate-50 transition group">
+        <div class="flex gap-4">
+          <div class="shrink-0 w-12 text-center bg-[#FFF1E0] rounded-lg py-1.5 border border-[#FF9900]/20 group-hover:bg-[#DC183C] transition-colors">
+            <p class="text-[9px] font-bold uppercase text-[#AE6B0A] tracking-widest group-hover:text-white">Jun</p>
+            <p class="font-jakarta font-extrabold text-xl text-[#121A21] leading-none mt-0.5 group-hover:text-white">23</p>
+          </div>
+          <div class="min-w-0">
+            <h5 class="font-bold text-sm text-[#121A21] leading-tight group-hover:text-[#DC183C] transition">Annual SME Funding Gala 2026</h5>
+            <p class="text-[11px] text-slate-500 mt-1 flex items-center gap-1"><i data-lucide="map-pin" class="w-3 h-3"></i> Focus Rooms, Sandton</p>
+            <p class="text-[11px] text-slate-500 mt-0.5 flex items-center gap-1"><i data-lucide="clock" class="w-3 h-3"></i> 08:30 AM SAST</p>
+          </div>
+        </div>
+      </a>
+      <a href="event-single-online.html" class="block px-5 py-4 hover:bg-slate-50 transition group border-t border-slate-100">
+        <div class="flex gap-4">
+          <div class="shrink-0 w-12 text-center bg-[#FFF1E0] rounded-lg py-1.5 border border-[#FF9900]/20 group-hover:bg-[#DC183C] transition-colors">
+            <p class="text-[9px] font-bold uppercase text-[#AE6B0A] tracking-widest group-hover:text-white">Jul</p>
+            <p class="font-jakarta font-extrabold text-xl text-[#121A21] leading-none mt-0.5 group-hover:text-white">09</p>
+          </div>
+          <div class="min-w-0">
+            <h5 class="font-bold text-sm text-[#121A21] leading-tight group-hover:text-[#DC183C] transition">Funding Without Tears Webinar</h5>
+            <p class="text-[11px] text-slate-500 mt-1 flex items-center gap-1"><i data-lucide="video" class="w-3 h-3"></i> Online · Zoom</p>
+            <p class="text-[11px] text-slate-500 mt-0.5 flex items-center gap-1"><i data-lucide="clock" class="w-3 h-3"></i> 11:00 AM SAST</p>
+          </div>
+        </div>
+      </a>
+    </div>
+
+    <!-- Suggested members -->
+    <div class="bg-white rounded-2xl border border-slate-100 overflow-hidden reveal" style="animation-delay:240ms">
+      <div class="px-5 py-3 border-b border-slate-100 flex items-center justify-between">
+        <h4 class="font-jakarta font-bold text-sm text-[#121A21] tracking-wide flex items-center gap-1.5">Entrepreneurs to connect with
+          <button onclick="openBrief('suggested')" class="dev-badge w-4 h-4 rounded-full bg-[#DC183C] text-white items-center justify-center text-[9px] font-bold leading-none animate-pulse" title="Implementation notes">i</button>
+        </h4>
+      </div>
+      <a href="#" class="block px-5 py-3 hover:bg-slate-50 transition group">
+        <div class="flex items-start gap-3">
+          <div class="relative shrink-0">
+            <img src="https://images.unsplash.com/photo-1506277886164-e25aa3f4ef7f?auto=format&fit=crop&q=80&w=100&h=100" alt="Brent Fisher" class="w-10 h-10 rounded-full object-cover">
+          </div>
+          <div class="min-w-0 flex-1">
+            <p class="text-[13px] font-bold text-[#121A21] group-hover:text-[#DC183C] transition truncate">Brent Fisher</p>
+            <p class="text-[12px] text-slate-500 mt-0.5 leading-snug">Owner · Africa IT Professionals Pty Ltd</p>
+            <button class="mt-2 inline-flex items-center gap-1 text-[11px] font-bold text-[#DC183C] bg-white border border-[#DC183C] hover:bg-[#FDECEF] px-3 py-1.5 rounded-full transition" aria-label="Connect">
+              <i data-lucide="plus" class="w-3 h-3"></i> Connect
+            </button>
+          </div>
+        </div>
+      </a>
+      <a href="#" class="block px-5 py-3 hover:bg-slate-50 transition group border-t border-slate-100">
+        <div class="flex items-start gap-3">
+          <div class="relative shrink-0">
+            <img src="https://images.unsplash.com/photo-1531123897727-8f129e1bfa82?auto=format&fit=crop&q=80&w=100&h=100" alt="Nobom Nini" class="w-10 h-10 rounded-full object-cover">
+          </div>
+          <div class="min-w-0 flex-1">
+            <p class="text-[13px] font-bold text-[#121A21] group-hover:text-[#DC183C] transition truncate">Nobom Nini</p>
+            <p class="text-[12px] text-slate-500 mt-0.5 leading-snug">Owner · SIPHETHUBOMI PTY LTD</p>
+            <button class="mt-2 inline-flex items-center gap-1 text-[11px] font-bold text-[#DC183C] bg-white border border-[#DC183C] hover:bg-[#FDECEF] px-3 py-1.5 rounded-full transition" aria-label="Connect">
+              <i data-lucide="plus" class="w-3 h-3"></i> Connect
+            </button>
+          </div>
+        </div>
+      </a>
+      <a href="#" class="block px-5 py-3 hover:bg-slate-50 transition group border-t border-slate-100">
+        <div class="flex items-start gap-3">
+          <div class="relative shrink-0">
+            <img src="https://images.unsplash.com/photo-1534308143481-c55f00be8bd7?auto=format&fit=crop&q=80&w=100&h=100" alt="Marvin Mafa" class="w-10 h-10 rounded-full object-cover">
+          </div>
+          <div class="min-w-0 flex-1">
+            <p class="text-[13px] font-bold text-[#121A21] group-hover:text-[#DC183C] transition truncate">Marvin Mafa</p>
+            <p class="text-[12px] text-slate-500 mt-0.5 leading-snug">Manager · African cooperative desk</p>
+            <button class="mt-2 inline-flex items-center gap-1 text-[11px] font-bold text-[#DC183C] bg-white border border-[#DC183C] hover:bg-[#FDECEF] px-3 py-1.5 rounded-full transition" aria-label="Connect">
+              <i data-lucide="plus" class="w-3 h-3"></i> Connect
+            </button>
+          </div>
+        </div>
+      </a>
+      <a href="#" class="block px-5 py-3 hover:bg-slate-50 transition group border-t border-slate-100">
+        <div class="flex items-start gap-3">
+          <div class="relative shrink-0">
+            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=100&h=100" alt="Nndivhe Godfrey Marema" class="w-10 h-10 rounded-full object-cover">
+          </div>
+          <div class="min-w-0 flex-1">
+            <p class="text-[13px] font-bold text-[#121A21] group-hover:text-[#DC183C] transition truncate">Nndivhe Godfrey Marema</p>
+            <p class="text-[12px] text-slate-500 mt-0.5 leading-snug">Co-Founder · Arem Enterprises Pty (Ltd)</p>
+            <button class="mt-2 inline-flex items-center gap-1 text-[11px] font-bold text-[#DC183C] bg-white border border-[#DC183C] hover:bg-[#FDECEF] px-3 py-1.5 rounded-full transition" aria-label="Connect">
+              <i data-lucide="plus" class="w-3 h-3"></i> Connect
+            </button>
+          </div>
+        </div>
+      </a>
+      <a href="#" class="block px-5 py-3 hover:bg-slate-50 transition group border-t border-slate-100">
+        <div class="flex items-start gap-3">
+          <div class="relative shrink-0">
+            <img src="https://images.unsplash.com/photo-1531384441138-2736e62e0919?auto=format&fit=crop&q=80&w=100&h=100" alt="Aadil Khan" class="w-10 h-10 rounded-full object-cover">
+          </div>
+          <div class="min-w-0 flex-1">
+            <p class="text-[13px] font-bold text-[#121A21] group-hover:text-[#DC183C] transition truncate">Aadil Khan</p>
+            <p class="text-[12px] text-slate-500 mt-0.5 leading-snug">Partner · Core Claim Holdings (Pty) Ltd</p>
+            <button class="mt-2 inline-flex items-center gap-1 text-[11px] font-bold text-[#DC183C] bg-white border border-[#DC183C] hover:bg-[#FDECEF] px-3 py-1.5 rounded-full transition" aria-label="Connect">
+              <i data-lucide="plus" class="w-3 h-3"></i> Connect
+            </button>
+          </div>
+        </div>
+      </a>
+    </div>
+
+    <!-- Links & Footer -->
+    <div class="text-center">
+      <div class="flex flex-wrap items-center justify-center gap-x-3 gap-y-2 text-[11px] text-slate-400 leading-relaxed px-2">
+          <a href="#" class="hover:text-slate-600">Advertising</a>
+          <a href="#" class="hover:text-slate-600">Funding</a>
+          <a href="#" class="hover:text-slate-600">Resources</a>
+          <a href="#" class="hover:text-slate-600">Founder Focus</a>
+          <a href="#" class="hover:text-slate-600">Insights</a>
+          <a href="#" class="hover:text-slate-600">Event</a>
+          <a href="#" class="hover:text-slate-600">Podcast</a>
+          <a href="#" class="hover:text-slate-600">Solutions</a>
+          <a href="#" class="hover:text-slate-600">Shop</a>
+          <a href="#" class="hover:text-slate-600">About</a>
+          <a href="#" class="hover:text-slate-600">Help</a>
+          <a href="#" class="hover:text-slate-600">Privacy</a>
+          <a href="#" class="hover:text-slate-600">Terms</a>
+      </div>
+      <p class="text-[11px] text-slate-400 mt-4">SME South Africa © 2026</p>
+    </div>
+  </aside>
+
+</div>
 </main>
 
-<!-- Overlay root -->
 <div id="overlay-root"></div>
-
-<!-- Toast -->
-<div id="toast" class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-50"></div>
+<div id="toast" class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-[100]"></div>
 
 <script>
-  // ===== Helpers =====
   function esc(s){ return String(s||'').replace(/[&<>"']/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c])); }
   function monogram(initials, size=40){
     const fs = Math.max(10, Math.floor(size * 0.38));
     return `<div class="rounded-full bg-gradient-to-br from-[#DC183C] to-[#FF9900] grid place-items-center font-jakarta font-bold text-white shrink-0" style="width:${size}px;height:${size}px;font-size:${fs}px">${esc(initials)}</div>`;
   }
 
-  // ===== TOAST =====
+
+
   function showToast(msg, color){
     color = color || '#0C1F31';
     const el = document.getElementById('toast');
@@ -421,34 +504,32 @@
     }, 2400);
   }
 
-  // ===== STATE (persisted) =====
-  const POST_ID = 'post-3756';
+  const safeStorage = {
+    get(key, fallback){ try { return localStorage.getItem(key) ?? fallback; } catch(e){ return fallback; } },
+    set(key, val){ try { localStorage.setItem(key, val); } catch(e){ /* storage unavailable (e.g. sandboxed iframe) — state just won't persist */ } }
+  };
+  const POST_ID = 'post-86';
   const LS = {
-    liked: JSON.parse(localStorage.getItem(POST_ID+'.liked') || 'false'),
-    saved: JSON.parse(localStorage.getItem(POST_ID+'.saved') || 'false'),
-    followed: JSON.parse(localStorage.getItem(POST_ID+'.followed') || 'false'),
-    likeCount: parseInt(localStorage.getItem(POST_ID+'.likeCount') || '142', 10)
+    liked: JSON.parse(safeStorage.get(POST_ID+'.liked', 'true')),
+    saved: JSON.parse(safeStorage.get(POST_ID+'.saved', 'false')),
+    followed: JSON.parse(safeStorage.get(POST_ID+'.followed', 'false')),
+    likeCount: parseInt(safeStorage.get(POST_ID+'.likeCount', '86'), 10)
   };
   function persist(){
-    localStorage.setItem(POST_ID+'.liked', JSON.stringify(LS.liked));
-    localStorage.setItem(POST_ID+'.saved', JSON.stringify(LS.saved));
-    localStorage.setItem(POST_ID+'.followed', JSON.stringify(LS.followed));
-    localStorage.setItem(POST_ID+'.likeCount', String(LS.likeCount));
+    safeStorage.set(POST_ID+'.liked', JSON.stringify(LS.liked));
+    safeStorage.set(POST_ID+'.saved', JSON.stringify(LS.saved));
+    safeStorage.set(POST_ID+'.followed', JSON.stringify(LS.followed));
+    safeStorage.set(POST_ID+'.likeCount', String(LS.likeCount));
   }
 
-  // ===== LIKE =====
   function renderLike(){
     const btn = document.getElementById('like-btn');
     const icon = document.getElementById('like-icon');
-    const count = document.getElementById('like-count');
-    count.textContent = LS.likeCount;
     if(LS.liked){
-      btn.classList.remove('text-slate-500');
-      btn.classList.add('text-[#DC183C]');
+      btn.classList.remove('text-slate-600'); btn.classList.add('text-[#DC183C]');
       icon.setAttribute('class','w-4 h-4 fill-current');
     } else {
-      btn.classList.add('text-slate-500');
-      btn.classList.remove('text-[#DC183C]');
+      btn.classList.add('text-slate-600'); btn.classList.remove('text-[#DC183C]');
       icon.setAttribute('class','w-4 h-4');
     }
     lucide.createIcons();
@@ -456,58 +537,10 @@
   function toggleLike(){
     LS.liked = !LS.liked;
     LS.likeCount += LS.liked ? 1 : -1;
-    persist();
-    renderLike();
-    if(LS.liked) showToast('You liked this post.', '#DC183C');
+    persist(); renderLike();
+    if(LS.liked) showToast('You liked Naledi\'s post.', '#DC183C');
   }
 
-  // ===== SAVE =====
-  function renderSave(){
-    const btn = document.getElementById('save-btn');
-    const icon = document.getElementById('save-icon');
-    const label = document.getElementById('save-label');
-    if(LS.saved){
-      btn.classList.remove('text-slate-500');
-      btn.classList.add('text-[#AE6B0A]');
-      icon.setAttribute('class','w-4 h-4 fill-current');
-      label.textContent = 'Saved';
-    } else {
-      btn.classList.add('text-slate-500');
-      btn.classList.remove('text-[#AE6B0A]');
-      icon.setAttribute('class','w-4 h-4');
-      label.textContent = 'Save';
-    }
-    lucide.createIcons();
-  }
-  function toggleSave(){
-    LS.saved = !LS.saved;
-    persist();
-    renderSave();
-    showToast(LS.saved ? 'Saved to your reading list.' : 'Removed from saved.', LS.saved ? '#AE6B0A' : null);
-  }
-
-  // ===== FOLLOW =====
-  function renderFollow(){
-    const btn = document.getElementById('follow-btn');
-    const label = document.getElementById('follow-label');
-    if(LS.followed){
-      btn.classList.remove('bg-[#DC183C]','hover:bg-[#B0142F]','text-white');
-      btn.classList.add('bg-slate-100','hover:bg-slate-200','text-[#121A21]');
-      label.textContent = 'Following';
-    } else {
-      btn.classList.add('bg-[#DC183C]','hover:bg-[#B0142F]','text-white');
-      btn.classList.remove('bg-slate-100','hover:bg-slate-200','text-[#121A21]');
-      label.textContent = 'Follow';
-    }
-  }
-  function followAuthor(){
-    LS.followed = !LS.followed;
-    persist();
-    renderFollow();
-    showToast(LS.followed ? 'Following Tshepang Sekudisa.' : 'Unfollowed.', LS.followed ? '#DC183C' : null);
-  }
-
-  // ===== SHARE MENU =====
   function toggleShare(e){
     e.stopPropagation();
     document.getElementById('share-menu').classList.toggle('hidden');
@@ -515,119 +548,93 @@
   }
   function shareDo(kind){
     document.getElementById('share-menu').classList.add('hidden');
-    const url = window.location.href;
-    if(kind === 'copy'){
-      if(navigator.clipboard && navigator.clipboard.writeText){
-        navigator.clipboard.writeText(url).then(
-          ()=> showToast('Link copied to clipboard.', '#29A37A'),
-          ()=> showToast('Couldn’t copy — long-press the address bar.', null)
-        );
-      } else {
-        showToast('Link copied to clipboard.', '#29A37A');
-      }
-    } else if(kind === 'linkedin'){
-      showToast('Opening LinkedIn share…', '#0A66C2');
-    } else if(kind === 'x'){
-      showToast('Opening X share…', null);
-    } else if(kind === 'email'){
-      showToast('Opening your mail app…', null);
-    }
-    const sc = document.getElementById('share-count');
-    sc.textContent = (parseInt(sc.textContent,10)+1);
+    if(kind === 'copy') showToast('Link copied to clipboard.', '#29A37A');
+    else showToast('Opening share window...', null);
   }
 
-  // ===== MORE MENU =====
   function toggleMenu(){
     document.getElementById('menu-fly').classList.toggle('hidden');
     document.getElementById('share-menu').classList.add('hidden');
   }
   function menuAction(kind){
     document.getElementById('menu-fly').classList.add('hidden');
-    if(kind === 'save'){ if(!LS.saved){ toggleSave(); } else { showToast('Already saved.', '#AE6B0A'); } }
-    else if(kind === 'copy'){ shareDo('copy'); }
-    else if(kind === 'mute'){ showToast('Notifications muted for this post.', null); }
-    else if(kind === 'report'){ showToast('Report submitted to moderators.', '#DC183C'); }
+    if(kind === 'mute') showToast('Notifications muted for this post.', null); 
+    else if(kind === 'report') showToast('Report submitted to moderators.', '#DC183C'); 
   }
 
   document.addEventListener('click', (e)=>{
     const sm = document.getElementById('share-menu');
     const mf = document.getElementById('menu-fly');
     if(sm && !sm.classList.contains('hidden') && !e.target.closest('#share-btn') && !e.target.closest('#share-menu')) sm.classList.add('hidden');
-    if(mf && !mf.classList.contains('hidden') && !e.target.closest('#menu-btn') && !e.target.closest('#menu-fly')) mf.classList.add('hidden');
+    if(mf && !mf.classList.contains('hidden') && !e.target.closest('#menu-btn') && !e.target.closest('#menu-btn-mobile') && !e.target.closest('#menu-fly')) mf.classList.add('hidden');
   });
 
-  // ===== COMMENTS =====
   let COMMENTS = [
     {
-      id:1, author:'Naledi Mokoena', initials:'NM', authorBadge:false, time:'14 minutes ago',
-      text:"This hit. I lost a Saturday last month to a no-show and spent the next two weeks resenting every booking. Rewriting my page tonight.",
+      id:1, author:'Sipho Monare', initials:'SM', authorBadge:false, time:'7 hours ago',
+      text:"Congratulations Naledi! Big move for GreenTrace. Pitching practice paid off!",
       likes:12, liked:false,
       replies:[
-        { id:11, author:'Tshepang Sekudisa', initials:'TS', authorBadge:true, time:'12 minutes ago', text:"Naledi — send me the two lines when you draft them. Happy to red-pen.", likes:4, liked:false }
+        { id:11, author:'Naledi Mokoena', initials:'NM', authorBadge:true, time:'6 hours ago', text:"Thanks Sipho! Couldn't have done it without the sharp feedback.", likes:5, liked:false }
       ]
     },
     {
-      id:2, author:'Sello Monare', initials:'SM', authorBadge:false, time:'22 minutes ago',
-      text:"The reframe — 'calendar lock, not trust test' — is the unlock. I've been awkward about deposits for 6 years. That sentence costs me money every month.",
-      likes:9, liked:true,
-      replies:[]
+      id:2, author:'Sello Monare', initials:'SM', authorBadge:false, time:'5 hours ago',
+      text:"50 enterprise accounts is huge momentum! How long did the sales cycle take for the last 10?",
+      likes:8, liked:true, replies:[]
     },
     {
-      id:3, author:'Refiloe Sithole', initials:'RS', authorBadge:false, time:'34 minutes ago',
-      text:"Counterpoint: in some niches (especially first-time consults) a deposit absolutely kills conversion. We A/B tested it. What worked instead: a paid 15-min discovery that gets credited if they book.",
-      likes:18, liked:false,
+      id:3, author:'Refiloe Sithole', initials:'RS', authorBadge:false, time:'3 hours ago',
+      text:"Massive win! Would love to feature GreenTrace on our founder spotlight series next month.",
+      likes:14, liked:false,
       replies:[
-        { id:31, author:'Tshepang Sekudisa', initials:'TS', authorBadge:true, time:'28 minutes ago', text:"This is the right nuance. Credit-back is a deposit in a kinder costume. Same logistics, less friction. Going to write this up.", likes:7, liked:false },
-        { id:32, author:'Karabo Kgophane', initials:'KK', authorBadge:false, time:'20 minutes ago', text:"+1 to credit-back. We do R150 for a 20-min, credited on booking. Show-rate jumped from 71% to 94%.", likes:5, liked:false }
+        { id:31, author:'Naledi Mokoena', initials:'NM', authorBadge:true, time:'2 hours ago', text:"Let's do it Refiloe! Sending you a DM now.", likes:6, liked:false }
       ]
-    },
-    {
-      id:4, author:'Lerato Phakathi', initials:'LP', authorBadge:false, time:'48 minutes ago',
-      text:"Saving this for my Monday team meeting. We've been bleeding hours and nobody on the team wanted to say the word 'deposit' out loud.",
-      likes:6, liked:false, replies:[]
-    },
-    {
-      id:5, author:'Mandla Dlamini', initials:'MD', authorBadge:false, time:'1 hour ago',
-      text:"Wrote my two lines. Going live tomorrow. Will report back.",
-      likes:3, liked:false, replies:[]
     }
   ];
 
   function renderComments(){
     const el = document.getElementById('comment-list');
+    if(!el) return;
     el.innerHTML = COMMENTS.map(c => renderComment(c, false)).join('');
-    document.getElementById('comments-heading-count').textContent = totalComments();
-    document.getElementById('comment-count').textContent = totalComments();
+    
+    const headingCount = document.getElementById('comments-heading-count');
+    if(headingCount) headingCount.textContent = totalComments();
+    
+    const commentCount = document.getElementById('comment-count');
+    if(commentCount) commentCount.textContent = totalComments();
+    
     lucide.createIcons();
   }
-  function totalComments(){
-    return COMMENTS.reduce((s,c) => s + 1 + (c.replies?.length||0), 0);
-  }
+  function totalComments(){ return COMMENTS.reduce((s,c) => s + 1 + (c.replies?.length||0), 0); }
   function renderComment(c, isReply){
-    const indent = isReply ? 'ml-12 sm:ml-14 border-l-2 border-slate-100 pl-4' : '';
-    const repliesHtml = (c.replies && c.replies.length) ? `<div class="mt-3 space-y-3">${c.replies.map(r=>renderComment(r, true)).join('')}</div>` : '';
-    const authorBadge = c.authorBadge ? `<span class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full bg-[#FDECEF] text-[#DC183C] text-[9px] font-extrabold uppercase tracking-widest"><i data-lucide="badge-check" class="w-2.5 h-2.5"></i> Author</span>` : '';
+    const indent = isReply ? 'ml-10 sm:ml-12 border-l-2 border-slate-100 pl-4 relative' : '';
+    const curvedConnector = isReply ? `<div class="absolute -left-[18px] top-6 w-4 h-4 border-b-2 border-l-2 border-slate-200 rounded-bl-xl"></div>` : '';
+    const repliesHtml = (c.replies && c.replies.length) ? `<div class="mt-3 space-y-2 relative">${c.replies.map(r=>renderComment(r, true)).join('')}</div>` : '';
+    const authorBadge = c.authorBadge ? `<span class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full bg-[#FDECEF] text-[#DC183C] text-[9px] font-extrabold uppercase tracking-widest ml-2"><i data-lucide="mic" class="w-2.5 h-2.5"></i> Author</span>` : '';
     const likeClass = c.liked ? 'text-[#DC183C]' : 'text-slate-400 hover:text-[#DC183C]';
     const heartClass = c.liked ? 'w-3.5 h-3.5 fill-current' : 'w-3.5 h-3.5';
+    
     return `
-      <div class="px-5 sm:px-7 py-4 ${isReply ? '' : ''}">
+      <div class="px-5 sm:px-7 py-5">
         <div class="${indent}">
+          ${curvedConnector}
           <div class="flex items-start gap-3">
             ${monogram(c.initials, 36)}
             <div class="min-w-0 flex-1">
-              <div class="flex items-center gap-2 flex-wrap">
-                <a href="members.html" class="font-bold text-[13px] text-[#121A21] hover:text-[#DC183C] transition">${esc(c.author)}</a>
+              <div class="flex items-center flex-wrap">
+                <a href="single-member.html" class="font-bold text-[13px] text-[#121A21] hover:text-[#DC183C] transition">${esc(c.author)}</a>
                 ${authorBadge}
-                <span class="text-[11px] text-slate-400">${esc(c.time)}</span>
+                <span class="text-[11px] text-slate-400 ml-2 hidden sm:inline">· ${esc(c.time)}</span>
               </div>
-              <p class="text-[14px] text-[#121A21] mt-1 leading-relaxed">${esc(c.text)}</p>
-              <div class="flex items-center gap-4 mt-2 text-[11px]">
-                <button onclick="toggleCommentLike(${c.id})" class="flex items-center gap-1 font-semibold ${likeClass} transition">
+              <p class="text-[14px] text-[#121A21] mt-1.5 leading-relaxed">${esc(c.text)}</p>
+              <div class="flex items-center gap-4 mt-3 text-[12px]">
+                <button onclick="toggleCommentLike(${c.id})" class="flex items-center gap-1.5 font-semibold ${likeClass} transition bg-slate-50 hover:bg-[#FDECEF] px-2 py-1 rounded-md">
                   <i data-lucide="heart" class="${heartClass}"></i>
-                  <span>${c.likes}</span>
+                  <span>${c.likes > 0 ? c.likes : 'Like'}</span>
                 </button>
-                <button onclick="replyTo('${esc(c.author)}')" class="text-slate-400 hover:text-[#121A21] font-semibold transition flex items-center gap-1"><i data-lucide="corner-down-right" class="w-3.5 h-3.5"></i> Reply</button>
-                <button class="text-slate-400 hover:text-[#121A21] font-semibold transition">Share</button>
+                <button onclick="replyTo('${esc(c.author)}')" class="text-slate-500 hover:text-[#121A21] font-semibold transition flex items-center gap-1"><i data-lucide="corner-down-right" class="w-3.5 h-3.5"></i> Reply</button>
+                <span class="text-[11px] text-slate-400 sm:hidden ml-auto">${esc(c.time)}</span>
               </div>
               ${repliesHtml}
             </div>
@@ -646,37 +653,28 @@
   }
   function replyTo(name){
     const ta = document.getElementById('comment-input');
-    ta.value = '@'+name+' ';
-    ta.focus();
-    ta.scrollIntoView({behavior:'smooth', block:'center'});
+    ta.value = '@'+name+' '; ta.focus(); ta.scrollIntoView({behavior:'smooth', block:'center'});
   }
   function focusComment(){
     const ta = document.getElementById('comment-input');
-    ta.focus();
-    ta.scrollIntoView({behavior:'smooth', block:'center'});
+    ta.focus(); ta.scrollIntoView({behavior:'smooth', block:'center'});
   }
   function submitComment(){
     const ta = document.getElementById('comment-input');
     const v = ta.value.trim();
     if(!v){ showToast('Write something first.', '#DC183C'); ta.focus(); return; }
-    COMMENTS.unshift({
-      id: Date.now(), author:'You', initials:'TJ', authorBadge:false, time:'just now', text:v, likes:0, liked:false, replies:[]
-    });
-    ta.value = '';
-    renderComments();
-    showToast('Comment posted.', '#29A37A');
+    COMMENTS.unshift({ id: Date.now(), author:'You', initials:'TJ', authorBadge:false, time:'just now', text:v, likes:0, liked:false, replies:[] });
+    ta.value = ''; renderComments(); showToast('Comment posted.', '#29A37A');
   }
   function loadOlder(){
     COMMENTS.push(
-      { id: 901, author:'Karabo Kgophane', initials:'KK', authorBadge:false, time:'2 hours ago', text:"Honest read. I always thought asking for a deposit would chase clients. Reading this back I realised — the ones it chases were never going to show up anyway.", likes:11, liked:false, replies:[] },
-      { id: 902, author:'Sipho Ngubane', initials:'SN', authorBadge:false, time:'3 hours ago', text:"Bookmarking. Sending to my wife's salon group chat.", likes:4, liked:false, replies:[] }
+      { id: 901, author:'Karabo Kgophane', initials:'KK', authorBadge:false, time:'8 hours ago', text:"Amazing work team GreenTrace! Very inspiring.", likes:7, liked:false, replies:[] }
     );
     renderComments();
     document.getElementById('load-older').classList.add('hidden');
-    showToast('Loaded 2 older comments.', null);
+    showToast('Loaded older comments.', null);
   }
 
-  // ===== DEV BRIEFS =====
   function toggleDevMode(){
     const on = document.body.classList.toggle('dev-on');
     const btn = document.getElementById('devToggle');
@@ -686,34 +684,41 @@
   }
   function closeOverlay(id){
     const el = document.getElementById(id);
-    if(!el) return;
-    el.classList.remove('open');
+    if(!el) return; el.classList.remove('open');
     setTimeout(()=>{ if(el && el.parentNode) el.remove(); }, 300);
   }
   const BRIEFS = {
+    activity: {
+      title:'Your Activity', sub:'The member&rsquo;s own posts, by type &amp; status',
+      purpose:'A personal index of what <b>you</b> posted, mirrored from the Community Feed sidebar so it stays visible while reading a single post.',
+      data:'Your posts grouped by type + status: Asks (open vs resolved), Wins, Shares. <code>resolved</code> = an answer was accepted.',
+      logic:'Tapping a row would filter the feed to YOUR posts of that type/status (navigates back to member-hub.html in production). Counts update live from the demo data.',
+      components:'Stat list · colour dot per type (red / grey / green / orange) · click → filtered feed.',
+      specs:'<b>Card:</b> left rail, bg white, radius 16px (<code>rounded-2xl</code>), 1px border slate-100. Same component as member-hub.html&rsquo;s left rail — kept in sync for consistency.'
+    },
+    suggested: {
+      title:'Suggested Members', sub:'Smart discovery — replaces &ldquo;New This Week&rdquo;',
+      purpose:'Connects founders who can actually help each other. Shows <b>only</b> members who (1) share interests / sector / stage and (2) have a <b>completed profile</b> (green check).',
+      data:'Candidates = members with <code>profile_complete = true</code>, excluding existing connections. Match on overlap of {sector, stage, province, tags}.',
+      logic:'Score each candidate by weighted overlap → sort descending → take top N. Each card shows its strongest match reason.',
+      components:'Member row · avatar + completeness badge · match-reason chip · one-tap Connect.',
+      specs:'<b>Card:</b> right rail, bg white, radius 16px (<code>rounded-2xl</code>), 1px border slate-100. Same component as member-hub.html&rsquo;s right rail — kept in sync for consistency.'
+    },
     post: {
       title:'Single member post', sub:'Activity permalink (BuddyBoss-style)',
-      purpose:'SEO-able permalink for any member activity post. Logged-in members get the full action bar (like/comment/share/save). Non-members see a teaser and are redirected to <code>/join</code> below the fold. The page mirrors the in-feed card so the experience is consistent.',
-      data:'<code>{ id, member, body, attachments[], hashtags[], timestamp, likes, comments[] }</code> — same schema as the feed item; this template just renders a single record at <code>/members/{slug}/activity/{id}/</code>.',
-      logic:'BuddyBoss activity permalink. Like/save state is persisted per-user. Share copies the canonical URL. Comments support one-level nesting; author replies get an Author badge.',
-      components:'Author bar · post card · link preview · attached image · hashtag chips · action bar · comment thread · sticky member rail.',
-      specs:'<b>Layout:</b> main container <code>max-w-6xl</code> = 1152px, padding-x 16px mobile / 24px, padding-y 24px mobile / 32px desktop (<code>py-6 sm:py-8</code>). 12-col grid at lg, gap 24px mobile / 32px desktop (<code>gap-6 lg:gap-8</code>) &mdash; post column <code>lg:col-span-8</code>, rail <code>lg:col-span-4</code>.<br/><b>Author bar:</b> white card rounded 16px (<code>rounded-2xl</code>), 1px border slate-100, padding 16px mobile / 20px (<code>p-4 sm:p-5</code>). Avatar 48&times;48 (<code>w-12 h-12</code>) rounded-full, gradient <code>#DC183C&rarr;#FF9900</code>, Plus Jakarta Sans weight 700 white. Name 15px weight 700 <code>#121A21</code>. Meta 12px slate-500, Lucide `clock`/`globe` 12&times;12. More button 36&times;36 (<code>w-9 h-9</code>) rounded-full.<br/><b>Post card:</b> white rounded 16px 1px border slate-100, inner padding 20px mobile / 28px (<code>p-5 sm:p-7</code>).<br/><b>H1:</b> Plus Jakarta Sans weight 800 &mdash; 24px mobile / 30px desktop (<code>text-2xl sm:text-3xl</code>) &mdash; leading tight, <code>#121A21</code>, 20px bottom margin.<br/><b>Prose body:</b> Inter 16px, line-height 1.75, <code>#121A21</code>; strong <code>#121A21</code> weight 700; paragraph spacing 1.1em; bullet marker 6&times;6 dot <code>#DC183C</code>.<br/><b>Pull quote:</b> 3px left border <code>#DC183C</code>, Plus Jakarta italic 19px, line-height 1.5, <code>#0C1F31</code>, 1.5em vertical margin.<br/><b>Link card:</b> 24px top margin, 1px border slate-200 rounded 12px (<code>rounded-xl</code>), hover border <code>#0A66C2</code>, card-lift. Header padding 16px/12px bg slate-50, source label 11px weight 700 uppercase tracking-widest slate-500, Lucide `linkedin` 16&times;16 <code>#0A66C2</code>, `external-link` 14&times;14. Body padding 16px: title Plus Jakarta weight 700 15px, description 13px slate-500.<br/><b>Attached image:</b> 20px top margin, rounded 12px, 1px border slate-100, aspect 16:9, caption padding 16px/10px 11px slate-500 italic.<br/><b>Hashtags:</b> 24px top margin, 8px gap, chip padding 12px/4px rounded-full bg <code>#FDECEF</code> text <code>#DC183C</code> 12px weight 600, hover bg <code>#DC183C</code> white.<br/><b>Action bar:</b> top border slate-100, padding-x 8px mobile / 16px (<code>px-2 sm:px-4</code>), buttons flex-1 padding-y 12px rounded 8px (<code>rounded-lg</code>) hover bg slate-50, slate-500 14px weight 600, Lucide `thumbs-up`/`message-circle`/`share-2`/`bookmark` 16&times;16. Share menu 224px (<code>w-56</code>) rounded 12px shadow-xl.<br/><b>Sticky rail:</b> <code>lg:col-span-4</code>, sticky top 80px, 20px vertical spacing. Member card white rounded 16px 1px border slate-100 padding 20px, avatar 68&times;68 rounded-full gradient.'
-    },
-    breadcrumb: {
-      title:'Breadcrumb', sub:'Activity URL pattern',
-      purpose:'Reinforces the URL hierarchy and makes back-navigation cheap. Matches the live BuddyBoss path <code>/members/{slug}/activity/{id}/</code>.',
-      data:'Derived from URL segments + member profile lookup.',
-      logic:'Static render. Last segment is the activity id, not a link.',
-      components:'Breadcrumb row.',
-      specs:'<b>Breadcrumb bar:</b> container <code>max-w-7xl</code> = 1280px, padding-x 16px / 24px, 24px top padding (<code>pt-6</code>).<br/><b>Trail:</b> 12px (<code>text-xs</code>) <code>#6A7581</code>, horizontal gap 6px (<code>gap-x-1.5</code>), wraps. Separator &rsaquo; slate-300. Links hover <code>#DC183C</code>. Current segment <code>#121A21</code> weight 500, truncates.'
+      purpose:'SEO-able permalink for any member activity post.',
+      data:'<code>{ id, member, body, attachments[], hashtags[], timestamp, likes, comments[] }</code>',
+      logic:'BuddyBoss activity permalink. Comments support one-level nesting.',
+      components:'Author bar · post card · comment thread · sticky member rail.',
+      specs:'<b>Layout:</b> main container <code>max-w-7xl</code> = 1280px. 3-col left rail, 6-col main feed, 3-col right rail.'
     },
     comments: {
-      title:'Comment thread', sub:'One-level nesting, author badge',
-      purpose:'Replies that move the conversation forward. Members can reply, like, and share comments. The original author’s replies are visually marked.',
-      data:'<code>Comment { id, post_id, author, body, created_at, likes, parent_id }</code>. parent_id is null for top-level, otherwise the parent comment id.',
-      logic:'Top-level comments sort newest-first. Replies nest under their parent in chronological order. Like state is per-user. Mentions (<code>@name</code>) trigger a notification.',
-      components:'Composer · comment row · reply row (indented) · Author badge · like/reply/share actions · Load older.',
-      specs:'<b>Comments card:</b> white rounded 16px (<code>rounded-2xl</code>) 1px border slate-100.<br/><b>Header:</b> padding-x 20px / 28px (<code>px-5 sm:px-7</code>) padding-y 16px, bottom border slate-100.<br/><b>H2:</b> Plus Jakarta Sans weight 800 uppercase 14px (<code>text-sm</code>) <code>#121A21</code> wide tracking.<br/><b>Guideline note:</b> 11px slate-500, Lucide `shield-check` 12&times;12 <code>#29A37A</code>, link underline hover <code>#DC183C</code>.<br/><b>Load older:</b> 11px weight 700 uppercase tracking-widest <code>#DC183C</code> hover underline.<br/><b>Composer:</b> padding-x 20px / 28px padding-y 16px, bottom border slate-100. Avatar 40&times;40 (<code>w-10 h-10</code>) rounded-full gradient <code>#DC183C&rarr;#FF9900</code>. Textarea 2 rows, 14px, bg slate-50 1px border slate-200 rounded 12px (<code>rounded-xl</code>) padding 14px/10px, focus ring 2px <code>#DC183C</code>/30. Toolbar buttons 28&times;28 (<code>w-7 h-7</code>) rounded-full, Lucide `image`/`link`/`at-sign` 16&times;16.<br/><b>Post-comment button:</b> bg <code>#DC183C</code> hover <code>#B0142F</code> rounded-full padding 16px/6px, white 12px (<code>text-xs</code>) weight 700 uppercase.<br/><b>Comment list:</b> rows divided by 1px slate-100 (<code>divide-y</code>).'
+      title:'Comment thread', sub:'One-level nesting',
+      purpose:'Replies that move the conversation forward.',
+      data:'<code>Comment { id, post_id, author, body, created_at, likes, parent_id }</code>.',
+      logic:'Top-level comments sort newest-first. Replies nest under their parent.',
+      components:'Composer · comment row · reply row (indented).',
+      specs:'<b>Comments card:</b> white rounded 16px 1px border slate-100.'
     }
   };
   function openBrief(id){
@@ -736,33 +741,22 @@
             <button onclick="closeOverlay('ov-brief')" aria-label="Close" class="text-white/60 hover:text-white shrink-0 ml-3"><i data-lucide="x" class="w-5 h-5"></i></button>
           </div>
           ${sec('target','Purpose', b.purpose)}
-          ${sec('database','Data model', b.data)}
           ${sec('git-branch','Logic', b.logic)}
-          ${b.specs ? sec('ruler','Spec values', b.specs) : ''}
-          ${sec('boxes','Components', b.components)}
-          <div class="px-6 py-4 border-t border-slate-100">
-            <p class="text-[11px] text-slate-400 flex items-center gap-1.5"><i data-lucide="info" class="w-3.5 h-3.5"></i> Spec lives beside the feature — toggle Dev Mode off for the clean stakeholder view.</p>
-          </div>
         </div>
       </div>`;
     requestAnimationFrame(()=>{ const o=document.getElementById('ov-brief'); if(o) o.classList.add('open'); });
     lucide.createIcons();
   }
 
-  document.addEventListener('keydown', (e)=>{
-    if(e.key === 'Escape'){
-      document.querySelectorAll('.ov.open').forEach(o => closeOverlay(o.id));
-      document.getElementById('share-menu')?.classList.add('hidden');
-      document.getElementById('menu-fly')?.classList.add('hidden');
-    }
-  });
-
-  // ===== INIT =====
-  renderLike();
-  renderSave();
-  renderFollow();
-  renderComments();
-  lucide.createIcons();
+  renderLike(); renderComments(); lucide.createIcons();
+  /* HEADER-SEARCH-JS */
+  function toggleHeaderSearch(){
+    var o=document.getElementById('headerSearchOverlay'); if(!o) return;
+    var open=o.classList.toggle('active');
+    var i=document.getElementById('headerSearchInput');
+    if(open){ if(i) setTimeout(function(){ i.focus(); },100); } else if(i){ i.value=''; }
+  }
+  document.addEventListener('keydown', function(e){ if(e.key==='Escape'){ var o=document.getElementById('headerSearchOverlay'); if(o&&o.classList.contains('active')) toggleHeaderSearch(); } });
 </script>
 </body>
 </html>

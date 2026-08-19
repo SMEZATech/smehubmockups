@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>What is your biggest business problem right now? | SME HUB Forums</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            jakarta: ['Plus Jakarta Sans', 'sans-serif'],
+            inter: ['Inter', 'system-ui', 'sans-serif']
+          },
+          colors: {
+            primary: '#DC183C',
+            accent: '#FF9900',
+            navy: '#0C1F31'
+          }
+        }
+      }
+    };
+  </script>
+
+  <style>
+    html, body { font-family: 'Inter', system-ui, sans-serif; }
+    .font-jakarta { font-family: 'Plus Jakarta Sans', sans-serif; letter-spacing: -0.01em; }
+
+    /* Scrollbars */
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+    /* Reveal Animations */
+    @keyframes fadeUp { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+    .reveal { animation: fadeUp .45s cubic-bezier(.2,.7,.2,1) backwards; }
+
+    /* Toast Notifications */
+    @keyframes toastIn { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
+    @keyframes toastOut { to { opacity:0; transform:translateY(20px); } }
+    .toast-in { animation: toastIn .25s ease forwards; }
+    .toast-out { animation: toastOut .25s ease forwards; }
+
+    /* Card lift */
+    .card-lift { transition: box-shadow .3s ease, transform .3s ease; }
+    .card-lift:hover { box-shadow: 0 16px 32px -12px rgba(12,31,49,.15); transform: translateY(-3px); }
+
+    /* Prose styling for forum post body */
+    .prose p { margin-bottom: 1.25rem; line-height: 1.75; color: #121A21; }
+    .prose ul { list-style-type: disc; padding-left: 1.5rem; margin-bottom: 1.25rem; line-height: 1.75; }
+    .prose li { margin-bottom: 0.5rem; }
+    .prose a { color: #DC183C; text-decoration: none; font-weight: 600; }
+    .prose a:hover { text-decoration: underline; }
+    .prose strong { font-weight: 700; color: #0C1F31; }
+
+    /* Dev Mode overlay */
+    #overlay-root:empty { display:none; }
+    .dev-badge { display:none; }
+    body.dev-on .dev-badge { display:inline-flex; }
+    #devToggle.on { background:#DC183C; color:#fff; border-color:#DC183C; }
+    
+    .ov { position:fixed; inset:0; z-index:60; }
+    .ov-bg { position:absolute; inset:0; background:rgba(12,31,49,.45); backdrop-filter:blur(2px); opacity:0; transition:opacity .3s; }
+    .ov.open .ov-bg { opacity:1; }
+    .drawer { position:absolute; right:0; top:0; height:100%; width:100%; max-width:440px; background:#fff; box-shadow:-12px 0 40px rgba(12,31,49,.25); overflow-y:auto; transform:translateX(100%); transition:transform .3s cubic-bezier(.2,.7,.2,1); }
+    .ov.open .drawer { transform:translateX(0); }
+      /* HEADER-SEARCH-CSS */
+    .search-overlay { position:absolute; inset:0; background:white; z-index:50; display:flex; align-items:center; justify-content:center; padding:0 1rem; opacity:0; pointer-events:none; transform:translateY(-10px); transition:all .3s cubic-bezier(.2,.8,.2,1); }
+    .search-overlay.active { opacity:1; pointer-events:auto; transform:translateY(0); }
+    @media (min-width:640px){ .search-overlay{ padding:0 1.5rem; } }
+</style>
+</head>
+<body class="bg-[#FCFCFC] text-[#121A21] antialiased">
+
+<!-- ===================== HEADER ===================== -->
+<header class="bg-white border-b border-slate-200 sticky top-0 z-40 shadow-sm relative">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+
+    <!-- Logo (Left) -->
+    <a href="public-home.html" class="flex items-center shrink-0 group mr-6 py-2">
+      <img src="https://smesouthafrica.co.za/wp-content/uploads/2025/10/Asset-1-1.webp" alt="SME South Africa" class="h-10 sm:h-11 w-auto object-contain group-hover:scale-105 transition-transform" />
+    </a>
+
+    <!-- Primary Navigation (Center - BuddyBoss Style) -->
+    <nav class="hidden md:flex items-center justify-center gap-2 flex-1 px-4 h-full">
+      <a href="member-hub.html" class="px-3 h-full text-[14px] font-semibold font-jakarta text-[#6A7581] hover:text-[#DC183C] border-b-[3px] border-transparent flex items-center gap-2 transition-colors"><i data-lucide="activity" class="w-4 h-4"></i> Home</a>
+      <a href="members.html" class="px-3 h-full text-[14px] font-semibold font-jakarta text-[#6A7581] hover:text-[#DC183C] border-b-[3px] border-transparent flex items-center gap-2 transition-colors"><i data-lucide="user" class="w-4 h-4"></i> Members</a>
+      <a href="groups.html" class="px-3 h-full text-[14px] font-semibold font-jakarta text-[#6A7581] hover:text-[#DC183C] border-b-[3px] border-transparent flex items-center gap-2 transition-colors"><i data-lucide="users" class="w-4 h-4"></i> Groups</a>
+      <a href="forums.html" class="px-3 h-full text-[14px] font-bold font-jakarta text-[#DC183C] border-b-[3px] border-[#DC183C] flex items-center gap-2 transition-colors"><i data-lucide="message-square" class="w-4 h-4 text-[#DC183C]"></i> Forums <i data-lucide="chevron-down" class="w-3 h-3 ml-[-2px] opacity-50"></i></a>
+    </nav>
+
+    <!-- Utility & Profile (Right) -->
+    <div class="flex items-center justify-end gap-4 shrink-0">
+
+      <!-- Search Trigger -->
+      <button onclick="toggleHeaderSearch()" class="text-slate-500 hover:text-[#121A21] transition-colors p-1.5" aria-label="Open search">
+        <i data-lucide="search" class="w-5 h-5"></i>
+      </button>
+
+      <div class="w-px h-6 bg-slate-200 hidden sm:block mx-1"></div>
+
+      <!-- Action Icons -->
+      <div class="hidden sm:flex items-center gap-2">
+        <button class="relative text-slate-500 hover:text-[#121A21] transition-colors p-1.5" aria-label="Messages">
+          <i data-lucide="inbox" class="w-5 h-5"></i>
+          <span class="absolute top-0 right-0 w-4 h-4 bg-[#DC183C] text-white text-[9px] font-bold rounded-full flex items-center justify-center ring-2 ring-white shadow-sm">1</span>
+        </button>
+        <button class="relative text-slate-500 hover:text-[#121A21] transition-colors p-1.5" aria-label="Notifications">
+          <i data-lucide="bell" class="w-5 h-5"></i>
+          <span class="absolute top-0 right-0 w-4 h-4 bg-[#DC183C] text-white text-[9px] font-bold rounded-full flex items-center justify-center ring-2 ring-white shadow-sm">8</span>
+        </button>
+        <button class="relative text-slate-500 hover:text-[#121A21] transition-colors p-1.5" aria-label="Cart">
+          <i data-lucide="shopping-cart" class="w-5 h-5"></i>
+          <span class="absolute top-0 right-0 w-4 h-4 bg-[#DC183C] text-white text-[9px] font-bold rounded-full flex items-center justify-center ring-2 ring-white shadow-sm">4</span>
+        </button>
+      </div>
+
+      <!-- User Profile Dropdown -->
+      <div class="relative ml-1 sm:ml-2 cursor-pointer group">
+        <div class="flex items-center gap-3">
+          <span class="font-jakarta font-bold text-[15px] text-[#121A21] hidden md:block">Tshepho</span>
+          <div class="w-9 h-9 rounded-full bg-gradient-to-br from-[#DC183C] to-[#FF9900] grid place-items-center font-jakarta font-bold text-white text-xs ring-2 ring-white shadow-sm group-hover:scale-105 transition-transform">TJ</div>
+        </div>
+
+        <!-- Dropdown Menu -->
+        <div class="absolute right-0 top-full mt-3 w-64 bg-white rounded-xl shadow-xl border border-slate-100 overflow-hidden z-50 transform origin-top-right scale-95 opacity-0 pointer-events-none transition-all duration-200 group-hover:scale-100 group-hover:opacity-100 group-hover:pointer-events-auto">
+          <div class="p-4 border-b border-slate-100 flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-gradient-to-br from-[#DC183C] to-[#FF9900] grid place-items-center font-jakarta font-bold text-white text-sm shrink-0">TJ</div>
+            <div class="min-w-0">
+              <p class="font-jakarta font-bold text-sm text-[#121A21] truncate">Tshepho Joel</p>
+              <p class="text-xs text-slate-500 truncate">@tshephojoel</p>
+            </div>
+          </div>
+          <div class="p-2 text-sm text-slate-700 font-medium">
+            <a href="single-member.html" class="block px-3 py-2 rounded-lg hover:bg-slate-50 hover:text-[#DC183C] transition-colors">Profile</a>
+            <a href="member-account.html" class="block px-3 py-2 rounded-lg hover:bg-slate-50 hover:text-[#DC183C] transition-colors">Account Settings</a>
+            <a href="#" class="block px-3 py-2 rounded-lg hover:bg-slate-50 hover:text-[#DC183C] transition-colors flex items-center justify-between">Orders <span class="bg-slate-100 text-slate-500 text-[10px] font-bold px-2 py-0.5 rounded-full">4</span></a>
+          </div>
+          <div class="p-2 border-t border-slate-100">
+            <a href="#" class="block px-3 py-2 text-sm font-semibold text-[#DC183C] hover:bg-[#FDECEF] rounded-lg transition-colors">Sign Out</a>
+          </div>
+          <div class="px-5 py-3 border-t border-slate-100 bg-slate-50 flex items-center justify-between">
+            <span class="text-[10px] font-bold uppercase tracking-widest text-slate-500">Dev Mode</span>
+            <button id="devToggle" onclick="toggleDevMode()" class="w-8 h-4 rounded-full bg-slate-200 relative transition-colors focus:outline-none" aria-pressed="false">
+              <span class="absolute left-0.5 top-0.5 w-3 h-3 rounded-full bg-white shadow-sm transition-transform duration-200"></span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Full Header Search Overlay -->
+  <div id="headerSearchOverlay" class="search-overlay">
+    <div class="w-full max-w-4xl flex items-center gap-4">
+      <div class="relative flex-1">
+        <i data-lucide="search" class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400"></i>
+        <input type="text" id="headerSearchInput" placeholder="Search members, groups, forums..." class="w-full h-12 pl-12 pr-4 text-base bg-slate-50 border border-[#DC183C] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#DC183C]/20 transition-all shadow-sm">
+      </div>
+      <button onclick="toggleHeaderSearch()" class="text-slate-500 hover:text-[#121A21] p-2 transition-colors shrink-0" aria-label="Close search">
+        <i data-lucide="x" class="w-6 h-6"></i>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="max-w-7xl mx-auto px-4 sm:px-6 pt-6">
+  <nav aria-label="Breadcrumb" class="text-xs text-[#6A7581] flex items-center flex-wrap gap-x-1.5">
+    <a href="public-home.html" class="hover:text-[#DC183C] transition">Home</a>
+    <span class="text-slate-300">›</span>
+    <a href="member-hub.html" class="hover:text-[#DC183C] transition">Community</a>
+    <span class="text-slate-300">›</span>
+    <a href="forums.html" class="hover:text-[#DC183C] transition">Forums</a>
+    <span class="text-slate-300">›</span>
+    <span class="text-[#121A21] font-medium truncate">What is your biggest business problem right now? Let's solve it together!</span>
+  </nav>
+</div>
+
+<main class="max-w-7xl mx-auto px-4 sm:px-6 py-6 lg:py-8">
+  
+  <div class="flex items-center justify-between gap-2 mb-6">
+    <a href="forums.html" class="text-[13px] font-bold text-slate-500 hover:text-[#DC183C] flex items-center gap-1.5 transition-colors">
+      <i data-lucide="arrow-left" class="w-4 h-4"></i> Back to discussions
+    </a>
+    <button onclick="openBrief('singlediscussion')" class="dev-badge w-5 h-5 rounded-full bg-[#DC183C] text-white items-center justify-center text-[10px] font-bold leading-none animate-pulse" title="Implementation notes">i</button>
+  </div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-[1fr,300px] gap-8 lg:gap-10 items-start">
+    
+    <!-- LEFT COLUMN: Topic and Replies -->
+    <div class="min-w-0 space-y-8">
+      
+      <!-- MAIN TOPIC CARD -->
+      <div class="bg-white rounded-[24px] border border-[#E7EBEF] overflow-hidden shadow-sm card-lift reveal">
+        <div class="p-6 sm:p-8">
+          
+          <!-- Top Row: Forum Pill & Icons -->
+          <div class="flex items-start justify-between gap-4 mb-5">
+            <a href="forums.html" class="inline-flex px-3 py-1.5 rounded-full bg-[#FDECEF] text-[10px] font-bold text-[#DC183C] uppercase tracking-widest hover:bg-[#F6C7D3] transition-colors">
+              General Discussion
+            </a>
+            <div class="flex items-center gap-3 text-slate-400">
+              <button class="hover:text-[#FF9900] transition-colors" title="Favorite"><i data-lucide="star" class="w-4 h-4 fill-current text-[#FF9900]"></i></button>
+              <button class="hover:text-[#AE6B0A] transition-colors" title="Pinned"><i data-lucide="pin" class="w-4 h-4"></i></button>
+              <button class="hover:text-slate-600 transition-colors" title="More options"><i data-lucide="more-horizontal" class="w-5 h-5"></i></button>
+            </div>
+          </div>
+
+          <!-- Title -->
+          <h1 class="font-jakarta font-extrabold text-2xl sm:text-3xl lg:text-4xl text-[#0C1F31] leading-tight tracking-tight mb-6">
+            What is your biggest business problem right now? Let's solve it together!
+          </h1>
+
+          <!-- Author Info -->
+          <div class="flex items-center gap-3 mb-8">
+            <a href="single-member.html" class="shrink-0">
+              <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=150&h=150" alt="Amahle Jacobs" class="w-12 h-12 rounded-full object-cover shadow-sm ring-2 ring-white" />
+            </a>
+            <div>
+              <p class="text-[14px] text-slate-500 leading-snug flex items-center flex-wrap gap-2">
+                Posted by <a href="single-member.html" class="font-bold text-[#0C1F31] hover:text-[#DC183C] transition-colors">Amahle Jacobs</a>
+                <span class="inline-flex items-center px-2 py-0.5 rounded text-[9px] font-bold bg-[#0C1F31] text-white uppercase tracking-widest">Topic Starter</span>
+              </p>
+              <p class="text-[12px] text-slate-400 mt-0.5">14 August 2026 at 9:15 am</p>
+            </div>
+          </div>
+
+          <!-- Content Body -->
+          <div class="prose max-w-none text-[15.5px]">
+            <p>Hey everyone, building a business is incredibly lonely, and sometimes the hurdle right in front of us feels insurmountable until someone else says, "Oh, I dealt with that last year, here's what you do."</p>
+            
+            <p>So, I'm opening this thread as a <strong>Community Mastermind</strong>. Drop your single biggest blocker below. It can be anything:</p>
+            
+            <ul>
+              <li>Struggling to close your first enterprise client?</li>
+              <li>Can't figure out how to structure employee equity?</li>
+              <li>Supplier logistics in Gauteng driving you insane?</li>
+              <li>Not sure if you should apply for the NEF grant or take on private debt?</li>
+            </ul>
+            
+            <p>Write down your specific problem. If you see a problem you know how to solve, reply and share your experience.</p>
+            
+            <p>I'll start in the replies. Let's build together.</p>
+          </div>
+
+        </div>
+
+        <!-- Topic Footer Meta & Share -->
+        <div class="px-6 sm:px-8 py-4 bg-slate-50 border-t border-[#E7EBEF] flex items-center justify-between flex-wrap gap-4 text-[13px] text-slate-500">
+          <div class="flex items-center flex-wrap gap-x-4 gap-y-2">
+            <div class="flex items-center gap-1.5">
+              <i data-lucide="corner-down-right" class="w-4 h-4 text-slate-400"></i>
+              <a href="single-member.html" class="font-bold text-[#0C1F31] hover:text-[#DC183C]">Sello</a> replied 2 days ago
+            </div>
+            <span class="hidden sm:inline text-slate-300">·</span>
+            <span class="flex items-center gap-1.5"><i data-lucide="users" class="w-4 h-4"></i> 4 Members</span>
+            <span class="hidden sm:inline text-slate-300">·</span>
+            <span class="flex items-center gap-1.5"><i data-lucide="message-circle" class="w-4 h-4"></i> 7 Replies</span>
+          </div>
+          <button onclick="showToast('Link copied to clipboard', 'win')" class="inline-flex items-center gap-1.5 font-bold hover:text-[#DC183C] transition-colors"><i data-lucide="share-2" class="w-4 h-4"></i> Share Topic</button>
+        </div>
+      </div>
+
+      <!-- REPLIES SECTION -->
+      <div class="bg-white rounded-[24px] border border-[#E7EBEF] overflow-hidden shadow-sm reveal" style="animation-delay: 80ms;">
+        <div class="px-6 sm:px-8 py-5 border-b border-[#E7EBEF] bg-white flex items-center justify-between">
+          <h2 class="font-jakarta font-extrabold text-[18px] text-[#0C1F31]">7 Replies</h2>
+        </div>
+
+        <div class="divide-y divide-[#E7EBEF]">
+          
+          <!-- Reply 1 -->
+          <div class="p-6 sm:p-8 hover:bg-slate-50/50 transition-colors">
+            <div class="flex items-start gap-4">
+              <a href="single-member.html" class="shrink-0 mt-1">
+                <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=150&h=150" alt="Amahle Jacobs" class="w-10 h-10 rounded-full object-cover shadow-sm ring-2 ring-white" />
+              </a>
+              <div class="min-w-0 flex-1">
+                <div class="flex items-center flex-wrap gap-2 mb-3">
+                  <a href="single-member.html" class="font-jakarta font-bold text-[15px] text-[#0C1F31] hover:text-[#DC183C] transition-colors">Amahle Jacobs</a>
+                  <span class="px-1.5 py-0.5 rounded bg-[#0C1F31] text-[9px] font-bold text-white uppercase tracking-widest">Topic Starter</span>
+                  <span class="text-[12px] text-slate-400">· 14 Aug 2026 at 9:18 am</span>
+                </div>
+                <div class="prose text-[15px]">
+                  <p>I'll kick off. My biggest blocker right now is <strong>B2B lead generation</strong>.</p>
+                  <p>We have a great software product, our current clients love it, and churn is zero. But our sales cycle relies entirely on me tapping my personal network and attending industry events. Cold emailing isn't working for us (open rates are abysmal). Has anyone successfully built an inbound B2B funnel in SA that doesn't just rely on expensive Google Ads?</p>
+                </div>
+                <div class="mt-4 flex items-center gap-4 text-[13px] font-bold text-slate-400">
+                  <button class="hover:text-[#DC183C] transition-colors flex items-center gap-1"><i data-lucide="corner-up-left" class="w-4 h-4"></i> Reply</button>
+                  <button class="hover:text-[#DC183C] transition-colors flex items-center gap-1"><i data-lucide="thumbs-up" class="w-4 h-4"></i> 4</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Reply 2 -->
+          <div class="p-6 sm:p-8 hover:bg-slate-50/50 transition-colors">
+            <div class="flex items-start gap-4">
+              <a href="single-member.html" class="shrink-0 mt-1">
+                <img src="https://images.unsplash.com/photo-1506277886164-e25aa3f4ef7f?auto=format&fit=crop&q=80&w=150&h=150" alt="Tshepho Joel" class="w-10 h-10 rounded-full object-cover shadow-sm ring-2 ring-white" />
+              </a>
+              <div class="min-w-0 flex-1">
+                <div class="flex items-center flex-wrap gap-2 mb-3">
+                  <a href="single-member.html" class="font-jakarta font-bold text-[15px] text-[#0C1F31] hover:text-[#DC183C] transition-colors">Tshepho Joel</a>
+                  <span class="text-[12px] text-slate-400">· 14 Aug 2026 at 11:30 am</span>
+                </div>
+                <div class="prose text-[15px]">
+                  <p>Hey Amahle, we had this exact problem two years ago. We stopped doing broad cold outreach and switched entirely to <strong>Account-Based Marketing (ABM) on LinkedIn</strong>.</p>
+                  <p>Instead of emailing 1000 random CEOs, we pick 50 target companies. We connect with multiple stakeholders in each company, comment thoughtfully on their posts for a few weeks, and then send a hyper-personalized voice note or short Loom video highlighting a specific inefficiency we noticed on their site. It takes way more time per lead, but our conversion rate went from 0.5% to 14%.</p>
+                </div>
+                <div class="mt-4 flex items-center gap-4 text-[13px] font-bold text-slate-400">
+                  <button class="hover:text-[#DC183C] transition-colors flex items-center gap-1"><i data-lucide="corner-up-left" class="w-4 h-4"></i> Reply</button>
+                  <button class="hover:text-[#DC183C] transition-colors flex items-center gap-1 text-[#DC183C]"><i data-lucide="thumbs-up" class="w-4 h-4 fill-current"></i> 12</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Reply 3 (Threaded visual) -->
+          <div class="p-6 sm:p-8 bg-slate-50/30 relative">
+            <div class="flex items-start gap-4 ml-6 sm:ml-10 relative before:absolute before:-left-6 sm:before:-left-10 before:top-4 before:w-6 sm:before:w-10 before:h-8 before:border-b-2 before:border-l-2 before:border-[#E7EBEF] before:rounded-bl-xl">
+              <a href="single-member.html" class="shrink-0 mt-1">
+                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=150&h=150" alt="Sello Monare" class="w-8 h-8 rounded-full object-cover shadow-sm ring-2 ring-white" />
+              </a>
+              <div class="min-w-0 flex-1">
+                <div class="flex items-center flex-wrap gap-2 mb-2">
+                  <a href="single-member.html" class="font-jakarta font-bold text-[14px] text-[#0C1F31] hover:text-[#DC183C] transition-colors">Sello Monare</a>
+                  <span class="text-[11px] text-slate-400">· 2 days ago</span>
+                </div>
+                <div class="prose text-[14px]">
+                  <p>Adding to Tshepho's point — the Loom video approach is gold. I rarely reply to cold emails, but if someone takes the time to record a 60-second video showing me exactly how their tool saves *my* specific business money, I will almost always take the meeting.</p>
+                </div>
+                <div class="mt-3 flex items-center gap-4 text-[12px] font-bold text-slate-400">
+                  <button class="hover:text-[#DC183C] transition-colors flex items-center gap-1"><i data-lucide="corner-up-left" class="w-3.5 h-3.5"></i> Reply</button>
+                  <button class="hover:text-[#DC183C] transition-colors flex items-center gap-1"><i data-lucide="thumbs-up" class="w-3.5 h-3.5"></i> 2</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Reply Composer -->
+        <div class="p-6 sm:p-8 bg-slate-50 border-t border-[#E7EBEF]">
+          <div class="flex items-start gap-4">
+            <div class="shrink-0 mt-1 hidden sm:block">
+              <div class="w-10 h-10 rounded-full bg-[#0C1F31] grid place-items-center font-jakarta font-bold text-white text-sm shadow-sm ring-2 ring-white">ME</div>
+            </div>
+            <div class="flex-1">
+              <div class="relative min-h-[140px] flex flex-col border border-[#E7EBEF] rounded-2xl bg-white overflow-hidden focus-within:border-[#DC183C] focus-within:ring-4 focus-within:ring-[#DC183C]/10 transition-all shadow-sm">
+                <div class="px-4 py-2.5 border-b border-slate-100 bg-slate-50/50 flex items-center gap-2 text-slate-500">
+                  <button type="button" class="w-8 h-8 rounded hover:bg-slate-200 transition-colors font-bold text-sm grid place-items-center" title="Bold">B</button>
+                  <button type="button" class="w-8 h-8 rounded hover:bg-slate-200 transition-colors italic text-sm grid place-items-center" title="Italic">I</button>
+                  <div class="w-px h-5 bg-slate-200 mx-1"></div>
+                  <button type="button" class="w-8 h-8 rounded hover:bg-slate-200 transition-colors grid place-items-center" title="Link"><i data-lucide="link" class="w-4 h-4"></i></button>
+                  <button type="button" class="w-8 h-8 rounded hover:bg-slate-200 transition-colors grid place-items-center" title="Image"><i data-lucide="image" class="w-4 h-4"></i></button>
+                </div>
+                <textarea id="replyText" placeholder="Write a reply..." class="w-full flex-1 p-4 text-[15px] text-[#121A21] placeholder-slate-400 outline-none resize-y min-h-[80px] bg-transparent leading-relaxed"></textarea>
+              </div>
+              <div class="mt-4 flex justify-end">
+                <button onclick="submitReply()" class="h-11 px-8 rounded-xl bg-[#DC183C] hover:bg-[#B0142F] text-white font-jakarta font-bold text-[15px] transition-colors shadow-lg shadow-[#DC183C]/20">
+                  Post Reply
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- RIGHT COLUMN: Actions -->
+    <aside class="space-y-5 lg:sticky lg:top-24 order-first lg:order-last">
+      
+      <!-- Action Buttons -->
+      <div class="space-y-3">
+        <button onclick="focusReply()" class="w-full h-12 rounded-xl bg-[#DC183C] hover:bg-[#B0142F] text-white font-jakarta font-bold text-[15px] transition-colors shadow-lg shadow-[#DC183C]/20 flex items-center justify-center gap-2">
+          <i data-lucide="reply" class="w-4 h-4"></i> Reply
+        </button>
+        
+        <button onclick="toggleAction(this, 'Subscribed')" class="w-full h-12 rounded-xl bg-white border border-[#E7EBEF] hover:border-[#0C1F31] hover:text-[#0C1F31] text-slate-600 font-jakarta font-bold text-[14px] transition-colors flex items-center justify-center gap-2 shadow-sm">
+          <i data-lucide="bell" class="w-4 h-4"></i> <span>Subscribe</span>
+        </button>
+        
+        <button onclick="toggleAction(this, 'Favorited')" class="w-full h-12 rounded-xl bg-white border border-[#E7EBEF] hover:border-[#FF9900] hover:text-[#AE6B0A] text-slate-600 font-jakarta font-bold text-[14px] transition-colors flex items-center justify-center gap-2 shadow-sm">
+          <i data-lucide="star" class="w-4 h-4"></i> <span>Favorite</span>
+        </button>
+      </div>
+
+      <!-- Thread Participants Widget -->
+      <div class="bg-white rounded-2xl border border-[#E7EBEF] p-5 shadow-sm hidden lg:block">
+        <div class="flex items-center justify-between mb-4">
+          <h4 class="font-jakarta font-bold text-[#0C1F31] text-[14px]">Participants</h4>
+          <span class="text-xs font-bold text-slate-400 bg-slate-100 px-2 py-0.5 rounded-full">4</span>
+        </div>
+        <div class="flex items-center gap-[-8px]">
+          <a href="single-member.html" class="relative z-40 hover:z-50 hover:scale-110 transition-transform" title="Amahle Jacobs">
+            <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=100&h=100" alt="" class="w-9 h-9 rounded-full object-cover ring-2 ring-white shadow-sm" />
+          </a>
+          <a href="single-member.html" class="relative z-30 hover:z-50 hover:scale-110 transition-transform -ml-2" title="Tshepho Joel">
+            <img src="https://images.unsplash.com/photo-1506277886164-e25aa3f4ef7f?auto=format&fit=crop&q=80&w=100&h=100" alt="" class="w-9 h-9 rounded-full object-cover ring-2 ring-white shadow-sm" />
+          </a>
+          <a href="single-member.html" class="relative z-20 hover:z-50 hover:scale-110 transition-transform -ml-2" title="Sello Monare">
+            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=100&h=100" alt="" class="w-9 h-9 rounded-full object-cover ring-2 ring-white shadow-sm" />
+          </a>
+          <div class="relative z-10 w-9 h-9 rounded-full bg-slate-100 ring-2 ring-white shadow-sm grid place-items-center text-[10px] font-bold text-slate-500 -ml-2">+1</div>
+        </div>
+      </div>
+
+      <!-- Contextual Sidebar Widget -->
+      <div class="bg-white rounded-2xl border border-[#E7EBEF] p-5 shadow-sm hidden lg:block">
+        <p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] mb-2">Forum Etiquette</p>
+        <h4 class="font-jakarta font-bold text-[#0C1F31] mb-2">Keep it constructive</h4>
+        <p class="text-[13px] text-slate-500 leading-relaxed">Ensure your replies add value to the discussion. Avoid self-promotion and treat fellow members with respect.</p>
+      </div>
+    </aside>
+
+  </div>
+</main>
+
+<!-- ===================== FOOTER ===================== -->
+
+<div id="overlay-root"></div>
+<div id="toast" class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-[100]"></div>
+
+<script>
+  function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+  
+  function showToast(msg, kind){
+    const el = document.getElementById('toast');
+    const color = kind === 'ask' ? '#DC183C' : kind === 'win' ? '#29A37A' : kind === 'share' ? '#FF9900' : '#0C1F31';
+    el.classList.remove('hidden');
+    el.innerHTML = `<div class="toast-in bg-[#0C1F31] text-white rounded-full pl-3 pr-5 py-2.5 shadow-2xl flex items-center gap-2 text-sm font-semibold" style="border-left:4px solid ${color}"><i data-lucide="check-circle" class="w-4 h-4" style="color:${color}"></i><span>${esc(msg)}</span></div>`;
+    lucide.createIcons();
+    setTimeout(()=>{
+      const i = el.firstElementChild;
+      if(i){i.classList.remove('toast-in');i.classList.add('toast-out');}
+      setTimeout(()=>{el.classList.add('hidden');el.innerHTML='';},250);
+    },2400);
+  }
+
+  function focusReply() {
+    const textarea = document.getElementById('replyText');
+    if(textarea) {
+      textarea.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      textarea.focus();
+    }
+  }
+
+  function submitReply() {
+    const textarea = document.getElementById('replyText');
+    if(textarea && textarea.value.trim() !== '') {
+      showToast('Reply posted successfully', 'win');
+      textarea.value = '';
+    } else {
+      showToast('Please write a reply first', 'ask');
+    }
+  }
+
+  function toggleAction(btn, actionName) {
+    const span = btn.querySelector('span');
+    const isActivating = span.textContent !== actionName;
+    
+    if (isActivating) {
+      span.textContent = actionName;
+      if (actionName === 'Subscribed') {
+        btn.className = 'w-full h-12 rounded-xl bg-slate-50 border border-[#0C1F31] text-[#0C1F31] font-jakarta font-bold text-[14px] transition-colors flex items-center justify-center gap-2 shadow-sm';
+      } else {
+        btn.className = 'w-full h-12 rounded-xl bg-[#FFF1E0] border border-[#FF9900] text-[#AE6B0A] font-jakarta font-bold text-[14px] transition-colors flex items-center justify-center gap-2 shadow-sm';
+        btn.querySelector('i').classList.add('fill-current');
+      }
+      showToast(actionName + ' to discussion', 'win');
+    } else {
+      span.textContent = actionName === 'Subscribed' ? 'Subscribe' : 'Favorite';
+      btn.className = `w-full h-12 rounded-xl bg-white border border-[#E7EBEF] hover:border-${actionName === 'Subscribed' ? '[#0C1F31]' : '[#FF9900]'} hover:text-${actionName === 'Subscribed' ? '[#0C1F31]' : '[#AE6B0A]'} text-slate-600 font-jakarta font-bold text-[14px] transition-colors flex items-center justify-center gap-2 shadow-sm`;
+      if (actionName === 'Favorited') {
+        btn.querySelector('i').classList.remove('fill-current');
+      }
+      showToast('Removed from ' + actionName.toLowerCase(), null);
+    }
+  }
+
+  const BRIEFS = { 
+    singlediscussion:{ 
+      title:'Single Discussion Topic', 
+      sub:'bbPress Topic View', 
+      purpose:'The single view for a specific forum discussion (topic). Displays the main post, all threaded replies, and provides actions to reply, subscribe, or favorite.', 
+      data:'<code>topic { id, title, content, author, created_at, forum_id, tags }</code> · <code>replies[] { id, content, author, created_at }</code>.', 
+      logic:'Maps directly to BuddyBoss/bbPress single topic template. The Reply button on the right scrolls the user down to the composer. The composer is locked/hidden if the user is not logged in or if the topic is locked.', 
+      components:'Topic Card (Header, Prose Body, Meta Footer) · Replies List · Rich Text Composer · Action Sidebar.', 
+      specs:'<b>Layout:</b> 2-column grid <code>lg:grid-cols-[1fr,300px]</code>. Left col min-w-0 for text wrapping.<br/><b>Topic Card:</b> white bg, rounded-[24px], border #E7EBEF. H1 Plus Jakarta Sans weight 800, 30px-36px. Prose styling for rich text. Footer bg slate-50, border-t.<br/><b>Replies:</b> divide-y #E7EBEF. Avatars 40px rounded-full. Author name bold.<br/><b>Action Sidebar:</b> sticky top-24. Primary Reply button uses brand Red <code>#DC183C</code>. Secondary buttons white with slate borders, hovering to brand colors.' 
+    } 
+  };
+
+  function toggleDevMode(){const on=document.body.classList.toggle('dev-on');const b=document.getElementById('devToggle');if(b)b.classList.toggle('on',on);if(on)showToast('Dev Mode on — tap any ⓘ for implementation notes.',null);lucide.createIcons();}
+  function closeOverlay(id){const el=document.getElementById(id);if(!el)return;el.classList.remove('open');setTimeout(()=>{if(el&&el.parentNode)el.remove();},300);}
+  function openBrief(id){const b=BRIEFS[id];if(!b)return;const sec=(icon,label,html)=>`<div class="px-6 py-4 border-t border-slate-100"><p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] flex items-center gap-1.5 mb-2"><i data-lucide="${icon}" class="w-3.5 h-3.5"></i>${label}</p><div class="text-sm text-slate-600 leading-relaxed">${html}</div></div>`;document.getElementById('overlay-root').innerHTML=`<div class="ov" id="ov-brief"><div class="ov-bg" onclick="closeOverlay('ov-brief')"></div><div class="drawer"><div class="sticky top-0 z-10 bg-[#0C1F31] text-white px-6 py-5 flex items-start justify-between"><div class="min-w-0"><p class="text-[10px] font-bold uppercase tracking-widest text-[#FF9900] mb-1">Dev Brief</p><h3 class="font-jakarta font-extrabold text-lg leading-tight">${b.title}</h3><p class="text-xs text-white/60 mt-1">${b.sub}</p></div><button onclick="closeOverlay('ov-brief')" class="text-white/60 hover:text-white shrink-0 ml-3"><i data-lucide="x" class="w-5 h-5"></i></button></div>${sec('target','Purpose',b.purpose)}${sec('database','Data model',b.data)}${sec('git-branch','Logic',b.logic)}${b.specs ? sec('ruler','Spec values', b.specs) : ''}${sec('boxes','Components',b.components)}</div></div>`;requestAnimationFrame(()=>{const o=document.getElementById('ov-brief');if(o)o.classList.add('open');});lucide.createIcons();}
+
+  document.addEventListener('keydown',e=>{ if(e.key==='Escape') document.querySelectorAll('.ov.open').forEach(o=>closeOverlay(o.id)); });
+  
+  lucide.createIcons();
+  /* HEADER-SEARCH-JS */
+  function toggleHeaderSearch(){
+    var o=document.getElementById('headerSearchOverlay'); if(!o) return;
+    var open=o.classList.toggle('active');
+    var i=document.getElementById('headerSearchInput');
+    if(open){ if(i) setTimeout(function(){ i.focus(); },100); } else if(i){ i.value=''; }
+  }
+  document.addEventListener('keydown', function(e){ if(e.key==='Escape'){ var o=document.getElementById('headerSearchOverlay'); if(o&&o.classList.contains('active')) toggleHeaderSearch(); } });
+</script>
+</body>
+</html>
