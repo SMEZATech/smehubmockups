@@ -414,6 +414,25 @@
   </div>
 </main>
 
+<!-- ===================== COMMUNITY FOOTER ===================== -->
+<footer class="bg-white border-t border-slate-200 mt-auto">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-5 flex flex-col sm:flex-row items-center justify-between gap-3">
+    <div class="flex items-center gap-2 text-xs text-slate-500">
+      <span>&copy; 2026 SME South Africa</span>
+      <span class="text-slate-300">&middot;</span>
+      <span class="font-bold text-slate-400 uppercase tracking-widest text-[10px]">Community</span>
+      <button onclick="openBrief('footer')" class="dev-badge w-4 h-4 rounded-full bg-[#DC183C] text-white items-center justify-center text-[9px] font-bold leading-none animate-pulse" title="Implementation notes">i</button>
+    </div>
+    <nav class="flex items-center gap-5 text-xs font-semibold text-slate-500">
+      <a href="#" class="hover:text-[#DC183C] transition-colors">Community Guidelines</a>
+      <a href="public-help.html" class="hover:text-[#DC183C] transition-colors">Help Center</a>
+      <a href="public-terms.html" class="hover:text-[#DC183C] transition-colors">Terms</a>
+      <a href="public-privacy.html" class="hover:text-[#DC183C] transition-colors">Privacy</a>
+    </nav>
+  </div>
+</footer>
+
+
 <!-- ===================== FOOTER ===================== -->
 
 <div id="overlay-root"></div>
@@ -476,7 +495,9 @@
     }
   }
 
-  const BRIEFS = { 
+  const BRIEFS = {
+    footer:{ title:'Community Footer', sub:'Shared app-shell component', purpose:'The closing utility bar for every logged-in community screen (Feed, Members, Groups, Forums, Profile, Account). Deliberately minimal &mdash; a single thin row, not a marketing footer &mdash; so it closes the app experience the same way the BuddyBoss header opens it, bookending all 9 community templates consistently.', data:'Static link list: <code>{ label, href }[]</code> &mdash; Community Guidelines, Help Center, Terms, Privacy. No dynamic data.', logic:'Rendered identically on every community template (member-hub, members, single-member, single-post, groups, single-group, forums, single-discussion, member-account). \'Community Guidelines\' currently points to <code>#</code> &mdash; wire to a real guidelines page once written; the rest already resolve to existing public pages.', components:'Copyright + Community tag (left) &middot; utility link row (right).', specs:'<b>Container:</b> <code>bg-white border-t border-slate-200</code> &mdash; light, matches the header, NOT the navy marketing surface used for hero bands elsewhere on the site. <code>max-w-7xl</code>, 20px vertical padding (<code>py-5</code>), stacks to a column below <code>sm</code>.<br/><b>Left group:</b> 12px (<code>text-xs</code>) slate-500, <code>&middot;</code> separator slate-300, "Community" tag 10px weight 800 uppercase tracking-widest slate-400 &mdash; a quiet reminder you\'re inside the app, not the marketing site.<br/><b>Right nav:</b> 12px weight 600 slate-500, 20px gap, hover <code>#DC183C</code>.<br/><br/><b>Why this differs from the (not-yet-built) public-site footer:</b> Articles/Resources/marketing pages are editorial and SEO-facing &mdash; that footer should be the tall, dark <code>navy</code> sitemap block with category columns, socials and a newsletter CTA, matching the hero-band treatment used across the public site. This community footer is the opposite on purpose: thin, light, utility-only &mdash; a logged-in member is inside a tool, not reading an article, so the chrome should get out of the way rather than sell anything.' },
+     
     singlediscussion:{ 
       title:'Single Discussion Topic', 
       sub:'bbPress Topic View', 

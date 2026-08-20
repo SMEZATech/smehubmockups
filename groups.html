@@ -213,6 +213,25 @@
   </aside>
 </main>
 
+<!-- ===================== COMMUNITY FOOTER ===================== -->
+<footer class="bg-white border-t border-slate-200 mt-auto">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-5 flex flex-col sm:flex-row items-center justify-between gap-3">
+    <div class="flex items-center gap-2 text-xs text-slate-500">
+      <span>&copy; 2026 SME South Africa</span>
+      <span class="text-slate-300">&middot;</span>
+      <span class="font-bold text-slate-400 uppercase tracking-widest text-[10px]">Community</span>
+      <button onclick="openBrief('footer')" class="dev-badge w-4 h-4 rounded-full bg-[#DC183C] text-white items-center justify-center text-[9px] font-bold leading-none animate-pulse" title="Implementation notes">i</button>
+    </div>
+    <nav class="flex items-center gap-5 text-xs font-semibold text-slate-500">
+      <a href="#" class="hover:text-[#DC183C] transition-colors">Community Guidelines</a>
+      <a href="public-help.html" class="hover:text-[#DC183C] transition-colors">Help Center</a>
+      <a href="public-terms.html" class="hover:text-[#DC183C] transition-colors">Terms</a>
+      <a href="public-privacy.html" class="hover:text-[#DC183C] transition-colors">Privacy</a>
+    </nav>
+  </div>
+</footer>
+
+
 <div id="overlay-root"></div>
 <div id="toast" class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-50"></div>
 
@@ -318,7 +337,9 @@ function render(){
   lucide.createIcons();
 }
 
-const BRIEFS = { groupsdir:{ title:'Groups Directory', sub:'Browse, filter & join groups', purpose:'Discovery for community groups. Uses a clean list view for quick scanning. Segments (All / My groups / Create Group), search and sort. Joining a group multiplies engagement surface — members in groups post far more than those who aren&rsquo;t.', data:'<code>groups[] { id, name, privacy, member_count, created_at, my_membership }</code>.', logic:'Public groups join instantly; Private create a join request. "Create Group" acts as a native tab that unmounts the directory and mounts the BuddyBoss multi-step form. Cards deep-link to the single-group page.', components:'Segmented tabs · search · sort · list-view cards · join toggle · create-group form · sidebar with guidelines & events.' } };
+const BRIEFS = {
+    footer:{ title:'Community Footer', sub:'Shared app-shell component', purpose:'The closing utility bar for every logged-in community screen (Feed, Members, Groups, Forums, Profile, Account). Deliberately minimal &mdash; a single thin row, not a marketing footer &mdash; so it closes the app experience the same way the BuddyBoss header opens it, bookending all 9 community templates consistently.', data:'Static link list: <code>{ label, href }[]</code> &mdash; Community Guidelines, Help Center, Terms, Privacy. No dynamic data.', logic:'Rendered identically on every community template (member-hub, members, single-member, single-post, groups, single-group, forums, single-discussion, member-account). \'Community Guidelines\' currently points to <code>#</code> &mdash; wire to a real guidelines page once written; the rest already resolve to existing public pages.', components:'Copyright + Community tag (left) &middot; utility link row (right).', specs:'<b>Container:</b> <code>bg-white border-t border-slate-200</code> &mdash; light, matches the header, NOT the navy marketing surface used for hero bands elsewhere on the site. <code>max-w-7xl</code>, 20px vertical padding (<code>py-5</code>), stacks to a column below <code>sm</code>.<br/><b>Left group:</b> 12px (<code>text-xs</code>) slate-500, <code>&middot;</code> separator slate-300, "Community" tag 10px weight 800 uppercase tracking-widest slate-400 &mdash; a quiet reminder you\'re inside the app, not the marketing site.<br/><b>Right nav:</b> 12px weight 600 slate-500, 20px gap, hover <code>#DC183C</code>.<br/><br/><b>Why this differs from the (not-yet-built) public-site footer:</b> Articles/Resources/marketing pages are editorial and SEO-facing &mdash; that footer should be the tall, dark <code>navy</code> sitemap block with category columns, socials and a newsletter CTA, matching the hero-band treatment used across the public site. This community footer is the opposite on purpose: thin, light, utility-only &mdash; a logged-in member is inside a tool, not reading an article, so the chrome should get out of the way rather than sell anything.' },
+     groupsdir:{ title:'Groups Directory', sub:'Browse, filter & join groups', purpose:'Discovery for community groups. Uses a clean list view for quick scanning. Segments (All / My groups / Create Group), search and sort. Joining a group multiplies engagement surface — members in groups post far more than those who aren&rsquo;t.', data:'<code>groups[] { id, name, privacy, member_count, created_at, my_membership }</code>.', logic:'Public groups join instantly; Private create a join request. "Create Group" acts as a native tab that unmounts the directory and mounts the BuddyBoss multi-step form. Cards deep-link to the single-group page.', components:'Segmented tabs · search · sort · list-view cards · join toggle · create-group form · sidebar with guidelines & events.' } };
 function toggleDevMode(){const on=document.body.classList.toggle('dev-on');const b=document.getElementById('devToggle');if(b)b.classList.toggle('on',on);if(on)showToast('Dev Mode on — tap any ⓘ for implementation notes.',null);lucide.createIcons();}
 function closeOverlay(id){const el=document.getElementById(id);if(!el)return;el.classList.remove('open');setTimeout(()=>{if(el&&el.parentNode)el.remove();},300);}
 function openBrief(id){const b=BRIEFS[id];if(!b)return;const sec=(icon,label,html)=>`<div class="px-6 py-4 border-t border-slate-100"><p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] flex items-center gap-1.5 mb-2"><i data-lucide="${icon}" class="w-3.5 h-3.5"></i>${label}</p><div class="text-sm text-slate-600 leading-relaxed">${html}</div></div>`;document.getElementById('overlay-root').innerHTML=`<div class="ov" id="ov-brief"><div class="ov-bg" onclick="closeOverlay('ov-brief')"></div><div class="drawer"><div class="sticky top-0 z-10 bg-[#0C1F31] text-white px-6 py-5 flex items-start justify-between"><div class="min-w-0"><p class="text-[10px] font-bold uppercase tracking-widest text-[#FF9900] mb-1">Dev Brief</p><h3 class="font-jakarta font-extrabold text-lg leading-tight">${b.title}</h3><p class="text-xs text-white/60 mt-1">${b.sub}</p></div><button onclick="closeOverlay('ov-brief')" class="text-white/60 hover:text-white shrink-0 ml-3"><i data-lucide="x" class="w-5 h-5"></i></button></div>${sec('target','Purpose',b.purpose)}${sec('database','Data model',b.data)}${sec('git-branch','Logic',b.logic)}${sec('boxes','Components',b.components)}</div></div>`;requestAnimationFrame(()=>{const o=document.getElementById('ov-brief');if(o)o.classList.add('open');});lucide.createIcons();}

@@ -301,6 +301,25 @@
   </div>
 </main>
 
+<!-- ===================== COMMUNITY FOOTER ===================== -->
+<footer class="bg-white border-t border-slate-200 mt-auto">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-5 flex flex-col sm:flex-row items-center justify-between gap-3">
+    <div class="flex items-center gap-2 text-xs text-slate-500">
+      <span>&copy; 2026 SME South Africa</span>
+      <span class="text-slate-300">&middot;</span>
+      <span class="font-bold text-slate-400 uppercase tracking-widest text-[10px]">Community</span>
+      <button onclick="openBrief('footer')" class="dev-badge w-4 h-4 rounded-full bg-[#DC183C] text-white items-center justify-center text-[9px] font-bold leading-none animate-pulse" title="Implementation notes">i</button>
+    </div>
+    <nav class="flex items-center gap-5 text-xs font-semibold text-slate-500">
+      <a href="#" class="hover:text-[#DC183C] transition-colors">Community Guidelines</a>
+      <a href="public-help.html" class="hover:text-[#DC183C] transition-colors">Help Center</a>
+      <a href="public-terms.html" class="hover:text-[#DC183C] transition-colors">Terms</a>
+      <a href="public-privacy.html" class="hover:text-[#DC183C] transition-colors">Privacy</a>
+    </nav>
+  </div>
+</footer>
+
+
 <div id="overlay-root"></div>
 <div id="toast" class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-50"></div>
 
@@ -535,6 +554,8 @@ function tabConnections(){
 
 /* ===== dev mode ===== */
 const BRIEFS = {
+    footer:{ title:'Community Footer', sub:'Shared app-shell component', purpose:'The closing utility bar for every logged-in community screen (Feed, Members, Groups, Forums, Profile, Account). Deliberately minimal &mdash; a single thin row, not a marketing footer &mdash; so it closes the app experience the same way the BuddyBoss header opens it, bookending all 9 community templates consistently.', data:'Static link list: <code>{ label, href }[]</code> &mdash; Community Guidelines, Help Center, Terms, Privacy. No dynamic data.', logic:'Rendered identically on every community template (member-hub, members, single-member, single-post, groups, single-group, forums, single-discussion, member-account). \'Community Guidelines\' currently points to <code>#</code> &mdash; wire to a real guidelines page once written; the rest already resolve to existing public pages.', components:'Copyright + Community tag (left) &middot; utility link row (right).', specs:'<b>Container:</b> <code>bg-white border-t border-slate-200</code> &mdash; light, matches the header, NOT the navy marketing surface used for hero bands elsewhere on the site. <code>max-w-7xl</code>, 20px vertical padding (<code>py-5</code>), stacks to a column below <code>sm</code>.<br/><b>Left group:</b> 12px (<code>text-xs</code>) slate-500, <code>&middot;</code> separator slate-300, "Community" tag 10px weight 800 uppercase tracking-widest slate-400 &mdash; a quiet reminder you\'re inside the app, not the marketing site.<br/><b>Right nav:</b> 12px weight 600 slate-500, 20px gap, hover <code>#DC183C</code>.<br/><br/><b>Why this differs from the (not-yet-built) public-site footer:</b> Articles/Resources/marketing pages are editorial and SEO-facing &mdash; that footer should be the tall, dark <code>navy</code> sitemap block with category columns, socials and a newsletter CTA, matching the hero-band treatment used across the public site. This community footer is the opposite on purpose: thin, light, utility-only &mdash; a logged-in member is inside a tool, not reading an article, so the chrome should get out of the way rather than sell anything.' },
+    
   suggested:{ title:'Suggested Members', sub:'Smart discovery — replaces &ldquo;New This Week&rdquo;', purpose:'Connects founders who can actually help each other. Shows <b>only</b> members who (1) share interests / sector / stage and (2) have a <b>completed profile</b> (green check). Same discovery widget as member-hub.html&rsquo;s right rail, kept in sync for consistency.', data:'Candidates = members with <code>profile_complete = true</code>, excluding existing connections. Match on overlap of {sector, stage, province, tags}.', logic:'Score each candidate by weighted overlap → sort descending → take top N. Each card shows its strongest match reason. Recomputed when a profile changes.', components:'Member row · avatar + completeness badge · match-reason chip · one-tap Connect.', specs:'<b>Card:</b> right rail, bg white, radius 16px (<code>rounded-2xl</code>), 1px border slate-100. Identical component to member-hub.html and single-post.html&rsquo;s right rail.' },
   profile:{ title:'Single Member Profile (Self-View)', sub:'BuddyBoss public profile', purpose:'The signed-in user viewing their own public profile page. This view provides controls to edit settings and copy the public profile link, and omits elements that only apply to viewing other members (like the "Groups in common" widget). Defaulting to the "About" tab creates a more professional, Instagram-style focus on the person rather than just their activity feed.', data:'<code>member { id, name, avatar, role, company, sector, stage, province, bio, website, socials, joined_at, last_active, contribution_total, connection_count, profile_complete }</code>.', logic:'Determines it is the self-view when <code>logged_in_user_id == profile_user_id</code>. Modifies the hero buttons to Edit/Settings. Replaces the right rail context widgets with the standard community discovery widgets (Upcoming Events, Suggested Connections).', components:'Profile hero (cover + avatar + name/role/company + status pills + stat line + Edit/Settings) · tab bar (About, Timeline, Groups, Connections) · About facts grid · Member recognition badges · right rail (Events, Suggestions).', specs:'<b>Layout:</b> identical shell to single-group.html — main <code>max-w-6xl</code>, content <code>lg:col-span-8</code> / rail <code>lg:col-span-4</code>, 24px gap.<br/><b>Hero cover:</b> 128/160px height, gradient <code>#0C1F31&rarr;#1a3a54</code>.<br/><b>Avatar:</b> 96px circular monogram, 4px white ring, pulled up 48/56px, small green &ldquo;active now&rdquo; dot bottom-right.<br/><b>Name row:</b> Plus Jakarta 800 24/30px + a `badge-check` (#29A37A) when <code>profile_complete</code>. Role/company 14px slate-500. Facet pills (sector/stage/province) 11px slate-100/slate-600. Stat line: contributions, connections, last-active, 14px slate-500 with Lucide icons.<br/><b>Actions:</b> "Copy public link" outline button alongside dark "Edit Profile" and gear "Settings" icon.<br/><b>Right Rail:</b> Identical to member-hub.html widgets to maintain a consistent discovery engine across the site.' }
 };
