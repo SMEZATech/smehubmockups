@@ -42,15 +42,15 @@ window.MOCKUP_STATUS = {
   "public-refunds.html": "finalised",
   "public-popia.html": "finalised",
   "public-advertising-disclosure.html": "finalised",
-  "member-hub.html": "under-work",
-  "members.html": "under-review",
-  "single-member.html": "under-review",
-  "single-post.html": "under-review",
-  "groups.html": "under-work",
-  "single-group.html": "under-work",
-  "forums.html": "under-review",
-  "single-discussion.html": "under-review",
-  "member-account.html": "under-review",
+  "member-hub.html": "finalised",
+  "members.html": "finalised",
+  "single-member.html": "finalised",
+  "single-post.html": "finalised",
+  "groups.html": "finalised",
+  "single-group.html": "finalised",
+  "forums.html": "finalised",
+  "single-discussion.html": "finalised",
+  "member-account.html": "finalised",
   "events.html": "finalised",
   "event-single-in-person.html": "finalised",
   "event-single-online.html": "finalised",
@@ -72,7 +72,7 @@ window.MOCKUP_STATUS = {
   "public-search.html": "finalised",
   "public-404.html": "finalised"
 };
-window.MOCKUP_STATUS_PUBLISHED = "2026-08-20T05:15:04.554Z";
+window.MOCKUP_STATUS_PUBLISHED = "2026-08-20T06:48:13.000Z";
 /* Developer builds (staging) — { mockup file: { url, status } }; status: "pending-review" | "reviewed" | "approved" */
 window.MOCKUP_DEV = {
   "public-home.html": {"url":"https://smesastg.wpengine.com/","status":"reviewed"},
