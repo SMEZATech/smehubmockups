@@ -8,6 +8,15 @@
  * Shape: { [file]: { [sectionId]: { label, text, author, ts, pending? } } }
  */
 window.SHARED_NOTES = {
+  "public-404.html": {
+    "search": {
+      "label": "Search",
+      "author": "Tshepho",
+      "ts": "2026-08-21",
+      "text": "- We have two search designs, please remove one."
+    }
+  },
+
   "public-about.html": {
     "hero": {
       "label": "First section",
@@ -157,6 +166,39 @@ window.SHARED_NOTES = {
     }
   },
 
+  "public-author.html": {
+    "mobile": {
+      "label": "Mobile",
+      "author": "Tshepho",
+      "ts": "2026-08-21",
+      "text": "Align the design with the mockup on mobile. Especially the first section."
+    }
+  },
+
+  "public-brand.html": {
+    "mobile": {
+      "label": "Mobile",
+      "author": "Tshepho",
+      "ts": "2026-08-21",
+      "text": "- Revise the design to be like the mockup..Especially the TOC is off."
+    }
+  },
+
+  "public-brands.html": {
+    "first-section": {
+      "label": "First Section",
+      "author": "Tshepho",
+      "ts": "2026-08-21",
+      "text": "- The heading should be H1"
+    },
+    "second-section": {
+      "label": "Second Section",
+      "author": "Tshepho",
+      "ts": "2026-08-21",
+      "text": "- Keep teh character limit max to 100 on post excerpt."
+    }
+  },
+
   "public-category.html": {
     "breadcrumbs": {
       "label": "First Section",
@@ -245,6 +287,33 @@ window.SHARED_NOTES = {
     }
   },
 
+  "public-glossary-category.html": {
+    "design-missing": {
+      "label": "DESIGN MISSING",
+      "author": "Tshepho",
+      "ts": "2026-08-21",
+      "text": "The design is missing as per the mockup"
+    }
+  },
+
+  "public-glossary-term.html": {
+    "mobile": {
+      "label": "Mobile",
+      "author": "Tshepho",
+      "ts": "2026-08-21",
+      "text": "- Omit the TOC and Join Widget from Mobile"
+    }
+  },
+
+  "public-glossary.html": {
+    "first-section": {
+      "label": "First Section",
+      "author": "Tshepho",
+      "ts": "2026-08-21",
+      "text": "- Update the heading to H1"
+    }
+  },
+
   "public-guide.html": {
     "breadcrumbs": {
       "label": "Breadcrumbs",
@@ -284,6 +353,21 @@ window.SHARED_NOTES = {
       "author": "Tshepho",
       "ts": "2026-07-15",
       "text": "- The Categories design are mising.\n- Max category name to show on the guides listing grid should be one and the max character limit should be 150"
+    }
+  },
+
+  "public-help.html": {
+    "first-section": {
+      "label": "First Section",
+      "author": "Tshepho",
+      "ts": "2026-08-21",
+      "text": "- The heading should be in H!"
+    },
+    "second-section": {
+      "label": "Second Section",
+      "author": "Tshepho",
+      "ts": "2026-08-21",
+      "text": "- Reduce the \"Browse by category\" size to 24px"
     }
   },
 
@@ -398,6 +482,27 @@ window.SHARED_NOTES = {
       "author": "Tshepho",
       "ts": "2026-07-15",
       "text": "- Show the Resource types in 2 columns view"
+    }
+  },
+
+  "public-solutions.html": {
+    "first-section": {
+      "label": "First Section",
+      "author": "Tshepho",
+      "ts": "2026-08-21",
+      "text": "- The heading should be H1\n- Please adjust the button to 218x48"
+    },
+    "second-section": {
+      "label": "Second Section",
+      "author": "Tshepho",
+      "ts": "2026-08-21",
+      "text": "- Remove the boarderline colour when you hover mouse over and adjust as per the mockup."
+    },
+    "third-section": {
+      "label": "Third Section",
+      "author": "Tshepho",
+      "ts": "2026-08-21",
+      "text": "- Adjust the \"Browse all categories\" button size to 241x48"
     }
   },
 
