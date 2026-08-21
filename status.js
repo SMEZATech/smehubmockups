@@ -30,9 +30,9 @@ window.MOCKUP_STATUS = {
   "public-guide.html": "finalised",
   "public-founder-focus-category.html": "finalised",
   "public-funding-summit-category.html": "finalised",
-  "public-shop.html": "under-work",
-  "public-product.html": "under-work",
-  "public-checkout.html": "under-work",
+  "public-shop.html": "not-started",
+  "public-product.html": "not-started",
+  "public-checkout.html": "not-started",
   "public-auth.html": "finalised",
   "public-about.html": "finalised",
   "public-contact.html": "finalised",
@@ -60,7 +60,7 @@ window.MOCKUP_STATUS = {
   "public-glossary-term.html": "finalised",
   "newsletter.html": "finalised",
   "newsletter-issue.html": "finalised",
-  "podcast.html": "finalised",
+  "podcast.html": "not-started",
   "brand_ci.html": "finalised",
   "public-icons.html": "finalised",
   "chrome-preview.html": "not-started",
@@ -72,7 +72,7 @@ window.MOCKUP_STATUS = {
   "public-search.html": "finalised",
   "public-404.html": "finalised"
 };
-window.MOCKUP_STATUS_PUBLISHED = "2026-08-20T06:48:13.000Z";
+window.MOCKUP_STATUS_PUBLISHED = "2026-08-21T08:56:44.433Z";
 /* Developer builds (staging) — { mockup file: { url, status } }; status: "pending-review" | "reviewed" | "approved" */
 window.MOCKUP_DEV = {
   "public-home.html": {"url":"https://smesastg.wpengine.com/","status":"reviewed"},
@@ -80,7 +80,7 @@ window.MOCKUP_DEV = {
   "public-article-categories.html": {"url":"https://smesastg.wpengine.com/article-categories/","status":"reviewed"},
   "public-category.html": {"url":"https://smesastg.wpengine.com/starting-a-business","status":"reviewed"},
   "public-subcategory.html": {"url":"https://smesastg.wpengine.com/starting-a-business/agriculture-and-farming/","status":"reviewed"},
-  "public-author.html": {"url":"https://smesastg.wpengine.com/author/maryna-steyn/","status":"pending-review"},
+  "public-author.html": {"url":"https://smesastg.wpengine.com/author/maryna-steyn/","status":"reviewed"},
   "public-article.html": {"url":"https://smesastg.wpengine.com/how-to-find-your-brands-tone-of-voice/","status":"reviewed"},
   "public-resources.html": {"url":"https://smesastg.wpengine.com/sme-resources/","status":"reviewed"},
   "public-resource-category.html": {"url":"https://smesastg.wpengine.com/sme-resources/e-books/","status":"reviewed"},
@@ -88,12 +88,12 @@ window.MOCKUP_DEV = {
   "public-funding.html": {"url":"https://smesastg.wpengine.com/sme-funding/","status":"reviewed"},
   "public-funding-category.html": {"url":"https://smesastg.wpengine.com/funding-articles/","status":"reviewed"},
   "public-loan-option.html": {"url":"https://smesastg.wpengine.com/sme-funding/inventory-finance/","status":"reviewed"},
-  "public-solutions.html": {"url":"https://smesastg.wpengine.com/reviews/","status":"pending-review"},
+  "public-solutions.html": {"url":"https://smesastg.wpengine.com/reviews/","status":"reviewed"},
   "public-solution-categories.html": {"url":"https://smesastg.wpengine.com/review-category/","status":"approved"},
-  "public-solution-category.html": {"url":"https://smesastg.wpengine.com/reviews/affiliate-networks/","status":"pending-review"},
+  "public-solution-category.html": {"url":"https://smesastg.wpengine.com/reviews/affiliate-networks/","status":"approved"},
   "public-sustainability.html": {"url":"https://smesastg.wpengine.com/sustainability-solutions/","status":"reviewed"},
-  "public-brands.html": {"url":"https://smesastg.wpengine.com/brands/","status":"pending-review"},
-  "public-brand.html": {"url":"https://smesastg.wpengine.com/brands/partnerstack/","status":"pending-review"},
+  "public-brands.html": {"url":"https://smesastg.wpengine.com/brands/","status":"reviewed"},
+  "public-brand.html": {"url":"https://smesastg.wpengine.com/brands/partnerstack/","status":"reviewed"},
   "public-guides.html": {"url":"https://smesastg.wpengine.com/sme-resources/guides/","status":"reviewed"},
   "public-guide.html": {"url":"https://smesastg.wpengine.com/sme-resource/test-guide/","status":"reviewed"},
   "public-shop.html": {"url":"https://smesouthafrica.co.za/shop/","status":""},
@@ -105,17 +105,18 @@ window.MOCKUP_DEV = {
   "public-refunds.html": {"url":"https://smesastg.wpengine.com/refund-and-cancellation/","status":"reviewed"},
   "public-popia.html": {"url":"https://smesastg.wpengine.com/popia/","status":"reviewed"},
   "public-advertising-disclosure.html": {"url":"https://smesastg.wpengine.com/advertising-disclosure/","status":"reviewed"},
-  "public-glossary.html": {"url":"https://smesastg.wpengine.com/glossary/","status":"pending-review"},
-  "public-glossary-category.html": {"url":"https://smesastg.wpengine.com/glossary-categories/glossary-category-one/","status":"pending-review"},
-  "public-glossary-term.html": {"url":"https://smesastg.wpengine.com/glossary/administrative-law/","status":"pending-review"},
-  "newsletter.html": {"url":"https://smesastg.wpengine.com/newsletters/","status":"pending-review"},
-  "newsletter-issue.html": {"url":"https://smesastg.wpengine.com/newsletters/back-from-the-long-weekend-heres-what-you-missed/","status":"pending-review"},
-  "public-help.html": {"url":"https://smesastg.wpengine.com/help/","status":"pending-review"},
-  "public-help-category.html": {"url":"https://smesastg.wpengine.com/help-category/getting-started/","status":"pending-review"},
-  "public-help-article.html": {"url":"https://smesastg.wpengine.com/help/how-to-change-email-or-password/","status":"pending-review"},
-  "public-support-ticket.html": {"url":"https://smesastg.wpengine.com/tickets/","status":"pending-review"},
-  "public-search.html": {"url":"https://smesastg.wpengine.com/search/","status":"pending-review"},
-  "public-404.html": {"url":"https://smesastg.wpengine.com/404","status":"pending-review"}
+  "public-glossary.html": {"url":"https://smesastg.wpengine.com/glossary/","status":"reviewed"},
+  "public-glossary-category.html": {"url":"https://smesastg.wpengine.com/glossary-categories/glossary-category-one/","status":"reviewed"},
+  "public-glossary-term.html": {"url":"https://smesastg.wpengine.com/glossary/administrative-law/","status":"reviewed"},
+  "newsletter.html": {"url":"https://smesastg.wpengine.com/newsletters/","status":"reviewed"},
+  "newsletter-issue.html": {"url":"https://smesastg.wpengine.com/newsletters/back-from-the-long-weekend-heres-what-you-missed/","status":"reviewed"},
+  "public-help.html": {"url":"https://smesastg.wpengine.com/help/","status":"reviewed"},
+  "public-help-category.html": {"url":"https://smesastg.wpengine.com/help-category/getting-started/","status":"reviewed"},
+  "public-help-article.html": {"url":"https://smesastg.wpengine.com/help/how-to-change-email-or-password/","status":"reviewed"},
+  "public-support-ticket.html": {"url":"https://smesastg.wpengine.com/tickets/","status":"approved"},
+  "public-support-detailed-ticket.html": {"url":"https://smesastg.wpengine.com/tickets/#/ticket/create","status":"approved"},
+  "public-search.html": {"url":"https://smesastg.wpengine.com/search/","status":"approved"},
+  "public-404.html": {"url":"https://smesastg.wpengine.com/404","status":"reviewed"}
 };
 /* Group overrides — { mockup file: "Group name" }; overrides default NAV grouping in index.html */
 window.MOCKUP_GROUPS = {
