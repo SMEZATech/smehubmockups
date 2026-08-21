@@ -72,7 +72,7 @@ window.MOCKUP_STATUS = {
   "public-search.html": "finalised",
   "public-404.html": "finalised"
 };
-window.MOCKUP_STATUS_PUBLISHED = "2026-08-21T08:56:44.433Z";
+window.MOCKUP_STATUS_PUBLISHED = "2026-08-21T09:10:30.827Z";
 /* Developer builds (staging) — { mockup file: { url, status } }; status: "pending-review" | "reviewed" | "approved" */
 window.MOCKUP_DEV = {
   "public-home.html": {"url":"https://smesastg.wpengine.com/","status":"reviewed"},
@@ -89,8 +89,8 @@ window.MOCKUP_DEV = {
   "public-funding-category.html": {"url":"https://smesastg.wpengine.com/funding-articles/","status":"reviewed"},
   "public-loan-option.html": {"url":"https://smesastg.wpengine.com/sme-funding/inventory-finance/","status":"reviewed"},
   "public-solutions.html": {"url":"https://smesastg.wpengine.com/reviews/","status":"reviewed"},
-  "public-solution-categories.html": {"url":"https://smesastg.wpengine.com/review-category/","status":"approved"},
-  "public-solution-category.html": {"url":"https://smesastg.wpengine.com/reviews/affiliate-networks/","status":"approved"},
+  "public-solution-categories.html": {"url":"https://smesastg.wpengine.com/review-category/","status":"reviewed"},
+  "public-solution-category.html": {"url":"https://smesastg.wpengine.com/reviews/affiliate-networks/","status":"reviewed"},
   "public-sustainability.html": {"url":"https://smesastg.wpengine.com/sustainability-solutions/","status":"reviewed"},
   "public-brands.html": {"url":"https://smesastg.wpengine.com/brands/","status":"reviewed"},
   "public-brand.html": {"url":"https://smesastg.wpengine.com/brands/partnerstack/","status":"reviewed"},
@@ -113,9 +113,9 @@ window.MOCKUP_DEV = {
   "public-help.html": {"url":"https://smesastg.wpengine.com/help/","status":"reviewed"},
   "public-help-category.html": {"url":"https://smesastg.wpengine.com/help-category/getting-started/","status":"reviewed"},
   "public-help-article.html": {"url":"https://smesastg.wpengine.com/help/how-to-change-email-or-password/","status":"reviewed"},
-  "public-support-ticket.html": {"url":"https://smesastg.wpengine.com/tickets/","status":"approved"},
-  "public-support-detailed-ticket.html": {"url":"https://smesastg.wpengine.com/tickets/#/ticket/create","status":"approved"},
-  "public-search.html": {"url":"https://smesastg.wpengine.com/search/","status":"approved"},
+  "public-support-ticket.html": {"url":"https://smesastg.wpengine.com/tickets/","status":"reviewed"},
+  "public-support-detailed-ticket.html": {"url":"https://smesastg.wpengine.com/tickets/#/ticket/create","status":"reviewed"},
+  "public-search.html": {"url":"https://smesastg.wpengine.com/search/","status":"reviewed"},
   "public-404.html": {"url":"https://smesastg.wpengine.com/404","status":"reviewed"}
 };
 /* Group overrides — { mockup file: "Group name" }; overrides default NAV grouping in index.html */
