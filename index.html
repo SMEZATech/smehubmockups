@@ -73,7 +73,7 @@
         <div class="mt-1 flex items-baseline gap-1.5">
           <span id="launchDays" class="font-jakarta font-extrabold text-xl leading-none text-white">–</span>
           <span class="text-[10px] font-semibold text-white/60" id="launchUnit">days</span>
-          <span class="ml-auto text-[9px] text-white/45 font-mono" id="launchDate">31 Aug 2026</span>
+          <span class="ml-auto text-[9px] text-white/45 font-mono" id="launchDate">1 Sep 2026</span>
         </div>
       </div>
       <button id="devPill" type="button" onclick="scrollToDev()" class="hidden w-full items-center gap-2 text-[10px] text-white/55 bg-[#3B82F6]/10 border border-[#3B82F6]/25 hover:bg-[#3B82F6]/15 rounded-lg px-3 py-2 transition text-left">
@@ -626,10 +626,10 @@
   // Init — restore from hash (dev lane bypasses gate), else first finalised.
   try{ if(window.MOCKUP_STATUS_PUBLISHED){ document.getElementById('lastPub').textContent = 'Updated '+new Date(window.MOCKUP_STATUS_PUBLISHED).toLocaleDateString('en-ZA',{day:'numeric',month:'short',year:'numeric'}); } }catch(e){}
 
-  // Launch countdown — target 2026-08-31 (Africa/Johannesburg / SAST).
+  // Launch countdown — target 2026-09-01 (Africa/Johannesburg / SAST).
   (function initLaunchCountdown(){
     try{
-      const target = new Date(2026, 7, 31, 0, 0, 0); // month is 0-indexed (7 = Aug)
+      const target = new Date(2026, 8, 1, 0, 0, 0); // month is 0-indexed (8 = Sep)
       const now = new Date();
       const startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate());
       const msPerDay = 86400000;
