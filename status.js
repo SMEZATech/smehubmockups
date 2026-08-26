@@ -21,7 +21,7 @@ window.MOCKUP_STATUS = {
   "public-solution-categories.html": "finalised",
   "public-solution-category.html": "finalised",
   "public-sustainability.html": "finalised",
-  "public-pricing.html": "not-started",
+  "public-pricing.html": "finalised",
   "public-brands.html": "finalised",
   "public-brand.html": "finalised",
   "public-deals.html": "not-started",
