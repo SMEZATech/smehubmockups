@@ -19,8 +19,9 @@
     .hero-bg{background:linear-gradient(115deg,#0C1F31 0%,#0C1F31 50%,#2b1626 80%,#5e1a2c 115%);}
     .dot-pattern{background-image:radial-gradient(rgba(255,255,255,.07) 1px,transparent 1.5px);background-size:22px 22px;}
     .frame{border:1px dashed #CBD5E1;border-radius:1rem;}
-    .pin{position:absolute;width:14px;height:14px;border-radius:9999px;background:#DC183C;box-shadow:0 0 0 4px rgba(220,24,60,.18);}
-    .pin::after{content:attr(data-n);position:absolute;left:18px;top:-3px;background:#DC183C;color:#fff;font-size:10px;font-weight:800;padding:2px 6px;border-radius:9999px;white-space:nowrap;}
+    .search-overlay{position:absolute;inset:0;background:#fff;z-index:20;display:flex;align-items:center;justify-content:center;padding:0 1rem;opacity:0;pointer-events:none;transform:translateY(-8px);transition:all .25s cubic-bezier(.2,.8,.2,1);}
+    .search-overlay.active{opacity:1;pointer-events:auto;transform:translateY(0);}
+    @media (min-width:640px){ .search-overlay{padding:0 1.5rem;} }
   </style>
 </head>
 <body class="bg-[#FCFCFC] text-[#121A21] antialiased">
@@ -30,11 +31,11 @@
   <div class="absolute inset-0 dot-pattern opacity-60 pointer-events-none"></div>
   <div class="max-w-6xl mx-auto px-4 sm:px-6 py-12 sm:py-16 relative">
     <p class="text-[11px] font-bold uppercase tracking-widest text-[#FF9900]">Chrome · Recommendation</p>
-    <h1 class="font-jakarta font-extrabold text-3xl sm:text-5xl mt-2 leading-tight">Header & Footer for the new SME&nbsp;SA</h1>
-    <p class="mt-4 text-white/70 max-w-2xl text-lg">A single, consistent chrome used across every mockup. Lighter and more focused than the current live site — built around primary tasks (Articles · Resources · Funding · Solutions · Shop · Join at no cost) instead of nested mega-menus.</p>
+    <h1 class="font-jakarta font-extrabold text-3xl sm:text-5xl mt-2 leading-tight">Header &amp; footer for the whole platform</h1>
+    <p class="mt-4 text-white/70 max-w-2xl text-lg">Every mockup on this site still ships the dashed "Header placeholder / Footer placeholder" — this is what should replace it, everywhere, in a single pass. One exception: the logged-in Community area (Feed, Members, Groups, Forums, Profile, Account) already has its own finalised, lighter chrome — this proposal covers everything else.</p>
     <div class="mt-6 flex flex-wrap items-center gap-3 text-sm">
       <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/10 border border-white/15"><i data-lucide="check" class="w-3.5 h-3.5 text-[#29A37A]"></i> On-brand (2026 CI)</span>
-      <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/10 border border-white/15"><i data-lucide="check" class="w-3.5 h-3.5 text-[#29A37A]"></i> Already across 30+ mockups</span>
+      <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/10 border border-white/15"><i data-lucide="check" class="w-3.5 h-3.5 text-[#29A37A]"></i> Every real page accounted for</span>
       <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/10 border border-white/15"><i data-lucide="check" class="w-3.5 h-3.5 text-[#29A37A]"></i> Mobile-ready</span>
     </div>
   </div>
@@ -42,18 +43,18 @@
 
 <!-- =============== HEADER PREVIEW =============== -->
 <section class="max-w-6xl mx-auto px-4 sm:px-6 py-12">
-  <div class="flex items-end justify-between mb-4">
+  <div class="flex items-end justify-between mb-4 flex-wrap gap-2">
     <div>
       <p class="text-[11px] font-bold uppercase tracking-widest text-[#DC183C]">A · Header</p>
       <h2 class="font-jakarta font-extrabold text-2xl mt-1">Light, sticky, single-level nav</h2>
     </div>
-    <span class="text-xs text-[#6A7581] hidden sm:inline">Click "Sign in" or "Join at no cost" to test</span>
+    <span class="text-xs text-[#6A7581]">Tap the search icon or "Join at no cost" to try it</span>
   </div>
 
   <div class="frame overflow-hidden bg-white">
     <!-- The actual proposed header -->
-    <header class="bg-white border-b border-[#E7EBEF]">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center gap-4">
+    <header class="bg-white border-b border-[#E7EBEF] relative">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center gap-3">
         <a href="public-home.html" class="flex items-center gap-2.5 shrink-0">
           <img src="assets/logo-icon.png" alt="SME South Africa" class="w-9 h-9" />
           <span class="font-jakarta font-extrabold text-[17px] tracking-tight">SME <span class="text-[#DC183C]">South Africa</span></span>
@@ -65,42 +66,88 @@
           <a href="public-solutions.html" class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition">Solutions</a>
           <a href="public-shop.html"      class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition">Shop</a>
         </nav>
+        <a href="member-hub.html" class="hidden md:inline-flex items-center gap-1.5 ml-2 px-3 py-1.5 rounded-full text-[13px] font-bold text-[#0C1F31] border border-[#E7EBEF] hover:border-[#DC183C] hover:text-[#DC183C] transition"><i data-lucide="users" class="w-3.5 h-3.5"></i> Community</a>
         <div class="flex items-center gap-1 sm:gap-2 ml-auto">
-          <button aria-label="Search" class="w-9 h-9 grid place-items-center rounded-full hover:bg-slate-100 text-slate-600"><i data-lucide="search" class="w-4 h-4"></i></button>
+          <button onclick="toggleChromeSearch()" aria-label="Search" class="w-9 h-9 grid place-items-center rounded-full hover:bg-slate-100 text-slate-600"><i data-lucide="search" class="w-4 h-4"></i></button>
           <a href="public-auth.html" class="hidden sm:inline-flex items-center px-3 h-9 rounded-full text-sm font-bold text-[#121A21] hover:bg-slate-100 transition">Sign in</a>
           <a href="public-auth.html#join" class="inline-flex items-center px-4 h-9 rounded-full text-sm font-bold text-white bg-[#DC183C] hover:bg-[#B0142F] transition">Join at no cost</a>
+          <button onclick="toggleChromeBurger()" aria-label="Menu" class="lg:hidden w-9 h-9 grid place-items-center rounded-full hover:bg-slate-100 text-slate-600 ml-1">
+            <i id="chromeBurgerIcon" data-lucide="menu" class="w-5 h-5"></i>
+          </button>
+        </div>
+      </div>
+      <!-- Mobile slide-down panel: same 5 nav items + Community + Sign in, since the flat nav and Community pill are hidden below lg/md -->
+      <div id="chromeBurgerPanel" class="hidden lg:hidden border-t border-[#E7EBEF] bg-white">
+        <nav class="max-w-7xl mx-auto px-4 sm:px-6 py-2 flex flex-col">
+          <a href="public-articles.html"  class="px-2 py-3 text-sm font-semibold text-slate-700 hover:text-[#DC183C] border-b border-slate-100">Articles</a>
+          <a href="public-resources.html" class="px-2 py-3 text-sm font-semibold text-slate-700 hover:text-[#DC183C] border-b border-slate-100">Resources</a>
+          <a href="public-funding.html"   class="px-2 py-3 text-sm font-semibold text-slate-700 hover:text-[#DC183C] border-b border-slate-100">Funding</a>
+          <a href="public-solutions.html" class="px-2 py-3 text-sm font-semibold text-slate-700 hover:text-[#DC183C] border-b border-slate-100">Solutions</a>
+          <a href="public-shop.html"      class="px-2 py-3 text-sm font-semibold text-slate-700 hover:text-[#DC183C] border-b border-slate-100">Shop</a>
+          <a href="member-hub.html" class="px-2 py-3 text-sm font-bold text-[#DC183C] flex items-center gap-1.5 border-b border-slate-100"><i data-lucide="users" class="w-4 h-4"></i> Community</a>
+          <a href="public-auth.html" class="px-2 py-3 text-sm font-semibold text-slate-700 hover:text-[#DC183C]">Sign in</a>
+        </nav>
+      </div>
+      <!-- Expand-in-place search (same interaction language as the Community header) -->
+      <div id="chromeSearchOverlay" class="search-overlay">
+        <div class="w-full max-w-2xl flex items-center gap-3">
+          <div class="relative flex-1">
+            <i data-lucide="search" class="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400"></i>
+            <input id="chromeSearchInput" type="text" placeholder="Search articles, resources, funding…" class="w-full h-11 pl-11 pr-4 text-sm bg-slate-50 border border-[#DC183C] rounded-full focus:outline-none focus:ring-2 focus:ring-[#DC183C]/20" onkeydown="if(event.key==='Enter') location.href='public-search.html';" />
+          </div>
+          <button onclick="toggleChromeSearch()" class="text-slate-500 hover:text-[#121A21] p-2 transition-colors shrink-0" aria-label="Close search"><i data-lucide="x" class="w-5 h-5"></i></button>
         </div>
       </div>
     </header>
     <!-- annotation strip below the chrome -->
-    <div class="bg-slate-50 border-t border-[#E7EBEF] px-4 sm:px-6 py-4 grid sm:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-3 text-[12px] text-slate-600">
+    <div class="bg-slate-50 border-t border-[#E7EBEF] px-4 sm:px-6 py-4 grid sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-3 text-[12px] text-slate-600">
       <p><span class="font-bold text-[#121A21]">1 · Logo</span> — icon + wordmark; "South Africa" in brand red.</p>
       <p><span class="font-bold text-[#121A21]">2 · Flat nav</span> — 5 top-level items, no mega-menus.</p>
-      <p><span class="font-bold text-[#121A21]">3 · Search</span> — single icon, expands to a panel (mobile + desktop).</p>
-      <p><span class="font-bold text-[#121A21]">4 · Auth</span> — Sign in (text) + Join at no cost (red pill) — conversion-first.</p>
+      <p><span class="font-bold text-[#121A21]">3 · Community pill</span> — visually distinct, not a text link. Signals "different destination" before you even click into the Community's own chrome.</p>
+      <p><span class="font-bold text-[#121A21]">4 · Search</span> — expands in place, same interaction as the Community header's search (one shared pattern, two weights).</p>
+      <p><span class="font-bold text-[#121A21]">5 · Auth</span> — Sign in (text) + Join at no cost (red pill) — conversion-first, wording matches public-auth.html.</p>
+      <p><span class="font-bold text-[#121A21]">6 · Logged-in state</span> — swaps Sign in/Join for an avatar + notifications bell (not shown here — see Community header for the pattern).</p>
     </div>
   </div>
 
   <ul class="mt-5 grid sm:grid-cols-2 gap-3 text-sm text-slate-700">
     <li class="flex items-start gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-[#29A37A] mt-0.5 shrink-0"></i><span><b>Sticky on scroll</b> across all pages so primary actions are always one tap away.</span></li>
-    <li class="flex items-start gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-[#29A37A] mt-0.5 shrink-0"></i><span><b>Mobile burger</b> drops the same five nav items in a slide-out panel.</span></li>
-    <li class="flex items-start gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-[#29A37A] mt-0.5 shrink-0"></i><span><b>Logged-in state</b> swaps Sign in/Join for an avatar + notifications bell.</span></li>
+    <li class="flex items-start gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-[#29A37A] mt-0.5 shrink-0"></i><span><b>Mobile burger</b> drops the same five nav items + Community in a slide-out panel.</span></li>
     <li class="flex items-start gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-[#29A37A] mt-0.5 shrink-0"></i><span><b>Taxonomy lives in the page</b> (category hub, sub-category archives) — not in a sticky mega-menu.</span></li>
+    <li class="flex items-start gap-2"><i data-lucide="alert-circle" class="w-4 h-4 text-[#AE6B0A] mt-0.5 shrink-0"></i><span><b>Deliberately not in the nav:</b> Events, Glossary, Newsletter, Podcast, Help Center, Brands — all real pages, all covered in the footer below instead of bloating the top bar past 5 items + Community.</span></li>
   </ul>
 </section>
 
 <!-- =============== FOOTER PREVIEW =============== -->
 <section class="max-w-6xl mx-auto px-4 sm:px-6 pb-12">
-  <div class="flex items-end justify-between mb-4">
+  <div class="flex items-end justify-between mb-4 flex-wrap gap-2">
     <div>
       <p class="text-[11px] font-bold uppercase tracking-widest text-[#DC183C]">B · Footer</p>
-      <h2 class="font-jakarta font-extrabold text-2xl mt-1">Navy, 5 columns, social row</h2>
+      <h2 class="font-jakarta font-extrabold text-2xl mt-1">Navy, newsletter band, 6 columns</h2>
     </div>
-    <span class="text-xs text-[#6A7581] hidden sm:inline">Matches live taxonomy + brand CI</span>
+    <span class="text-xs text-[#6A7581]">Every real page on the site has a home here</span>
   </div>
 
   <div class="frame overflow-hidden">
     <footer class="bg-[#0C1F31] text-white">
+      <!-- Newsletter capture band -->
+      <div class="border-b border-white/10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 py-8 flex flex-col md:flex-row md:items-center gap-5 md:gap-8">
+          <div class="flex items-start gap-3 md:flex-1">
+            <div class="w-10 h-10 rounded-xl bg-[#DC183C]/15 grid place-items-center shrink-0"><i data-lucide="mail" class="w-5 h-5 text-[#FF9900]"></i></div>
+            <div>
+              <p class="font-jakarta font-extrabold text-[16px]">Get it in your inbox</p>
+              <p class="text-sm text-white/55 mt-0.5">Don't miss the next issue. We send high-value insights, zero spam.</p>
+            </div>
+          </div>
+          <form onsubmit="event.preventDefault(); location.href='newsletter.html';" class="flex items-center gap-2 md:w-[360px] shrink-0">
+            <input type="email" required placeholder="you@business.co.za" class="flex-1 h-11 px-4 rounded-full bg-white/10 border border-white/15 text-sm placeholder-white/40 text-white focus:outline-none focus:ring-2 focus:ring-[#DC183C]/40 focus:border-[#DC183C]" />
+            <button type="submit" class="h-11 px-5 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white text-sm font-bold transition shrink-0">Subscribe</button>
+          </form>
+        </div>
+        <p class="max-w-7xl mx-auto px-4 sm:px-6 pb-5 -mt-3 text-[11px] text-white/35">No spam. Unsubscribe anytime.</p>
+      </div>
+
       <div class="max-w-7xl mx-auto px-4 sm:px-6 py-12">
         <div class="grid grid-cols-2 md:grid-cols-6 gap-8">
           <div class="col-span-2">
@@ -114,32 +161,42 @@
               <a href="#" aria-label="YouTube" class="w-9 h-9 rounded-lg bg-white/8 hover:bg-white/15 grid place-items-center transition"><i data-lucide="youtube" class="w-4 h-4"></i></a>
               <a href="#" aria-label="TikTok" class="w-9 h-9 rounded-lg bg-white/8 hover:bg-white/15 grid place-items-center transition"><i data-lucide="music-2" class="w-4 h-4"></i></a>
             </div>
+            <div class="flex flex-wrap items-center gap-x-3 gap-y-1.5 mt-5 text-[12.5px] text-white/50">
+              <a href="public-about.html" class="hover:text-white transition">About</a><span class="text-white/20">·</span>
+              <a href="public-contact.html" class="hover:text-white transition">Contact</a><span class="text-white/20">·</span>
+              <a href="public-advertise.html" class="hover:text-white transition">Advertise</a><span class="text-white/20">·</span>
+              <a href="public-help.html" class="hover:text-white transition">Help Center</a>
+            </div>
+            <a href="mailto:joel@smesouthafrica.co.za" class="inline-flex items-center gap-1.5 mt-4 text-[13px] text-white/60 hover:text-white transition"><i data-lucide="mail" class="w-3.5 h-3.5"></i> joel@smesouthafrica.co.za</a>
           </div>
           <div>
             <p class="text-[11px] font-bold uppercase tracking-widest text-[#FF9900]">Platform</p>
             <ul class="mt-4 space-y-2.5 text-sm text-white/70">
               <li><a href="public-resources.html" class="hover:text-white">Resources Library</a></li>
               <li><a href="public-funding.html" class="hover:text-white">Funding Portal</a></li>
-              <li><a href="member-hub.html" class="hover:text-white">Community Forum</a></li>
-              <li><a href="public-sustainability.html" class="hover:text-white">Sustainability Solutions</a></li>
+              <li><a href="public-solutions.html" class="hover:text-white">Solutions Directory</a></li>
+              <li><a href="public-shop.html" class="hover:text-white">Shop</a></li>
+              <li><a href="public-brands.html" class="hover:text-white">Brands Directory</a></li>
             </ul>
           </div>
           <div>
             <p class="text-[11px] font-bold uppercase tracking-widest text-[#FF9900]">Insights</p>
             <ul class="mt-4 space-y-2.5 text-sm text-white/70">
-              <li><a href="public-articles.html?cat=start" class="hover:text-white">Start</a></li>
-              <li><a href="public-articles.html?cat=manage" class="hover:text-white">Manage</a></li>
-              <li><a href="public-articles.html?cat=grow" class="hover:text-white">Grow</a></li>
+              <li><a href="public-articles.html" class="hover:text-white">All Articles</a></li>
               <li><a href="public-founder-focus-category.html" class="hover:text-white">Founder Focus</a></li>
+              <li><a href="public-funding-summit-category.html" class="hover:text-white">Funding Summit</a></li>
+              <li><a href="public-category.html" class="hover:text-white">Business Opportunities</a></li>
+              <li><a href="public-category.html" class="hover:text-white">Brand Voice</a></li>
+              <li><a href="public-glossary.html" class="hover:text-white">Glossary</a></li>
             </ul>
           </div>
           <div>
-            <p class="text-[11px] font-bold uppercase tracking-widest text-[#FF9900]">Company</p>
+            <p class="text-[11px] font-bold uppercase tracking-widest text-[#FF9900]">Community</p>
             <ul class="mt-4 space-y-2.5 text-sm text-white/70">
-              <li><a href="public-about.html" class="hover:text-white">About Us</a></li>
-              <li><a href="public-contact.html" class="hover:text-white">Contact</a></li>
-              <li><a href="public-advertise.html" class="hover:text-white">Advertise</a></li>
-              <li><a href="events.html" class="hover:text-white">Events & Webinars</a></li>
+              <li><a href="member-hub.html" class="hover:text-white">Community Forum</a></li>
+              <li><a href="events.html" class="hover:text-white">Events &amp; Webinars</a></li>
+              <li><a href="newsletter.html" class="hover:text-white">Newsletter</a></li>
+              <li><a href="podcast.html" class="hover:text-white">Podcast</a></li>
             </ul>
           </div>
           <div>
@@ -161,26 +218,38 @@
     </footer>
 
     <div class="bg-slate-50 border-t border-[#E7EBEF] px-4 sm:px-6 py-4 grid sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-3 text-[12px] text-slate-600">
-      <p><span class="font-bold text-[#121A21]">5 columns</span> — Logo+social · Platform · Insights · Company · Legal.</p>
-      <p><span class="font-bold text-[#121A21]">New: "Insights"</span> column (Start · Manage · Grow · Founder Focus) — matches live taxonomy.</p>
-      <p><span class="font-bold text-[#121A21]">New: Social row</span> (X · LinkedIn · Instagram · Facebook · YouTube · TikTok).</p>
+      <p><span class="font-bold text-[#121A21]">Newsletter band</span> — full-width, above the columns. Copy matches newsletter.html's own tone exactly ("Get it in your inbox" · "zero spam" · "No spam. Unsubscribe anytime.") — no new voice invented.</p>
+      <p><span class="font-bold text-[#121A21]">6 columns</span> — Logo+social (spans 2) · Platform · Insights · Community · Legal.</p>
+      <p><span class="font-bold text-[#121A21]">Fixed:</span> "Insights" now lists the real 4 signature series (Business Opportunities, Founder Focus, Funding Summit, Brand Voice) + Glossary, not a paraphrase of the Topic pillars with broken <code>?cat=</code> links.</p>
+      <p><span class="font-bold text-[#121A21]">New "Community" column</span> — Forum, Events, Newsletter, Podcast. These had no footer home at all before.</p>
+      <p><span class="font-bold text-[#121A21]">Contact</span> folded into the brand column (email + About/Contact/Advertise/Help row) rather than a 7th column — keeps the grid at 6 slots.</p>
+      <p><span class="font-bold text-[#121A21]">5 legal links</span> — Terms · Privacy · Refunds · POPIA · Advertising Disclosure — covers the full live legal set.</p>
     </div>
   </div>
 
   <ul class="mt-5 grid sm:grid-cols-2 gap-3 text-sm text-slate-700">
     <li class="flex items-start gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-[#29A37A] mt-0.5 shrink-0"></i><span><b>Navy `#0C1F31`</b> base, white text — matches the 2026 brand CI footer pattern.</span></li>
     <li class="flex items-start gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-[#29A37A] mt-0.5 shrink-0"></i><span><b>Orange `#FF9900`</b> column headings for accent + scannability.</span></li>
-    <li class="flex items-start gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-[#29A37A] mt-0.5 shrink-0"></i><span><b>5 legal links</b> (Terms · Privacy · Refunds · POPIA · Advertising Disclosure) — covers the full live legal set.</span></li>
+    <li class="flex items-start gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-[#29A37A] mt-0.5 shrink-0"></i><span><b>Every real page</b> on the site now has a footer link — nothing orphaned.</span></li>
     <li class="flex items-start gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-[#29A37A] mt-0.5 shrink-0"></i><span><b>Bottom row</b> — © + proprietary; consistent across every page.</span></li>
   </ul>
+</section>
+
+<!-- =============== ONE OPEN QUESTION =============== -->
+<section class="max-w-6xl mx-auto px-4 sm:px-6 pb-12">
+  <div class="rounded-2xl bg-white border border-[#E7EBEF] p-6 sm:p-8">
+    <p class="text-[11px] font-bold uppercase tracking-widest text-[#6A7581]">Worth a decision before roll-out</p>
+    <h3 class="font-jakarta font-extrabold text-xl mt-1 text-[#0C1F31]">brand_ci.html's own reference nav/footer don't quite match this</h3>
+    <p class="text-slate-700 mt-2 text-[15px] leading-relaxed">The brand doc's nav example uses <b>"Join Free"</b> (this proposal uses <b>"Join at no cost"</b>, matching public-auth.html and the site-wide no-"free" rule). Its footer example is <b>4 columns</b> with legal links folded into the bottom bar, not the 6-column structure above. Both are reasonable evolutions past what brand_ci.html currently shows — but since that file is the design-system reference, I'd suggest updating it to match once this is approved, rather than leaving two slightly different "official" versions floating around. Say the word and I'll sync it.</p>
+  </div>
 </section>
 
 <!-- =============== ROLL-OUT NOTE =============== -->
 <section class="max-w-6xl mx-auto px-4 sm:px-6 pb-16">
   <div class="rounded-2xl bg-[#FDECEF] border border-[#FCB1C0] p-6 sm:p-8">
     <p class="text-[11px] font-bold uppercase tracking-widest text-[#DC183C]">Roll-out</p>
-    <h3 class="font-jakarta font-extrabold text-xl mt-1">If approved, I'll update both across every mockup</h3>
-    <p class="text-slate-700 mt-2 text-[15px] leading-relaxed">All 40+ mockups already use a near-identical header. The two footer enhancements above — the <b>"Insights"</b> column and the <b>social row</b> — will be rolled out everywhere in a single pass so the entire mockup set stays in lockstep.</p>
+    <h3 class="font-jakarta font-extrabold text-xl mt-1">Once approved, I'll swap this in on every page</h3>
+    <p class="text-slate-700 mt-2 text-[15px] leading-relaxed">Every public/editorial mockup — 40+ pages — currently ships the dashed placeholder header and footer you've seen throughout review. This one pass replaces both, everywhere, in a single sweep, so the whole site lands in lockstep. The Community area (member-hub, members, groups, forums, profile, account) keeps its own already-finalised chrome — it isn't touched by this.</p>
     <div class="mt-5 flex flex-wrap gap-3">
       <a href="public-home.html" class="inline-flex items-center gap-1.5 px-4 h-10 rounded-full bg-white hover:bg-slate-50 text-[#121A21] text-sm font-bold border border-[#E7EBEF] transition"><i data-lucide="external-link" class="w-4 h-4"></i> See it on Home</a>
       <a href="public-articles.html" class="inline-flex items-center gap-1.5 px-4 h-10 rounded-full bg-white hover:bg-slate-50 text-[#121A21] text-sm font-bold border border-[#E7EBEF] transition"><i data-lucide="external-link" class="w-4 h-4"></i> Articles</a>
@@ -190,6 +259,22 @@
   </div>
 </section>
 
-<script>lucide.createIcons();</script>
+<script>
+  function toggleChromeSearch(){
+    const o = document.getElementById('chromeSearchOverlay');
+    const opening = o.classList.toggle('active');
+    if(opening) setTimeout(()=>document.getElementById('chromeSearchInput').focus(), 100);
+  }
+  function toggleChromeBurger(){
+    const p = document.getElementById('chromeBurgerPanel');
+    const open = p.classList.toggle('hidden') === false;
+    document.getElementById('chromeBurgerIcon').setAttribute('data-lucide', open ? 'x' : 'menu');
+    lucide.createIcons();
+  }
+  document.addEventListener('keydown', e=>{
+    if(e.key==='Escape'){ const o=document.getElementById('chromeSearchOverlay'); if(o && o.classList.contains('active')) toggleChromeSearch(); }
+  });
+  lucide.createIcons();
+</script>
 </body>
 </html>
