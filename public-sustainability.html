@@ -19,29 +19,113 @@
     .dev-badge{display:none;} body.dev-on .dev-badge{display:inline-flex;} #devToggle.on{background:#DC183C;color:#fff;border-color:#DC183C;}
     .ov{position:fixed;inset:0;z-index:60;} .ov-bg{position:absolute;inset:0;background:rgba(12,31,49,.45);backdrop-filter:blur(2px);opacity:0;transition:opacity .3s;} .ov.open .ov-bg{opacity:1;}
     .drawer{position:absolute;right:0;top:0;height:100%;width:100%;max-width:440px;background:#fff;box-shadow:-12px 0 40px rgba(12,31,49,.25);overflow-y:auto;transform:translateX(100%);transition:transform .3s cubic-bezier(.2,.7,.2,1);} .ov.open .drawer{transform:translateX(0);}
+    .search-overlay{position:absolute;inset:0;background:#fff;z-index:20;display:flex;align-items:center;justify-content:center;padding:0 1rem;opacity:0;pointer-events:none;transform:translateY(-8px);transition:all .25s cubic-bezier(.2,.8,.2,1);}
+    .search-overlay.active{opacity:1;pointer-events:auto;transform:translateY(0);}
+    @media (min-width:640px){ .search-overlay{padding:0 1.5rem;} }
+    .review-tools{position:fixed;bottom:16px;right:16px;z-index:70;display:flex;align-items:center;gap:8px;background:#0C1F31;border-radius:9999px;padding:6px;box-shadow:0 12px 32px -8px rgba(12,31,49,.5);}
+    @media (max-width:1023px){ .review-tools{bottom:calc(72px + env(safe-area-inset-bottom));} }
   </style>
 </head>
 <body class="bg-[#FCFCFC] text-[#121A21] antialiased">
-<header class="bg-slate-100 border-b-2 border-dashed border-slate-400 relative overflow-hidden">
-  <div class="absolute inset-0 opacity-30 pointer-events-none" style="background:repeating-linear-gradient(45deg,transparent,transparent 8px,rgba(100,116,139,.18) 8px,rgba(100,116,139,.18) 16px)"></div>
-  <div class="relative max-w-7xl mx-auto px-4 sm:px-6 h-14 flex items-center gap-3 sm:gap-4">
-    <a href="public-home.html" class="flex items-center gap-2 shrink-0 opacity-70 hover:opacity-100 transition">
-      <img src="assets/logo-icon.png" alt="SME South Africa" class="w-7 h-7" />
-      <span class="font-jakarta font-extrabold text-[13px] tracking-tight text-slate-700 hidden sm:inline">SME South Africa</span>
+<header class="bg-white border-b border-[#E7EBEF] sticky top-0 z-30 relative">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center gap-3">
+    <a href="public-home.html" class="flex items-center gap-2.5 shrink-0">
+      <img src="assets/logo-icon.png" alt="SME South Africa" class="w-9 h-9" />
+      <span class="font-jakarta font-extrabold text-[17px] tracking-tight">SME <span class="text-[#DC183C]">South Africa</span></span>
     </a>
-    <span class="mx-1 hidden sm:inline w-px h-5 bg-slate-300"></span>
-    <p class="text-[10px] sm:text-[11px] font-bold uppercase tracking-widest text-slate-600 flex items-center gap-1.5">
-      <i data-lucide="construction" class="w-3.5 h-3.5 text-slate-500"></i>
-      Header placeholder &middot; design pending
-    </p>
-    <div class="ml-auto flex items-center gap-2">
-      <button id="devToggle" onclick="toggleDevMode()" class="inline-flex items-center gap-1.5 px-2.5 h-8 rounded-full bg-white border border-slate-300 hover:border-[#DC183C] hover:text-[#DC183C] text-[11px] font-bold uppercase tracking-wider text-slate-600 transition" title="Toggle implementation notes"><i data-lucide="code-2" class="w-3.5 h-3.5"></i><span class="hidden sm:inline">Dev</span></button>
-      <a href="index.html" class="inline-flex items-center gap-1.5 px-3 h-8 rounded-full bg-white border border-slate-300 hover:border-slate-500 text-[11px] font-bold text-slate-700 transition">
-        <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i><span class="hidden sm:inline">Launcher</span>
-      </a>
+    <nav class="hidden lg:flex items-center gap-1 ml-4">
+      <div class="relative" onmouseleave="closeChromeDrop('articles')">
+        <button onclick="toggleChromeDrop('articles')" class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition inline-flex items-center gap-1">Articles <i data-lucide="chevron-down" class="w-3.5 h-3.5"></i></button>
+        <div id="dropArticles" class="hidden absolute left-0 top-full mt-1 w-64 bg-white rounded-xl border border-[#E7EBEF] shadow-xl py-2 z-30">
+          <a href="public-category.html" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-[#DC183C] transition">Starting a Business</a>
+          <a href="public-category.html" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-[#DC183C] transition">Managing a Business</a>
+          <a href="public-category.html" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-[#DC183C] transition">Growing a Business</a>
+          <div class="my-1.5 border-t border-slate-100"></div>
+          <a href="public-founder-focus-category.html" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-[#DC183C] transition">Founder Focus</a>
+          <a href="public-category.html" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-[#DC183C] transition">Business Opportunities</a>
+        </div>
+      </div>
+      <div class="relative" onmouseleave="closeChromeDrop('resources')">
+        <button onclick="toggleChromeDrop('resources')" class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition inline-flex items-center gap-1">Resources <i data-lucide="chevron-down" class="w-3.5 h-3.5"></i></button>
+        <div id="dropResources" class="hidden absolute left-0 top-full mt-1 w-56 bg-white rounded-xl border border-[#E7EBEF] shadow-xl py-2 z-30">
+          <a href="public-resource-category.html?type=ebooks" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-[#DC183C] transition">Ebooks</a>
+          <a href="public-resource-category.html?type=templates" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-[#DC183C] transition">Templates</a>
+          <a href="public-resource-category.html?type=guides" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-[#DC183C] transition">Guides</a>
+          <a href="public-resource-category.html?type=reports" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-[#DC183C] transition">Reports</a>
+        </div>
+      </div>
+      <div class="relative" onmouseleave="closeChromeDrop('funding')">
+        <button onclick="toggleChromeDrop('funding')" class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition inline-flex items-center gap-1">Funding <i data-lucide="chevron-down" class="w-3.5 h-3.5"></i></button>
+        <div id="dropFunding" class="hidden absolute left-0 top-full mt-1 w-60 bg-white rounded-xl border border-[#E7EBEF] shadow-xl py-2 z-30">
+          <a href="public-loan-option.html" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-[#DC183C] transition">Invoice Finance</a>
+          <a href="public-loan-option.html" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-[#DC183C] transition">Inventory Finance</a>
+          <a href="public-loan-option.html" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-[#DC183C] transition">Unsecured Business Loan</a>
+          <a href="public-loan-option.html" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-[#DC183C] transition">Purchase Order Funding</a>
+          <a href="public-loan-option.html" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-[#DC183C] transition">Bridging Finance</a>
+          <a href="public-loan-option.html" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-[#DC183C] transition">Working Capital Loans</a>
+        </div>
+      </div>
+      <a href="public-solutions.html" class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition">Solutions</a>
+      <a href="public-shop.html"      class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition">Shop</a>
+      <a href="podcast.html"          class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition">Podcast</a>
+    </nav>
+    <div class="flex items-center gap-1 sm:gap-2 ml-auto">
+      <button onclick="toggleChromeSearch()" aria-label="Search" class="w-9 h-9 grid place-items-center rounded-full hover:bg-slate-100 text-slate-600"><i data-lucide="search" class="w-4 h-4"></i></button>
+      <a href="public-auth.html" class="hidden sm:inline-flex items-center px-3 h-9 rounded-full text-sm font-bold text-[#121A21] hover:bg-slate-100 transition">Sign in</a>
+      <a href="public-auth.html#join" class="inline-flex items-center px-4 h-9 rounded-full text-sm font-bold text-white bg-[#DC183C] hover:bg-[#B0142F] transition">Join Now</a>
+      <button onclick="toggleChromeBurger()" aria-label="Menu" class="lg:hidden w-9 h-9 grid place-items-center rounded-full hover:bg-slate-100 text-slate-600 ml-1">
+        <i id="chromeBurgerIcon" data-lucide="menu" class="w-5 h-5"></i>
+      </button>
+    </div>
+  </div>
+  <div id="chromeBurgerPanel" class="hidden lg:hidden border-t border-[#E7EBEF] bg-white">
+    <nav class="max-w-7xl mx-auto px-4 sm:px-6 py-2 flex flex-col">
+      <a href="public-articles.html"  class="px-2 py-3 text-sm font-semibold text-slate-700 hover:text-[#DC183C] border-b border-slate-100">Articles</a>
+      <a href="public-resources.html" class="px-2 py-3 text-sm font-semibold text-slate-700 hover:text-[#DC183C] border-b border-slate-100">Resources</a>
+      <a href="public-funding.html"   class="px-2 py-3 text-sm font-semibold text-slate-700 hover:text-[#DC183C] border-b border-slate-100">Funding</a>
+      <a href="public-solutions.html" class="px-2 py-3 text-sm font-semibold text-slate-700 hover:text-[#DC183C] border-b border-slate-100">Solutions</a>
+      <a href="public-shop.html"      class="px-2 py-3 text-sm font-semibold text-slate-700 hover:text-[#DC183C] border-b border-slate-100">Shop</a>
+      <a href="podcast.html"          class="px-2 py-3 text-sm font-semibold text-slate-700 hover:text-[#DC183C] border-b border-slate-100">Podcast</a>
+      <a href="public-auth.html" class="px-2 py-3 text-sm font-semibold text-slate-700 hover:text-[#DC183C]">Sign in</a>
+    </nav>
+  </div>
+  <div id="chromeSearchOverlay" class="search-overlay">
+    <div class="w-full max-w-2xl flex items-center gap-3">
+      <div class="relative flex-1">
+        <i data-lucide="search" class="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400"></i>
+        <input id="chromeSearchInput" type="text" placeholder="Search articles, resources, funding…" class="w-full h-11 pl-11 pr-4 text-sm bg-slate-50 border border-[#DC183C] rounded-full focus:outline-none focus:ring-2 focus:ring-[#DC183C]/20" onkeydown="if(event.key==='Enter') location.href='public-search.html';" />
+      </div>
+      <button onclick="toggleChromeSearch()" class="text-slate-500 hover:text-[#121A21] p-2 transition-colors shrink-0" aria-label="Close search"><i data-lucide="x" class="w-5 h-5"></i></button>
     </div>
   </div>
 </header>
+
+<!-- Mobile bottom tab bar — thumb-reach quick nav -->
+<nav aria-label="Quick nav" class="lg:hidden fixed bottom-0 inset-x-0 z-40 bg-white border-t border-[#E7EBEF] shadow-[0_-4px_16px_-4px_rgba(12,31,49,0.08)]" style="padding-bottom:env(safe-area-inset-bottom)">
+  <div class="grid grid-cols-5">
+    <a href="public-home.html" class="relative flex flex-col items-center justify-center gap-1 py-2.5 text-[#DC183C]">
+      <span class="absolute top-0 left-1/2 -translate-x-1/2 w-8 h-0.5 rounded-full bg-[#DC183C]"></span>
+      <i data-lucide="house" class="w-5 h-5"></i>
+      <span class="font-jakarta text-[11px] font-bold">Home</span>
+    </a>
+    <a href="public-articles.html" class="flex flex-col items-center justify-center gap-1 py-2.5 text-slate-500 hover:text-[#121A21] transition">
+      <i data-lucide="lightbulb" class="w-5 h-5"></i>
+      <span class="font-jakarta text-[11px] font-bold">Insights</span>
+    </a>
+    <a href="public-funding.html" class="flex flex-col items-center justify-center gap-1 py-2.5 text-slate-500 hover:text-[#121A21] transition">
+      <i data-lucide="banknote" class="w-5 h-5"></i>
+      <span class="font-jakarta text-[11px] font-bold">Funding</span>
+    </a>
+    <a href="public-resources.html" class="flex flex-col items-center justify-center gap-1 py-2.5 text-slate-500 hover:text-[#121A21] transition">
+      <i data-lucide="book-open" class="w-5 h-5"></i>
+      <span class="font-jakarta text-[11px] font-bold">Resources</span>
+    </a>
+    <a href="public-auth.html#join" class="flex flex-col items-center justify-center gap-1 py-2.5 text-slate-500 hover:text-[#121A21] transition">
+      <i data-lucide="user-round-plus" class="w-5 h-5"></i>
+      <span class="font-jakarta text-[11px] font-bold">Sign Up</span>
+    </a>
+  </div>
+</nav>
 
 <!-- ===================== 1. HERO ===================== -->
 <section class="hero-bg text-white relative overflow-hidden"><div class="absolute inset-0 dot-pattern opacity-70 pointer-events-none"></div>
@@ -230,18 +314,83 @@
   </div>
 </section>
 
-<footer class="bg-slate-100 border-t-2 border-dashed border-slate-400 relative overflow-hidden">
-  <div class="absolute inset-0 opacity-30 pointer-events-none" style="background:repeating-linear-gradient(45deg,transparent,transparent 8px,rgba(100,116,139,.18) 8px,rgba(100,116,139,.18) 16px)"></div>
-  <div class="relative max-w-7xl mx-auto px-4 sm:px-6 py-6 text-center">
-    <p class="text-[10px] sm:text-[11px] font-bold uppercase tracking-widest text-slate-600 flex items-center justify-center gap-1.5">
-      <i data-lucide="construction" class="w-3.5 h-3.5 text-slate-500"></i>
-      Footer placeholder &middot; design pending
-    </p>
-    <p class="text-[11px] text-slate-500 mt-2">&copy; 2026 SME South Africa</p>
+<div class="lg:hidden" style="height:calc(64px + env(safe-area-inset-bottom))"></div>
+<footer class="bg-[#0C1F31] text-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-12">
+    <div class="grid grid-cols-2 md:grid-cols-6 gap-8">
+      <div class="col-span-2">
+        <a href="public-home.html" class="flex items-center gap-2.5"><span class="w-9 h-9 rounded-lg bg-white grid place-items-center"><img src="assets/logo-icon.png" alt="SME South Africa" class="w-7 h-7" /></span><span class="font-jakarta font-extrabold text-[17px]">SME South Africa</span></a>
+        <p class="text-sm text-white/55 mt-4 max-w-xs leading-relaxed">South Africa's leading SME community — connecting founders with funding, mentorship, events, and the tools to scale.</p>
+        <div class="flex items-center gap-2 mt-5">
+          <a href="#" aria-label="X" class="w-9 h-9 rounded-lg bg-white/8 hover:bg-white/15 grid place-items-center transition"><svg viewBox="0 0 24 24" class="w-4 h-4" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24h-6.66l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+          <a href="#" aria-label="LinkedIn" class="w-9 h-9 rounded-lg bg-white/8 hover:bg-white/15 grid place-items-center transition"><svg viewBox="0 0 24 24" class="w-4 h-4" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0z"/></svg></a>
+          <a href="#" aria-label="Instagram" class="w-9 h-9 rounded-lg bg-white/8 hover:bg-white/15 grid place-items-center transition"><svg viewBox="0 0 24 24" class="w-4 h-4" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></a>
+          <a href="#" aria-label="Facebook" class="w-9 h-9 rounded-lg bg-white/8 hover:bg-white/15 grid place-items-center transition"><svg viewBox="0 0 24 24" class="w-4 h-4" fill="currentColor"><path d="M22.675 0H1.325C.593 0 0 .593 0 1.325v21.351C0 23.407.593 24 1.325 24h11.495v-9.294H9.692v-3.622h3.128V8.413c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.716-1.795 1.763v2.313h3.587l-.467 3.622h-3.12V24h6.116C23.407 24 24 23.407 24 22.675V1.325C24 .593 23.407 0 22.675 0z"/></svg></a>
+          <a href="#" aria-label="YouTube" class="w-9 h-9 rounded-lg bg-white/8 hover:bg-white/15 grid place-items-center transition"><svg viewBox="0 0 24 24" class="w-4 h-4" fill="currentColor"><path d="M21.582 6.186a2.684 2.684 0 0 0-1.884-1.9C17.962 3.84 12 3.84 12 3.84s-5.962 0-7.698.446a2.684 2.684 0 0 0-1.884 1.9C2 7.934 2 12 2 12s0 4.066.418 5.814a2.684 2.684 0 0 0 1.884 1.9C6.038 20.16 12 20.16 12 20.16s5.962 0 7.698-.446a2.684 2.684 0 0 0 1.884-1.9C22 16.066 22 12 22 12s0-4.066-.418-5.814zM9.996 15.005V8.994L15.26 12l-5.264 3.005z"/></svg></a>
+          <a href="#" aria-label="TikTok" class="w-9 h-9 rounded-lg bg-white/8 hover:bg-white/15 grid place-items-center transition"><svg viewBox="0 0 24 24" class="w-4 h-4" fill="currentColor"><path d="M16.6 5.82c-1.01-.88-1.62-2.14-1.63-3.55h-3.13v13.39c0 1.6-1.3 2.9-2.9 2.9a2.9 2.9 0 0 1 0-5.8c.29 0 .57.04.83.13V9.75a6.03 6.03 0 0 0-.83-.06c-3.34 0-6.05 2.71-6.05 6.05S5.6 21.79 8.94 21.79s6.05-2.71 6.05-6.05V9.01a9.14 9.14 0 0 0 5.34 1.71V7.6a5.94 5.94 0 0 1-3.73-1.78z"/></svg></a>
+        </div>
+        <div class="flex flex-wrap items-center gap-x-3 gap-y-1.5 mt-5 text-[12.5px] text-white/50">
+          <a href="public-about.html" class="hover:text-white transition">About</a><span class="text-white/20">·</span>
+          <a href="public-contact.html" class="hover:text-white transition">Contact</a><span class="text-white/20">·</span>
+          <a href="public-advertise.html" class="hover:text-white transition">Advertise</a><span class="text-white/20">·</span>
+          <a href="public-help.html" class="hover:text-white transition">Help Center</a>
+        </div>
+      </div>
+      <div>
+        <p class="text-[11px] font-bold uppercase tracking-widest text-[#FF9900]">Platform</p>
+        <ul class="mt-4 space-y-2.5 text-sm text-white/70">
+          <li><a href="public-resources.html" class="hover:text-white">Resources Library</a></li>
+          <li><a href="public-funding.html" class="hover:text-white">Funding Portal</a></li>
+          <li><a href="public-solutions.html" class="hover:text-white">Solutions Directory</a></li>
+          <li><a href="public-shop.html" class="hover:text-white">Shop</a></li>
+          <li><a href="public-brands.html" class="hover:text-white">Brands Directory</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="text-[11px] font-bold uppercase tracking-widest text-[#FF9900]">Insights</p>
+        <ul class="mt-4 space-y-2.5 text-sm text-white/70">
+          <li><a href="public-articles.html" class="hover:text-white">All Articles</a></li>
+          <li><a href="public-founder-focus-category.html" class="hover:text-white">Founder Focus</a></li>
+          <li><a href="public-funding-summit-category.html" class="hover:text-white">Funding Summit</a></li>
+          <li><a href="public-category.html" class="hover:text-white">Business Opportunities</a></li>
+          <li><a href="public-category.html" class="hover:text-white">Brand Voice</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="text-[11px] font-bold uppercase tracking-widest text-[#FF9900]">Community</p>
+        <ul class="mt-4 space-y-2.5 text-sm text-white/70">
+          <li><a href="member-hub.html" class="hover:text-white">Community Forum</a></li>
+          <li><a href="events.html" class="hover:text-white">Events &amp; Webinars</a></li>
+          <li><a href="newsletter.html" class="hover:text-white">Newsletter</a></li>
+          <li><a href="podcast.html" class="hover:text-white">Podcast</a></li>
+          <li><a href="public-glossary.html" class="hover:text-white">Glossary</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="text-[11px] font-bold uppercase tracking-widest text-[#FF9900]">Legal</p>
+        <ul class="mt-4 space-y-2.5 text-sm text-white/70">
+          <li><a href="public-terms.html" class="hover:text-white">Terms &amp; Conditions</a></li>
+          <li><a href="public-privacy.html" class="hover:text-white">Privacy Policy</a></li>
+          <li><a href="public-refunds.html" class="hover:text-white">Refunds Policy</a></li>
+          <li><a href="public-popia.html" class="hover:text-white">POPIA</a></li>
+          <li><a href="public-advertising-disclosure.html" class="hover:text-white">Advertising Disclosure</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="flex flex-col sm:flex-row items-center justify-between gap-4 pt-8 mt-10 border-t border-white/10 text-sm text-white/50">
+      <p>© 2026 SME South Africa. All rights reserved.</p>
+      <p class="text-white/40">Proprietary &amp; confidential.</p>
+    </div>
   </div>
 </footer>
 
 <div id="overlay-root"></div><div id="toast" class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-50"></div>
+<!-- Floating review-mode tools -->
+<div class="review-tools">
+  <a href="index.html" class="text-[11px] font-bold text-white/70 hover:text-white px-3 py-1.5 transition flex items-center gap-1.5"><i data-lucide="arrow-left" class="w-3.5 h-3.5"></i> Launcher</a>
+  <span class="w-px h-4 bg-white/15"></span>
+  <button id="devToggle" onclick="toggleDevMode()" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/10 hover:bg-white/20 text-[11px] font-bold uppercase tracking-wider text-white transition"><i data-lucide="code-2" class="w-3.5 h-3.5"></i> Dev</button>
+</div>
 <script>
   function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
   function showToast(m){const el=document.getElementById('toast');el.classList.remove('hidden');el.innerHTML=`<div class="bg-[#0C1F31] text-white rounded-full pl-3 pr-5 py-2.5 shadow-2xl flex items-center gap-2 text-sm font-semibold" style="border-left:4px solid #29A37A"><i data-lucide="check-circle" class="w-4 h-4" style="color:#29A37A"></i><span>${esc(m)}</span></div>`;lucide.createIcons();setTimeout(()=>{el.classList.add('hidden');el.innerHTML='';},2400);}
@@ -369,6 +518,34 @@
   function openBrief(id){const b=BRIEFS[id];if(!b)return;const sec=(i,l,h)=>`<div class="px-6 py-4 border-t border-slate-100"><p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] flex items-center gap-1.5 mb-2"><i data-lucide="${i}" class="w-3.5 h-3.5"></i>${l}</p><div class="text-sm text-slate-600 leading-relaxed">${h}</div></div>`;document.getElementById('overlay-root').innerHTML=`<div class="ov" id="ov"><div class="ov-bg" onclick="closeOverlay('ov')"></div><div class="drawer"><div class="sticky top-0 z-10 bg-[#0C1F31] text-white px-6 py-5 flex items-start justify-between"><div><p class="text-[10px] font-bold uppercase tracking-widest text-[#FF9900] mb-1">Dev Brief</p><h3 class="font-jakarta font-extrabold text-lg leading-tight">${b.title}</h3><p class="text-xs text-white/60 mt-1">${b.sub}</p></div><button onclick="closeOverlay('ov')" class="text-white/60 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button></div>${sec('target','Purpose',b.purpose)}${sec('database','Data model',b.data)}${sec('git-branch','Logic',b.logic)}${sec('ruler','Spec values',b.specs)}${sec('boxes','Components',b.components)}</div></div>`;requestAnimationFrame(()=>{const o=document.getElementById('ov');if(o)o.classList.add('open');});lucide.createIcons();}
 
   renderSolutions();renderWhy();renderTeam();initStats();lucide.createIcons();
+</script>
+<script>
+  // ===== Recommended header/footer behaviour =====
+  function toggleChromeSearch(){
+    const o = document.getElementById('chromeSearchOverlay');
+    const opening = o.classList.toggle('active');
+    if(opening) setTimeout(()=>document.getElementById('chromeSearchInput').focus(), 100);
+  }
+  function toggleChromeBurger(){
+    const p = document.getElementById('chromeBurgerPanel');
+    const open = p.classList.toggle('hidden') === false;
+    document.getElementById('chromeBurgerIcon').setAttribute('data-lucide', open ? 'x' : 'menu');
+    lucide.createIcons();
+  }
+  const CHROME_DROPS = { articles: 'dropArticles', resources: 'dropResources', funding: 'dropFunding' };
+  function toggleChromeDrop(name){
+    Object.keys(CHROME_DROPS).forEach(k=>{ if(k!==name) document.getElementById(CHROME_DROPS[k]).classList.add('hidden'); });
+    document.getElementById(CHROME_DROPS[name]).classList.toggle('hidden');
+  }
+  function closeChromeDrop(name){
+    document.getElementById(CHROME_DROPS[name]).classList.add('hidden');
+  }
+  document.addEventListener('click', e=>{
+    if(!e.target.closest('nav .relative')) Object.values(CHROME_DROPS).forEach(id=>document.getElementById(id).classList.add('hidden'));
+  });
+  document.addEventListener('keydown', e=>{
+    if(e.key==='Escape'){ const o=document.getElementById('chromeSearchOverlay'); if(o && o.classList.contains('active')) toggleChromeSearch(); }
+  });
 </script>
 </body>
 </html>
