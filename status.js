@@ -21,7 +21,7 @@ window.MOCKUP_STATUS = {
   "public-solution-categories.html": "finalised",
   "public-solution-category.html": "finalised",
   "public-sustainability.html": "finalised",
-  "public-pricing.html": "finalised",
+  "public-pricing.html": "not-started",
   "public-brands.html": "finalised",
   "public-brand.html": "finalised",
   "public-deals.html": "not-started",
@@ -72,7 +72,7 @@ window.MOCKUP_STATUS = {
   "public-search.html": "finalised",
   "public-404.html": "finalised"
 };
-window.MOCKUP_STATUS_PUBLISHED = "2026-08-25T10:45:38.323Z";
+window.MOCKUP_STATUS_PUBLISHED = "2026-08-27T12:19:15.962Z";
 /* Developer builds (staging) — { mockup file: { url, status } }; status: "pending-review" | "reviewed" | "approved" */
 window.MOCKUP_DEV = {
   "public-home.html": {"url":"https://smesastg.wpengine.com/","status":"reviewed"},
@@ -105,6 +105,10 @@ window.MOCKUP_DEV = {
   "public-refunds.html": {"url":"https://smesastg.wpengine.com/refund-and-cancellation/","status":"reviewed"},
   "public-popia.html": {"url":"https://smesastg.wpengine.com/popia/","status":"reviewed"},
   "public-advertising-disclosure.html": {"url":"https://smesastg.wpengine.com/advertising-disclosure/","status":"reviewed"},
+  "events.html": {"url":"https://smesastg.wpengine.com/events/","status":"pending-review"},
+  "event-single-in-person.html": {"url":"https://smesastg.wpengine.com/events/funding-summit-2026/","status":"pending-review"},
+  "event-single-online.html": {"url":"https://smesastg.wpengine.com/events/how-to-scale-a-business-with-minimal-capital-investment/","status":"pending-review"},
+  "event-speaker.html": {"url":"https://smesastg.wpengine.com/organizers/zibusiso-mkhwanazi/","status":"pending-review"},
   "public-glossary.html": {"url":"https://smesastg.wpengine.com/glossary/","status":"reviewed"},
   "public-glossary-category.html": {"url":"https://smesastg.wpengine.com/glossary-categories/glossary-category-one/","status":"reviewed"},
   "public-glossary-term.html": {"url":"https://smesastg.wpengine.com/glossary/administrative-law/","status":"reviewed"},
