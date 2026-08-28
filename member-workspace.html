@@ -674,11 +674,28 @@
             <h1 class="font-jakarta font-extrabold text-[26px] sm:text-[28px] tracking-tight flex items-center gap-2">Funding
               <button onclick="openBrief('funding')" class="dev-badge w-5 h-5 rounded-full bg-[#DC183C] text-white items-center justify-center text-[10px] font-bold leading-none animate-pulse" title="Implementation notes">i</button>
             </h1>
-            <p class="text-[14.5px] text-[#6A7581] leading-relaxed max-w-[62ch] mt-2">Your funding applications, tracked from submission to decision — the same list you'll find under Account Settings while we decide where this lives long-term.</p>
+            <p class="text-[14.5px] text-[#6A7581] leading-relaxed max-w-[62ch] mt-2">From getting funding-ready to tracking a decision — the same applications you'll find under Account Settings while we decide where this lives long-term.</p>
           </div>
           <a href="member-account.html#funding" class="shrink-0 inline-flex items-center gap-2 font-jakarta font-bold text-[13px] px-5 py-3 rounded-lg bg-[#0C1F31] text-white hover:bg-[#16324a] transition">
             <i data-lucide="plus" class="w-4 h-4"></i> New application
           </a>
+        </div>
+
+        <!-- Funding readiness checklist -->
+        <div class="rounded-2xl border border-[#E7EBEF] shadow-sm bg-white overflow-hidden reveal mb-5">
+          <div class="flex items-center justify-between gap-3 px-5 py-4 border-b border-[#E7EBEF]">
+            <div class="min-w-0">
+              <p class="font-jakarta font-extrabold text-sm flex items-center gap-1.5">Funding readiness checklist
+                <button onclick="openBrief('readiness')" class="dev-badge w-4 h-4 rounded-full bg-[#DC183C] text-white items-center justify-center text-[9px] font-bold leading-none animate-pulse" title="Implementation notes">i</button>
+              </p>
+              <p class="text-[12px] text-[#6A7581] mt-0.5">What South African funders check before a first review.</p>
+            </div>
+            <span id="readiness-score" class="text-[11px] font-bold px-2.5 py-1 rounded-full bg-[#F0F5F9] text-[#6A7581] shrink-0">0/100</span>
+          </div>
+          <div id="readiness-list"></div>
+          <div class="p-5">
+            <div id="readiness-next-steps"></div>
+          </div>
         </div>
 
         <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-5">
@@ -1047,6 +1064,60 @@
       <div class="grid grid-cols-7 gap-1.5">${dow}${cells}</div>`;
   }
 
+  // ===== FUNDING READINESS CHECKLIST (adapted from SME IQ's FundingHub) =========
+  const readinessItems = [
+    { id:1, label:'Tax Clearance', complete:false },
+    { id:2, label:'B-BBEE Affidavit', complete:false },
+    { id:3, label:'Financial Statements or Management Accounts', complete:false },
+    { id:4, label:'6 months of bank statements', complete:false },
+    { id:5, label:'Owner ID', complete:false },
+    { id:6, label:'Business plan', complete:false },
+    { id:7, label:'Proof of address', complete:false }
+  ];
+  function toggleReadiness(id){
+    const item = readinessItems.find(r => r.id === id);
+    if(!item) return;
+    item.complete = !item.complete;
+    renderReadiness();
+  }
+  function readinessRow(r){
+    return `
+      <button onclick="toggleReadiness(${r.id})" class="w-full flex items-center justify-between gap-3 px-5 py-3.5 border-b border-[#E7EBEF] last:border-b-0 text-left hover:bg-[#FCFCFC] transition">
+        <span class="flex items-center gap-3 min-w-0">
+          <span class="w-5 h-5 rounded-full border-2 shrink-0 grid place-items-center ${r.complete ? 'bg-[#29A37A] border-[#29A37A]' : 'border-[#E7EBEF]'}">
+            ${r.complete ? '<i data-lucide="check" class="w-3 h-3 text-white"></i>' : ''}
+          </span>
+          <span class="text-[13.5px] font-semibold truncate">${esc(r.label)}</span>
+        </span>
+        <span class="text-[10.5px] font-bold px-2.5 py-1 rounded-full shrink-0 ${r.complete ? 'bg-[#E4F5EE] text-[#29A37A]' : 'bg-[#F0F5F9] text-[#6A7581]'}">${r.complete ? 'Complete' : 'Missing'}</span>
+      </button>`;
+  }
+  function renderReadiness(){
+    document.getElementById('readiness-list').innerHTML = readinessItems.map(readinessRow).join('');
+    const done = readinessItems.filter(r => r.complete).length;
+    const total = readinessItems.length;
+    const pct = Math.round((done / total) * 100);
+    const scoreEl = document.getElementById('readiness-score');
+    scoreEl.textContent = pct + '/100';
+    scoreEl.className = 'text-[11px] font-bold px-2.5 py-1 rounded-full shrink-0 ' + (pct >= 70 ? 'bg-[#E4F5EE] text-[#29A37A]' : pct >= 30 ? 'bg-[#FFF1E0] text-[#AE6B0A]' : 'bg-[#F0F5F9] text-[#6A7581]');
+    const missing = readinessItems.filter(r => !r.complete);
+    const nextEl = document.getElementById('readiness-next-steps');
+    nextEl.innerHTML = missing.length === 0
+      ? `<div class="rounded-xl border border-[#29A37A]/25 bg-[#E4F5EE] p-4 flex items-center gap-2.5"><i data-lucide="check-circle" class="w-4 h-4 text-[#29A37A] shrink-0"></i><p class="text-[12.5px] font-semibold">You're funding-ready — every check funders look for first is in place.</p></div>`
+      : `<div class="rounded-xl border border-[#DC183C]/20 bg-[#FDECEF] p-4">
+          <p class="text-[12.5px] font-bold flex items-center gap-1.5 mb-1"><i data-lucide="sparkles" class="w-3.5 h-3.5 text-[#DC183C]"></i> Recommended next steps</p>
+          <p class="text-[12px] text-[#6A7581] mb-3">Close these gaps before you speak to funders:</p>
+          <div class="flex flex-wrap gap-1.5 mb-4">
+            ${missing.slice(0,3).map(r => `<span class="text-[11px] font-semibold px-2.5 py-1 rounded-full bg-white border border-[#E7EBEF]">${esc(r.label)}</span>`).join('')}
+          </div>
+          <div class="flex flex-wrap gap-2.5">
+            <button onclick="showView('success-plan')" class="inline-flex items-center gap-1.5 font-jakarta font-bold text-[12.5px] px-4 py-2.5 rounded-lg bg-[#DC183C] text-white hover:bg-[#B0142F] transition">Open action plan <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i></button>
+            <a href="public-help.html" class="inline-flex items-center gap-1.5 font-jakarta font-bold text-[12.5px] px-4 py-2.5 rounded-lg border-[1.5px] border-[#E7EBEF] hover:bg-[#F0F5F9] transition">Talk to an accountant</a>
+          </div>
+        </div>`;
+    lucide.createIcons();
+  }
+
   // ===== FUNDING (mirrors member-account.html's Settings → Funding, for now) ====
   const FUNDING_STATUS = {
     review:   { label:'In review',           color:'#AE6B0A', bg:'#FFF1E0' },
@@ -1273,6 +1344,13 @@
       logic:'"New application" and per-row detail links are stubs in this round. Once the placement decision is made, whichever surface is NOT primary becomes a shallow link into the other, rather than keeping two independently-maintained UIs.',
       components:'4-stat strip (Total / In review / Approved / Docs needed) · compact application list (reused row shape, no expand/detail in this view).'
     },
+    readiness: {
+      title:'Funding Readiness Checklist', sub:'Adapted from SME IQ\'s FundingHub',
+      purpose:'Sits deliberately before "Your applications" rather than replacing it — readiness is a pre-application gate ("what do I need before I speak to a funder"), applications is post-submission tracking. SME IQ frames this as the actual painkiller: most funding rejections are process failures (missing docs), not creditworthiness ones.',
+      data:'<code>funding_readiness_items</code>: <code>{ member_id, item_key (tax_clearance|bbbee_affidavit|financials|bank_statements|owner_id|business_plan|proof_of_address), complete, source_document_id? }</code>. <code>source_document_id</code> would link to the Documents vault so completing an item there could auto-check it here — not wired in this mockup.',
+      logic:'Score = (complete count / 7) × 100, coloured red&lt;30 / amber 30-69 / green ≥70. Checking an item is optimistic client-side state in this mockup only. "Open action plan" deep-links to My Success Plan; "Talk to an accountant" is a placeholder for a real advisor-routing destination once that\'s scoped.',
+      components:'Header with live readiness score · checklist rows (reused toggle-row pattern from Compliance/Cash Flow) · conditional callout: red "Recommended next steps" (top 3 missing items + 2 CTAs) when incomplete, green all-clear state when 7/7.'
+    },
     resources: {
       title:'Resources', sub:'Duplicated view — same data as Account Settings → Downloads',
       purpose:'Same reasoning as Funding: a member\'s downloaded-resources library shown here too, sourced from the same list as Account Settings, so nothing goes out of sync while the two-surface question is still open. "Browse full library" routes to the public catalogue (<code>public-resources.html</code>), not a duplicate catalogue browser.',
@@ -1387,6 +1465,7 @@
   renderOverviewActions();
   renderSuccessPlan();
   renderCompliance();
+  renderReadiness();
   renderFunding();
   renderResources();
   renderCashflow();
