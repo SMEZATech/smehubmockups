@@ -1,0 +1,1399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Member Workspace — SME Success Core Mockup</title>
+<meta name="description" content="Internal concept mockup — Member Workspace (SME Success Core): business health score, personalised success plan, compliance tracking, funding, resources and matched programmes." />
+<meta name="robots" content="noindex, nofollow" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        fontFamily: {
+          jakarta: ['Plus Jakarta Sans', 'sans-serif'],
+          inter: ['Inter', 'system-ui', 'sans-serif']
+        }
+      }
+    }
+  };
+</script>
+
+<style>
+  html, body { font-family: 'Inter', system-ui, sans-serif; }
+  .font-jakarta { font-family: 'Plus Jakarta Sans', sans-serif; letter-spacing: 0.005em; }
+
+  @keyframes fadeUp { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+  .reveal { animation: fadeUp .45s cubic-bezier(.2,.7,.2,1) backwards; }
+
+  @keyframes toastIn { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
+  @keyframes toastOut { to { opacity:0; transform:translateY(20px); } }
+  .toast-in { animation: toastIn .25s ease forwards; }
+  .toast-out { animation: toastOut .25s ease forwards; }
+
+  #overlay-root:empty { display:none; }
+
+  /* ===== Dev Mode (implementation notes) — identical system to member-hub.html ===== */
+  .dev-badge { display:none; }
+  body.dev-on .dev-badge { display:inline-flex; }
+  #devToggle.on { background:#DC183C; color:#fff; border-color:#DC183C; }
+  .ov { position:fixed; inset:0; z-index:60; }
+  .ov-bg { position:absolute; inset:0; background:rgba(12,31,49,.45); backdrop-filter:blur(2px); opacity:0; transition:opacity .3s; }
+  .ov.open .ov-bg { opacity:1; }
+  .drawer { position:absolute; right:0; top:0; height:100%; width:100%; max-width:440px; background:#fff; box-shadow:-12px 0 40px rgba(12,31,49,.25); overflow-y:auto; transform:translateX(100%); transition:transform .3s cubic-bezier(.2,.7,.2,1); }
+  .ov.open .drawer { transform:translateX(0); }
+
+  .view { display:none; }
+  .view.active { display:block; }
+
+  .hero-grad { background: linear-gradient(135deg, #0C1F31 0%, #17324A 45%, #591020 100%); position:relative; }
+  .hero-grad::after { content:""; position:absolute; inset:0; background: radial-gradient(circle at 85% 10%, rgba(255,153,0,.18), transparent 55%); pointer-events:none; }
+  .accent-grad { background: linear-gradient(135deg, #DC183C 0%, #FF9900 100%); }
+  .accent-text-grad { background: linear-gradient(135deg, #DC183C 0%, #FF9900 100%); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; }
+
+  @media (max-width: 1023px) { .app-sidebar { display:none; } }
+
+  /* ===== Shared header search (identical to member-account.html / member-hub.html) ===== */
+  .search-overlay { position:absolute; inset:0; background:white; z-index:50; display:flex; align-items:center; justify-content:center; padding:0 1rem; opacity:0; pointer-events:none; transform:translateY(-10px); transition:all .3s cubic-bezier(.2,.8,.2,1); }
+  .search-overlay.active { opacity:1; pointer-events:auto; transform:translateY(0); }
+  @media (min-width:640px){ .search-overlay{ padding:0 1.5rem; } }
+</style>
+</head>
+<body class="bg-[#FCFCFC] text-[#121A21] antialiased">
+
+<!-- ============================ HEADER (shared member chrome — identical to member-account.html / member-hub.html) ============================ -->
+<header class="bg-white border-b border-slate-200 sticky top-0 z-40 shadow-sm relative">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+
+    <!-- Logo (Left) -->
+    <a href="public-home.html" class="flex items-center shrink-0 group mr-6 py-2">
+      <img src="https://smesouthafrica.co.za/wp-content/uploads/2025/10/Asset-1-1.webp" alt="SME South Africa" class="h-10 sm:h-11 w-auto object-contain group-hover:scale-105 transition-transform" />
+    </a>
+
+    <!-- Primary Navigation (Center - BuddyBoss Style) -->
+    <nav class="hidden md:flex items-center justify-center gap-2 flex-1 px-4 h-full">
+      <a href="member-hub.html" class="px-3 h-full text-[14px] font-semibold font-jakarta text-[#6A7581] hover:text-[#DC183C] border-b-[3px] border-transparent flex items-center gap-2 transition-colors"><i data-lucide="activity" class="w-4 h-4"></i> Home</a>
+      <a href="members.html" class="px-3 h-full text-[14px] font-semibold font-jakarta text-[#6A7581] hover:text-[#DC183C] border-b-[3px] border-transparent flex items-center gap-2 transition-colors"><i data-lucide="user" class="w-4 h-4"></i> Members</a>
+      <a href="groups.html" class="px-3 h-full text-[14px] font-semibold font-jakarta text-[#6A7581] hover:text-[#DC183C] border-b-[3px] border-transparent flex items-center gap-2 transition-colors"><i data-lucide="users" class="w-4 h-4"></i> Groups</a>
+      <a href="forums.html" class="px-3 h-full text-[14px] font-semibold font-jakarta text-[#6A7581] hover:text-[#DC183C] border-b-[3px] border-transparent flex items-center gap-2 transition-colors"><i data-lucide="message-square" class="w-4 h-4"></i> Forums <i data-lucide="chevron-down" class="w-3 h-3 ml-[-2px] opacity-50"></i></a>
+      <a href="member-workspace.html" class="px-3 h-full text-[14px] font-bold font-jakarta text-[#DC183C] border-b-[3px] border-[#DC183C] flex items-center gap-2 transition-colors"><i data-lucide="sparkles" class="w-4 h-4 text-[#DC183C]"></i> Workspace</a>
+    </nav>
+
+    <!-- Utility & Profile (Right) -->
+    <div class="flex items-center justify-end gap-4 shrink-0">
+
+      <!-- Search Trigger -->
+      <button onclick="toggleHeaderSearch()" class="text-slate-500 hover:text-[#121A21] transition-colors p-1.5" aria-label="Open search">
+        <i data-lucide="search" class="w-5 h-5"></i>
+      </button>
+
+      <div class="w-px h-6 bg-slate-200 hidden sm:block mx-1"></div>
+
+      <!-- Action Icons -->
+      <div class="hidden sm:flex items-center gap-2">
+        <button class="relative text-slate-500 hover:text-[#121A21] transition-colors p-1.5" aria-label="Messages">
+          <i data-lucide="inbox" class="w-5 h-5"></i>
+          <span class="absolute top-0 right-0 w-4 h-4 bg-[#DC183C] text-white text-[9px] font-bold rounded-full flex items-center justify-center ring-2 ring-white shadow-sm">1</span>
+        </button>
+        <button class="relative text-slate-500 hover:text-[#121A21] transition-colors p-1.5" aria-label="Notifications">
+          <i data-lucide="bell" class="w-5 h-5"></i>
+          <span class="absolute top-0 right-0 w-4 h-4 bg-[#DC183C] text-white text-[9px] font-bold rounded-full flex items-center justify-center ring-2 ring-white shadow-sm">3</span>
+        </button>
+      </div>
+
+      <!-- User Profile Dropdown -->
+      <div class="relative ml-1 sm:ml-2 cursor-pointer group">
+        <div class="flex items-center gap-3">
+          <span class="font-jakarta font-bold text-[15px] text-[#121A21] hidden md:block">Tshepho Joel</span>
+          <div class="w-9 h-9 rounded-full accent-grad grid place-items-center font-jakarta font-bold text-white text-xs ring-2 ring-white shadow-sm group-hover:scale-105 transition-transform">TJ</div>
+        </div>
+
+        <!-- Dropdown Menu -->
+        <div class="absolute right-0 top-full mt-3 w-64 bg-white rounded-xl shadow-xl border border-slate-100 overflow-hidden z-50 transform origin-top-right scale-95 opacity-0 pointer-events-none transition-all duration-200 group-hover:scale-100 group-hover:opacity-100 group-hover:pointer-events-auto">
+          <div class="p-4 border-b border-slate-100 flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full accent-grad grid place-items-center font-jakarta font-bold text-white text-sm shrink-0">TJ</div>
+            <div class="min-w-0">
+              <p class="font-jakarta font-bold text-sm text-[#121A21] truncate">Tshepho Joel</p>
+              <p class="text-xs text-slate-500 truncate">SME South Africa</p>
+            </div>
+          </div>
+          <div class="p-2 text-sm text-slate-700 font-medium">
+            <a href="member-hub.html" class="block px-3 py-2 rounded-lg hover:bg-slate-50 hover:text-[#DC183C] transition-colors">Community</a>
+            <a href="member-account.html" class="block px-3 py-2 rounded-lg hover:bg-slate-50 hover:text-[#DC183C] transition-colors">Account Settings</a>
+          </div>
+          <div class="p-2 border-t border-slate-100">
+            <a href="#" class="block px-3 py-2 text-sm font-semibold text-[#DC183C] hover:bg-[#FDECEF] rounded-lg transition-colors">Sign Out</a>
+          </div>
+          <div class="px-5 py-3 border-t border-slate-100 bg-slate-50 flex items-center justify-between">
+            <span class="text-[10px] font-bold uppercase tracking-widest text-slate-500">Dev Mode</span>
+            <button id="devToggle" onclick="toggleDevMode()" class="w-8 h-4 rounded-full bg-slate-200 relative transition-colors focus:outline-none" aria-pressed="false">
+              <span class="absolute left-0.5 top-0.5 w-3 h-3 rounded-full bg-white shadow-sm transition-transform duration-200"></span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Full Header Search Overlay -->
+  <div id="headerSearchOverlay" class="search-overlay">
+    <div class="w-full max-w-4xl flex items-center gap-4">
+      <div class="relative flex-1">
+        <i data-lucide="search" class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400"></i>
+        <input type="text" id="headerSearchInput" placeholder="Search members, groups, forums..." class="w-full h-12 pl-12 pr-4 text-base bg-slate-50 border border-[#DC183C] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#DC183C]/20 transition-all shadow-sm">
+      </div>
+      <button onclick="toggleHeaderSearch()" class="text-slate-500 hover:text-[#121A21] p-2 transition-colors shrink-0" aria-label="Close search">
+        <i data-lucide="x" class="w-6 h-6"></i>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col lg:flex-row gap-6 lg:items-start">
+
+  <!-- ===================== SIDEBAR ===================== -->
+  <aside class="app-sidebar hidden lg:flex w-64 shrink-0 flex-col gap-6 bg-[#0C1F31] text-white rounded-2xl overflow-hidden p-5 lg:sticky lg:top-24">
+
+    <!-- Member preview -->
+    <div class="bg-white rounded-2xl border border-slate-100 overflow-hidden reveal -mx-5 -mt-5">
+      <div class="h-16 bg-[#0C1F31] relative">
+        <div class="absolute inset-0 opacity-40" style="background: radial-gradient(circle at 30% 50%, #FFF1E0 0%, transparent 65%);"></div>
+        <div class="absolute -bottom-8 left-1/2 -translate-x-1/2">
+          <div class="w-16 h-16 rounded-full bg-gradient-to-br from-[#DC183C] to-[#FF9900] grid place-items-center font-jakarta font-extrabold text-white text-xl ring-4 ring-white">TJ</div>
+        </div>
+      </div>
+      <div class="pt-10 pb-4 px-4 text-center">
+        <a href="member-account.html" class="font-jakarta font-extrabold uppercase text-base text-[#121A21] tracking-wide hover:text-[#DC183C] transition">Tshepho Joel</a>
+        <p class="text-xs text-slate-500 mt-0.5">Founder at <span class="font-bold text-[#121A21]">Langa Holdings</span></p>
+        <a href="member-account.html" class="inline-flex items-center gap-1 mt-2 text-[11px] font-bold text-[#DC183C] uppercase tracking-wide hover:underline">View profile <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i></a>
+      </div>
+      <div class="grid grid-cols-3 border-t border-slate-100 text-center pb-2">
+        <div class="py-2.5 border-r border-slate-100">
+          <p class="text-[8.5px] font-bold uppercase tracking-widest text-slate-400">Plan</p>
+          <p class="font-jakarta font-bold text-xs text-[#121A21] mt-1">Growing</p>
+        </div>
+        <div class="py-2.5 border-r border-slate-100">
+          <p class="text-[8.5px] font-bold uppercase tracking-widest text-slate-400">Sector</p>
+          <p class="font-jakarta font-bold text-xs text-[#121A21] mt-1">Fintech</p>
+        </div>
+        <div class="py-2.5">
+          <p class="text-[8.5px] font-bold uppercase tracking-widest text-slate-400">Region</p>
+          <p class="font-jakarta font-bold text-xs text-[#121A21] mt-1">GP</p>
+        </div>
+      </div>
+    </div>
+
+    <nav>
+      <p class="text-[10px] font-bold uppercase tracking-widest text-white/40 px-2.5 mb-2">Member Workspace</p>
+      <div class="flex flex-col gap-0.5">
+        <button data-view="overview" onclick="showView('overview')" class="navlink flex items-center gap-2.5 px-2.5 py-2.5 rounded-lg text-[13.5px] font-semibold text-white/75 hover:bg-white/[0.06] hover:text-white transition text-left">
+          <i data-lucide="layout-dashboard" class="w-4 h-4 shrink-0 opacity-90"></i> Overview
+        </button>
+        <button data-view="success-plan" onclick="showView('success-plan')" class="navlink flex items-center gap-2.5 px-2.5 py-2.5 rounded-lg text-[13.5px] font-semibold text-white/75 hover:bg-white/[0.06] hover:text-white transition text-left">
+          <i data-lucide="list-checks" class="w-4 h-4 shrink-0 opacity-90"></i> My Success Plan
+        </button>
+        <button data-view="compliance" onclick="showView('compliance')" class="navlink flex items-center gap-2.5 px-2.5 py-2.5 rounded-lg text-[13.5px] font-semibold text-white/75 hover:bg-white/[0.06] hover:text-white transition text-left">
+          <i data-lucide="shield-check" class="w-4 h-4 shrink-0 opacity-90"></i> Compliance
+        </button>
+        <button data-view="programmes" onclick="showView('programmes')" class="navlink flex items-center gap-2.5 px-2.5 py-2.5 rounded-lg text-[13.5px] font-semibold text-white/75 hover:bg-white/[0.06] hover:text-white transition text-left">
+          <i data-lucide="target" class="w-4 h-4 shrink-0 opacity-90"></i> Programmes
+        </button>
+        <button data-view="funding" onclick="showView('funding')" class="navlink flex items-center gap-2.5 px-2.5 py-2.5 rounded-lg text-[13.5px] font-semibold text-white/75 hover:bg-white/[0.06] hover:text-white transition text-left">
+          <i data-lucide="banknote" class="w-4 h-4 shrink-0 opacity-90"></i> Funding
+        </button>
+        <button data-view="cashflow" onclick="showView('cashflow')" class="navlink flex items-center gap-2.5 px-2.5 py-2.5 rounded-lg text-[13.5px] font-semibold text-white/75 hover:bg-white/[0.06] hover:text-white transition text-left">
+          <i data-lucide="wallet" class="w-4 h-4 shrink-0 opacity-90"></i> Cash Flow
+        </button>
+        <button data-view="documents" onclick="showView('documents')" class="navlink flex items-center gap-2.5 px-2.5 py-2.5 rounded-lg text-[13.5px] font-semibold text-white/75 hover:bg-white/[0.06] hover:text-white transition text-left">
+          <i data-lucide="folder-check" class="w-4 h-4 shrink-0 opacity-90"></i> Documents
+        </button>
+        <button data-view="resources" onclick="showView('resources')" class="navlink flex items-center gap-2.5 px-2.5 py-2.5 rounded-lg text-[13.5px] font-semibold text-white/75 hover:bg-white/[0.06] hover:text-white transition text-left">
+          <i data-lucide="book-open" class="w-4 h-4 shrink-0 opacity-90"></i> Resources
+        </button>
+      </div>
+    </nav>
+
+    <nav>
+      <p class="text-[10px] font-bold uppercase tracking-widest text-white/40 px-2.5 mb-2">Community</p>
+      <div class="flex flex-col gap-0.5">
+        <a href="member-hub.html" class="flex items-center gap-2.5 px-2.5 py-2.5 rounded-lg text-[13.5px] font-semibold text-white/75 hover:bg-white/[0.06] hover:text-white transition text-left">
+          <i data-lucide="users" class="w-4 h-4 shrink-0 opacity-90"></i> Community
+        </a>
+        <a href="member-account.html" class="flex items-center gap-2.5 px-2.5 py-2.5 rounded-lg text-[13.5px] font-semibold text-white/75 hover:bg-white/[0.06] hover:text-white transition text-left">
+          <i data-lucide="circle-user" class="w-4 h-4 shrink-0 opacity-90"></i> Account
+        </a>
+        <a href="public-help.html" class="flex items-center gap-2.5 px-2.5 py-2.5 rounded-lg text-[13.5px] font-semibold text-white/75 hover:bg-white/[0.06] hover:text-white transition text-left">
+          <i data-lucide="life-buoy" class="w-4 h-4 shrink-0 opacity-90"></i> Get Help
+        </a>
+      </div>
+    </nav>
+  </aside>
+
+  <!-- ===================== MAIN ===================== -->
+  <div class="flex-1 flex flex-col min-w-0">
+
+    <main class="py-7 sm:py-8 max-w-[1180px] w-full">
+
+      <!-- ============ VIEW: OVERVIEW ============ -->
+      <div class="view active" id="view-overview">
+        <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-5 mb-6">
+          <div>
+            <span class="inline-flex items-center gap-1.5 text-[11px] font-bold tracking-wide px-3 py-1.5 rounded-full bg-[#DC183C]/[0.09] text-[#DC183C] mb-3">
+              <i data-lucide="sparkles" class="w-3 h-3"></i> Sample Member View
+            </span>
+            <h1 class="font-jakarta font-extrabold text-[26px] sm:text-[28px] tracking-tight">Your business, at a glance</h1>
+            <p class="text-[14.5px] text-[#6A7581] leading-relaxed max-w-[60ch] mt-2">A clear view of what's going well, what needs attention, and where SME South Africa can help next.</p>
+          </div>
+          <button onclick="stubNav('Business Health Check')" class="shrink-0 inline-flex items-center gap-2 font-jakarta font-bold text-[13px] px-5 py-3 rounded-lg bg-[#0C1F31] text-white hover:bg-[#16324a] transition">
+            <i data-lucide="plus" class="w-4 h-4"></i> Start a check-in
+          </button>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-[1.15fr_1fr_1fr] gap-5 items-start">
+
+          <!-- Health score -->
+          <div class="rounded-2xl border border-[#E7EBEF] shadow-sm overflow-hidden hero-grad text-white reveal">
+            <div class="relative z-[1] p-6">
+              <div class="flex items-center justify-between">
+                <p class="text-[11px] font-bold uppercase tracking-widest text-white/55">Business Health Score</p>
+                <button onclick="openBrief('score')" class="dev-badge w-4 h-4 rounded-full bg-[#DC183C] text-white items-center justify-center text-[9px] font-bold leading-none animate-pulse" title="Implementation notes">i</button>
+              </div>
+              <p class="text-xs text-white/40 mt-0.5">Based on your latest check-in</p>
+              <div class="flex justify-center my-5">
+                <svg width="150" height="150" viewBox="0 0 150 150">
+                  <circle cx="75" cy="75" r="62" fill="none" stroke="rgba(255,255,255,.14)" stroke-width="14"/>
+                  <circle cx="75" cy="75" r="62" fill="none" stroke="#FF9900" stroke-width="14"
+                    stroke-dasharray="389.6" stroke-dashoffset="113" stroke-linecap="round" transform="rotate(-90 75 75)"/>
+                  <text x="75" y="80" text-anchor="middle" class="font-jakarta font-extrabold" style="font-size:42px;fill:#fff">71</text>
+                  <text x="75" y="98" text-anchor="middle" style="font-size:11px;fill:rgba(255,255,255,.5)">out of 100</text>
+                </svg>
+              </div>
+              <div class="flex justify-center mb-3">
+                <span class="inline-flex items-center gap-1.5 bg-[#29A37A]/[0.18] border border-[#29A37A]/30 text-[#7EE0BE] text-[11px] font-bold px-3 py-1.5 rounded-full">
+                  <i data-lucide="arrow-up" class="w-3 h-3"></i> 4 points since April
+                </span>
+              </div>
+              <p class="text-[13px] text-white/80 leading-relaxed text-center">You have a solid base. Focus on compliance and growth readiness next.</p>
+            </div>
+          </div>
+
+          <!-- Five dimensions -->
+          <div class="rounded-2xl border border-[#E7EBEF] shadow-sm p-6 bg-white reveal" style="animation-delay:80ms">
+            <div class="flex items-center justify-between mb-4">
+              <h3 class="font-jakarta font-extrabold text-sm flex items-center gap-1.5">Five Dimensions
+                <button onclick="openBrief('dimensions')" class="dev-badge w-4 h-4 rounded-full bg-[#DC183C] text-white items-center justify-center text-[9px] font-bold leading-none animate-pulse" title="Implementation notes">i</button>
+              </h3>
+              <button onclick="stubNav('Dimension breakdown')" class="text-xs font-bold text-[#DC183C] hover:underline">View breakdown →</button>
+            </div>
+            <div id="dims-list" class="space-y-3.5"></div>
+          </div>
+
+          <!-- Current focus -->
+          <div class="rounded-2xl border border-[#E7EBEF] shadow-sm bg-white reveal" style="animation-delay:160ms">
+            <div class="p-5">
+              <div class="w-10 h-10 rounded-[11px] bg-[#FFF1E0] grid place-items-center mb-3.5">
+                <i data-lucide="target" class="w-5 h-5 text-[#AE6B0A]"></i>
+              </div>
+              <p class="text-[11px] font-extrabold uppercase tracking-wide text-[#DC183C] mb-1">Current Focus</p>
+              <h3 class="font-jakarta font-extrabold text-[17px] mb-2">Get ready to grow</h3>
+              <p class="text-[13px] text-[#6A7581] leading-relaxed mb-4">Your next step is making sure the business can handle more customers without putting pressure on you.</p>
+              <div class="bg-[#F0F5F9] rounded-xl p-3.5">
+                <div class="flex justify-between text-[11.5px] mb-2"><span>Focus progress</span><b id="focus-count" class="text-[#DC183C]">2 of 6 complete</b></div>
+                <div class="h-1.5 bg-[#E7EBEF] rounded-full overflow-hidden mb-2.5"><div id="focus-fill" class="h-full accent-grad rounded-full" style="width:33%"></div></div>
+                <button onclick="showView('success-plan')" class="text-xs font-bold text-[#DC183C] inline-flex items-center gap-1 hover:underline">Open my success plan <i data-lucide="arrow-right" class="w-3 h-3"></i></button>
+              </div>
+              <div class="flex items-center gap-1.5 text-[11px] text-[#6A7581] mt-3.5">
+                <i data-lucide="history" class="w-3 h-3"></i> Suggested from your June check-in
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-[1.4fr_1fr] gap-5 mt-5">
+          <!-- Three things preview -->
+          <div class="rounded-2xl border border-[#E7EBEF] shadow-sm bg-white reveal" style="animation-delay:200ms">
+            <div class="flex items-center justify-between p-5 pb-0">
+              <div>
+                <p class="text-[11px] font-extrabold uppercase tracking-wide text-[#DC183C] mb-0.5">This Week</p>
+                <p class="font-jakarta font-extrabold text-lg">Three things worth doing</p>
+              </div>
+              <button onclick="showView('success-plan')" class="text-xs font-bold text-[#DC183C] hover:underline shrink-0">See my plan →</button>
+            </div>
+            <div id="overview-actions" class="mt-3"></div>
+          </div>
+
+          <!-- Compliance alerts -->
+          <div class="rounded-2xl border border-[#E7EBEF] shadow-sm bg-white reveal" style="animation-delay:240ms">
+            <div class="flex items-center justify-between p-5 pb-0">
+              <div>
+                <p class="text-[11px] font-extrabold uppercase tracking-wide text-[#DC183C] mb-0.5">Stay On Track</p>
+                <p class="font-jakarta font-extrabold text-lg flex items-center gap-1.5">Compliance alerts
+                  <button onclick="openBrief('alerts')" class="dev-badge w-4 h-4 rounded-full bg-[#DC183C] text-white items-center justify-center text-[9px] font-bold leading-none animate-pulse" title="Implementation notes">i</button>
+                </p>
+              </div>
+              <button onclick="showView('compliance')" class="text-xs font-bold text-[#DC183C] hover:underline shrink-0">View all →</button>
+            </div>
+            <div class="flex gap-3 p-5">
+              <div class="w-[34px] h-[34px] rounded-[9px] bg-[#FFF1E0] grid place-items-center shrink-0">
+                <i data-lucide="alert-triangle" class="w-[17px] h-[17px] text-[#AE6B0A]"></i>
+              </div>
+              <div class="min-w-0">
+                <p class="text-[13.5px] font-bold mb-0.5">CIPC annual return</p>
+                <p class="text-[12.5px] text-[#6A7581] leading-relaxed mb-2">Due 30 June 2026. Filing on time keeps your company in good standing.</p>
+                <button onclick="showView('compliance')" class="text-xs font-bold text-[#DC183C] hover:underline">Open checklist →</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-[1.4fr_1fr] gap-5 mt-5">
+          <!-- Weekly momentum -->
+          <div class="rounded-2xl border border-[#E7EBEF] shadow-sm bg-white p-5 reveal" style="animation-delay:280ms">
+            <div class="flex items-center justify-between mb-4">
+              <p class="font-jakarta font-extrabold text-lg flex items-center gap-1.5">This week's momentum
+                <button onclick="openBrief('momentum')" class="dev-badge w-4 h-4 rounded-full bg-[#DC183C] text-white items-center justify-center text-[9px] font-bold leading-none animate-pulse" title="Implementation notes">i</button>
+              </p>
+              <span class="inline-flex items-center gap-1 text-[11px] font-bold text-[#29A37A] bg-[#E4F5EE] px-2.5 py-1 rounded-full"><i data-lucide="trending-up" class="w-3 h-3"></i> +3 pts</span>
+            </div>
+            <div class="grid grid-cols-3 gap-3">
+              <div class="text-center">
+                <p class="font-jakarta font-extrabold text-2xl">2</p>
+                <p class="text-[11px] text-[#6A7581] mt-0.5">Actions done</p>
+              </div>
+              <div class="text-center border-x border-[#E7EBEF]">
+                <p class="font-jakarta font-extrabold text-2xl">1</p>
+                <p class="text-[11px] text-[#6A7581] mt-0.5">Risk resolved</p>
+              </div>
+              <div class="text-center">
+                <p class="font-jakarta font-extrabold text-2xl">9</p>
+                <p class="text-[11px] text-[#6A7581] mt-0.5">Pts to Excellent</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Achievements strip -->
+          <div class="rounded-2xl border border-[#E7EBEF] shadow-sm bg-white p-5 reveal" style="animation-delay:320ms">
+            <div class="flex items-center justify-between mb-3.5">
+              <p class="font-jakarta font-extrabold text-lg flex items-center gap-1.5">Achievements
+                <button onclick="openBrief('achievements')" class="dev-badge w-4 h-4 rounded-full bg-[#DC183C] text-white items-center justify-center text-[9px] font-bold leading-none animate-pulse" title="Implementation notes">i</button>
+              </p>
+              <span class="text-[11px] font-bold text-[#6A7581]">2 of 5</span>
+            </div>
+            <div class="flex items-center gap-2.5" id="achievements-strip"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============ VIEW: MY SUCCESS PLAN ============ -->
+      <div class="view" id="view-success-plan">
+        <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-5 mb-6">
+          <div>
+            <span class="inline-flex items-center gap-1.5 text-[11px] font-bold tracking-wide px-3 py-1.5 rounded-full bg-[#DC183C]/[0.09] text-[#DC183C] mb-3">
+              <i data-lucide="sparkles" class="w-3 h-3"></i> Built From Your Score
+            </span>
+            <h1 class="font-jakarta font-extrabold text-[26px] sm:text-[28px] tracking-tight flex items-center gap-2">My Success Plan
+              <button onclick="openBrief('successplan')" class="dev-badge w-5 h-5 rounded-full bg-[#DC183C] text-white items-center justify-center text-[10px] font-bold leading-none animate-pulse" title="Implementation notes">i</button>
+            </h1>
+            <p class="text-[14.5px] text-[#6A7581] leading-relaxed max-w-[62ch] mt-2">A short, ordered list built from your Business Health Score — the lowest-scoring dimensions surface first, so you always know what matters most right now.</p>
+          </div>
+          <button onclick="stubNav('New check-in')" class="shrink-0 inline-flex items-center gap-2 font-jakarta font-bold text-[13px] px-5 py-3 rounded-lg border-[1.5px] border-[#E7EBEF] hover:bg-[#F0F5F9] transition">
+            <i data-lucide="refresh-cw" class="w-4 h-4"></i> New check-in
+          </button>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-[1.4fr_1fr] gap-5 items-start">
+          <div class="space-y-5">
+            <!-- Progress summary -->
+            <div class="rounded-2xl border border-[#E7EBEF] shadow-sm bg-white p-5 reveal">
+              <div class="flex items-center justify-between text-[12.5px] mb-2.5">
+                <span class="font-semibold text-[#6A7581]">Plan progress</span>
+                <b id="sp-progress-label" class="text-[#DC183C]">2 of 6 complete</b>
+              </div>
+              <div class="h-2 bg-[#F0F5F9] rounded-full overflow-hidden">
+                <div id="sp-progress-fill" class="h-full accent-grad rounded-full transition-all duration-300" style="width:33%"></div>
+              </div>
+            </div>
+
+            <!-- This month -->
+            <div class="rounded-2xl border border-[#E7EBEF] shadow-sm bg-white overflow-hidden reveal" style="animation-delay:80ms">
+              <div class="px-5 py-4 border-b border-[#E7EBEF]">
+                <p class="font-jakarta font-extrabold text-sm">This month</p>
+              </div>
+              <div id="sp-list-active"></div>
+            </div>
+
+            <!-- When you have time -->
+            <div class="rounded-2xl border border-[#E7EBEF] shadow-sm bg-white overflow-hidden reveal" style="animation-delay:120ms">
+              <div class="px-5 py-4 border-b border-[#E7EBEF]">
+                <p class="font-jakarta font-extrabold text-sm">When you have time</p>
+              </div>
+              <div id="sp-list-later"></div>
+            </div>
+          </div>
+
+          <!-- Why this plan -->
+          <div class="rounded-2xl border border-[#E7EBEF] shadow-sm bg-white overflow-hidden reveal" style="animation-delay:100ms">
+            <div class="px-5 py-4 border-b border-[#E7EBEF]">
+              <p class="font-jakarta font-extrabold text-sm">Where this comes from</p>
+            </div>
+            <div class="p-5 space-y-4">
+              <p class="text-[13px] text-[#6A7581] leading-relaxed">Every action here traces back to one of your five dimension scores. The two lowest — <b class="text-[#121A21]">Growth readiness (49)</b> and <b class="text-[#121A21]">Compliance (54)</b> — drive most of this month's list.</p>
+              <div class="space-y-2.5">
+                <div class="flex items-center gap-2.5">
+                  <span class="w-2 h-2 rounded-full bg-[#DC183C] shrink-0"></span>
+                  <span class="text-[12.5px] font-semibold flex-1">Compliance</span>
+                  <span class="text-[11px] font-mono text-[#6A7581]">54</span>
+                </div>
+                <div class="flex items-center gap-2.5">
+                  <span class="w-2 h-2 rounded-full bg-[#FF9900] shrink-0"></span>
+                  <span class="text-[12.5px] font-semibold flex-1">Growth readiness</span>
+                  <span class="text-[11px] font-mono text-[#6A7581]">49</span>
+                </div>
+              </div>
+              <div class="border-t border-[#E7EBEF] pt-4">
+                <p class="text-[11px] text-[#6A7581] leading-relaxed flex items-start gap-1.5"><i data-lucide="info" class="w-3.5 h-3.5 shrink-0 mt-0.5"></i> Complete more of this plan and your next check-in score reflects it automatically — no separate form to fill in.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============ VIEW: PROGRAMMES ============ -->
+      <div class="view" id="view-programmes">
+        <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-5 mb-6">
+          <div>
+            <span class="inline-flex items-center gap-1.5 text-[11px] font-bold tracking-wide px-3 py-1.5 rounded-full bg-[#DC183C]/[0.09] text-[#DC183C] mb-3">
+              <i data-lucide="sparkles" class="w-3 h-3"></i> A Better Next Step
+            </span>
+            <h1 class="font-jakarta font-extrabold text-[26px] sm:text-[28px] tracking-tight">Find the right programme</h1>
+            <p class="text-[14.5px] text-[#6A7581] leading-relaxed max-w-[60ch] mt-2">Your business check-in points to a few places where the right people, tools and timing can make the next move lighter.</p>
+          </div>
+          <button onclick="stubNav('Retake match')" class="shrink-0 inline-flex items-center gap-2 font-jakarta font-bold text-[13px] px-5 py-3 rounded-lg border-[1.5px] border-[#E7EBEF] hover:bg-[#F0F5F9] transition">
+            <i data-lucide="refresh-cw" class="w-4 h-4"></i> Retake my match
+          </button>
+        </div>
+
+        <div class="rounded-[18px] overflow-hidden shadow-sm grid grid-cols-1 lg:grid-cols-[1.3fr_1fr]">
+          <div class="hero-grad text-white p-7 sm:p-8">
+            <div class="relative z-[1]">
+              <span class="inline-flex items-center gap-1.5 text-[10.5px] font-bold uppercase tracking-widest bg-white/10 border border-white/[0.16] text-white/80 px-3 py-1.5 rounded-full mb-5">
+                <i data-lucide="target" class="w-3 h-3"></i> Your Match Profile
+              </span>
+              <h2 class="font-jakarta font-extrabold text-[26px] leading-snug mb-3.5">Growth is the goal.<br><span class="accent-text-grad">Capacity is the unlock.</span></h2>
+              <p class="text-[13.5px] text-white/70 leading-relaxed max-w-[52ch] mb-5">You're ready to serve more customers, but your systems need to catch up. We matched you with programmes that make that work practical.</p>
+              <div class="flex flex-wrap gap-2">
+                <span class="text-[11.5px] font-semibold bg-white/[0.08] border border-white/[0.14] px-3.5 py-1.5 rounded-full">Growing team</span>
+                <span class="text-[11.5px] font-semibold bg-white/[0.08] border border-white/[0.14] px-3.5 py-1.5 rounded-full">Planning ahead</span>
+                <span class="text-[11.5px] font-semibold bg-white/[0.08] border border-white/[0.14] px-3.5 py-1.5 rounded-full">Service business</span>
+              </div>
+            </div>
+          </div>
+          <div class="accent-grad p-7 sm:p-8 flex items-end">
+            <div class="bg-white/[0.14] backdrop-blur-md border border-white/25 rounded-2xl p-5 w-full">
+              <div class="flex justify-between text-[10.5px] font-bold uppercase tracking-widest text-white/85 mb-2.5">
+                <span class="flex items-center gap-1.5">Match Strength
+                  <button onclick="openBrief('match')" class="dev-badge w-4 h-4 rounded-full bg-[#0C1F31] text-white items-center justify-center text-[9px] font-bold leading-none animate-pulse normal-case tracking-normal" title="Implementation notes">i</button>
+                </span>
+                <span>Today</span>
+              </div>
+              <p class="font-jakarta font-extrabold text-[44px] leading-none text-white">94<span class="text-base font-semibold opacity-75">/100</span></p>
+              <div class="h-1.5 bg-white/25 rounded-full my-3 overflow-hidden"><div class="h-full bg-white rounded-full" style="width:94%"></div></div>
+              <p class="text-xs text-white/85 leading-relaxed">Business Growth Clinic is your strongest fit right now.</p>
+            </div>
+          </div>
+        </div>
+        <div class="flex items-center justify-between px-7 sm:px-8 py-3.5 border border-t-0 border-[#E7EBEF] rounded-b-[18px] bg-white">
+          <div class="flex items-center gap-2 text-[12.5px] text-[#6A7581]">
+            <i data-lucide="check-circle" class="w-3.5 h-3.5 text-[#29A37A]"></i> Matched from your June check-in
+          </div>
+          <button onclick="stubNav('Match preferences')" class="text-xs font-bold text-[#AE6B0A] hover:underline">Change my preferences →</button>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-[1.4fr_1fr] gap-5 mt-6">
+          <div>
+            <div class="flex items-center justify-between mb-3.5">
+              <div>
+                <p class="text-[11px] font-extrabold uppercase tracking-wide text-[#DC183C] mb-0.5">Recommended For You</p>
+                <p class="font-jakarta font-extrabold text-lg">Start with this one</p>
+              </div>
+              <button onclick="stubNav('Full programme list')" class="text-xs font-bold text-[#DC183C] hover:underline shrink-0">See all programmes →</button>
+            </div>
+            <div class="rounded-2xl border border-[#E7EBEF] shadow-sm bg-white">
+              <div class="flex gap-4 p-5.5 p-5">
+                <div class="w-[52px] h-[52px] rounded-[13px] bg-[#DC183C]/[0.08] grid place-items-center shrink-0">
+                  <i data-lucide="clock-4" class="w-6 h-6 text-[#DC183C]"></i>
+                </div>
+                <div class="flex-1 min-w-0">
+                  <div class="flex items-center gap-2.5 flex-wrap mb-1">
+                    <p class="font-jakarta font-extrabold text-base">Business Growth Clinic</p>
+                    <span class="text-[10px] font-extrabold tracking-wide bg-[#29A37A]/[0.12] text-[#29A37A] px-2.5 py-0.5 rounded-full">BEST FIT</span>
+                  </div>
+                  <p class="text-xs text-[#6A7581] mb-2.5">SME South Africa · Featured</p>
+                  <p class="text-[13.5px] leading-relaxed">A practical 4-week sprint to turn your growth plans into a clear operating rhythm.</p>
+                </div>
+              </div>
+              <div class="px-5 pb-5">
+                <button id="save-programme-btn" onclick="toggleSaveProgramme()" class="inline-flex items-center gap-2 font-jakarta font-bold text-[13px] px-5 py-2.5 rounded-lg bg-[#0C1F31] text-white hover:bg-[#16324a] transition">
+                  <i data-lucide="bookmark" class="w-4 h-4"></i> <span>Save programme</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <div class="mb-3.5">
+              <p class="text-[11px] font-extrabold uppercase tracking-wide text-[#DC183C] mb-0.5">Your Readiness</p>
+              <p class="font-jakarta font-extrabold text-lg flex items-center gap-1.5">Why this match?
+                <button onclick="openBrief('why')" class="dev-badge w-4 h-4 rounded-full bg-[#DC183C] text-white items-center justify-center text-[9px] font-bold leading-none animate-pulse" title="Implementation notes">i</button>
+              </p>
+            </div>
+            <div class="rounded-2xl border border-[#E7EBEF] shadow-sm bg-white">
+              <div class="flex gap-3 p-4 border-b border-[#E7EBEF]">
+                <div class="w-8 h-8 rounded-[9px] bg-[#FFF1E0] grid place-items-center shrink-0"><i data-lucide="list-checks" class="w-4 h-4 text-[#AE6B0A]"></i></div>
+                <div>
+                  <p class="text-[13px] font-bold mb-0.5">You have a clear direction</p>
+                  <p class="text-xs text-[#6A7581] leading-relaxed">The programme fills the gap between your ambition and your current capacity.</p>
+                </div>
+              </div>
+              <div class="flex gap-3 p-4">
+                <div class="w-8 h-8 rounded-[9px] bg-[#FFF1E0] grid place-items-center shrink-0"><i data-lucide="trending-up" class="w-4 h-4 text-[#AE6B0A]"></i></div>
+                <div>
+                  <p class="text-[13px] font-bold mb-0.5">Growth readiness: strong signal</p>
+                  <p class="text-xs text-[#6A7581] leading-relaxed">Your latest check-in shows demand ahead of your current operating capacity.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============ VIEW: COMPLIANCE ============ -->
+      <div class="view" id="view-compliance">
+        <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-5 mb-6">
+          <div>
+            <span class="inline-flex items-center gap-1.5 text-[11px] font-bold tracking-wide px-3 py-1.5 rounded-full bg-[#DC183C]/[0.09] text-[#DC183C] mb-3">
+              <i data-lucide="sparkles" class="w-3 h-3"></i> Never Miss A Deadline
+            </span>
+            <h1 class="font-jakarta font-extrabold text-[26px] sm:text-[28px] tracking-tight flex items-center gap-2">Compliance
+              <button onclick="openBrief('compliance')" class="dev-badge w-5 h-5 rounded-full bg-[#DC183C] text-white items-center justify-center text-[10px] font-bold leading-none animate-pulse" title="Implementation notes">i</button>
+            </h1>
+            <p class="text-[14.5px] text-[#6A7581] leading-relaxed max-w-[62ch] mt-2">Every recurring deadline that keeps your business in good standing — SARS, CIPC and labour — in one list. Ticking an item off improves your Compliance score.</p>
+          </div>
+          <button onclick="stubNav('Mark as filed')" class="shrink-0 inline-flex items-center gap-2 font-jakarta font-bold text-[13px] px-5 py-3 rounded-lg border-[1.5px] border-[#E7EBEF] hover:bg-[#F0F5F9] transition">
+            <i data-lucide="calendar-plus" class="w-4 h-4"></i> Add a deadline
+          </button>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-[1.4fr_1fr] gap-5 items-start">
+          <div class="space-y-5">
+            <!-- Period progress -->
+            <div class="rounded-2xl border border-[#E7EBEF] shadow-sm bg-white p-5 reveal">
+              <div class="flex items-center justify-between text-[12.5px] mb-2.5">
+                <span class="font-semibold text-[#6A7581]">This period</span>
+                <b id="cp-progress-label" class="text-[#DC183C]">1 of 6 filed</b>
+              </div>
+              <div class="h-2 bg-[#F0F5F9] rounded-full overflow-hidden">
+                <div id="cp-progress-fill" class="h-full accent-grad rounded-full transition-all duration-300" style="width:17%"></div>
+              </div>
+            </div>
+
+            <!-- Deadline list / calendar -->
+            <div class="rounded-2xl border border-[#E7EBEF] shadow-sm bg-white overflow-hidden reveal" style="animation-delay:80ms">
+              <div class="flex items-center justify-between px-5 py-4 border-b border-[#E7EBEF]">
+                <p class="font-jakarta font-extrabold text-sm flex items-center gap-1.5">All deadlines
+                  <button onclick="openBrief('calendar')" class="dev-badge w-4 h-4 rounded-full bg-[#DC183C] text-white items-center justify-center text-[9px] font-bold leading-none animate-pulse" title="Implementation notes">i</button>
+                </p>
+                <div class="inline-flex items-center bg-[#F0F5F9] rounded-full p-0.5">
+                  <button id="cp-view-list-btn" onclick="setComplianceView('list')" class="px-3 py-1.5 rounded-full text-[11px] font-bold transition bg-white shadow-sm">List</button>
+                  <button id="cp-view-cal-btn" onclick="setComplianceView('calendar')" class="px-3 py-1.5 rounded-full text-[11px] font-bold transition">Calendar</button>
+                </div>
+              </div>
+              <div id="compliance-list"></div>
+              <div id="compliance-calendar" class="hidden p-5"></div>
+            </div>
+          </div>
+
+          <div class="space-y-5">
+            <!-- What the badges mean -->
+            <div class="rounded-2xl border border-[#E7EBEF] shadow-sm bg-white overflow-hidden reveal" style="animation-delay:100ms">
+              <div class="px-5 py-4 border-b border-[#E7EBEF]">
+                <p class="font-jakarta font-extrabold text-sm flex items-center gap-1.5">Status, explained
+                  <button onclick="openBrief('verification')" class="dev-badge w-4 h-4 rounded-full bg-[#DC183C] text-white items-center justify-center text-[9px] font-bold leading-none animate-pulse" title="Implementation notes">i</button>
+                </p>
+              </div>
+              <div class="p-5 space-y-4">
+                <div class="flex gap-3">
+                  <span class="text-[10px] font-bold px-2 py-1 rounded-full bg-[#F0F5F9] text-[#6A7581] shrink-0 h-fit">Member-declared</span>
+                  <p class="text-[12.5px] text-[#6A7581] leading-relaxed">You tick it off yourself. Good for keeping momentum, but not proof of filing.</p>
+                </div>
+                <div class="flex gap-3">
+                  <span class="inline-flex items-center gap-1 text-[10px] font-bold px-2 py-1 rounded-full bg-[#29A37A]/[0.12] text-[#29A37A] shrink-0 h-fit"><i data-lucide="badge-check" class="w-2.5 h-2.5"></i> Staff-verified</span>
+                  <p class="text-[12.5px] text-[#6A7581] leading-relaxed">An SME South Africa advisor confirmed this against your actual SARS/CIPC filing.</p>
+                </div>
+                <div class="border-t border-[#E7EBEF] pt-4">
+                  <p class="text-[11px] text-[#6A7581] leading-relaxed flex items-start gap-1.5"><i data-lucide="info" class="w-3.5 h-3.5 shrink-0 mt-0.5"></i> Only staff-verified items are excluded from your next compliance score if overdue — a member-declared tick alone doesn't change the score.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Evidence pack -->
+            <div class="rounded-2xl border border-[#E7EBEF] shadow-sm bg-white overflow-hidden reveal" style="animation-delay:140ms">
+              <div class="px-5 py-4 border-b border-[#E7EBEF]">
+                <p class="font-jakarta font-extrabold text-sm flex items-center gap-1.5">Compliance evidence pack
+                  <button onclick="openBrief('evidencepack')" class="dev-badge w-4 h-4 rounded-full bg-[#DC183C] text-white items-center justify-center text-[9px] font-bold leading-none animate-pulse" title="Implementation notes">i</button>
+                </p>
+              </div>
+              <div class="p-5">
+                <p class="text-[12.5px] text-[#6A7581] leading-relaxed mb-4">A single PDF bundling every filed, staff-verified item — grouped by authority (SARS, CIPC, Dept of Labour, Compensation Fund). Handy for funders and auditors who ask "prove it."</p>
+                <div class="space-y-2 mb-4">
+                  <div class="flex items-center justify-between text-[12px]"><span class="text-[#6A7581]">SARS</span><span class="font-bold">2 documents</span></div>
+                  <div class="flex items-center justify-between text-[12px]"><span class="text-[#6A7581]">CIPC</span><span class="font-bold">1 document</span></div>
+                  <div class="flex items-center justify-between text-[12px]"><span class="text-[#6A7581]">Dept of Labour</span><span class="font-bold">1 document</span></div>
+                </div>
+                <button onclick="stubNav('Generate compliance pack')" class="w-full inline-flex items-center justify-center gap-2 font-jakarta font-bold text-[13px] px-5 py-3 rounded-lg bg-[#0C1F31] text-white hover:bg-[#16324a] transition">
+                  <i data-lucide="file-down" class="w-4 h-4"></i> Generate PDF
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============ VIEW: FUNDING ============ -->
+      <div class="view" id="view-funding">
+        <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-5 mb-6">
+          <div>
+            <h1 class="font-jakarta font-extrabold text-[26px] sm:text-[28px] tracking-tight flex items-center gap-2">Funding
+              <button onclick="openBrief('funding')" class="dev-badge w-5 h-5 rounded-full bg-[#DC183C] text-white items-center justify-center text-[10px] font-bold leading-none animate-pulse" title="Implementation notes">i</button>
+            </h1>
+            <p class="text-[14.5px] text-[#6A7581] leading-relaxed max-w-[62ch] mt-2">Your funding applications, tracked from submission to decision — the same list you'll find under Account Settings while we decide where this lives long-term.</p>
+          </div>
+          <a href="member-account.html#funding" class="shrink-0 inline-flex items-center gap-2 font-jakarta font-bold text-[13px] px-5 py-3 rounded-lg bg-[#0C1F31] text-white hover:bg-[#16324a] transition">
+            <i data-lucide="plus" class="w-4 h-4"></i> New application
+          </a>
+        </div>
+
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-5">
+          <div class="rounded-2xl border border-[#E7EBEF] bg-white p-4 reveal">
+            <p class="text-[10px] font-bold uppercase tracking-widest text-[#6A7581]">Total</p>
+            <p class="font-jakarta font-extrabold text-2xl mt-1">3</p>
+          </div>
+          <div class="rounded-2xl border border-[#E7EBEF] bg-white p-4 reveal" style="animation-delay:40ms">
+            <p class="text-[10px] font-bold uppercase tracking-widest text-[#6A7581]">In review</p>
+            <p class="font-jakarta font-extrabold text-2xl mt-1 text-[#AE6B0A]">1</p>
+          </div>
+          <div class="rounded-2xl border border-[#E7EBEF] bg-white p-4 reveal" style="animation-delay:80ms">
+            <p class="text-[10px] font-bold uppercase tracking-widest text-[#6A7581]">Approved</p>
+            <p class="font-jakarta font-extrabold text-2xl mt-1 text-[#29A37A]">1</p>
+          </div>
+          <div class="rounded-2xl border border-[#E7EBEF] bg-white p-4 reveal" style="animation-delay:120ms">
+            <p class="text-[10px] font-bold uppercase tracking-widest text-[#6A7581]">Docs needed</p>
+            <p class="font-jakarta font-extrabold text-2xl mt-1 text-[#DC183C]">1</p>
+          </div>
+        </div>
+
+        <div class="rounded-2xl border border-[#E7EBEF] shadow-sm bg-white overflow-hidden reveal" style="animation-delay:80ms">
+          <div class="px-5 py-4 border-b border-[#E7EBEF]">
+            <p class="font-jakarta font-extrabold text-sm">Your applications</p>
+          </div>
+          <div id="funding-list"></div>
+        </div>
+      </div>
+
+      <!-- ============ VIEW: CASH FLOW ============ -->
+      <div class="view" id="view-cashflow">
+        <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-5 mb-6">
+          <div>
+            <span class="inline-flex items-center gap-1.5 text-[11px] font-bold tracking-wide px-3 py-1.5 rounded-full bg-[#DC183C]/[0.09] text-[#DC183C] mb-3">
+              <i data-lucide="sparkles" class="w-3 h-3"></i> New
+            </span>
+            <h1 class="font-jakarta font-extrabold text-[26px] sm:text-[28px] tracking-tight flex items-center gap-2">Cash Flow
+              <button onclick="openBrief('cashflow')" class="dev-badge w-5 h-5 rounded-full bg-[#DC183C] text-white items-center justify-center text-[10px] font-bold leading-none animate-pulse" title="Implementation notes">i</button>
+            </h1>
+            <p class="text-[14.5px] text-[#6A7581] leading-relaxed max-w-[62ch] mt-2">A simple money-in / money-out log — the missing piece behind your Cash Flow dimension score. No bank connection needed, just log it as it happens.</p>
+          </div>
+          <button onclick="stubNav('Log an entry')" class="shrink-0 inline-flex items-center gap-2 font-jakarta font-bold text-[13px] px-5 py-3 rounded-lg bg-[#0C1F31] text-white hover:bg-[#16324a] transition">
+            <i data-lucide="plus" class="w-4 h-4"></i> Log an entry
+          </button>
+        </div>
+
+        <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-5">
+          <div class="rounded-2xl border border-[#E7EBEF] bg-white p-4 reveal">
+            <p class="text-[10px] font-bold uppercase tracking-widest text-[#6A7581]">Money in (30d)</p>
+            <p class="font-jakarta font-extrabold text-2xl mt-1 text-[#29A37A]">R84 500</p>
+          </div>
+          <div class="rounded-2xl border border-[#E7EBEF] bg-white p-4 reveal" style="animation-delay:40ms">
+            <p class="text-[10px] font-bold uppercase tracking-widest text-[#6A7581]">Money out (30d)</p>
+            <p class="font-jakarta font-extrabold text-2xl mt-1 text-[#DC183C]">R61 200</p>
+          </div>
+          <div class="rounded-2xl border border-[#E7EBEF] bg-white p-4 reveal col-span-2 sm:col-span-1" style="animation-delay:80ms">
+            <p class="text-[10px] font-bold uppercase tracking-widest text-[#6A7581]">Net position</p>
+            <p class="font-jakarta font-extrabold text-2xl mt-1">R23 300</p>
+          </div>
+        </div>
+
+        <div class="rounded-2xl border border-[#E7EBEF] shadow-sm bg-white overflow-hidden reveal" style="animation-delay:80ms">
+          <div class="px-5 py-4 border-b border-[#E7EBEF] flex items-center justify-between">
+            <p class="font-jakarta font-extrabold text-sm">Recent entries</p>
+            <span class="text-[11px] text-[#6A7581]">Most recent first</span>
+          </div>
+          <div id="cashflow-list"></div>
+        </div>
+      </div>
+
+      <!-- ============ VIEW: DOCUMENTS ============ -->
+      <div class="view" id="view-documents">
+        <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-5 mb-6">
+          <div>
+            <span class="inline-flex items-center gap-1.5 text-[11px] font-bold tracking-wide px-3 py-1.5 rounded-full bg-[#DC183C]/[0.09] text-[#DC183C] mb-3">
+              <i data-lucide="sparkles" class="w-3 h-3"></i> New
+            </span>
+            <h1 class="font-jakarta font-extrabold text-[26px] sm:text-[28px] tracking-tight flex items-center gap-2">Documents
+              <button onclick="openBrief('documents')" class="dev-badge w-5 h-5 rounded-full bg-[#DC183C] text-white items-center justify-center text-[10px] font-bold leading-none animate-pulse" title="Implementation notes">i</button>
+            </h1>
+            <p class="text-[14.5px] text-[#6A7581] leading-relaxed max-w-[62ch] mt-2">Your compliance documents in one vault, with expiry tracked automatically — so an expired Tax Clearance Certificate never catches you off guard at a funding application.</p>
+          </div>
+          <button onclick="stubNav('Upload document')" class="shrink-0 inline-flex items-center gap-2 font-jakarta font-bold text-[13px] px-5 py-3 rounded-lg bg-[#0C1F31] text-white hover:bg-[#16324a] transition">
+            <i data-lucide="upload" class="w-4 h-4"></i> Upload document
+          </button>
+        </div>
+
+        <div class="rounded-2xl border border-[#E7EBEF] shadow-sm bg-white overflow-hidden reveal">
+          <div class="px-5 py-4 border-b border-[#E7EBEF] flex items-center justify-between">
+            <p class="font-jakarta font-extrabold text-sm">Your documents</p>
+            <span class="text-[11px] text-[#6A7581]">Expiry status</span>
+          </div>
+          <div id="documents-list"></div>
+        </div>
+      </div>
+
+      <!-- ============ VIEW: RESOURCES ============ -->
+      <div class="view" id="view-resources">
+        <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-5 mb-6">
+          <div>
+            <h1 class="font-jakarta font-extrabold text-[26px] sm:text-[28px] tracking-tight flex items-center gap-2">Resources
+              <button onclick="openBrief('resources')" class="dev-badge w-5 h-5 rounded-full bg-[#DC183C] text-white items-center justify-center text-[10px] font-bold leading-none animate-pulse" title="Implementation notes">i</button>
+            </h1>
+            <p class="text-[14.5px] text-[#6A7581] leading-relaxed max-w-[62ch] mt-2">eBooks, templates, guides and reports you've downloaded — the same library you'll find under Account Settings while we decide where this lives long-term.</p>
+          </div>
+          <a href="public-resources.html" class="shrink-0 inline-flex items-center gap-2 font-jakarta font-bold text-[13px] px-5 py-3 rounded-lg border-[1.5px] border-[#E7EBEF] hover:bg-[#F0F5F9] transition">
+            <i data-lucide="compass" class="w-4 h-4"></i> Browse full library
+          </a>
+        </div>
+
+        <div class="rounded-2xl border border-[#E7EBEF] shadow-sm bg-white overflow-hidden reveal">
+          <div class="px-5 py-4 border-b border-[#E7EBEF] flex items-center justify-between">
+            <p class="font-jakarta font-extrabold text-sm">Your downloads</p>
+            <span class="text-[11px] text-[#6A7581]">Most recent first</span>
+          </div>
+          <div id="resources-list"></div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<!-- Overlay root (Dev Mode briefs) -->
+<div id="overlay-root"></div>
+<!-- Toast container -->
+<div id="toast" class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-[100]"></div>
+
+<script>
+  // ===== HELPERS (shared pattern — see member-hub.html) ========================
+  function esc(s){ return String(s||'').replace(/[&<>"']/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c])); }
+  function monogram(initials, size=44){
+    const fs = Math.max(10, Math.floor(size * 0.38));
+    return `<div class="rounded-full accent-grad grid place-items-center font-jakarta font-bold text-white shrink-0" style="width:${size}px;height:${size}px;font-size:${fs}px">${esc(initials)}</div>`;
+  }
+  function showToast(msg, kind){
+    const el = document.getElementById('toast');
+    const color = '#29A37A';
+    el.classList.remove('hidden');
+    el.innerHTML = `<div class="toast-in bg-[#0C1F31] text-white rounded-full pl-3 pr-5 py-2.5 shadow-2xl flex items-center gap-2 text-sm font-semibold" style="border-left:4px solid ${color}">
+      <i data-lucide="check-circle" class="w-4 h-4" style="color:${color}"></i>
+      <span>${esc(msg)}</span>
+    </div>`;
+    lucide.createIcons();
+    setTimeout(()=>{
+      const inner = el.firstElementChild;
+      if(inner){ inner.classList.remove('toast-in'); inner.classList.add('toast-out'); }
+      setTimeout(()=>{ el.classList.add('hidden'); el.innerHTML=''; }, 250);
+    }, 2400);
+  }
+  function stubNav(label){
+    showToast(`${label} — not part of this concept round yet.`, null);
+  }
+
+  // ===== VIEW SWITCHING =========================================================
+  function showView(name){
+    document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+    document.querySelectorAll('.navlink').forEach(n => n.classList.remove('bg-[#DC183C]', 'text-white'));
+    const el = document.getElementById('view-' + name);
+    if (el) el.classList.add('active');
+    const link = document.querySelector('.navlink[data-view="' + name + '"]');
+    if (link) link.classList.add('bg-[#DC183C]', 'text-white');
+    window.scrollTo({ top: 0, behavior: 'instant' });
+    lucide.createIcons();
+  }
+
+  // ===== Header search (shared pattern — see member-account.html) ==============
+  function toggleHeaderSearch(){
+    const o = document.getElementById('headerSearchOverlay');
+    if(!o) return;
+    const open = o.classList.toggle('active');
+    const i = document.getElementById('headerSearchInput');
+    if(open){ if(i) setTimeout(()=>i.focus(), 100); } else if(i){ i.value=''; }
+  }
+
+  // ===== FIVE DIMENSIONS =========================================================
+  const DIMENSIONS = [
+    { name:'Cash flow',        score:72, color:'#DC183C', note:'Steady this month' },
+    { name:'Compliance',       score:54, color:'#FF9900', note:'One item to review' },
+    { name:'Customers',        score:68, color:'#29A37A', note:'Good repeat business' },
+    { name:'Operations',       score:61, color:'#0C1F31', note:'A little stretched' },
+    { name:'Growth readiness', score:49, color:'#FF9900', note:'Room to prepare' }
+  ];
+  function renderDimensions(){
+    document.getElementById('dims-list').innerHTML = DIMENSIONS.map(d => `
+      <div>
+        <div class="flex justify-between items-baseline mb-1.5">
+          <span class="text-[13.5px] font-bold">${esc(d.name)}</span>
+          <span class="font-mono text-[13px] font-semibold text-[#6A7581]">${d.score}</span>
+        </div>
+        <div class="h-[7px] bg-[#F0F5F9] rounded-full overflow-hidden">
+          <div class="h-full rounded-full" style="width:${d.score}%;background:${d.color}"></div>
+        </div>
+        <p class="text-[11.5px] text-[#6A7581] mt-1">${esc(d.note)}</p>
+      </div>`).join('');
+  }
+
+  // ===== SUCCESS PLAN (shared data — Overview preview + full Success Plan view) =
+  const successPlan = [
+    { id:1, title:'Review your monthly numbers', desc:'Check income, costs and what is due before month-end.', icon:'file-text', category:'Finance', color:'#DC183C', done:true,  time:null, group:'active' },
+    { id:2, title:'Confirm your tax filing dates', desc:'Save the dates that matter so there are no last-minute surprises.', icon:'calendar', category:'Compliance', color:'#AE6B0A', done:false, time:'12 min', group:'active' },
+    { id:3, title:"Update your beneficial ownership record", desc:"Keep CIPC's records current to avoid annual return issues.", icon:'users', category:'Compliance', color:'#AE6B0A', done:false, time:'8 min', group:'active' },
+    { id:4, title:'Set a weekly cash flow check-in', desc:'A 5-minute habit that catches shortfalls before they bite.', icon:'trending-up', category:'Finance', color:'#DC183C', done:true, time:null, group:'later' },
+    { id:5, title:'Document your customer onboarding steps', desc:'Write down what happens today so it survives you being away.', icon:'clipboard-list', category:'Operations', color:'#6A7581', done:false, time:'15 min', group:'later' },
+    { id:6, title:'Explore the Business Growth Clinic', desc:'Your growth-readiness score points here — see why it was matched.', icon:'rocket', category:'Growth', color:'#AE6B0A', done:false, time:'3 min', group:'later', linkTo:'programmes' }
+  ];
+
+  function toggleAction(id){
+    const item = successPlan.find(a => a.id === id);
+    if(!item) return;
+    item.done = !item.done;
+    renderSuccessPlan();
+    renderOverviewActions();
+    showToast(item.done ? 'Marked as done.' : 'Reopened.', null);
+  }
+
+  function actionRow(a, { compact } = {}){
+    const iconBg = a.done ? 'background:#E9F7F1' : `background:${a.color}1A`;
+    const iconColor = a.done ? '#29A37A' : a.color;
+    return `
+      <div class="flex items-start gap-3.5 px-5 py-4 border-b border-[#E7EBEF] last:border-b-0">
+        <button onclick="${compact ? '' : `toggleAction(${a.id})`}" ${compact ? 'disabled' : ''} class="w-6 h-6 rounded-full border-2 shrink-0 mt-0.5 grid place-items-center transition ${a.done ? 'bg-[#29A37A] border-[#29A37A]' : 'border-[#E7EBEF] hover:border-[#DC183C]'}" aria-label="${a.done ? 'Mark as not done' : 'Mark as done'}">
+          ${a.done ? '<i data-lucide="check" class="w-3.5 h-3.5 text-white"></i>' : ''}
+        </button>
+        <div class="w-[34px] h-[34px] rounded-[9px] grid place-items-center shrink-0" style="${iconBg}">
+          <i data-lucide="${a.icon}" class="w-4 h-4" style="color:${iconColor}"></i>
+        </div>
+        <div class="flex-1 min-w-0">
+          <p class="text-[13.5px] font-bold ${a.done ? 'line-through text-[#6A7581]' : ''}">${esc(a.title)}</p>
+          <p class="text-[12.5px] text-[#6A7581] mt-0.5">${esc(a.desc)}</p>
+        </div>
+        <div class="flex items-center gap-2 shrink-0">
+          ${a.done
+            ? `<span class="text-[11px] font-bold bg-[#E9F7F1] text-[#29A37A] px-2.5 py-1 rounded-full">Done</span>`
+            : `${a.time ? `<span class="text-[11px] font-bold bg-[#DC183C]/[0.09] text-[#DC183C] px-2.5 py-1 rounded-full">${esc(a.time)}</span>` : ''}
+               <button onclick="${a.linkTo ? `showView('${a.linkTo}')` : `toggleAction(${a.id})`}" class="text-[#6A7581] hover:text-[#DC183C] transition" aria-label="Open"><i data-lucide="arrow-right" class="w-4 h-4"></i></button>`
+          }
+        </div>
+      </div>`;
+  }
+
+  function renderOverviewActions(){
+    const top3 = successPlan.slice(0, 3);
+    document.getElementById('overview-actions').innerHTML = top3.map(a => actionRow(a, { compact:true })).join('');
+    lucide.createIcons();
+  }
+
+  function renderSuccessPlan(){
+    const active = successPlan.filter(a => a.group === 'active');
+    const later = successPlan.filter(a => a.group === 'later');
+    document.getElementById('sp-list-active').innerHTML = active.map(a => actionRow(a)).join('');
+    document.getElementById('sp-list-later').innerHTML = later.map(a => actionRow(a)).join('');
+
+    const done = successPlan.filter(a => a.done).length;
+    const total = successPlan.length;
+    const pct = Math.round((done / total) * 100);
+    document.getElementById('sp-progress-label').textContent = `${done} of ${total} complete`;
+    document.getElementById('sp-progress-fill').style.width = pct + '%';
+    document.getElementById('focus-count').textContent = `${done} of ${total} complete`;
+    document.getElementById('focus-fill').style.width = pct + '%';
+    lucide.createIcons();
+  }
+
+  // ===== COMPLIANCE =============================================================
+  const complianceItems = [
+    { id:1, title:'EMP201 — PAYE, UIF & SDL', desc:'Monthly employer declaration and payment to SARS.', dueLabel:'20 days overdue', status:'overdue', verified:true,  filed:false, day:7 },
+    { id:2, title:'UIF UI-19 monthly declaration', desc:'Employee earnings declaration to the Department of Labour.', dueLabel:'20 days overdue', status:'overdue', verified:true,  filed:false, day:7 },
+    { id:3, title:'Provisional tax (IRP6)', desc:'Second provisional payment for the current tax year.', dueLabel:'Due in 4 days', status:'soon', verified:false, filed:false, day:15 },
+    { id:4, title:'CIPC annual return', desc:'Filing on time keeps your company in good standing.', dueLabel:'Due 30 June 2026', status:'upcoming', verified:false, filed:false, day:30 },
+    { id:5, title:'B-BBEE affidavit renewal', desc:'Annual sworn statement for exempt micro-enterprise status.', dueLabel:'Due 12 August 2026', status:'upcoming', verified:false, filed:true },
+    { id:6, title:'COIDA return of earnings', desc:'Annual return to the Compensation Fund.', dueLabel:'Due 30 April 2026', status:'upcoming', verified:true,  filed:true }
+  ];
+  const COMPLIANCE_STATUS = {
+    overdue:  { label:'Overdue',  chip:'bg-[#DC183C]/[0.09] text-[#DC183C]' },
+    soon:     { label:'Due soon', chip:'bg-[#FFF1E0] text-[#AE6B0A]' },
+    upcoming: { label:'Upcoming', chip:'bg-[#F0F5F9] text-[#6A7581]' }
+  };
+  function toggleFiled(id){
+    const item = complianceItems.find(c => c.id === id);
+    if(!item) return;
+    item.filed = !item.filed;
+    renderCompliance();
+    showToast(item.filed ? 'Marked as filed.' : 'Reopened.', null);
+  }
+  function complianceRow(c){
+    const st = COMPLIANCE_STATUS[c.status];
+    const iconBg = c.filed ? 'background:#E9F7F1' : (c.status === 'overdue' ? 'background:#DC183C1A' : 'background:#FFF1E0');
+    const iconColor = c.filed ? '#29A37A' : (c.status === 'overdue' ? '#DC183C' : '#AE6B0A');
+    const icon = c.filed ? 'check' : (c.status === 'overdue' ? 'alert-triangle' : 'calendar');
+    return `
+      <div class="flex items-start gap-3.5 px-5 py-4 border-b border-[#E7EBEF] last:border-b-0">
+        <div class="w-[34px] h-[34px] rounded-[9px] grid place-items-center shrink-0" style="${iconBg}">
+          <i data-lucide="${icon}" class="w-4 h-4" style="color:${iconColor}"></i>
+        </div>
+        <div class="flex-1 min-w-0">
+          <div class="flex items-center gap-2 flex-wrap mb-0.5">
+            <p class="text-[13.5px] font-bold ${c.filed ? 'line-through text-[#6A7581]' : ''}">${esc(c.title)}</p>
+            ${c.verified
+              ? `<span class="inline-flex items-center gap-1 text-[9.5px] font-bold px-2 py-0.5 rounded-full bg-[#29A37A]/[0.12] text-[#29A37A] shrink-0"><i data-lucide="badge-check" class="w-2.5 h-2.5"></i> Staff-verified</span>`
+              : `<span class="text-[9.5px] font-bold px-2 py-0.5 rounded-full bg-[#F0F5F9] text-[#6A7581] shrink-0">Member-declared</span>`}
+          </div>
+          <p class="text-[12.5px] text-[#6A7581] mt-0.5">${esc(c.desc)}</p>
+        </div>
+        <div class="flex flex-col items-end gap-2 shrink-0">
+          ${c.filed
+            ? `<span class="text-[11px] font-bold bg-[#E9F7F1] text-[#29A37A] px-2.5 py-1 rounded-full">Filed</span>`
+            : `<span class="text-[11px] font-bold px-2.5 py-1 rounded-full ${st.chip}">${esc(c.dueLabel)}</span>`}
+          <button onclick="toggleFiled(${c.id})" class="text-[11px] font-bold text-[#DC183C] hover:underline">${c.filed ? 'Reopen' : 'Mark as filed'}</button>
+        </div>
+      </div>`;
+  }
+  function renderCompliance(){
+    const sorted = [...complianceItems].sort((a,b) => {
+      const order = { overdue:0, soon:1, upcoming:2 };
+      if(a.filed !== b.filed) return a.filed ? 1 : -1;
+      return order[a.status] - order[b.status];
+    });
+    document.getElementById('compliance-list').innerHTML = sorted.map(complianceRow).join('');
+    const filed = complianceItems.filter(c => c.filed).length;
+    const total = complianceItems.length;
+    const pct = Math.round((filed / total) * 100);
+    document.getElementById('cp-progress-label').textContent = `${filed} of ${total} filed`;
+    document.getElementById('cp-progress-fill').style.width = pct + '%';
+    lucide.createIcons();
+  }
+
+  // ===== COMPLIANCE: List / Calendar toggle ======================================
+  let complianceView = 'list';
+  function setComplianceView(mode){
+    complianceView = mode;
+    document.getElementById('compliance-list').classList.toggle('hidden', mode !== 'list');
+    document.getElementById('compliance-calendar').classList.toggle('hidden', mode !== 'calendar');
+    document.getElementById('cp-view-list-btn').classList.toggle('bg-white', mode === 'list');
+    document.getElementById('cp-view-list-btn').classList.toggle('shadow-sm', mode === 'list');
+    document.getElementById('cp-view-cal-btn').classList.toggle('bg-white', mode === 'calendar');
+    document.getElementById('cp-view-cal-btn').classList.toggle('shadow-sm', mode === 'calendar');
+    if(mode === 'calendar') renderComplianceCalendar();
+  }
+  function renderComplianceCalendar(){
+    const byDay = {};
+    complianceItems.forEach(c => { if(c.day) (byDay[c.day] = byDay[c.day] || []).push(c); });
+    const JUNE_2026_LEAD_BLANKS = 0; // 1 June 2026 renders as the grid's first cell for this mockup
+    const DAYS_IN_MONTH = 30;
+    let cells = '';
+    for(let i = 0; i < JUNE_2026_LEAD_BLANKS; i++) cells += `<div></div>`;
+    for(let d = 1; d <= DAYS_IN_MONTH; d++){
+      const items = byDay[d] || [];
+      const worst = items.some(c=>c.status==='overdue') ? 'overdue' : items.some(c=>c.status==='soon') ? 'soon' : items.length ? 'upcoming' : null;
+      const dotColor = worst === 'overdue' ? '#DC183C' : worst === 'soon' ? '#AE6B0A' : worst === 'upcoming' ? '#6A7581' : null;
+      cells += `
+        <div class="aspect-square rounded-lg border ${items.length ? 'border-[#E7EBEF]' : 'border-transparent'} flex flex-col items-center justify-center gap-0.5 ${items.length ? 'bg-[#FCFCFC]' : ''}">
+          <span class="text-[11px] font-semibold ${items.length ? 'text-[#121A21]' : 'text-[#C4CBD3]'}">${d}</span>
+          ${dotColor ? `<span class="w-1.5 h-1.5 rounded-full" style="background:${dotColor}" title="${items.map(c=>esc(c.title)).join(', ')}"></span>` : ''}
+        </div>`;
+    }
+    const dow = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'].map(d=>`<div class="text-center text-[9.5px] font-bold uppercase tracking-widest text-[#6A7581] pb-1.5">${d}</div>`).join('');
+    document.getElementById('compliance-calendar').innerHTML = `
+      <div class="flex items-center justify-between mb-3">
+        <p class="font-jakarta font-extrabold text-sm">June 2026</p>
+        <div class="flex items-center gap-3 text-[10.5px] text-[#6A7581]">
+          <span class="flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-[#DC183C]"></span> Overdue</span>
+          <span class="flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-[#AE6B0A]"></span> Due soon</span>
+          <span class="flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-[#6A7581]"></span> Upcoming</span>
+        </div>
+      </div>
+      <div class="grid grid-cols-7 gap-1.5">${dow}${cells}</div>`;
+  }
+
+  // ===== FUNDING (mirrors member-account.html's Settings → Funding, for now) ====
+  const FUNDING_STATUS = {
+    review:   { label:'In review',           color:'#AE6B0A', bg:'#FFF1E0' },
+    docs:     { label:'Documents requested',  color:'#DC183C', bg:'#FDECEF' },
+    approved: { label:'Approved',            color:'#29A37A', bg:'#E4F5EE' }
+  };
+  const fundingApps = [
+    { id:'APP-2026-0481', product:'Asset Finance',        icon:'truck',                amount:'R1 200 000', status:'docs',     updated:'2 days ago' },
+    { id:'APP-2026-0512', product:'Working Capital Loan',  icon:'wallet',               amount:'R350 000',   status:'review',   updated:'5 days ago' },
+    { id:'APP-2026-0397', product:'Invoice Finance',       icon:'file-text',            amount:'R210 000',   status:'approved', updated:'3 weeks ago' }
+  ];
+  function fundingRow(a){
+    const st = FUNDING_STATUS[a.status];
+    return `
+      <div class="flex items-center gap-3.5 px-5 py-4 border-b border-[#E7EBEF] last:border-b-0">
+        <div class="w-[38px] h-[38px] rounded-[10px] grid place-items-center shrink-0" style="background:${st.bg}">
+          <i data-lucide="${a.icon}" class="w-[18px] h-[18px]" style="color:${st.color}"></i>
+        </div>
+        <div class="flex-1 min-w-0">
+          <p class="text-[13.5px] font-bold">${esc(a.product)}</p>
+          <p class="text-[12px] text-[#6A7581] mt-0.5">${esc(a.id)} · Updated ${esc(a.updated)}</p>
+        </div>
+        <div class="flex flex-col items-end gap-1.5 shrink-0">
+          <span class="text-[13px] font-mono font-semibold">${esc(a.amount)}</span>
+          <span class="text-[10.5px] font-bold px-2 py-0.5 rounded-full" style="background:${st.bg};color:${st.color}">${st.label}</span>
+        </div>
+      </div>`;
+  }
+  function renderFunding(){
+    document.getElementById('funding-list').innerHTML = fundingApps.map(fundingRow).join('');
+    lucide.createIcons();
+  }
+
+  // ===== RESOURCES (mirrors member-account.html's Settings → Downloads, for now) =
+  const RESOURCE_TYPE_META = {
+    ebook:    { label:'eBook',    color:'#DC183C', bg:'#FDECEF' },
+    template: { label:'Template', color:'#3B82F6', bg:'#E5EFFB' },
+    guide:    { label:'Guide',    color:'#AE6B0A', bg:'#FFF1E0' }
+  };
+  const savedResources = [
+    { title:'One-Page Business Plan Template', type:'template', date:'14 Jun 2026', format:'DOCX', icon:'file-text' },
+    { title:'Pitching to Funders That Say Yes', type:'guide',    date:'11 Jun 2026', format:'PDF',  icon:'clipboard-list' },
+    { title:'Cash Flow Forecast (12 Months)',   type:'template', date:'2 Jun 2026',  format:'XLSX', icon:'file-text' },
+    { title:'Your Guide to AI Prompting',       type:'ebook',    date:'18 Jun 2026', format:'PDF',  icon:'book-open' }
+  ];
+  function resourceRow(r){
+    const m = RESOURCE_TYPE_META[r.type];
+    return `
+      <div class="flex items-center gap-3.5 px-5 py-4 border-b border-[#E7EBEF] last:border-b-0">
+        <div class="w-[38px] h-[38px] rounded-[10px] grid place-items-center shrink-0" style="background:${m.bg}">
+          <i data-lucide="${r.icon}" class="w-[18px] h-[18px]" style="color:${m.color}"></i>
+        </div>
+        <div class="flex-1 min-w-0">
+          <p class="text-[13.5px] font-bold truncate">${esc(r.title)}</p>
+          <div class="flex items-center gap-2 mt-0.5">
+            <span class="text-[10px] font-bold px-2 py-0.5 rounded-full" style="background:${m.bg};color:${m.color}">${m.label}</span>
+            <span class="text-[12px] text-[#6A7581]">Downloaded ${esc(r.date)} · ${esc(r.format)}</span>
+          </div>
+        </div>
+        <button onclick="stubNav('Re-download')" class="text-xs font-bold text-[#DC183C] hover:underline shrink-0">Download again</button>
+      </div>`;
+  }
+  function renderResources(){
+    document.getElementById('resources-list').innerHTML = savedResources.map(resourceRow).join('');
+    lucide.createIcons();
+  }
+
+  // ===== CASH FLOW (new — closes the gap on the scored Cash flow dimension) ======
+  const cashflowEntries = [
+    { desc:'Client invoice — Khumalo Retail',   type:'in',  amount:'R32 000', date:'9 Jun 2026',  icon:'arrow-down-circle', color:'#29A37A' },
+    { desc:'Supplier payment — packaging',      type:'out', amount:'R8 400',  date:'8 Jun 2026',  icon:'arrow-up-circle',   color:'#DC183C' },
+    { desc:'Client invoice — Ndlovu Projects',   type:'in',  amount:'R52 500', date:'5 Jun 2026',  icon:'arrow-down-circle', color:'#29A37A' },
+    { desc:'Payroll',                            type:'out', amount:'R41 200', date:'1 Jun 2026',  icon:'arrow-up-circle',   color:'#DC183C' },
+    { desc:'Rent',                               type:'out', amount:'R11 600', date:'1 Jun 2026',  icon:'arrow-up-circle',   color:'#DC183C' }
+  ];
+  function cashflowRow(e){
+    return `
+      <div class="flex items-center gap-3.5 px-5 py-4 border-b border-[#E7EBEF] last:border-b-0">
+        <div class="w-[34px] h-[34px] rounded-[9px] grid place-items-center shrink-0" style="background:${e.color}1A">
+          <i data-lucide="${e.icon}" class="w-[18px] h-[18px]" style="color:${e.color}"></i>
+        </div>
+        <div class="flex-1 min-w-0">
+          <p class="text-[13.5px] font-bold">${esc(e.desc)}</p>
+          <p class="text-[12px] text-[#6A7581] mt-0.5">${esc(e.date)}</p>
+        </div>
+        <span class="text-[13px] font-mono font-semibold shrink-0" style="color:${e.color}">${e.type === 'in' ? '+' : '−'} ${esc(e.amount)}</span>
+      </div>`;
+  }
+  function renderCashflow(){
+    document.getElementById('cashflow-list').innerHTML = cashflowEntries.map(cashflowRow).join('');
+    lucide.createIcons();
+  }
+
+  // ===== DOCUMENTS / VAULT (new — expiry-tracked compliance document library) ===
+  const DOC_EXPIRY_META = {
+    expired: { label:'Expired',      color:'#DC183C', bg:'#FDECEF' },
+    soon:    { label:'Due soon',     color:'#AE6B0A', bg:'#FFF1E0' },
+    valid:   { label:'Valid',        color:'#29A37A', bg:'#E4F5EE' }
+  };
+  const vaultDocs = [
+    { title:'Tax Clearance Certificate', authority:'SARS',              issued:'14 Jan 2026', expires:'14 Jan 2026', status:'expired', icon:'file-text' },
+    { title:'B-BBEE Affidavit',          authority:'CIPC',               issued:'12 Aug 2025', expires:'12 Aug 2026', status:'soon',    icon:'file-text' },
+    { title:'VAT Registration',          authority:'SARS',               issued:'3 Mar 2024',  expires:'—',           status:'valid',   icon:'file-text' },
+    { title:'COIDA Letter of Good Standing', authority:'Compensation Fund', issued:'30 Apr 2026', expires:'30 Apr 2027', status:'valid', icon:'file-text' },
+    { title:'CIPC Company Registration', authority:'CIPC',               issued:'19 Feb 2019', expires:'—',           status:'valid',   icon:'file-text' }
+  ];
+  function docRow(d){
+    const m = DOC_EXPIRY_META[d.status];
+    return `
+      <div class="flex items-center gap-3.5 px-5 py-4 border-b border-[#E7EBEF] last:border-b-0">
+        <div class="w-[34px] h-[34px] rounded-[9px] grid place-items-center shrink-0" style="background:${m.bg}">
+          <i data-lucide="${d.icon}" class="w-4 h-4" style="color:${m.color}"></i>
+        </div>
+        <div class="flex-1 min-w-0">
+          <p class="text-[13.5px] font-bold">${esc(d.title)}</p>
+          <p class="text-[12px] text-[#6A7581] mt-0.5">${esc(d.authority)} · Issued ${esc(d.issued)}${d.expires !== '—' ? ' · Expires ' + esc(d.expires) : ''}</p>
+        </div>
+        <span class="text-[10.5px] font-bold px-2.5 py-1 rounded-full shrink-0" style="background:${m.bg};color:${m.color}">${m.label}</span>
+      </div>`;
+  }
+  function renderDocuments(){
+    document.getElementById('documents-list').innerHTML = vaultDocs.map(docRow).join('');
+    lucide.createIcons();
+  }
+
+  // ===== ACHIEVEMENTS (professional, restrained — no confetti) ===================
+  const ACHIEVEMENTS = [
+    { icon:'shield-check',  label:'First compliance item filed', earned:true },
+    { icon:'trending-up',   label:'Score improved 3 checks running', earned:true },
+    { icon:'wallet',        label:'4 weeks of cash flow logged', earned:false },
+    { icon:'banknote',      label:'Funding-ready badge', earned:false },
+    { icon:'list-checks',   label:'Success plan completed', earned:false }
+  ];
+  function renderAchievements(){
+    document.getElementById('achievements-strip').innerHTML = ACHIEVEMENTS.map(a => `
+      <div class="w-10 h-10 rounded-full grid place-items-center shrink-0" style="background:${a.earned ? '#FDECEF' : '#F0F5F9'}" title="${esc(a.label)}${a.earned ? '' : ' (locked)'}">
+        <i data-lucide="${a.icon}" class="w-[18px] h-[18px]" style="color:${a.earned ? '#DC183C' : '#C4CBD3'}"></i>
+      </div>`).join('');
+    lucide.createIcons();
+  }
+
+  // ===== PROGRAMMES: save toggle =================================================
+  let programmeSaved = false;
+  function toggleSaveProgramme(){
+    programmeSaved = !programmeSaved;
+    const btn = document.getElementById('save-programme-btn');
+    btn.innerHTML = programmeSaved
+      ? `<i data-lucide="bookmark-check" class="w-4 h-4"></i> <span>Saved</span>`
+      : `<i data-lucide="bookmark" class="w-4 h-4"></i> <span>Save programme</span>`;
+    btn.classList.toggle('bg-[#29A37A]', programmeSaved);
+    btn.classList.toggle('hover:bg-[#238a66]', programmeSaved);
+    btn.classList.toggle('bg-[#0C1F31]', !programmeSaved);
+    btn.classList.toggle('hover:bg-[#16324a]', !programmeSaved);
+    lucide.createIcons();
+    showToast(programmeSaved ? 'Saved to your programmes.' : 'Removed from your programmes.', null);
+  }
+
+  // ===== DEV MODE + IMPLEMENTATION BRIEFS ========================================
+  const BRIEFS = {
+    score: {
+      title:'Business Health Score', sub:'Deterministic 5-dimension composite',
+      purpose:'The member-facing headline of SME Success Core — a single number members can watch move over time. It exists to make the value of a check-in legible in 3 seconds, and to anchor everything else in this module (Success Plan, compliance alerts, programme matches) as things that came <i>from</i> this score rather than generic content.',
+      data:'<code>business_health_checks</code>: one row per completed check-in — <code>{ member_id, submitted_at, dimension_scores: {cash_flow, compliance, customers, operations, growth_readiness}, composite_score, delta_from_previous }</code>. Composite is a deterministic weighted average of the five dimensions, not an LLM output — same inputs must always produce the same score.',
+      logic:'Score and delta are read directly off the member\'s latest <code>business_health_checks</code> row — no live computation on page load. A new check-in inserts a new row; the delta badge compares to the immediately prior row for the same member.',
+      components:'SVG ring (stroke-dasharray) · delta badge · one-line coaching note (templated off which dimension is lowest).',
+      specs:'Ring: 150&times;150 viewBox, 62px radius, 14px stroke, <code>#FF9900</code> progress on <code>rgba(255,255,255,.14)</code> track. Card surface: <code>hero-grad</code> (Navy <code>#0C1F31</code> → dark red blend), decorative only — never used for body text per brand rule.'
+    },
+    dimensions: {
+      title:'Five Dimensions', sub:'The scoring taxonomy every other surface reads from',
+      purpose:'Breaks the composite score into the five areas a member can actually act on. This is the taxonomy the whole module is built around — Success Plan items, compliance alerts and programme matches all tag themselves against one of these five.',
+      data:'Fixed enum: <code>cash_flow | compliance | customers | operations | growth_readiness</code>. Each dimension score is 0–100, computed from a fixed question set in the Business Health Check (not shown in this mockup round).',
+      logic:'Rendered in fixed order, always all five even at 0. Colour is decorative (rotates through brand palette), not a semantic status colour — do not read bar colour as "good/bad", only the number and note do that.',
+      components:'Label + numeric value (font-mono) · progress track · one-line note.',
+      specs:'Track 7px, <code>#F0F5F9</code> background, full rounded. Note text 11.5px <code>#6A7581</code>.'
+    },
+    alerts: {
+      title:'Compliance Alerts', sub:'Deadline surfacing on the Overview',
+      purpose:'Compliance is the dimension members are most likely to under-invest in because nothing forces attention until it is overdue. This card exists to put the single nearest deadline in front of the member every time they land on Overview, before they have to go looking for it in a dedicated Compliance Centre.',
+      data:'<code>compliance_items</code>: <code>{ member_id, item_type (e.g. cipc_annual_return), due_date, status: member_declared|staff_verified|overdue, notes }</code>. Overview shows only the single nearest upcoming item; the full list lives in the (not-yet-built) Compliance Centre.',
+      logic:'Query = nearest <code>compliance_items</code> row by <code>due_date</code> where status != resolved. "Open checklist" is a stub in this round — it will route into the Compliance Centre once built.',
+      components:'Icon chip · title · description · text link.'
+    },
+    successplan: {
+      title:'My Success Plan', sub:'The personalised action list — richest surface in this module',
+      purpose:'This is where the 5-dimension score becomes something a member can actually do something about today. It is deliberately short (never the whole backlog at once) and explicitly ordered by which dimensions scored lowest, so the connection between "your score" and "your plan" is never left implicit.',
+      data:'<code>success_plan_actions</code>: <code>{ member_id, title, description, dimension, category, estimated_minutes, status: pending|done, priority_rank, source_check_id, linked_programme_id? }</code>. <code>priority_rank</code> is derived server-side from dimension scores at check-in time, not user-reorderable in v1.',
+      logic:'"This month" = top-priority pending + any already completed this cycle (kept visible, struck through, for a sense of momentum). "When you have time" = lower-priority remaining items. Checking an item off updates <code>status</code> and recomputes the progress bar — in this mockup, toggling is purely client-side state with no persistence. One action (Growth Clinic) deep-links to Programmes via <code>linked_programme_id</code>, demonstrating the score → plan → programme funnel end to end.',
+      components:'Progress summary bar · grouped action lists (reused row component, shared with Overview\'s 3-item preview) · "Where this comes from" explainer panel tying back to the two lowest dimension scores.',
+      specs:'Progress bar and action-item accent colour both use the shared <code>accent-grad</code> (Red → Orange), matching the monogram avatar gradient used platform-wide, so this module reads as part of the same system as Member Hub.'
+    },
+    match: {
+      title:'Match Strength', sub:'Programme matching score',
+      purpose:'Gives members a confidence number for why a specific programme is being pushed to the top of their list, so a recommendation never feels arbitrary.',
+      data:'<code>programme_matches</code>: <code>{ member_id, programme_id, match_score (0-100), computed_at, reasons: string[] }</code>. Recomputed whenever a new check-in is submitted or the programme catalogue changes.',
+      logic:'Match score is a weighted function of dimension scores against a programme\'s target-dimension profile (e.g. Growth Clinic weights heavily on growth_readiness + operations). "Retake my match" in this round is a stub — real behaviour is: re-run matching against the member\'s current scores without requiring a full new check-in.',
+      components:'Score card (glass panel over accent gradient) · progress track · one-line note naming the top match.'
+    },
+    why: {
+      title:'Why This Match?', sub:'Match reasoning panel',
+      purpose:'Match scores alone invite "why should I trust this number" — this panel answers that in plain language, sourced from the same <code>reasons</code> array that produced the score, so the explanation can never drift from the number.',
+      data:'Reads <code>programme_matches.reasons[]</code> for the top-matched programme — each reason is a short templated string keyed to a dimension.',
+      logic:'Static in this mockup (two reasons hardcoded); in the real build this list length varies with how many reasons cross the significance threshold.',
+      components:'Icon chip + title + one-line explanation, repeated per reason.'
+    },
+    compliance: {
+      title:'Compliance', sub:'Full deadline list — SARS, CIPC, labour',
+      purpose:'The dedicated home for every recurring compliance obligation, promoted from the Overview\'s single-item teaser once a member wants the full picture. Built to answer one question fast: "what do I owe and when" — sorted so overdue items are never buried below upcoming ones.',
+      data:'<code>compliance_items</code>: <code>{ member_id, item_type (emp201|uif_ui19|irp6|cipc_annual_return|bbbee_affidavit|coida), due_date, recurrence, status: member_declared|staff_verified, filed_at?, notes }</code>. <code>item_type</code> drives the title/description copy from a fixed lookup table, not free text — keeps every member\'s list consistent and translatable later.',
+      logic:'Rows sort: unfiled items first (overdue → due soon → upcoming, by <code>due_date</code>), filed items last. "Mark as filed" is optimistic client-side state in this mockup only — the real build requires either staff verification or a member e-signature/attestation step before <code>status</code> can flip, per the no-paywall compliance-trust model. Period progress = filed count / total items due this recurrence cycle.',
+      components:'Period progress bar (reused pattern from Success Plan) · sortable deadline list (reused row shape, compliance-specific status chip) · "Status, explained" legend panel.',
+      specs:'Status chip colours: Overdue = red <code>#DC183C</code> on 9% tint, Due soon = orange text <code>#AE6B0A</code> on <code>#FFF1E0</code>, Upcoming = muted <code>#6A7581</code> on <code>#F0F5F9</code> — matches the traffic-light convention used for dimension scores elsewhere in this module.'
+    },
+    verification: {
+      title:'Verification Status', sub:'Member-declared vs. staff-verified',
+      purpose:'Distinguishes a member ticking their own box from SME South Africa staff actually confirming a filing happened. This matters for trust: a member-declared tick is a self-report (fine for keeping the member motivated) but should never silently count as proof for anything downstream (e.g. a funder eligibility check) without staff verification.',
+      data:'Adds one field to <code>compliance_items</code>: <code>status: member_declared | staff_verified</code>, plus <code>verified_by</code> (staff user id) and <code>verified_at</code> when staff-verified. Set by an internal-only tool, not member-facing.',
+      logic:'Overdue + staff-verified items are the only ones excluded from a member\'s next Compliance dimension score once resolved — a member-declared tick alone nudges the UI (strikethrough, "Filed" pill) but does not move the score, to avoid the incentive to self-report falsely.',
+      components:'Two-row legend (chip + explanation) reused verbatim as the small badge shown inline on every compliance list row.'
+    },
+    funding: {
+      title:'Funding', sub:'Duplicated view — same data as Account Settings → Funding',
+      purpose:'Deliberately duplicated, not migrated: while we decide whether funding tracking permanently lives inside this workspace or stays under Account Settings, both surfaces read from the same underlying data so a member sees identical status wherever they look. This mockup shows a compact list view only — the real Account Settings screen already has the fuller 3-screen system (list / new-application / detail) which this would either reuse or link out to once the location question is settled.',
+      data:'Same <code>funding_applications</code> table Account Settings reads: <code>{ id, member_id, product, amount, term, status: draft|submitted|review|docs|approved|declined|funded, submitted_at, updated_at }</code>. No separate table — this is one data source shown in two places.',
+      logic:'"New application" and per-row detail links are stubs in this round. Once the placement decision is made, whichever surface is NOT primary becomes a shallow link into the other, rather than keeping two independently-maintained UIs.',
+      components:'4-stat strip (Total / In review / Approved / Docs needed) · compact application list (reused row shape, no expand/detail in this view).'
+    },
+    resources: {
+      title:'Resources', sub:'Duplicated view — same data as Account Settings → Downloads',
+      purpose:'Same reasoning as Funding: a member\'s downloaded-resources library shown here too, sourced from the same list as Account Settings, so nothing goes out of sync while the two-surface question is still open. "Browse full library" routes to the public catalogue (<code>public-resources.html</code>), not a duplicate catalogue browser.',
+      data:'Same <code>member_downloads</code> table Account Settings\' Downloads section reads: <code>{ member_id, resource_id, title, type: ebook|template|guide|report, downloaded_at, format }</code>.',
+      logic:'Read-only list in this round — filtering/search/sort (present in the full Account Settings version) is intentionally left out here to keep this a lightweight preview, not a second full implementation to maintain.',
+      components:'Row list (icon chip · title · type badge · date/format · re-download action), reused row shape from Compliance/Funding.'
+    },
+    momentum: {
+      title:'Weekly Momentum', sub:'Adapted from SME IQ\'s WeeklyMomentum widget',
+      purpose:'Makes the score feel alive between check-ins instead of a static number that only moves once a month. Ported concept from SME IQ — cheap to build, high perceived value: a member sees their own activity translating into progress in near-real-time.',
+      data:'Rolling 7-day window over the same event log that drives the score: <code>{ actions_completed, compliance_items_resolved, points_delta }</code>, plus a static <code>points_to_next_tier</code> lookup off the current composite score.',
+      logic:'Purely a read/aggregate view — no new write path. "+3 pts" recomputes from the same delta already shown on the Business Health Score card; this widget just re-frames it as a weekly summary rather than a since-last-check-in one.',
+      components:'Header with trend badge · 3-stat row (Actions done / Risk resolved / Points to next tier).'
+    },
+    achievements: {
+      title:'Achievements', sub:'Adapted from SME IQ\'s Achievements page — kept deliberately restrained',
+      purpose:'Adds light gamification to reward consistent use without undermining the platform\'s B2B credibility — SME IQ\'s own design note was "no confetti, no cartoon badges," which this follows: plain icon chips, muted when locked, no animation or celebratory copy.',
+      data:'<code>achievements</code>: <code>{ member_id, achievement_key, earned_at | null }</code> against a fixed catalogue of achievement definitions (icon, label, unlock condition tied to a score-dimension or action-completion event).',
+      logic:'Unlock conditions are simple thresholds (e.g. "resolve 1 compliance item," "log cash flow 4 weeks running") evaluated after the relevant action — no new scoring logic, this reads existing events.',
+      components:'Compact icon-chip row in this mockup (Overview); a full grid view (locked vs. earned states) exists in SME IQ\'s original if this grows into its own page.'
+    },
+    calendar: {
+      title:'Compliance Calendar', sub:'Adapted from SME IQ\'s AssistComplianceCalendar',
+      purpose:'A month-grid view of deadlines reads as materially more capable than a flat list, and lets a member spot clustering (e.g. two payroll deadlines landing the same week) at a glance — exactly the kind of "painkiller" polish SME IQ built around compliance being its retained value driver.',
+      data:'Same <code>compliance_items</code> source as the List view, keyed by <code>due_date</code> (day-of-month) instead of sorted status — no new data model, just a different projection of the same rows.',
+      logic:'List/Calendar is a client-side view toggle only, both read the same <code>complianceItems</code> array. Calendar shows one dot per day using the worst status present that day (overdue &gt; due soon &gt; upcoming); hovering a dot lists the item title(s) via native tooltip in this mockup — a real build would use a proper popover.',
+      components:'Segmented List/Calendar toggle · 7-column month grid with status-coloured dots · legend.'
+    },
+    evidencepack: {
+      title:'Compliance Evidence Pack', sub:'Adapted from SME IQ\'s AssistComplianceEvidence',
+      purpose:'Turns "I\'m compliant" into a handoff-ready artifact — a funder, auditor, or tender assessor can be given one PDF instead of being pointed at a dashboard they can\'t access. Directly serves the Funding section too: this is the kind of proof a lender application often asks for.',
+      data:'Generated from <code>compliance_items</code> where <code>status = staff_verified</code> and <code>filed = true</code>, grouped by <code>authority</code> (SARS / CIPC / Dept of Labour / Compensation Fund), each with its linked evidence document from the Documents vault.',
+      logic:'"Generate PDF" is a stub in this round. Real version: server-rendered PDF listing verified items per authority with filing dates and linked document references; likely reuses whatever renderer produces the "Evidence PDF" export already named on the Compliance page pattern.',
+      components:'Per-authority document-count summary · primary "Generate PDF" action.'
+    },
+    cashflow: {
+      title:'Cash Flow', sub:'New — adapted from SME IQ\'s AssistMoney',
+      purpose:'We score a "Cash flow" dimension on Overview but, until now, had no member-facing input that actually feeds it — this closes that gap with the simplest possible mechanism: a manual money-in/money-out log, no bank integration required (a real barrier for many informal SA SMEs).',
+      data:'<code>cashflow_entries</code>: <code>{ member_id, description, type: in|out, amount, entry_date }</code>. The 30-day summary cards and Cash Flow dimension score are both aggregates over this table.',
+      logic:'"Log an entry" is a stub in this round. Real version: a short form (description, amount, in/out, date) appending to <code>cashflow_entries</code>; the Cash Flow dimension score recomputes from the trailing-30-day net position and entry frequency at the next check-in.',
+      components:'3-stat summary (Money in / Money out / Net position) · reused row-list pattern for recent entries.'
+    },
+    documents: {
+      title:'Documents', sub:'New — adapted from SME IQ\'s AssistComplianceVault',
+      purpose:'A lapsed Tax Clearance Certificate or B-BBEE Affidavit is a classic, entirely avoidable reason an SME gets stuck at the funding-application stage. This vault surfaces expiry automatically instead of requiring the member to remember renewal dates themselves.',
+      data:'<code>member_documents</code>: <code>{ member_id, title, authority, issued_at, expires_at | null, file_ref }</code>. Status (<code>expired | soon | valid</code>) is computed, not stored — derived from <code>expires_at</code> vs. today at render time (e.g. "soon" = within 60 days).',
+      logic:'"Upload document" is a stub in this round. Real version: file upload + metadata form; expiry status recomputes on every page load rather than via a scheduled job, so it\'s always accurate without needing reminders infrastructure for the status badge itself (reminders are a separate, later concern).',
+      components:'Row list (icon chip · title/authority/issued-expires · expiry status pill), reused row shape from Compliance/Funding/Cash Flow.'
+    }
+  };
+
+  function toggleDevMode(){
+    const on = document.body.classList.toggle('dev-on');
+    const btn = document.getElementById('devToggle');
+    if(btn) btn.classList.toggle('on', on);
+    if(on) showToast('Dev Mode on — tap any ⓘ for implementation notes.', null);
+    lucide.createIcons();
+  }
+
+  function closeOverlay(id){
+    const el = document.getElementById(id);
+    if(!el) return;
+    el.classList.remove('open');
+    setTimeout(()=>{ if(el && el.parentNode) el.remove(); }, 300);
+  }
+
+  function openBrief(id){
+    const b = BRIEFS[id];
+    if(!b) return;
+    const sec = (icon,label,html) => `
+      <div class="px-6 py-4 border-t border-slate-100">
+        <p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] flex items-center gap-1.5 mb-2"><i data-lucide="${icon}" class="w-3.5 h-3.5"></i>${label}</p>
+        <div class="text-sm text-slate-600 leading-relaxed">${html}</div>
+      </div>`;
+    document.getElementById('overlay-root').innerHTML = `
+      <div class="ov" id="ov-brief">
+        <div class="ov-bg" onclick="closeOverlay('ov-brief')"></div>
+        <div class="drawer">
+          <div class="sticky top-0 z-10 bg-[#0C1F31] text-white px-6 py-5 flex items-start justify-between">
+            <div class="min-w-0">
+              <p class="text-[10px] font-bold uppercase tracking-widest text-[#FF9900] mb-1">Dev Brief</p>
+              <h3 class="font-jakarta font-extrabold text-lg leading-tight">${b.title}</h3>
+              <p class="text-xs text-white/60 mt-1">${b.sub}</p>
+            </div>
+            <button onclick="closeOverlay('ov-brief')" aria-label="Close" class="text-white/60 hover:text-white shrink-0 ml-3"><i data-lucide="x" class="w-5 h-5"></i></button>
+          </div>
+          ${sec('target','Purpose', b.purpose)}
+          ${sec('database','Data model', b.data)}
+          ${sec('git-branch','Logic', b.logic)}
+          ${b.specs ? sec('ruler','Spec values', b.specs) : ''}
+          ${sec('boxes','Components', b.components)}
+          <div class="px-6 py-4 border-t border-slate-100">
+            <p class="text-[11px] text-slate-400 flex items-center gap-1.5"><i data-lucide="info" class="w-3.5 h-3.5"></i> Spec lives beside the feature — toggle Dev Mode off for the clean stakeholder view.</p>
+          </div>
+        </div>
+      </div>`;
+    requestAnimationFrame(()=>{ const o=document.getElementById('ov-brief'); if(o) o.classList.add('open'); });
+    lucide.createIcons();
+  }
+
+  // ===== INIT =====================================================================
+  document.addEventListener('keydown', (e)=>{
+    if(e.key === 'Escape'){
+      document.querySelectorAll('.ov.open').forEach(o => closeOverlay(o.id));
+      const so = document.getElementById('headerSearchOverlay');
+      if(so && so.classList.contains('active')) toggleHeaderSearch();
+    }
+  });
+
+  showView('overview');
+  renderDimensions();
+  renderOverviewActions();
+  renderSuccessPlan();
+  renderCompliance();
+  renderFunding();
+  renderResources();
+  renderCashflow();
+  renderDocuments();
+  renderAchievements();
+  lucide.createIcons();
+</script>
+
+</body>
+</html>

@@ -1487,6 +1487,12 @@ function showToast(msg, kind){
 /* ===================== INIT ===================== */
 document.addEventListener('keydown', e=>{ if(e.key==='Escape') document.querySelectorAll('.ov.open').forEach(o=>closeOverlay(o.id)); });
 
+/* Deep-link support: #funding, #profile, etc. — lets other pages (e.g. the member workspace) land straight on a settings tab */
+(function(){
+  var hashId = (location.hash || '').replace('#','');
+  if(hashId && SETTINGS_NAV.some(function(s){ return s.id === hashId; })) state.settingsTab = hashId;
+})();
+
 renderSettingsNav();
 renderSettingsContent();
 lucide.createIcons();
