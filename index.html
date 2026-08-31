@@ -71,9 +71,8 @@
           <span class="text-[9px] font-bold uppercase tracking-widest text-white/70">Launch countdown</span>
         </div>
         <div class="mt-1 flex items-baseline gap-1.5">
-          <span id="launchDays" class="font-jakarta font-extrabold text-xl leading-none text-white">–</span>
-          <span class="text-[10px] font-semibold text-white/60" id="launchUnit">days</span>
-          <span class="ml-auto text-[9px] text-white/45 font-mono" id="launchDate">1 Sep 2026</span>
+          <span id="launchDays" class="font-jakarta font-extrabold text-xl leading-none text-white">TBC</span>
+          <span class="text-[10px] font-semibold text-white/60" id="launchUnit">launch date to be confirmed</span>
         </div>
       </div>
       <button id="devPill" type="button" onclick="scrollToDev()" class="hidden w-full items-center gap-2 text-[10px] text-white/55 bg-[#3B82F6]/10 border border-[#3B82F6]/25 hover:bg-[#3B82F6]/15 rounded-lg px-3 py-2 transition text-left">
@@ -623,24 +622,7 @@
   // Init — restore from hash (dev lane bypasses gate), else first finalised.
   try{ if(window.MOCKUP_STATUS_PUBLISHED){ document.getElementById('lastPub').textContent = 'Updated '+new Date(window.MOCKUP_STATUS_PUBLISHED).toLocaleDateString('en-ZA',{day:'numeric',month:'short',year:'numeric'}); } }catch(e){}
 
-  // Launch countdown — target 2026-09-01 (Africa/Johannesburg / SAST).
-  (function initLaunchCountdown(){
-    try{
-      const target = new Date(2026, 8, 1, 0, 0, 0); // month is 0-indexed (8 = Sep)
-      const now = new Date();
-      const startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-      const msPerDay = 86400000;
-      const days = Math.round((target - startOfToday) / msPerDay);
-      const daysEl = document.getElementById('launchDays');
-      const unitEl = document.getElementById('launchUnit');
-      const wrap   = document.getElementById('launchCountdown');
-      if(!daysEl || !unitEl || !wrap) return;
-      if(days > 1)      { daysEl.textContent = days;  unitEl.textContent = 'days to launch'; }
-      else if(days===1) { daysEl.textContent = '1';   unitEl.textContent = 'day — tomorrow'; }
-      else if(days===0) { daysEl.textContent = '🚀';  unitEl.textContent = 'launching today'; wrap.classList.add('ring-2','ring-[#FF9900]/50'); }
-      else              { daysEl.textContent = '✓';   unitEl.textContent = `launched · ${Math.abs(days)}d ago`; }
-    }catch(e){}
-  })();
+  // Launch date not yet confirmed — countdown intentionally static ("TBC") until a real date is set.
   (function initLoad(){
     const hash = location.hash.slice(1);
     // hash + finalised → normal load
