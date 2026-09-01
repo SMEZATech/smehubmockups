@@ -72,7 +72,7 @@ window.MOCKUP_STATUS = {
   "public-search.html": "finalised",
   "public-404.html": "finalised"
 };
-window.MOCKUP_STATUS_PUBLISHED = "2026-08-27T12:19:15.962Z";
+window.MOCKUP_STATUS_PUBLISHED = "2026-09-01T09:55:21.857Z";
 /* Developer builds (staging) — { mockup file: { url, status } }; status: "pending-review" | "reviewed" | "approved" */
 window.MOCKUP_DEV = {
   "public-home.html": {"url":"https://smesastg.wpengine.com/","status":"reviewed"},
@@ -114,6 +114,7 @@ window.MOCKUP_DEV = {
   "public-glossary-term.html": {"url":"https://smesastg.wpengine.com/glossary/administrative-law/","status":"reviewed"},
   "newsletter.html": {"url":"https://smesastg.wpengine.com/newsletters/","status":"reviewed"},
   "newsletter-issue.html": {"url":"https://smesastg.wpengine.com/newsletters/back-from-the-long-weekend-heres-what-you-missed/","status":"reviewed"},
+  "podcast.html": {"url":"https://smesastg.wpengine.com/podcast/","status":"pending-review"},
   "public-help.html": {"url":"https://smesastg.wpengine.com/help/","status":"reviewed"},
   "public-help-category.html": {"url":"https://smesastg.wpengine.com/help-category/getting-started/","status":"reviewed"},
   "public-help-article.html": {"url":"https://smesastg.wpengine.com/help/how-to-change-email-or-password/","status":"reviewed"},
