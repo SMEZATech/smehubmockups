@@ -64,17 +64,6 @@
         <i data-lucide="eye" class="w-3.5 h-3.5 text-[#29A37A]"></i>
         <span>Completed Mockups — <span id="liveCount" class="text-white/70 font-semibold">…</span></span>
       </div>
-      <!-- LAUNCH COUNTDOWN -->
-      <div id="launchCountdown" class="rounded-lg px-3 py-2.5 bg-gradient-to-br from-[#DC183C]/15 to-[#FF9900]/10 border border-[#DC183C]/30">
-        <div class="flex items-center gap-1.5">
-          <i data-lucide="rocket" class="w-3.5 h-3.5 text-[#FF9900]"></i>
-          <span class="text-[9px] font-bold uppercase tracking-widest text-white/70">Launch countdown</span>
-        </div>
-        <div class="mt-1 flex items-baseline gap-1.5">
-          <span id="launchDays" class="font-jakarta font-extrabold text-xl leading-none text-white">TBC</span>
-          <span class="text-[10px] font-semibold text-white/60" id="launchUnit">launch date to be confirmed</span>
-        </div>
-      </div>
       <button id="devPill" type="button" onclick="scrollToDev()" class="hidden w-full items-center gap-2 text-[10px] text-white/55 bg-[#3B82F6]/10 border border-[#3B82F6]/25 hover:bg-[#3B82F6]/15 rounded-lg px-3 py-2 transition text-left">
         <i data-lucide="code-2" class="w-3.5 h-3.5 text-[#3B82F6]"></i>
         <span>Dev builds — <span id="devCount" class="text-white/80 font-semibold">0 of 0</span></span>
@@ -622,7 +611,6 @@
   // Init — restore from hash (dev lane bypasses gate), else first finalised.
   try{ if(window.MOCKUP_STATUS_PUBLISHED){ document.getElementById('lastPub').textContent = 'Updated '+new Date(window.MOCKUP_STATUS_PUBLISHED).toLocaleDateString('en-ZA',{day:'numeric',month:'short',year:'numeric'}); } }catch(e){}
 
-  // Launch date not yet confirmed — countdown intentionally static ("TBC") until a real date is set.
   (function initLoad(){
     const hash = location.hash.slice(1);
     // hash + finalised → normal load
