@@ -72,7 +72,7 @@ window.MOCKUP_STATUS = {
   "public-search.html": "finalised",
   "public-404.html": "finalised"
 };
-window.MOCKUP_STATUS_PUBLISHED = "2026-09-01T09:55:21.857Z";
+window.MOCKUP_STATUS_PUBLISHED = "2026-09-08T07:11:45.133Z";
 /* Developer builds (staging) — { mockup file: { url, status } }; status: "pending-review" | "reviewed" | "approved" */
 window.MOCKUP_DEV = {
   "public-home.html": {"url":"https://smesastg.wpengine.com/","status":"reviewed"},
@@ -96,7 +96,9 @@ window.MOCKUP_DEV = {
   "public-brand.html": {"url":"https://smesastg.wpengine.com/brands/partnerstack/","status":"reviewed"},
   "public-guides.html": {"url":"https://smesastg.wpengine.com/sme-resources/guides/","status":"reviewed"},
   "public-guide.html": {"url":"https://smesastg.wpengine.com/sme-resource/test-guide/","status":"reviewed"},
-  "public-shop.html": {"url":"https://smesouthafrica.co.za/shop/","status":""},
+  "public-shop.html": {"url":"https://smesastg.wpengine.com/shop/","status":""},
+  "public-product.html": {"url":"https://smesastg.wpengine.com/product/founders-edition-white-t-shirt/","status":""},
+  "public-checkout.html": {"url":"https://smesastg.wpengine.com/checkout/","status":""},
   "public-about.html": {"url":"https://smesastg.wpengine.com/about/","status":"reviewed"},
   "public-contact.html": {"url":"https://smesastg.wpengine.com/contact-us/","status":"reviewed"},
   "public-advertise.html": {"url":"https://smesastg.wpengine.com/advertise-with-us/","status":"reviewed"},
