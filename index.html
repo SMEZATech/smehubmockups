@@ -270,7 +270,6 @@
       { label:'Advertising Disclosure', file:'public-advertising-disclosure.html', icon:'info' },
       { label:'Sustainability',         file:'public-sustainability.html',         icon:'leaf' },
       { label:'Author page',            file:'public-author.html',                 icon:'feather' },
-      { label:'Pricing / Plans',        file:'public-pricing.html',                icon:'crown' },
       { label:'Login / Sign up',        file:'public-auth.html',                   icon:'log-in' }
     ]},
     { group:'Articles', tag:'Editorial', accent:'#DC183C', icon:'newspaper', items:[
@@ -503,11 +502,27 @@
       return bHas - aHas; // newly-finalised groups first
     });
 
+    const noteCounts = Feedback.countSharedByFile();
+
+    function navItemButton(it, sec){
+      return `<button onclick="load('${it.file}','${esc(sec.group)}','${esc(it.label)}','${sec.accent}')" data-file="${it.file}" class="nav-item w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-semibold text-white/80 hover:bg-white/5 hover:text-white transition text-left">
+                  <i data-lucide="${it.icon}" class="w-4 h-4 shrink-0"></i><span class="truncate">${it.label}</span>
+                  ${DEV[it.file]?`<span class="ml-auto shrink-0 inline-flex items-center gap-1 text-[8px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded-full" style="background:${(DEVMETA[DEV[it.file].status]||{c:'#6A7581'}).c}26;color:${(DEVMETA[DEV[it.file].status]||{c:'#6A7581'}).c}"><i data-lucide="code-2" class="w-2.5 h-2.5"></i> Dev</span>`:`<span class="ml-auto shrink-0 inline-flex items-center gap-1 text-[8px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded-full bg-white/10 text-white/50"><i data-lucide="circle-dashed" class="w-2.5 h-2.5"></i> No dev</span>`}
+                </button>`;
+    }
+
     sortedNav.forEach(sec=>{
       const finalisedItems = sec.items.filter(it=>isLive(it.file));
       const pendingItems   = sec.items.filter(it=>!isLive(it.file));
       const open = getSecState(sec.group, sec.group === currentSection);
       // Note: default-collapsed unless this section holds the current file.
+
+      // Priority within a section's completed items: 1) has open review notes,
+      // 2) no dev build started yet (easy to lose track of), 3) actually done —
+      // built and note-free — demoted under "Completed development".
+      const withNotes   = finalisedItems.filter(it => noteCounts[it.file]);
+      const noDevYet     = finalisedItems.filter(it => !noteCounts[it.file] && !DEV[it.file]);
+      const doneNoNotes = finalisedItems.filter(it => !noteCounts[it.file] && DEV[it.file]);
 
       const finalisedCount = finalisedItems.length;
       const pendingCount   = pendingItems.length;
@@ -523,10 +538,10 @@
         <div class="px-2 pb-2 pt-0.5">
           <p class="px-3 pb-1.5 text-[9px] uppercase tracking-wider text-white/30 font-semibold">${countLabel}</p>
           <div class="space-y-0.5">
-            ${finalisedItems.map(it=>`<button onclick="load('${it.file}','${esc(sec.group)}','${esc(it.label)}','${sec.accent}')" data-file="${it.file}" class="nav-item w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-semibold text-white/80 hover:bg-white/5 hover:text-white transition text-left">
-                  <i data-lucide="${it.icon}" class="w-4 h-4 shrink-0"></i><span class="truncate">${it.label}</span>
-                  ${DEV[it.file]?`<span class="ml-auto shrink-0 inline-flex items-center gap-1 text-[8px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded-full" style="background:${(DEVMETA[DEV[it.file].status]||{c:'#6A7581'}).c}26;color:${(DEVMETA[DEV[it.file].status]||{c:'#6A7581'}).c}"><i data-lucide="code-2" class="w-2.5 h-2.5"></i> Dev</span>`:`<span class="ni-dot ml-auto w-1.5 h-1.5 rounded-full bg-[#29A37A] opacity-0"></span>`}
-                </button>`).join('')}
+            ${withNotes.map(it=>navItemButton(it, sec)).join('')}
+            ${noDevYet.map(it=>navItemButton(it, sec)).join('')}
+            ${doneNoNotes.length ? `<p class="px-3 pt-2.5 pb-1 text-[8.5px] uppercase tracking-wider text-white/25 font-bold">Completed development</p>` : ''}
+            ${doneNoNotes.map(it=>navItemButton(it, sec)).join('')}
             ${pendingItems.map(it=>`<div title="Coming soon — not yet completed" class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-semibold text-white/25 cursor-not-allowed select-none">
                   <i data-lucide="${it.icon}" class="w-4 h-4 shrink-0"></i><span class="truncate">${it.label}</span>
                   <span class="ml-auto text-[8px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded-full bg-white/5 text-white/30 flex items-center gap-1 shrink-0"><i data-lucide="lock" class="w-2.5 h-2.5"></i> Soon</span>
