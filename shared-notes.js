@@ -8,6 +8,60 @@
  * Shape: { [file]: { [sectionId]: { label, text, author, ts, pending? } } }
  */
 window.SHARED_NOTES = {
+  "event-single-in-person.html": {
+    "first-section": {
+      "label": "First Section",
+      "author": "Tshepho",
+      "ts": "2026-09-08",
+      "text": "- The page is missing the countdown design\n- The Select ickets and Add to calendar CTAs are not responsive\n- The Subtext detail should not share with the About the Event..Currently the default content body is used for both."
+    },
+    "mobile": {
+      "label": "Mobile",
+      "author": "Tshepho",
+      "ts": "2026-09-08",
+      "text": "- Hide Quick facts Design from mobile\n- Move the Social media Share design below the YT video"
+    }
+  },
+
+  "event-single-online.html": {
+    "error": {
+      "label": "Error",
+      "author": "Tshepho",
+      "ts": "2026-09-08",
+      "text": "- Please check this page for logged in users, is showing WordPress Critical Error but viewing it as a visitor shows well."
+    },
+    "related-events": {
+      "label": "Related Events",
+      "author": "Tshepho",
+      "ts": "2026-09-08",
+      "text": "- Please update the title to be Related events as per mockup and not Presentation."
+    }
+  },
+
+  "event-speaker.html": {
+    "url-name": {
+      "label": "URL name",
+      "author": "Tshepho",
+      "ts": "2026-09-08",
+      "text": "- Please replace that organizers name from the slug to speakers..example would be from /organizers/zibusiso-mkhwanazi/ to /speakers/zibusiso-mkhwanazi/"
+    },
+    "icons-missing": {
+      "label": "Icons Missing",
+      "author": "Tshepho",
+      "ts": "2026-09-08",
+      "text": "- We are missing the Social Media Sharing options from the speaker profile."
+    }
+  },
+
+  "events.html": {
+    "events-listing-grid": {
+      "label": "Events Listing Grid",
+      "author": "Tshepho",
+      "ts": "2026-09-08",
+      "text": "- The Funding Type from the listing grid should show first above the event title..Please revise accordingly as per the mockup."
+    }
+  },
+
   "public-404.html": {
     "search": {
       "label": "Search",
@@ -163,6 +217,15 @@ window.SHARED_NOTES = {
       "ts": "2026-07-03",
       "pending": true,
       "text": "Grid: 1 column mobile, 2 columns sm, 3 columns lg. Gap: **24px** between cards.\n\nEach card: `bg #FFFFFF`, border `#E7EBEF`, border-radius 1rem (16px), overflow-hidden.\n\nCard image: aspect 16/10, object-cover.\nCategory pill (top-left overlay): 10px uppercase, `bg #FDECEF`, colour `#DC183C`, 4px vertical / 10px horizontal padding, rounded-full.\nTitle: 18px, Plus Jakarta Sans weight 700, colour `#121A21` (ink).\nExcerpt: 14px, colour `#6A7581` (muted), 2-line clamp.\nByline avatar: 32 ÃÂÃÂ 32, gradient (red ÃÂ¢ÃÂÃÂ orange).\nAuthor name: 13px, weight 600, `#121A21`.\nDate ÃÂÃÂ· read time: 12px, `#6A7581`."
+    }
+  },
+
+  "public-auth.html": {
+    "login-options": {
+      "label": "Login Options",
+      "author": "Tshepho",
+      "ts": "2026-09-08",
+      "text": "- We are missing the Login by Linkedin and Google Options."
     }
   },
 
@@ -416,6 +479,15 @@ window.SHARED_NOTES = {
       "author": "Tshepho",
       "ts": "2026-07-01",
       "text": "Same fix as public-refunds — the first section is too tall.\n\nSpacing: ~48px top / ~64px bottom. Container maxed at 1280px.\n\nTypography: H1 in Plus Jakarta Sans 800, 36px mobile / 48px desktop. Breadcrumb 12px in white 55%. 'Last updated' line 14px in white 55%.\n\nBackground: the same navy → maroon gradient with the dot pattern at 70% opacity.\n\nNo CTAs in the hero.\n\n**One shared template across all legal pages please.**"
+    }
+  },
+
+  "public-product.html": {
+    "product-details": {
+      "label": "Product Details",
+      "author": "Tshepho",
+      "ts": "2026-09-08",
+      "text": "- Please remove the colour section details from the design. We only have one colour in stock."
     }
   },
 
