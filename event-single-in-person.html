@@ -262,6 +262,26 @@
       </div>
     </section>
 
+    <!-- SHARE (mobile only — desktop keeps this in the sticky sidebar) -->
+    <section class="mb-14 lg:hidden">
+      <div class="bg-white rounded-2xl border border-[#E7EBEF] p-5 shadow-sm">
+        <p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] mb-3">Share</p>
+        <div class="flex items-center gap-2">
+          <button class="w-9 h-9 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 grid place-items-center transition"><svg viewBox="0 0 24 24" fill="currentColor" class="w-3.5 h-3.5"><path d="M17 3h3.5l-7.6 8.7L22 21h-6.9l-5.4-6.5L3.4 21H0l8.2-9.4L0 3h7l4.9 5.9L17 3zm-1.2 15.6h1.9L6.3 5.3H4.2l11.6 13.3z"/></svg></button>
+          <button class="w-9 h-9 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 grid place-items-center transition"><svg viewBox="0 0 24 24" fill="currentColor" class="w-3.5 h-3.5"><path d="M20.5 2h-17A1.5 1.5 0 002 3.5v17A1.5 1.5 0 003.5 22h17a1.5 1.5 0 001.5-1.5v-17A1.5 1.5 0 0020.5 2zM8 19H5v-9h3v9zM6.5 8.7a1.75 1.75 0 110-3.5 1.75 1.75 0 010 3.5zM19 19h-3v-4.7c0-1.1-.4-1.8-1.4-1.8-.8 0-1.3.5-1.5 1-.1.2-.1.5-.1.7V19h-3v-9h3v1.3c.4-.6 1.2-1.5 2.8-1.5 2 0 3.5 1.3 3.5 4.1V19z"/></svg></button>
+          <!-- Explicit Instagram SVG to guarantee visibility -->
+          <button class="w-9 h-9 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 grid place-items-center transition">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-3.5 h-3.5"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+          </button>
+          <!-- WhatsApp SVG -->
+          <button class="w-9 h-9 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 grid place-items-center transition">
+             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-3.5 h-3.5"><path d="M3 21l1.65-3.8a9 9 0 1 1 3.4 2.9L3 21"/><path d="M9 10a.5.5 0 0 0 1 0V9a.5.5 0 0 0-1 0v1a5 5 0 0 0 5 5h1a.5.5 0 0 0 0-1h-1a.5.5 0 0 0 0 1"/></svg>
+          </button>
+          <button onclick="copyLink()" class="flex-1 h-9 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition inline-flex items-center justify-center gap-1.5"><i data-lucide="link" class="w-3.5 h-3.5"></i> Copy link</button>
+        </div>
+      </div>
+    </section>
+
     <!-- ABOUT -->
     <section class="mb-14">
       <h2 class="font-jakarta font-extrabold text-2xl sm:text-3xl text-[#0C1F31] mb-4">About the Event</h2>
@@ -369,8 +389,11 @@
 
     <!-- SPEAKERS GRID -->
     <section class="mb-14">
-      <h2 class="font-jakarta font-extrabold text-2xl sm:text-3xl text-[#0C1F31] mb-6">Speakers &amp; Panelists</h2>
-      
+      <div class="flex items-end justify-between gap-3 mb-6">
+        <h2 class="font-jakarta font-extrabold text-2xl sm:text-3xl text-[#0C1F31]">Speakers &amp; Panelists</h2>
+        <a href="event-speakers.html" class="text-sm font-bold text-[#DC183C] hover:underline shrink-0 whitespace-nowrap">View all speakers →</a>
+      </div>
+
       <div class="grid grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
         <!-- Sp 1 -->
         <a href="event-speaker.html" class="group bg-white border border-[#E7EBEF] rounded-2xl p-5 text-center flex flex-col items-center hover:shadow-lg hover:-translate-y-1 transition-all">
@@ -542,7 +565,7 @@
   <!-- SIDEBAR -->
   <aside>
     <div class="lg:sticky lg:top-6 space-y-5">
-      <div class="bg-white rounded-2xl border border-[#E7EBEF] p-5 shadow-sm">
+      <div class="hidden lg:block bg-white rounded-2xl border border-[#E7EBEF] p-5 shadow-sm">
         <p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] mb-4">Quick facts</p>
         <ul class="space-y-4 text-[14px]">
           <li class="flex items-start gap-3 text-[#121A21]"><div class="mt-0.5 text-[#6A7581]"><i data-lucide="users" class="w-4 h-4"></i></div> <span class="font-medium">250 attendees expected</span></li>
@@ -552,8 +575,8 @@
           <li class="flex items-start gap-3 text-[#121A21]"><div class="mt-0.5 text-[#6A7581]"><i data-lucide="accessibility" class="w-4 h-4"></i></div> <span class="font-medium">Wheelchair accessible</span></li>
         </ul>
       </div>
-      
-      <div class="bg-white rounded-2xl border border-[#E7EBEF] p-5 shadow-sm">
+
+      <div class="hidden lg:block bg-white rounded-2xl border border-[#E7EBEF] p-5 shadow-sm">
         <p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] mb-3">Share</p>
         <div class="flex items-center gap-2">
           <button class="w-9 h-9 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 grid place-items-center transition"><svg viewBox="0 0 24 24" fill="currentColor" class="w-3.5 h-3.5"><path d="M17 3h3.5l-7.6 8.7L22 21h-6.9l-5.4-6.5L3.4 21H0l8.2-9.4L0 3h7l4.9 5.9L17 3zm-1.2 15.6h1.9L6.3 5.3H4.2l11.6 13.3z"/></svg></button>
