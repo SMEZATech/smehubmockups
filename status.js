@@ -72,7 +72,7 @@ window.MOCKUP_STATUS = {
   "public-search.html": "finalised",
   "public-404.html": "finalised"
 };
-window.MOCKUP_STATUS_PUBLISHED = "2026-09-08T07:11:45.133Z";
+window.MOCKUP_STATUS_PUBLISHED = "2026-09-08T09:48:25.714Z";
 /* Developer builds (staging) — { mockup file: { url, status } }; status: "pending-review" | "reviewed" | "approved" */
 window.MOCKUP_DEV = {
   "public-home.html": {"url":"https://smesastg.wpengine.com/","status":"reviewed"},
@@ -96,9 +96,11 @@ window.MOCKUP_DEV = {
   "public-brand.html": {"url":"https://smesastg.wpengine.com/brands/partnerstack/","status":"reviewed"},
   "public-guides.html": {"url":"https://smesastg.wpengine.com/sme-resources/guides/","status":"reviewed"},
   "public-guide.html": {"url":"https://smesastg.wpengine.com/sme-resource/test-guide/","status":"reviewed"},
-  "public-shop.html": {"url":"https://smesastg.wpengine.com/shop/","status":""},
-  "public-product.html": {"url":"https://smesastg.wpengine.com/product/founders-edition-white-t-shirt/","status":""},
-  "public-checkout.html": {"url":"https://smesastg.wpengine.com/checkout/","status":""},
+  "public-founder-focus-category.html": {"url":"https://smesastg.wpengine.com/founder-focus/","status":"reviewed"},
+  "public-shop.html": {"url":"https://smesastg.wpengine.com/shop/","status":"reviewed"},
+  "public-product.html": {"url":"https://smesastg.wpengine.com/product/founders-edition-white-t-shirt/","status":"reviewed"},
+  "public-checkout.html": {"url":"https://smesastg.wpengine.com/checkout/","status":"reviewed"},
+  "public-auth.html": {"url":"https://smesastg.wpengine.com/sign-up/","status":"reviewed"},
   "public-about.html": {"url":"https://smesastg.wpengine.com/about/","status":"reviewed"},
   "public-contact.html": {"url":"https://smesastg.wpengine.com/contact-us/","status":"reviewed"},
   "public-advertise.html": {"url":"https://smesastg.wpengine.com/advertise-with-us/","status":"reviewed"},
@@ -107,16 +109,16 @@ window.MOCKUP_DEV = {
   "public-refunds.html": {"url":"https://smesastg.wpengine.com/refund-and-cancellation/","status":"reviewed"},
   "public-popia.html": {"url":"https://smesastg.wpengine.com/popia/","status":"reviewed"},
   "public-advertising-disclosure.html": {"url":"https://smesastg.wpengine.com/advertising-disclosure/","status":"reviewed"},
-  "events.html": {"url":"https://smesastg.wpengine.com/events/","status":"pending-review"},
-  "event-single-in-person.html": {"url":"https://smesastg.wpengine.com/events/funding-summit-2026/","status":"pending-review"},
-  "event-single-online.html": {"url":"https://smesastg.wpengine.com/events/how-to-scale-a-business-with-minimal-capital-investment/","status":"pending-review"},
-  "event-speaker.html": {"url":"https://smesastg.wpengine.com/organizers/zibusiso-mkhwanazi/","status":"pending-review"},
+  "events.html": {"url":"https://smesastg.wpengine.com/events/","status":"reviewed"},
+  "event-single-in-person.html": {"url":"https://smesastg.wpengine.com/events/funding-summit-2026/","status":"reviewed"},
+  "event-single-online.html": {"url":"https://smesastg.wpengine.com/events/how-to-scale-a-business-with-minimal-capital-investment/","status":"reviewed"},
+  "event-speaker.html": {"url":"https://smesastg.wpengine.com/organizers/zibusiso-mkhwanazi/","status":"reviewed"},
   "public-glossary.html": {"url":"https://smesastg.wpengine.com/glossary/","status":"reviewed"},
   "public-glossary-category.html": {"url":"https://smesastg.wpengine.com/glossary-categories/glossary-category-one/","status":"reviewed"},
   "public-glossary-term.html": {"url":"https://smesastg.wpengine.com/glossary/administrative-law/","status":"reviewed"},
   "newsletter.html": {"url":"https://smesastg.wpengine.com/newsletters/","status":"reviewed"},
   "newsletter-issue.html": {"url":"https://smesastg.wpengine.com/newsletters/back-from-the-long-weekend-heres-what-you-missed/","status":"reviewed"},
-  "podcast.html": {"url":"https://smesastg.wpengine.com/podcast/","status":"pending-review"},
+  "podcast.html": {"url":"https://smesastg.wpengine.com/podcast/","status":"reviewed"},
   "public-help.html": {"url":"https://smesastg.wpengine.com/help/","status":"reviewed"},
   "public-help-category.html": {"url":"https://smesastg.wpengine.com/help-category/getting-started/","status":"reviewed"},
   "public-help-article.html": {"url":"https://smesastg.wpengine.com/help/how-to-change-email-or-password/","status":"reviewed"},
