@@ -435,6 +435,21 @@
     const devFiles = Object.keys(DEV || {});
     let html='';
 
+    // Files where every live review note has been actioned by the dev — final-approved.
+    const readyForLiveFiles = (typeof Feedback !== 'undefined' && Feedback.readyForLiveFiles)
+      ? Feedback.readyForLiveFiles().filter(f => isLive(f))
+      : [];
+    const currentIsReadyForLive = currentFile && readyForLiveFiles.indexOf(currentFile) >= 0;
+
+    function readyButton(file){
+      const meta = FILE_INDEX[file] || { label:file, icon:'file', group:'', accent:'#29A37A' };
+      return `<button onclick="load('${file}','${esc(meta.group)}','${esc(meta.label)}','${meta.accent}')" data-file="${file}" class="nav-item w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-semibold text-white/85 hover:bg-white/5 hover:text-white transition text-left">
+          <i data-lucide="${meta.icon}" class="w-4 h-4 shrink-0"></i>
+          <span class="truncate">${meta.label}</span>
+          <span class="ml-auto shrink-0 inline-flex items-center gap-1 text-[8px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded-full bg-[#29A37A]/20 text-[#29A37A]"><i data-lucide="rocket" class="w-2.5 h-2.5"></i> Final</span>
+        </button>`;
+    }
+
     // Determine which section holds the current file (for default-expand).
     const currentSection = currentFile && FILE_INDEX[currentFile] ? FILE_INDEX[currentFile].group : null;
     const currentIsDev = !!(currentFile && DEV[currentFile]);
@@ -461,6 +476,22 @@
             <span class="w-1.5 h-1.5 rounded-full" style="background:${dm.c}"></span>${dm.label}
           </span>
         </button>`;
+    }
+
+    // ---- READY FOR LIVE section — every review note on the file has been actioned ----
+    if(readyForLiveFiles.length){
+      const rOpen = currentIsReadyForLive;
+      html += `<details id="readyForLiveSection" class="nav-sec rounded-lg border border-[#29A37A]/30 bg-[#29A37A]/[0.06]" data-group="Ready for live" ${rOpen?'open':''}>
+        <summary class="flex items-center gap-2 px-3 py-2.5 rounded-lg">
+          <i data-lucide="chevron-right" class="chev w-3.5 h-3.5 text-white/50 shrink-0"></i>
+          <i data-lucide="rocket" class="w-4 h-4 text-[#29A37A] shrink-0"></i>
+          <span class="text-[11px] font-bold uppercase tracking-widest text-white/90">Ready for live</span>
+          <span class="ml-auto text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded-full bg-[#29A37A]/25 text-[#29A37A]">${readyForLiveFiles.length} approved</span>
+        </summary>
+        <div class="px-2 pb-2 pt-1 space-y-0.5">
+          ${readyForLiveFiles.map(readyButton).join('')}
+        </div>
+      </details>`;
     }
 
     // ---- REVIEW section — dev builds reviewed or approved by you ----

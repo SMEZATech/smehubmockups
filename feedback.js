@@ -11,29 +11,49 @@
  *
  * Notes flagged `pending: true` stay in Mission Control for operator review and
  * do NOT surface here until that flag is stripped on PUBLISH LIVE.
+ *
+ * Notes flagged `actioned: true` have been addressed by the dev — Mission Control
+ * still holds them (for the archive/history), but they no longer count as an open
+ * note here, so they drop off the nav pill and the notes panel. Once every live
+ * note on a file is actioned, that file counts as "ready for live" (see
+ * readyForLiveFiles below) — index.html surfaces it in its own top-level section.
  */
 (function(global){
   'use strict';
 
   var Feedback = {
-    // All non-pending shared notes for one mockup file.
+    // Open shared notes for one mockup file — excludes pending (not yet live)
+    // and actioned (already addressed) notes.
     getShared: function(file){
       var s = (global.SHARED_NOTES || {})[file] || {};
       var out = {};
       Object.keys(s).forEach(function(k){
-        if(!s[k] || !s[k].pending) out[k] = s[k];
+        if(s[k] && !s[k].pending && !s[k].actioned) out[k] = s[k];
       });
       return out;
     },
 
-    // { [file]: count } of non-pending shared notes — drives the nav pills.
+    // { [file]: count } of open (non-pending, non-actioned) shared notes — drives the nav pills.
     countSharedByFile: function(){
       var s = global.SHARED_NOTES || {}, out = {};
       Object.keys(s).forEach(function(f){
         var secs = s[f] || {};
         var n = 0;
-        Object.keys(secs).forEach(function(k){ if(!secs[k] || !secs[k].pending) n++; });
+        Object.keys(secs).forEach(function(k){ if(secs[k] && !secs[k].pending && !secs[k].actioned) n++; });
         if(n) out[f] = n;
+      });
+      return out;
+    },
+
+    // Files where every live note has been actioned by the dev — final-approved,
+    // ready to ship. A file with zero notes at all is never "ready for live" here;
+    // it just has no notes (see the "Completed development" bucket in index.html).
+    readyForLiveFiles: function(){
+      var s = global.SHARED_NOTES || {}, out = [];
+      Object.keys(s).forEach(function(f){
+        var secs = s[f] || {};
+        var liveKeys = Object.keys(secs).filter(function(k){ return secs[k] && !secs[k].pending; });
+        if(liveKeys.length && liveKeys.every(function(k){ return secs[k].actioned; })) out.push(f);
       });
       return out;
     },
