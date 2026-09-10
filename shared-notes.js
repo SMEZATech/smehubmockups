@@ -3,9 +3,12 @@
  * These notes ship with the repo — everyone sees them on the mockup hub.
  * Notes flagged with "pending": true stay in Mission Control for operator review
  * and DO NOT surface on the public launcher until that flag is stripped.
+ * Notes flagged with "actioned": true have been addressed by the dev — they're
+ * hidden from the public launcher's note panel, and once every live note on a
+ * file is actioned, that file appears in the "Ready for live" section.
  *
  * Add / edit these from control.html → the "Shared notes" panel.
- * Shape: { [file]: { [sectionId]: { label, text, author, ts, pending? } } }
+ * Shape: { [file]: { [sectionId]: { label, text, author, ts, pending?, actioned? } } }
  */
 window.SHARED_NOTES = {
   "event-single-in-person.html": {
@@ -85,38 +88,42 @@ window.SHARED_NOTES = {
       "label": "First section",
       "author": "Tshepho",
       "ts": "2026-07-03",
-      "pending": true,
+      "actioned": true,
       "text": "**Split hero Ã¢ÂÂ copy left, image right on desktop; stacks on mobile.**\n\nContainer: max-width 1280px, 2-column grid on lg+ (grid-cols-2), 48px column gap.\nPadding: **64px top/bottom on mobile, 96px on desktop.**\n\nTypography:\n- H1: **36px mobile / 48px tablet / 56px desktop**, Plus Jakarta Sans weight 800, line-height 1.05.\n- 'South African SMEs' in the H1: apply the accent gradient (red `#DC183C` Ã¢ÂÂ orange `#FF9900`, 90ÃÂ° or 135ÃÂ°).\n- Sub copy: 18px, `rgba(255,255,255,0.70)`, max-width ~576px.\n\nHero image (right column):\n- Aspect 4/3, border-radius **1.5rem (24px)**, subtle white/10 border, deep shadow.\n\n**Colour reminder:** H1 base colour is `#FFFFFF` (with gradient span for 'South African SMEs'). Never use `#0C1F31` or `#121A21` for text on this navy hero."
     },
     "partner-logos": {
       "label": "Partner logos strip",
       "author": "Tshepho",
       "ts": "2026-07-03",
-      "pending": true,
+      "actioned": true,
       "text": "White background band directly under the hero. Container max-width 1280px, 40px vertical padding.\n\nLogo pills: `bg #FCFCFC`, border `#E7EBEF`, rounded-full, 24px horizontal / 12px vertical padding. Logo text: 18px, weight 800, colour `#121A21` (ink), letter-spacing tight.\n\nSpacing between logos: ~24Ã¢ÂÂ32px."
     },
     "first-section-header": {
       "label": "First Section - header",
       "author": "Tshepho",
       "ts": "2026-07-10",
+      "actioned": true,
       "text": "- Update your heading size to H1 and the font size should be 56px"
     },
     "second-section-leading-brands": {
       "label": "Second Section - Leading Brands",
       "author": "Tshepho",
       "ts": "2026-07-10",
+      "actioned": true,
       "text": "- Update your title font size to 12px\n- Update the Brands Widget Names Size to 90x54px"
     },
     "section-three-how-it-works": {
       "label": "Section three - How it Works",
       "author": "Tshepho",
       "ts": "2026-07-10",
+      "actioned": true,
       "text": "- Uodate the heading size to 48px\n- The Number Step Indicator size should be 36x36px\n- The icon size should be 28x28px, The icon wrapper size should be 56x56px and the Item Container size should be 120x120px"
     },
     "last-section": {
       "label": "Last Section",
       "author": "Tshepho",
       "ts": "2026-07-10",
+      "actioned": true,
       "text": "- I have combined the last two sections into one, please check the updated mockup"
     }
   },
@@ -126,6 +133,7 @@ window.SHARED_NOTES = {
       "label": "First section",
       "author": "Tshepho",
       "ts": "2026-07-02",
+      "actioned": true,
       "text": "Same fix as public-refunds — the first section is too tall.\n\nSpacing: ~48px top / ~64px bottom. Container maxed at 1280px.\n\nTypography: H1 in Plus Jakarta Sans 800, 36px mobile / 48px desktop. Breadcrumb 12px in white 55%. 'Last updated' line 14px in white 55%."
     }
   },
@@ -302,26 +310,28 @@ window.SHARED_NOTES = {
       "label": "First section",
       "author": "Tshepho",
       "ts": "2026-07-03",
-      "pending": true,
+      "actioned": true,
       "text": "**Please match the mockup exactly on section height Ã¢ÂÂ currently coming out too tall.**\n\nSpec:\n- Container: max-width 1024px, centered.\n- Padding: 56px top / 56px bottom.\n- Background: the same navy Ã¢ÂÂ maroon gradient as the legal pages, with the dot pattern overlaid at ~70% opacity.\n\nTypography:\n- H1 'Get in touch': **30px mobile / 36px desktop**, Plus Jakarta Sans weight 800, colour `#FFFFFF`.\n- Sub copy: 16px, `rgba(255,255,255,0.70)`, max-width ~576px, centered.\n- Breadcrumb: 12px, `rgba(255,255,255,0.55)`.\n\n**Colour reminder:** H1 is white on navy. Never use `#0C1F31` (surface) or `#121A21` (light-bg ink) for text on this hero. See brand_ci.html Ã¢ÂÂ Colour roles."
     },
     "contact-form": {
       "label": "Contact details + form",
       "author": "Tshepho",
       "ts": "2026-07-03",
-      "pending": true,
+      "actioned": true,
       "text": "Main container: max-width 1024px, 2-column grid on md+ (details left, form right), 48px column gap, 48px top padding.\n\nSection H2 'Contact details': 24px, Plus Jakarta Sans weight 800, colour `#121A21` (ink on light bg).\n\nDetail row icons: 24 ÃÂ 24, red `#DC183C`.\nDetail row labels: 15px, weight 700, `#121A21`.\nDetail row values: 14px, `#6A7581` (muted).\n\nForm fields: 48px height, 12px border-radius, border `#E7EBEF`. Focus state: red border `#DC183C` + red-tinted focus ring."
     },
     "side-details": {
       "label": "Side Details",
       "author": "Tshepho",
       "ts": "2026-07-10",
+      "actioned": true,
       "text": "- Please update the \"Contact Details\" font size to 24px\n- Icons size should be 20x20"
     },
     "mobile": {
       "label": "Mobile",
       "author": "Tshepho",
       "ts": "2026-07-10",
+      "actioned": true,
       "text": "Work on how the Contact details design show as per mockup, right now the icons are pulling the text below them and not showing along side."
     }
   },
@@ -478,6 +488,7 @@ window.SHARED_NOTES = {
       "label": "First section",
       "author": "Tshepho",
       "ts": "2026-07-01",
+      "actioned": true,
       "text": "Same fix as public-refunds — the first section is too tall.\n\nSpacing: ~48px top / ~64px bottom. Container maxed at 1280px.\n\nTypography: H1 in Plus Jakarta Sans 800, 36px mobile / 48px desktop. Breadcrumb 12px in white 55%. 'Last updated' line 14px in white 55%.\n\nBackground: the same navy → maroon gradient with the dot pattern at 70% opacity.\n\nNo CTAs in the hero.\n\n**One shared template across all legal pages please.**"
     }
   },
@@ -496,6 +507,7 @@ window.SHARED_NOTES = {
       "label": "First section",
       "author": "Tshepho",
       "ts": "2026-07-01",
+      "actioned": true,
       "text": "The first section is way too tall — please bring it down to the mockup's spec.\n\nSpacing to hit:\n- Section padding: ~48px top / ~64px bottom (roughly py-12 sm:py-16).\n- Container: max-width 1280px, centered.\n\nTypography to hit:\n- H1: Plus Jakarta Sans, weight 800, 36px on mobile / 48px on desktop, tight tracking.\n- Breadcrumb above H1: 12px, white at 55% opacity, `›` separator at white 30%.\n- 'Last updated' line under H1: 14px, white at 55% opacity, ~12px top margin.\n\nBackground: navy gradient — starts `#0C1F31` top-left, transitions through `#2b1626` toward `#5e1a2c` bottom-right — with the subtle dot pattern overlaid at ~70% opacity.\n\nNo CTAs in this hero. It's a legal doc header, keep it clean.\n\n**All five legal pages (refunds, terms, privacy, popia, advertising disclosure) share this exact same design — please reuse ONE template.**"
     }
   },
@@ -620,6 +632,7 @@ window.SHARED_NOTES = {
       "label": "First section",
       "author": "Tshepho",
       "ts": "2026-07-01",
+      "actioned": true,
       "text": "Same fix as public-refunds — the first section is too tall.\n\nSpacing: ~48px top / ~64px bottom. Container maxed at 1280px.\n\nTypography: H1 in Plus Jakarta Sans 800, 36px mobile / 48px desktop. Breadcrumb 12px in white 55%. 'Last updated' line 14px in white 55%.\n\nBackground: the same navy → maroon gradient with the dot pattern at 70% opacity.\n\nNo CTAs in the hero.\n\n**Please build one shared template for all the legal pages (refunds, terms, privacy, popia, advertising disclosure). Right now each one looks slightly different — they should be identical.**"
     }
   }
