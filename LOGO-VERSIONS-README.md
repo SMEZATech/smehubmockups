@@ -31,6 +31,36 @@ the family the 2026 CI retired — worth confirming with the designer.
 These are local only. They are new files (nothing existing was modified), so nothing is at risk.
 Deploying to Pages needs a commit + push.
 
+## `logo-downloads.html`
+
+Download page for the actual files — each option shown large on light and dark, with per-file
+download links. **SVG is the master format**: no fixed size, sharp at any scale from favicon to
+billboard. PNG is offered for tools that will not take vector.
+
+`logo-downloads/` holds 12 SVG + 12 PNG + 4 zips. Per option:
+
+| asset | vector | raster |
+|---|---|---|
+| Full logo | SVG | PNG 2400px wide |
+| Full logo, reversed | SVG | PNG 2400px wide |
+| Icon only | SVG | PNG 1024px |
+| Icon, one-colour white | SVG | PNG 1024px |
+
+Plus `sme-logo-v{1,2,3}.zip` per option and `sme-logo-all-options.zip` (foldered by option).
+
+V1 and V2 share the same cube, so their one-colour white icons are byte-identical files. This is
+stated on the page rather than deduplicated, so each option's zip stays self-contained.
+
+### viewBox correction
+
+The v1 and v2 lockup viewBox was widened by a fraction so artwork cannot overflow its canvas. The
+wordmark sat exactly on the right edge — v1 by 0.0002 units, v2 by 0.0986 — sub-pixel and not
+visibly clipping, but a flush edge on a distributable master can get shaved by downstream tooling.
+v3 was already fully inside its box. Applied to both `assets/` and `logo-downloads/`.
+
+Note on line endings: `core.autocrlf=true` means local SVG working copies have CRLF while git stores
+and Pages serves LF. Content is identical; it does not affect rendering.
+
 ## `logo-socials-mockup.html`
 
 Social avatar mockups for all three options, built on the **real** SME South Africa profiles.
