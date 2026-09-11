@@ -55,7 +55,6 @@ window.MOCKUP_STATUS = {
   "event-single-in-person.html": "finalised",
   "event-single-online.html": "finalised",
   "event-speaker.html": "finalised",
-  "event-speakers.html": "finalised",
   "public-glossary.html": "finalised",
   "public-glossary-category.html": "finalised",
   "public-glossary-term.html": "finalised",
@@ -64,9 +63,7 @@ window.MOCKUP_STATUS = {
   "podcast.html": "finalised",
   "brand_ci.html": "finalised",
   "public-icons.html": "finalised",
-  "logo-files.html": "finalised",
-  "logo-downloads.html": "finalised",
-  "chrome-preview.html": "not-started",
+  "chrome-preview.html": "finalised",
   "public-help.html": "finalised",
   "public-help-category.html": "finalised",
   "public-help-article.html": "finalised",
@@ -75,7 +72,7 @@ window.MOCKUP_STATUS = {
   "public-search.html": "finalised",
   "public-404.html": "finalised"
 };
-window.MOCKUP_STATUS_PUBLISHED = "2026-09-08T09:48:25.714Z";
+window.MOCKUP_STATUS_PUBLISHED = "2026-09-11T13:18:13.840Z";
 /* Developer builds (staging) — { mockup file: { url, status } }; status: "pending-review" | "reviewed" | "approved" */
 window.MOCKUP_DEV = {
   "public-home.html": {"url":"https://smesastg.wpengine.com/","status":"reviewed"},
@@ -132,5 +129,5 @@ window.MOCKUP_DEV = {
 };
 /* Group overrides — { mockup file: "Group name" }; overrides default NAV grouping in index.html */
 window.MOCKUP_GROUPS = {
-  "podcast.html": "Public site"
+  "podcast.html": "Site pages"
 };
