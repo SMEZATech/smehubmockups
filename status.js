@@ -64,6 +64,7 @@ window.MOCKUP_STATUS = {
   "podcast.html": "finalised",
   "brand_ci.html": "finalised",
   "public-icons.html": "finalised",
+  "logo-downloads.html": "finalised",
   "chrome-preview.html": "not-started",
   "public-help.html": "finalised",
   "public-help-category.html": "finalised",
