@@ -340,9 +340,9 @@
       { label:'404 page',       file:'public-404.html',          icon:'file-x' }
     ]},
     { group:'Reference', tag:'Brand', accent:'#6A7581', icon:'palette', items:[
-      { label:'Brand CI 2026', file:'brand_ci.html',       icon:'palette' },
-      { label:'Icon Library',  file:'public-icons.html',   icon:'shapes' },
-      { label:'Logo Files',    file:'logo-downloads.html', icon:'download' }
+      { label:'Brand CI 2026', file:'brand_ci.html',     icon:'palette' },
+      { label:'Icon Library',  file:'public-icons.html', icon:'shapes' },
+      { label:'Logo Files',    file:'logo-files.html',   icon:'download' }
     ]}
   ];
 
@@ -525,7 +525,13 @@
     }
 
     // ---- Standard NAV sections — bubble groups with newly-finalised items first ----
+    // 'Reference' is pinned to the bottom: it's brand/reference material, not a build queue,
+    // so it must not bubble up when one of its pages is newly finalised.
+    const PINNED_BOTTOM = { 'Reference': 1 };
     const sortedNav = NAV.slice().sort((a,b)=>{
+      const aPin = PINNED_BOTTOM[a.group] ? 1 : 0;
+      const bPin = PINNED_BOTTOM[b.group] ? 1 : 0;
+      if(aPin !== bPin) return aPin - bPin; // pinned groups always last
       const aHas = bubbleGroups[a.group] ? 1 : 0;
       const bHas = bubbleGroups[b.group] ? 1 : 0;
       return bHas - aHas; // newly-finalised groups first
