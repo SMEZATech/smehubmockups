@@ -192,38 +192,40 @@ window.SHARED_NOTES = {
       "label": "First section",
       "author": "Tshepho",
       "ts": "2026-07-03",
+      "actioned": true,
       "text": "Please keep the icon by browse by category 16x16 as per the mockup"
     },
     "jet-articles-listing-grid": {
       "label": "Jet Articles Listing Grid",
       "author": "Tshepho",
       "ts": "2026-07-03",
+      "actioned": true,
       "text": "Currently the rendered size is 378x198, it should be 393x245 as per the mockup"
     },
     "listing-articles-grid-third-section": {
       "label": "Listing Articles Grid - Third Section",
       "author": "Tshepho",
       "ts": "2026-07-03",
+      "actioned": true,
       "text": "I know the current design was following the Brand CI order but i have updated that now to match the mockup. This means the order after the feature image, shoudl start first with the Article Title instead o the data+ est read. Please update this listing grid accordingly.. Please also take into account the same words limit (16 words) applied on the mockup plus the three dots applied after that."
     },
     "space-between-the-header-and-featured-content-mobile": {
       "label": "Space - Between the header and featured content (Mobile)",
       "author": "Tshepho",
       "ts": "2026-07-03",
+      "actioned": true,
       "text": "Please adjust your top padding, currently is set to 4em..please adjust to to 3em as per the mockup"
     },
     "hero": {
       "label": "First section",
       "author": "Tshepho",
       "ts": "2026-07-03",
-      "pending": true,
       "text": "**Please match the mockup on padding ÃÂ¢ÃÂÃÂ dev looks too tall.**\n\nSpec:\n- Container: max-width 1280px.\n- Padding: **48px top / 56px bottom** (pt-12 pb-14). Not py-16 or py-20.\n\nTypography:\n- H1 'SME Insights': **36px mobile / 48px desktop**, Plus Jakarta Sans weight 800, colour `#FFFFFF`, tracking-tight.\n- Sub: 18px, `rgba(255,255,255,0.70)`, max-width ~672px.\n- Content aligned LEFT (not centered).\n- Breadcrumb: 12px in `rgba(255,255,255,0.55)`.\n\nBackground: navy ÃÂ¢ÃÂÃÂ maroon gradient with dot pattern at 70% opacity."
     },
     "article-grid": {
       "label": "Article grid",
       "author": "Tshepho",
       "ts": "2026-07-03",
-      "pending": true,
       "text": "Grid: 1 column mobile, 2 columns sm, 3 columns lg. Gap: **24px** between cards.\n\nEach card: `bg #FFFFFF`, border `#E7EBEF`, border-radius 1rem (16px), overflow-hidden.\n\nCard image: aspect 16/10, object-cover.\nCategory pill (top-left overlay): 10px uppercase, `bg #FDECEF`, colour `#DC183C`, 4px vertical / 10px horizontal padding, rounded-full.\nTitle: 18px, Plus Jakarta Sans weight 700, colour `#121A21` (ink).\nExcerpt: 14px, colour `#6A7581` (muted), 2-line clamp.\nByline avatar: 32 ÃÂÃÂ 32, gradient (red ÃÂ¢ÃÂÃÂ orange).\nAuthor name: 13px, weight 600, `#121A21`.\nDate ÃÂÃÂ· read time: 12px, `#6A7581`."
     }
   },
@@ -479,6 +481,7 @@ window.SHARED_NOTES = {
       "label": "First section",
       "author": "Tshepho",
       "ts": "2026-07-02",
+      "actioned": true,
       "text": "Same fix as public-refunds — the first section is too tall.\n\nSpacing: ~48px top / ~64px bottom. Container maxed at 1280px.\n\nTypography: H1 in Plus Jakarta Sans 800, 36px mobile / 48px desktop. Breadcrumb 12px in white 55%. 'Last updated' line 14px in white 55%."
     }
   },
