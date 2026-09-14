@@ -377,10 +377,13 @@
     {title:'Zero-based Budgeting',            cat:'finance'}
   ];
 
+  // "All" is a pseudo-category — not part of the taxonomy, just an unfiltered view. Always sits first in the chip row.
+  const ALL_CAT = { slug:'all', label:'All', blurb:'Every term in the SME South Africa glossary — browse the whole list, unfiltered by topic.' };
+
   // Read ?cat=slug (default to funding).
   const params = new URLSearchParams(location.search);
   const activeSlug = (params.get('cat') || 'funding').toLowerCase();
-  const activeCat  = CATEGORIES.find(c=>c.slug===activeSlug) || CATEGORIES[0];
+  const activeCat  = activeSlug === 'all' ? ALL_CAT : (CATEGORIES.find(c=>c.slug===activeSlug) || CATEGORIES[0]);
 
   // Render hero details
   document.title = `${activeCat.label} — Business Terms Glossary — SME South Africa`;
@@ -388,16 +391,17 @@
   document.getElementById('catH1').innerHTML = `<span class="bg-gradient-to-r from-[#DC183C] to-[#FF9900] bg-clip-text text-transparent">${esc(activeCat.label)}</span> terms
     <button onclick="openBrief()" class="dev-badge align-middle ml-1 w-6 h-6 rounded-full bg-[#FF9900] text-[#0C1F31] items-center justify-center text-[11px] font-bold">i</button>`;
   document.getElementById('catSub').textContent = activeCat.blurb;
+  document.getElementById('termSearch').placeholder = activeSlug === 'all' ? 'Search all terms…' : 'Search within this category…';
 
-  // Category chips
-  document.getElementById('catChips').innerHTML = CATEGORIES.map(c=>{
-    const count = TERMS.filter(t=>t.cat===c.slug).length;
+  // Category chips — "All" always first, then the taxonomy in its normal order.
+  document.getElementById('catChips').innerHTML = [ALL_CAT, ...CATEGORIES].map(c=>{
+    const count = c.slug==='all' ? TERMS.length : TERMS.filter(t=>t.cat===c.slug).length;
     const active = c.slug === activeSlug;
     return `<a href="public-glossary-category.html?cat=${c.slug}" class="cat-chip ${active?'active':''}">${esc(c.label)} <span class="opacity-70 ml-0.5">${count}</span></a>`;
   }).join('');
 
-  // Filter down to the active category
-  const inCat = TERMS.filter(t=>t.cat===activeSlug);
+  // Filter down to the active category ("all" shows every term, unfiltered)
+  const inCat = activeSlug === 'all' ? TERMS.slice() : TERMS.filter(t=>t.cat===activeSlug);
 
   // Group by first letter
   const LETTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
@@ -463,7 +467,8 @@
       sec.style.display = secVis ? '' : 'none';
     });
     document.getElementById('emptyState').classList.toggle('hidden', visible>0 || !q);
-    document.getElementById('matchCount').textContent = q ? `${visible} term${visible===1?'':'s'} match "${q}" in ${activeCat.label}` : '';
+    const scopeLabel = activeSlug === 'all' ? 'All categories' : activeCat.label;
+    document.getElementById('matchCount').textContent = q ? `${visible} term${visible===1?'':'s'} match "${q}" in ${scopeLabel}` : '';
   }
   function clearSearch(){ document.getElementById('termSearch').value=''; filterTerms(); document.getElementById('termSearch').focus(); }
 
