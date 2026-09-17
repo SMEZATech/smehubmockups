@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Membership & Pricing — SME South Africa</title>
-  <meta name="description" content="Compare Standard and Premium membership. Unlock priority funding matching, private networking, live webinars and exclusive partner deals from R99/month." />
+  <meta name="description" content="Take the Business Health Check at no cost, then compare Standard and Premium. Premium unlocks the full member Workspace — your Success Plan, Compliance Calendar, Cash Flow Tracker and funding-ready Document Vault — from R99/month." />
   <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <script src="https://cdn.tailwindcss.com"></script><script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
@@ -11,6 +11,7 @@
   <style>
     html,body{font-family:'Inter',system-ui,sans-serif;} .font-jakarta{font-family:'Plus Jakarta Sans',sans-serif;letter-spacing:.005em;}
     .hero-bg{background:linear-gradient(115deg,#0C1F31 0%,#0C1F31 50%,#2b1626 80%,#5e1a2c 115%);}
+    .grad-text{background:linear-gradient(100deg,#DC183C,#FF9900);-webkit-background-clip:text;background-clip:text;color:transparent;}
     .dot-pattern{background-image:radial-gradient(rgba(255,255,255,.07) 1px,transparent 1.5px);background-size:22px 22px;}
     .card-lift{transition:box-shadow .2s,transform .2s;} .card-lift:hover{box-shadow:0 14px 30px -12px rgba(10,44,61,.22);transform:translateY(-3px);}
     .field{width:100%;background:#fff;border:1px solid #E7EBEF;border-radius:.75rem;height:3rem;padding:0 1rem;font-size:.9rem;outline:none;transition:border-color .15s,box-shadow .15s;} .field:focus{border-color:#DC183C;box-shadow:0 0 0 3px rgba(220,24,60,.12);}
@@ -24,13 +25,21 @@
     /* Hero community preview card */
     .preview-card{box-shadow:0 30px 60px -20px rgba(0,0,0,.55),0 12px 24px -8px rgba(0,0,0,.35);transform:rotate(-1.5deg);}
     .preview-card-2{box-shadow:0 24px 50px -20px rgba(0,0,0,.5);transform:rotate(2deg);}
-    .pulse-dot{position:relative;}
-    .pulse-dot::before{content:"";position:absolute;inset:-2px;border-radius:9999px;background:#29A37A;opacity:.45;animation:pulse-ring 1.8s ease-out infinite;}
-    @keyframes pulse-ring{0%{transform:scale(.9);opacity:.55} 80%{transform:scale(1.9);opacity:0} 100%{transform:scale(1.9);opacity:0}}
     .ring-prog{transform:rotate(-90deg);}
     .marquee{display:flex;gap:42px;animation:marquee 22s linear infinite;white-space:nowrap;}
     @keyframes marquee{0%{transform:translateX(0)} 100%{transform:translateX(-50%)}}
     .tier-card{transition:box-shadow .2s,transform .2s;border-radius:1.25rem;} .tier-card:hover{transform:translateY(-3px);box-shadow:0 18px 36px -14px rgba(10,44,61,.18);}
+    /* Module compare cards — Standard vs Premium, two lines, no table */
+    .tier-row{display:flex;align-items:flex-start;gap:.5rem;font-size:.8125rem;line-height:1.45;padding:.4rem 0;}
+    .tier-row+.tier-row{border-top:1px dashed #E7EBEF;margin-top:.15rem;padding-top:.55rem;}
+    .tier-row i{flex-shrink:0;margin-top:.15rem;}
+    .tier-row--std{color:#6A7581;}
+    .tier-row--std i{color:#CBD5E1;}
+    .tier-row--std b{color:#121A21;}
+    .tier-row--off i{color:#DC183C;opacity:.55;}
+    .tier-row--prem{color:#121A21;font-weight:500;}
+    .tier-row--prem i{color:#29A37A;}
+    .tier-row--prem b{color:#DC183C;}
       .search-overlay{position:absolute;inset:0;background:#fff;z-index:20;display:flex;align-items:center;justify-content:center;padding:0 1rem;opacity:0;pointer-events:none;transform:translateY(-8px);transition:all .25s cubic-bezier(.2,.8,.2,1);}
     .search-overlay.active{opacity:1;pointer-events:auto;transform:translateY(0);}
     @media (min-width:640px){ .search-overlay{padding:0 1.5rem;} }
@@ -140,21 +149,20 @@
 <!-- ===================== HERO — split layout with community preview ===================== -->
 <section id="hero" data-section-label="Hero" class="hero-bg text-white relative overflow-hidden">
   <div class="absolute inset-0 dot-pattern opacity-70 pointer-events-none"></div>
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-14 sm:py-20 relative grid lg:grid-cols-12 gap-10 lg:gap-8 items-center">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-12 sm:py-16 relative grid lg:grid-cols-12 gap-10 lg:gap-8 items-start">
     <!-- LEFT — copy + CTAs -->
     <div class="lg:col-span-7 relative">
       <nav aria-label="Breadcrumb" class="text-xs text-white/55 flex items-center flex-wrap gap-x-1.5 mb-5"><a href="public-home.html" class="hover:text-white transition">Home</a><span class="text-white/30">›</span><span class="text-white/85 font-medium truncate">Membership</span></nav>
-      <p class="inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-widest text-[#FF9900] bg-[#FF9900]/10 border border-[#FF9900]/30 px-3 py-1.5 rounded-full"><i data-lucide="sparkles" class="w-3.5 h-3.5"></i>Membership</p>
-      <h1 class="font-jakarta font-extrabold text-4xl sm:text-5xl lg:text-6xl leading-[1.05] tracking-tight mt-4">Where South African founders <span class="text-[#FF9900]">actually build</span> together. <button onclick="openBrief()" class="dev-badge align-middle ml-1 w-6 h-6 rounded-full bg-[#FF9900] text-[#0C1F31] items-center justify-center text-[11px] font-bold">i</button></h1>
-      <p class="mt-5 text-white/75 text-lg max-w-xl leading-relaxed">Post, ask, connect — at <b class="text-white">no cost, forever</b>. Upgrade when you need the deeper tools: priority funding, private messaging, 50% off events.</p>
+      <h1 class="font-jakarta font-extrabold text-4xl sm:text-5xl lg:text-6xl leading-[1.05] tracking-tight">Know where your <span class="grad-text">business stands</span>. <button onclick="openBrief()" class="dev-badge align-middle ml-1 w-6 h-6 rounded-full bg-[#FF9900] text-[#0C1F31] items-center justify-center text-[11px] font-bold">i</button></h1>
+      <p class="mt-5 text-white/75 text-lg max-w-xl leading-relaxed">Take the 3-minute Business Health Check <b class="text-white">at no cost</b>. Upgrade to Premium for the full Workspace to act on it.</p>
       <div class="mt-7 flex flex-col sm:flex-row gap-3">
-        <a href="public-auth.html#join" class="inline-flex items-center justify-center gap-2 h-12 px-7 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold transition">Join the SME Hub <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
+        <a href="public-auth.html#join" class="inline-flex items-center justify-center gap-2 h-12 px-7 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold transition">Start the Health Check <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
         <a href="#plans" class="inline-flex items-center justify-center gap-2 h-12 px-7 rounded-full border border-white/25 text-white hover:bg-white/10 font-bold transition">See Premium</a>
       </div>
     </div>
 
     <!-- RIGHT — interactive community preview -->
-    <div class="lg:col-span-5 relative min-h-[420px]">
+    <div class="lg:col-span-5 relative min-h-[380px]">
       <!-- Floating preview card 1 — community feed -->
       <div class="preview-card absolute right-0 sm:right-4 top-0 w-[88%] sm:w-[420px] max-w-[460px] bg-white text-[#121A21] rounded-2xl overflow-hidden">
         <div class="px-4 py-3 border-b border-[#E7EBEF] flex items-center justify-between">
@@ -162,7 +170,6 @@
             <div class="w-7 h-7 rounded-lg bg-[#0C1F31] grid place-items-center"><img src="assets/logo-v1-icon-white.svg" alt="" class="w-4 h-4"/></div>
             <span class="font-jakarta font-extrabold text-[12px] tracking-tight">SME HUB</span>
           </div>
-          <div class="flex items-center gap-1.5 text-[11px] text-[#6A7581] font-semibold"><span class="pulse-dot w-1.5 h-1.5 rounded-full bg-[#29A37A]"></span>50,447 online</div>
         </div>
         <div class="px-4 pt-3 pb-2 flex items-center justify-between">
           <h4 class="font-jakarta font-extrabold text-sm">Activity feed</h4>
@@ -172,10 +179,6 @@
           </div>
         </div>
         <div class="px-4 pb-3 space-y-2">
-          <div class="bg-[#0C1F31] text-white rounded-xl px-3 py-2.5 flex items-center justify-between text-[11px]">
-            <span class="font-semibold">3,412 <span class="text-[#29A37A] font-bold ml-1">+18%</span></span>
-            <i data-lucide="trending-up" class="w-4 h-4 text-[#FF9900]"></i>
-          </div>
           <div class="rounded-xl border border-[#E7EBEF] px-3 py-2.5 flex items-start gap-2.5">
             <div class="w-7 h-7 rounded-full bg-[#0C1F31] grid place-items-center text-white text-[10px] font-bold shrink-0">TJ</div>
             <div class="min-w-0 flex-1">
@@ -190,25 +193,22 @@
           </div>
         </div>
       </div>
-      <!-- Floating preview card 2 — connections / profile setup -->
+      <!-- Floating preview card 2 — Business Health Check score -->
       <div class="preview-card-2 absolute -bottom-2 sm:bottom-0 -left-2 sm:left-0 w-[68%] sm:w-[280px] bg-white text-[#121A21] rounded-2xl overflow-hidden hidden sm:block">
-        <div class="px-4 py-3 border-b border-[#E7EBEF]">
-          <p class="text-[10px] font-bold uppercase tracking-widest text-[#6A7581]">My connections</p>
-          <div class="mt-2 flex items-center gap-1.5">
-            <span class="w-7 h-7 rounded-full bg-[#0C1F31] text-white grid place-items-center text-[10px] font-bold">MK</span>
-            <span class="w-7 h-7 rounded-full bg-[#DC183C] text-white grid place-items-center text-[10px] font-bold">JD</span>
-            <span class="w-7 h-7 rounded-full bg-[#FF9900] text-[#0C1F31] grid place-items-center text-[10px] font-bold">PS</span>
-            <span class="w-7 h-7 rounded-full bg-[#29A37A] text-white grid place-items-center text-[10px] font-bold">TJ</span>
-            <span class="w-7 h-7 rounded-full bg-[#0C1F31] text-white grid place-items-center text-[10px] font-bold">NA</span>
-            <span class="text-[10px] font-bold text-[#6A7581] ml-1">+10</span>
-          </div>
+        <div class="px-4 py-3 border-b border-[#E7EBEF] flex items-center justify-between">
+          <p class="text-[10px] font-bold uppercase tracking-widest text-[#6A7581]">Health Check</p>
+          <span class="text-[9px] font-bold text-[#29A37A] bg-[#E4F5EE] px-2 py-0.5 rounded-full">Standard</span>
         </div>
         <div class="px-4 py-3 flex items-center gap-3">
-          <svg class="w-12 h-12 ring-prog" viewBox="0 0 36 36"><circle cx="18" cy="18" r="14" fill="none" stroke="#E7EBEF" stroke-width="4"/><circle cx="18" cy="18" r="14" fill="none" stroke="#29A37A" stroke-width="4" stroke-dasharray="64,100" stroke-linecap="round"/><text x="18" y="20" text-anchor="middle" transform="rotate(90 18 18)" font-size="9" font-weight="800" fill="#121A21" font-family="Plus Jakarta Sans">73%</text></svg>
+          <svg class="w-12 h-12 ring-prog" viewBox="0 0 36 36"><circle cx="18" cy="18" r="14" fill="none" stroke="#E7EBEF" stroke-width="4"/><circle cx="18" cy="18" r="14" fill="none" stroke="#FF9900" stroke-width="4" stroke-dasharray="68,100" stroke-linecap="round"/><text x="18" y="20" text-anchor="middle" transform="rotate(90 18 18)" font-size="9" font-weight="800" fill="#121A21" font-family="Plus Jakarta Sans">68</text></svg>
           <div>
-            <p class="font-jakarta font-extrabold text-[12px]">Profile setup</p>
-            <p class="text-[10px] text-[#6A7581]">2 steps left</p>
+            <p class="font-jakarta font-extrabold text-[12px]">Score: 68 / 100</p>
+            <p class="text-[10px] text-[#6A7581]">Weakest: Cash flow</p>
           </div>
+        </div>
+        <div class="px-4 pb-3 space-y-1.5">
+          <div class="flex items-center gap-2"><span class="text-[9px] w-16 text-[#6A7581] font-semibold shrink-0">Compliance</span><div class="h-1.5 flex-1 rounded-full bg-[#E7EBEF] overflow-hidden"><div class="h-full rounded-full bg-[#FF9900]" style="width:80%"></div></div></div>
+          <div class="flex items-center gap-2"><span class="text-[9px] w-16 text-[#6A7581] font-semibold shrink-0">Cash flow</span><div class="h-1.5 flex-1 rounded-full bg-[#E7EBEF] overflow-hidden"><div class="h-full rounded-full bg-[#DC183C]" style="width:42%"></div></div></div>
         </div>
       </div>
     </div>
@@ -220,12 +220,12 @@
   <div class="max-w-7xl mx-auto px-4 sm:px-6 py-10">
     <div class="grid sm:grid-cols-2 gap-6 text-center sm:text-left">
       <div class="flex items-start gap-3 justify-center sm:justify-start">
-        <div class="w-10 h-10 rounded-xl bg-[#FDECEF] text-[#DC183C] grid place-items-center shrink-0"><i data-lucide="message-square-text" class="w-5 h-5"></i></div>
-        <div><p class="font-jakarta font-extrabold text-sm">Start at R0, forever</p><p class="text-xs text-[#6A7581] mt-1 leading-snug">Sign up and you can post, reply, follow members, apply for funding and download starter resources.</p></div>
+        <div class="w-10 h-10 rounded-xl bg-[#FDECEF] text-[#DC183C] grid place-items-center shrink-0"><i data-lucide="activity" class="w-5 h-5"></i></div>
+        <div><p class="font-jakarta font-extrabold text-sm">Start at R0, forever</p><p class="text-xs text-[#6A7581] mt-1 leading-snug">Take the Business Health Check, get your top 3 recommended actions, post in the community and apply for funding.</p></div>
       </div>
       <div class="flex items-start gap-3 justify-center sm:justify-start">
         <div class="w-10 h-10 rounded-xl bg-[#FFF1E0] text-[#AE6B0A] grid place-items-center shrink-0"><i data-lucide="crown" class="w-5 h-5"></i></div>
-        <div><p class="font-jakarta font-extrabold text-sm">Premium when you’re ready</p><p class="text-xs text-[#6A7581] mt-1 leading-snug">Priority funding, private messaging and 50% off events — R99/mo, cancel anytime.</p></div>
+        <div><p class="font-jakarta font-extrabold text-sm">Premium unlocks the Workspace</p><p class="text-xs text-[#6A7581] mt-1 leading-snug">Your full Success Plan, Compliance Calendar, Cash Flow Tracker and Document Vault — R99/mo, cancel anytime.</p></div>
       </div>
     </div>
   </div>
@@ -236,7 +236,7 @@
   <div class="text-center max-w-2xl mx-auto mb-10">
     <p class="text-[11px] font-bold uppercase tracking-widest text-[#DC183C]">Two tiers · zero pressure</p>
     <h2 class="font-jakarta font-extrabold text-3xl sm:text-4xl tracking-tight mt-2">Pick the level that matches where you are</h2>
-    <p class="mt-4 text-[#6A7581]">Start at R0. Upgrade only when you need the deeper tools to grow.</p>
+    <p class="mt-4 text-[#6A7581]">Start at R0 with the Business Health Check. Upgrade to the Workspace when you're ready to act on it.</p>
   </div>
 
   <!-- Billing toggle -->
@@ -254,14 +254,14 @@
       <span class="absolute -top-3 left-1/2 -translate-x-1/2 inline-flex items-center gap-1.5 bg-[#0C1F31] text-white text-[10px] font-extrabold uppercase tracking-wider px-3 py-1 rounded-full">Where most start</span>
       <div class="flex items-center gap-2.5"><div class="w-11 h-11 rounded-xl bg-[#FDECEF] text-[#DC183C] grid place-items-center"><i data-lucide="message-square-text" class="w-5 h-5"></i></div><h3 class="font-jakarta font-extrabold text-xl">Standard</h3></div>
       <div class="mt-5 flex items-end gap-1.5"><span class="font-jakarta font-extrabold text-4xl">R0</span><span class="text-[#6A7581] text-sm mb-1.5">forever</span></div>
-      <p class="mt-1 text-sm text-[#6A7581]">Sign up to join the conversation. Post, ask, connect — no card needed.</p>
+      <p class="mt-1 text-sm text-[#6A7581]">Sign up, take the health check, join the conversation — no card needed.</p>
       <ul class="mt-6 space-y-3 text-sm flex-1">
+        <li class="flex items-start gap-2.5"><i data-lucide="check" class="w-5 h-5 text-[#DC183C] shrink-0 mt-0.5"></i><b>Business Health Check</b> — your score out of 100 across 5 areas</li>
+        <li class="flex items-start gap-2.5"><i data-lucide="check" class="w-5 h-5 text-[#DC183C] shrink-0 mt-0.5"></i>Your top 3 recommended actions, from the same ranking engine as Premium</li>
         <li class="flex items-start gap-2.5"><i data-lucide="check" class="w-5 h-5 text-[#DC183C] shrink-0 mt-0.5"></i><b>Post in the community</b> — share wins, ask questions, swap suppliers</li>
         <li class="flex items-start gap-2.5"><i data-lucide="check" class="w-5 h-5 text-[#DC183C] shrink-0 mt-0.5"></i>Reply, react &amp; follow other members</li>
         <li class="flex items-start gap-2.5"><i data-lucide="check" class="w-5 h-5 text-[#DC183C] shrink-0 mt-0.5"></i>Apply for funding through SME South Africa</li>
-        <li class="flex items-start gap-2.5"><i data-lucide="check" class="w-5 h-5 text-[#DC183C] shrink-0 mt-0.5"></i>Subscribe to any newsletter edition</li>
-        <li class="flex items-start gap-2.5"><i data-lucide="check" class="w-5 h-5 text-[#DC183C] shrink-0 mt-0.5"></i>Download starter templates &amp; ebooks</li>
-        <li class="flex items-start gap-2.5"><i data-lucide="check" class="w-5 h-5 text-[#DC183C] shrink-0 mt-0.5"></i>Personal profile &amp; activity feed</li>
+        <li class="flex items-start gap-2.5"><i data-lucide="check" class="w-5 h-5 text-[#DC183C] shrink-0 mt-0.5"></i>Full Resources library &amp; starter templates</li>
       </ul>
       <a href="public-auth.html#join" class="mt-7 h-12 rounded-full bg-[#0C1F31] hover:bg-[#16314a] text-white font-bold transition flex items-center justify-center gap-2">Join the SME Hub <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
       <p class="mt-3 text-center text-xs text-[#6A7581]">No card. Less than a minute.</p>
@@ -277,14 +277,13 @@
       </div>
       <p id="priceNote" class="mt-1 text-sm text-[#6A7581]">Billed monthly. Cancel anytime.</p>
       <ul class="mt-6 space-y-3 text-sm flex-1">
-        <li class="flex items-start gap-2.5 font-semibold text-[#121A21]"><i data-lucide="check-check" class="w-5 h-5 text-[#DC183C] shrink-0 mt-0.5"></i>Everything Standard members get, plus:</li>
-        <li class="flex items-start gap-2.5"><i data-lucide="check" class="w-5 h-5 text-[#DC183C] shrink-0 mt-0.5"></i><b>Priority funding matching</b> — pushed to the front of funder queues</li>
-        <li class="flex items-start gap-2.5"><i data-lucide="check" class="w-5 h-5 text-[#DC183C] shrink-0 mt-0.5"></i><b>Private messaging</b> &amp; connection requests</li>
-        <li class="flex items-start gap-2.5"><i data-lucide="check" class="w-5 h-5 text-[#DC183C] shrink-0 mt-0.5"></i><b>50% off all live events</b> — Founders Connect, Pitch Days, summits</li>
-        <li class="flex items-start gap-2.5"><i data-lucide="check" class="w-5 h-5 text-[#DC183C] shrink-0 mt-0.5"></i><b>Monthly live webinars</b> with operators &amp; experts</li>
-        <li class="flex items-start gap-2.5"><i data-lucide="check" class="w-5 h-5 text-[#DC183C] shrink-0 mt-0.5"></i><b>Exclusive partner deals</b> — banking, accounting, software</li>
-        <li class="flex items-start gap-2.5"><i data-lucide="check" class="w-5 h-5 text-[#DC183C] shrink-0 mt-0.5"></i><b>Premium templates &amp; downloads</b> — pitch decks, contracts</li>
-        <li class="flex items-start gap-2.5"><i data-lucide="check" class="w-5 h-5 text-[#DC183C] shrink-0 mt-0.5"></i><b>Profile boost</b> — appear in member discovery</li>
+        <li class="flex items-start gap-2.5 font-semibold text-[#121A21]"><i data-lucide="check-check" class="w-5 h-5 text-[#DC183C] shrink-0 mt-0.5"></i>Everything Standard members get, plus the full Workspace:</li>
+        <li class="flex items-start gap-2.5"><i data-lucide="check" class="w-5 h-5 text-[#DC183C] shrink-0 mt-0.5"></i><b>My Success Plan</b> — every recommended action, broken into steps you tick off</li>
+        <li class="flex items-start gap-2.5"><i data-lucide="check" class="w-5 h-5 text-[#DC183C] shrink-0 mt-0.5"></i><b>Compliance Calendar</b> — filing deadlines generated for your business, and a filed/verified tracker</li>
+        <li class="flex items-start gap-2.5"><i data-lucide="check" class="w-5 h-5 text-[#DC183C] shrink-0 mt-0.5"></i><b>Cash Flow Tracker</b> — log your numbers weekly, see the trend before it's a crisis</li>
+        <li class="flex items-start gap-2.5"><i data-lucide="check" class="w-5 h-5 text-[#DC183C] shrink-0 mt-0.5"></i><b>Funding-Ready Document Vault</b> — your pack tracked to expiry, credited from real applications</li>
+        <li class="flex items-start gap-2.5"><i data-lucide="check" class="w-5 h-5 text-[#DC183C] shrink-0 mt-0.5"></i><b>Real funding status</b> in your Workspace — not generic loan education</li>
+        <li class="flex items-start gap-2.5"><i data-lucide="check" class="w-5 h-5 text-[#DC183C] shrink-0 mt-0.5"></i><b>Programme matching</b> — saved and tracked against your weakest area</li>
       </ul>
       <a href="public-auth.html#join" class="mt-7 h-12 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold transition flex items-center justify-center gap-2">Go Premium <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
       <p class="mt-3 text-center text-xs text-[#6A7581]">Cancel anytime. No hidden fees.</p>
@@ -293,86 +292,70 @@
 </section>
 
 <!-- ===================== FEATURE COMPARISON TABLE — 3 columns ===================== -->
-<section id="compare" data-section-label="Compare plans" class="max-w-5xl mx-auto px-4 sm:px-6 py-16 sm:py-20">
-  <div class="text-center mb-10">
-    <h2 class="font-jakarta font-extrabold text-2xl sm:text-3xl">Compare every feature, side by side</h2>
-    <p class="mt-2 text-[#6A7581] text-sm max-w-xl mx-auto">Here is what each tier unlocks.</p>
-  </div>
-  <div class="bg-white rounded-2xl border border-[#E7EBEF] overflow-hidden">
-    <table class="w-full text-sm">
-      <thead>
-        <tr class="bg-[#0C1F31] text-white">
-          <th class="text-left font-jakarta font-bold px-4 sm:px-6 py-4">Feature</th>
-          <th class="font-jakarta font-bold px-3 py-4 w-24 sm:w-32">Standard</th>
-          <th class="font-jakarta font-bold px-3 py-4 w-24 sm:w-32"><span class="inline-flex items-center gap-1.5"><i data-lucide="crown" class="w-4 h-4 text-[#FF9900]"></i>Premium</span></th>
-        </tr>
-      </thead>
-      <tbody id="compareBody"></tbody>
-    </table>
-  </div>
-  <div class="mt-6 flex flex-col sm:flex-row items-center justify-center gap-3">
-    <a href="public-auth.html#join" class="inline-flex items-center justify-center gap-2 h-11 px-6 rounded-full bg-[#0C1F31] hover:bg-[#16314a] text-white font-bold transition">Join the SME Hub</a>
-    <a href="public-auth.html#join" class="inline-flex items-center justify-center gap-2 h-11 px-6 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold transition">Go Premium <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
-  </div>
-</section>
-
-<!-- ===================== WHAT CHANGES WHEN YOU UPGRADE ===================== -->
-<section id="upgrade-changes" data-section-label="What changes with Premium" class="bg-white border-y border-[#E7EBEF]">
-  <div class="max-w-5xl mx-auto px-4 sm:px-6 py-16 sm:py-20">
-    <div class="text-center mb-10">
+<!-- ===================== WHAT PREMIUM ADDS — module cards, not a spreadsheet ===================== -->
+<section id="compare" data-section-label="What Premium adds" class="bg-white border-y border-[#E7EBEF]">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 py-16 sm:py-20">
+    <div class="text-center max-w-2xl mx-auto mb-12">
       <p class="text-[11px] font-bold uppercase tracking-widest text-[#DC183C]">The Premium difference</p>
-      <h2 class="font-jakarta font-extrabold text-2xl sm:text-3xl mt-2">Five things only Premium unlocks</h2>
-      <p class="mt-3 text-[#6A7581] text-sm max-w-xl mx-auto">Standard is generous. Premium is for when you want the room.</p>
+      <h2 class="font-jakarta font-extrabold text-2xl sm:text-3xl mt-2">Same modules. A very different level of help.</h2>
+      <p class="mt-3 text-[#6A7581] text-sm">Standard gives you the score and a preview of what to do. Premium is the tracked, save-as-you-go version of the same thing.</p>
     </div>
-    <div class="grid sm:grid-cols-2 lg:grid-cols-5 gap-5">
-      <div class="rounded-2xl border border-[#E7EBEF] p-6 card-lift">
-        <div class="w-12 h-12 rounded-xl bg-[#FDECEF] text-[#DC183C] grid place-items-center mb-4"><i data-lucide="target" class="w-6 h-6"></i></div>
-        <h3 class="font-jakarta font-bold text-base">Priority funding</h3>
-        <p class="mt-1.5 text-sm text-[#6A7581]">Your application is pushed to the front of funder queues — we match you proactively.</p>
-      </div>
-      <div class="rounded-2xl border border-[#E7EBEF] p-6 card-lift">
-        <div class="w-12 h-12 rounded-xl bg-[#FDECEF] text-[#DC183C] grid place-items-center mb-4"><i data-lucide="send" class="w-6 h-6"></i></div>
-        <h3 class="font-jakarta font-bold text-base">Private messaging</h3>
-        <p class="mt-1.5 text-sm text-[#6A7581]">DM any member, send connection requests, build the network around your business.</p>
-      </div>
-      <div class="rounded-2xl border border-[#E7EBEF] p-6 card-lift">
-        <div class="w-12 h-12 rounded-xl bg-[#FFF1E0] text-[#AE6B0A] grid place-items-center mb-4"><i data-lucide="ticket-percent" class="w-6 h-6"></i></div>
-        <h3 class="font-jakarta font-bold text-base">50% off events</h3>
-        <p class="mt-1.5 text-sm text-[#6A7581]">Half-price on every live event — Founders Connect, Pitch Days, summits.</p>
-      </div>
-      <div class="rounded-2xl border border-[#E7EBEF] p-6 card-lift">
-        <div class="w-12 h-12 rounded-xl bg-[#FFF1E0] text-[#AE6B0A] grid place-items-center mb-4"><i data-lucide="video" class="w-6 h-6"></i></div>
-        <h3 class="font-jakarta font-bold text-base">Monthly webinars</h3>
-        <p class="mt-1.5 text-sm text-[#6A7581]">Live sessions with operators &amp; experts, plus on-demand replays.</p>
-      </div>
-      <div class="rounded-2xl border border-[#E7EBEF] p-6 card-lift">
-        <div class="w-12 h-12 rounded-xl bg-[#E4F5EE] text-[#29A37A] grid place-items-center mb-4"><i data-lucide="badge-percent" class="w-6 h-6"></i></div>
-        <h3 class="font-jakarta font-bold text-base">Member-only deals</h3>
-        <p class="mt-1.5 text-sm text-[#6A7581]">Partner discounts on software, banking, accounting — worth more than the membership.</p>
-      </div>
-    </div>
-  </div>
-</section>
 
-<!-- TESTIMONIAL / TRUST BAND -->
-<section class="max-w-5xl mx-auto px-4 sm:px-6 py-16 sm:py-20">
-  <div class="grid md:grid-cols-2 gap-6">
-    <div class="rounded-2xl bg-[#0C1F31] text-white p-7 relative overflow-hidden">
-      <div class="absolute inset-0 dot-pattern opacity-30 pointer-events-none"></div>
-      <i data-lucide="quote" class="w-8 h-8 text-[#FF9900] relative"></i>
-      <p class="mt-4 text-white/90 leading-relaxed relative">"Premium paid for itself in the first month. The funding match alone connected me to a grant I'd never have found on my own."</p>
-      <div class="mt-5 flex items-center gap-3 relative">
-        <div class="w-10 h-10 rounded-full bg-[#DC183C] grid place-items-center font-jakarta font-bold text-sm">TM</div>
-        <div><p class="font-semibold text-sm">Thandi M.</p><p class="text-xs text-white/50">Founder, Cape Town</p></div>
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+      <div class="compare-card rounded-2xl border border-[#E7EBEF] p-6 card-lift bg-white">
+        <div class="flex items-center gap-3 mb-4">
+          <div class="w-11 h-11 rounded-xl bg-[#FDECEF] text-[#DC183C] grid place-items-center shrink-0"><i data-lucide="list-checks" class="w-5 h-5"></i></div>
+          <h3 class="font-jakarta font-bold text-base">Success Plan</h3>
+        </div>
+        <div class="tier-row tier-row--std"><i data-lucide="circle" class="w-3.5 h-3.5"></i><span><b>Standard</b> — your top 3 recommended actions</span></div>
+        <div class="tier-row tier-row--prem"><i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i><span><b>Premium</b> — the full plan, every action, with steps you tick off</span></div>
+      </div>
+
+      <div class="compare-card rounded-2xl border border-[#E7EBEF] p-6 card-lift bg-white">
+        <div class="flex items-center gap-3 mb-4">
+          <div class="w-11 h-11 rounded-xl bg-[#FFF1E0] text-[#AE6B0A] grid place-items-center shrink-0"><i data-lucide="calendar-check" class="w-5 h-5"></i></div>
+          <h3 class="font-jakarta font-bold text-base">Compliance</h3>
+        </div>
+        <div class="tier-row tier-row--std"><i data-lucide="circle" class="w-3.5 h-3.5"></i><span><b>Standard</b> — a preview of what's due</span></div>
+        <div class="tier-row tier-row--prem"><i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i><span><b>Premium</b> — your full filing calendar (EMP201, UIF, VAT), mark filings done &amp; keep history</span></div>
+      </div>
+
+      <div class="compare-card rounded-2xl border border-[#E7EBEF] p-6 card-lift bg-white">
+        <div class="flex items-center gap-3 mb-4">
+          <div class="w-11 h-11 rounded-xl bg-[#E4F5EE] text-[#29A37A] grid place-items-center shrink-0"><i data-lucide="banknote" class="w-5 h-5"></i></div>
+          <h3 class="font-jakarta font-bold text-base">Funding</h3>
+        </div>
+        <div class="tier-row tier-row--std"><i data-lucide="circle" class="w-3.5 h-3.5"></i><span><b>Standard</b> — browse listings &amp; apply</span></div>
+        <div class="tier-row tier-row--prem"><i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i><span><b>Premium</b> — your real application status, plus a funding-ready Document Vault tracked to expiry</span></div>
+      </div>
+
+      <div class="compare-card rounded-2xl border border-[#E7EBEF] p-6 card-lift bg-white">
+        <div class="flex items-center gap-3 mb-4">
+          <div class="w-11 h-11 rounded-xl bg-[#FDECEF] text-[#DC183C] grid place-items-center shrink-0"><i data-lucide="trending-up" class="w-5 h-5"></i></div>
+          <h3 class="font-jakarta font-bold text-base">Cash Flow</h3>
+        </div>
+        <div class="tier-row tier-row--std tier-row--off"><i data-lucide="x" class="w-3.5 h-3.5"></i><span><b>Standard</b> — not included</span></div>
+        <div class="tier-row tier-row--prem"><i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i><span><b>Premium</b> — log your numbers weekly and see the trend before it's a crisis</span></div>
+      </div>
+
+      <div class="compare-card rounded-2xl border border-[#E7EBEF] p-6 card-lift bg-white">
+        <div class="flex items-center gap-3 mb-4">
+          <div class="w-11 h-11 rounded-xl bg-[#FFF1E0] text-[#AE6B0A] grid place-items-center shrink-0"><i data-lucide="compass" class="w-5 h-5"></i></div>
+          <h3 class="font-jakarta font-bold text-base">Programmes</h3>
+        </div>
+        <div class="tier-row tier-row--std"><i data-lucide="circle" class="w-3.5 h-3.5"></i><span><b>Standard</b> — browse programmes matched to your check-in</span></div>
+        <div class="tier-row tier-row--prem"><i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i><span><b>Premium</b> — save &amp; track matches against your weakest area</span></div>
+      </div>
+
+      <div class="compare-card rounded-2xl border-2 border-dashed border-[#E7EBEF] p-6 flex flex-col items-center justify-center text-center">
+        <p class="font-jakarta font-bold text-sm text-[#121A21]">Everything else is the same</p>
+        <p class="text-xs text-[#6A7581] mt-1.5 max-w-[22ch]">Community feed, articles, resources &amp; starter downloads — Standard and Premium both get all of it.</p>
       </div>
     </div>
-    <div class="rounded-2xl bg-white border border-[#E7EBEF] p-7">
-      <i data-lucide="quote" class="w-8 h-8 text-[#DC183C]"></i>
-      <p class="mt-4 text-[#121A21] leading-relaxed">"The private network and webinars changed how I run my business. I've made partnerships I genuinely couldn't have made anywhere else."</p>
-      <div class="mt-5 flex items-center gap-3">
-        <div class="w-10 h-10 rounded-full bg-[#29A37A] text-white grid place-items-center font-jakarta font-bold text-sm">SK</div>
-        <div><p class="font-semibold text-sm">Sipho K.</p><p class="text-xs text-[#6A7581]">Retail SME, Durban</p></div>
-      </div>
+
+    <div class="mt-10 flex flex-col sm:flex-row items-center justify-center gap-3">
+      <a href="public-auth.html#join" class="inline-flex items-center justify-center gap-2 h-11 px-6 rounded-full border-2 border-[#0C1F31] text-[#0C1F31] hover:bg-[#0C1F31] hover:text-white font-bold transition">Join the SME Hub</a>
+      <a href="public-auth.html#join" class="inline-flex items-center justify-center gap-2 h-11 px-6 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold transition">Go Premium <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
     </div>
   </div>
 </section>
@@ -392,7 +375,7 @@
   <div class="absolute inset-0 dot-pattern opacity-70 pointer-events-none"></div>
   <div class="max-w-3xl mx-auto px-4 sm:px-6 py-16 sm:py-20 relative text-center">
     <h2 class="font-jakarta font-extrabold text-2xl sm:text-4xl">Ready to unlock the full hub?</h2>
-    <p class="mt-3 text-white/70 max-w-xl mx-auto">Join 50,000+ South African entrepreneurs. Start at R0, upgrade when you're ready.</p>
+    <p class="mt-3 text-white/70 max-w-xl mx-auto">Start at R0, upgrade to the Workspace when you're ready.</p>
     <div class="mt-7 flex flex-col sm:flex-row items-center justify-center gap-3">
       <a href="public-auth.html#join" class="h-12 px-7 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold transition inline-flex items-center justify-center gap-2">Upgrade to Premium <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
       <a href="public-auth.html#join" class="h-12 px-7 rounded-full border border-white/30 text-white hover:bg-white/10 font-bold transition inline-flex items-center justify-center">Create account</a>
@@ -420,7 +403,8 @@
           <a href="public-about.html" class="hover:text-white transition">About</a><span class="text-white/20">·</span>
           <a href="public-contact.html" class="hover:text-white transition">Contact</a><span class="text-white/20">·</span>
           <a href="public-advertise.html" class="hover:text-white transition">Advertise</a><span class="text-white/20">·</span>
-          <a href="public-help.html" class="hover:text-white transition">Help Center</a>
+          <a href="public-help.html" class="hover:text-white transition">Help Center</a><span class="text-white/20">·</span>
+          <a href="logo-files.html" class="hover:text-white transition">Logo Files</a>
         </div>
       </div>
       <div>
@@ -485,57 +469,15 @@
     else{amt.textContent='990';per.textContent='/year';note.innerHTML='Billed annually — <span class="font-bold text-[#AE6B0A]">save 2 months</span>. Cancel anytime.';}
   }
 
-  /* ---- Comparison table (Standard · Premium) ---- */
-  const COMPARE=[
-    {group:'Community & Networking',rows:[
-      ['Browse the community feed',                 true, true],
-      ['Post, reply & react',                       true, true],
-      ['Follow other members',                      true, true],
-      ['Private messaging & connection requests',   false,true],
-      ['Profile boost in member discovery',         false,true],
-    ]},
-    {group:'Funding',rows:[
-      ['Browse funding listings',                   true, true],
-      ['Apply for funding',                         true, true],
-      ['Priority funding matching',                 false,true],
-    ]},
-    {group:'Content & Learning',rows:[
-      ['Read every article & guide',                true, true],
-      ['Read newsletter issues',                    true, true],
-      ['Download starter ebooks & templates',       true, true],
-      ['Premium templates (decks, contracts)',      false,true],
-      ['Monthly live webinars',                     false,true],
-    ]},
-    {group:'Events & Deals',rows:[
-      ['Browse upcoming events',                    true, true],
-      ['Browse partner deals',                      true, true],
-      ['50% off all live events',                   false,true],
-      ['Exclusive partner deals',                   false,true],
-    ]},
-  ];
-  function cell(on){return on
-    ? '<td class="px-3 py-3.5 text-center"><i data-lucide="check" class="w-5 h-5 text-[#29A37A] inline"></i></td>'
-    : '<td class="px-3 py-3.5 text-center"><i data-lucide="minus" class="w-5 h-5 text-slate-300 inline"></i></td>';}
-  (function renderCompare(){
-    let html='';
-    COMPARE.forEach(g=>{
-      html+=`<tr class="bg-[#FCFCFC]"><td colspan="3" class="px-4 sm:px-6 pt-5 pb-2 font-jakarta font-extrabold text-xs uppercase tracking-wider text-[#DC183C]">${esc(g.group)}</td></tr>`;
-      g.rows.forEach(r=>{
-        html+=`<tr class="border-t border-[#E7EBEF]"><td class="px-4 sm:px-6 py-3.5 text-[#121A21]">${esc(r[0])}</td>${cell(r[1])}${cell(r[2])}</tr>`;
-      });
-    });
-    document.getElementById('compareBody').innerHTML=html;
-  })();
-
   /* ---- FAQ ---- */
   const FAQ=[
-    ['Do I pay anything to join?','No. Standard membership is R0, forever. You can post, reply, follow members, apply for funding and download starter resources without ever entering a card.'],
-    ['What can I do as a Standard member?','Quite a lot. Standard members can post in the community feed, reply and react to other posts, follow members, apply for funding, subscribe to newsletter editions, download starter templates and ebooks, and run a personal profile. No card needed, no time limit.'],
-    ['What’s the difference between Standard and Premium?','Standard is for being part of the conversation. Premium is for accelerating it — priority funding matching, private messaging, 50% off live events, monthly live webinars, exclusive partner deals and premium downloadable templates.'],
+    ['Do I pay anything to join?','No. Standard membership is R0, forever. You can take the Business Health Check, see your top 3 recommended actions, post in the community and apply for funding without ever entering a card.'],
+    ['What’s in the Business Health Check?','A 3-minute check-in that scores your business out of 100 across five areas — Cash flow, Compliance, Customers, Operations and Growth readiness. It ranks your top recommended actions using the same engine that powers the full Success Plan, so the advice is real, not generic.'],
+    ['What’s the difference between Standard and Premium?','Standard gives you the score and a preview of what to do next. Premium unlocks the full Workspace where you actually do it: the complete Success Plan with step tracking, a Compliance Calendar generated for your business, a Cash Flow Tracker, and a funding-ready Document Vault.'],
     ['Can I cancel Premium anytime?','Yes. Premium has no lock-in. Cancel anytime from your account settings and you’ll keep Premium access until the end of your current billing period — then drop back to Standard, never deactivated.'],
     ['How does billing work?','Premium is R99/month billed monthly, or R990/year billed annually (saving you two months). Subscription renews automatically until you cancel.'],
     ['What payment methods do you accept?','Major South African debit and credit cards, plus instant EFT through our secure payment partner. All payments are processed securely in ZAR.'],
-    ['Is the funding match Premium-only?','No — any Standard member can apply for funding through SME South Africa. Premium gives you <i>priority</i> matching: your application is pushed to the front of funder queues and we proactively match you to relevant opportunities.'],
+    ['Does Premium guarantee funding approval?','No — nobody can guarantee that. What Premium gives you is your real, current application status inside your Workspace, and a Document Vault that credits documents you have already submitted, so you are not asked for the same bank statements twice.'],
     ['Is there a student or startup discount?','We run periodic discounts for students and early-stage startups. Reach out via the contact page and we’ll let you know what’s currently running.'],
   ];
   (function renderFaq(){
@@ -556,7 +498,7 @@
   }
 
   /* ---- Dev mode ---- */
-  const BRIEF={title:'Membership & Pricing',sub:'Two tiers: Standard (R0) · Premium (R99/mo or R990/yr)',purpose:'Single source of truth for membership tiers. Drives Standard sign-ups (the primary conversion — they unlock community posting + funding applications) and Premium upgrades (the secondary, revenue conversion). Replaces the legacy /premium/, /join/ and /plans/membership/ pages. <b>Word usage rule:</b> never use the word "fr&#101;e" in any user-facing copy on this platform — say "R0", "no cost", "starter", or "Standard" instead.',data:'Plans: <code>{id, name, price_monthly, price_annual, features[]}</code>. User: <code>{role: \'standard\' | \'premium\', subscription: {plan, billing_cycle, status, renews_at}}</code>. Visitors (unauthenticated users) are NOT a tier on this page — articles and guides are simply public content gated below the membership layer.',logic:'<b>Capability gating model:</b> Standard members can POST + apply for funding + download starter resources; Premium adds priority matching + private messaging + 50% event discount + member-only deals + premium downloads. WP capabilities map 1:1 to these tiers via MemberPress (or equivalent) — never check tier names in templates, check capabilities. Monthly/annual toggle updates Premium price client-side only (R99/mo or R990/yr). CTAs route to public-auth.html#join; the selected billing cycle and target plan are carried into checkout via query string.',components:'split hero (copy + community preview cards) · value strip (R0 / Premium) · two plan cards · billing toggle · feature comparison table (3 col) · Premium highlight cards · testimonials · FAQ · final CTA.',specs:'<b>Hero:</b> container <code>max-w-7xl</code> = 1280px, padding 56px top+bottom mobile / 80px desktop (<code>py-14 sm:py-20</code>), hero-bg navy gradient (<code>#0C1F31</code>→<code>#2b1626</code>→<code>#5e1a2c</code>) + dot-pattern 70% opacity. 12-col grid at lg, 40px gap mobile / 32px desktop, items-center — left copy col spans 7, right preview col spans 5 (min-height 420px).<br/><b>Breadcrumb:</b> 12px <code>rgba(255,255,255,0.55)</code>, divider <code>rgba(255,255,255,0.30)</code>, current <code>rgba(255,255,255,0.85)</code> weight 500, 20px bottom margin.<br/><b>Hero eyebrow pill:</b> 11px weight 700 uppercase tracking widest <code>#FF9900</code>, bg <code>#FF9900</code>/10, border 1px <code>#FF9900</code>/30, padding 12px x / 6px y, rounded-full, Lucide `sparkles` 14×14.<br/><b>H1:</b> Plus Jakarta Sans weight 800 — 36px mobile / 48px sm / 60px lg (<code>text-4xl sm:text-5xl lg:text-6xl</code>) — leading 1.05, tight tracking, 16px top margin; highlighted "actually build" in <code>#FF9900</code>.<br/><b>Hero sub:</b> 18px (<code>text-lg</code>) <code>rgba(255,255,255,0.75)</code>, max-width 576px (<code>max-w-xl</code>), 20px top margin; "no cost, forever" bold white.<br/><b>Hero CTAs:</b> 28px top margin, 12px gap. Primary height 48px (<code>h-12</code>) padding-x 28px (<code>px-7</code>) rounded-full bg <code>#DC183C</code> hover <code>#B0142F</code> white weight 700, Lucide `arrow-right` 16×16. Secondary height 48px rounded-full 1px border <code>rgba(255,255,255,0.25)</code>, hover bg white/10.<br/><b>Preview card 1 (feed):</b> width 420px, rounded-2xl (16px), rotate -1.5deg, layered drop shadow, white bg with <code>#121A21</code> text; header border-bottom 1px <code>#E7EBEF</code>; logo tile 28×28 rounded-lg (8px) <code>#0C1F31</code>; online dot <code>#29A37A</code> pulsing 6px; stat pill bg <code>#0C1F31</code> with <code>#29A37A</code> delta and Lucide `trending-up` 16×16 <code>#FF9900</code>; post row rounded-xl 1px border <code>#E7EBEF</code>, avatar 28×28 rounded-full <code>#0C1F31</code>.<br/><b>Preview card 2 (connections):</b> width 280px, rounded-2xl, rotate 2deg (hidden on mobile); avatar chips 28×28 rounded-full in <code>#0C1F31</code>/<code>#DC183C</code>/<code>#FF9900</code>/<code>#29A37A</code>/<code>#0C1F31</code>; progress ring 48×48 SVG, track <code>#E7EBEF</code>, progress <code>#29A37A</code>, 73% label Plus Jakarta weight 800.<br/><br/><b>Value strip:</b> bg <code>#FCFCFC</code>, bottom border 1px <code>#E7EBEF</code>, container <code>max-w-7xl</code> padding 40px vertical (<code>py-10</code>), 2-col grid at sm, 24px gap. Icon tile 40×40 (<code>w-10 h-10</code>) rounded-xl (12px) — tile 1 bg <code>#FDECEF</code> icon <code>#DC183C</code> Lucide `message-square-text`, tile 2 bg <code>#FFF1E0</code> icon <code>#AE6B0A</code> Lucide `crown` — both 20×20. Title Plus Jakarta Sans weight 800 14px (<code>text-sm</code>). Body 12px (<code>text-xs</code>) <code>#6A7581</code>, 4px top margin.<br/><br/><b>Plans section:</b> container <code>max-w-6xl</code> = 1152px, 56px top padding mobile / 80px desktop (<code>pt-14 sm:pt-20</code>). Heading block <code>max-w-2xl</code> = 672px centered, 40px bottom margin.<br/><b>Kicker:</b> 11px weight 700 uppercase tracking widest <code>#DC183C</code>.<br/><b>Section H2:</b> Plus Jakarta Sans weight 800 — 30px mobile / 36px desktop (<code>text-3xl sm:text-4xl</code>) — tight tracking, 8px top margin.<br/><b>Section sub:</b> 16px <code>#6A7581</code>, 16px top margin.<br/><b>Billing toggle:</b> inline-flex bg <code>#0C1F31</code> rounded-full 4px pad, 14px weight 700; pills rounded-full padding 20px x / 8px y — active bg <code>#FFFFFF</code> text <code>#121A21</code> soft shadow, inactive <code>rgba(255,255,255,0.70)</code>. Save badge 12px weight 700 <code>#AE6B0A</code> bg <code>#FFF1E0</code> padding 12px/4px rounded-full, Lucide `sparkles` 14×14.<br/><b>Plan cards grid:</b> 2 columns at md, 24px gap, <code>max-w-4xl</code> = 896px, items-stretch.<br/><b>Standard card:</b> bg white, 2px border <code>#0C1F31</code>, radius 20px (<code>tier-card</code> rounded 1.25rem), padding 28px (<code>p-7</code>), hover lift -3px + shadow. Ribbon badge absolute -12px top, bg <code>#0C1F31</code> white 10px weight 800 uppercase padding 12px/4px rounded-full. Icon tile 44×44 (<code>w-11 h-11</code>) rounded-xl bg <code>#FDECEF</code> icon <code>#DC183C</code> `message-square-text` 20×20. H3 Plus Jakarta weight 800 20px (<code>text-xl</code>). Price "R0" Plus Jakarta weight 800 36px (<code>text-4xl</code>), suffix "forever" 14px <code>#6A7581</code>. Feature list 24px top margin, 12px row spacing, 14px text, Lucide `check` 20×20 <code>#DC183C</code>. CTA 28px top margin height 48px rounded-full bg <code>#0C1F31</code> hover <code>#16314a</code> white weight 700, `arrow-right` 16×16. Fine print 12px <code>#6A7581</code> centered.<br/><b>Premium card (featured):</b> bg white, 2px border <code>#DC183C</code>, extra shadow-xl tinted <code>#DC183C</code>/5. Ribbon badge bg <code>#FF9900</code> text <code>#0C1F31</code> 11px weight 800, Lucide `star` 14×14. Icon tile 44×44 rounded-xl gradient <code>#DC183C</code>→<code>#FF9900</code> white `crown` 20×20. Price "R" + amount Plus Jakarta weight 800 36px, period suffix 14px <code>#6A7581</code> (monthly R99 /month, annual R990 /year). First feature row weight 600 <code>#121A21</code> with Lucide `check-check` 20×20. CTA height 48px rounded-full bg <code>#DC183C</code> hover <code>#B0142F</code> white weight 700.<br/><br/><b>Comparison table section:</b> container <code>max-w-5xl</code> = 1024px, padding 64px vertical mobile / 80px desktop (<code>py-16 sm:py-20</code>). H2 Plus Jakarta weight 800 24px mobile / 30px desktop (<code>text-2xl sm:text-3xl</code>) centered, sub 14px <code>#6A7581</code> max-width 576px. Table card rounded-2xl 1px border <code>#E7EBEF</code>, 14px text.<br/><b>Table header:</b> bg <code>#0C1F31</code> white, Feature column left-aligned Plus Jakarta weight 700 padding 16px x mobile / 24px desktop and 16px y; Standard &amp; Premium columns Plus Jakarta weight 700 padding 12px x / 16px y, width 96px mobile / 128px desktop, Lucide `crown` 16×16 <code>#FF9900</code> on Premium.<br/><b>Group rows:</b> bg <code>#FCFCFC</code>, Plus Jakarta weight 800 12px uppercase tracking wider <code>#DC183C</code>, padding 20px top / 8px bottom.<br/><b>Feature rows:</b> top border 1px <code>#E7EBEF</code>, label padding 16–24px x / 14px y colour <code>#121A21</code>; included cell Lucide `check` 20×20 <code>#29A37A</code>, excluded cell Lucide `minus` 20×20 slate-300 (<code>#CBD5E1</code>), centered.<br/><b>Table CTAs:</b> 24px top margin, height 44px (<code>h-11</code>) padding-x 24px rounded-full — one bg <code>#0C1F31</code> hover <code>#16314a</code>, one bg <code>#DC183C</code> hover <code>#B0142F</code>, white weight 700.<br/><br/><b>Premium-difference section:</b> bg white, top+bottom border 1px <code>#E7EBEF</code>, container <code>max-w-5xl</code>, 64px/80px vertical padding. Kicker 11px weight 700 uppercase <code>#DC183C</code>; H2 24px/30px 8px top margin; sub 14px <code>#6A7581</code>. Card grid 2 cols sm / 5 cols lg, 20px gap. Cards rounded-2xl 1px border <code>#E7EBEF</code> padding 24px (<code>p-6</code>), hover lift. Icon tile 48×48 (<code>w-12 h-12</code>) rounded-xl 16px bottom margin, Lucide icon 24×24 — tints: `target`/`send` bg <code>#FDECEF</code> <code>#DC183C</code>, `ticket-percent`/`video` bg <code>#FFF1E0</code> <code>#AE6B0A</code>, `badge-percent` bg <code>#E4F5EE</code> <code>#29A37A</code>. Card H3 Plus Jakarta weight 700 16px (<code>text-base</code>); body 14px <code>#6A7581</code> 6px top margin.<br/><br/><b>Testimonials section:</b> container <code>max-w-5xl</code>, 64px/80px vertical padding, 2-col grid at md, 24px gap. Card 1 bg <code>#0C1F31</code> white padding 28px rounded-2xl + dot-pattern 30%, Lucide `quote` 32×32 <code>#FF9900</code>, quote body <code>rgba(255,255,255,0.90)</code>, avatar 40×40 rounded-full bg <code>#DC183C</code> Plus Jakarta weight 700 14px. Card 2 bg white 1px border <code>#E7EBEF</code>, `quote` <code>#DC183C</code>, avatar 40×40 bg <code>#29A37A</code>.<br/><br/><b>FAQ section:</b> bg white, top+bottom border 1px <code>#E7EBEF</code>, container <code>max-w-3xl</code> = 768px, 64px/80px vertical padding. H2 24px/30px centered, 40px bottom margin. Items 12px spacing, each 1px border <code>#E7EBEF</code> rounded-xl (12px) bg white; question button padding 20px x / 16px y weight 600, Lucide `chevron-down` 20×20 <code>#6A7581</code> rotating 180deg on open; answer padding 20px x / 20px bottom, 14px <code>#6A7581</code>.<br/><br/><b>Final CTA band:</b> hero-bg gradient + dot-pattern 70%, container <code>max-w-3xl</code>, 64px/80px vertical padding, centered. H2 Plus Jakarta weight 800 24px mobile / 36px desktop (<code>text-2xl sm:text-4xl</code>); sub 16px <code>rgba(255,255,255,0.70)</code> 12px top margin max-width 576px; CTAs 28px top margin 12px gap — primary height 48px padding-x 28px rounded-full bg <code>#DC183C</code> hover <code>#B0142F</code>, secondary height 48px rounded-full 1px border <code>rgba(255,255,255,0.30)</code> hover white/10; fine print 12px <code>rgba(255,255,255,0.50)</code> 20px top margin.'};
+  const BRIEF={title:'Membership & Pricing',sub:'Two tiers: Standard (R0) · Premium (R99/mo or R990/yr) — grounded in the real SME Success Core workspace',purpose:'Single source of truth for membership tiers, rebuilt to sell the actual member Workspace (plugin: SME Success Core, live on staging at /workspace/) rather than a generic community-perks list. The Workspace ships eight modules — Overview, My Success Plan, Compliance, Programmes, Funding, Cash Flow, Documents, Resources — plus the Business Health Check intake that feeds them all. This page&rsquo;s job is to convert on that: Standard sign-ups get the check-in and a preview (the same code path a guest already gets, per <code>SMESC_Guest::OPEN_VIEWS</code>); Premium is where the preview becomes a tracked, tick-off-able plan. <b>Word usage rule:</b> never use the word "fr&#101;e" in any user-facing copy on this platform — say "R0", "no cost", "starter", or "Standard" instead.',data:'Plans: <code>{id, name, price_monthly, price_annual, features[]}</code>. User: <code>{role: \'standard\' | \'premium\', subscription: {plan, billing_cycle, status, renews_at}}</code>. The Health Check itself writes one immutable row per check-in to <code>smesc_health_checks</code>; dimension scores are Cash flow / Compliance / Customers / Operations / Growth readiness. Visitors (unauthenticated users) are NOT a tier on this page — articles and guides are simply public content gated below the membership layer.',logic:'<b>Capability gating model:</b> Standard members get the check-in, the top-3 action preview, community posting and funding applications — the same open views a logged-out guest already sees, per the module&rsquo;s own rule that a guest and a member answering identically must produce identical results (no second, drifting scoring path). Premium is the account-only tracking layer on top: full Success Plan with per-step progress (<code>smesc_action_state</code>), the generated Compliance Calendar (<code>smesc_compliance_items</code>), Cash Flow log (<code>smesc_cashflow_entries</code>), and the Document Vault (<code>smesc_documents</code>, stored un-routable under WP Engine&rsquo;s edge-blocked <code>_wpeprivate/</code>, served only via a signed, ownership-checked link). WP capabilities should map 1:1 to these tiers via MemberPress — never check tier names in templates, check capabilities. Monthly/annual toggle updates Premium price client-side only (R99/mo or R990/yr). CTAs route to public-auth.html#join; the selected billing cycle and target plan are carried into checkout via query string.',components:'split hero (copy + Health Check score preview) · value strip (R0 / Premium) · two plan cards · billing toggle · module compare cards (Standard vs Premium, no table) · FAQ · final CTA. No community-size stats or member counts anywhere on the page, and no testimonials section — Joel’s call: the page sells the product on its own merits, not on claimed adoption numbers or quotes.',specs:'<b>Hero:</b> container <code>max-w-7xl</code> = 1280px, padding 56px top+bottom mobile / 80px desktop (<code>py-14 sm:py-20</code>), hero-bg navy gradient (<code>#0C1F31</code>→<code>#2b1626</code>→<code>#5e1a2c</code>) + dot-pattern 70% opacity. 12-col grid at lg, 40px gap mobile / 32px desktop, items-center — left copy col spans 7, right preview col spans 5 (min-height 420px).<br/><b>Breadcrumb:</b> 12px <code>rgba(255,255,255,0.55)</code>, divider <code>rgba(255,255,255,0.30)</code>, current <code>rgba(255,255,255,0.85)</code> weight 500, 20px bottom margin.<br/><b>H1:</b> Plus Jakarta Sans weight 800 — 36px mobile / 48px sm / 60px lg (<code>text-4xl sm:text-5xl lg:text-6xl</code>) — leading 1.05, tight tracking, sits directly under the breadcrumb (no separate eyebrow pill — removed, it was redundant with the breadcrumb&rsquo;s own "Membership" crumb); "business stands" rendered in <code>.grad-text</code> (the same red&rarr;orange gradient-clip used on every pillar page&rsquo;s H1 highlight, e.g. public-about.html).<br/><b>Hero sub:</b> kept deliberately short — one sentence on the check, one on the upgrade. 18px (<code>text-lg</code>) <code>rgba(255,255,255,0.75)</code>, max-width 576px (<code>max-w-xl</code>), 20px top margin; "at no cost" bold white.<br/><b>Hero CTAs:</b> 28px top margin, 12px gap. Primary height 48px (<code>h-12</code>) padding-x 28px (<code>px-7</code>) rounded-full bg <code>#DC183C</code> hover <code>#B0142F</code> white weight 700, Lucide `arrow-right` 16×16. Secondary height 48px rounded-full 1px border <code>rgba(255,255,255,0.25)</code>, hover bg white/10.<br/><b>Preview card 1 (feed):</b> width 420px, rounded-2xl (16px), rotate -1.5deg, layered drop shadow, white bg with <code>#121A21</code> text; header border-bottom 1px <code>#E7EBEF</code>, logo tile 28×28 rounded-lg (8px) <code>#0C1F31</code> only (deliberately no member-count or online-count stat — this page does not surface community-size numbers anywhere); post row rounded-xl 1px border <code>#E7EBEF</code>, avatar 28×28 rounded-full <code>#0C1F31</code>.<br/><b>Preview card 2 (Health Check score):</b> width 280px, rounded-2xl, rotate 2deg (hidden on mobile); "Standard" pill bg <code>#E4F5EE</code> text <code>#29A37A</code>; score ring 48×48 SVG, track <code>#E7EBEF</code>, progress <code>#FF9900</code>, 68 label Plus Jakarta weight 800; two dimension bars (Compliance, Cash flow) 6px rounded tracks <code>#E7EBEF</code> with tinted fill.<br/><br/><b>Value strip:</b> bg <code>#FCFCFC</code>, bottom border 1px <code>#E7EBEF</code>, container <code>max-w-7xl</code> padding 40px vertical (<code>py-10</code>), 2-col grid at sm, 24px gap. Icon tile 40×40 (<code>w-10 h-10</code>) rounded-xl (12px) — tile 1 bg <code>#FDECEF</code> icon <code>#DC183C</code> Lucide `message-square-text`, tile 2 bg <code>#FFF1E0</code> icon <code>#AE6B0A</code> Lucide `crown` — both 20×20. Title Plus Jakarta Sans weight 800 14px (<code>text-sm</code>). Body 12px (<code>text-xs</code>) <code>#6A7581</code>, 4px top margin.<br/><br/><b>Plans section:</b> container <code>max-w-6xl</code> = 1152px, 56px top padding mobile / 80px desktop (<code>pt-14 sm:pt-20</code>). Heading block <code>max-w-2xl</code> = 672px centered, 40px bottom margin.<br/><b>Kicker:</b> 11px weight 700 uppercase tracking widest <code>#DC183C</code>.<br/><b>Section H2:</b> Plus Jakarta Sans weight 800 — 30px mobile / 36px desktop (<code>text-3xl sm:text-4xl</code>) — tight tracking, 8px top margin.<br/><b>Section sub:</b> 16px <code>#6A7581</code>, 16px top margin.<br/><b>Billing toggle:</b> inline-flex bg <code>#0C1F31</code> rounded-full 4px pad, 14px weight 700; pills rounded-full padding 20px x / 8px y — active bg <code>#FFFFFF</code> text <code>#121A21</code> soft shadow, inactive <code>rgba(255,255,255,0.70)</code>. Save badge 12px weight 700 <code>#AE6B0A</code> bg <code>#FFF1E0</code> padding 12px/4px rounded-full, Lucide `sparkles` 14×14.<br/><b>Plan cards grid:</b> 2 columns at md, 24px gap, <code>max-w-4xl</code> = 896px, items-stretch.<br/><b>Standard card:</b> bg white, 2px border <code>#0C1F31</code>, radius 20px (<code>tier-card</code> rounded 1.25rem), padding 28px (<code>p-7</code>), hover lift -3px + shadow. Ribbon badge absolute -12px top, bg <code>#0C1F31</code> white 10px weight 800 uppercase padding 12px/4px rounded-full. Icon tile 44×44 (<code>w-11 h-11</code>) rounded-xl bg <code>#FDECEF</code> icon <code>#DC183C</code> `message-square-text` 20×20. H3 Plus Jakarta weight 800 20px (<code>text-xl</code>). Price "R0" Plus Jakarta weight 800 36px (<code>text-4xl</code>), suffix "forever" 14px <code>#6A7581</code>. Feature list 24px top margin, 12px row spacing, 14px text, Lucide `check` 20×20 <code>#DC183C</code>. CTA 28px top margin height 48px rounded-full bg <code>#0C1F31</code> hover <code>#16314a</code> white weight 700, `arrow-right` 16×16. Fine print 12px <code>#6A7581</code> centered.<br/><b>Premium card (featured):</b> bg white, 2px border <code>#DC183C</code>, extra shadow-xl tinted <code>#DC183C</code>/5. Ribbon badge bg <code>#FF9900</code> text <code>#0C1F31</code> 11px weight 800, Lucide `star` 14×14. Icon tile 44×44 rounded-xl gradient <code>#DC183C</code>→<code>#FF9900</code> white `crown` 20×20. Price "R" + amount Plus Jakarta weight 800 36px, period suffix 14px <code>#6A7581</code> (monthly R99 /month, annual R990 /year). First feature row weight 600 <code>#121A21</code> with Lucide `check-check` 20×20. CTA height 48px rounded-full bg <code>#DC183C</code> hover <code>#B0142F</code> white weight 700.<br/><br/><b>What-Premium-adds section (replaces the old feature table — was reading as a spreadsheet, especially on mobile where three cramped columns of checkmarks carry no story):</b> bg white, top+bottom border 1px <code>#E7EBEF</code>, container <code>max-w-6xl</code> = 1152px, 64px/80px vertical padding. Kicker 11px weight 700 uppercase <code>#DC183C</code>; H2 24px/30px 8px top margin, centered <code>max-w-2xl</code>; sub 14px <code>#6A7581</code>.<br/><b>Module cards:</b> grid 2 cols sm / 3 cols lg, 20px gap (<code>gap-5</code>). Each card rounded-2xl 1px border <code>#E7EBEF</code> padding 24px (<code>p-6</code>), hover lift. Header row: icon tile 44×44 (<code>w-11 h-11</code>) rounded-xl per-module tint, Lucide 20×20, plus H3 Plus Jakarta weight 700 16px (<code>text-base</code>) — 12px gap, 16px bottom margin.<br/><b>Tier rows (the replacement for table cells):</b> two stacked lines per card, not a grid — <code>.tier-row</code> flex row, 13px text, 8px icon gap, dashed 1px top border between the two rows. Standard line: Lucide `circle` 14×14 slate-300 (or `x` <code>#DC183C</code>/55% when not included), text <code>#6A7581</code>, "Standard" label bold <code>#121A21</code>. Premium line: Lucide `check-circle-2` 14×14 <code>#29A37A</code>, text <code>#121A21</code> weight 500, "Premium" label bold <code>#DC183C</code>.<br/><b>Sixth card:</b> dashed 2px border <code>#E7EBEF</code>, no icon tile, centered text — "everything else is the same" reassurance so the grid doesn&rsquo;t imply community/content is also tiered when it isn&rsquo;t.<br/><b>Section CTAs:</b> 40px top margin (<code>mt-10</code>), height 44px (<code>h-11</code>) padding-x 24px rounded-full — Standard 2px border <code>#0C1F31</code> text <code>#0C1F31</code> hover fill navy/white, Premium bg <code>#DC183C</code> hover <code>#B0142F</code> white.<br/><br/><b>FAQ section:</b> bg white, top+bottom border 1px <code>#E7EBEF</code>, container <code>max-w-3xl</code> = 768px, 64px/80px vertical padding. H2 24px/30px centered, 40px bottom margin. Items 12px spacing, each 1px border <code>#E7EBEF</code> rounded-xl (12px) bg white; question button padding 20px x / 16px y weight 600, Lucide `chevron-down` 20×20 <code>#6A7581</code> rotating 180deg on open; answer padding 20px x / 20px bottom, 14px <code>#6A7581</code>.<br/><br/><b>Final CTA band:</b> hero-bg gradient + dot-pattern 70%, container <code>max-w-3xl</code>, 64px/80px vertical padding, centered. H2 Plus Jakarta weight 800 24px mobile / 36px desktop (<code>text-2xl sm:text-4xl</code>); sub 16px <code>rgba(255,255,255,0.70)</code> 12px top margin max-width 576px; CTAs 28px top margin 12px gap — primary height 48px padding-x 28px rounded-full bg <code>#DC183C</code> hover <code>#B0142F</code>, secondary height 48px rounded-full 1px border <code>rgba(255,255,255,0.30)</code> hover white/10; fine print 12px <code>rgba(255,255,255,0.50)</code> 20px top margin.'};
   function toggleDevMode(){const on=document.body.classList.toggle('dev-on');const b=document.getElementById('devToggle');if(b)b.classList.toggle('on',on);if(on)showToast('Dev Mode on — tap any ⓘ for implementation notes.');lucide.createIcons();}
   function closeOverlay(id){const el=document.getElementById(id);if(!el)return;el.classList.remove('open');setTimeout(()=>{if(el&&el.parentNode)el.remove();},300);}
   function openBrief(){const b=BRIEF;const sec=(i,l,h)=>`<div class="px-6 py-4 border-t border-slate-100"><p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] flex items-center gap-1.5 mb-2"><i data-lucide="${i}" class="w-3.5 h-3.5"></i>${l}</p><div class="text-sm text-slate-600 leading-relaxed">${h}</div></div>`;document.getElementById('overlay-root').innerHTML=`<div class="ov" id="ov"><div class="ov-bg" onclick="closeOverlay('ov')"></div><div class="drawer"><div class="sticky top-0 z-10 bg-[#0C1F31] text-white px-6 py-5 flex items-start justify-between"><div><p class="text-[10px] font-bold uppercase tracking-widest text-[#FF9900] mb-1">Dev Brief</p><h3 class="font-jakarta font-extrabold text-lg leading-tight">${b.title}</h3><p class="text-xs text-white/60 mt-1">${b.sub}</p></div><button onclick="closeOverlay('ov')" class="text-white/60 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button></div>${sec('target','Purpose',b.purpose)}${sec('database','Data model',b.data)}${sec('git-branch','Logic',b.logic)}${sec('ruler','Spec values',b.specs)}${sec('boxes','Components',b.components)}</div></div>`;requestAnimationFrame(()=>{const o=document.getElementById('ov');if(o)o.classList.add('open');});lucide.createIcons();}
