@@ -40,9 +40,94 @@
     .nav-sec > summary:hover { background: rgba(255,255,255,0.04); }
     .nav-sec[data-dev="1"] > summary { background: rgba(59,130,246,0.06); }
     .nav-sec[data-dev="1"][open] > summary { background: rgba(59,130,246,0.10); }
+
+    /* ---- Boot intro — digital-rain load screen ---- */
+    #bootIntro{position:fixed;inset:0;z-index:9999;background:#05090d;display:flex;align-items:center;justify-content:center;transition:opacity .5s ease;}
+    #bootIntro.fade-out{opacity:0;pointer-events:none;}
+    #bootCanvas{position:absolute;inset:0;width:100%;height:100%;}
+    #bootPanel{position:relative;text-align:center;font-family:monospace;}
+    #bootPanel img{height:40px;width:auto;margin:0 auto 18px;filter:drop-shadow(0 0 14px rgba(41,163,122,.45));}
+    #bootLines{min-height:84px;font-size:11px;letter-spacing:.06em;color:#29A37A;text-align:left;display:inline-block;}
+    #bootLines p{margin:0 0 4px;opacity:0;animation:bootLineIn .25s ease forwards;}
+    #bootLines p.done::before{content:"✓ ";color:#29A37A;}
+    #bootLines p.active::before{content:"› ";color:#FF9900;}
+    @keyframes bootLineIn{to{opacity:1;}}
+    #bootBar{width:220px;height:2px;background:rgba(255,255,255,.08);margin:14px auto 0;border-radius:2px;overflow:hidden;}
+    #bootBarFill{height:100%;width:0%;background:linear-gradient(90deg,#29A37A,#FF9900);transition:width .3s ease;}
   </style>
 </head>
 <body class="bg-[#0C1F31] text-[#121A21] antialiased h-full overflow-hidden">
+
+<div id="bootIntro" aria-hidden="true">
+  <canvas id="bootCanvas"></canvas>
+  <div id="bootPanel">
+    <img src="assets/logo-v1-icon-white.svg" alt="" />
+    <div id="bootLines"></div>
+    <div id="bootBar"><div id="bootBarFill"></div></div>
+  </div>
+</div>
+<script>
+(function(){
+  var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var overlay = document.getElementById('bootIntro');
+  function finish(){
+    if(!overlay) return;
+    overlay.classList.add('fade-out');
+    setTimeout(function(){ if(overlay && overlay.parentNode) overlay.parentNode.removeChild(overlay); }, 550);
+  }
+  if(reduceMotion){ finish(); return; }
+
+  // Digital-rain canvas
+  var canvas = document.getElementById('bootCanvas'), ctx = canvas && canvas.getContext && canvas.getContext('2d');
+  var raf = null;
+  if(ctx){
+    var CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789/+-=<>';
+    var fontSize = 15, columns, drops;
+    function size(){
+      canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+      columns = Math.ceil(canvas.width / fontSize);
+      drops = new Array(columns).fill(0).map(function(){ return Math.random() * -40; });
+    }
+    size();
+    window.addEventListener('resize', size);
+    function draw(){
+      ctx.fillStyle = 'rgba(5,9,13,0.18)';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.font = fontSize + 'px monospace';
+      for(var i=0; i<columns; i++){
+        var ch = CHARS[Math.floor(Math.random()*CHARS.length)];
+        var y = drops[i]*fontSize;
+        ctx.fillStyle = Math.random() < 0.06 ? '#FF9900' : (Math.random() < 0.5 ? '#29A37A' : 'rgba(41,163,122,.55)');
+        ctx.fillText(ch, i*fontSize, y);
+        if(y > canvas.height && Math.random() > 0.975) drops[i] = 0;
+        drops[i]++;
+      }
+      raf = requestAnimationFrame(draw);
+    }
+    raf = requestAnimationFrame(draw);
+  }
+
+  // Boot-sequence lines, mirroring the Mission Control boot style
+  var STEPS = ['Initialising mockup hub…','Loading brand tokens…','Indexing pages…','Ready.'];
+  var host = document.getElementById('bootLines'), fill = document.getElementById('bootBarFill');
+  var els = STEPS.map(function(label){
+    var p = document.createElement('p'); p.textContent = label; p.className = 'active';
+    host.appendChild(p); return p;
+  });
+  var i = 0;
+  function step(){
+    if(i > 0) els[i-1].className = 'done';
+    if(fill) fill.style.width = Math.round(((i+1)/STEPS.length)*100) + '%';
+    if(i >= STEPS.length){ if(raf) cancelAnimationFrame(raf); finish(); return; }
+    els[i].className = 'active';
+    i++;
+    setTimeout(step, 260);
+  }
+  setTimeout(step, 120);
+  // Hard stop — never let a boot screen block the actual hub for long.
+  setTimeout(finish, 2200);
+})();
+</script>
 
 <div class="flex h-full">
   <!-- ===================== SIDEBAR ===================== -->
@@ -67,7 +152,16 @@
         <i data-lucide="arrow-down" class="w-3 h-3 ml-auto text-white/40"></i>
       </button>
     </div>
-    <nav id="nav" class="flex-1 overflow-y-auto no-scrollbar px-3 py-3 space-y-2"></nav>
+    <div class="px-4 pt-1 pb-2 shrink-0">
+      <div class="relative">
+        <i data-lucide="search" class="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-white/30 pointer-events-none"></i>
+        <input id="navSearch" type="text" placeholder="Find a page…" oninput="filterNav(this.value)"
+          class="w-full h-9 pl-9 pr-8 rounded-lg bg-white/5 border border-white/10 text-xs text-white placeholder-white/30 outline-none focus:border-white/25 focus:bg-white/10 transition" />
+        <button id="navSearchClear" onclick="clearNavSearch()" class="hidden absolute right-2 top-1/2 -translate-y-1/2 w-5 h-5 grid place-items-center rounded text-white/40 hover:text-white/70" title="Clear search"><i data-lucide="x" class="w-3.5 h-3.5"></i></button>
+      </div>
+      <p id="navSearchEmpty" class="hidden text-[11px] text-white/30 px-1 pt-2">No pages match &ldquo;<span id="navSearchEmptyQ"></span>&rdquo;.</p>
+    </div>
+    <nav id="nav" class="flex-1 overflow-y-auto no-scrollbar px-3 py-1 space-y-2"></nav>
     <div class="px-5 py-4 border-t border-white/10 text-[11px] text-white/40 shrink-0">
       <p class="text-white/70 font-semibold">© 2026 Tshepho Joel</p>
       <p class="mt-0.5">All rights reserved. Proprietary &amp; confidential.</p>
@@ -266,6 +360,7 @@
       { label:'POPIA',                  file:'public-popia.html',                  icon:'lock' },
       { label:'Advertising Disclosure', file:'public-advertising-disclosure.html', icon:'info' },
       { label:'Sustainability',         file:'public-sustainability.html',         icon:'leaf' },
+      { label:'Pricing / Plans',        file:'public-pricing.html',                icon:'credit-card' },
       { label:'Author page',            file:'public-author.html',                 icon:'feather' },
       { label:'Login / Sign up',        file:'public-auth.html',                   icon:'log-in' }
     ]},
@@ -375,6 +470,23 @@
   // Map file → NAV entry (so DEV section can look up label/group/accent)
   const FILE_INDEX = {};
   NAV.forEach(sec => sec.items.forEach(it => { FILE_INDEX[it.file] = { ...it, group:sec.group, accent:sec.accent }; }));
+
+  // Chunk the (now long) list of topic groups into a few labelled zones, purely visual —
+  // scanning past 12+ flat group headers to find one is the "overwhelming" part.
+  // Anything not listed here (e.g. a custom group created via a MOCKUP_GROUPS override)
+  // falls back to 'Public Site' — a safe default so a new group never renders unlabelled.
+  const SUPERCATEGORY = {
+    'Single Pages':'Public Site', 'Articles':'Public Site', 'Funding':'Public Site', 'Resources':'Public Site',
+    'Glossary':'Public Site', 'Solutions':'Public Site', 'Events':'Public Site', 'Newsletter':'Public Site',
+    'Shop':'Public Site', 'Help and System':'Public Site',
+    'Community':'Community & Members',
+    'Reference':'Reference'
+  };
+  function superCatDivider(name){
+    return `<p data-divider class="flex items-center gap-2 px-1 pt-3 pb-1 text-[9px] font-extrabold uppercase tracking-[0.15em] text-white/30">
+      <span>${name}</span><span class="h-px flex-1 bg-white/10"></span>
+    </p>`;
+  }
 
   // localStorage helpers for section open/close persistence
   function secKey(g){ return 'smeNav:'+g.replace(/\s+/g,'_').toLowerCase(); }
@@ -547,7 +659,19 @@
                 </button>`;
     }
 
+    // Newly-finalised groups can bubble out of supercategory order (see bubbleGroups above),
+    // which would otherwise print the same zone label twice with something else sandwiched
+    // between. Each zone label prints once per render, first time it's needed, never again —
+    // a rare bubbled group just lands without a fresh label rather than duplicating one.
+    let lastSuperCat = null;
+    const shownSuperCats = new Set();
     sortedNav.forEach(sec=>{
+      const superCat = SUPERCATEGORY[sec.group] || 'Public Site';
+      if(superCat !== lastSuperCat && !shownSuperCats.has(superCat)){
+        html += superCatDivider(superCat); shownSuperCats.add(superCat);
+      }
+      lastSuperCat = superCat;
+
       const finalisedItems = sec.items.filter(it=>isLive(it.file));
       const pendingItems   = sec.items.filter(it=>!isLive(it.file));
       const open = getSecState(sec.group, sec.group === currentSection);
@@ -578,7 +702,7 @@
             ${noDevYet.map(it=>navItemButton(it, sec)).join('')}
             ${doneNoNotes.length ? `<p class="px-3 pt-2.5 pb-1 text-[8.5px] uppercase tracking-wider text-white/25 font-bold">Completed development</p>` : ''}
             ${doneNoNotes.map(it=>navItemButton(it, sec)).join('')}
-            ${pendingItems.map(it=>`<div title="Coming soon — not yet completed" class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-semibold text-white/25 cursor-not-allowed select-none">
+            ${pendingItems.map(it=>`<div data-pending-label title="Coming soon — not yet completed" class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-semibold text-white/25 cursor-not-allowed select-none">
                   <i data-lucide="${it.icon}" class="w-4 h-4 shrink-0"></i><span class="truncate">${it.label}</span>
                   <span class="ml-auto text-[8px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded-full bg-white/5 text-white/30 flex items-center gap-1 shrink-0"><i data-lucide="lock" class="w-2.5 h-2.5"></i> Soon</span>
                 </div>`).join('')}
@@ -629,7 +753,9 @@
     if(!isLive(file)) return; // gate: only finalised mockups open via standard lane
     _doLoad(file, group, label, accent, file);
   }
+  let CURRENT_FILE = null;
   function _doLoad(file, group, label, accent, srcUrl){
+    CURRENT_FILE = file;
     document.getElementById('frame').src = srcUrl || file;
     document.getElementById('curGroup').textContent = group;
     document.getElementById('curGroup').style.color = accent || '#AE6B0A';
@@ -649,6 +775,43 @@
     closeSidebar();
   }
   function reloadFrame(){ const f=document.getElementById('frame'); f.src = f.src; }
+
+  // ---- Sidebar search — filters items across every section, including the
+  // workflow lanes (Ready for live / Reviewed / Development). Purely a DOM
+  // show/hide over what buildNav already rendered; clearing just re-runs
+  // buildNav so persisted open/closed section state comes back exactly as it was.
+  function filterNav(qRaw){
+    const q = (qRaw||'').trim().toLowerCase();
+    const clearBtn = document.getElementById('navSearchClear');
+    const emptyEl = document.getElementById('navSearchEmpty');
+    if(clearBtn) clearBtn.classList.toggle('hidden', !q);
+    if(!q){
+      buildNav(CURRENT_FILE);
+      if(emptyEl) emptyEl.classList.add('hidden');
+      return;
+    }
+    document.querySelectorAll('#nav p[data-divider]').forEach(p=> p.style.display = 'none');
+    let anySectionVisible = false;
+    document.querySelectorAll('#nav details.nav-sec').forEach(d=>{
+      const rows = d.querySelectorAll('button.nav-item, [data-pending-label]');
+      let anyMatch = false;
+      rows.forEach(row=>{
+        const match = (row.textContent||'').toLowerCase().includes(q);
+        row.style.display = match ? '' : 'none';
+        if(match) anyMatch = true;
+      });
+      d.style.display = anyMatch ? '' : 'none';
+      if(anyMatch){ d.open = true; anySectionVisible = true; }
+    });
+    if(emptyEl){
+      emptyEl.classList.toggle('hidden', anySectionVisible);
+      const qEl = document.getElementById('navSearchEmptyQ'); if(qEl) qEl.textContent = qRaw.trim();
+    }
+  }
+  function clearNavSearch(){
+    const el = document.getElementById('navSearch');
+    if(el){ el.value=''; filterNav(''); el.focus(); }
+  }
 
   function setVP(mode){
     const wrap = document.getElementById('frameWrap');
