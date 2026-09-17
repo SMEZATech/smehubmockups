@@ -61,35 +61,6 @@ a.dl{display:inline-block;text-decoration:none;font-family:var(--display);font-w
 a.dl.svg{border-color:var(--navy);background:var(--navy);color:#fff}
 a.dl:hover{border-color:var(--red)}
 a.dl:focus-visible{outline:2px solid var(--red);outline-offset:2px}
-.snip{border:1px solid var(--border);border-radius:5px;background:#fff;margin-bottom:16px;
- overflow:hidden}
-.snip-head{display:flex;align-items:center;justify-content:space-between;gap:12px;
- padding:11px 15px;background:var(--surface);border-bottom:1px solid var(--border)}
-.snip-head b{font-family:var(--display);font-size:13.5px}
-.copy{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;
- cursor:pointer;border:1px solid var(--border);background:#fff;color:var(--muted);
- padding:5px 10px;border-radius:3px}
-.copy:hover{border-color:var(--navy);color:var(--navy)}
-.copy.done{border-color:var(--green);color:var(--green)}
-.snip-note{margin:0;padding:11px 15px 0;font-size:13px;color:var(--muted)}
-pre{margin:11px 15px 15px;padding:13px 15px;background:var(--navy);border-radius:4px;
- overflow-x:auto}
-pre code{font-family:var(--mono);font-size:12px;line-height:1.65;color:#cfe0f0;white-space:pre}
-.specs{display:grid;grid-template-columns:auto 1fr;gap:9px 20px;font-size:14px;margin:0}
-.specs dt{font-family:var(--mono);font-size:11.5px;color:var(--navy);font-weight:500;
- white-space:nowrap;padding-top:3px}
-.specs dd{margin:0;color:var(--muted)}
-.dd-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:8px}
-.dd{border:1px solid var(--border);border-radius:5px;padding:18px 20px;background:#fff}
-.dd.do{border-left:3px solid var(--green)}
-.dd.dont{border-left:3px solid var(--red)}
-.dd .lbl{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;
- margin-bottom:9px}
-.dd.do .lbl{color:var(--green)}
-.dd.dont .lbl{color:var(--red)}
-.dd ul{margin:0;padding-left:18px}
-.dd li{font-size:13.5px;margin-bottom:7px;color:var(--ink)}
-.dd li:last-child{margin-bottom:0}
 a.zip{display:inline-block;margin-top:18px;font-family:var(--display);font-weight:700;font-size:14px;
  text-decoration:none;color:#fff;background:var(--red);padding:12px 20px;border-radius:3px}
 a.zip:hover{background:#B0142F}
@@ -97,16 +68,15 @@ a.zip:hover{background:#B0142F}
 footer{background:var(--surface);border-top:1px solid var(--border)}
 footer .wrap{padding:24px 28px 32px}
 footer p{margin:0;font-size:13px;color:var(--muted)}
-@media (max-width:640px){.prev,.dd-grid{grid-template-columns:1fr}}
+@media (max-width:640px){.prev{grid-template-columns:1fr}}
 </style>
 </head><body>
 
 <div class="band"><div class="wrap hero">
-  <p class="eyebrow">Logo files &middot; for developers &middot; September 2026</p>
   <h1>The SME South Africa logo</h1>
   <p class="lede">One approved logo. The 2021 cube mark, restyled in the 2026 CI, with
   &ldquo;SOUTH AFRICA&rdquo; stacked under &ldquo;SME&rdquo;. Everything below is what ships
-  &mdash; <strong>file paths, markup, and sizing</strong> as already rolled out across the site.</p>
+  &mdash; <strong>the file paths and downloads</strong> as already rolled out across the site.</p>
   <span class="approved">Approved &middot; in production</span>
 </div></div>
 
@@ -137,8 +107,7 @@ footer p{margin:0;font-size:13px;color:var(--muted)}
   </section>
 
   <section>
-    <div class="shead"><h2>Files</h2>
-      <p>Production paths are already in the repo. Downloads are for decks, print and anything outside this codebase.</p></div>
+    <div class="shead"><h2>Files</h2></div>
     <div class="scroll"><table>
       <thead><tr><th>Asset</th><th>Path in repo</th><th>Download</th></tr></thead>
       <tbody><tr><td class="what"><b>Full logo</b><span>Light backgrounds. The default — use this unless the background is dark.</span></td><td><code class="path">assets/logo-v1-lockup.svg</code></td><td class="dlcell"><a class="dl svg" href="logo-downloads/sme-logo-v1-lockup.svg" download>SVG</a><a class="dl png" href="logo-downloads/sme-logo-v1-lockup-2400.png" download>PNG</a></td></tr><tr><td class="what"><b>Full logo, reversed</b><span>Navy or dark backgrounds. The cube keeps its colour; only the wordmark changes.</span></td><td><code class="path">assets/logo-v1-lockup-reversed.svg</code></td><td class="dlcell"><a class="dl svg" href="logo-downloads/sme-logo-v1-lockup-reversed.svg" download>SVG</a><a class="dl png" href="logo-downloads/sme-logo-v1-lockup-reversed-2400.png" download>PNG</a></td></tr><tr><td class="what"><b>Icon only</b><span>Favicons and app icons only — anywhere too small for the wordmark to read.</span></td><td><code class="path">assets/logo-v1-icon.svg</code></td><td class="dlcell"><a class="dl svg" href="logo-downloads/sme-logo-v1-icon.svg" download>SVG</a><a class="dl png" href="logo-downloads/sme-logo-v1-icon-1024.png" download>PNG</a></td></tr><tr><td class="what"><b>Icon only, white</b><span>Icon on a dark or coloured chip, where the full-colour cube would not read.</span></td><td><code class="path">assets/logo-v1-icon-white.svg</code></td><td class="dlcell"><a class="dl svg" href="logo-downloads/sme-logo-v1-icon-white.svg" download>SVG</a><a class="dl png" href="logo-downloads/sme-logo-v1-icon-white-1024.png" download>PNG</a></td></tr></tbody>
@@ -147,86 +116,10 @@ footer p{margin:0;font-size:13px;color:var(--muted)}
       <span class="mono">sme-logo-v1.zip</span> &middot; 174 KB</a>
   </section>
 
-  <section>
-    <div class="shead"><h2>Markup to use</h2>
-      <p>Copy these exactly. This is what is live across all 63 pages.</p></div>
-    <div class="snip"><div class="snip-head"><b>Header / light background</b><button type="button" class="copy" data-i="0">Copy</button></div><p class="snip-note">Replaces the old icon + text combo. The wordmark is part of the SVG — do not add a text label beside it.</p><pre id="snip0"><code>&lt;a href=&quot;public-home.html&quot; class=&quot;flex items-center gap-2.5 shrink-0&quot;&gt;
-  &lt;img src=&quot;assets/logo-v1-lockup.svg&quot; alt=&quot;SME South Africa&quot; class=&quot;h-9 w-auto&quot; /&gt;
-&lt;/a&gt;</code></pre></div><div class="snip"><div class="snip-head"><b>Footer / navy background</b><button type="button" class="copy" data-i="1">Copy</button></div><p class="snip-note">Reversed variant, no white chip needed — it is already white-on-transparent.</p><pre id="snip1"><code>&lt;a href=&quot;public-home.html&quot; class=&quot;flex items-center gap-2.5&quot;&gt;
-  &lt;img src=&quot;assets/logo-v1-lockup-reversed.svg&quot; alt=&quot;SME South Africa&quot; class=&quot;h-9 w-auto&quot; /&gt;
-&lt;/a&gt;</code></pre></div><div class="snip"><div class="snip-head"><b>Icon in a light chip</b><button type="button" class="copy" data-i="2">Copy</button></div><p class="snip-note">Only where the wordmark will not fit. Decorative use takes an empty alt.</p><pre id="snip2"><code>&lt;span class=&quot;w-10 h-10 rounded-lg bg-white grid place-items-center shrink-0&quot;&gt;
-  &lt;img src=&quot;assets/logo-v1-icon.svg&quot; class=&quot;w-8 h-8&quot; alt=&quot;&quot; /&gt;
-&lt;/span&gt;</code></pre></div><div class="snip"><div class="snip-head"><b>Icon in a navy chip</b><button type="button" class="copy" data-i="3">Copy</button></div><p class="snip-note">Use the white icon so it reads against the dark chip.</p><pre id="snip3"><code>&lt;div class=&quot;w-7 h-7 rounded-lg bg-[#0C1F31] grid place-items-center&quot;&gt;
-  &lt;img src=&quot;assets/logo-v1-icon-white.svg&quot; alt=&quot;&quot; class=&quot;w-4 h-4&quot; /&gt;
-&lt;/div&gt;</code></pre></div><div class="snip"><div class="snip-head"><b>Favicon and app icons</b><button type="button" class="copy" data-i="4">Copy</button></div><p class="snip-note">Point at the icon SVG; browsers scale it cleanly. Add PNG fallbacks only if you need to support very old browsers.</p><pre id="snip4"><code>&lt;link rel=&quot;icon&quot; type=&quot;image/svg+xml&quot; href=&quot;assets/logo-v1-icon.svg&quot;&gt;
-&lt;link rel=&quot;apple-touch-icon&quot; href=&quot;logo-downloads/sme-logo-v1-icon-1024.png&quot;&gt;</code></pre></div>
-  </section>
-
-  <section>
-    <div class="shead"><h2>Specs</h2>
-      <p>Measured from the vector master.</p></div>
-    <dl class="specs">
-      <dt>Aspect ratio</dt><dd>2.70 : 1 (900.01 &times; 333 in the SVG viewBox) &mdash; set height and let width follow (<span class="mono">h-9 w-auto</span>), never both</dd>
-      <dt>Standard size</dt><dd><span class="mono">h-9</span> (36px tall) in headers and footers &mdash; renders 97px wide</dd>
-      <dt>Minimum width</dt><dd>120px for the full logo. Below that, use the icon instead</dd>
-      <dt>Clear space</dt><dd>At least the width of the small accent bar on all sides &mdash; roughly a fifth of the mark's width</dd>
-      <dt>Icon aspect</dt><dd>0.87 : 1 (329.8 &times; 380.7) &mdash; slightly taller than square, so it needs <span class="mono">w-auto</span> or a square box with <span class="mono">place-items-center</span></dd>
-      <dt>Colours</dt><dd>Cube: red <span class="mono">#DC183C</span> to wine <span class="mono">#592D3A</span> gradient, accent <span class="mono">#FF9900</span>. Wordmark: <span class="mono">#0C1F31</span> on light; white + <span class="mono">#FF9900</span> reversed</dd>
-      <dt>Format</dt><dd>SVG everywhere in the product. It is smaller than the PNG and stays sharp at any zoom or pixel density</dd>
-    </dl>
-  </section>
-
-  <section>
-    <div class="shead"><h2>Rules</h2>
-      <p>The ones that actually get broken.</p></div>
-    <div class="dd-grid">
-      <div class="dd do">
-        <div class="lbl">&#10003; Do</div>
-        <ul>
-          <li>Use the reversed file on navy or dark backgrounds &mdash; do not just lower the opacity</li>
-          <li>Set height only and let width follow, so the logo never distorts</li>
-          <li>Give it an <span class="mono">alt</span> of &ldquo;SME South Africa&rdquo; when it is the page logo</li>
-          <li>Use an empty <span class="mono">alt=""</span> when the icon is decorative and a text label sits beside it</li>
-        </ul>
-      </div>
-      <div class="dd dont">
-        <div class="lbl">&#10007; Don't</div>
-        <ul>
-          <li>Don't put a text label next to the full logo &mdash; the wordmark is already in the file</li>
-          <li>Don't wrap the reversed logo in a white chip; it is built for dark grounds</li>
-          <li>Don't recolour the cube. Its gradient and orange accent are fixed on every background</li>
-          <li>Don't stretch, rotate, crop, or add shadows and effects</li>
-          <li>Don't use the icon alone on social profiles &mdash; those take the full logo</li>
-        </ul>
-      </div>
-    </div>
-  </section>
-
 </div>
 
 <footer><div class="wrap">
   <p>&copy; 2026 SME South Africa. All rights reserved.</p>
 </div></footer>
 
-<script>
-document.querySelectorAll('.copy').forEach(function(btn){
-  btn.addEventListener('click', function(){
-    var pre = document.getElementById('snip' + btn.dataset.i);
-    var text = pre ? pre.textContent : '';
-    function done(){ btn.textContent = 'Copied'; btn.classList.add('done');
-      setTimeout(function(){ btn.textContent = 'Copy'; btn.classList.remove('done'); }, 1600); }
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(text).then(done, fallback);
-    } else { fallback(); }
-    function fallback(){
-      var ta = document.createElement('textarea');
-      ta.value = text; ta.setAttribute('readonly','');
-      ta.style.position = 'absolute'; ta.style.left = '-9999px';
-      document.body.appendChild(ta); ta.select();
-      try { document.execCommand('copy'); done(); } catch(e) {}
-      document.body.removeChild(ta);
-    }
-  });
-});
-</script>
 </body></html>
