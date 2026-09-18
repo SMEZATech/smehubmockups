@@ -652,11 +652,41 @@
 
     const noteCounts = Feedback.countSharedByFile();
 
+    // ---- OUTSTANDING — every finalised page across the hub with no dev build assigned yet ----
+    // Pulled out of each group's own list (same exclusions as the total-count above) so
+    // "what still needs a developer" is visible in one place, not buried group by group.
+    const outstanding = [];
+    NAV.forEach(sec=>{
+      if(sec.group === 'Reference') return;
+      sec.items.forEach(it=>{
+        if(it.file === 'chrome-preview.html') return;
+        if(isLive(it.file) && !noteCounts[it.file] && !DEV[it.file]) outstanding.push({ it, sec });
+      });
+    });
+    const outstandingFiles = outstanding.map(o=>o.it.file);
+    const currentIsOutstanding = currentFile && outstandingFiles.indexOf(currentFile) >= 0;
+
     function navItemButton(it, sec){
       return `<button onclick="load('${it.file}','${esc(sec.group)}','${esc(it.label)}','${sec.accent}')" data-file="${it.file}" class="nav-item w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-semibold text-white/80 hover:bg-white/5 hover:text-white transition text-left">
                   <i data-lucide="${it.icon}" class="w-4 h-4 shrink-0"></i><span class="truncate">${it.label}</span>
                   ${DEV[it.file]?`<span class="ml-auto shrink-0 inline-flex items-center gap-1 text-[8px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded-full" style="background:${(DEVMETA[DEV[it.file].status]||{c:'#6A7581'}).c}26;color:${(DEVMETA[DEV[it.file].status]||{c:'#6A7581'}).c}"><i data-lucide="code-2" class="w-2.5 h-2.5"></i> Dev</span>`:`<span class="ml-auto shrink-0 inline-flex items-center gap-1 text-[8px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded-full bg-white/10 text-white/50"><i data-lucide="circle-dashed" class="w-2.5 h-2.5"></i> No dev</span>`}
                 </button>`;
+    }
+
+    // ---- OUTSTANDING section — no dev build assigned yet, across every group ----
+    if(outstanding.length){
+      const outOpen = currentIsOutstanding;
+      html += `<details class="nav-sec rounded-lg border border-white/10 bg-white/[0.02]" data-group="Outstanding" ${outOpen?'open':''}>
+        <summary class="flex items-center gap-2 px-3 py-2.5 rounded-lg">
+          <i data-lucide="chevron-right" class="chev w-3.5 h-3.5 text-white/50 shrink-0"></i>
+          <i data-lucide="circle-dashed" class="w-4 h-4 text-white/50 shrink-0"></i>
+          <span class="text-[11px] font-bold uppercase tracking-widest text-white/80">Outstanding</span>
+          <span class="ml-auto text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded-full bg-white/10 text-white/50">${outstanding.length} no dev</span>
+        </summary>
+        <div class="px-2 pb-2 pt-1 space-y-0.5">
+          ${outstanding.map(o=>navItemButton(o.it, o.sec)).join('')}
+        </div>
+      </details>`;
     }
 
     // Newly-finalised groups can bubble out of supercategory order (see bubbleGroups above),
@@ -678,10 +708,10 @@
       // Note: default-collapsed unless this section holds the current file.
 
       // Priority within a section's completed items: 1) has open review notes,
-      // 2) no dev build started yet (easy to lose track of), 3) actually done —
-      // built and note-free — demoted under "Completed development".
+      // 2) actually done — built and note-free — demoted under "Completed development".
+      // Items with no dev build yet are pulled out entirely into the global "Outstanding"
+      // section above, not shown here — see `outstanding` computed earlier.
       const withNotes   = finalisedItems.filter(it => noteCounts[it.file]);
-      const noDevYet     = finalisedItems.filter(it => !noteCounts[it.file] && !DEV[it.file]);
       const doneNoNotes = finalisedItems.filter(it => !noteCounts[it.file] && DEV[it.file]);
 
       const finalisedCount = finalisedItems.length;
@@ -699,7 +729,6 @@
           <p class="px-3 pb-1.5 text-[9px] uppercase tracking-wider text-white/30 font-semibold">${countLabel}</p>
           <div class="space-y-0.5">
             ${withNotes.map(it=>navItemButton(it, sec)).join('')}
-            ${noDevYet.map(it=>navItemButton(it, sec)).join('')}
             ${doneNoNotes.length ? `<p class="px-3 pt-2.5 pb-1 text-[8.5px] uppercase tracking-wider text-white/25 font-bold">Completed development</p>` : ''}
             ${doneNoNotes.map(it=>navItemButton(it, sec)).join('')}
             ${pendingItems.map(it=>`<div data-pending-label title="Coming soon — not yet completed" class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-semibold text-white/25 cursor-not-allowed select-none">
