@@ -77,38 +77,88 @@
   }
   if(reduceMotion){ finish(); return; }
 
-  // Digital-rain canvas
+  // Boot-screen rain — digital matrix code year-round, swapped for falling
+  // Ndebele/Zulu-style geometric motifs (diamonds, triangles, chevrons) in the
+  // SA flag palette during September, South Africa's Heritage Month.
   var canvas = document.getElementById('bootCanvas'), ctx = canvas && canvas.getContext && canvas.getContext('2d');
   var raf = null;
-  if(ctx){
-    var CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789/+-=<>';
-    var fontSize = 15, columns, drops;
+  var isHeritageMonth = new Date().getMonth() === 8; // September, 0-indexed
+  if(ctx && isHeritageMonth){
+    var FLAG_COLOURS = ['#007A4D', '#FFB612', '#DE3831', '#001489'];
+    var SHAPES = ['diamond', 'triangle', 'chevron'];
+    var cellSize = 26, columns, drops, dropShape, dropColour;
+    function drawMotif(shape, x, y, size, colour){
+      ctx.fillStyle = colour;
+      ctx.beginPath();
+      if(shape === 'diamond'){
+        ctx.moveTo(x, y - size); ctx.lineTo(x + size, y); ctx.lineTo(x, y + size); ctx.lineTo(x - size, y);
+      } else if(shape === 'triangle'){
+        ctx.moveTo(x, y - size); ctx.lineTo(x + size, y + size); ctx.lineTo(x - size, y + size);
+      } else { // chevron
+        var t = size * 0.42;
+        ctx.moveTo(x - size, y - size + t); ctx.lineTo(x, y - size); ctx.lineTo(x + size, y - size + t);
+        ctx.lineTo(x + size, y - size + t + t); ctx.lineTo(x, y - t); ctx.lineTo(x - size, y - size + t + t);
+      }
+      ctx.closePath(); ctx.fill();
+    }
     function size(){
       canvas.width = window.innerWidth; canvas.height = window.innerHeight;
-      columns = Math.ceil(canvas.width / fontSize);
-      drops = new Array(columns).fill(0).map(function(){ return Math.random() * -40; });
+      columns = Math.ceil(canvas.width / cellSize);
+      drops = new Array(columns).fill(0).map(function(){ return Math.random() * -18; });
+      dropShape = new Array(columns).fill(0).map(function(){ return SHAPES[Math.floor(Math.random()*SHAPES.length)]; });
+      dropColour = new Array(columns).fill(0).map(function(){ return FLAG_COLOURS[Math.floor(Math.random()*FLAG_COLOURS.length)]; });
     }
     size();
     window.addEventListener('resize', size);
     function draw(){
-      ctx.fillStyle = 'rgba(5,9,13,0.18)';
+      ctx.fillStyle = 'rgba(5,9,13,0.14)';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
-      ctx.font = fontSize + 'px monospace';
       for(var i=0; i<columns; i++){
-        var ch = CHARS[Math.floor(Math.random()*CHARS.length)];
-        var y = drops[i]*fontSize;
-        ctx.fillStyle = Math.random() < 0.06 ? '#FF9900' : (Math.random() < 0.5 ? '#29A37A' : 'rgba(41,163,122,.55)');
-        ctx.fillText(ch, i*fontSize, y);
-        if(y > canvas.height && Math.random() > 0.975) drops[i] = 0;
-        drops[i]++;
+        var y = drops[i]*cellSize;
+        ctx.globalAlpha = 0.55 + Math.random()*0.35;
+        drawMotif(dropShape[i], i*cellSize + cellSize/2, y, 6.5, dropColour[i]);
+        ctx.globalAlpha = 1;
+        if(y > canvas.height && Math.random() > 0.97){
+          drops[i] = Math.random() * -6;
+          dropShape[i] = SHAPES[Math.floor(Math.random()*SHAPES.length)];
+          dropColour[i] = FLAG_COLOURS[Math.floor(Math.random()*FLAG_COLOURS.length)];
+        }
+        drops[i] += 0.55;
       }
       raf = requestAnimationFrame(draw);
     }
     raf = requestAnimationFrame(draw);
+  } else if(ctx){
+    var CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789/+-=<>';
+    var fontSize = 15, mColumns, mDrops;
+    function msize(){
+      canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+      mColumns = Math.ceil(canvas.width / fontSize);
+      mDrops = new Array(mColumns).fill(0).map(function(){ return Math.random() * -40; });
+    }
+    msize();
+    window.addEventListener('resize', msize);
+    function mdraw(){
+      ctx.fillStyle = 'rgba(5,9,13,0.18)';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.font = fontSize + 'px monospace';
+      for(var i=0; i<mColumns; i++){
+        var ch = CHARS[Math.floor(Math.random()*CHARS.length)];
+        var y = mDrops[i]*fontSize;
+        ctx.fillStyle = Math.random() < 0.06 ? '#FF9900' : (Math.random() < 0.5 ? '#29A37A' : 'rgba(41,163,122,.55)');
+        ctx.fillText(ch, i*fontSize, y);
+        if(y > canvas.height && Math.random() > 0.975) mDrops[i] = 0;
+        mDrops[i]++;
+      }
+      raf = requestAnimationFrame(mdraw);
+    }
+    raf = requestAnimationFrame(mdraw);
   }
 
   // Boot-sequence lines, mirroring the Mission Control boot style
-  var STEPS = ['Initialising mockup hub…','Loading brand tokens…','Indexing pages…','Ready.'];
+  var STEPS = isHeritageMonth
+    ? ['Initialising mockup hub…','Loading Heritage Month patterns…','Indexing pages…','Ready.']
+    : ['Initialising mockup hub…','Loading brand tokens…','Indexing pages…','Ready.'];
   var host = document.getElementById('bootLines'), fill = document.getElementById('bootBarFill');
   var els = STEPS.map(function(label){
     var p = document.createElement('p'); p.textContent = label; p.className = 'active';
