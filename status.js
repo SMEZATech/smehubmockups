@@ -24,8 +24,8 @@ window.MOCKUP_STATUS = {
   "public-pricing.html": "finalised",
   "public-brands.html": "finalised",
   "public-brand.html": "finalised",
-  "public-deals.html": "finalised",
-  "public-deal.html": "finalised",
+  "public-deals.html": "not-started",
+  "public-deal.html": "not-started",
   "public-guides.html": "finalised",
   "public-guide.html": "finalised",
   "public-founder-focus-category.html": "finalised",
@@ -76,10 +76,10 @@ window.MOCKUP_STATUS = {
   "public-search.html": "finalised",
   "public-404.html": "finalised"
 };
-window.MOCKUP_STATUS_PUBLISHED = "2026-09-22T10:38:38.874Z";
+window.MOCKUP_STATUS_PUBLISHED = "2026-09-22T10:43:37.729Z";
 /* Developer builds (staging) — { mockup file: { url, status } }; status: "pending-review" | "reviewed" | "approved" */
 window.MOCKUP_DEV = {
-  "public-home.html": {"url":"https://smesastg.wpengine.com/","status":"pending-review"},
+  "public-home.html": {"url":"https://smesastg.wpengine.com/","status":"reviewed"},
   "public-articles.html": {"url":"https://smesastg.wpengine.com/sme-articles/","status":"reviewed"},
   "public-article-categories.html": {"url":"https://smesastg.wpengine.com/article-categories/","status":"reviewed"},
   "public-category.html": {"url":"https://smesastg.wpengine.com/starting-a-business","status":"reviewed"},
@@ -96,13 +96,12 @@ window.MOCKUP_DEV = {
   "public-solution-categories.html": {"url":"https://smesastg.wpengine.com/review-category/","status":"reviewed"},
   "public-solution-category.html": {"url":"https://smesastg.wpengine.com/reviews/affiliate-networks/","status":"reviewed"},
   "public-sustainability.html": {"url":"https://smesastg.wpengine.com/sustainability-solutions/","status":"reviewed"},
-  "public-pricing.html": {"url":"https://smesastg.wpengine.com/pricing/","status":"pending-review"},
+  "public-pricing.html": {"url":"https://smesastg.wpengine.com/pricing","status":"pending-review"},
   "public-brands.html": {"url":"https://smesastg.wpengine.com/brands/","status":"reviewed"},
   "public-brand.html": {"url":"https://smesastg.wpengine.com/brands/partnerstack/","status":"reviewed"},
   "public-guides.html": {"url":"https://smesastg.wpengine.com/sme-resources/guides/","status":"reviewed"},
   "public-guide.html": {"url":"https://smesastg.wpengine.com/sme-resource/test-guide/","status":"reviewed"},
   "public-founder-focus-category.html": {"url":"https://smesastg.wpengine.com/founder-focus/","status":"reviewed"},
-  "public-funding-summit-category.html": {"url":"https://smesastg.wpengine.com/funding-summit/","status":"pending-review"},
   "public-shop.html": {"url":"https://smesastg.wpengine.com/shop/","status":"reviewed"},
   "public-product.html": {"url":"https://smesastg.wpengine.com/product/founders-edition-white-t-shirt/","status":"reviewed"},
   "public-checkout.html": {"url":"https://smesastg.wpengine.com/checkout/","status":"reviewed"},
