@@ -418,7 +418,7 @@ function tabDiscussions(){
         <span>by ${esc(d.author)}</span><span class="inline-flex items-center gap-1"><i data-lucide="users" class="w-3.5 h-3.5"></i> ${d.members}</span><span class="inline-flex items-center gap-1"><i data-lucide="message-circle" class="w-3.5 h-3.5"></i> ${d.replies} replies</span><span class="inline-flex items-center gap-1"><i data-lucide="clock" class="w-3.5 h-3.5"></i> ${esc(d.last)}</span>
       </div>
     </button>`).join('');
-  return `<div class="flex items-center justify-between mb-3">${sectionLabel('Discussions','discussions')}<button onclick="showToast('New discussion composer (mockup).',null)" class="bg-[#DC183C] hover:bg-[#B0142F] text-white rounded-full px-4 py-1.5 text-xs font-bold flex items-center gap-1.5 transition shadow-sm"><i data-lucide="plus" class="w-3.5 h-3.5"></i> New</button></div><div class="space-y-3">${rows}</div>`;
+  return `<div class="flex items-center justify-between mb-3">${sectionLabel('Discussions','discussions')}<button onclick="showToast('New discussion composer.',null)" class="bg-[#DC183C] hover:bg-[#B0142F] text-white rounded-full px-4 py-1.5 text-xs font-bold flex items-center gap-1.5 transition shadow-sm"><i data-lucide="plus" class="w-3.5 h-3.5"></i> New</button></div><div class="space-y-3">${rows}</div>`;
 }
 function openDiscussion(id){
   const d = G_DISCUSSIONS.find(x=>x.id===id); if(!d) return;
@@ -436,7 +436,7 @@ function openDiscussion(id){
       <div class="flex items-center gap-3 mt-3 mb-4">${monogram('SN',40)}<div><p class="font-bold text-sm text-[#121A21]">${esc(d.author)}</p><p class="text-xs text-slate-400">Posted ${esc(d.date)}</p></div></div>
       <p class="text-[15px] text-[#121A21] leading-relaxed whitespace-pre-line">${esc(d.excerpt)}</p>
       <div class="flex gap-2 mt-4">
-        <button onclick="showToast('Reply box (mockup).',null)" class="bg-[#DC183C] hover:bg-[#B0142F] text-white rounded-full px-5 py-2 font-jakarta font-bold text-sm transition flex items-center gap-1.5"><i data-lucide="reply" class="w-4 h-4"></i> Reply</button>
+        <button onclick="showToast('Reply box.',null)" class="bg-[#DC183C] hover:bg-[#B0142F] text-white rounded-full px-5 py-2 font-jakarta font-bold text-sm transition flex items-center gap-1.5"><i data-lucide="reply" class="w-4 h-4"></i> Reply</button>
         <button onclick="showToast('Subscribed to this discussion.',null)" class="border border-slate-200 hover:border-[#DC183C] hover:text-[#DC183C] text-slate-600 rounded-full px-5 py-2 font-jakarta font-semibold text-sm transition flex items-center gap-1.5"><i data-lucide="bell" class="w-4 h-4"></i> Subscribe</button>
         <button onclick="showToast('Added to favourites.',null)" class="border border-slate-200 hover:border-[#DC183C] hover:text-[#DC183C] text-slate-600 rounded-full px-5 py-2 font-jakarta font-semibold text-sm transition flex items-center gap-1.5"><i data-lucide="star" class="w-4 h-4"></i> Favorite</button>
       </div>

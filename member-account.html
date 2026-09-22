@@ -1100,7 +1100,7 @@ function fundingContextCTA(a){
           <p class="text-xs text-white/70 mt-1">${esc(body)}</p>
         </div>
       </div>
-      <button onclick="showToast('${esc(cta)} (mockup).',null)" class="relative bg-[#DC183C] hover:bg-[#B0142F] text-white rounded-full px-5 py-2.5 font-jakarta font-bold text-sm transition flex items-center gap-2 shrink-0"><i data-lucide="${icon}" class="w-4 h-4"></i> ${esc(cta)}</button>
+      <button onclick="showToast('${esc(cta)}.',null)" class="relative bg-[#DC183C] hover:bg-[#B0142F] text-white rounded-full px-5 py-2.5 font-jakarta font-bold text-sm transition flex items-center gap-2 shrink-0"><i data-lucide="${icon}" class="w-4 h-4"></i> ${esc(cta)}</button>
     </div>
   </div>`;
 }
@@ -1164,8 +1164,8 @@ function renderFundingDetail(id){
     <p class="text-[10px] font-bold uppercase tracking-widest text-[#0C1F31] mb-3">Actions</p>
     <div class="space-y-2">
       ${a.status!=='declined' && a.status!=='funded' ? `<button onclick="confirmWithdraw('${a.id}')" class="w-full text-left text-xs font-bold text-[#DC183C] hover:bg-[#FDECEF] rounded-lg px-3 py-2 transition flex items-center gap-2"><i data-lucide="x-circle" class="w-3.5 h-3.5"></i> Withdraw application</button>`:''}
-      <button onclick="showToast('Duplicated as draft (mockup).','win')" class="w-full text-left text-xs font-bold text-[#121A21] hover:bg-slate-50 rounded-lg px-3 py-2 transition flex items-center gap-2"><i data-lucide="copy" class="w-3.5 h-3.5 text-slate-500"></i> Duplicate as draft</button>
-      <button onclick="showToast('Generating summary PDF (mockup).',null)" class="w-full text-left text-xs font-bold text-[#121A21] hover:bg-slate-50 rounded-lg px-3 py-2 transition flex items-center gap-2"><i data-lucide="download" class="w-3.5 h-3.5 text-slate-500"></i> Download summary (PDF)</button>
+      <button onclick="showToast('Duplicated as draft.','win')" class="w-full text-left text-xs font-bold text-[#121A21] hover:bg-slate-50 rounded-lg px-3 py-2 transition flex items-center gap-2"><i data-lucide="copy" class="w-3.5 h-3.5 text-slate-500"></i> Duplicate as draft</button>
+      <button onclick="showToast('Generating summary PDF.',null)" class="w-full text-left text-xs font-bold text-[#121A21] hover:bg-slate-50 rounded-lg px-3 py-2 transition flex items-center gap-2"><i data-lucide="download" class="w-3.5 h-3.5 text-slate-500"></i> Download summary (PDF)</button>
     </div>
   </div>`;
 
@@ -1228,7 +1228,7 @@ function renderFundingDetail(id){
         </div>
         <div class="text-right shrink-0">
           <p class="text-[11px] text-slate-500">Submitted ${esc(a.submitted)} <span class="text-slate-300">·</span> Updated ${esc(a.updated)}</p>
-          <button onclick="showToast('Opening edit form (mockup).',null)" class="mt-2 bg-[#DC183C] hover:bg-[#B0142F] text-white rounded-full px-4 py-2 text-xs font-bold transition inline-flex items-center gap-1.5"><i data-lucide="pencil" class="w-3.5 h-3.5"></i> Update info</button>
+          <button onclick="showToast('Opening edit form.',null)" class="mt-2 bg-[#DC183C] hover:bg-[#B0142F] text-white rounded-full px-4 py-2 text-xs font-bold transition inline-flex items-center gap-1.5"><i data-lucide="pencil" class="w-3.5 h-3.5"></i> Update info</button>
         </div>
       </div>
     </div>
@@ -1296,7 +1296,7 @@ function setProfile(){
   const body = `
     <div class="pb-5 mb-5 border-b border-slate-100">
       ${field('Cover Photo', `
-        <div onclick="showToast('Cover photo upload (mockup).',null)" class="border-2 border-dashed border-slate-200 rounded-2xl bg-slate-50 py-10 flex flex-col items-center justify-center text-center gap-1 cursor-pointer hover:border-[#DC183C] transition">
+        <div onclick="showToast('Cover photo upload.',null)" class="border-2 border-dashed border-slate-200 rounded-2xl bg-slate-50 py-10 flex flex-col items-center justify-center text-center gap-1 cursor-pointer hover:border-[#DC183C] transition">
           <i data-lucide="image" class="w-6 h-6 text-slate-400 mb-1"></i>
           <p class="text-sm font-bold text-[#121A21]">Upload Cover Photo</p>
           <p class="text-xs text-slate-400">1200 &times; 400px minimum</p>
@@ -1306,7 +1306,7 @@ function setProfile(){
       <p class="text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-2">Profile Photo</p>
       <div class="flex items-center gap-4">
         ${monogram(p.initials,64)}
-        <div><button onclick="showToast('Avatar upload (mockup).',null)" class="bg-[#0C1F31] text-white rounded-full px-4 py-2 text-xs font-bold flex items-center gap-1.5"><i data-lucide="upload" class="w-3.5 h-3.5"></i> Change photo</button><p class="text-xs text-slate-400 mt-1.5">JPG or PNG, max 2MB.</p></div>
+        <div><button onclick="showToast('Avatar upload.',null)" class="bg-[#0C1F31] text-white rounded-full px-4 py-2 text-xs font-bold flex items-center gap-1.5"><i data-lucide="upload" class="w-3.5 h-3.5"></i> Change photo</button><p class="text-xs text-slate-400 mt-1.5">JPG or PNG, max 2MB.</p></div>
       </div>
     </div>
 
