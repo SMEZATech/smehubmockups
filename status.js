@@ -45,7 +45,7 @@ window.MOCKUP_STATUS = {
   "member-hub.html": "finalised",
   "members.html": "finalised",
   "single-member.html": "finalised",
-  "single-post.html": "not-started",
+  "single-post.html": "finalised",
   "groups.html": "finalised",
   "single-group.html": "finalised",
   "forums.html": "finalised",
@@ -65,7 +65,7 @@ window.MOCKUP_STATUS = {
   "podcast.html": "finalised",
   "brand_ci.html": "finalised",
   "public-icons.html": "finalised",
-  "chrome-preview.html": "not-started",
+  "chrome-preview.html": "finalised",
   "logo-files.html": "finalised",
   "logo-downloads.html": "finalised",
   "public-help.html": "finalised",
@@ -76,11 +76,11 @@ window.MOCKUP_STATUS = {
   "public-search.html": "finalised",
   "public-404.html": "finalised"
 };
-window.MOCKUP_STATUS_PUBLISHED = "2026-09-22T10:43:37.729Z";
+window.MOCKUP_STATUS_PUBLISHED = "2026-09-23T10:14:41.662Z";
 /* Developer builds (staging) — { mockup file: { url, status } }; status: "pending-review" | "reviewed" | "approved" */
 window.MOCKUP_DEV = {
   "public-home.html": {"url":"https://smesastg.wpengine.com/","status":"reviewed"},
-  "public-articles.html": {"url":"https://smesastg.wpengine.com/sme-articles/","status":"reviewed"},
+  "public-articles.html": {"url":"https://smesastg.wpengine.com/sme-articles/","status":"approved"},
   "public-article-categories.html": {"url":"https://smesastg.wpengine.com/article-categories/","status":"reviewed"},
   "public-category.html": {"url":"https://smesastg.wpengine.com/starting-a-business","status":"reviewed"},
   "public-subcategory.html": {"url":"https://smesastg.wpengine.com/starting-a-business/agriculture-and-farming/","status":"reviewed"},
@@ -95,7 +95,7 @@ window.MOCKUP_DEV = {
   "public-solutions.html": {"url":"https://smesastg.wpengine.com/reviews/","status":"reviewed"},
   "public-solution-categories.html": {"url":"https://smesastg.wpengine.com/review-category/","status":"reviewed"},
   "public-solution-category.html": {"url":"https://smesastg.wpengine.com/reviews/affiliate-networks/","status":"reviewed"},
-  "public-sustainability.html": {"url":"https://smesastg.wpengine.com/sustainability-solutions/","status":"reviewed"},
+  "public-sustainability.html": {"url":"https://smesastg.wpengine.com/sustainability-solutions/","status":"approved"},
   "public-pricing.html": {"url":"https://smesastg.wpengine.com/pricing","status":"pending-review"},
   "public-brands.html": {"url":"https://smesastg.wpengine.com/brands/","status":"reviewed"},
   "public-brand.html": {"url":"https://smesastg.wpengine.com/brands/partnerstack/","status":"reviewed"},
