@@ -596,15 +596,22 @@
     const devFiles = Object.keys(DEV || {});
     let html='';
 
-    // Files where every live review note has been actioned by the dev — final-approved.
-    const readyForLiveFiles = (typeof Feedback !== 'undefined' && Feedback.readyForLiveFiles)
+    // Ready for live = every live review note actioned, OR the dev build itself is Approved.
+    // Either path means "final — nothing left to check", so both land in the same bucket.
+    const notesReadyFiles = (typeof Feedback !== 'undefined' && Feedback.readyForLiveFiles)
       ? Feedback.readyForLiveFiles().filter(f => isLive(f))
       : [];
+    const approvedDevFiles = devFiles.filter(f => (DEV[f]||{}).status === 'approved');
+    const readyForLiveFiles = Array.from(new Set([...approvedDevFiles, ...notesReadyFiles]));
     const currentIsReadyForLive = currentFile && readyForLiveFiles.indexOf(currentFile) >= 0;
 
     function readyButton(file){
       const meta = FILE_INDEX[file] || { label:file, icon:'file', group:'', accent:'#29A37A' };
-      return `<button onclick="load('${file}','${esc(meta.group)}','${esc(meta.label)}','${meta.accent}')" data-file="${file}" class="nav-item w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-semibold text-white/85 hover:bg-white/5 hover:text-white transition text-left">
+      // Approved dev builds still open the staging URL (what was actually approved);
+      // note-only "final" items open the mockup itself.
+      const isApprovedDev = (DEV[file]||{}).status === 'approved';
+      const onclick = isApprovedDev ? `loadDev('${file}')` : `load('${file}','${esc(meta.group)}','${esc(meta.label)}','${meta.accent}')`;
+      return `<button onclick="${onclick}" data-file="${file}" class="nav-item w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-semibold text-white/85 hover:bg-white/5 hover:text-white transition text-left">
           <i data-lucide="${meta.icon}" class="w-4 h-4 shrink-0"></i>
           <span class="truncate">${meta.label}</span>
           <span class="ml-auto shrink-0 inline-flex items-center gap-1 text-[8px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded-full bg-[#29A37A]/20 text-[#29A37A]"><i data-lucide="rocket" class="w-2.5 h-2.5"></i> Final</span>
@@ -620,8 +627,9 @@
     const bubbleGroups = {};
     newlyFinalised.forEach(n => { bubbleGroups[n.group] = true; });
 
-    // Split dev files: signed-off (reviewed/approved) at the top; Development = pending-review only
-    const signedOffFiles = devFiles.filter(f => { const s=(DEV[f]||{}).status; return s==='reviewed' || s==='approved'; });
+    // Split dev files: Reviewed = reviewed status only (approved moved to Ready for live above);
+    // Development = pending-review only.
+    const signedOffFiles = devFiles.filter(f => (DEV[f]||{}).status === 'reviewed');
     const pendingDevFiles = devFiles.filter(f => (DEV[f]||{}).status === 'pending-review');
     const currentIsSignedOff = currentFile && signedOffFiles.indexOf(currentFile) >= 0;
     const currentIsPendingDev = currentFile && pendingDevFiles.indexOf(currentFile) >= 0;
