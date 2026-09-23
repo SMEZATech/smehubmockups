@@ -76,22 +76,22 @@ window.MOCKUP_STATUS = {
   "public-search.html": "finalised",
   "public-404.html": "finalised"
 };
-window.MOCKUP_STATUS_PUBLISHED = "2026-09-23T10:14:41.662Z";
+window.MOCKUP_STATUS_PUBLISHED = "2026-09-23T10:20:37.501Z";
 /* Developer builds (staging) — { mockup file: { url, status } }; status: "pending-review" | "reviewed" | "approved" */
 window.MOCKUP_DEV = {
   "public-home.html": {"url":"https://smesastg.wpengine.com/","status":"reviewed"},
   "public-articles.html": {"url":"https://smesastg.wpengine.com/sme-articles/","status":"approved"},
   "public-article-categories.html": {"url":"https://smesastg.wpengine.com/article-categories/","status":"reviewed"},
-  "public-category.html": {"url":"https://smesastg.wpengine.com/starting-a-business","status":"reviewed"},
-  "public-subcategory.html": {"url":"https://smesastg.wpengine.com/starting-a-business/agriculture-and-farming/","status":"reviewed"},
+  "public-category.html": {"url":"https://smesastg.wpengine.com/starting-a-business","status":"approved"},
+  "public-subcategory.html": {"url":"https://smesastg.wpengine.com/starting-a-business/agriculture-and-farming/","status":"approved"},
   "public-author.html": {"url":"https://smesastg.wpengine.com/author/maryna-steyn/","status":"reviewed"},
-  "public-article.html": {"url":"https://smesastg.wpengine.com/how-to-find-your-brands-tone-of-voice/","status":"reviewed"},
+  "public-article.html": {"url":"https://smesastg.wpengine.com/how-to-find-your-brands-tone-of-voice/","status":"approved"},
   "public-resources.html": {"url":"https://smesastg.wpengine.com/sme-resources/","status":"reviewed"},
   "public-resource-category.html": {"url":"https://smesastg.wpengine.com/sme-resources/e-books/","status":"reviewed"},
   "public-resource.html": {"url":"https://smesastg.wpengine.com/sme-resource/your-guide-to-ai-prompting/","status":"reviewed"},
-  "public-funding.html": {"url":"https://smesastg.wpengine.com/sme-funding/","status":"reviewed"},
-  "public-funding-category.html": {"url":"https://smesastg.wpengine.com/funding-articles/","status":"reviewed"},
-  "public-loan-option.html": {"url":"https://smesastg.wpengine.com/sme-funding/inventory-finance/","status":"reviewed"},
+  "public-funding.html": {"url":"https://smesastg.wpengine.com/sme-funding/","status":"approved"},
+  "public-funding-category.html": {"url":"https://smesastg.wpengine.com/funding-articles/","status":"approved"},
+  "public-loan-option.html": {"url":"https://smesastg.wpengine.com/sme-funding/inventory-finance/","status":"approved"},
   "public-solutions.html": {"url":"https://smesastg.wpengine.com/reviews/","status":"reviewed"},
   "public-solution-categories.html": {"url":"https://smesastg.wpengine.com/review-category/","status":"reviewed"},
   "public-solution-category.html": {"url":"https://smesastg.wpengine.com/reviews/affiliate-networks/","status":"reviewed"},
