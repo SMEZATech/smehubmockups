@@ -373,7 +373,7 @@
       const file = btn.dataset.file || btn.dataset.devfile;
       const existing = btn.querySelector('.note-pill');
       if(existing) existing.remove();
-      if(file && counts[file]){
+      if(file && counts[file] && !btn.dataset.hidePill){
         const pill = document.createElement('button');
         pill.className = 'note-pill';
         pill.title = counts[file]+' review note'+(counts[file]===1?'':'s');
@@ -611,7 +611,10 @@
       // note-only "final" items open the mockup itself.
       const isApprovedDev = (DEV[file]||{}).status === 'approved';
       const onclick = isApprovedDev ? `loadDev('${file}')` : `load('${file}','${esc(meta.group)}','${esc(meta.label)}','${meta.accent}')`;
-      return `<button onclick="${onclick}" data-file="${file}" class="nav-item w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-semibold text-white/85 hover:bg-white/5 hover:text-white transition text-left">
+      // Ready for live = final. Don't attach a note-count pill here even if the file still
+      // has open notes (e.g. approved-by-dev but notes not yet actioned) — the badge already
+      // reads "Final"; a notes pill next to it reads as a contradiction.
+      return `<button onclick="${onclick}" data-file="${file}" data-hide-pill="1" class="nav-item w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-semibold text-white/85 hover:bg-white/5 hover:text-white transition text-left">
           <i data-lucide="${meta.icon}" class="w-4 h-4 shrink-0"></i>
           <span class="truncate">${meta.label}</span>
           <span class="ml-auto shrink-0 inline-flex items-center gap-1 text-[8px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded-full bg-[#29A37A]/20 text-[#29A37A]"><i data-lucide="rocket" class="w-2.5 h-2.5"></i> Final</span>
