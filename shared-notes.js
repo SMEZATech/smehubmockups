@@ -153,30 +153,34 @@ window.SHARED_NOTES = {
       "author": "Tshepho",
       "ts": "2026-07-03",
       "pending": true,
-      "text": "**Note: this hero sits on a LIGHT background, not the navy hero. Text colour is ink `#121A21`, not white.**\n\nContainer: max-width 1152px, padding 40px top.\n\nTypography:\n- Category pill above H1: 11px uppercase, `bg #FDECEF`, colour `#DC183C`, rounded-full.\n- H1: **30px mobile / 41.6px desktop** (custom 2.6rem), Plus Jakarta Sans weight 800, colour `#121A21` (ink), line-height 1.1, tracking-tight.\n- Max-width on H1: 768px (max-w-3xl). Don't stretch across the full container.\n\nByline row (below H1):\n- Avatar: 40 ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ 40, gradient (`#DC183C` ÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ `#FF9900`).\n- Author name: 15px, weight 700, `#121A21`.\n- Date ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ· read time: 14px, `#6A7581` (muted).\n- 'Updated <date>' chip: 14px, `#6A7581`, with calendar icon.\n\nSocial share buttons: 36 ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ 36, 1px border `#E7EBEF`, rounded-full, hover state red `#DC183C`. Icons: 16 ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ 16."
+      "text": "**Note: this hero sits on a LIGHT background, not the navy hero. Text colour is ink `#121A21`, not white.**\n\nContainer: max-width 1152px, padding 40px top.\n\nTypography:\n- Category pill above H1: 11px uppercase, `bg #FDECEF`, colour `#DC183C`, rounded-full.\n- H1: **30px mobile / 41.6px desktop** (custom 2.6rem), Plus Jakarta Sans weight 800, colour `#121A21` (ink), line-height 1.1, tracking-tight.\n- Max-width on H1: 768px (max-w-3xl). Don't stretch across the full container.\n\nByline row (below H1):\n- Avatar: 40 ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ 40, gradient (`#DC183C` ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ `#FF9900`).\n- Author name: 15px, weight 700, `#121A21`.\n- Date ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ· read time: 14px, `#6A7581` (muted).\n- 'Updated <date>' chip: 14px, `#6A7581`, with calendar icon.\n\nSocial share buttons: 36 ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ 36, 1px border `#E7EBEF`, rounded-full, hover state red `#DC183C`. Icons: 16 ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ 16."
     },
     "header-details-first-section": {
       "label": "Header Details - First Section",
       "author": "Tshepho",
       "ts": "2026-07-10",
+      "actioned": true,
       "text": "Please update the article heading colour to use the primary text colour as per the mockup: #121A21\n- Please update the heading font size to 36px\n- The author's avatar size rendered should be 44x44px\n- Please apply proper spacing between the est read and date as per the mockup\n- Please update social media buttons to 36x36px and the icons size inside to 16x16px as per the mockup"
     },
     "body-content": {
       "label": "Body Content",
       "author": "Tshepho",
       "ts": "2026-07-10",
+      "actioned": true,
       "text": "Please update the body content text colour to use our primary text colour here: #121a21"
     },
     "side-widgets": {
       "label": "Side Widgets",
       "author": "Tshepho",
       "ts": "2026-07-10",
+      "actioned": true,
       "text": "- Update the TOC heading size to 10px as per the mockup.\n- Use the correct icon on the SME Brief Widget as per mockup as the size rendered should be 20x20"
     },
     "author-s-preview-card": {
       "label": "Author's Preview card",
       "author": "Tshepho",
       "ts": "2026-07-10",
+      "actioned": true,
       "text": "- Update the \"Written by\" font colour to: #121A21\n- Update the Author's Name size to 18px\n- Update the Author's Bio Colour to #121A21 and apply 100 character limit with the 3 dots after.\n- Update the CTA \" View all articles\"  font size to 14px"
     },
     "listing-articles-grid": {
@@ -220,6 +224,7 @@ window.SHARED_NOTES = {
       "label": "First section",
       "author": "Tshepho",
       "ts": "2026-07-03",
+      "actioned": true,
       "text": "**Please match the mockup on padding ÃÂ¢ÃÂÃÂ dev looks too tall.**\n\nSpec:\n- Container: max-width 1280px.\n- Padding: **48px top / 56px bottom** (pt-12 pb-14). Not py-16 or py-20.\n\nTypography:\n- H1 'SME Insights': **36px mobile / 48px desktop**, Plus Jakarta Sans weight 800, colour `#FFFFFF`, tracking-tight.\n- Sub: 18px, `rgba(255,255,255,0.70)`, max-width ~672px.\n- Content aligned LEFT (not centered).\n- Breadcrumb: 12px in `rgba(255,255,255,0.55)`.\n\nBackground: navy ÃÂ¢ÃÂÃÂ maroon gradient with dot pattern at 70% opacity."
     },
     "article-grid": {
@@ -253,6 +258,7 @@ window.SHARED_NOTES = {
       "label": "Mobile",
       "author": "Tshepho",
       "ts": "2026-08-21",
+      "actioned": true,
       "text": "- Revise the design to be like the mockup..Especially the TOC is off."
     }
   },
@@ -277,18 +283,21 @@ window.SHARED_NOTES = {
       "label": "First Section",
       "author": "Tshepho",
       "ts": "2026-07-06",
+      "actioned": true,
       "text": "- The breadcrumbs text size should be 12px as per the mockup. Currently is set to 13px.\n- Please keep the icon by browse by category 16x16 as per the mockup"
     },
     "second-section-featured-article": {
       "label": "Second Section - Featured Article",
       "author": "Tshepho",
       "ts": "2026-07-06",
+      "actioned": true,
       "text": "- Update the Article featured image to 614x404px as per the mockup\n- Update the Article Title to 32px as per the Mockup\n- The tag name size should be 11px as per the mockup"
     },
     "third-section-subcategories": {
       "label": "Third Section - Subcategories",
       "author": "Tshepho",
       "ts": "2026-07-06",
+      "actioned": true,
       "text": "- Please update your row design to show 4 articles per the mockup\n- Update the subcategory names heading size to 30px as per the mockup\n- The See all CTA size should be 14px as per the mockup\n-"
     },
     "hero": {
@@ -296,14 +305,14 @@ window.SHARED_NOTES = {
       "author": "Tshepho",
       "ts": "2026-07-03",
       "pending": true,
-      "text": "**Featured card overlaps upward into this hero ÃÂÃÂ¢ÃÂÃÂÃÂÃÂ please match the overlap exactly.**\n\nSpec:\n- Container: max-width 1280px, LEFT-aligned content (not centered).\n- Padding: **48px top / 112px bottom** (pt-12 pb-28). The extra bottom space is intentional ÃÂÃÂ¢ÃÂÃÂÃÂÃÂ it makes room for the featured card that overlaps upward with `margin-top: -64px`.\n\nTypography:\n- H1: **36px mobile / 48px desktop**, Plus Jakarta Sans weight 800, colour `#FFFFFF`, tracking-tight.\n- Sub: 18px, `rgba(255,255,255,0.70)`, max-width ~672px.\n- Breadcrumb: 12px, `rgba(255,255,255,0.55)`.\n- 'Browse all categories' link: 14px, weight 700, white, with layout-grid icon.\n\n**Do not shorten the bottom padding of the hero ÃÂÃÂ¢ÃÂÃÂÃÂÃÂ the featured card needs room to sit half-in / half-out of the hero band.**"
+      "text": "**Featured card overlaps upward into this hero ÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ please match the overlap exactly.**\n\nSpec:\n- Container: max-width 1280px, LEFT-aligned content (not centered).\n- Padding: **48px top / 112px bottom** (pt-12 pb-28). The extra bottom space is intentional ÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ it makes room for the featured card that overlaps upward with `margin-top: -64px`.\n\nTypography:\n- H1: **36px mobile / 48px desktop**, Plus Jakarta Sans weight 800, colour `#FFFFFF`, tracking-tight.\n- Sub: 18px, `rgba(255,255,255,0.70)`, max-width ~672px.\n- Breadcrumb: 12px, `rgba(255,255,255,0.55)`.\n- 'Browse all categories' link: 14px, weight 700, white, with layout-grid icon.\n\n**Do not shorten the bottom padding of the hero ÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ the featured card needs room to sit half-in / half-out of the hero band.**"
     },
     "featured-card": {
       "label": "Featured card (overlaps hero)",
       "author": "Tshepho",
       "ts": "2026-07-03",
       "pending": true,
-      "text": "Card: `bg #FFFFFF`, border `#E7EBEF`, border-radius **1.5rem (24px)**, shadow-xl, margin-top **-64px** (this is what makes it overlap the hero above).\n\nLayout: 2-column grid on md+, 1 column mobile. Left column is image, right is content.\n\nImage: aspect 16/11, object-cover. FEATURED pill top-left: 11px uppercase, `bg #FF9900`, colour `#0C1F31` (navy on orange), rounded-full.\n\nContent right:\n- Category pill: 11px uppercase, `bg #FDECEF`, colour `#DC183C`.\n- Title: 24px mobile / 32px desktop, Plus Jakarta Sans weight 800, colour `#121A21` (ink), line-height 1.15.\n- Excerpt: 16px, colour `#6A7581`.\n- Byline avatar: 40 ÃÂÃÂÃÂÃÂ 40 gradient. Name 14px weight 700 ink. Date ÃÂÃÂÃÂÃÂ· read time 14px muted."
+      "text": "Card: `bg #FFFFFF`, border `#E7EBEF`, border-radius **1.5rem (24px)**, shadow-xl, margin-top **-64px** (this is what makes it overlap the hero above).\n\nLayout: 2-column grid on md+, 1 column mobile. Left column is image, right is content.\n\nImage: aspect 16/11, object-cover. FEATURED pill top-left: 11px uppercase, `bg #FF9900`, colour `#0C1F31` (navy on orange), rounded-full.\n\nContent right:\n- Category pill: 11px uppercase, `bg #FDECEF`, colour `#DC183C`.\n- Title: 24px mobile / 32px desktop, Plus Jakarta Sans weight 800, colour `#121A21` (ink), line-height 1.15.\n- Excerpt: 16px, colour `#6A7581`.\n- Byline avatar: 40 ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ 40 gradient. Name 14px weight 700 ink. Date ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ· read time 14px muted."
     }
   },
 
@@ -343,6 +352,7 @@ window.SHARED_NOTES = {
       "label": "Funding Guides Section",
       "author": "Tshepho",
       "ts": "2026-07-22",
+      "actioned": true,
       "text": "- The Max category on the guides ot show should be one.\n- The Funding Guides post excerpts and the characterlimit should be 75"
     }
   },
@@ -352,12 +362,14 @@ window.SHARED_NOTES = {
       "label": "First Section",
       "author": "Tshepho",
       "ts": "2026-07-22",
+      "actioned": true,
       "text": "- Please reduce the \"Apply Now\" button size to 165x56 and the \"Funding Options\" button size to 215x56"
     },
     "mobile-first-section": {
       "label": "Mobile - First Section",
       "author": "Tshepho",
       "ts": "2026-07-22",
+      "actioned": true,
       "text": "- Adjust the x number of SMEs Funded tage design size to it shows on the side with the amount facilitated instead of showing below."
     }
   },
@@ -427,6 +439,7 @@ window.SHARED_NOTES = {
       "label": "Missing Designs",
       "author": "Tshepho",
       "ts": "2026-07-15",
+      "actioned": true,
       "text": "- The Categories design are mising.\n- Max category name to show on the guides listing grid should be one and the max character limit should be 150"
     }
   },
@@ -472,6 +485,7 @@ window.SHARED_NOTES = {
       "label": "Breadcrumbs",
       "author": "Tshepho",
       "ts": "2026-07-22",
+      "actioned": true,
       "text": "- Add the funding nav to the breadcrumbs"
     }
   },
@@ -535,12 +549,14 @@ window.SHARED_NOTES = {
       "label": "First Section",
       "author": "Tshepho",
       "ts": "2026-07-15",
+      "actioned": true,
       "text": "- The button size should be 586x48\n- Please doublecheck your What's Inside Design, is not showing properly as per the mockup"
     },
     "related-resources": {
       "label": "Related resources",
       "author": "Tshepho",
       "ts": "2026-07-15",
+      "actioned": true,
       "text": "- The related resources should include the post excerpts, and the character limit on that should be 55."
     }
   },
@@ -550,24 +566,28 @@ window.SHARED_NOTES = {
       "label": "Resource Types Containers",
       "author": "Tshepho",
       "ts": "2026-07-15",
+      "actioned": true,
       "text": "- Please update the Resource Types Container sizes to 296x170"
     },
     "featured-resource": {
       "label": "Featured Resource",
       "author": "Tshepho",
       "ts": "2026-07-15",
+      "actioned": true,
       "text": "- Update the Featured Resource Heading to 30px as per mockup\n- Update the Featured Resource Tag size to 144x25\n- Update the button size to 190x48"
     },
     "listing-grid": {
       "label": "Listing Grid",
       "author": "Tshepho",
       "ts": "2026-07-15",
+      "actioned": true,
       "text": "- The Listing Grid for these resource types, posts excerpt should be 75 characters"
     },
     "mobile": {
       "label": "Mobile",
       "author": "Tshepho",
       "ts": "2026-07-15",
+      "actioned": true,
       "text": "- Show the Resource types in 2 columns view"
     }
   },
@@ -577,18 +597,21 @@ window.SHARED_NOTES = {
       "label": "First Section",
       "author": "Tshepho",
       "ts": "2026-08-21",
+      "actioned": true,
       "text": "- The heading should be H1\n- Please adjust the button to 218x48"
     },
     "second-section": {
       "label": "Second Section",
       "author": "Tshepho",
       "ts": "2026-08-21",
+      "actioned": true,
       "text": "- Remove the boarderline colour when you hover mouse over and adjust as per the mockup."
     },
     "third-section": {
       "label": "Third Section",
       "author": "Tshepho",
       "ts": "2026-08-21",
+      "actioned": true,
       "text": "- Adjust the \"Browse all categories\" button size to 241x48"
     }
   },
@@ -614,18 +637,20 @@ window.SHARED_NOTES = {
       "author": "Tshepho",
       "ts": "2026-07-03",
       "pending": true,
-      "text": "**Please match the mockup on section height.**\n\nContainer: max-width 1024px, centered content.\nPadding: **56px top / 64px bottom on mobile, 64px / 80px on desktop.**\n\nTypography:\n- H1: **36px mobile / 48px desktop**, Plus Jakarta Sans weight 800, tracking-tight, line-height tight.\n- H1 base colour: `#FFFFFF`. 'Sustainability Solutions' gets accent orange `#FF9900`.\n- Sub: 18px, `rgba(255,255,255,0.70)`, max-width ~672px, centered.\n- Breadcrumb: 12px, `rgba(255,255,255,0.55)`.\n\nTwo CTAs below sub:\n- 'Start your strategy' ÃÂÃÂ¢ÃÂÃÂÃÂÃÂ red pill `bg #DC183C`, hover `#B0142F`, height 48px, 28px horizontal padding.\n- 'Explore solutions' ÃÂÃÂ¢ÃÂÃÂÃÂÃÂ outline pill, border `rgba(255,255,255,0.30)`, hover bg `rgba(255,255,255,0.10)`, height 48px.\n\nTrust line below CTAs: 14px, `rgba(255,255,255,0.50)`, with shield-check icon in green `#29A37A`."
+      "text": "**Please match the mockup on section height.**\n\nContainer: max-width 1024px, centered content.\nPadding: **56px top / 64px bottom on mobile, 64px / 80px on desktop.**\n\nTypography:\n- H1: **36px mobile / 48px desktop**, Plus Jakarta Sans weight 800, tracking-tight, line-height tight.\n- H1 base colour: `#FFFFFF`. 'Sustainability Solutions' gets accent orange `#FF9900`.\n- Sub: 18px, `rgba(255,255,255,0.70)`, max-width ~672px, centered.\n- Breadcrumb: 12px, `rgba(255,255,255,0.55)`.\n\nTwo CTAs below sub:\n- 'Start your strategy' ÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ red pill `bg #DC183C`, hover `#B0142F`, height 48px, 28px horizontal padding.\n- 'Explore solutions' ÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ outline pill, border `rgba(255,255,255,0.30)`, hover bg `rgba(255,255,255,0.10)`, height 48px.\n\nTrust line below CTAs: 14px, `rgba(255,255,255,0.50)`, with shield-check icon in green `#29A37A`."
     },
     "second-section": {
       "label": "Second section",
       "author": "Tshepho",
       "ts": "2026-07-10",
+      "actioned": true,
       "text": "- Please update the icons size to 24x24px\n-Please update the stats font size to 36px"
     },
     "sixth-section-from-strategy-to-measurable-impact": {
       "label": "Sixth Section (From strategy to measurable impact)",
       "author": "Tshepho",
       "ts": "2026-07-10",
+      "actioned": true,
       "text": "- Please update the widget heading used for numbers design size to 56x56px"
     }
   },
