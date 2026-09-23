@@ -186,6 +186,16 @@
       <img src="assets/logo-v1-lockup-reversed.svg" alt="SME South Africa" class="h-8 w-auto" />
       <p class="text-[11px] text-white/50 font-mono">Mockup Hub</p>
     </div>
+    <div class="px-4 pt-3 shrink-0">
+      <div class="rounded-lg bg-white/5 border border-white/10 px-3 py-2.5">
+        <div class="flex items-baseline justify-between">
+          <span class="text-[10px] font-bold uppercase tracking-wider text-white/50">Go-live readiness</span>
+          <span id="goLivePct" class="text-[15px] font-extrabold text-[#29A37A]">…</span>
+        </div>
+        <div class="mt-2 h-2 rounded-full bg-white/10 overflow-hidden flex" id="goLiveBar"></div>
+        <div class="mt-2 flex flex-wrap gap-x-3 gap-y-1" id="goLiveLegend"></div>
+      </div>
+    </div>
     <div class="px-4 pt-3 pb-1 shrink-0 space-y-1.5">
       <button id="signedOffPill" type="button" onclick="scrollToSignedOff()" class="hidden w-full items-center gap-2 text-[10px] text-white/55 bg-[#29A37A]/10 border border-[#29A37A]/30 hover:bg-[#29A37A]/15 rounded-lg px-3 py-2 transition text-left">
         <i data-lucide="badge-check" class="w-3.5 h-3.5 text-[#29A37A]"></i>
@@ -631,9 +641,11 @@
     newlyFinalised.forEach(n => { bubbleGroups[n.group] = true; });
 
     // Split dev files: Reviewed = reviewed status only (approved moved to Ready for live above);
-    // Development = pending-review only.
-    const signedOffFiles = devFiles.filter(f => (DEV[f]||{}).status === 'reviewed');
-    const pendingDevFiles = devFiles.filter(f => (DEV[f]||{}).status === 'pending-review');
+    // Development = pending-review only. Either bucket can still lose a file to Ready for live
+    // via the notes-actioned path (e.g. a "reviewed" build whose notes are all closed out) —
+    // exclude those explicitly so a file never shows in two sections at once.
+    const signedOffFiles = devFiles.filter(f => (DEV[f]||{}).status === 'reviewed' && readyForLiveFiles.indexOf(f) === -1);
+    const pendingDevFiles = devFiles.filter(f => (DEV[f]||{}).status === 'pending-review' && readyForLiveFiles.indexOf(f) === -1);
     const currentIsSignedOff = currentFile && signedOffFiles.indexOf(currentFile) >= 0;
     const currentIsPendingDev = currentFile && pendingDevFiles.indexOf(currentFile) >= 0;
 
@@ -721,7 +733,7 @@
       if(sec.group === 'Reference') return;
       sec.items.forEach(it=>{
         if(it.file === 'chrome-preview.html') return;
-        if(isLive(it.file) && !noteCounts[it.file] && !DEV[it.file]) outstanding.push({ it, sec });
+        if(isLive(it.file) && !noteCounts[it.file] && !DEV[it.file] && readyForLiveFiles.indexOf(it.file) === -1) outstanding.push({ it, sec });
       });
     });
     const outstandingFiles = outstanding.map(o=>o.it.file);
@@ -812,6 +824,35 @@
     lucide.createIcons();
     refreshPills();
     const lc = document.getElementById('liveCount'); if(lc) lc.textContent = totalFinalised+' of '+total+' completed';
+
+    // Go-live readiness — the whole pipeline as one bar: Ready for live (done) →
+    // Reviewed → Development (in progress) → Outstanding → not-yet-designed (untouched).
+    // Every bucket here is mutually exclusive (see signedOffFiles/pendingDevFiles/outstanding
+    // above, each of which excludes anything already in readyForLiveFiles) so the segments
+    // always sum to `total` — no double-counted or missing pages.
+    (function renderGoLive(){
+      const notDesigned = total - totalFinalised;
+      const segments = [
+        { label:'Ready for live', n:readyForLiveFiles.length, c:'#29A37A' },
+        { label:'Reviewed',       n:signedOffFiles.length,    c:'#3B82F6' },
+        { label:'Development',    n:pendingDevFiles.length,   c:'#FF9900' },
+        { label:'Outstanding',    n:outstanding.length,       c:'#6A7581' },
+        { label:'Not designed',   n:notDesigned,               c:'#DC183C' }
+      ].filter(s => s.n > 0);
+      const pctEl = document.getElementById('goLivePct');
+      const barEl = document.getElementById('goLiveBar');
+      const legendEl = document.getElementById('goLiveLegend');
+      if(!pctEl || !barEl || !legendEl) return;
+      const pct = total ? Math.round(readyForLiveFiles.length/total*100) : 0;
+      pctEl.textContent = pct+'%';
+      barEl.innerHTML = segments.map(s=>{
+        const w = total ? (s.n/total*100) : 0;
+        return `<span style="width:${w}%;background:${s.c}" title="${s.label} — ${s.n} of ${total}"></span>`;
+      }).join('');
+      legendEl.innerHTML = segments.map(s=>
+        `<span class="inline-flex items-center gap-1 text-[9px] text-white/50"><span class="w-1.5 h-1.5 rounded-full shrink-0" style="background:${s.c}"></span>${s.label} · ${s.n}</span>`
+      ).join('');
+    })();
     const dp = document.getElementById('devPill'), dc = document.getElementById('devCount');
     if(dp && dc){
       // Count dev links ADDED (a staging URL exists), regardless of review status.
