@@ -276,6 +276,7 @@ const CHALLENGES = ['Funding & Cash Flow','Sales & Marketing','Hiring & Team','O
 const state = {
   settingsTab:'profile',
   notif:{ digest:'weekly', reply:true, mention:true, sectorAsk:true, winConn:true, event:true, suggested:false },
+  newsletter:{ weekly:true, funding:true, solutions:false, events:false },
   downloads:{ q:'', type:'all', sort:'newest' },
   funding:{ q:'', status:'all', sort:'newest', expanded:{}, editing:{}, view:'list', activeId:null },
   orders:{ page:1 }
@@ -285,6 +286,7 @@ const SETTINGS_NAV = [
   { id:'login',         label:'Login Information', icon:'key-round' },
   { id:'profile',       label:'Profile',        icon:'user-round' },
   { id:'notifications', label:'Notification Preferences', icon:'bell' },
+  { id:'newsletter',    label:'Newsletter',     icon:'mail-open' },
   { id:'privacy',       label:'Privacy',        icon:'eye' },
   { id:'blocked',       label:'Blocked Members',icon:'user-x' },
   { id:'invites',       label:'Group Invites',  icon:'mail-plus' },
@@ -327,7 +329,7 @@ function toggleRow(label, sub, on, onclick){
 
 function renderSettingsContent(){
   const host = document.getElementById('settings-content');
-  const map = { login:setLogin, profile:setProfile, notifications:setNotifications, privacy:setPrivacy, blocked:setBlocked, invites:setInvites, membership:setMembership, orders:setOrders, downloads:renderDownloads, funding:renderFunding, export:setExportData };
+  const map = { login:setLogin, profile:setProfile, notifications:setNotifications, newsletter:setNewsletter, privacy:setPrivacy, blocked:setBlocked, invites:setInvites, membership:setMembership, orders:setOrders, downloads:renderDownloads, funding:renderFunding, export:setExportData };
   host.innerHTML = (map[state.settingsTab]||setLogin)();
   lucide.createIcons();
 }
@@ -362,6 +364,43 @@ function setNotifications(){
 }
 function setDigest(d){ state.notif.digest=d; renderSettingsContent(); showToast('Email digest: '+d+'.', null); }
 function toggleNotif(k){ state.notif[k]=!state.notif[k]; renderSettingsContent(); }
+
+/* ===================== SETTINGS · NEWSLETTER (SME Brief) ===================== */
+// Same four editions as the public SME Brief archive (newsletter.html) — this tab is
+// just that subscription, managed from inside the account instead of via an email link.
+const NEWSLETTER_EDITIONS = [
+  ['weekly',    'The SME Weekly',  'Tue',  'News, funding and founder stories — every week.'],
+  ['funding',   'Funding Alerts',  'ASAP', 'New funding windows and deadlines, sent the moment they open.'],
+  ['solutions', 'SME Solutions',   'Thu',  'Tools, templates and partner offers worth knowing about.'],
+  ['events',    'SME Events',      'Fri',  'Upcoming events, webinars and the Funding Summit calendar.']
+];
+function toggleNewsletterEdition(k){ state.newsletter[k]=!state.newsletter[k]; renderSettingsContent(); }
+function unsubscribeAllNewsletter(){
+  NEWSLETTER_EDITIONS.forEach(([k])=> state.newsletter[k]=false);
+  renderSettingsContent();
+  showToast('Unsubscribed from all editions.', null);
+}
+function newsletterRow(k,label,day,sub){
+  const on = state.newsletter[k];
+  return `<div class="flex items-center justify-between gap-4 py-3.5">
+    <div class="min-w-0">
+      <p class="text-sm font-semibold text-[#121A21]">${esc(label)} <span class="text-[10px] bg-slate-100 text-slate-500 px-2 py-0.5 rounded ml-1 font-medium align-middle">${esc(day)}</span></p>
+      <p class="text-xs text-slate-500 mt-0.5">${esc(sub)}</p>
+    </div>
+    <div onclick="toggleNewsletterEdition('${k}')" class="switch ${on?'on':''}"></div>
+  </div>`;
+}
+function setNewsletter(){
+  const anyOn = NEWSLETTER_EDITIONS.some(([k])=>state.newsletter[k]);
+  const rows = NEWSLETTER_EDITIONS.map(([k,label,day,sub])=>newsletterRow(k,label,day,sub)).join('');
+  const body = `
+    <div class="divide-y divide-slate-100">${rows}</div>
+    <div class="mt-5 pt-5 border-t border-slate-100 flex flex-col sm:flex-row sm:items-center gap-3 sm:justify-between">
+      <a href="newsletter.html" target="_blank" class="inline-flex items-center gap-1.5 text-sm font-bold text-[#DC183C] hover:text-[#B0142F] transition">Browse the full archive <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i></a>
+      ${anyOn ? `<button onclick="unsubscribeAllNewsletter()" class="text-sm font-semibold text-slate-400 hover:text-[#DC183C] transition text-left sm:text-right">Unsubscribe from all editions</button>` : ''}
+    </div>`;
+  return settingsCard('Newsletter', 'Pick which SME Brief editions land in your inbox — sent via Kit, never bundled with in-app notifications above.', body);
+}
 
 const PRIVACY_OPTIONS = ['Public','Only Me','My Connections'];
 const PRIVACY_FIELDS = [
@@ -1390,6 +1429,12 @@ const BRIEFS = {
     logic:'Email digests sent via <b>Kit (ConvertKit)</b> — staggered batches, never a single 10k+ blast (WP Engine CPU). In-app events fan out from a queue.',
     components:'Radio cards (digest) · toggle rows (events).',
     specs:'<b>Settings shell:</b> <code>&lt;main&gt;</code> inner <code>max-w-6xl</code> = 1152px padding-y 24px; page kicker 11px weight 700 uppercase tracking-widest <code>#DC183C</code>, h1 Plus Jakarta 800 24px. Grid 12-col at lg 24px gap: sidebar <code>lg:col-span-3</code> sticky <code>lg:top-24</code> (96px offset), content <code>lg:col-span-9</code>.<br/><b>Settings nav:</b> card bg white rounded-2xl border slate-100 padding 8px (<code>p-2</code>); rows (<code>.snav</code>) padding 14px/10px (<code>px-3.5 py-2.5</code>) rounded-xl (12px) 14px weight 600, Lucide icon 16&times;16 slate-400; active row highlighted; per-row info badge 16&times;16.<br/><b>settingsCard:</b> bg white rounded-2xl border slate-100; header padding 20px/24px horiz (<code>px-5 sm:px-6</code>) 16px vert (<code>py-4</code>) + bottom border slate-100, title Plus Jakarta 800 18px (<code>text-lg</code>) <code>#121A21</code>, sub 14px slate-500; body padding 20px mobile / 24px sm (<code>p-5 sm:p-6</code>).<br/><b>Field:</b> label 11px weight 700 uppercase tracking-wider slate-500 (6px bottom, <code>mb-1.5</code>); hint 12px slate-400.<br/><b>Input / select:</b> full width, bg slate-50, 1px slate-200, radius 12px (<code>rounded-xl</code>), padding 14px/10px (<code>px-3.5 py-2.5</code>), 14px, focus border <code>#DC183C</code> + white bg.<br/><b>Toggle row:</b> padding-y 14px (<code>py-3.5</code>), label 14px weight 600 <code>#121A21</code>, sub 12px slate-500, <code>.switch</code> control (on = brand fill).<br/><br/><b>Email digest:</b> heading Plus Jakarta 700 uppercase 14px <code>#121A21</code>; sub 12px slate-500. Radio cards <code>grid sm:grid-cols-3</code> 8px gap; each <code>.rcard</code> 1px slate-200 rounded-xl (12px) padding 12px centred, selected = border <code>#DC183C</code> + bg <code>#FDECEF</code>; title Plus Jakarta 700 14px capitalize, sub 11px slate-500.<br/><b>In-app events:</b> <code>divide-y divide-slate-100</code> toggle rows &mdash; padding-y 14px (<code>py-3.5</code>), label 14px weight 600 <code>#121A21</code>, sub 12px slate-500, <code>.switch</code> 42&times;24 track (off <code>#CBD5E1</code>, on <code>#29A37A</code>) 20px knob.' },
+  set_newsletter:{ title:'Settings · Newsletter', sub:'SME Brief subscription — same 4 editions as the public archive',
+    purpose:'Lets a logged-in member manage their SME Brief (email newsletter) subscription from inside the account, instead of only via the unsubscribe/preferences link in the email footer. Mirrors the exact same four editions offered on the public newsletter archive (<code>newsletter.html</code>) so the two surfaces never drift out of sync.',
+    data:'Kit (ConvertKit) subscriber tags, one per edition: <code>{ weekly, funding, solutions, events }</code> (booleans). Same subscriber record used by the public subscribe form — toggling here calls the same Kit Subscribers API, just authenticated instead of anonymous.',
+    logic:'Each toggle maps 1:1 to a Kit tag add/remove call. "Unsubscribe from all editions" removes every tag in one request rather than four sequential ones. This is a preference surface only — it never touches the in-app notification digest (Notifications tab); those are two separate systems (Kit email vs in-app queue) that happen to share this member.',
+    components:'Four toggle rows (edition name + send-day chip + one-line description) · archive link · conditional "unsubscribe from all" action.',
+    specs:'<b>Container:</b> <code>settingsCard</code> (see Settings shell in the Notifications brief).<br/><b>Row:</b> reuses the toggle-row pattern (padding-y 14px, label 14px weight 600 <code>#121A21</code>, sub 12px slate-500, <code>.switch</code> control) with one addition — a send-day chip inline after the label: 10px, bg slate-100, text slate-500, rounded 4px, padding 8px/2px, matching the chip on the public archive\\u2019s subscribe widget exactly (same edition names + days: The SME Weekly/Tue, Funding Alerts/ASAP, SME Solutions/Thu, SME Events/Fri).<br/><b>Footer row:</b> top border slate-100, 20px top padding (<code>pt-5</code>); archive link 14px weight 700 <code>#DC183C</code> + Lucide <code>arrow-up-right</code> 14&times;14; unsubscribe-all is plain text slate-400 hover <code>#DC183C</code>, only rendered when at least one edition is on.' },
   set_privacy:{ title:'Settings · Privacy', sub:'Per-field profile visibility (BuddyBoss default)',
     purpose:'The BuddyBoss-standard "Profile Visibility Settings" table — each xprofile field on the member\'s profile gets its own visibility level, so a member can share their bio publicly while keeping a nickname private, for example.',
     data:'<code>xprofile_fields[] { id, label, visibility: Public|Only Me|My Connections, editable }</code>. Non-editable rows (First Name, Nickname, Job Position) follow the platform default per BuddyBoss core-field rules.',
