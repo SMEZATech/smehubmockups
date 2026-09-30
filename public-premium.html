@@ -122,7 +122,7 @@
       <i data-lucide="book-open" class="w-5 h-5"></i>
       <span class="font-jakarta text-[11px] font-bold">Resources</span>
     </a>
-    <a href="public-pricing.html" class="relative flex flex-col items-center justify-center gap-1 py-2.5 text-[#DC183C]">
+    <a href="public-premium-checkout.html" class="relative flex flex-col items-center justify-center gap-1 py-2.5 text-[#DC183C]">
       <span class="absolute top-0 left-1/2 -translate-x-1/2 w-8 h-0.5 rounded-full bg-[#DC183C]"></span>
       <i data-lucide="user-round-plus" class="w-5 h-5"></i>
       <span class="font-jakarta text-[11px] font-bold">Sign Up</span>
@@ -146,7 +146,7 @@
 
     <div class="mt-8 inline-flex items-end gap-1.5"><span class="font-jakarta font-extrabold text-5xl">R99</span><span class="text-white/60 mb-2">/month</span></div>
     <div class="mt-5 flex flex-wrap items-center justify-center gap-3">
-      <a href="public-pricing.html" class="inline-flex items-center gap-2 px-7 h-12 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold transition">Upgrade to Premium <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
+      <a href="public-premium-checkout.html" class="inline-flex items-center gap-2 px-7 h-12 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold transition">Upgrade to Premium <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
     </div>
     <p class="mt-4 text-sm text-white/50 flex items-center justify-center gap-1.5"><i data-lucide="shield-check" class="w-4 h-4"></i> Cancel anytime. No hidden fees.</p>
   </div>
@@ -169,7 +169,7 @@
       <h3 class="font-jakarta font-extrabold text-xl sm:text-2xl mt-3">Ready to Level Up?</h3>
       <div class="mt-3 flex items-end justify-center gap-1.5"><span class="font-jakarta font-extrabold text-4xl">R99</span><span class="text-white/60 mb-1">/month</span></div>
       <p class="mt-2 text-sm text-white/60 max-w-md mx-auto leading-relaxed">Direct messaging, event discounts, and the full community — all unlocked immediately.</p>
-      <a href="public-pricing.html" class="inline-flex items-center gap-2 mt-6 px-7 h-12 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold transition">Upgrade to Premium <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
+      <a href="public-premium-checkout.html" class="inline-flex items-center gap-2 mt-6 px-7 h-12 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold transition">Upgrade to Premium <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
     </div>
   </div>
 </main>
@@ -275,7 +275,7 @@
   const BRIEF={title:'Premium Upgrade Landing Page',sub:'Marketing / conversion page · public, indexable — feeds into Membership Checkout',
     purpose:'Covers <code>/premium/</code>, a focused single-tier upsell page distinct from public-pricing.html (which compares both tiers) and public-membership-sales.html (which sells the whole community top-of-funnel). This page assumes the visitor already knows the hub and is deciding whether to pay for Premium specifically, so it leads with the price and a direct Standard-vs-Premium contrast rather than re-explaining what the platform is. Redesigned from a flat, two-card feature dump into the same dark hero + tier-row comparison language already proven on public-pricing.html, so a visitor arriving from either page recognises the pattern instantly.',
     data:'Single plan: Premium, R99/month. Six comparison cards, each a genuine Standard-vs-Premium gap: Private Messaging, Connections, Offline Events, Monthly Webinars, Rich Media Posts, Interactive Content. "Community Forum" was dropped from the original seven-item list — public-pricing.html already lists community posting under Standard, so keeping it here as a Premium-exclusive contradicted that page; fixed rather than carried the inconsistency forward.',
-    logic:'Both CTAs ("Upgrade to Premium") route to public-pricing.html with Premium pre-selected in production, rather than the raw MemberPress form this page links to live today. (public-membership-checkout.html was retired and moved to /archive — CTAs across the site now point straight at public-pricing.html instead.)',
+    logic:'Both CTAs ("Upgrade to Premium") and the mobile tab bar route to <code>public-premium-checkout.html</code>, the dedicated Premium registration page, rather than the raw MemberPress form this page links to live today. (public-membership-checkout.html was retired and moved to /archive; its Premium path was rebuilt as public-premium-checkout.html.)',
     components:'dark hero with Premium crown pill + price · six-card Standard-vs-Premium comparison grid (icon + two tier-rows) · closing price-repeat CTA panel on the same dark treatment as the hero.',
     specs:'<b>Hero:</b> hero-bg navy gradient + 70% dot-pattern + top-right radial <code>rgba(255,153,0,.20)</code> glow (55%×55% at 80%/25%, 50% opacity), <code>max-w-3xl</code>=768px centred, <code>py-16 sm:py-20</code>. Crown pill: <code>#DC183C→#FF9900</code> gradient bg, white text, 11px weight 800 uppercase, rounded-full. H1 Jakarta extrabold 36px/48px, second line in <code>.grad-text</code> (red→orange gradient-clip, same token used on every pillar page). Price row: Jakarta extrabold 48px (<code>text-5xl</code>) + "/month" white/60. CTA height 48px rounded-full bg <code>#DC183C</code>, arrow-right icon. Trust line: shield-check icon + white/50 12px.<br/><br/><b>Comparison grid:</b> <code>max-w-6xl</code>=1152px, 2/3-col grid, 20px gap (<code>gap-5</code>). Card: white <code>rounded-2xl</code> border <code>#E7EBEF</code> <code>p-6</code>, hover lift. Header row: 44px icon tile per-card tint + Jakarta bold 16px title. Two <code>.tier-row</code> lines reused byte-for-byte from public-pricing.html — Standard line <code>x</code> icon <code>#DC183C</code>/55%, Premium line <code>check-circle-2</code> <code>#29A37A</code> weight 500 text with <code>#DC183C</code> bold label.<br/><br/><b>Closing panel:</b> same hero-bg + dot-pattern treatment as the hero (not a flat navy block — ties the page together visually), <code>rounded-2xl</code> <code>p-8</code>→<code>sm:p-10</code>, centred, crown icon, repeats the price, single CTA with arrow icon.'};
   function toggleDevMode(){const on=document.body.classList.toggle('dev-on');const b=document.getElementById('devToggle');if(b)b.classList.toggle('on',on);if(on)showToast('Dev Mode on. Tap any ⓘ for implementation notes.');lucide.createIcons();}

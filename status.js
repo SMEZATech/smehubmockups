@@ -26,6 +26,7 @@ window.MOCKUP_STATUS = {
   "public-premium.html": "under-review",
   "public-membership-sales.html": "under-review",
   "public-workspace.html": "under-review",
+  "public-premium-checkout.html": "under-review",
   "public-brands.html": "finalised",
   "public-brand.html": "finalised",
   "public-deals.html": "not-started",
