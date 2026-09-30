@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Unlock the Full Power of the SME Hub</title>
+  <meta name="description" content="You've got the basics. Now get the connections, the tools, and the discounts reserved for our Premium members." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script><script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  <script>tailwind.config={theme:{extend:{fontFamily:{jakarta:['Plus Jakarta Sans','sans-serif'],inter:['Inter','system-ui','sans-serif']}}}};</script>
+  <style>
+    html,body{font-family:'Inter',system-ui,sans-serif;} .font-jakarta{font-family:'Plus Jakarta Sans',sans-serif;letter-spacing:.005em;}
+    .hero-bg{background:linear-gradient(115deg,#0C1F31 0%,#0C1F31 50%,#2b1626 80%,#5e1a2c 115%);}
+    .grad-text{background:linear-gradient(100deg,#DC183C,#FF9900);-webkit-background-clip:text;background-clip:text;color:transparent;}
+    .dot-pattern{background-image:radial-gradient(rgba(255,255,255,.07) 1px,transparent 1.5px);background-size:22px 22px;}
+    .card-lift{transition:box-shadow .2s,transform .2s;} .card-lift:hover{box-shadow:0 14px 30px -12px rgba(10,44,61,.22);transform:translateY(-3px);}
+    .glow-card{box-shadow:0 30px 60px -20px rgba(0,0,0,.5),0 12px 24px -8px rgba(0,0,0,.3);}
+    /* Module compare cards — Standard vs Premium, two lines, no table (reused byte-for-byte from public-pricing.html) */
+    .tier-row{display:flex;align-items:flex-start;gap:.5rem;font-size:.8125rem;line-height:1.45;padding:.4rem 0;}
+    .tier-row+.tier-row{border-top:1px dashed #E7EBEF;margin-top:.15rem;padding-top:.55rem;}
+    .tier-row i{flex-shrink:0;margin-top:.15rem;}
+    .tier-row--std{color:#6A7581;} .tier-row--std i{color:#CBD5E1;} .tier-row--std b{color:#121A21;}
+    .tier-row--off i{color:#DC183C;opacity:.55;}
+    .tier-row--prem{color:#121A21;font-weight:500;} .tier-row--prem i{color:#29A37A;} .tier-row--prem b{color:#DC183C;}
+    .dev-badge{display:none;} body.dev-on .dev-badge{display:inline-flex;} #devToggle.on{background:#DC183C;color:#fff;border-color:#DC183C;}
+    .ov{position:fixed;inset:0;z-index:60;} .ov-bg{position:absolute;inset:0;background:rgba(12,31,49,.45);backdrop-filter:blur(2px);opacity:0;transition:opacity .3s;} .ov.open .ov-bg{opacity:1;}
+    .drawer{position:absolute;right:0;top:0;height:100%;width:100%;max-width:440px;background:#fff;box-shadow:-12px 0 40px rgba(12,31,49,.25);overflow-y:auto;transform:translateX(100%);transition:transform .3s cubic-bezier(.2,.7,.2,1);} .ov.open .drawer{transform:translateX(0);}
+      .search-overlay{position:absolute;inset:0;background:#fff;z-index:20;display:flex;align-items:center;justify-content:center;padding:0 1rem;opacity:0;pointer-events:none;transform:translateY(-8px);transition:all .25s cubic-bezier(.2,.8,.2,1);}
+    .search-overlay.active{opacity:1;pointer-events:auto;transform:translateY(0);}
+    @media (min-width:640px){ .search-overlay{padding:0 1.5rem;} }
+</style>
+</head>
+<body class="bg-[#FCFCFC] text-[#121A21] antialiased">
+<header class="bg-white border-b border-[#E7EBEF] sticky top-0 z-30 relative">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center gap-3">
+    <a href="public-home.html" class="flex items-center gap-2.5 shrink-0">
+      <img src="assets/logo-v1-lockup.svg" alt="SME South Africa" class="h-9 w-auto" />
+    </a>
+    <nav class="hidden lg:flex items-center gap-1 ml-auto">
+      <div class="relative" onmouseleave="closeChromeDrop('articles')">
+        <button onclick="toggleChromeDrop('articles')" class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition inline-flex items-center gap-1">Articles <i data-lucide="chevron-down" class="w-3.5 h-3.5"></i></button>
+        <div id="dropArticles" class="hidden absolute left-0 top-full mt-1 w-64 bg-white rounded-xl border border-[#E7EBEF] shadow-xl py-2 z-30">
+          <a href="public-category.html" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-[#DC183C] transition">Starting a Business</a>
+          <a href="public-category.html" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-[#DC183C] transition">Managing a Business</a>
+          <a href="public-category.html" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-[#DC183C] transition">Growing a Business</a>
+          <div class="my-1.5 border-t border-slate-100"></div>
+          <a href="public-founder-focus-category.html" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-[#DC183C] transition">Founder Focus</a>
+          <a href="public-category.html" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-[#DC183C] transition">Business Opportunities</a>
+        </div>
+      </div>
+      <div class="relative" onmouseleave="closeChromeDrop('resources')">
+        <button onclick="toggleChromeDrop('resources')" class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition inline-flex items-center gap-1">Resources <i data-lucide="chevron-down" class="w-3.5 h-3.5"></i></button>
+        <div id="dropResources" class="hidden absolute left-0 top-full mt-1 w-56 bg-white rounded-xl border border-[#E7EBEF] shadow-xl py-2 z-30">
+          <a href="public-resource-category.html?type=ebooks" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-[#DC183C] transition">Ebooks</a>
+          <a href="public-resource-category.html?type=templates" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-[#DC183C] transition">Templates</a>
+          <a href="public-resource-category.html?type=guides" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-[#DC183C] transition">Guides</a>
+          <a href="public-resource-category.html?type=reports" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-[#DC183C] transition">Reports</a>
+        </div>
+      </div>
+      <div class="relative" onmouseleave="closeChromeDrop('funding')">
+        <button onclick="toggleChromeDrop('funding')" class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition inline-flex items-center gap-1">Funding <i data-lucide="chevron-down" class="w-3.5 h-3.5"></i></button>
+        <div id="dropFunding" class="hidden absolute left-0 top-full mt-1 w-60 bg-white rounded-xl border border-[#E7EBEF] shadow-xl py-2 z-30">
+          <a href="public-loan-option.html" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-[#DC183C] transition">Invoice Finance</a>
+          <a href="public-loan-option.html" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-[#DC183C] transition">Inventory Finance</a>
+          <a href="public-loan-option.html" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-[#DC183C] transition">Unsecured Business Loan</a>
+          <a href="public-loan-option.html" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-[#DC183C] transition">Purchase Order Funding</a>
+          <a href="public-loan-option.html" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-[#DC183C] transition">Bridging Finance</a>
+          <a href="public-loan-option.html" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-[#DC183C] transition">Working Capital Loans</a>
+        </div>
+      </div>
+      <a href="public-solutions.html" class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition">Solutions</a>
+      <a href="podcast.html"          class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition">Podcast</a>
+      <a href="public-shop.html"      class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition">Shop</a>
+    </nav>
+    <div class="flex items-center gap-1 sm:gap-2 ml-2 sm:ml-3">
+      <button onclick="toggleChromeSearch()" aria-label="Search" class="w-9 h-9 grid place-items-center rounded-full hover:bg-slate-100 text-slate-600"><i data-lucide="search" class="w-4 h-4"></i></button>
+      <a href="public-auth.html" class="hidden sm:inline-flex items-center px-3 h-9 rounded-full text-sm font-bold text-[#121A21] hover:bg-slate-100 transition">Sign in</a>
+      <a href="public-pricing.html" class="inline-flex items-center px-4 h-9 rounded-full text-sm font-bold text-white bg-[#DC183C] hover:bg-[#B0142F] transition">Join Now</a>
+      <button onclick="toggleChromeBurger()" aria-label="Menu" class="lg:hidden w-9 h-9 grid place-items-center rounded-full hover:bg-slate-100 text-slate-600 ml-1">
+        <i id="chromeBurgerIcon" data-lucide="menu" class="w-5 h-5"></i>
+      </button>
+    </div>
+  </div>
+  <div id="chromeBurgerPanel" class="hidden lg:hidden border-t border-[#E7EBEF] bg-white">
+    <nav class="max-w-7xl mx-auto px-4 sm:px-6 py-2 flex flex-col">
+      <a href="public-articles.html"  class="px-2 py-3 text-sm font-semibold text-slate-700 hover:text-[#DC183C] border-b border-slate-100">Articles</a>
+      <a href="public-resources.html" class="px-2 py-3 text-sm font-semibold text-slate-700 hover:text-[#DC183C] border-b border-slate-100">Resources</a>
+      <a href="public-funding.html"   class="px-2 py-3 text-sm font-semibold text-slate-700 hover:text-[#DC183C] border-b border-slate-100">Funding</a>
+      <a href="public-solutions.html" class="px-2 py-3 text-sm font-semibold text-slate-700 hover:text-[#DC183C] border-b border-slate-100">Solutions</a>
+      <a href="podcast.html"          class="px-2 py-3 text-sm font-semibold text-slate-700 hover:text-[#DC183C] border-b border-slate-100">Podcast</a>
+      <a href="public-shop.html"      class="px-2 py-3 text-sm font-semibold text-slate-700 hover:text-[#DC183C] border-b border-slate-100">Shop</a>
+      <a href="public-auth.html" class="px-2 py-3 text-sm font-semibold text-slate-700 hover:text-[#DC183C]">Sign in</a>
+    </nav>
+  </div>
+  <div id="chromeSearchOverlay" class="search-overlay">
+    <div class="w-full max-w-2xl flex items-center gap-3">
+      <div class="relative flex-1">
+        <i data-lucide="search" class="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400"></i>
+        <input id="chromeSearchInput" type="text" placeholder="Search articles, resources, funding…" class="w-full h-11 pl-11 pr-4 text-sm bg-slate-50 border border-[#DC183C] rounded-full focus:outline-none focus:ring-2 focus:ring-[#DC183C]/20" onkeydown="if(event.key==='Enter') location.href='public-search.html';" />
+      </div>
+      <button onclick="toggleChromeSearch()" class="text-slate-500 hover:text-[#121A21] p-2 transition-colors shrink-0" aria-label="Close search"><i data-lucide="x" class="w-5 h-5"></i></button>
+    </div>
+  </div>
+</header>
+
+<!-- Mobile bottom tab bar -->
+<nav aria-label="Quick nav" class="lg:hidden fixed bottom-0 inset-x-0 z-40 bg-white border-t border-[#E7EBEF] shadow-[0_-4px_16px_-4px_rgba(12,31,49,0.08)]" style="padding-bottom:env(safe-area-inset-bottom)">
+  <div class="grid grid-cols-5">
+    <a href="public-home.html" class="flex flex-col items-center justify-center gap-1 py-2.5 text-slate-500 hover:text-[#121A21] transition">
+      <i data-lucide="house" class="w-5 h-5"></i>
+      <span class="font-jakarta text-[11px] font-bold">Home</span>
+    </a>
+    <a href="public-articles.html" class="flex flex-col items-center justify-center gap-1 py-2.5 text-slate-500 hover:text-[#121A21] transition">
+      <i data-lucide="lightbulb" class="w-5 h-5"></i>
+      <span class="font-jakarta text-[11px] font-bold">Insights</span>
+    </a>
+    <a href="public-funding.html" class="flex flex-col items-center justify-center gap-1 py-2.5 text-slate-500 hover:text-[#121A21] transition">
+      <i data-lucide="banknote" class="w-5 h-5"></i>
+      <span class="font-jakarta text-[11px] font-bold">Funding</span>
+    </a>
+    <a href="public-resources.html" class="flex flex-col items-center justify-center gap-1 py-2.5 text-slate-500 hover:text-[#121A21] transition">
+      <i data-lucide="book-open" class="w-5 h-5"></i>
+      <span class="font-jakarta text-[11px] font-bold">Resources</span>
+    </a>
+    <a href="public-membership-checkout.html" class="relative flex flex-col items-center justify-center gap-1 py-2.5 text-[#DC183C]">
+      <span class="absolute top-0 left-1/2 -translate-x-1/2 w-8 h-0.5 rounded-full bg-[#DC183C]"></span>
+      <i data-lucide="user-round-plus" class="w-5 h-5"></i>
+      <span class="font-jakarta text-[11px] font-bold">Sign Up</span>
+    </a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero-bg text-white relative overflow-hidden">
+  <div class="absolute inset-0 dot-pattern opacity-70 pointer-events-none"></div>
+  <div class="absolute top-0 right-0 w-2/3 h-full opacity-50 pointer-events-none" style="background:radial-gradient(55% 55% at 80% 25%, rgba(255,153,0,.20), transparent 70%)"></div>
+  <div class="max-w-3xl mx-auto px-4 sm:px-6 py-16 sm:py-20 text-center relative">
+    <span class="inline-flex items-center gap-1.5 bg-gradient-to-r from-[#DC183C] to-[#FF9900] text-white text-[11px] font-extrabold uppercase tracking-widest px-3.5 py-1.5 rounded-full">
+      <i data-lucide="crown" class="w-3.5 h-3.5"></i> Premium
+    </span>
+    <h1 class="font-jakarta font-extrabold text-4xl sm:text-5xl leading-[1.05] tracking-tight mt-5">Unlock the Full Power of
+      <button onclick="openBrief()" class="dev-badge align-middle ml-1 w-6 h-6 rounded-full bg-[#FF9900] text-[#0C1F31] items-center justify-center text-[11px] font-bold">i</button>
+      <span class="block grad-text mt-1">the SME Hub</span>
+    </h1>
+    <p class="mt-5 text-lg text-white/70 max-w-lg mx-auto leading-relaxed">You've got the basics. Now get direct messaging, a stronger network, and the discounts reserved for Premium members.</p>
+
+    <div class="mt-8 inline-flex items-end gap-1.5"><span class="font-jakarta font-extrabold text-5xl">R99</span><span class="text-white/60 mb-2">/month</span></div>
+    <div class="mt-5 flex flex-wrap items-center justify-center gap-3">
+      <a href="public-membership-checkout.html" class="inline-flex items-center gap-2 px-7 h-12 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold transition">Upgrade to Premium <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
+    </div>
+    <p class="mt-4 text-sm text-white/50 flex items-center justify-center gap-1.5"><i data-lucide="shield-check" class="w-4 h-4"></i> Cancel anytime. No hidden fees.</p>
+  </div>
+</section>
+
+<!-- WHAT CHANGES — Standard vs Premium, six real differences -->
+<main class="max-w-6xl mx-auto px-4 sm:px-6 py-16 sm:py-20">
+  <div class="text-center max-w-xl mx-auto">
+    <p class="text-[11px] font-bold uppercase tracking-widest text-[#DC183C]">Standard vs Premium</p>
+    <h2 class="font-jakarta font-extrabold text-2xl sm:text-3xl tracking-tight mt-2">What Changes When You Upgrade</h2>
+    <p class="mt-3 text-[#6A7581]">Everything below is a genuine gap between the two tiers, not a marketing checklist.</p>
+  </div>
+
+  <div id="compareGrid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 mt-10"></div>
+
+  <div class="hero-bg rounded-2xl p-8 sm:p-10 mt-10 text-center text-white relative overflow-hidden">
+    <div class="absolute inset-0 dot-pattern opacity-70 pointer-events-none"></div>
+    <div class="relative">
+      <i data-lucide="crown" class="w-7 h-7 mx-auto text-[#FF9900]"></i>
+      <h3 class="font-jakarta font-extrabold text-xl sm:text-2xl mt-3">Ready to Level Up?</h3>
+      <div class="mt-3 flex items-end justify-center gap-1.5"><span class="font-jakarta font-extrabold text-4xl">R99</span><span class="text-white/60 mb-1">/month</span></div>
+      <p class="mt-2 text-sm text-white/60 max-w-md mx-auto leading-relaxed">Direct messaging, event discounts, and the full community — all unlocked immediately.</p>
+      <a href="public-membership-checkout.html" class="inline-flex items-center gap-2 mt-6 px-7 h-12 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold transition">Upgrade to Premium <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
+    </div>
+  </div>
+</main>
+
+<div class="lg:hidden" style="height:calc(64px + env(safe-area-inset-bottom))"></div>
+<footer class="bg-[#0C1F31] text-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-12">
+    <div class="grid grid-cols-2 md:grid-cols-6 gap-8">
+      <div class="col-span-2">
+        <a href="public-home.html" class="flex items-center gap-2.5"><img src="assets/logo-v1-lockup-reversed.svg" alt="SME South Africa" class="h-9 w-auto" /></a>
+        <p class="text-sm text-white/55 mt-4 max-w-xs leading-relaxed">South Africa's leading SME community, connecting founders with funding, mentorship, events, and the tools to scale.</p>
+        <div class="flex items-center gap-2 mt-5">
+          <a href="#" aria-label="X" class="w-9 h-9 rounded-lg bg-white/8 hover:bg-white/15 grid place-items-center transition"><svg viewBox="0 0 24 24" class="w-4 h-4" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24h-6.66l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+          <a href="#" aria-label="LinkedIn" class="w-9 h-9 rounded-lg bg-white/8 hover:bg-white/15 grid place-items-center transition"><svg viewBox="0 0 24 24" class="w-4 h-4" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0z"/></svg></a>
+          <a href="#" aria-label="Instagram" class="w-9 h-9 rounded-lg bg-white/8 hover:bg-white/15 grid place-items-center transition"><svg viewBox="0 0 24 24" class="w-4 h-4" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></a>
+          <a href="#" aria-label="Facebook" class="w-9 h-9 rounded-lg bg-white/8 hover:bg-white/15 grid place-items-center transition"><svg viewBox="0 0 24 24" class="w-4 h-4" fill="currentColor"><path d="M22.675 0H1.325C.593 0 0 .593 0 1.325v21.351C0 23.407.593 24 1.325 24h11.495v-9.294H9.692v-3.622h3.128V8.413c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.716-1.795 1.763v2.313h3.587l-.467 3.622h-3.12V24h6.116C23.407 24 24 23.407 24 22.675V1.325C24 .593 23.407 0 22.675 0z"/></svg></a>
+          <a href="#" aria-label="YouTube" class="w-9 h-9 rounded-lg bg-white/8 hover:bg-white/15 grid place-items-center transition"><svg viewBox="0 0 24 24" class="w-4 h-4" fill="currentColor"><path d="M21.582 6.186a2.684 2.684 0 0 0-1.884-1.9C17.962 3.84 12 3.84 12 3.84s-5.962 0-7.698.446a2.684 2.684 0 0 0-1.884 1.9C2 7.934 2 12 2 12s0 4.066.418 5.814a2.684 2.684 0 0 0 1.884 1.9C6.038 20.16 12 20.16 12 20.16s5.962 0 7.698-.446a2.684 2.684 0 0 0 1.884-1.9C22 16.066 22 12 22 12s0-4.066-.418-5.814zM9.996 15.005V8.994L15.26 12l-5.264 3.005z"/></svg></a>
+          <a href="#" aria-label="TikTok" class="w-9 h-9 rounded-lg bg-white/8 hover:bg-white/15 grid place-items-center transition"><svg viewBox="0 0 24 24" class="w-4 h-4" fill="currentColor"><path d="M16.6 5.82c-1.01-.88-1.62-2.14-1.63-3.55h-3.13v13.39c0 1.6-1.3 2.9-2.9 2.9a2.9 2.9 0 0 1 0-5.8c.29 0 .57.04.83.13V9.75a6.03 6.03 0 0 0-.83-.06c-3.34 0-6.05 2.71-6.05 6.05S5.6 21.79 8.94 21.79s6.05-2.71 6.05-6.05V9.01a9.14 9.14 0 0 0 5.34 1.71V7.6a5.94 5.94 0 0 1-3.73-1.78z"/></svg></a>
+        </div>
+      </div>
+      <div>
+        <p class="text-[11px] font-bold uppercase tracking-widest text-[#FF9900]">Platform</p>
+        <ul class="mt-4 space-y-2.5 text-sm text-white/70">
+          <li><a href="public-resources.html" class="hover:text-white">Resources Library</a></li>
+          <li><a href="public-funding.html" class="hover:text-white">Funding Portal</a></li>
+          <li><a href="public-solutions.html" class="hover:text-white">Solutions Directory</a></li>
+          <li><a href="public-shop.html" class="hover:text-white">Shop</a></li>
+          <li><a href="public-brands.html" class="hover:text-white">Brands Directory</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="text-[11px] font-bold uppercase tracking-widest text-[#FF9900]">Insights</p>
+        <ul class="mt-4 space-y-2.5 text-sm text-white/70">
+          <li><a href="public-articles.html" class="hover:text-white">All Articles</a></li>
+          <li><a href="public-founder-focus-category.html" class="hover:text-white">Founder Focus</a></li>
+          <li><a href="public-funding-summit-category.html" class="hover:text-white">Funding Summit</a></li>
+          <li><a href="public-category.html" class="hover:text-white">Business Opportunities</a></li>
+          <li><a href="public-category.html" class="hover:text-white">Brand Voice</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="text-[11px] font-bold uppercase tracking-widest text-[#FF9900]">Community</p>
+        <ul class="mt-4 space-y-2.5 text-sm text-white/70">
+          <li><a href="member-hub.html" class="hover:text-white">Community Forum</a></li>
+          <li><a href="events.html" class="hover:text-white">Events &amp; Webinars</a></li>
+          <li><a href="newsletter.html" class="hover:text-white">Newsletter</a></li>
+          <li><a href="podcast.html" class="hover:text-white">Podcast</a></li>
+          <li><a href="public-glossary.html" class="hover:text-white">Glossary</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="text-[11px] font-bold uppercase tracking-widest text-[#FF9900]">Legal</p>
+        <ul class="mt-4 space-y-2.5 text-sm text-white/70">
+          <li><a href="public-terms.html" class="hover:text-white">Terms &amp; Conditions</a></li>
+          <li><a href="public-privacy.html" class="hover:text-white">Privacy Policy</a></li>
+          <li><a href="public-refunds.html" class="hover:text-white">Refunds Policy</a></li>
+          <li><a href="public-popia.html" class="hover:text-white">POPIA</a></li>
+          <li><a href="public-advertising-disclosure.html" class="hover:text-white">Advertising Disclosure</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-3 pt-8 mt-10 border-t border-white/10 text-[12.5px] text-white/50">
+      <div class="flex flex-wrap items-center gap-x-3 gap-y-1.5">
+        <a href="public-about.html" class="hover:text-white transition">About</a><span class="text-white/20">·</span>
+            <a href="public-contact.html" class="hover:text-white transition">Contact</a><span class="text-white/20">·</span>
+            <a href="public-advertise.html" class="hover:text-white transition">Advertise</a><span class="text-white/20">·</span>
+            <a href="public-help.html" class="hover:text-white transition">Help Center</a>
+      </div>
+      <p>© 2026 SME South Africa. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+
+<div id="overlay-root"></div><div id="toast" class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-50"></div>
+<script>
+  function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+  function showToast(m){const el=document.getElementById('toast');el.classList.remove('hidden');el.innerHTML=`<div class="bg-[#0C1F31] text-white rounded-full pl-3 pr-5 py-2.5 shadow-2xl flex items-center gap-2 text-sm font-semibold" style="border-left:4px solid #29A37A"><i data-lucide="check-circle" class="w-4 h-4" style="color:#29A37A"></i><span>${esc(m)}</span></div>`;lucide.createIcons();setTimeout(()=>{el.classList.add('hidden');el.innerHTML='';},2400);}
+
+  const COMPARE = [
+    {icon:'message-circle', tint:'bg-[#FDECEF] text-[#DC183C]', title:'Private Messaging',
+      std:'Not included', prem:'Message any member directly, one-to-one'},
+    {icon:'user-round-plus', tint:'bg-[#E4F5EE] text-[#29A37A]', title:'Connections',
+      std:'Not included', prem:'Send and accept connection requests, build a verified network'},
+    {icon:'calendar-days', tint:'bg-[#FFF1E0] text-[#AE6B0A]', title:'Offline Events',
+      std:'Full ticket price', prem:'50% off every in-person event'},
+    {icon:'video', tint:'bg-[#FDECEF] text-[#DC183C]', title:'Monthly Webinars',
+      std:'Not included', prem:'Live monthly sessions with industry leaders'},
+    {icon:'image', tint:'bg-[#E4F5EE] text-[#29A37A]', title:'Rich Media Posts',
+      std:'Text posts only', prem:'Images and video in every post you share'},
+    {icon:'message-square-heart', tint:'bg-[#FFF1E0] text-[#AE6B0A]', title:'Interactive Content',
+      std:'Read only', prem:'Comment and react on articles, guides and member posts'}
+  ];
+  document.getElementById('compareGrid').innerHTML = COMPARE.map(c=>`
+    <div class="bg-white rounded-2xl border border-[#E7EBEF] p-6 card-lift">
+      <div class="flex items-center gap-3 mb-4">
+        <div class="w-11 h-11 rounded-xl ${c.tint} grid place-items-center shrink-0"><i data-lucide="${c.icon}" class="w-5 h-5"></i></div>
+        <h3 class="font-jakarta font-bold text-base">${esc(c.title)}</h3>
+      </div>
+      <div class="tier-row tier-row--std tier-row--off"><i data-lucide="x" class="w-3.5 h-3.5"></i><span><b>Standard</b> — ${esc(c.std)}</span></div>
+      <div class="tier-row tier-row--prem"><i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i><span><b>Premium</b> — ${esc(c.prem)}</span></div>
+    </div>`).join('');
+
+  const BRIEF={title:'Premium Upgrade Landing Page',sub:'Marketing / conversion page · public, indexable — feeds into Membership Checkout',
+    purpose:'Covers <code>/premium/</code>, a focused single-tier upsell page distinct from public-pricing.html (which compares both tiers) and public-membership-sales.html (which sells the whole community top-of-funnel). This page assumes the visitor already knows the hub and is deciding whether to pay for Premium specifically, so it leads with the price and a direct Standard-vs-Premium contrast rather than re-explaining what the platform is. Redesigned from a flat, two-card feature dump into the same dark hero + tier-row comparison language already proven on public-pricing.html, so a visitor arriving from either page recognises the pattern instantly.',
+    data:'Single plan: Premium, R99/month. Six comparison cards, each a genuine Standard-vs-Premium gap: Private Messaging, Connections, Offline Events, Monthly Webinars, Rich Media Posts, Interactive Content. "Community Forum" was dropped from the original seven-item list — public-pricing.html already lists community posting under Standard, so keeping it here as a Premium-exclusive contradicted that page; fixed rather than carried the inconsistency forward.',
+    logic:'Both CTAs ("Upgrade to Premium") route to public-membership-checkout.html with Premium pre-selected in production, rather than the raw MemberPress form this page links to live today.',
+    components:'dark hero with Premium crown pill + price · six-card Standard-vs-Premium comparison grid (icon + two tier-rows) · closing price-repeat CTA panel on the same dark treatment as the hero.',
+    specs:'<b>Hero:</b> hero-bg navy gradient + 70% dot-pattern + top-right radial <code>rgba(255,153,0,.20)</code> glow (55%×55% at 80%/25%, 50% opacity), <code>max-w-3xl</code>=768px centred, <code>py-16 sm:py-20</code>. Crown pill: <code>#DC183C→#FF9900</code> gradient bg, white text, 11px weight 800 uppercase, rounded-full. H1 Jakarta extrabold 36px/48px, second line in <code>.grad-text</code> (red→orange gradient-clip, same token used on every pillar page). Price row: Jakarta extrabold 48px (<code>text-5xl</code>) + "/month" white/60. CTA height 48px rounded-full bg <code>#DC183C</code>, arrow-right icon. Trust line: shield-check icon + white/50 12px.<br/><br/><b>Comparison grid:</b> <code>max-w-6xl</code>=1152px, 2/3-col grid, 20px gap (<code>gap-5</code>). Card: white <code>rounded-2xl</code> border <code>#E7EBEF</code> <code>p-6</code>, hover lift. Header row: 44px icon tile per-card tint + Jakarta bold 16px title. Two <code>.tier-row</code> lines reused byte-for-byte from public-pricing.html — Standard line <code>x</code> icon <code>#DC183C</code>/55%, Premium line <code>check-circle-2</code> <code>#29A37A</code> weight 500 text with <code>#DC183C</code> bold label.<br/><br/><b>Closing panel:</b> same hero-bg + dot-pattern treatment as the hero (not a flat navy block — ties the page together visually), <code>rounded-2xl</code> <code>p-8</code>→<code>sm:p-10</code>, centred, crown icon, repeats the price, single CTA with arrow icon.'};
+  function toggleDevMode(){const on=document.body.classList.toggle('dev-on');const b=document.getElementById('devToggle');if(b)b.classList.toggle('on',on);if(on)showToast('Dev Mode on. Tap any ⓘ for implementation notes.');lucide.createIcons();}
+  function closeOverlay(id){const el=document.getElementById(id);if(!el)return;el.classList.remove('open');setTimeout(()=>{if(el&&el.parentNode)el.remove();},300);}
+  function openBrief(){const b=BRIEF;const sec=(i,l,h)=>`<div class="px-6 py-4 border-t border-slate-100"><p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] flex items-center gap-1.5 mb-2"><i data-lucide="${i}" class="w-3.5 h-3.5"></i>${l}</p><div class="text-sm text-slate-600 leading-relaxed">${h}</div></div>`;document.getElementById('overlay-root').innerHTML=`<div class="ov" id="ov"><div class="ov-bg" onclick="closeOverlay('ov')"></div><div class="drawer"><div class="sticky top-0 z-10 bg-[#0C1F31] text-white px-6 py-5 flex items-start justify-between"><div><p class="text-[10px] font-bold uppercase tracking-widest text-[#FF9900] mb-1">Dev Brief</p><h3 class="font-jakarta font-extrabold text-lg leading-tight">${b.title}</h3><p class="text-xs text-white/60 mt-1">${b.sub}</p></div><button onclick="closeOverlay('ov')" class="text-white/60 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button></div>${sec('target','Purpose',b.purpose)}${sec('database','Data model',b.data)}${sec('git-branch','Logic',b.logic)}${sec('ruler','Spec values',b.specs)}${sec('boxes','Components',b.components)}</div></div>`;requestAnimationFrame(()=>{const o=document.getElementById('ov');if(o)o.classList.add('open');});lucide.createIcons();}
+
+  lucide.createIcons();
+</script>
+<script>
+  function toggleChromeSearch(){
+    const o = document.getElementById('chromeSearchOverlay');
+    const opening = o.classList.toggle('active');
+    if(opening) setTimeout(()=>document.getElementById('chromeSearchInput').focus(), 100);
+  }
+  function toggleChromeBurger(){
+    const p = document.getElementById('chromeBurgerPanel');
+    const open = p.classList.toggle('hidden') === false;
+    document.getElementById('chromeBurgerIcon').setAttribute('data-lucide', open ? 'x' : 'menu');
+    lucide.createIcons();
+  }
+  const CHROME_DROPS = { articles: 'dropArticles', resources: 'dropResources', funding: 'dropFunding' };
+  function toggleChromeDrop(name){
+    Object.keys(CHROME_DROPS).forEach(k=>{ if(k!==name) document.getElementById(CHROME_DROPS[k]).classList.add('hidden'); });
+    document.getElementById(CHROME_DROPS[name]).classList.toggle('hidden');
+  }
+  function closeChromeDrop(name){
+    document.getElementById(CHROME_DROPS[name]).classList.add('hidden');
+  }
+  document.addEventListener('click', e=>{
+    if(!e.target.closest('nav .relative')) Object.values(CHROME_DROPS).forEach(id=>document.getElementById(id).classList.add('hidden'));
+  });
+  document.addEventListener('keydown', e=>{
+    if(e.key==='Escape'){ const o=document.getElementById('chromeSearchOverlay'); if(o && o.classList.contains('active')) toggleChromeSearch(); }
+  });
+</script>
+</body>
+</html>

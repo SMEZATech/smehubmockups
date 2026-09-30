@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Join South Africa's #1 SME Community: SME South Africa</title>
+  <meta name="description" content="Access funding, resources, events, and a thriving network of entrepreneurs just like you, all in one hub." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script><script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  <script>tailwind.config={theme:{extend:{fontFamily:{jakarta:['Plus Jakarta Sans','sans-serif'],inter:['Inter','system-ui','sans-serif']}}}};</script>
+  <style>
+    html,body{font-family:'Inter',system-ui,sans-serif;} .font-jakarta{font-family:'Plus Jakarta Sans',sans-serif;letter-spacing:.005em;}
+    .hero-bg-light{background:linear-gradient(160deg,#FDECEF 0%,#FCFCFC 55%);}
+    .hero-bg{background:linear-gradient(115deg,#0C1F31 0%,#0C1F31 55%,#2b1626 85%,#5e1a2c 120%);}
+    .grad-text{background:linear-gradient(100deg,#DC183C,#FF9900);-webkit-background-clip:text;background-clip:text;color:transparent;}
+    .dot-pattern{background-image:radial-gradient(rgba(255,255,255,.07) 1px,transparent 1.5px);background-size:22px 22px;}
+    .card-lift{transition:box-shadow .2s,transform .2s;} .card-lift:hover{box-shadow:0 14px 30px -12px rgba(10,44,61,.22);transform:translateY(-3px);}
+    .preview-card{box-shadow:0 30px 60px -20px rgba(0,0,0,.55),0 12px 24px -8px rgba(0,0,0,.35);}
+    .preview-card-2{box-shadow:0 24px 50px -20px rgba(0,0,0,.5);}
+    .ring-prog{transform:rotate(-90deg);}
+    .faq-body{max-height:0;overflow:hidden;transition:max-height .28s ease;} .faq-item.open .faq-body{max-height:320px;} .faq-item.open .faq-chev{transform:rotate(180deg);} .faq-chev{transition:transform .28s ease;}
+    .dev-badge{display:none;} body.dev-on .dev-badge{display:inline-flex;} #devToggle.on{background:#DC183C;color:#fff;border-color:#DC183C;}
+    .ov{position:fixed;inset:0;z-index:60;} .ov-bg{position:absolute;inset:0;background:rgba(12,31,49,.45);backdrop-filter:blur(2px);opacity:0;transition:opacity .3s;} .ov.open .ov-bg{opacity:1;}
+    .drawer{position:absolute;right:0;top:0;height:100%;width:100%;max-width:440px;background:#fff;box-shadow:-12px 0 40px rgba(12,31,49,.25);overflow-y:auto;transform:translateX(100%);transition:transform .3s cubic-bezier(.2,.7,.2,1);} .ov.open .drawer{transform:translateX(0);}
+      .search-overlay{position:absolute;inset:0;background:#fff;z-index:20;display:flex;align-items:center;justify-content:center;padding:0 1rem;opacity:0;pointer-events:none;transform:translateY(-8px);transition:all .25s cubic-bezier(.2,.8,.2,1);}
+    .search-overlay.active{opacity:1;pointer-events:auto;transform:translateY(0);}
+    @media (min-width:640px){ .search-overlay{padding:0 1.5rem;} }
+</style>
+</head>
+<body class="bg-[#FCFCFC] text-[#121A21] antialiased">
+<header class="bg-white border-b border-[#E7EBEF] sticky top-0 z-30 relative">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center gap-3">
+    <a href="public-home.html" class="flex items-center gap-2.5 shrink-0">
+      <img src="assets/logo-v1-lockup.svg" alt="SME South Africa" class="h-9 w-auto" />
+    </a>
+    <nav class="hidden lg:flex items-center gap-1 ml-auto">
+      <div class="relative" onmouseleave="closeChromeDrop('articles')">
+        <button onclick="toggleChromeDrop('articles')" class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition inline-flex items-center gap-1">Articles <i data-lucide="chevron-down" class="w-3.5 h-3.5"></i></button>
+        <div id="dropArticles" class="hidden absolute left-0 top-full mt-1 w-64 bg-white rounded-xl border border-[#E7EBEF] shadow-xl py-2 z-30">
+          <a href="public-category.html" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-[#DC183C] transition">Starting a Business</a>
+          <a href="public-category.html" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-[#DC183C] transition">Managing a Business</a>
+          <a href="public-category.html" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-[#DC183C] transition">Growing a Business</a>
+          <div class="my-1.5 border-t border-slate-100"></div>
+          <a href="public-founder-focus-category.html" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-[#DC183C] transition">Founder Focus</a>
+          <a href="public-category.html" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-[#DC183C] transition">Business Opportunities</a>
+        </div>
+      </div>
+      <div class="relative" onmouseleave="closeChromeDrop('resources')">
+        <button onclick="toggleChromeDrop('resources')" class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition inline-flex items-center gap-1">Resources <i data-lucide="chevron-down" class="w-3.5 h-3.5"></i></button>
+        <div id="dropResources" class="hidden absolute left-0 top-full mt-1 w-56 bg-white rounded-xl border border-[#E7EBEF] shadow-xl py-2 z-30">
+          <a href="public-resource-category.html?type=ebooks" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-[#DC183C] transition">Ebooks</a>
+          <a href="public-resource-category.html?type=templates" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-[#DC183C] transition">Templates</a>
+          <a href="public-resource-category.html?type=guides" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-[#DC183C] transition">Guides</a>
+          <a href="public-resource-category.html?type=reports" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-[#DC183C] transition">Reports</a>
+        </div>
+      </div>
+      <div class="relative" onmouseleave="closeChromeDrop('funding')">
+        <button onclick="toggleChromeDrop('funding')" class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition inline-flex items-center gap-1">Funding <i data-lucide="chevron-down" class="w-3.5 h-3.5"></i></button>
+        <div id="dropFunding" class="hidden absolute left-0 top-full mt-1 w-60 bg-white rounded-xl border border-[#E7EBEF] shadow-xl py-2 z-30">
+          <a href="public-loan-option.html" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-[#DC183C] transition">Invoice Finance</a>
+          <a href="public-loan-option.html" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-[#DC183C] transition">Inventory Finance</a>
+          <a href="public-loan-option.html" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-[#DC183C] transition">Unsecured Business Loan</a>
+          <a href="public-loan-option.html" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-[#DC183C] transition">Purchase Order Funding</a>
+          <a href="public-loan-option.html" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-[#DC183C] transition">Bridging Finance</a>
+          <a href="public-loan-option.html" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-[#DC183C] transition">Working Capital Loans</a>
+        </div>
+      </div>
+      <a href="public-solutions.html" class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition">Solutions</a>
+      <a href="podcast.html"          class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition">Podcast</a>
+      <a href="public-shop.html"      class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition">Shop</a>
+    </nav>
+    <div class="flex items-center gap-1 sm:gap-2 ml-2 sm:ml-3">
+      <button onclick="toggleChromeSearch()" aria-label="Search" class="w-9 h-9 grid place-items-center rounded-full hover:bg-slate-100 text-slate-600"><i data-lucide="search" class="w-4 h-4"></i></button>
+      <a href="public-auth.html" class="hidden sm:inline-flex items-center px-3 h-9 rounded-full text-sm font-bold text-[#121A21] hover:bg-slate-100 transition">Sign in</a>
+      <a href="public-pricing.html" class="inline-flex items-center px-4 h-9 rounded-full text-sm font-bold text-white bg-[#DC183C] hover:bg-[#B0142F] transition">Join Now</a>
+      <button onclick="toggleChromeBurger()" aria-label="Menu" class="lg:hidden w-9 h-9 grid place-items-center rounded-full hover:bg-slate-100 text-slate-600 ml-1">
+        <i id="chromeBurgerIcon" data-lucide="menu" class="w-5 h-5"></i>
+      </button>
+    </div>
+  </div>
+  <div id="chromeBurgerPanel" class="hidden lg:hidden border-t border-[#E7EBEF] bg-white">
+    <nav class="max-w-7xl mx-auto px-4 sm:px-6 py-2 flex flex-col">
+      <a href="public-articles.html"  class="px-2 py-3 text-sm font-semibold text-slate-700 hover:text-[#DC183C] border-b border-slate-100">Articles</a>
+      <a href="public-resources.html" class="px-2 py-3 text-sm font-semibold text-slate-700 hover:text-[#DC183C] border-b border-slate-100">Resources</a>
+      <a href="public-funding.html"   class="px-2 py-3 text-sm font-semibold text-slate-700 hover:text-[#DC183C] border-b border-slate-100">Funding</a>
+      <a href="public-solutions.html" class="px-2 py-3 text-sm font-semibold text-slate-700 hover:text-[#DC183C] border-b border-slate-100">Solutions</a>
+      <a href="podcast.html"          class="px-2 py-3 text-sm font-semibold text-slate-700 hover:text-[#DC183C] border-b border-slate-100">Podcast</a>
+      <a href="public-shop.html"      class="px-2 py-3 text-sm font-semibold text-slate-700 hover:text-[#DC183C] border-b border-slate-100">Shop</a>
+      <a href="public-auth.html" class="px-2 py-3 text-sm font-semibold text-slate-700 hover:text-[#DC183C]">Sign in</a>
+    </nav>
+  </div>
+  <div id="chromeSearchOverlay" class="search-overlay">
+    <div class="w-full max-w-2xl flex items-center gap-3">
+      <div class="relative flex-1">
+        <i data-lucide="search" class="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400"></i>
+        <input id="chromeSearchInput" type="text" placeholder="Search articles, resources, funding…" class="w-full h-11 pl-11 pr-4 text-sm bg-slate-50 border border-[#DC183C] rounded-full focus:outline-none focus:ring-2 focus:ring-[#DC183C]/20" onkeydown="if(event.key==='Enter') location.href='public-search.html';" />
+      </div>
+      <button onclick="toggleChromeSearch()" class="text-slate-500 hover:text-[#121A21] p-2 transition-colors shrink-0" aria-label="Close search"><i data-lucide="x" class="w-5 h-5"></i></button>
+    </div>
+  </div>
+</header>
+
+<!-- Mobile bottom tab bar -->
+<nav aria-label="Quick nav" class="lg:hidden fixed bottom-0 inset-x-0 z-40 bg-white border-t border-[#E7EBEF] shadow-[0_-4px_16px_-4px_rgba(12,31,49,0.08)]" style="padding-bottom:env(safe-area-inset-bottom)">
+  <div class="grid grid-cols-5">
+    <a href="public-home.html" class="flex flex-col items-center justify-center gap-1 py-2.5 text-slate-500 hover:text-[#121A21] transition">
+      <i data-lucide="house" class="w-5 h-5"></i>
+      <span class="font-jakarta text-[11px] font-bold">Home</span>
+    </a>
+    <a href="public-articles.html" class="flex flex-col items-center justify-center gap-1 py-2.5 text-slate-500 hover:text-[#121A21] transition">
+      <i data-lucide="lightbulb" class="w-5 h-5"></i>
+      <span class="font-jakarta text-[11px] font-bold">Insights</span>
+    </a>
+    <a href="public-funding.html" class="flex flex-col items-center justify-center gap-1 py-2.5 text-slate-500 hover:text-[#121A21] transition">
+      <i data-lucide="banknote" class="w-5 h-5"></i>
+      <span class="font-jakarta text-[11px] font-bold">Funding</span>
+    </a>
+    <a href="public-resources.html" class="flex flex-col items-center justify-center gap-1 py-2.5 text-slate-500 hover:text-[#121A21] transition">
+      <i data-lucide="book-open" class="w-5 h-5"></i>
+      <span class="font-jakarta text-[11px] font-bold">Resources</span>
+    </a>
+    <a href="public-membership-checkout.html" class="relative flex flex-col items-center justify-center gap-1 py-2.5 text-[#DC183C]">
+      <span class="absolute top-0 left-1/2 -translate-x-1/2 w-8 h-0.5 rounded-full bg-[#DC183C]"></span>
+      <i data-lucide="user-round-plus" class="w-5 h-5"></i>
+      <span class="font-jakarta text-[11px] font-bold">Sign Up</span>
+    </a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero-bg-light relative overflow-hidden">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-14 sm:py-20 relative">
+    <div class="grid lg:grid-cols-2 gap-10 lg:gap-12 items-center">
+      <div class="text-center lg:text-left">
+        <h1 class="font-jakarta font-extrabold text-3xl sm:text-4xl lg:text-[2.75rem] leading-[1.1] tracking-tight">Join South Africa's #1 Community
+          <button onclick="openBrief()" class="dev-badge align-middle ml-1 w-6 h-6 rounded-full bg-[#FF9900] text-[#0C1F31] items-center justify-center text-[11px] font-bold">i</button>
+          <span class="block text-transparent bg-clip-text bg-gradient-to-r from-[#DC183C] to-[#FF9900] mt-1">for Small Business Owners</span>
+        </h1>
+        <p class="mt-5 text-lg text-[#6A7581] max-w-lg mx-auto lg:mx-0 leading-relaxed">Access funding, resources, events, and a thriving network of entrepreneurs just like you, all in one hub.</p>
+        <div class="mt-7 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3">
+          <a href="public-membership-checkout.html" class="inline-flex items-center gap-2 px-6 h-12 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold transition">Become a Member <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
+          <a href="public-auth.html" class="text-sm font-semibold text-[#6A7581] hover:text-[#121A21] transition">Already a member? Sign in</a>
+        </div>
+      </div>
+
+      <!-- Illustrative product preview (no real screenshots — stylised, matches the platform's own card system) -->
+      <div class="relative h-[360px] hidden sm:block">
+        <div class="preview-card absolute left-1/2 top-0 w-[320px] bg-white rounded-2xl border border-[#E7EBEF] p-4" style="transform:translateX(-58%) rotate(-3deg)">
+          <div class="flex items-center gap-2 pb-3 border-b border-[#E7EBEF]"><span class="w-7 h-7 rounded-lg bg-[#0C1F31] grid place-items-center"><i data-lucide="rss" class="w-3.5 h-3.5 text-white"></i></span><span class="font-jakarta font-bold text-sm">Activity Feed</span></div>
+          <div class="mt-3 space-y-3">
+            <div class="flex items-center gap-2"><span class="w-7 h-7 rounded-full bg-gradient-to-br from-[#DC183C] to-[#FF9900]"></span><div class="flex-1 space-y-1"><div class="h-2 w-28 rounded bg-slate-100"></div><div class="h-1.5 w-16 rounded bg-slate-50"></div></div></div>
+            <div class="h-16 rounded-xl bg-slate-50 border border-[#E7EBEF]"></div>
+            <div class="flex items-center gap-3 text-[#6A7581]"><span class="flex items-center gap-1 text-[11px] font-semibold"><i data-lucide="heart" class="w-3.5 h-3.5"></i> 12</span><span class="flex items-center gap-1 text-[11px] font-semibold"><i data-lucide="message-circle" class="w-3.5 h-3.5"></i> 4</span></div>
+            <div class="flex items-center gap-2"><span class="w-7 h-7 rounded-full bg-[#0C1F31]/80"></span><div class="h-2 w-20 rounded bg-slate-100"></div></div>
+          </div>
+        </div>
+        <div class="preview-card-2 absolute right-1/2 bottom-0 w-[230px] bg-white rounded-2xl border border-[#E7EBEF] p-4" style="transform:translateX(58%) rotate(3deg)">
+          <p class="text-[10px] font-bold uppercase tracking-widest text-[#6A7581]">Business Health Score</p>
+          <div class="flex items-center gap-3 mt-3">
+            <svg class="w-14 h-14 ring-prog shrink-0" viewBox="0 0 36 36"><circle cx="18" cy="18" r="15.5" fill="none" stroke="#E7EBEF" stroke-width="3.5"/><circle cx="18" cy="18" r="15.5" fill="none" stroke="#FF9900" stroke-width="3.5" stroke-dasharray="73,100" stroke-linecap="round"/><text x="18" y="21" text-anchor="middle" transform="rotate(90 18 18)" font-size="10" font-weight="800" fill="#121A21" font-family="Plus Jakarta Sans">73</text></svg>
+            <div class="flex-1"><p class="font-jakarta font-extrabold text-[13px]">Growth-ready</p><p class="text-[10px] text-[#6A7581] mt-0.5">Updated after your last check-in</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURE STRIP -->
+<section class="max-w-6xl mx-auto px-4 sm:px-6 py-14 sm:py-16">
+  <div class="text-center max-w-xl mx-auto">
+    <h2 class="font-jakarta font-extrabold text-2xl sm:text-3xl tracking-tight">Everything You Need to Start, Grow, and Fund Your Business</h2>
+  </div>
+  <div id="featureCards" class="grid sm:grid-cols-3 gap-5 mt-9"></div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="bg-[#FCFCFC] border-y border-[#E7EBEF]">
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 py-14 sm:py-16">
+    <div class="text-center max-w-xl mx-auto">
+      <p class="text-[11px] font-bold uppercase tracking-widest text-[#DC183C]">How It Works</p>
+      <h2 class="font-jakarta font-extrabold text-2xl sm:text-3xl tracking-tight mt-2">Three Steps to Your Next Move</h2>
+    </div>
+    <div id="stepsGrid" class="grid sm:grid-cols-3 gap-6 mt-10"></div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="max-w-5xl mx-auto px-4 sm:px-6 py-14 sm:py-16">
+  <div class="text-center max-w-xl mx-auto">
+    <h2 class="font-jakarta font-extrabold text-2xl sm:text-3xl tracking-tight">Find Your Perfect Plan</h2>
+    <p class="mt-3 text-[#6A7581]">Choose the plan that's right for your business journey. Start at no cost and upgrade anytime.</p>
+  </div>
+
+  <div class="grid md:grid-cols-2 gap-6 mt-9 items-stretch">
+    <div class="bg-white rounded-2xl border-2 border-[#0C1F31] p-7">
+      <p class="text-[#6A7581] font-medium">Standard</p>
+      <h3 class="font-jakarta font-extrabold text-2xl mt-0.5">Member</h3>
+      <div class="mt-4 flex items-end gap-1.5"><span class="font-jakarta font-extrabold text-4xl">R0</span><span class="text-[#6A7581] text-sm mb-1.5">/monthly</span></div>
+      <div class="border-t border-[#E7EBEF] my-5"></div>
+      <ul class="space-y-4 text-sm">
+        <li class="flex items-start gap-2.5"><i data-lucide="check-circle-2" class="w-4.5 h-4.5 text-[#0C1F31] shrink-0 mt-0.5"></i><div><b>Standard Content Access</b><p class="text-[#6A7581]">Access to foundational articles and guides.</p></div></li>
+        <li class="flex items-start gap-2.5"><i data-lucide="check-circle-2" class="w-4.5 h-4.5 text-[#0C1F31] shrink-0 mt-0.5"></i><div><b>Apply for Funding</b><p class="text-[#6A7581]">Apply to multiple funders and track applications within the platform.</p></div></li>
+        <li class="flex items-start gap-2.5"><i data-lucide="check-circle-2" class="w-4.5 h-4.5 text-[#0C1F31] shrink-0 mt-0.5"></i><div><b>SME Solutions Marketplace</b><p class="text-[#6A7581]">Access to coupon codes and exclusive offers from partners.</p></div></li>
+        <li class="flex items-start gap-2.5"><i data-lucide="check-circle-2" class="w-4.5 h-4.5 text-[#0C1F31] shrink-0 mt-0.5"></i><div><b>Early Access to Features</b><p class="text-[#6A7581]">Get a sneak peek at upcoming functionality.</p></div></li>
+      </ul>
+      <a href="public-membership-checkout.html" class="mt-7 flex items-center justify-center gap-2 h-12 rounded-full border-2 border-[#0C1F31] text-[#0C1F31] font-bold hover:bg-[#0C1F31] hover:text-white transition">Join Now</a>
+    </div>
+
+    <div class="bg-[#0C1F31] text-white rounded-2xl border-2 border-[#DC183C] p-7 relative shadow-xl">
+      <span class="absolute -top-3 left-7 px-3 py-1 rounded-full text-[11px] font-bold bg-[#FF9900] text-[#0C1F31]">MOST POPULAR</span>
+      <p class="text-white/60 font-medium">Premium</p>
+      <h3 class="font-jakarta font-extrabold text-2xl mt-0.5">Access</h3>
+      <div class="mt-4 flex items-end gap-1.5"><span class="font-jakarta font-extrabold text-4xl">R99</span><span class="text-white/60 text-sm mb-1.5">/monthly</span></div>
+      <div class="border-t border-white/15 my-5"></div>
+      <ul class="space-y-4 text-sm">
+        <li class="flex items-start gap-2.5"><i data-lucide="check-circle-2" class="w-4.5 h-4.5 text-[#FF9900] shrink-0 mt-0.5"></i><div><b>Everything on Standard Membership</b><p class="text-white/60">Access to all features available to Standard membership.</p></div></li>
+        <li class="flex items-start gap-2.5"><i data-lucide="check-circle-2" class="w-4.5 h-4.5 text-[#FF9900] shrink-0 mt-0.5"></i><div><b>Community Access</b><p class="text-white/60">Join our private network of South African SME owners.</p></div></li>
+        <li class="flex items-start gap-2.5"><i data-lucide="check-circle-2" class="w-4.5 h-4.5 text-[#FF9900] shrink-0 mt-0.5"></i><div><b>Connect with other SMEs</b><p class="text-white/60">Ability to connect with other small and medium enterprises.</p></div></li>
+        <li class="flex items-start gap-2.5"><i data-lucide="check-circle-2" class="w-4.5 h-4.5 text-[#FF9900] shrink-0 mt-0.5"></i><div><b>Private Messaging</b><p class="text-white/60">Direct message other members instead of only posting publicly.</p></div></li>
+      </ul>
+      <a href="public-membership-checkout.html" class="mt-7 flex items-center justify-center gap-2 h-12 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold transition">Join Now</a>
+    </div>
+  </div>
+  <p class="text-center text-sm text-[#6A7581] mt-5">Upgrade to Premium anytime.</p>
+</section>
+
+<!-- FAQ -->
+<section class="bg-white border-y border-[#E7EBEF]">
+  <div class="max-w-3xl mx-auto px-4 sm:px-6 py-16 sm:py-20">
+    <div class="text-center mb-10"><h2 class="font-jakarta font-extrabold text-2xl sm:text-3xl">Frequently Asked Questions</h2></div>
+    <div id="faqList" class="space-y-3"></div>
+  </div>
+</section>
+
+<!-- WHAT'S INSIDE — platform recap, no invented numbers -->
+<section class="bg-white border-b border-[#E7EBEF]">
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 py-14 sm:py-16 text-center">
+    <p class="text-[11px] font-bold uppercase tracking-widest text-[#DC183C]">What's Inside</p>
+    <h2 class="font-jakarta font-extrabold text-2xl sm:text-3xl mt-2">One Hub for Every Stage of the Journey</h2>
+    <div id="pillarsGrid" class="grid grid-cols-2 sm:grid-cols-4 gap-5 mt-9"></div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="hero-bg text-white relative overflow-hidden">
+  <div class="absolute inset-0 dot-pattern opacity-70 pointer-events-none"></div>
+  <div class="max-w-2xl mx-auto px-4 sm:px-6 py-16 sm:py-20 relative text-center">
+    <h2 class="font-jakarta font-extrabold text-2xl sm:text-4xl">Ready to Build With Us?</h2>
+    <p class="mt-3 text-white/70 max-w-xl mx-auto">Sign up for R0 and get access to funding, resources, and a community built for South African entrepreneurs.</p>
+    <div class="mt-7 flex flex-col sm:flex-row items-center justify-center gap-3">
+      <a href="public-membership-checkout.html" class="h-12 px-7 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold transition inline-flex items-center justify-center gap-2">Join Now <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
+    </div>
+    <p class="mt-5 text-sm text-white/60">Already a subscriber? <a href="public-auth.html" class="text-white font-semibold hover:underline">Sign in</a></p>
+  </div>
+</section>
+
+<div class="lg:hidden" style="height:calc(64px + env(safe-area-inset-bottom))"></div>
+<footer class="bg-[#0C1F31] text-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-12">
+    <div class="grid grid-cols-2 md:grid-cols-6 gap-8">
+      <div class="col-span-2">
+        <a href="public-home.html" class="flex items-center gap-2.5"><img src="assets/logo-v1-lockup-reversed.svg" alt="SME South Africa" class="h-9 w-auto" /></a>
+        <p class="text-sm text-white/55 mt-4 max-w-xs leading-relaxed">South Africa's leading SME community, connecting founders with funding, mentorship, events, and the tools to scale.</p>
+        <div class="flex items-center gap-2 mt-5">
+          <a href="#" aria-label="X" class="w-9 h-9 rounded-lg bg-white/8 hover:bg-white/15 grid place-items-center transition"><svg viewBox="0 0 24 24" class="w-4 h-4" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24h-6.66l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+          <a href="#" aria-label="LinkedIn" class="w-9 h-9 rounded-lg bg-white/8 hover:bg-white/15 grid place-items-center transition"><svg viewBox="0 0 24 24" class="w-4 h-4" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0z"/></svg></a>
+          <a href="#" aria-label="Instagram" class="w-9 h-9 rounded-lg bg-white/8 hover:bg-white/15 grid place-items-center transition"><svg viewBox="0 0 24 24" class="w-4 h-4" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></a>
+          <a href="#" aria-label="Facebook" class="w-9 h-9 rounded-lg bg-white/8 hover:bg-white/15 grid place-items-center transition"><svg viewBox="0 0 24 24" class="w-4 h-4" fill="currentColor"><path d="M22.675 0H1.325C.593 0 0 .593 0 1.325v21.351C0 23.407.593 24 1.325 24h11.495v-9.294H9.692v-3.622h3.128V8.413c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.716-1.795 1.763v2.313h3.587l-.467 3.622h-3.12V24h6.116C23.407 24 24 23.407 24 22.675V1.325C24 .593 23.407 0 22.675 0z"/></svg></a>
+          <a href="#" aria-label="YouTube" class="w-9 h-9 rounded-lg bg-white/8 hover:bg-white/15 grid place-items-center transition"><svg viewBox="0 0 24 24" class="w-4 h-4" fill="currentColor"><path d="M21.582 6.186a2.684 2.684 0 0 0-1.884-1.9C17.962 3.84 12 3.84 12 3.84s-5.962 0-7.698.446a2.684 2.684 0 0 0-1.884 1.9C2 7.934 2 12 2 12s0 4.066.418 5.814a2.684 2.684 0 0 0 1.884 1.9C6.038 20.16 12 20.16 12 20.16s5.962 0 7.698-.446a2.684 2.684 0 0 0 1.884-1.9C22 16.066 22 12 22 12s0-4.066-.418-5.814zM9.996 15.005V8.994L15.26 12l-5.264 3.005z"/></svg></a>
+          <a href="#" aria-label="TikTok" class="w-9 h-9 rounded-lg bg-white/8 hover:bg-white/15 grid place-items-center transition"><svg viewBox="0 0 24 24" class="w-4 h-4" fill="currentColor"><path d="M16.6 5.82c-1.01-.88-1.62-2.14-1.63-3.55h-3.13v13.39c0 1.6-1.3 2.9-2.9 2.9a2.9 2.9 0 0 1 0-5.8c.29 0 .57.04.83.13V9.75a6.03 6.03 0 0 0-.83-.06c-3.34 0-6.05 2.71-6.05 6.05S5.6 21.79 8.94 21.79s6.05-2.71 6.05-6.05V9.01a9.14 9.14 0 0 0 5.34 1.71V7.6a5.94 5.94 0 0 1-3.73-1.78z"/></svg></a>
+        </div>
+      </div>
+      <div>
+        <p class="text-[11px] font-bold uppercase tracking-widest text-[#FF9900]">Platform</p>
+        <ul class="mt-4 space-y-2.5 text-sm text-white/70">
+          <li><a href="public-resources.html" class="hover:text-white">Resources Library</a></li>
+          <li><a href="public-funding.html" class="hover:text-white">Funding Portal</a></li>
+          <li><a href="public-solutions.html" class="hover:text-white">Solutions Directory</a></li>
+          <li><a href="public-shop.html" class="hover:text-white">Shop</a></li>
+          <li><a href="public-brands.html" class="hover:text-white">Brands Directory</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="text-[11px] font-bold uppercase tracking-widest text-[#FF9900]">Insights</p>
+        <ul class="mt-4 space-y-2.5 text-sm text-white/70">
+          <li><a href="public-articles.html" class="hover:text-white">All Articles</a></li>
+          <li><a href="public-founder-focus-category.html" class="hover:text-white">Founder Focus</a></li>
+          <li><a href="public-funding-summit-category.html" class="hover:text-white">Funding Summit</a></li>
+          <li><a href="public-category.html" class="hover:text-white">Business Opportunities</a></li>
+          <li><a href="public-category.html" class="hover:text-white">Brand Voice</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="text-[11px] font-bold uppercase tracking-widest text-[#FF9900]">Community</p>
+        <ul class="mt-4 space-y-2.5 text-sm text-white/70">
+          <li><a href="member-hub.html" class="hover:text-white">Community Forum</a></li>
+          <li><a href="events.html" class="hover:text-white">Events &amp; Webinars</a></li>
+          <li><a href="newsletter.html" class="hover:text-white">Newsletter</a></li>
+          <li><a href="podcast.html" class="hover:text-white">Podcast</a></li>
+          <li><a href="public-glossary.html" class="hover:text-white">Glossary</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="text-[11px] font-bold uppercase tracking-widest text-[#FF9900]">Legal</p>
+        <ul class="mt-4 space-y-2.5 text-sm text-white/70">
+          <li><a href="public-terms.html" class="hover:text-white">Terms &amp; Conditions</a></li>
+          <li><a href="public-privacy.html" class="hover:text-white">Privacy Policy</a></li>
+          <li><a href="public-refunds.html" class="hover:text-white">Refunds Policy</a></li>
+          <li><a href="public-popia.html" class="hover:text-white">POPIA</a></li>
+          <li><a href="public-advertising-disclosure.html" class="hover:text-white">Advertising Disclosure</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-3 pt-8 mt-10 border-t border-white/10 text-[12.5px] text-white/50">
+      <div class="flex flex-wrap items-center gap-x-3 gap-y-1.5">
+        <a href="public-about.html" class="hover:text-white transition">About</a><span class="text-white/20">·</span>
+            <a href="public-contact.html" class="hover:text-white transition">Contact</a><span class="text-white/20">·</span>
+            <a href="public-advertise.html" class="hover:text-white transition">Advertise</a><span class="text-white/20">·</span>
+            <a href="public-help.html" class="hover:text-white transition">Help Center</a>
+      </div>
+      <p>© 2026 SME South Africa. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+
+<div id="overlay-root"></div><div id="toast" class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-50"></div>
+<script>
+  function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+  function showToast(m){const el=document.getElementById('toast');el.classList.remove('hidden');el.innerHTML=`<div class="bg-[#0C1F31] text-white rounded-full pl-3 pr-5 py-2.5 shadow-2xl flex items-center gap-2 text-sm font-semibold" style="border-left:4px solid #29A37A"><i data-lucide="check-circle" class="w-4 h-4" style="color:#29A37A"></i><span>${esc(m)}</span></div>`;lucide.createIcons();setTimeout(()=>{el.classList.add('hidden');el.innerHTML='';},2400);}
+
+  const FEATURES = [
+    {icon:'banknote',      title:'Access Funding Opportunities', desc:'Apply for business loans, grants, and investor funding through verified local and international partners.'},
+    {icon:'graduation-cap',title:'Learn from Experts',           desc:'Access guides, webinars, and real-world tips from industry leaders across finance and operations.'},
+    {icon:'users-round',   title:'Grow Your Network',            desc:'Connect with other SME owners, mentors, and partners across South Africa in one shared community.'}
+  ];
+  document.getElementById('featureCards').innerHTML = FEATURES.map(f=>`
+    <div class="bg-white rounded-2xl border border-[#E7EBEF] p-6 text-center card-lift">
+      <div class="w-12 h-12 rounded-xl bg-[#FDECEF] text-[#DC183C] grid place-items-center mx-auto"><i data-lucide="${f.icon}" class="w-5 h-5"></i></div>
+      <h3 class="font-jakarta font-bold text-lg mt-4">${esc(f.title)}</h3>
+      <p class="text-sm text-[#6A7581] mt-2 leading-relaxed">${esc(f.desc)}</p>
+    </div>`).join('');
+
+  const STEPS = [
+    {n:'01', icon:'user-plus', title:'Sign Up', desc:'Create your account in under a minute. Standard membership never asks for card details.'},
+    {n:'02', icon:'clipboard-check', title:'Take the Health Check', desc:'A few short questions give you a Business Health Score across cash flow, compliance, customers, operations and growth.'},
+    {n:'03', icon:'rocket', title:'Act on Your Plan', desc:'Get your top recommended actions, apply for funding, and join the conversation with other members.'}
+  ];
+  document.getElementById('stepsGrid').innerHTML = STEPS.map(s=>`
+    <div class="relative bg-white rounded-2xl border border-[#E7EBEF] p-6 card-lift">
+      <span class="absolute -top-3 -left-2 font-jakarta font-extrabold text-4xl text-[#0C1F31]/[0.06]">${s.n}</span>
+      <div class="relative w-12 h-12 rounded-xl bg-[#FDECEF] text-[#DC183C] grid place-items-center"><i data-lucide="${s.icon}" class="w-5 h-5"></i></div>
+      <h3 class="relative font-jakarta font-bold text-lg mt-4">${esc(s.title)}</h3>
+      <p class="relative text-sm text-[#6A7581] mt-2 leading-relaxed">${esc(s.desc)}</p>
+    </div>`).join('');
+
+  const PILLARS = [
+    {icon:'users', tint:'bg-[#FDECEF] text-[#DC183C]', title:'Community', desc:'Network with founders, mentors and industry leaders.'},
+    {icon:'calendar-days', tint:'bg-[#FFF1E0] text-[#AE6B0A]', title:'Events', desc:'Live sessions and workshops built to accelerate growth.'},
+    {icon:'banknote', tint:'bg-[#E4F5EE] text-[#29A37A]', title:'Funding', desc:'One application matches you with verified funders.'},
+    {icon:'library', tint:'bg-[#F0F5F9] text-slate-600', title:'Resources', desc:'Templates, guides and expert insight for every stage.'}
+  ];
+  document.getElementById('pillarsGrid').innerHTML = PILLARS.map(p=>`
+    <div class="bg-[#FCFCFC] rounded-2xl border border-[#E7EBEF] p-5">
+      <div class="w-11 h-11 rounded-xl ${p.tint} grid place-items-center mx-auto"><i data-lucide="${p.icon}" class="w-5 h-5"></i></div>
+      <h3 class="font-jakarta font-bold text-sm mt-3">${esc(p.title)}</h3>
+      <p class="text-xs text-[#6A7581] mt-1.5 leading-relaxed">${esc(p.desc)}</p>
+    </div>`).join('');
+
+  const FAQ = [
+    ['What is the main difference between the Standard and Premium memberships?', 'Premium unlocks deeper connections, exclusive events pricing, and full community access. Standard offers foundational content, funding applications and the solutions marketplace, so you can experience the hub before you upgrade.'],
+    ['Can I cancel Premium anytime?', 'Yes. Premium has no lock-in. Cancel anytime from your account settings and you’ll keep access until the end of your current billing period, then drop back to Standard.'],
+    ['Do I need a card to join as a Standard member?', 'No. Standard membership is R0 and never asks for payment details. You only enter card details if you choose to upgrade to Premium.'],
+    ['What payment methods do you accept?', 'Major South African debit and credit cards, processed securely by PayFast in ZAR.']
+  ];
+  document.getElementById('faqList').innerHTML = FAQ.map((f,i)=>`
+    <div class="faq-item border border-[#E7EBEF] rounded-xl overflow-hidden bg-white">
+      <button onclick="toggleFaq(${i})" class="w-full flex items-center justify-between gap-3 text-left px-5 py-4 font-semibold hover:bg-[#FCFCFC] transition">
+        <span>${esc(f[0])}</span>
+        <i data-lucide="chevron-down" class="faq-chev w-5 h-5 text-[#6A7581] shrink-0"></i>
+      </button>
+      <div class="faq-body"><p class="px-5 pb-5 text-sm text-[#6A7581] leading-relaxed">${esc(f[1])}</p></div>
+    </div>`).join('');
+  function toggleFaq(i){
+    const items = document.querySelectorAll('.faq-item');
+    const it = items[i]; const wasOpen = it.classList.contains('open');
+    items.forEach(x=>x.classList.remove('open'));
+    if(!wasOpen) it.classList.add('open');
+  }
+
+  const BRIEF={title:'Membership Sales Landing Page',sub:'Marketing funnel · public, indexable — feeds into Membership Checkout',
+    purpose:'Covers <code>/membership-sales/</code>, the top-of-funnel marketing page that sells the community before handing off to registration. Redesigned from a thin layout that leaned on fabricated trust content — a partner-logo bar, a stock testimonial quote, and invented stats (50K+ members, R100M+ funding facilitated, 92% satisfaction). Following the same content-honesty principle already documented on <code>public-pricing.html</code> (&ldquo;the page sells the product on its own merits, not on claimed adoption numbers or quotes&rdquo;), all of that was replaced with real, checkable content: a How It Works section and a What&rsquo;s Inside recap, both describing the actual product rather than unverified numbers.',
+    data:'Same Plan/Member data model as public-pricing.html and public-membership-checkout.html: Standard (R0, forever) and Premium (R99/month). The Premium comparison row was changed from a redundant &ldquo;Community Forum&rdquo; bullet (Standard already includes community posting per public-pricing.html) to &ldquo;Private Messaging,&rdquo; matching the same fix applied to public-premium.html so the two pages don&rsquo;t contradict each other.',
+    logic:'Every CTA on the page (hero, pricing cards, final band) routes to <code>public-membership-checkout.html</code> so a visitor gets one consistent signup experience regardless of which CTA they click.',
+    components:'split hero with illustrative dashboard + Business Health Score preview · 3-card feature strip · 3-step "How It Works" · two-tier pricing cards · FAQ accordion · 4-pillar "What\'s Inside" recap · final CTA band.',
+    specs:'<b>Hero:</b> light rose-to-white gradient (<code>hero-bg-light</code>), <code>max-w-7xl</code>=1280px, <code>py-14 sm:py-20</code>. 2-col grid at lg, items-center. H1 Jakarta extrabold 30px/36px/44px, gradient second line via <code>.grad-text</code>. Preview: two overlapping white rounded-2xl cards using <code>.preview-card</code>/<code>.preview-card-2</code> layered shadows, rotated ±3deg — an Activity Feed card and a Business Health Score card with an SVG progress ring (<code>.ring-prog</code>, same pattern as public-pricing.html), no real screenshots.<br/><br/><b>Feature strip:</b> <code>max-w-6xl</code>, 3-col grid sm, card <code>rounded-2xl</code> border <code>#E7EBEF</code> <code>p-6</code>, centered icon tile 48px bg <code>#FDECEF</code>, hover lift via <code>.card-lift</code>.<br/><br/><b>How It Works:</b> <code>max-w-5xl</code>, off-white band bordered top/bottom, 3-col grid sm, numbered cards (large faint 01/02/03 watermark) walking Sign Up → Health Check → Act on Your Plan.<br/><br/><b>Pricing cards:</b> <code>max-w-5xl</code>, 2-col grid md. Standard: white, 2px border <code>#0C1F31</code>. Premium: bg <code>#0C1F31</code> 2px border <code>#DC183C</code>, "MOST POPULAR" ribbon bg <code>#FF9900</code>. Feature rows use <code>check-circle-2</code>, bold title + muted description per row.<br/><br/><b>FAQ:</b> identical accordion pattern to public-pricing.html, reused byte-for-byte (<code>.faq-item</code>/<code>.faq-body</code>/<code>.faq-chev</code>).<br/><br/><b>What\'s Inside:</b> <code>max-w-5xl</code> centered, 4-col grid sm (Community/Events/Funding/Resources), tinted icon tiles, mirrors the platform-pillar language used on public-home.html for cross-page consistency.<br/><br/><b>Final CTA:</b> <code>.hero-bg</code> navy gradient + <code>.dot-pattern</code>, <code>max-w-2xl</code> centered, evergreen copy with no member-count claim, single primary CTA.'};
+  function toggleDevMode(){const on=document.body.classList.toggle('dev-on');const b=document.getElementById('devToggle');if(b)b.classList.toggle('on',on);if(on)showToast('Dev Mode on. Tap any ⓘ for implementation notes.');lucide.createIcons();}
+  function closeOverlay(id){const el=document.getElementById(id);if(!el)return;el.classList.remove('open');setTimeout(()=>{if(el&&el.parentNode)el.remove();},300);}
+  function openBrief(){const b=BRIEF;const sec=(i,l,h)=>`<div class="px-6 py-4 border-t border-slate-100"><p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] flex items-center gap-1.5 mb-2"><i data-lucide="${i}" class="w-3.5 h-3.5"></i>${l}</p><div class="text-sm text-slate-600 leading-relaxed">${h}</div></div>`;document.getElementById('overlay-root').innerHTML=`<div class="ov" id="ov"><div class="ov-bg" onclick="closeOverlay('ov')"></div><div class="drawer"><div class="sticky top-0 z-10 bg-[#0C1F31] text-white px-6 py-5 flex items-start justify-between"><div><p class="text-[10px] font-bold uppercase tracking-widest text-[#FF9900] mb-1">Dev Brief</p><h3 class="font-jakarta font-extrabold text-lg leading-tight">${b.title}</h3><p class="text-xs text-white/60 mt-1">${b.sub}</p></div><button onclick="closeOverlay('ov')" class="text-white/60 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button></div>${sec('target','Purpose',b.purpose)}${sec('database','Data model',b.data)}${sec('git-branch','Logic',b.logic)}${sec('ruler','Spec values',b.specs)}${sec('boxes','Components',b.components)}</div></div>`;requestAnimationFrame(()=>{const o=document.getElementById('ov');if(o)o.classList.add('open');});lucide.createIcons();}
+
+  lucide.createIcons();
+</script>
+<script>
+  function toggleChromeSearch(){
+    const o = document.getElementById('chromeSearchOverlay');
+    const opening = o.classList.toggle('active');
+    if(opening) setTimeout(()=>document.getElementById('chromeSearchInput').focus(), 100);
+  }
+  function toggleChromeBurger(){
+    const p = document.getElementById('chromeBurgerPanel');
+    const open = p.classList.toggle('hidden') === false;
+    document.getElementById('chromeBurgerIcon').setAttribute('data-lucide', open ? 'x' : 'menu');
+    lucide.createIcons();
+  }
+  const CHROME_DROPS = { articles: 'dropArticles', resources: 'dropResources', funding: 'dropFunding' };
+  function toggleChromeDrop(name){
+    Object.keys(CHROME_DROPS).forEach(k=>{ if(k!==name) document.getElementById(CHROME_DROPS[k]).classList.add('hidden'); });
+    document.getElementById(CHROME_DROPS[name]).classList.toggle('hidden');
+  }
+  function closeChromeDrop(name){
+    document.getElementById(CHROME_DROPS[name]).classList.add('hidden');
+  }
+  document.addEventListener('click', e=>{
+    if(!e.target.closest('nav .relative')) Object.values(CHROME_DROPS).forEach(id=>document.getElementById(id).classList.add('hidden'));
+  });
+  document.addEventListener('keydown', e=>{
+    if(e.key==='Escape'){ const o=document.getElementById('chromeSearchOverlay'); if(o && o.classList.contains('active')) toggleChromeSearch(); }
+  });
+</script>
+</body>
+</html>
