@@ -2,27 +2,27 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Join South Africa's #1 SME Community: SME South Africa</title>
-  <meta name="description" content="Access funding, resources, events, and a thriving network of entrepreneurs just like you, all in one hub." />
+  <title>SME Workspace: Your Business Score, Compliance &amp; Funding Readiness: SME South Africa</title>
+  <meta name="description" content="SME Workspace gives you one honest score across cash flow, compliance, funding and growth — plus the next move to make. Included with Premium membership." />
   <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <script src="https://cdn.tailwindcss.com"></script><script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
   <script>tailwind.config={theme:{extend:{fontFamily:{jakarta:['Plus Jakarta Sans','sans-serif'],inter:['Inter','system-ui','sans-serif']}}}};</script>
   <style>
     html,body{font-family:'Inter',system-ui,sans-serif;} .font-jakarta{font-family:'Plus Jakarta Sans',sans-serif;letter-spacing:.005em;}
-    .hero-bg-light{background:linear-gradient(160deg,#FDECEF 0%,#FCFCFC 55%);}
     .hero-bg{background:linear-gradient(115deg,#0C1F31 0%,#0C1F31 55%,#2b1626 85%,#5e1a2c 120%);}
     .grad-text{background:linear-gradient(100deg,#DC183C,#FF9900);-webkit-background-clip:text;background-clip:text;color:transparent;}
     .dot-pattern{background-image:radial-gradient(rgba(255,255,255,.07) 1px,transparent 1.5px);background-size:22px 22px;}
     .card-lift{transition:box-shadow .2s,transform .2s;} .card-lift:hover{box-shadow:0 14px 30px -12px rgba(10,44,61,.22);transform:translateY(-3px);}
     .preview-card{box-shadow:0 30px 60px -20px rgba(0,0,0,.55),0 12px 24px -8px rgba(0,0,0,.35);}
-    .preview-card-2{box-shadow:0 24px 50px -20px rgba(0,0,0,.5);}
     .ring-prog{transform:rotate(-90deg);}
+    .stall-row{display:flex;align-items:flex-start;gap:.6rem;font-size:.875rem;line-height:1.4;padding:.55rem 0;}
+    .stall-row+.stall-row{border-top:1px dashed #E7EBEF;}
     .faq-body{max-height:0;overflow:hidden;transition:max-height .28s ease;} .faq-item.open .faq-body{max-height:320px;} .faq-item.open .faq-chev{transform:rotate(180deg);} .faq-chev{transition:transform .28s ease;}
     .dev-badge{display:none;} body.dev-on .dev-badge{display:inline-flex;} #devToggle.on{background:#DC183C;color:#fff;border-color:#DC183C;}
     .ov{position:fixed;inset:0;z-index:60;} .ov-bg{position:absolute;inset:0;background:rgba(12,31,49,.45);backdrop-filter:blur(2px);opacity:0;transition:opacity .3s;} .ov.open .ov-bg{opacity:1;}
     .drawer{position:absolute;right:0;top:0;height:100%;width:100%;max-width:440px;background:#fff;box-shadow:-12px 0 40px rgba(12,31,49,.25);overflow-y:auto;transform:translateX(100%);transition:transform .3s cubic-bezier(.2,.7,.2,1);} .ov.open .drawer{transform:translateX(0);}
-      .search-overlay{position:absolute;inset:0;background:#fff;z-index:20;display:flex;align-items:center;justify-content:center;padding:0 1rem;opacity:0;pointer-events:none;transform:translateY(-8px);transition:all .25s cubic-bezier(.2,.8,.2,1);}
+    .search-overlay{position:absolute;inset:0;background:#fff;z-index:20;display:flex;align-items:center;justify-content:center;padding:0 1rem;opacity:0;pointer-events:none;transform:translateY(-8px);transition:all .25s cubic-bezier(.2,.8,.2,1);}
     .search-overlay.active{opacity:1;pointer-events:auto;transform:translateY(0);}
     @media (min-width:640px){ .search-overlay{padding:0 1.5rem;} }
 </style>
@@ -121,108 +121,122 @@
     </a>
     <a href="public-pricing.html" class="relative flex flex-col items-center justify-center gap-1 py-2.5 text-[#DC183C]">
       <span class="absolute top-0 left-1/2 -translate-x-1/2 w-8 h-0.5 rounded-full bg-[#DC183C]"></span>
-      <i data-lucide="user-round-plus" class="w-5 h-5"></i>
-      <span class="font-jakarta text-[11px] font-bold">Sign Up</span>
+      <i data-lucide="gauge" class="w-5 h-5"></i>
+      <span class="font-jakarta text-[11px] font-bold">Workspace</span>
     </a>
   </div>
 </nav>
 
 <!-- HERO -->
-<section class="hero-bg-light relative overflow-hidden">
+<section class="hero-bg text-white relative overflow-hidden">
+  <div class="absolute inset-0 dot-pattern opacity-70 pointer-events-none"></div>
   <div class="max-w-7xl mx-auto px-4 sm:px-6 py-14 sm:py-20 relative">
     <div class="grid lg:grid-cols-2 gap-10 lg:gap-12 items-center">
       <div class="text-center lg:text-left">
-        <h1 class="font-jakarta font-extrabold text-3xl sm:text-4xl lg:text-[2.75rem] leading-[1.1] tracking-tight">Join South Africa's #1 Community
+        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-bold bg-white/10 text-white/80 border border-white/15"><i data-lucide="sparkles" class="w-3 h-3"></i> PREMIUM MEMBER TOOL · SME WORKSPACE</span>
+        <h1 class="font-jakarta font-extrabold text-3xl sm:text-4xl lg:text-[2.75rem] leading-[1.1] tracking-tight mt-4">Build a Smarter,
           <button onclick="openBrief()" class="dev-badge align-middle ml-1 w-6 h-6 rounded-full bg-[#FF9900] text-[#0C1F31] items-center justify-center text-[11px] font-bold">i</button>
-          <span class="block text-transparent bg-clip-text bg-gradient-to-r from-[#DC183C] to-[#FF9900] mt-1">for Small Business Owners</span>
+          <span class="block grad-text mt-1">Stronger Business</span>
         </h1>
-        <p class="mt-5 text-lg text-[#6A7581] max-w-lg mx-auto lg:mx-0 leading-relaxed">Access funding, resources, events, and a thriving network of entrepreneurs just like you, all in one hub.</p>
+        <p class="mt-5 text-lg text-white/70 max-w-lg mx-auto lg:mx-0 leading-relaxed">SME Workspace helps you understand your business health, improve funding readiness, stay compliant, and get a clear next move — all from one score.</p>
+        <ul class="mt-6 space-y-2.5 max-w-lg mx-auto lg:mx-0 text-left">
+          <li class="flex items-start gap-2.5 text-sm text-white/80"><i data-lucide="check-circle-2" class="w-4.5 h-4.5 text-[#29A37A] shrink-0 mt-0.5"></i><span><b class="text-white">Your Workspace Score.</b> An honest 0–100 read across cash flow, compliance, funding and growth.</span></li>
+          <li class="flex items-start gap-2.5 text-sm text-white/80"><i data-lucide="check-circle-2" class="w-4.5 h-4.5 text-[#29A37A] shrink-0 mt-0.5"></i><span><b class="text-white">Your next best action.</b> Prioritised recommendations for your stage, industry and goals.</span></li>
+        </ul>
         <div class="mt-7 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3">
-          <a href="public-pricing.html" class="inline-flex items-center gap-2 px-6 h-12 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold transition">Become a Member <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
-          <a href="public-auth.html" class="text-sm font-semibold text-[#6A7581] hover:text-[#121A21] transition">Already a member? Sign in</a>
+          <a href="public-pricing.html" class="inline-flex items-center gap-2 px-6 h-12 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold transition">Unlock SME Workspace <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
+          <a href="#how-it-works" class="text-sm font-semibold text-white/70 hover:text-white transition">See how it works</a>
         </div>
+        <p class="mt-5 text-xs text-white/50">Included with Premium membership · POPIA-aligned</p>
       </div>
 
-      <!-- Illustrative product preview (no real screenshots — stylised, matches the platform's own card system) -->
-      <div class="relative h-[360px] hidden sm:block">
-        <div class="preview-card absolute left-1/2 top-0 w-[320px] bg-white rounded-2xl border border-[#E7EBEF] p-4" style="transform:translateX(-58%) rotate(-3deg)">
-          <div class="flex items-center gap-2 pb-3 border-b border-[#E7EBEF]"><span class="w-7 h-7 rounded-lg bg-[#0C1F31] grid place-items-center"><i data-lucide="rss" class="w-3.5 h-3.5 text-white"></i></span><span class="font-jakarta font-bold text-sm">Activity Feed</span></div>
-          <div class="mt-3 space-y-3">
-            <div class="flex items-center gap-2"><span class="w-7 h-7 rounded-full bg-gradient-to-br from-[#DC183C] to-[#FF9900]"></span><div class="flex-1 space-y-1"><div class="h-2 w-28 rounded bg-slate-100"></div><div class="h-1.5 w-16 rounded bg-slate-50"></div></div></div>
-            <div class="h-16 rounded-xl bg-slate-50 border border-[#E7EBEF]"></div>
-            <div class="flex items-center gap-3 text-[#6A7581]"><span class="flex items-center gap-1 text-[11px] font-semibold"><i data-lucide="heart" class="w-3.5 h-3.5"></i> 12</span><span class="flex items-center gap-1 text-[11px] font-semibold"><i data-lucide="message-circle" class="w-3.5 h-3.5"></i> 4</span></div>
-            <div class="flex items-center gap-2"><span class="w-7 h-7 rounded-full bg-[#0C1F31]/80"></span><div class="h-2 w-20 rounded bg-slate-100"></div></div>
+      <!-- Illustrative Workspace Score dashboard preview -->
+      <div class="relative">
+        <div class="preview-card bg-white rounded-2xl border border-[#E7EBEF] p-6 text-[#121A21] max-w-sm mx-auto">
+          <div class="flex items-center justify-between">
+            <p class="text-[10px] font-bold uppercase tracking-widest text-[#6A7581]">Your Workspace Score</p>
+            <span class="text-[10px] font-bold text-[#29A37A] bg-[#E4F5EE] px-2 py-0.5 rounded-full">+6 this month</span>
           </div>
-        </div>
-        <div class="preview-card-2 absolute right-1/2 bottom-0 w-[230px] bg-white rounded-2xl border border-[#E7EBEF] p-4" style="transform:translateX(58%) rotate(3deg)">
-          <p class="text-[10px] font-bold uppercase tracking-widest text-[#6A7581]">Business Health Score</p>
-          <div class="flex items-center gap-3 mt-3">
-            <svg class="w-14 h-14 ring-prog shrink-0" viewBox="0 0 36 36"><circle cx="18" cy="18" r="15.5" fill="none" stroke="#E7EBEF" stroke-width="3.5"/><circle cx="18" cy="18" r="15.5" fill="none" stroke="#FF9900" stroke-width="3.5" stroke-dasharray="73,100" stroke-linecap="round"/><text x="18" y="21" text-anchor="middle" transform="rotate(90 18 18)" font-size="10" font-weight="800" fill="#121A21" font-family="Plus Jakarta Sans">73</text></svg>
-            <div class="flex-1"><p class="font-jakarta font-extrabold text-[13px]">Growth-ready</p><p class="text-[10px] text-[#6A7581] mt-0.5">Updated after your last check-in</p></div>
+          <div class="flex items-center gap-4 mt-3">
+            <svg class="w-20 h-20 ring-prog shrink-0" viewBox="0 0 36 36"><circle cx="18" cy="18" r="15.5" fill="none" stroke="#E7EBEF" stroke-width="3.5"/><circle cx="18" cy="18" r="15.5" fill="none" stroke="#FF9900" stroke-width="3.5" stroke-dasharray="72,100" stroke-linecap="round"/><text x="18" y="21.5" text-anchor="middle" transform="rotate(90 18 18)" font-size="11" font-weight="800" fill="#121A21" font-family="Plus Jakarta Sans">72</text></svg>
+            <div>
+              <p class="font-jakarta font-extrabold text-lg">Growth-ready</p>
+              <p class="text-xs text-[#6A7581] mt-0.5">Updated today</p>
+            </div>
           </div>
+          <div id="scoreMetrics" class="grid grid-cols-2 gap-3 mt-5 pt-5 border-t border-[#E7EBEF]"></div>
+          <div id="scoreStats" class="grid grid-cols-3 gap-2 mt-4"></div>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- FEATURE STRIP -->
+<!-- WHY MOST SMES STALL -->
 <section class="max-w-6xl mx-auto px-4 sm:px-6 py-14 sm:py-16">
-  <div class="text-center max-w-xl mx-auto">
-    <h2 class="font-jakarta font-extrabold text-2xl sm:text-3xl tracking-tight">Everything You Need to Start, Grow, and Fund Your Business</h2>
+  <div class="grid lg:grid-cols-2 gap-10 items-center">
+    <div>
+      <p class="text-[11px] font-bold uppercase tracking-widest text-[#DC183C]">Why Most SMEs Stall</p>
+      <h2 class="font-jakarta font-extrabold text-2xl sm:text-3xl tracking-tight mt-2">You don't have a bad business. You have a visibility problem.</h2>
+      <p class="mt-4 text-[#6A7581] leading-relaxed">Compliance slips. Funding applications quietly get declined. Growth moves pass you by before you even see them. SME Workspace replaces the guesswork with a single live score and the one move to make next.</p>
+    </div>
+    <div class="bg-white rounded-2xl border border-[#E7EBEF] p-6 sm:p-7" id="stallList"></div>
   </div>
-  <div id="featureCards" class="grid sm:grid-cols-3 gap-5 mt-9"></div>
+</section>
+
+<!-- THE WORKSPACE SCORE -->
+<section class="bg-[#FCFCFC] border-y border-[#E7EBEF]">
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 py-14 sm:py-16 text-center">
+    <p class="text-[11px] font-bold uppercase tracking-widest text-[#DC183C]">The Workspace Score</p>
+    <h2 class="font-jakarta font-extrabold text-2xl sm:text-3xl mt-2">One Number That Tells You Where You Stand</h2>
+    <p class="mt-3 text-[#6A7581] max-w-2xl mx-auto leading-relaxed">A 0–100 read across cash flow, compliance, funding and growth. It updates as your business changes, and every other module in Workspace — your next move, your readiness tracker, your compliance vault — is driven by it.</p>
+    <div id="pillarsGrid" class="grid grid-cols-2 sm:grid-cols-4 gap-5 mt-9"></div>
+  </div>
 </section>
 
 <!-- HOW IT WORKS -->
+<section id="how-it-works" class="max-w-5xl mx-auto px-4 sm:px-6 py-14 sm:py-16">
+  <div class="text-center max-w-xl mx-auto">
+    <p class="text-[11px] font-bold uppercase tracking-widest text-[#DC183C]">How It Works</p>
+    <h2 class="font-jakarta font-extrabold text-2xl sm:text-3xl tracking-tight mt-2">Three Steps to Your Next Move</h2>
+  </div>
+  <div id="stepsGrid" class="grid sm:grid-cols-3 gap-6 mt-10"></div>
+</section>
+
+<!-- EVERYTHING WIRED TO YOUR SCORE -->
 <section class="bg-[#FCFCFC] border-y border-[#E7EBEF]">
-  <div class="max-w-5xl mx-auto px-4 sm:px-6 py-14 sm:py-16">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 py-14 sm:py-16">
     <div class="text-center max-w-xl mx-auto">
-      <p class="text-[11px] font-bold uppercase tracking-widest text-[#DC183C]">How It Works</p>
-      <h2 class="font-jakarta font-extrabold text-2xl sm:text-3xl tracking-tight mt-2">Three Steps to Your Next Move</h2>
+      <p class="text-[11px] font-bold uppercase tracking-widest text-[#DC183C]">Everything Wired to Your Score</p>
+      <h2 class="font-jakarta font-extrabold text-2xl sm:text-3xl tracking-tight mt-2">One Score. One Next Move. Every Module Connected.</h2>
+      <p class="mt-3 text-[#6A7581]">Missions, funding readiness, your SARS and CIPC compliance vault — they all read from your Workspace Score, so nothing you do is generic.</p>
     </div>
-    <div id="stepsGrid" class="grid sm:grid-cols-3 gap-6 mt-10"></div>
+    <div id="modulesGrid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 mt-9"></div>
   </div>
 </section>
 
-<!-- PRICING -->
+<!-- PRICING / UPGRADE BAND -->
 <section class="max-w-5xl mx-auto px-4 sm:px-6 py-14 sm:py-16">
-  <div class="text-center max-w-xl mx-auto">
-    <h2 class="font-jakarta font-extrabold text-2xl sm:text-3xl tracking-tight">Find Your Perfect Plan</h2>
-    <p class="mt-3 text-[#6A7581]">Choose the plan that's right for your business journey. Start at no cost and upgrade anytime.</p>
-  </div>
-
-  <div class="grid md:grid-cols-2 gap-6 mt-9 items-stretch">
-    <div class="bg-white rounded-2xl border-2 border-[#0C1F31] p-7">
-      <p class="text-[#6A7581] font-medium">Standard</p>
-      <h3 class="font-jakarta font-extrabold text-2xl mt-0.5">Member</h3>
-      <div class="mt-4 flex items-end gap-1.5"><span class="font-jakarta font-extrabold text-4xl">R0</span><span class="text-[#6A7581] text-sm mb-1.5">/monthly</span></div>
-      <div class="border-t border-[#E7EBEF] my-5"></div>
-      <ul class="space-y-4 text-sm">
-        <li class="flex items-start gap-2.5"><i data-lucide="check-circle-2" class="w-4.5 h-4.5 text-[#0C1F31] shrink-0 mt-0.5"></i><div><b>Standard Content Access</b><p class="text-[#6A7581]">Access to foundational articles and guides.</p></div></li>
-        <li class="flex items-start gap-2.5"><i data-lucide="check-circle-2" class="w-4.5 h-4.5 text-[#0C1F31] shrink-0 mt-0.5"></i><div><b>Apply for Funding</b><p class="text-[#6A7581]">Apply to multiple funders and track applications within the platform.</p></div></li>
-        <li class="flex items-start gap-2.5"><i data-lucide="check-circle-2" class="w-4.5 h-4.5 text-[#0C1F31] shrink-0 mt-0.5"></i><div><b>SME Solutions Marketplace</b><p class="text-[#6A7581]">Access to coupon codes and exclusive offers from partners.</p></div></li>
-        <li class="flex items-start gap-2.5"><i data-lucide="check-circle-2" class="w-4.5 h-4.5 text-[#0C1F31] shrink-0 mt-0.5"></i><div><b>Early Access to Features</b><p class="text-[#6A7581]">Get a sneak peek at upcoming functionality.</p></div></li>
-      </ul>
-      <a href="public-pricing.html" class="mt-7 flex items-center justify-center gap-2 h-12 rounded-full border-2 border-[#0C1F31] text-[#0C1F31] font-bold hover:bg-[#0C1F31] hover:text-white transition">Join Now</a>
-    </div>
-
-    <div class="bg-[#0C1F31] text-white rounded-2xl border-2 border-[#DC183C] p-7 relative shadow-xl">
-      <span class="absolute -top-3 left-7 px-3 py-1 rounded-full text-[11px] font-bold bg-[#FF9900] text-[#0C1F31]">MOST POPULAR</span>
-      <p class="text-white/60 font-medium">Premium</p>
-      <h3 class="font-jakarta font-extrabold text-2xl mt-0.5">Access</h3>
-      <div class="mt-4 flex items-end gap-1.5"><span class="font-jakarta font-extrabold text-4xl">R99</span><span class="text-white/60 text-sm mb-1.5">/monthly</span></div>
-      <div class="border-t border-white/15 my-5"></div>
-      <ul class="space-y-4 text-sm">
-        <li class="flex items-start gap-2.5"><i data-lucide="check-circle-2" class="w-4.5 h-4.5 text-[#FF9900] shrink-0 mt-0.5"></i><div><b>Everything on Standard Membership</b><p class="text-white/60">Access to all features available to Standard membership.</p></div></li>
-        <li class="flex items-start gap-2.5"><i data-lucide="check-circle-2" class="w-4.5 h-4.5 text-[#FF9900] shrink-0 mt-0.5"></i><div><b>Community Access</b><p class="text-white/60">Join our private network of South African SME owners.</p></div></li>
-        <li class="flex items-start gap-2.5"><i data-lucide="check-circle-2" class="w-4.5 h-4.5 text-[#FF9900] shrink-0 mt-0.5"></i><div><b>Connect with other SMEs</b><p class="text-white/60">Ability to connect with other small and medium enterprises.</p></div></li>
-        <li class="flex items-start gap-2.5"><i data-lucide="check-circle-2" class="w-4.5 h-4.5 text-[#FF9900] shrink-0 mt-0.5"></i><div><b>Private Messaging</b><p class="text-white/60">Direct message other members instead of only posting publicly.</p></div></li>
-      </ul>
-      <a href="public-pricing.html" class="mt-7 flex items-center justify-center gap-2 h-12 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold transition">Join Now</a>
+  <div class="bg-[#0C1F31] text-white rounded-2xl border-2 border-[#DC183C] p-8 sm:p-10 relative overflow-hidden">
+    <div class="absolute inset-0 dot-pattern opacity-50 pointer-events-none"></div>
+    <div class="relative grid lg:grid-cols-[1fr_auto] gap-8 items-center">
+      <div>
+        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-bold bg-[#FF9900] text-[#0C1F31]">PREMIUM MEMBERSHIP</span>
+        <h2 class="font-jakarta font-extrabold text-2xl sm:text-3xl mt-3">SME Workspace Is Part of Premium</h2>
+        <p class="mt-3 text-white/70 max-w-lg leading-relaxed">Your Workspace Score, the four-pillar breakdown, the compliance vault, funding readiness and advisor matching are all included in Premium membership — one plan, no separate add-on to buy.</p>
+        <ul class="mt-5 space-y-2 text-sm text-white/80">
+          <li class="flex items-center gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-[#29A37A]"></i>Full Workspace Score &amp; four-pillar breakdown</li>
+          <li class="flex items-center gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-[#29A37A]"></i>Compliance vault &amp; readiness tracker</li>
+          <li class="flex items-center gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-[#29A37A]"></i>Trusted advisor matching</li>
+        </ul>
+      </div>
+      <div class="text-center lg:text-right shrink-0">
+        <div class="flex items-end gap-1.5 justify-center lg:justify-end"><span class="font-jakarta font-extrabold text-4xl">R99</span><span class="text-white/60 text-sm mb-1.5">/monthly</span></div>
+        <a href="public-pricing.html" class="mt-4 inline-flex items-center justify-center gap-2 px-7 h-12 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold transition w-full lg:w-auto">Upgrade to Premium <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
+        <p class="mt-3 text-xs text-white/50">Cancel anytime · see full plan comparison</p>
+      </div>
     </div>
   </div>
-  <p class="text-center text-sm text-[#6A7581] mt-5">Upgrade to Premium anytime.</p>
 </section>
 
 <!-- FAQ -->
@@ -233,25 +247,16 @@
   </div>
 </section>
 
-<!-- WHAT'S INSIDE — platform recap, no invented numbers -->
-<section class="bg-white border-b border-[#E7EBEF]">
-  <div class="max-w-5xl mx-auto px-4 sm:px-6 py-14 sm:py-16 text-center">
-    <p class="text-[11px] font-bold uppercase tracking-widest text-[#DC183C]">What's Inside</p>
-    <h2 class="font-jakarta font-extrabold text-2xl sm:text-3xl mt-2">One Hub for Every Stage of the Journey</h2>
-    <div id="pillarsGrid" class="grid grid-cols-2 sm:grid-cols-4 gap-5 mt-9"></div>
-  </div>
-</section>
-
 <!-- FINAL CTA -->
 <section class="hero-bg text-white relative overflow-hidden">
   <div class="absolute inset-0 dot-pattern opacity-70 pointer-events-none"></div>
   <div class="max-w-2xl mx-auto px-4 sm:px-6 py-16 sm:py-20 relative text-center">
-    <h2 class="font-jakarta font-extrabold text-2xl sm:text-4xl">Ready to Build With Us?</h2>
-    <p class="mt-3 text-white/70 max-w-xl mx-auto">Sign up for R0 and get access to funding, resources, and a community built for South African entrepreneurs.</p>
+    <h2 class="font-jakarta font-extrabold text-2xl sm:text-4xl">Ready to See Your Score?</h2>
+    <p class="mt-3 text-white/70 max-w-xl mx-auto">Unlock SME Workspace with Premium membership and walk away with the single highest-leverage move for your business.</p>
     <div class="mt-7 flex flex-col sm:flex-row items-center justify-center gap-3">
-      <a href="public-pricing.html" class="h-12 px-7 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold transition inline-flex items-center justify-center gap-2">Join Now <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
+      <a href="public-pricing.html" class="h-12 px-7 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold transition inline-flex items-center justify-center gap-2">Upgrade to Premium <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
     </div>
-    <p class="mt-5 text-sm text-white/60">Already a subscriber? <a href="public-auth.html" class="text-white font-semibold hover:underline">Sign in</a></p>
+    <p class="mt-5 text-sm text-white/60">Already a Premium member? <a href="public-auth.html" class="text-white font-semibold hover:underline">Sign in</a></p>
   </div>
 </section>
 
@@ -274,10 +279,10 @@
       <div>
         <p class="text-[11px] font-bold uppercase tracking-widest text-[#FF9900]">Platform</p>
         <ul class="mt-4 space-y-2.5 text-sm text-white/70">
+          <li><a href="public-workspace.html" class="hover:text-white">SME Workspace</a></li>
           <li><a href="public-resources.html" class="hover:text-white">Resources Library</a></li>
           <li><a href="public-funding.html" class="hover:text-white">Funding Portal</a></li>
           <li><a href="public-solutions.html" class="hover:text-white">Solutions Directory</a></li>
-          <li><a href="public-shop.html" class="hover:text-white">Shop</a></li>
           <li><a href="public-brands.html" class="hover:text-white">Brands Directory</a></li>
         </ul>
       </div>
@@ -329,22 +334,51 @@
   function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
   function showToast(m){const el=document.getElementById('toast');el.classList.remove('hidden');el.innerHTML=`<div class="bg-[#0C1F31] text-white rounded-full pl-3 pr-5 py-2.5 shadow-2xl flex items-center gap-2 text-sm font-semibold" style="border-left:4px solid #29A37A"><i data-lucide="check-circle" class="w-4 h-4" style="color:#29A37A"></i><span>${esc(m)}</span></div>`;lucide.createIcons();setTimeout(()=>{el.classList.add('hidden');el.innerHTML='';},2400);}
 
-  const FEATURES = [
-    {icon:'banknote',      title:'Access Funding Opportunities', desc:'Apply for business loans, grants, and investor funding through verified local and international partners.'},
-    {icon:'graduation-cap',title:'Learn from Experts',           desc:'Access guides, webinars, and real-world tips from industry leaders across finance and operations.'},
-    {icon:'users-round',   title:'Grow Your Network',            desc:'Connect with other SME owners, mentors, and partners across South Africa in one shared community.'}
+  const SCORE_METRICS = [
+    {label:'Funding Readiness', val:'78%'},
+    {label:'Compliance Health', val:'84%'},
+    {label:'Business Credibility', val:'66%'},
+    {label:'Growth Readiness', val:'61%'}
   ];
-  document.getElementById('featureCards').innerHTML = FEATURES.map(f=>`
-    <div class="bg-white rounded-2xl border border-[#E7EBEF] p-6 text-center card-lift">
-      <div class="w-12 h-12 rounded-xl bg-[#FDECEF] text-[#DC183C] grid place-items-center mx-auto"><i data-lucide="${f.icon}" class="w-5 h-5"></i></div>
-      <h3 class="font-jakarta font-bold text-lg mt-4">${esc(f.title)}</h3>
-      <p class="text-sm text-[#6A7581] mt-2 leading-relaxed">${esc(f.desc)}</p>
+  document.getElementById('scoreMetrics').innerHTML = SCORE_METRICS.map(m=>`
+    <div><p class="text-[11px] text-[#6A7581]">${esc(m.label)}</p><p class="font-jakarta font-extrabold text-base mt-0.5">${esc(m.val)}</p></div>`).join('');
+
+  const SCORE_STATS = [
+    {label:'FUNDING MATCHED', val:'R 4.2m'},
+    {label:'COMPLIANCE ITEMS', val:'12/14'},
+    {label:'CREDIBILITY GRADE', val:'A−'}
+  ];
+  document.getElementById('scoreStats').innerHTML = SCORE_STATS.map(s=>`
+    <div class="bg-[#FCFCFC] border border-[#E7EBEF] rounded-lg p-2 text-center"><p class="font-jakarta font-extrabold text-sm">${esc(s.val)}</p><p class="text-[9px] text-[#6A7581] mt-0.5 leading-tight">${esc(s.label)}</p></div>`).join('');
+
+  const STALLS = [
+    'Compliance feels like a moving target',
+    'Funding applications quietly get declined',
+    'No clear view of business health',
+    'Nowhere to turn for trusted guidance',
+    'No clear picture of how lenders see you',
+    'Growth moves pass you by'
+  ];
+  document.getElementById('stallList').innerHTML = STALLS.map(s=>`
+    <div class="stall-row"><i data-lucide="alert-circle" class="w-4 h-4 text-[#DC183C] opacity-70 shrink-0 mt-0.5"></i><span>${esc(s)}</span></div>`).join('');
+
+  const PILLARS = [
+    {icon:'banknote', tint:'bg-[#E4F5EE] text-[#29A37A]', title:'Cash Flow Health', desc:'Whether the money coming in covers what\'s going out, with records to prove it when a funder or SARS asks.'},
+    {icon:'shield-check', tint:'bg-[#FFF1E0] text-[#AE6B0A]', title:'Compliance Health', desc:'Where you stand with SARS, CIPC and B-BBEE, surfaced clearly so nothing slips through the cracks.'},
+    {icon:'trending-up', tint:'bg-[#FDECEF] text-[#DC183C]', title:'Funding Readiness', desc:'How prepared your business is to attract capital — the records and structure funders look for.'},
+    {icon:'rocket', tint:'bg-[#F0F5F9] text-slate-600', title:'Growth Readiness', desc:'Your capacity to take on more revenue and customers, measured honestly, not optimistically.'}
+  ];
+  document.getElementById('pillarsGrid').innerHTML = PILLARS.map(p=>`
+    <div class="bg-white rounded-2xl border border-[#E7EBEF] p-5 text-left card-lift">
+      <div class="w-11 h-11 rounded-xl ${p.tint} grid place-items-center"><i data-lucide="${p.icon}" class="w-5 h-5"></i></div>
+      <h3 class="font-jakarta font-bold text-sm mt-3">${esc(p.title)}</h3>
+      <p class="text-xs text-[#6A7581] mt-1.5 leading-relaxed">${esc(p.desc)}</p>
     </div>`).join('');
 
   const STEPS = [
-    {n:'01', icon:'user-plus', title:'Sign Up', desc:'Create your account in under a minute. Standard membership never asks for card details.'},
-    {n:'02', icon:'clipboard-check', title:'Take the Health Check', desc:'A few short questions give you a Business Health Score across cash flow, compliance, customers, operations and growth.'},
-    {n:'03', icon:'rocket', title:'Act on Your Plan', desc:'Get your top recommended actions, apply for funding, and join the conversation with other members.'}
+    {n:'01', icon:'clipboard-check', title:'Answer the Check', desc:'Short, plain-English questions about your business. No uploads, no jargon.'},
+    {n:'02', icon:'gauge', title:'See Your Score', desc:'Your 0–100 number, broken down by pillar, with the gaps quietly costing you funding and deals.'},
+    {n:'03', icon:'compass', title:'Get Your Next Move', desc:'One concrete action for your growth stage, plus the moves you\'re already eligible for.'}
   ];
   document.getElementById('stepsGrid').innerHTML = STEPS.map(s=>`
     <div class="relative bg-white rounded-2xl border border-[#E7EBEF] p-6 card-lift">
@@ -354,24 +388,29 @@
       <p class="relative text-sm text-[#6A7581] mt-2 leading-relaxed">${esc(s.desc)}</p>
     </div>`).join('');
 
-  const PILLARS = [
-    {icon:'users', tint:'bg-[#FDECEF] text-[#DC183C]', title:'Community', desc:'Network with founders, mentors and industry leaders.'},
-    {icon:'calendar-days', tint:'bg-[#FFF1E0] text-[#AE6B0A]', title:'Events', desc:'Live sessions and workshops built to accelerate growth.'},
-    {icon:'banknote', tint:'bg-[#E4F5EE] text-[#29A37A]', title:'Funding', desc:'One application matches you with verified funders.'},
-    {icon:'library', tint:'bg-[#F0F5F9] text-slate-600', title:'Resources', desc:'Templates, guides and expert insight for every stage.'}
+  const MODULES = [
+    {icon:'shield-check', tint:'bg-[#FFF1E0] text-[#AE6B0A]', tag:'SARS · CIPC · B-BBEE · document vault', title:'Stay compliant, documents included', desc:'Track your SARS, CIPC and B-BBEE obligations in one calm dashboard, and keep tax clearance, AFS, bank statements and IDs in the same funder-ready vault.'},
+    {icon:'banknote', tint:'bg-[#FDECEF] text-[#DC183C]', tag:'DFI & lender-aligned criteria', title:'Walk into funding conversations prepared', desc:'See exactly what funders look at, fix the gaps, and only apply when your business is genuinely ready to win.'},
+    {icon:'users', tint:'bg-[#E4F5EE] text-[#29A37A]', tag:'Curated 3–5 matches · no marketplace', title:'Trusted guidance, only when you need it', desc:'Get matched to vetted South African experts — accountants, funding specialists, compliance pros — at the exact moment a decision matters.'},
+    {icon:'list-checks', tint:'bg-[#F0F5F9] text-slate-600', tag:'Tied to your Workspace Score', title:'See exactly what to fix, in priority order', desc:'A prioritised, next-best-action plan that lifts your fundability, compliance and growth-readiness one step at a time.'},
+    {icon:'bar-chart-3', tint:'bg-[#FFF1E0] text-[#AE6B0A]', tag:'Live Workspace Score · 4 pillars', title:'One honest view of business health', desc:'Replace gut-feel with clarity. See where your business is strong, where it\'s exposed, and what to fix next.'},
+    {icon:'target', tint:'bg-[#FDECEF] text-[#DC183C]', tag:'Intelligence · not a CRM or ad platform', title:'Find out what\'s really blocking your growth', desc:'A quick customer-acquisition health check across visibility, lead capture, trust and marketing, with a tailored 30-day plan.'}
   ];
-  document.getElementById('pillarsGrid').innerHTML = PILLARS.map(p=>`
-    <div class="bg-[#FCFCFC] rounded-2xl border border-[#E7EBEF] p-5">
-      <div class="w-11 h-11 rounded-xl ${p.tint} grid place-items-center mx-auto"><i data-lucide="${p.icon}" class="w-5 h-5"></i></div>
-      <h3 class="font-jakarta font-bold text-sm mt-3">${esc(p.title)}</h3>
-      <p class="text-xs text-[#6A7581] mt-1.5 leading-relaxed">${esc(p.desc)}</p>
+  document.getElementById('modulesGrid').innerHTML = MODULES.map(m=>`
+    <div class="bg-white rounded-2xl border border-[#E7EBEF] p-6 card-lift">
+      <div class="w-11 h-11 rounded-xl ${m.tint} grid place-items-center"><i data-lucide="${m.icon}" class="w-5 h-5"></i></div>
+      <p class="text-[10px] font-bold uppercase tracking-widest text-[#6A7581] mt-3">${esc(m.tag)}</p>
+      <h3 class="font-jakarta font-bold text-base mt-1.5">${esc(m.title)}</h3>
+      <p class="text-sm text-[#6A7581] mt-2 leading-relaxed">${esc(m.desc)}</p>
     </div>`).join('');
 
   const FAQ = [
-    ['What is the main difference between the Standard and Premium memberships?', 'Premium unlocks deeper connections, exclusive events pricing, and full community access. Standard offers foundational content, funding applications and the solutions marketplace, so you can experience the hub before you upgrade.'],
-    ['Can I cancel Premium anytime?', 'Yes. Premium has no lock-in. Cancel anytime from your account settings and you’ll keep access until the end of your current billing period, then drop back to Standard.'],
-    ['Do I need a card to join as a Standard member?', 'No. Standard membership is R0 and never asks for payment details. You only enter card details if you choose to upgrade to Premium.'],
-    ['What payment methods do you accept?', 'Major South African debit and credit cards, processed securely by PayFast in ZAR.']
+    ['What exactly is the Workspace Score?', 'A single number from 0–100 that shows how ready your business is to grow, raise funding and operate confidently. It blends four pillars — Cash Flow Health, Compliance Health, Funding Readiness and Growth Readiness — into one honest view of where you stand.'],
+    ['Who is behind SME Workspace?', 'SME Workspace is built and operated by SME South Africa, the country\'s SME knowledge and support network. The platform, the Workspace Score methodology and this page are maintained by the SME South Africa team.'],
+    ['How is SME Workspace different from accounting or admin software?', 'SME Workspace is not a bookkeeping tool. It\'s the intelligence and readiness layer that sits across your business — measuring cash flow, compliance, funding and growth readiness, and telling you what to do next. Use it alongside your existing tools.'],
+    ['Is SME Workspace included with my membership?', 'Yes. SME Workspace is included with Premium membership at R99/month — the Workspace Score, four-pillar breakdown, compliance vault, funding readiness and advisor matching are all part of the same plan, not a separate add-on.'],
+    ['Who is SME Workspace for?', 'South African SME owners who want to be taken seriously — by funders, by partners, by SARS, and by themselves. Whether you\'re newly registered or scaling toward your next round, Workspace helps you get and stay ready.'],
+    ['Is SME Workspace certified by SARS, CIPC, the dtic or any DFI?', 'No. SME Workspace is not certified, endorsed or accredited by SARS, CIPC, the dtic, the SEDA/SEFA group, any DFI or any regulator. We describe it as SARS-aligned, CIPC-aware, POPIA-aligned and DFI-ready because we design the product around those frameworks — these are self-declared statements by SME South Africa, not third-party audits.']
   ];
   document.getElementById('faqList').innerHTML = FAQ.map((f,i)=>`
     <div class="faq-item border border-[#E7EBEF] rounded-xl overflow-hidden bg-white">
@@ -388,12 +427,12 @@
     if(!wasOpen) it.classList.add('open');
   }
 
-  const BRIEF={title:'Membership Sales Landing Page',sub:'Marketing funnel · public, indexable — feeds into Membership Checkout',
-    purpose:'Covers <code>/membership-sales/</code>, the top-of-funnel marketing page that sells the community before handing off to registration. Redesigned from a thin layout that leaned on fabricated trust content — a partner-logo bar, a stock testimonial quote, and invented stats (50K+ members, R100M+ funding facilitated, 92% satisfaction). Following the same content-honesty principle already documented on <code>public-pricing.html</code> (&ldquo;the page sells the product on its own merits, not on claimed adoption numbers or quotes&rdquo;), all of that was replaced with real, checkable content: a How It Works section and a What&rsquo;s Inside recap, both describing the actual product rather than unverified numbers.',
-    data:'Same Plan/Member data model as public-pricing.html: Standard (R0, forever) and Premium (R99/month). The Premium comparison row was changed from a redundant &ldquo;Community Forum&rdquo; bullet (Standard already includes community posting per public-pricing.html) to &ldquo;Private Messaging,&rdquo; matching the same fix applied to public-premium.html so the two pages don&rsquo;t contradict each other.',
-    logic:'Every CTA on the page (hero, pricing cards, final band) routes to <code>public-pricing.html</code> so a visitor gets one consistent plan-selection experience regardless of which CTA they click. (public-membership-checkout.html was retired and moved to /archive.)',
-    components:'split hero with illustrative dashboard + Business Health Score preview · 3-card feature strip · 3-step "How It Works" · two-tier pricing cards · FAQ accordion · 4-pillar "What\'s Inside" recap · final CTA band.',
-    specs:'<b>Hero:</b> light rose-to-white gradient (<code>hero-bg-light</code>), <code>max-w-7xl</code>=1280px, <code>py-14 sm:py-20</code>. 2-col grid at lg, items-center. H1 Jakarta extrabold 30px/36px/44px, gradient second line via <code>.grad-text</code>. Preview: two overlapping white rounded-2xl cards using <code>.preview-card</code>/<code>.preview-card-2</code> layered shadows, rotated ±3deg — an Activity Feed card and a Business Health Score card with an SVG progress ring (<code>.ring-prog</code>, same pattern as public-pricing.html), no real screenshots.<br/><br/><b>Feature strip:</b> <code>max-w-6xl</code>, 3-col grid sm, card <code>rounded-2xl</code> border <code>#E7EBEF</code> <code>p-6</code>, centered icon tile 48px bg <code>#FDECEF</code>, hover lift via <code>.card-lift</code>.<br/><br/><b>How It Works:</b> <code>max-w-5xl</code>, off-white band bordered top/bottom, 3-col grid sm, numbered cards (large faint 01/02/03 watermark) walking Sign Up → Health Check → Act on Your Plan.<br/><br/><b>Pricing cards:</b> <code>max-w-5xl</code>, 2-col grid md. Standard: white, 2px border <code>#0C1F31</code>. Premium: bg <code>#0C1F31</code> 2px border <code>#DC183C</code>, "MOST POPULAR" ribbon bg <code>#FF9900</code>. Feature rows use <code>check-circle-2</code>, bold title + muted description per row.<br/><br/><b>FAQ:</b> identical accordion pattern to public-pricing.html, reused byte-for-byte (<code>.faq-item</code>/<code>.faq-body</code>/<code>.faq-chev</code>).<br/><br/><b>What\'s Inside:</b> <code>max-w-5xl</code> centered, 4-col grid sm (Community/Events/Funding/Resources), tinted icon tiles, mirrors the platform-pillar language used on public-home.html for cross-page consistency.<br/><br/><b>Final CTA:</b> <code>.hero-bg</code> navy gradient + <code>.dot-pattern</code>, <code>max-w-2xl</code> centered, evergreen copy with no member-count claim, single primary CTA.'};
+  const BRIEF={title:'SME Workspace — Homepage',sub:'New public page · Premium proposition, not yet wired into global nav',
+    purpose:'Covers a new <code>/workspace/</code> page: the paid proposition for SME Workspace, a rebrand of the live SME IQ product (iq.smesouthafrica.co.za) into the Hub\'s own membership model. Content and information architecture (hero, Workspace Score, four pillars, module grid, FAQ) are carried over from the real live site almost 1:1 — that page is well-built — but every "SME IQ" mention is renamed to "SME Workspace" per Joel\'s brief, and the framing flips from a pre-launch cohort giveaway to a Premium membership benefit. Every instance of "free" / "no credit card required" on the live site was removed site-wide-rule (never use "free" in user-facing copy) and because this mockup positions Workspace as something you unlock with Premium, not a free assessment. The "Founder Access — first 100 SMMEs" cohort section on the live site was dropped entirely since it doesn\'t fit a standing paid proposition.',
+    data:'Reuses the site\'s existing Standard/Premium plan model from public-pricing.html — Workspace is NOT a third price point, it\'s bundled into the existing R99/month Premium tier, so every CTA on this page routes to <code>public-pricing.html</code> rather than inventing new checkout flow. Score numbers (72/100, 78%/84%/66%/61% pillar breakdown, R4.2m funding matched, 12/14 compliance items, A− credibility) are illustrative, copied from the live site\'s own example dashboard, not real user data.',
+    logic:'Single BRIEF/dev-badge for the whole page (matches the pattern used on public-tag.html and other single-purpose pages) rather than a badge per section, since this is one continuous pitch rather than a multi-audience page.',
+    components:'hero with Workspace Score dashboard preview (ring-prog) · "why most SMEs stall" problem list · Workspace Score explainer · four-pillar grid · 3-step how-it-works · 6-module "everything wired to your score" grid · Premium upgrade band · FAQ accordion · final CTA.',
+    specs:'<b>Hero:</b> hero-bg navy gradient + dot-pattern, <code>max-w-7xl</code>, 2-col grid at lg. Score preview: white <code>preview-card</code>, 80px ring-prog SVG (matches public-pricing.html\'s ring pattern, scaled up), 2×2 metric grid + 3-stat row below.<br/><br/><b>Why SMEs stall:</b> <code>max-w-6xl</code>, 2-col grid lg, right column a white card of 6 dashed-divider rows with <code>alert-circle</code> icons (<code>.stall-row</code>).<br/><br/><b>Workspace Score band:</b> off-white, <code>max-w-5xl</code> centred, 4-col pillar grid sm.<br/><br/><b>How it works:</b> identical numbered-card pattern to public-membership-sales.html\'s "How It Works" section, reused for consistency.<br/><br/><b>Modules grid:</b> <code>max-w-6xl</code>, 2/3-col grid, 6 cards each with tinted icon tile + eyebrow tag + title + description.<br/><br/><b>Premium band:</b> navy card, 2px <code>#DC183C</code> border, dot-pattern overlay, price + 3 bullet highlights left, price + CTA right.<br/><br/><b>FAQ:</b> identical accordion pattern to public-pricing.html, reused byte-for-byte.<br/><br/><b>Not yet done:</b> this page isn\'t wired into the global header/footer nav across the rest of the site yet (only its own footer links to itself) — that\'s a separate follow-up once Joel confirms the page is approved.'};
   function toggleDevMode(){const on=document.body.classList.toggle('dev-on');const b=document.getElementById('devToggle');if(b)b.classList.toggle('on',on);if(on)showToast('Dev Mode on. Tap any ⓘ for implementation notes.');lucide.createIcons();}
   function closeOverlay(id){const el=document.getElementById(id);if(!el)return;el.classList.remove('open');setTimeout(()=>{if(el&&el.parentNode)el.remove();},300);}
   function openBrief(){const b=BRIEF;const sec=(i,l,h)=>`<div class="px-6 py-4 border-t border-slate-100"><p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] flex items-center gap-1.5 mb-2"><i data-lucide="${i}" class="w-3.5 h-3.5"></i>${l}</p><div class="text-sm text-slate-600 leading-relaxed">${h}</div></div>`;document.getElementById('overlay-root').innerHTML=`<div class="ov" id="ov"><div class="ov-bg" onclick="closeOverlay('ov')"></div><div class="drawer"><div class="sticky top-0 z-10 bg-[#0C1F31] text-white px-6 py-5 flex items-start justify-between"><div><p class="text-[10px] font-bold uppercase tracking-widest text-[#FF9900] mb-1">Dev Brief</p><h3 class="font-jakarta font-extrabold text-lg leading-tight">${b.title}</h3><p class="text-xs text-white/60 mt-1">${b.sub}</p></div><button onclick="closeOverlay('ov')" class="text-white/60 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button></div>${sec('target','Purpose',b.purpose)}${sec('database','Data model',b.data)}${sec('git-branch','Logic',b.logic)}${sec('ruler','Spec values',b.specs)}${sec('boxes','Components',b.components)}</div></div>`;requestAnimationFrame(()=>{const o=document.getElementById('ov');if(o)o.classList.add('open');});lucide.createIcons();}

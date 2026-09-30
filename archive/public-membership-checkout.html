@@ -2,26 +2,27 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Join South Africa's #1 SME Community: SME South Africa</title>
-  <meta name="description" content="Access funding, resources, events, and a thriving network of entrepreneurs just like you, all in one hub." />
+  <title>Join SME South Africa: Membership Checkout</title>
+  <meta name="description" content="Create your SME South Africa account and choose Standard or Premium membership." />
   <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <script src="https://cdn.tailwindcss.com"></script><script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
   <script>tailwind.config={theme:{extend:{fontFamily:{jakarta:['Plus Jakarta Sans','sans-serif'],inter:['Inter','system-ui','sans-serif']}}}};</script>
   <style>
     html,body{font-family:'Inter',system-ui,sans-serif;} .font-jakarta{font-family:'Plus Jakarta Sans',sans-serif;letter-spacing:.005em;}
-    .hero-bg-light{background:linear-gradient(160deg,#FDECEF 0%,#FCFCFC 55%);}
-    .hero-bg{background:linear-gradient(115deg,#0C1F31 0%,#0C1F31 55%,#2b1626 85%,#5e1a2c 120%);}
-    .grad-text{background:linear-gradient(100deg,#DC183C,#FF9900);-webkit-background-clip:text;background-clip:text;color:transparent;}
-    .dot-pattern{background-image:radial-gradient(rgba(255,255,255,.07) 1px,transparent 1.5px);background-size:22px 22px;}
-    .card-lift{transition:box-shadow .2s,transform .2s;} .card-lift:hover{box-shadow:0 14px 30px -12px rgba(10,44,61,.22);transform:translateY(-3px);}
-    .preview-card{box-shadow:0 30px 60px -20px rgba(0,0,0,.55),0 12px 24px -8px rgba(0,0,0,.35);}
-    .preview-card-2{box-shadow:0 24px 50px -20px rgba(0,0,0,.5);}
-    .ring-prog{transform:rotate(-90deg);}
-    .faq-body{max-height:0;overflow:hidden;transition:max-height .28s ease;} .faq-item.open .faq-body{max-height:320px;} .faq-item.open .faq-chev{transform:rotate(180deg);} .faq-chev{transition:transform .28s ease;}
+    .field{width:100%;background:#fff;border:1px solid #E7EBEF;border-radius:.75rem;height:3rem;padding:0 1rem;font-size:.9rem;outline:none;transition:border-color .15s,box-shadow .15s;} .field:focus{border-color:#DC183C;box-shadow:0 0 0 3px rgba(220,24,60,.12);}
+    select.field{appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%236A7581' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 1rem center;padding-right:2.5rem;}
     .dev-badge{display:none;} body.dev-on .dev-badge{display:inline-flex;} #devToggle.on{background:#DC183C;color:#fff;border-color:#DC183C;}
     .ov{position:fixed;inset:0;z-index:60;} .ov-bg{position:absolute;inset:0;background:rgba(12,31,49,.45);backdrop-filter:blur(2px);opacity:0;transition:opacity .3s;} .ov.open .ov-bg{opacity:1;}
     .drawer{position:absolute;right:0;top:0;height:100%;width:100%;max-width:440px;background:#fff;box-shadow:-12px 0 40px rgba(12,31,49,.25);overflow-y:auto;transform:translateX(100%);transition:transform .3s cubic-bezier(.2,.7,.2,1);} .ov.open .drawer{transform:translateX(0);}
+    .acc-panel{display:grid;grid-template-rows:0fr;transition:grid-template-rows .35s cubic-bezier(.2,.7,.2,1);} .acc-panel.open{grid-template-rows:1fr;}
+    .acc-panel>div{overflow:hidden;}
+    .plan-tab{transition:all .15s;}
+    .step-pane{display:none;} .step-pane.active{display:block;animation:fadeUp .4s cubic-bezier(.2,.7,.2,1) backwards;}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+    @keyframes pop{0%{transform:scale(.6);opacity:0;}60%{transform:scale(1.08);}100%{transform:scale(1);opacity:1;}}
+    .pop{animation:pop .5s cubic-bezier(.2,.7,.2,1) backwards;}
+    .strength-seg{height:4px;border-radius:2px;background:#E7EBEF;transition:background .2s;}
       .search-overlay{position:absolute;inset:0;background:#fff;z-index:20;display:flex;align-items:center;justify-content:center;padding:0 1rem;opacity:0;pointer-events:none;transform:translateY(-8px);transition:all .25s cubic-bezier(.2,.8,.2,1);}
     .search-overlay.active{opacity:1;pointer-events:auto;transform:translateY(0);}
     @media (min-width:640px){ .search-overlay{padding:0 1.5rem;} }
@@ -119,7 +120,7 @@
       <i data-lucide="book-open" class="w-5 h-5"></i>
       <span class="font-jakarta text-[11px] font-bold">Resources</span>
     </a>
-    <a href="public-pricing.html" class="relative flex flex-col items-center justify-center gap-1 py-2.5 text-[#DC183C]">
+    <a href="public-membership-checkout.html" class="relative flex flex-col items-center justify-center gap-1 py-2.5 text-[#DC183C]">
       <span class="absolute top-0 left-1/2 -translate-x-1/2 w-8 h-0.5 rounded-full bg-[#DC183C]"></span>
       <i data-lucide="user-round-plus" class="w-5 h-5"></i>
       <span class="font-jakarta text-[11px] font-bold">Sign Up</span>
@@ -127,133 +128,124 @@
   </div>
 </nav>
 
-<!-- HERO -->
-<section class="hero-bg-light relative overflow-hidden">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-14 sm:py-20 relative">
-    <div class="grid lg:grid-cols-2 gap-10 lg:gap-12 items-center">
-      <div class="text-center lg:text-left">
-        <h1 class="font-jakarta font-extrabold text-3xl sm:text-4xl lg:text-[2.75rem] leading-[1.1] tracking-tight">Join South Africa's #1 Community
-          <button onclick="openBrief()" class="dev-badge align-middle ml-1 w-6 h-6 rounded-full bg-[#FF9900] text-[#0C1F31] items-center justify-center text-[11px] font-bold">i</button>
-          <span class="block text-transparent bg-clip-text bg-gradient-to-r from-[#DC183C] to-[#FF9900] mt-1">for Small Business Owners</span>
-        </h1>
-        <p class="mt-5 text-lg text-[#6A7581] max-w-lg mx-auto lg:mx-0 leading-relaxed">Access funding, resources, events, and a thriving network of entrepreneurs just like you, all in one hub.</p>
-        <div class="mt-7 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3">
-          <a href="public-pricing.html" class="inline-flex items-center gap-2 px-6 h-12 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold transition">Become a Member <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
-          <a href="public-auth.html" class="text-sm font-semibold text-[#6A7581] hover:text-[#121A21] transition">Already a member? Sign in</a>
+<div class="max-w-6xl mx-auto px-4 sm:px-6 pt-6">
+  <nav aria-label="Breadcrumb" class="text-xs text-[#6A7581] flex items-center flex-wrap gap-x-1.5"><a href="public-home.html" class="hover:text-[#DC183C] transition">Home</a><span class="text-slate-300">›</span><a href="public-pricing.html" class="hover:text-[#DC183C] transition">Pricing</a><span class="text-slate-300">›</span><span class="text-[#121A21] font-medium truncate">Create account</span></nav>
+</div>
+
+<section class="max-w-6xl mx-auto px-4 sm:px-6 pt-4 pb-2">
+  <p class="text-[12px] font-bold uppercase tracking-widest text-[#DC183C] flex items-center gap-1.5">Membership
+    <button onclick="openBrief()" class="dev-badge align-middle w-5 h-5 rounded-full bg-[#FF9900] text-[#0C1F31] items-center justify-center text-[10px] font-bold">i</button>
+  </p>
+  <h1 class="font-jakarta font-extrabold text-3xl sm:text-4xl mt-0.5 tracking-tight" id="pageTitle">Create your account</h1>
+  <p class="mt-2 text-[#6A7581] max-w-xl" id="pageSub">Join SME South Africa in a couple of minutes. Upgrade to Premium any time from your account settings.</p>
+</section>
+
+<main class="max-w-6xl mx-auto px-4 sm:px-6 pb-16">
+  <div class="grid lg:grid-cols-3 gap-6 mt-4">
+
+    <!-- FORM -->
+    <form onsubmit="event.preventDefault();submitJoin()" class="lg:col-span-2 space-y-5">
+
+      <div class="bg-white rounded-2xl border border-[#E7EBEF] p-6">
+        <h3 class="font-jakarta font-extrabold text-lg">Your details</h3>
+        <div class="grid sm:grid-cols-2 gap-4 mt-4">
+          <div><label class="block text-sm font-semibold mb-1.5">First name</label><input required class="field" placeholder="Thabo" /></div>
+          <div><label class="block text-sm font-semibold mb-1.5">Last name</label><input required class="field" placeholder="Nkosi" /></div>
+        </div>
+        <div class="mt-4"><label class="block text-sm font-semibold mb-1.5">Business email</label><input type="email" required class="field" placeholder="you@business.co.za" /></div>
+        <div class="mt-4"><label class="block text-sm font-semibold mb-1.5">Phone</label>
+          <div class="flex">
+            <span class="inline-flex items-center gap-1 px-3 h-12 rounded-l-xl border border-r-0 border-[#E7EBEF] bg-[#FCFCFC] text-sm font-semibold whitespace-nowrap">🇿🇦 +27</span>
+            <input required class="field rounded-l-none" placeholder="82 123 4567" />
+          </div>
+        </div>
+        <div class="grid sm:grid-cols-2 gap-4 mt-4">
+          <div>
+            <label class="block text-sm font-semibold mb-1.5">Password</label>
+            <input id="pw" oninput="checkStrength()" type="password" required class="field" placeholder="Create a password" />
+            <div class="flex gap-1 mt-2" id="pwBars"><div class="flex-1 strength-seg"></div><div class="flex-1 strength-seg"></div><div class="flex-1 strength-seg"></div></div>
+            <p class="text-[11px] text-[#6A7581] mt-1.5" id="pwHint">Must be "Medium" strength or stronger.</p>
+          </div>
+          <div><label class="block text-sm font-semibold mb-1.5">Confirm password</label><input type="password" required class="field" placeholder="Re-enter password" /></div>
         </div>
       </div>
 
-      <!-- Illustrative product preview (no real screenshots — stylised, matches the platform's own card system) -->
-      <div class="relative h-[360px] hidden sm:block">
-        <div class="preview-card absolute left-1/2 top-0 w-[320px] bg-white rounded-2xl border border-[#E7EBEF] p-4" style="transform:translateX(-58%) rotate(-3deg)">
-          <div class="flex items-center gap-2 pb-3 border-b border-[#E7EBEF]"><span class="w-7 h-7 rounded-lg bg-[#0C1F31] grid place-items-center"><i data-lucide="rss" class="w-3.5 h-3.5 text-white"></i></span><span class="font-jakarta font-bold text-sm">Activity Feed</span></div>
-          <div class="mt-3 space-y-3">
-            <div class="flex items-center gap-2"><span class="w-7 h-7 rounded-full bg-gradient-to-br from-[#DC183C] to-[#FF9900]"></span><div class="flex-1 space-y-1"><div class="h-2 w-28 rounded bg-slate-100"></div><div class="h-1.5 w-16 rounded bg-slate-50"></div></div></div>
-            <div class="h-16 rounded-xl bg-slate-50 border border-[#E7EBEF]"></div>
-            <div class="flex items-center gap-3 text-[#6A7581]"><span class="flex items-center gap-1 text-[11px] font-semibold"><i data-lucide="heart" class="w-3.5 h-3.5"></i> 12</span><span class="flex items-center gap-1 text-[11px] font-semibold"><i data-lucide="message-circle" class="w-3.5 h-3.5"></i> 4</span></div>
-            <div class="flex items-center gap-2"><span class="w-7 h-7 rounded-full bg-[#0C1F31]/80"></span><div class="h-2 w-20 rounded bg-slate-100"></div></div>
+      <!-- Billing + payment — only relevant to Premium, collapses away for Standard -->
+      <div class="acc-panel" id="billingCollapse">
+        <div><div class="bg-white rounded-2xl border border-[#E7EBEF] p-6 space-y-4">
+          <h3 class="font-jakarta font-extrabold text-lg">Billing address</h3>
+          <div><label class="block text-sm font-semibold mb-1.5">Street address</label><input class="field" placeholder="12 Sandton Drive" /></div>
+          <div class="grid sm:grid-cols-2 gap-4">
+            <div><label class="block text-sm font-semibold mb-1.5">City</label><input class="field" placeholder="Johannesburg" /></div>
+            <div><label class="block text-sm font-semibold mb-1.5">Province</label>
+              <select class="field">
+                <option value="" disabled selected>Select province</option>
+                <option>Gauteng</option><option>Western Cape</option><option>KwaZulu-Natal</option><option>Eastern Cape</option><option>Free State</option><option>Limpopo</option><option>Mpumalanga</option><option>North West</option><option>Northern Cape</option>
+              </select>
+            </div>
           </div>
-        </div>
-        <div class="preview-card-2 absolute right-1/2 bottom-0 w-[230px] bg-white rounded-2xl border border-[#E7EBEF] p-4" style="transform:translateX(58%) rotate(3deg)">
-          <p class="text-[10px] font-bold uppercase tracking-widest text-[#6A7581]">Business Health Score</p>
-          <div class="flex items-center gap-3 mt-3">
-            <svg class="w-14 h-14 ring-prog shrink-0" viewBox="0 0 36 36"><circle cx="18" cy="18" r="15.5" fill="none" stroke="#E7EBEF" stroke-width="3.5"/><circle cx="18" cy="18" r="15.5" fill="none" stroke="#FF9900" stroke-width="3.5" stroke-dasharray="73,100" stroke-linecap="round"/><text x="18" y="21" text-anchor="middle" transform="rotate(90 18 18)" font-size="10" font-weight="800" fill="#121A21" font-family="Plus Jakarta Sans">73</text></svg>
-            <div class="flex-1"><p class="font-jakarta font-extrabold text-[13px]">Growth-ready</p><p class="text-[10px] text-[#6A7581] mt-0.5">Updated after your last check-in</p></div>
+          <div class="grid sm:grid-cols-2 gap-4">
+            <div><label class="block text-sm font-semibold mb-1.5">Postal code</label><input class="field" placeholder="2196" inputmode="numeric" /></div>
+            <div><label class="block text-sm font-semibold mb-1.5">Country</label><input class="field" value="South Africa" disabled /></div>
           </div>
-        </div>
+        </div></div>
       </div>
-    </div>
-  </div>
-</section>
+      <div class="acc-panel" id="paymentCollapse">
+        <div><div class="bg-white rounded-2xl border border-[#E7EBEF] p-6 space-y-4">
+          <h3 class="font-jakarta font-extrabold text-lg">Payment</h3>
+          <div class="flex items-center gap-2">
+            <span class="px-2.5 py-1 rounded-md border border-[#E7EBEF] text-[10px] font-bold text-[#6A7581]">VISA</span>
+            <span class="px-2.5 py-1 rounded-md border border-[#E7EBEF] text-[10px] font-bold text-[#6A7581]">MASTERCARD</span>
+            <span class="px-2.5 py-1 rounded-md border border-[#E7EBEF] text-[10px] font-bold text-[#6A7581]">AMEX</span>
+          </div>
+          <div><label class="block text-sm font-semibold mb-1.5">Card number</label>
+            <div class="relative"><input class="field pr-11" placeholder="4242 4242 4242 4242" inputmode="numeric" /><i data-lucide="credit-card" class="w-5 h-5 text-[#6A7581] absolute right-3.5 top-1/2 -translate-y-1/2"></i></div>
+          </div>
+          <div class="grid grid-cols-2 gap-4">
+            <div><label class="block text-sm font-semibold mb-1.5">Expiry</label><input class="field" placeholder="MM/YY" inputmode="numeric" /></div>
+            <div><label class="block text-sm font-semibold mb-1.5">CVV</label><input class="field" placeholder="123" inputmode="numeric" /></div>
+          </div>
+          <p class="text-[11px] text-[#6A7581] flex items-center gap-1.5"><i data-lucide="shield-check" class="w-3.5 h-3.5 text-[#29A37A]"></i> Encrypted &amp; processed by PayFast, PCI-DSS compliant.</p>
+        </div></div>
+      </div>
 
-<!-- FEATURE STRIP -->
-<section class="max-w-6xl mx-auto px-4 sm:px-6 py-14 sm:py-16">
-  <div class="text-center max-w-xl mx-auto">
-    <h2 class="font-jakarta font-extrabold text-2xl sm:text-3xl tracking-tight">Everything You Need to Start, Grow, and Fund Your Business</h2>
-  </div>
-  <div id="featureCards" class="grid sm:grid-cols-3 gap-5 mt-9"></div>
-</section>
+      <div class="bg-white rounded-2xl border border-[#E7EBEF] p-6">
+        <label class="flex items-start gap-3 cursor-pointer">
+          <input type="checkbox" required class="accent-[#DC183C] w-4 h-4 mt-0.5" />
+          <span class="text-sm text-[#6A7581]">By registering, I consent to the processing of my business data and agree to the <a href="public-terms.html" class="text-[#DC183C] font-semibold hover:underline">Terms of Service</a> and <a href="public-privacy.html" class="text-[#DC183C] font-semibold hover:underline">Privacy Policy</a>.</span>
+        </label>
+      </div>
 
-<!-- HOW IT WORKS -->
-<section class="bg-[#FCFCFC] border-y border-[#E7EBEF]">
-  <div class="max-w-5xl mx-auto px-4 sm:px-6 py-14 sm:py-16">
-    <div class="text-center max-w-xl mx-auto">
-      <p class="text-[11px] font-bold uppercase tracking-widest text-[#DC183C]">How It Works</p>
-      <h2 class="font-jakarta font-extrabold text-2xl sm:text-3xl tracking-tight mt-2">Three Steps to Your Next Move</h2>
-    </div>
-    <div id="stepsGrid" class="grid sm:grid-cols-3 gap-6 mt-10"></div>
-  </div>
-</section>
+      <button id="submitBtn" class="w-full h-13 py-3.5 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold transition flex items-center justify-center gap-2"><i data-lucide="user-round-plus" class="w-4 h-4"></i> <span id="submitLabel">Create Standard account</span></button>
+    </form>
 
-<!-- PRICING -->
-<section class="max-w-5xl mx-auto px-4 sm:px-6 py-14 sm:py-16">
-  <div class="text-center max-w-xl mx-auto">
-    <h2 class="font-jakarta font-extrabold text-2xl sm:text-3xl tracking-tight">Find Your Perfect Plan</h2>
-    <p class="mt-3 text-[#6A7581]">Choose the plan that's right for your business journey. Start at no cost and upgrade anytime.</p>
-  </div>
+    <!-- PLAN / ORDER SUMMARY -->
+    <aside class="lg:sticky lg:top-24 h-max">
+      <div class="bg-white rounded-2xl border border-[#E7EBEF] p-5">
+        <h3 class="font-jakarta font-extrabold text-lg">Choose your plan</h3>
+        <div class="grid grid-cols-2 gap-2 mt-4">
+          <button type="button" onclick="selectPlan('standard')" id="tabStandard" class="plan-tab text-left p-3.5 rounded-xl border-2 border-[#DC183C] bg-[#FDECEF]/40">
+            <span class="text-[10px] font-bold uppercase tracking-widest text-[#29A37A]">Standard</span>
+            <p class="font-jakarta font-extrabold text-xl mt-0.5">R0</p>
+            <p class="text-[11px] text-[#6A7581]">forever</p>
+          </button>
+          <button type="button" onclick="selectPlan('premium')" id="tabPremium" class="plan-tab text-left p-3.5 rounded-xl border-2 border-[#E7EBEF]">
+            <span class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C]">Premium</span>
+            <p class="font-jakarta font-extrabold text-xl mt-0.5">R99</p>
+            <p class="text-[11px] text-[#6A7581]">/month</p>
+          </button>
+        </div>
 
-  <div class="grid md:grid-cols-2 gap-6 mt-9 items-stretch">
-    <div class="bg-white rounded-2xl border-2 border-[#0C1F31] p-7">
-      <p class="text-[#6A7581] font-medium">Standard</p>
-      <h3 class="font-jakarta font-extrabold text-2xl mt-0.5">Member</h3>
-      <div class="mt-4 flex items-end gap-1.5"><span class="font-jakarta font-extrabold text-4xl">R0</span><span class="text-[#6A7581] text-sm mb-1.5">/monthly</span></div>
-      <div class="border-t border-[#E7EBEF] my-5"></div>
-      <ul class="space-y-4 text-sm">
-        <li class="flex items-start gap-2.5"><i data-lucide="check-circle-2" class="w-4.5 h-4.5 text-[#0C1F31] shrink-0 mt-0.5"></i><div><b>Standard Content Access</b><p class="text-[#6A7581]">Access to foundational articles and guides.</p></div></li>
-        <li class="flex items-start gap-2.5"><i data-lucide="check-circle-2" class="w-4.5 h-4.5 text-[#0C1F31] shrink-0 mt-0.5"></i><div><b>Apply for Funding</b><p class="text-[#6A7581]">Apply to multiple funders and track applications within the platform.</p></div></li>
-        <li class="flex items-start gap-2.5"><i data-lucide="check-circle-2" class="w-4.5 h-4.5 text-[#0C1F31] shrink-0 mt-0.5"></i><div><b>SME Solutions Marketplace</b><p class="text-[#6A7581]">Access to coupon codes and exclusive offers from partners.</p></div></li>
-        <li class="flex items-start gap-2.5"><i data-lucide="check-circle-2" class="w-4.5 h-4.5 text-[#0C1F31] shrink-0 mt-0.5"></i><div><b>Early Access to Features</b><p class="text-[#6A7581]">Get a sneak peek at upcoming functionality.</p></div></li>
-      </ul>
-      <a href="public-pricing.html" class="mt-7 flex items-center justify-center gap-2 h-12 rounded-full border-2 border-[#0C1F31] text-[#0C1F31] font-bold hover:bg-[#0C1F31] hover:text-white transition">Join Now</a>
-    </div>
+        <div class="mt-5 space-y-2.5 text-sm" id="planFeatures"></div>
 
-    <div class="bg-[#0C1F31] text-white rounded-2xl border-2 border-[#DC183C] p-7 relative shadow-xl">
-      <span class="absolute -top-3 left-7 px-3 py-1 rounded-full text-[11px] font-bold bg-[#FF9900] text-[#0C1F31]">MOST POPULAR</span>
-      <p class="text-white/60 font-medium">Premium</p>
-      <h3 class="font-jakarta font-extrabold text-2xl mt-0.5">Access</h3>
-      <div class="mt-4 flex items-end gap-1.5"><span class="font-jakarta font-extrabold text-4xl">R99</span><span class="text-white/60 text-sm mb-1.5">/monthly</span></div>
-      <div class="border-t border-white/15 my-5"></div>
-      <ul class="space-y-4 text-sm">
-        <li class="flex items-start gap-2.5"><i data-lucide="check-circle-2" class="w-4.5 h-4.5 text-[#FF9900] shrink-0 mt-0.5"></i><div><b>Everything on Standard Membership</b><p class="text-white/60">Access to all features available to Standard membership.</p></div></li>
-        <li class="flex items-start gap-2.5"><i data-lucide="check-circle-2" class="w-4.5 h-4.5 text-[#FF9900] shrink-0 mt-0.5"></i><div><b>Community Access</b><p class="text-white/60">Join our private network of South African SME owners.</p></div></li>
-        <li class="flex items-start gap-2.5"><i data-lucide="check-circle-2" class="w-4.5 h-4.5 text-[#FF9900] shrink-0 mt-0.5"></i><div><b>Connect with other SMEs</b><p class="text-white/60">Ability to connect with other small and medium enterprises.</p></div></li>
-        <li class="flex items-start gap-2.5"><i data-lucide="check-circle-2" class="w-4.5 h-4.5 text-[#FF9900] shrink-0 mt-0.5"></i><div><b>Private Messaging</b><p class="text-white/60">Direct message other members instead of only posting publicly.</p></div></li>
-      </ul>
-      <a href="public-pricing.html" class="mt-7 flex items-center justify-center gap-2 h-12 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold transition">Join Now</a>
-    </div>
+        <div class="border-t border-[#E7EBEF] my-4"></div>
+        <div class="flex items-center justify-between"><span class="text-[#6A7581] text-sm">Today's total</span><span class="font-jakarta font-extrabold text-xl" id="planTotal">R0</span></div>
+        <p class="mt-3 text-[11px] text-center text-[#6A7581] flex items-center justify-center gap-1.5" id="planNote"><i data-lucide="check-circle" class="w-3 h-3 text-[#29A37A]"></i> No card required for Standard.</p>
+      </div>
+      <p class="text-[11px] text-center text-[#6A7581] mt-3">Already a member? <a href="public-auth.html" class="text-[#DC183C] font-semibold hover:underline">Sign in</a></p>
+    </aside>
   </div>
-  <p class="text-center text-sm text-[#6A7581] mt-5">Upgrade to Premium anytime.</p>
-</section>
-
-<!-- FAQ -->
-<section class="bg-white border-y border-[#E7EBEF]">
-  <div class="max-w-3xl mx-auto px-4 sm:px-6 py-16 sm:py-20">
-    <div class="text-center mb-10"><h2 class="font-jakarta font-extrabold text-2xl sm:text-3xl">Frequently Asked Questions</h2></div>
-    <div id="faqList" class="space-y-3"></div>
-  </div>
-</section>
-
-<!-- WHAT'S INSIDE — platform recap, no invented numbers -->
-<section class="bg-white border-b border-[#E7EBEF]">
-  <div class="max-w-5xl mx-auto px-4 sm:px-6 py-14 sm:py-16 text-center">
-    <p class="text-[11px] font-bold uppercase tracking-widest text-[#DC183C]">What's Inside</p>
-    <h2 class="font-jakarta font-extrabold text-2xl sm:text-3xl mt-2">One Hub for Every Stage of the Journey</h2>
-    <div id="pillarsGrid" class="grid grid-cols-2 sm:grid-cols-4 gap-5 mt-9"></div>
-  </div>
-</section>
-
-<!-- FINAL CTA -->
-<section class="hero-bg text-white relative overflow-hidden">
-  <div class="absolute inset-0 dot-pattern opacity-70 pointer-events-none"></div>
-  <div class="max-w-2xl mx-auto px-4 sm:px-6 py-16 sm:py-20 relative text-center">
-    <h2 class="font-jakarta font-extrabold text-2xl sm:text-4xl">Ready to Build With Us?</h2>
-    <p class="mt-3 text-white/70 max-w-xl mx-auto">Sign up for R0 and get access to funding, resources, and a community built for South African entrepreneurs.</p>
-    <div class="mt-7 flex flex-col sm:flex-row items-center justify-center gap-3">
-      <a href="public-pricing.html" class="h-12 px-7 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold transition inline-flex items-center justify-center gap-2">Join Now <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
-    </div>
-    <p class="mt-5 text-sm text-white/60">Already a subscriber? <a href="public-auth.html" class="text-white font-semibold hover:underline">Sign in</a></p>
-  </div>
-</section>
+</main>
 
 <div class="lg:hidden" style="height:calc(64px + env(safe-area-inset-bottom))"></div>
 <footer class="bg-[#0C1F31] text-white">
@@ -329,75 +321,55 @@
   function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
   function showToast(m){const el=document.getElementById('toast');el.classList.remove('hidden');el.innerHTML=`<div class="bg-[#0C1F31] text-white rounded-full pl-3 pr-5 py-2.5 shadow-2xl flex items-center gap-2 text-sm font-semibold" style="border-left:4px solid #29A37A"><i data-lucide="check-circle" class="w-4 h-4" style="color:#29A37A"></i><span>${esc(m)}</span></div>`;lucide.createIcons();setTimeout(()=>{el.classList.add('hidden');el.innerHTML='';},2400);}
 
-  const FEATURES = [
-    {icon:'banknote',      title:'Access Funding Opportunities', desc:'Apply for business loans, grants, and investor funding through verified local and international partners.'},
-    {icon:'graduation-cap',title:'Learn from Experts',           desc:'Access guides, webinars, and real-world tips from industry leaders across finance and operations.'},
-    {icon:'users-round',   title:'Grow Your Network',            desc:'Connect with other SME owners, mentors, and partners across South Africa in one shared community.'}
-  ];
-  document.getElementById('featureCards').innerHTML = FEATURES.map(f=>`
-    <div class="bg-white rounded-2xl border border-[#E7EBEF] p-6 text-center card-lift">
-      <div class="w-12 h-12 rounded-xl bg-[#FDECEF] text-[#DC183C] grid place-items-center mx-auto"><i data-lucide="${f.icon}" class="w-5 h-5"></i></div>
-      <h3 class="font-jakarta font-bold text-lg mt-4">${esc(f.title)}</h3>
-      <p class="text-sm text-[#6A7581] mt-2 leading-relaxed">${esc(f.desc)}</p>
-    </div>`).join('');
+  const PLAN_FEATURES = {
+    standard: ['Business Health Check score', 'Top 3 recommended actions', 'Community feed & forum access', 'Browse and apply for funding'],
+    premium: ['Everything in Standard, plus:', 'Full Success Plan with step tracking', 'Compliance Calendar for your business', 'Cash Flow Tracker', 'Funding-ready Document Vault']
+  };
 
-  const STEPS = [
-    {n:'01', icon:'user-plus', title:'Sign Up', desc:'Create your account in under a minute. Standard membership never asks for card details.'},
-    {n:'02', icon:'clipboard-check', title:'Take the Health Check', desc:'A few short questions give you a Business Health Score across cash flow, compliance, customers, operations and growth.'},
-    {n:'03', icon:'rocket', title:'Act on Your Plan', desc:'Get your top recommended actions, apply for funding, and join the conversation with other members.'}
-  ];
-  document.getElementById('stepsGrid').innerHTML = STEPS.map(s=>`
-    <div class="relative bg-white rounded-2xl border border-[#E7EBEF] p-6 card-lift">
-      <span class="absolute -top-3 -left-2 font-jakarta font-extrabold text-4xl text-[#0C1F31]/[0.06]">${s.n}</span>
-      <div class="relative w-12 h-12 rounded-xl bg-[#FDECEF] text-[#DC183C] grid place-items-center"><i data-lucide="${s.icon}" class="w-5 h-5"></i></div>
-      <h3 class="relative font-jakarta font-bold text-lg mt-4">${esc(s.title)}</h3>
-      <p class="relative text-sm text-[#6A7581] mt-2 leading-relaxed">${esc(s.desc)}</p>
-    </div>`).join('');
-
-  const PILLARS = [
-    {icon:'users', tint:'bg-[#FDECEF] text-[#DC183C]', title:'Community', desc:'Network with founders, mentors and industry leaders.'},
-    {icon:'calendar-days', tint:'bg-[#FFF1E0] text-[#AE6B0A]', title:'Events', desc:'Live sessions and workshops built to accelerate growth.'},
-    {icon:'banknote', tint:'bg-[#E4F5EE] text-[#29A37A]', title:'Funding', desc:'One application matches you with verified funders.'},
-    {icon:'library', tint:'bg-[#F0F5F9] text-slate-600', title:'Resources', desc:'Templates, guides and expert insight for every stage.'}
-  ];
-  document.getElementById('pillarsGrid').innerHTML = PILLARS.map(p=>`
-    <div class="bg-[#FCFCFC] rounded-2xl border border-[#E7EBEF] p-5">
-      <div class="w-11 h-11 rounded-xl ${p.tint} grid place-items-center mx-auto"><i data-lucide="${p.icon}" class="w-5 h-5"></i></div>
-      <h3 class="font-jakarta font-bold text-sm mt-3">${esc(p.title)}</h3>
-      <p class="text-xs text-[#6A7581] mt-1.5 leading-relaxed">${esc(p.desc)}</p>
-    </div>`).join('');
-
-  const FAQ = [
-    ['What is the main difference between the Standard and Premium memberships?', 'Premium unlocks deeper connections, exclusive events pricing, and full community access. Standard offers foundational content, funding applications and the solutions marketplace, so you can experience the hub before you upgrade.'],
-    ['Can I cancel Premium anytime?', 'Yes. Premium has no lock-in. Cancel anytime from your account settings and you’ll keep access until the end of your current billing period, then drop back to Standard.'],
-    ['Do I need a card to join as a Standard member?', 'No. Standard membership is R0 and never asks for payment details. You only enter card details if you choose to upgrade to Premium.'],
-    ['What payment methods do you accept?', 'Major South African debit and credit cards, processed securely by PayFast in ZAR.']
-  ];
-  document.getElementById('faqList').innerHTML = FAQ.map((f,i)=>`
-    <div class="faq-item border border-[#E7EBEF] rounded-xl overflow-hidden bg-white">
-      <button onclick="toggleFaq(${i})" class="w-full flex items-center justify-between gap-3 text-left px-5 py-4 font-semibold hover:bg-[#FCFCFC] transition">
-        <span>${esc(f[0])}</span>
-        <i data-lucide="chevron-down" class="faq-chev w-5 h-5 text-[#6A7581] shrink-0"></i>
-      </button>
-      <div class="faq-body"><p class="px-5 pb-5 text-sm text-[#6A7581] leading-relaxed">${esc(f[1])}</p></div>
-    </div>`).join('');
-  function toggleFaq(i){
-    const items = document.querySelectorAll('.faq-item');
-    const it = items[i]; const wasOpen = it.classList.contains('open');
-    items.forEach(x=>x.classList.remove('open'));
-    if(!wasOpen) it.classList.add('open');
+  let plan = 'standard';
+  function selectPlan(p){
+    plan = p;
+    document.getElementById('tabStandard').className = 'plan-tab text-left p-3.5 rounded-xl border-2 ' + (p==='standard' ? 'border-[#DC183C] bg-[#FDECEF]/40' : 'border-[#E7EBEF]');
+    document.getElementById('tabPremium').className  = 'plan-tab text-left p-3.5 rounded-xl border-2 ' + (p==='premium'  ? 'border-[#DC183C] bg-[#FDECEF]/40' : 'border-[#E7EBEF]');
+    document.getElementById('billingCollapse').classList.toggle("open", p==="premium");
+    document.getElementById('paymentCollapse').classList.toggle("open", p==="premium");
+    document.getElementById('planTotal').textContent = p==='premium' ? 'R99' : 'R0';
+    document.getElementById('planNote').innerHTML = p==='premium'
+      ? '<i data-lucide="shield-check" class="w-3 h-3 text-[#29A37A]"></i> Billed monthly via PayFast. Cancel anytime.'
+      : '<i data-lucide="check-circle" class="w-3 h-3 text-[#29A37A]"></i> No card required for Standard.';
+    document.getElementById('submitLabel').textContent = p==='premium' ? 'Pay R99 and join Premium' : 'Create Standard account';
+    document.getElementById('planFeatures').innerHTML = PLAN_FEATURES[p].map(f=>`<div class="flex items-start gap-2"><i data-lucide="check" class="w-4 h-4 text-[#29A37A] shrink-0 mt-0.5"></i><span>${esc(f)}</span></div>`).join('');
+    lucide.createIcons();
   }
 
-  const BRIEF={title:'Membership Sales Landing Page',sub:'Marketing funnel · public, indexable — feeds into Membership Checkout',
-    purpose:'Covers <code>/membership-sales/</code>, the top-of-funnel marketing page that sells the community before handing off to registration. Redesigned from a thin layout that leaned on fabricated trust content — a partner-logo bar, a stock testimonial quote, and invented stats (50K+ members, R100M+ funding facilitated, 92% satisfaction). Following the same content-honesty principle already documented on <code>public-pricing.html</code> (&ldquo;the page sells the product on its own merits, not on claimed adoption numbers or quotes&rdquo;), all of that was replaced with real, checkable content: a How It Works section and a What&rsquo;s Inside recap, both describing the actual product rather than unverified numbers.',
-    data:'Same Plan/Member data model as public-pricing.html: Standard (R0, forever) and Premium (R99/month). The Premium comparison row was changed from a redundant &ldquo;Community Forum&rdquo; bullet (Standard already includes community posting per public-pricing.html) to &ldquo;Private Messaging,&rdquo; matching the same fix applied to public-premium.html so the two pages don&rsquo;t contradict each other.',
-    logic:'Every CTA on the page (hero, pricing cards, final band) routes to <code>public-pricing.html</code> so a visitor gets one consistent plan-selection experience regardless of which CTA they click. (public-membership-checkout.html was retired and moved to /archive.)',
-    components:'split hero with illustrative dashboard + Business Health Score preview · 3-card feature strip · 3-step "How It Works" · two-tier pricing cards · FAQ accordion · 4-pillar "What\'s Inside" recap · final CTA band.',
-    specs:'<b>Hero:</b> light rose-to-white gradient (<code>hero-bg-light</code>), <code>max-w-7xl</code>=1280px, <code>py-14 sm:py-20</code>. 2-col grid at lg, items-center. H1 Jakarta extrabold 30px/36px/44px, gradient second line via <code>.grad-text</code>. Preview: two overlapping white rounded-2xl cards using <code>.preview-card</code>/<code>.preview-card-2</code> layered shadows, rotated ±3deg — an Activity Feed card and a Business Health Score card with an SVG progress ring (<code>.ring-prog</code>, same pattern as public-pricing.html), no real screenshots.<br/><br/><b>Feature strip:</b> <code>max-w-6xl</code>, 3-col grid sm, card <code>rounded-2xl</code> border <code>#E7EBEF</code> <code>p-6</code>, centered icon tile 48px bg <code>#FDECEF</code>, hover lift via <code>.card-lift</code>.<br/><br/><b>How It Works:</b> <code>max-w-5xl</code>, off-white band bordered top/bottom, 3-col grid sm, numbered cards (large faint 01/02/03 watermark) walking Sign Up → Health Check → Act on Your Plan.<br/><br/><b>Pricing cards:</b> <code>max-w-5xl</code>, 2-col grid md. Standard: white, 2px border <code>#0C1F31</code>. Premium: bg <code>#0C1F31</code> 2px border <code>#DC183C</code>, "MOST POPULAR" ribbon bg <code>#FF9900</code>. Feature rows use <code>check-circle-2</code>, bold title + muted description per row.<br/><br/><b>FAQ:</b> identical accordion pattern to public-pricing.html, reused byte-for-byte (<code>.faq-item</code>/<code>.faq-body</code>/<code>.faq-chev</code>).<br/><br/><b>What\'s Inside:</b> <code>max-w-5xl</code> centered, 4-col grid sm (Community/Events/Funding/Resources), tinted icon tiles, mirrors the platform-pillar language used on public-home.html for cross-page consistency.<br/><br/><b>Final CTA:</b> <code>.hero-bg</code> navy gradient + <code>.dot-pattern</code>, <code>max-w-2xl</code> centered, evergreen copy with no member-count claim, single primary CTA.'};
+  function checkStrength(){
+    const v = document.getElementById('pw').value;
+    let score = 0;
+    if(v.length>=8) score++;
+    if(/[A-Z]/.test(v) && /[0-9]/.test(v)) score++;
+    if(/[^A-Za-z0-9]/.test(v) && v.length>=10) score++;
+    const bars = document.querySelectorAll('#pwBars .strength-seg');
+    const colors = ['#DC183C','#FF9900','#29A37A'];
+    bars.forEach((b,i)=>{ b.style.background = i<score ? colors[score-1] : '#E7EBEF'; });
+    const hint = document.getElementById('pwHint');
+    hint.textContent = !v ? 'Must be "Medium" strength or stronger.' : score<=1 ? 'Weak — add a number, a capital letter or a symbol.' : score===2 ? 'Medium — good to go.' : 'Strong.';
+  }
+
+  function submitJoin(){
+    showToast(plan==='premium' ? 'Payment received. Welcome to Premium.' : 'Account created. Welcome to the community.');
+  }
+
+  const BRIEF={title:'Membership Checkout — Create Account',sub:'MemberPress registration + PayFast handoff · public, indexable form pages',
+    purpose:'Covers <code>/register/free-membership/</code> and <code>/register/paid-membership/</code>, which live today as completely unstyled MemberPress default forms — no header, no footer, broken logo, plain browser inputs, and (on paid) the form bleeds into unrelated theme widgets below it. This mockup gives both registration paths one unified, on-brand flow with a plan switcher instead of two disconnected raw pages.',
+    data:'MemberPress: <code>Member { first_name, last_name, email, phone, password }</code> + <code>Transaction { membership_id, amount, gateway:"PayFast", status }</code>. One WP user record is shared across MemberPress, WooCommerce and BuddyBoss — a single login. Plans map to the two tiers on public-pricing.html: Standard (R0, forever) and Premium (R99/month, PayFast recurring).',
+    logic:'Selecting a plan in the summary card toggles the Billing address and Payment sections open (Premium) or collapsed (Standard) via CSS grid-template-rows, and updates total / CTA label / trust note live. Password strength is a simple 3-tier client-side heuristic mirroring the live MemberPress "Medium or stronger" requirement. Standard never touches payment fields at all — no card required, consistent with the no-cost tier.',
+    components:'plan switcher (2-tab) · account form · collapsible billing + payment sections · password strength meter · consent checkbox · sticky plan summary.',
+    specs:'<b>Page shell:</b> content <code>max-w-6xl</code>=1152px. Eyebrow "Membership" 12px bold uppercase tracking-widest <code>#DC183C</code>. H1 Jakarta extrabold 800, 30px mobile / 36px desktop. Sub 16px <code>#6A7581</code> max-width 576px.<br/><br/><b>Layout grid:</b> <code>lg:grid-cols-3 gap-6</code>=24px — form spans <code>lg:col-span-2</code>, plan summary sticky at <code>lg:top-24</code>=96px.<br/><br/><b>Form section cards:</b> white <code>rounded-2xl</code>=16px, border 1px <code>#E7EBEF</code>, <code>p-6</code>=24px, stacked <code>space-y-5</code>=20px. Section heading Jakarta extrabold <code>text-lg</code>=18px.<br/><b>Fields:</b> global <code>.field</code> — 48px height, <code>rounded-xl</code>=12px, border <code>#E7EBEF</code>, focus ring <code>rgba(220,24,60,.12)</code>. Paired fields <code>sm:grid-cols-2 gap-4</code>.<br/><b>Password strength:</b> 3 segments height 4px <code>rounded-full</code>, fill red→orange→green (<code>#DC183C</code>/<code>#FF9900</code>/<code>#29A37A</code>) by score; hint text 11px <code>#6A7581</code> updates live.<br/><b>Billing/Payment collapse:</b> CSS grid-template-rows 0fr→1fr transition 350ms, opens only when Premium is selected.<br/><br/><b>Plan summary card:</b> white <code>rounded-2xl</code>=16px border <code>#E7EBEF</code> <code>p-5</code>=20px. Two-tab grid <code>grid-cols-2 gap-2</code>; each tab <code>p-3.5</code>=14px <code>rounded-xl</code>=12px, 2px border — selected state border <code>#DC183C</code> + bg <code>#FDECEF</code>/40. Tab eyebrow 10px bold uppercase (Standard=<code>#29A37A</code>, Premium=<code>#DC183C</code>), price Jakarta extrabold <code>text-xl</code>=20px.<br/><b>Feature list:</b> 14px rows with Lucide <code>check</code> 16px <code>#29A37A</code>.<br/><b>Total row:</b> label 14px <code>#6A7581</code>, amount Jakarta extrabold <code>text-xl</code>=20px, divider 1px <code>#E7EBEF</code>.<br/><b>Submit button:</b> full width, <code>rounded-full</code>, bg <code>#DC183C</code> → hover <code>#B0142F</code>, white bold, label swaps with plan choice.'};
   function toggleDevMode(){const on=document.body.classList.toggle('dev-on');const b=document.getElementById('devToggle');if(b)b.classList.toggle('on',on);if(on)showToast('Dev Mode on. Tap any ⓘ for implementation notes.');lucide.createIcons();}
   function closeOverlay(id){const el=document.getElementById(id);if(!el)return;el.classList.remove('open');setTimeout(()=>{if(el&&el.parentNode)el.remove();},300);}
   function openBrief(){const b=BRIEF;const sec=(i,l,h)=>`<div class="px-6 py-4 border-t border-slate-100"><p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] flex items-center gap-1.5 mb-2"><i data-lucide="${i}" class="w-3.5 h-3.5"></i>${l}</p><div class="text-sm text-slate-600 leading-relaxed">${h}</div></div>`;document.getElementById('overlay-root').innerHTML=`<div class="ov" id="ov"><div class="ov-bg" onclick="closeOverlay('ov')"></div><div class="drawer"><div class="sticky top-0 z-10 bg-[#0C1F31] text-white px-6 py-5 flex items-start justify-between"><div><p class="text-[10px] font-bold uppercase tracking-widest text-[#FF9900] mb-1">Dev Brief</p><h3 class="font-jakarta font-extrabold text-lg leading-tight">${b.title}</h3><p class="text-xs text-white/60 mt-1">${b.sub}</p></div><button onclick="closeOverlay('ov')" class="text-white/60 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button></div>${sec('target','Purpose',b.purpose)}${sec('database','Data model',b.data)}${sec('git-branch','Logic',b.logic)}${sec('ruler','Spec values',b.specs)}${sec('boxes','Components',b.components)}</div></div>`;requestAnimationFrame(()=>{const o=document.getElementById('ov');if(o)o.classList.add('open');});lucide.createIcons();}
 
+  selectPlan('standard');
   lucide.createIcons();
 </script>
 <script>

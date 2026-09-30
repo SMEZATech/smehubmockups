@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Join South Africa's Largest SME Network</title>
+  <meta name="description" content="Confirm your membership and access the tools, funding, and resources you need to start, manage, and grow your business." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script><script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  <script>tailwind.config={theme:{extend:{fontFamily:{jakarta:['Plus Jakarta Sans','sans-serif'],inter:['Inter','system-ui','sans-serif']}}}};</script>
+  <style>
+    html,body{font-family:'Inter',system-ui,sans-serif;} .font-jakarta{font-family:'Plus Jakarta Sans',sans-serif;letter-spacing:.005em;}
+    body{background:linear-gradient(160deg,#FDECEF 0%,#FCFCFC 45%);}
+    .field{width:100%;background:#fff;border:1px solid #E7EBEF;border-radius:.75rem;height:3rem;padding:0 1rem;font-size:.9rem;outline:none;transition:border-color .15s,box-shadow .15s;} .field:focus{border-color:#DC183C;box-shadow:0 0 0 3px rgba(220,24,60,.12);}
+    select.field{appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%236A7581' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 1rem center;padding-right:2.5rem;}
+    .dev-badge{display:none;} body.dev-on .dev-badge{display:inline-flex;} #devToggle.on{background:#DC183C;color:#fff;border-color:#DC183C;}
+    .ov{position:fixed;inset:0;z-index:60;} .ov-bg{position:absolute;inset:0;background:rgba(12,31,49,.45);backdrop-filter:blur(2px);opacity:0;transition:opacity .3s;} .ov.open .ov-bg{opacity:1;}
+    .drawer{position:absolute;right:0;top:0;height:100%;width:100%;max-width:440px;background:#fff;box-shadow:-12px 0 40px rgba(12,31,49,.25);overflow-y:auto;transform:translateX(100%);transition:transform .3s cubic-bezier(.2,.7,.2,1);} .ov.open .drawer{transform:translateX(0);}
+    .strength-seg{height:4px;border-radius:2px;background:#E7EBEF;transition:background .2s;}
+</style>
+</head>
+<body class="text-[#121A21] antialiased min-h-screen">
+
+<!-- Distraction-free header: logo only, no nav, no chrome — this is a checkout-style funnel page, not a browsing page -->
+<header class="pt-8 pb-2">
+  <div class="max-w-lg mx-auto px-4 flex justify-center">
+    <a href="public-home.html" class="flex items-center gap-2.5">
+      <img src="assets/logo-v1-lockup.svg" alt="SME South Africa" class="h-10 w-auto" />
+    </a>
+  </div>
+</header>
+
+<main class="max-w-lg mx-auto px-4 pb-16">
+  <div class="text-center mt-6">
+    <h1 class="font-jakarta font-extrabold text-2xl sm:text-3xl tracking-tight">Join South Africa's Largest
+      <button onclick="openBrief()" class="dev-badge align-middle ml-1 w-6 h-6 rounded-full bg-[#FF9900] text-[#0C1F31] items-center justify-center text-[11px] font-bold">i</button>
+      <span class="block text-transparent bg-clip-text bg-gradient-to-r from-[#DC183C] to-[#FF9900] mt-1">SME Network</span>
+    </h1>
+    <p class="mt-3 text-[#6A7581] max-w-sm mx-auto leading-relaxed">Access the tools, funding, and resources you need to start, manage, and grow your business.</p>
+  </div>
+
+  <div class="bg-white rounded-2xl border border-[#E7EBEF] shadow-sm p-6 sm:p-7 mt-8">
+    <h2 class="font-jakarta font-extrabold text-lg">Confirm Membership</h2>
+    <p class="text-sm text-[#6A7581] mt-0.5">Review your plan details below to proceed.</p>
+
+    <div class="mt-4 rounded-xl bg-[#FCFCFC] border border-[#E7EBEF] p-4">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <div class="w-9 h-9 rounded-lg bg-[#FDECEF] text-[#DC183C] grid place-items-center shrink-0"><i data-lucide="user-round" class="w-4.5 h-4.5"></i></div>
+          <div><p class="font-jakarta font-bold text-sm">Standard Membership</p><p class="text-[12px] text-[#6A7581]">Standard Access</p></div>
+        </div>
+        <span class="font-jakarta font-extrabold">R0.00</span>
+      </div>
+      <div class="border-t border-[#E7EBEF] mt-4 pt-3 flex items-center justify-between">
+        <span class="text-[11px] font-bold uppercase tracking-widest text-[#6A7581]">Total due today</span>
+        <span class="font-jakarta font-extrabold">R0.00</span>
+      </div>
+    </div>
+    <p class="text-[12px] text-[#6A7581] mt-3">Upgrading later? Compare plans on <a href="public-pricing.html" class="text-[#DC183C] font-semibold hover:underline">Pricing</a>.</p>
+  </div>
+
+  <form onsubmit="event.preventDefault();submitJoin()" class="bg-white rounded-2xl border border-[#E7EBEF] shadow-sm p-6 sm:p-7 mt-5 space-y-4">
+    <div class="grid sm:grid-cols-2 gap-4">
+      <div><label class="block text-sm font-semibold mb-1.5">First name</label><input required class="field" placeholder="Thabo" /></div>
+      <div><label class="block text-sm font-semibold mb-1.5">Last name</label><input required class="field" placeholder="Nkosi" /></div>
+    </div>
+    <div><label class="block text-sm font-semibold mb-1.5">Address line 1</label><input required class="field" placeholder="12 Sandton Drive" /></div>
+    <div><label class="block text-sm font-semibold mb-1.5">Address line 2 <span class="text-[#6A7581] font-normal">(optional)</span></label><input class="field" placeholder="Unit, suite, etc." /></div>
+    <div class="grid sm:grid-cols-2 gap-4">
+      <div><label class="block text-sm font-semibold mb-1.5">City</label><input required class="field" placeholder="Johannesburg" /></div>
+      <div><label class="block text-sm font-semibold mb-1.5">Country</label>
+        <select required class="field"><option value="" disabled selected>Select country</option><option selected>South Africa</option><option>Namibia</option><option>Botswana</option><option>Zimbabwe</option></select>
+      </div>
+    </div>
+    <div class="grid sm:grid-cols-2 gap-4">
+      <div><label class="block text-sm font-semibold mb-1.5">State / Province</label>
+        <select required class="field"><option value="" disabled selected>Select province</option><option>Gauteng</option><option>Western Cape</option><option>KwaZulu-Natal</option><option>Eastern Cape</option><option>Free State</option><option>Limpopo</option><option>Mpumalanga</option><option>North West</option><option>Northern Cape</option></select>
+      </div>
+      <div><label class="block text-sm font-semibold mb-1.5">Zip / Postal code</label><input required class="field" placeholder="2196" inputmode="numeric" /></div>
+    </div>
+    <div><label class="block text-sm font-semibold mb-1.5">Phone number</label>
+      <div class="flex">
+        <span class="inline-flex items-center gap-1 px-3 h-12 rounded-l-xl border border-r-0 border-[#E7EBEF] bg-[#FCFCFC] text-sm font-semibold whitespace-nowrap">🇿🇦 +27</span>
+        <input required class="field rounded-l-none" placeholder="71 123 4567" />
+      </div>
+    </div>
+    <div><label class="block text-sm font-semibold mb-1.5">Email</label><input type="email" required class="field" placeholder="you@business.co.za" /></div>
+    <div class="grid sm:grid-cols-2 gap-4">
+      <div>
+        <label class="block text-sm font-semibold mb-1.5">Password</label>
+        <input id="pw" oninput="checkStrength()" type="password" required class="field" placeholder="Create a password" />
+        <div class="flex gap-1 mt-2" id="pwBars"><div class="flex-1 strength-seg"></div><div class="flex-1 strength-seg"></div><div class="flex-1 strength-seg"></div></div>
+        <p class="text-[11px] text-[#6A7581] mt-1.5" id="pwHint">Must be "Medium" strength or stronger.</p>
+      </div>
+      <div><label class="block text-sm font-semibold mb-1.5">Password confirmation</label><input type="password" required class="field" placeholder="Re-enter password" /></div>
+    </div>
+
+    <label class="flex items-start gap-3 cursor-pointer pt-2">
+      <input type="checkbox" required class="accent-[#DC183C] w-4 h-4 mt-0.5" />
+      <span class="text-sm text-[#6A7581]">By registering, I consent to the processing of my business data and agree to the <a href="public-terms.html" class="text-[#DC183C] font-semibold hover:underline">SME Hub Terms of Service</a> and <a href="public-privacy.html" class="text-[#DC183C] font-semibold hover:underline">Privacy Policy</a>.</span>
+    </label>
+
+    <button class="w-full h-13 py-3.5 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold uppercase tracking-wide text-sm transition">Join the Community</button>
+    <p class="text-[11px] text-center text-[#6A7581] flex items-center justify-center gap-1.5"><i data-lucide="lock" class="w-3 h-3"></i> Secure SSL encrypted</p>
+  </form>
+
+  <div class="grid grid-cols-2 gap-x-6 gap-y-4 mt-8 px-1">
+    <div class="flex items-center gap-2.5 text-sm font-semibold text-[#121A21]"><i data-lucide="shield" class="w-4 h-4 text-[#DC183C]"></i>Access Funding Portal</div>
+    <div class="flex items-center gap-2.5 text-sm font-semibold text-[#121A21]"><i data-lucide="download" class="w-4 h-4 text-[#DC183C]"></i>Download Resources</div>
+    <div class="flex items-center gap-2.5 text-sm font-semibold text-[#121A21]"><i data-lucide="book-open" class="w-4 h-4 text-[#DC183C]"></i>Read Business Insights</div>
+    <div class="flex items-center gap-2.5 text-sm font-semibold text-[#121A21]"><i data-lucide="badge-percent" class="w-4 h-4 text-[#DC183C]"></i>Exclusive Partner Deals</div>
+  </div>
+
+  <p class="text-center text-[12px] text-[#6A7581] mt-8">Already a member? <a href="public-auth.html" class="text-[#DC183C] font-semibold hover:underline">Sign in</a></p>
+  <p class="text-center text-[12px] text-[#6A7581] mt-6">© 2026 SME South Africa. All rights reserved.</p>
+</main>
+
+<div id="overlay-root"></div><div id="toast" class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-50"></div>
+<script>
+  function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+  function showToast(m){const el=document.getElementById('toast');el.classList.remove('hidden');el.innerHTML=`<div class="bg-[#0C1F31] text-white rounded-full pl-3 pr-5 py-2.5 shadow-2xl flex items-center gap-2 text-sm font-semibold" style="border-left:4px solid #29A37A"><i data-lucide="check-circle" class="w-4 h-4" style="color:#29A37A"></i><span>${esc(m)}</span></div>`;lucide.createIcons();setTimeout(()=>{el.classList.add('hidden');el.innerHTML='';},2400);}
+
+  function checkStrength(){
+    const v = document.getElementById('pw').value;
+    let score = 0;
+    if(v.length>=8) score++;
+    if(/[A-Z]/.test(v) && /[0-9]/.test(v)) score++;
+    if(/[^A-Za-z0-9]/.test(v) && v.length>=10) score++;
+    const bars = document.querySelectorAll('#pwBars .strength-seg');
+    const colors = ['#DC183C','#FF9900','#29A37A'];
+    bars.forEach((b,i)=>{ b.style.background = i<score ? colors[score-1] : '#E7EBEF'; });
+    const hint = document.getElementById('pwHint');
+    hint.textContent = !v ? 'Must be "Medium" strength or stronger.' : score<=1 ? 'Weak — add a number, a capital letter or a symbol.' : score===2 ? 'Medium — good to go.' : 'Strong.';
+  }
+
+  function submitJoin(){ showToast('Account created. Welcome to the community.'); }
+
+  const BRIEF={title:'Join — Standard Membership Confirmation',sub:'MemberPress registration funnel · public, noindex — standalone layout',
+    purpose:'Covers <code>/join/</code>, the Standard (R0) membership registration path. Unlike <code>/register/free-membership/</code> and <code>/register/paid-membership/</code> (raw, unstyled MemberPress defaults, covered by public-membership-checkout.html), this page already has real branding live: a distraction-free single-column layout with no site header or footer, used deliberately to remove exit points during signup. This mockup keeps that intentional isolation rather than adding the normal site chrome.',
+    data:'Same MemberPress <code>Member</code> record as public-membership-checkout.html, Standard tier only — no billing/payment fields since the plan is R0. The "Confirm Membership" card mirrors the plan-summary pattern used at the top of the raw live form.',
+    logic:'No header nav, no footer nav, no dropdowns — every non-essential exit link is removed except "Sign in" (for existing members who landed here by mistake) and a link back to Pricing (for someone who actually wants Premium instead of Standard). This mirrors the real page’s funnel intent: one path, one action.',
+    components:'logo-only header · gradient hero heading · confirm-membership summary card · full account form (name, address, phone, email, password + strength) · consent checkbox · 4-icon benefit strip · minimal text footer.',
+    specs:'<b>Page bg:</b> light rose-to-white gradient, no card container around the whole page — content sits directly on the gradient, <code>max-w-lg</code>=512px throughout (deliberately narrower than the rest of the site’s <code>max-w-7xl</code>, since this is a single-task page).<br/><b>Header:</b> logo only, centred, <code>pt-8 pb-2</code>=32px/8px, no nav.<br/><b>H1:</b> Jakarta extrabold 24px/30px, gradient second line, centred.<br/><b>Confirm Membership card:</b> white <code>rounded-2xl</code>=16px border <code>#E7EBEF</code> shadow-sm <code>p-6</code>=24px → <code>sm:p-7</code>=28px. Plan row: icon tile 36px <code>rounded-lg</code>, title Jakarta bold 14px, sub 12px <code>#6A7581</code>, price Jakarta extrabold. Total row: 11px bold uppercase label, divider 1px <code>#E7EBEF</code>.<br/><b>Form card:</b> identical white card treatment, <code>space-y-4</code>=16px fields, same <code>.field</code> global style as every other form in the mockup set. Password strength meter identical component to public-membership-checkout.html.<br/><b>Submit button:</b> full width, <code>rounded-full</code>, bg <code>#DC183C</code> hover <code>#B0142F</code>, uppercase tracked label (matches the live page’s all-caps "JOIN THE COMMUNITY" button), SSL trust note below.<br/><b>Benefit strip:</b> 2-col grid, 24px/16px gap, each row icon 16px <code>#DC183C</code> + 14px bold text — mirrors the four icons on the live page footer (funding portal, resources, insights, partner deals).<br/><b>Footer:</b> two centred text lines only, 12px <code>#6A7581</code> — no social icons, no link columns, consistent with the live page’s minimal close.'};
+  function toggleDevMode(){const on=document.body.classList.toggle('dev-on');const b=document.getElementById('devToggle');if(b)b.classList.toggle('on',on);if(on)showToast('Dev Mode on. Tap any ⓘ for implementation notes.');lucide.createIcons();}
+  function closeOverlay(id){const el=document.getElementById(id);if(!el)return;el.classList.remove('open');setTimeout(()=>{if(el&&el.parentNode)el.remove();},300);}
+  function openBrief(){const b=BRIEF;const sec=(i,l,h)=>`<div class="px-6 py-4 border-t border-slate-100"><p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] flex items-center gap-1.5 mb-2"><i data-lucide="${i}" class="w-3.5 h-3.5"></i>${l}</p><div class="text-sm text-slate-600 leading-relaxed">${h}</div></div>`;document.getElementById('overlay-root').innerHTML=`<div class="ov" id="ov"><div class="ov-bg" onclick="closeOverlay('ov')"></div><div class="drawer"><div class="sticky top-0 z-10 bg-[#0C1F31] text-white px-6 py-5 flex items-start justify-between"><div><p class="text-[10px] font-bold uppercase tracking-widest text-[#FF9900] mb-1">Dev Brief</p><h3 class="font-jakarta font-extrabold text-lg leading-tight">${b.title}</h3><p class="text-xs text-white/60 mt-1">${b.sub}</p></div><button onclick="closeOverlay('ov')" class="text-white/60 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button></div>${sec('target','Purpose',b.purpose)}${sec('database','Data model',b.data)}${sec('git-branch','Logic',b.logic)}${sec('ruler','Spec values',b.specs)}${sec('boxes','Components',b.components)}</div></div>`;requestAnimationFrame(()=>{const o=document.getElementById('ov');if(o)o.classList.add('open');});lucide.createIcons();}
+
+  lucide.createIcons();
+</script>
+</body>
+</html>

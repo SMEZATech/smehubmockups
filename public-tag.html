@@ -2,27 +2,24 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Join South Africa's #1 SME Community: SME South Africa</title>
-  <meta name="description" content="Access funding, resources, events, and a thriving network of entrepreneurs just like you, all in one hub." />
+  <title>Old Mutual: Articles Tagged: SME South Africa</title>
+  <meta name="description" content="Every article tagged Old Mutual — practical insights for South African SME owners." />
   <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <script src="https://cdn.tailwindcss.com"></script><script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
   <script>tailwind.config={theme:{extend:{fontFamily:{jakarta:['Plus Jakarta Sans','sans-serif'],inter:['Inter','system-ui','sans-serif']}}}};</script>
   <style>
     html,body{font-family:'Inter',system-ui,sans-serif;} .font-jakarta{font-family:'Plus Jakarta Sans',sans-serif;letter-spacing:.005em;}
-    .hero-bg-light{background:linear-gradient(160deg,#FDECEF 0%,#FCFCFC 55%);}
-    .hero-bg{background:linear-gradient(115deg,#0C1F31 0%,#0C1F31 55%,#2b1626 85%,#5e1a2c 120%);}
-    .grad-text{background:linear-gradient(100deg,#DC183C,#FF9900);-webkit-background-clip:text;background-clip:text;color:transparent;}
+    .hero-bg{background:linear-gradient(115deg,#0C1F31 0%,#0C1F31 50%,#2b1626 80%,#5e1a2c 115%);}
     .dot-pattern{background-image:radial-gradient(rgba(255,255,255,.07) 1px,transparent 1.5px);background-size:22px 22px;}
     .card-lift{transition:box-shadow .2s,transform .2s;} .card-lift:hover{box-shadow:0 14px 30px -12px rgba(10,44,61,.22);transform:translateY(-3px);}
-    .preview-card{box-shadow:0 30px 60px -20px rgba(0,0,0,.55),0 12px 24px -8px rgba(0,0,0,.35);}
-    .preview-card-2{box-shadow:0 24px 50px -20px rgba(0,0,0,.5);}
-    .ring-prog{transform:rotate(-90deg);}
-    .faq-body{max-height:0;overflow:hidden;transition:max-height .28s ease;} .faq-item.open .faq-body{max-height:320px;} .faq-item.open .faq-chev{transform:rotate(180deg);} .faq-chev{transition:transform .28s ease;}
+    .chip{transition:all .15s;} .chip:not(.chip-active):hover{background:#FDECEF;color:#B0142F;border-color:#DC183C;}
+    .chip-active{background:#DC183C !important;color:#fff !important;border-color:#DC183C !important;}
+    .line-clamp-2{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
     .dev-badge{display:none;} body.dev-on .dev-badge{display:inline-flex;} #devToggle.on{background:#DC183C;color:#fff;border-color:#DC183C;}
     .ov{position:fixed;inset:0;z-index:60;} .ov-bg{position:absolute;inset:0;background:rgba(12,31,49,.45);backdrop-filter:blur(2px);opacity:0;transition:opacity .3s;} .ov.open .ov-bg{opacity:1;}
     .drawer{position:absolute;right:0;top:0;height:100%;width:100%;max-width:440px;background:#fff;box-shadow:-12px 0 40px rgba(12,31,49,.25);overflow-y:auto;transform:translateX(100%);transition:transform .3s cubic-bezier(.2,.7,.2,1);} .ov.open .drawer{transform:translateX(0);}
-      .search-overlay{position:absolute;inset:0;background:#fff;z-index:20;display:flex;align-items:center;justify-content:center;padding:0 1rem;opacity:0;pointer-events:none;transform:translateY(-8px);transition:all .25s cubic-bezier(.2,.8,.2,1);}
+    .search-overlay{position:absolute;inset:0;background:#fff;z-index:20;display:flex;align-items:center;justify-content:center;padding:0 1rem;opacity:0;pointer-events:none;transform:translateY(-8px);transition:all .25s cubic-bezier(.2,.8,.2,1);}
     .search-overlay.active{opacity:1;pointer-events:auto;transform:translateY(0);}
     @media (min-width:640px){ .search-overlay{padding:0 1.5rem;} }
 </style>
@@ -107,7 +104,8 @@
       <i data-lucide="house" class="w-5 h-5"></i>
       <span class="font-jakarta text-[11px] font-bold">Home</span>
     </a>
-    <a href="public-articles.html" class="flex flex-col items-center justify-center gap-1 py-2.5 text-slate-500 hover:text-[#121A21] transition">
+    <a href="public-articles.html" class="relative flex flex-col items-center justify-center gap-1 py-2.5 text-[#DC183C]">
+      <span class="absolute top-0 left-1/2 -translate-x-1/2 w-8 h-0.5 rounded-full bg-[#DC183C]"></span>
       <i data-lucide="lightbulb" class="w-5 h-5"></i>
       <span class="font-jakarta text-[11px] font-bold">Insights</span>
     </a>
@@ -119,141 +117,69 @@
       <i data-lucide="book-open" class="w-5 h-5"></i>
       <span class="font-jakarta text-[11px] font-bold">Resources</span>
     </a>
-    <a href="public-pricing.html" class="relative flex flex-col items-center justify-center gap-1 py-2.5 text-[#DC183C]">
-      <span class="absolute top-0 left-1/2 -translate-x-1/2 w-8 h-0.5 rounded-full bg-[#DC183C]"></span>
+    <a href="public-auth.html#join" class="flex flex-col items-center justify-center gap-1 py-2.5 text-slate-500 hover:text-[#121A21] transition">
       <i data-lucide="user-round-plus" class="w-5 h-5"></i>
       <span class="font-jakarta text-[11px] font-bold">Sign Up</span>
     </a>
   </div>
 </nav>
 
-<!-- HERO -->
-<section class="hero-bg-light relative overflow-hidden">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-14 sm:py-20 relative">
-    <div class="grid lg:grid-cols-2 gap-10 lg:gap-12 items-center">
-      <div class="text-center lg:text-left">
-        <h1 class="font-jakarta font-extrabold text-3xl sm:text-4xl lg:text-[2.75rem] leading-[1.1] tracking-tight">Join South Africa's #1 Community
-          <button onclick="openBrief()" class="dev-badge align-middle ml-1 w-6 h-6 rounded-full bg-[#FF9900] text-[#0C1F31] items-center justify-center text-[11px] font-bold">i</button>
-          <span class="block text-transparent bg-clip-text bg-gradient-to-r from-[#DC183C] to-[#FF9900] mt-1">for Small Business Owners</span>
-        </h1>
-        <p class="mt-5 text-lg text-[#6A7581] max-w-lg mx-auto lg:mx-0 leading-relaxed">Access funding, resources, events, and a thriving network of entrepreneurs just like you, all in one hub.</p>
-        <div class="mt-7 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3">
-          <a href="public-pricing.html" class="inline-flex items-center gap-2 px-6 h-12 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold transition">Become a Member <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
-          <a href="public-auth.html" class="text-sm font-semibold text-[#6A7581] hover:text-[#121A21] transition">Already a member? Sign in</a>
-        </div>
-      </div>
+<!-- TAG ARCHIVE HERO -->
+<section class="hero-bg text-white relative overflow-hidden"><div class="absolute inset-0 dot-pattern opacity-70 pointer-events-none"></div>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 pt-12 pb-14 relative">
+    <nav aria-label="Breadcrumb" class="text-xs text-white/55 flex items-center flex-wrap gap-x-1.5 mb-5"><a href="public-home.html" class="hover:text-white transition">Home</a><span class="text-white/30">›</span><a href="public-articles.html" class="hover:text-white transition">Articles</a><span class="text-white/30">›</span><span class="text-white/85 font-medium truncate">Tag: Old Mutual</span></nav>
+    <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-bold bg-white/10 text-white/80 border border-white/15"><i data-lucide="tag" class="w-3 h-3"></i> TAG</span>
+    <h1 class="font-jakarta font-extrabold text-4xl sm:text-5xl tracking-tight mt-3">Old Mutual
+      <button onclick="openBrief()" class="dev-badge align-middle ml-1 w-6 h-6 rounded-full bg-[#FF9900] text-[#0C1F31] items-center justify-center text-[11px] font-bold">i</button>
+    </h1>
+  </div>
+</section>
 
-      <!-- Illustrative product preview (no real screenshots — stylised, matches the platform's own card system) -->
-      <div class="relative h-[360px] hidden sm:block">
-        <div class="preview-card absolute left-1/2 top-0 w-[320px] bg-white rounded-2xl border border-[#E7EBEF] p-4" style="transform:translateX(-58%) rotate(-3deg)">
-          <div class="flex items-center gap-2 pb-3 border-b border-[#E7EBEF]"><span class="w-7 h-7 rounded-lg bg-[#0C1F31] grid place-items-center"><i data-lucide="rss" class="w-3.5 h-3.5 text-white"></i></span><span class="font-jakarta font-bold text-sm">Activity Feed</span></div>
-          <div class="mt-3 space-y-3">
-            <div class="flex items-center gap-2"><span class="w-7 h-7 rounded-full bg-gradient-to-br from-[#DC183C] to-[#FF9900]"></span><div class="flex-1 space-y-1"><div class="h-2 w-28 rounded bg-slate-100"></div><div class="h-1.5 w-16 rounded bg-slate-50"></div></div></div>
-            <div class="h-16 rounded-xl bg-slate-50 border border-[#E7EBEF]"></div>
-            <div class="flex items-center gap-3 text-[#6A7581]"><span class="flex items-center gap-1 text-[11px] font-semibold"><i data-lucide="heart" class="w-3.5 h-3.5"></i> 12</span><span class="flex items-center gap-1 text-[11px] font-semibold"><i data-lucide="message-circle" class="w-3.5 h-3.5"></i> 4</span></div>
-            <div class="flex items-center gap-2"><span class="w-7 h-7 rounded-full bg-[#0C1F31]/80"></span><div class="h-2 w-20 rounded bg-slate-100"></div></div>
-          </div>
-        </div>
-        <div class="preview-card-2 absolute right-1/2 bottom-0 w-[230px] bg-white rounded-2xl border border-[#E7EBEF] p-4" style="transform:translateX(58%) rotate(3deg)">
-          <p class="text-[10px] font-bold uppercase tracking-widest text-[#6A7581]">Business Health Score</p>
-          <div class="flex items-center gap-3 mt-3">
-            <svg class="w-14 h-14 ring-prog shrink-0" viewBox="0 0 36 36"><circle cx="18" cy="18" r="15.5" fill="none" stroke="#E7EBEF" stroke-width="3.5"/><circle cx="18" cy="18" r="15.5" fill="none" stroke="#FF9900" stroke-width="3.5" stroke-dasharray="73,100" stroke-linecap="round"/><text x="18" y="21" text-anchor="middle" transform="rotate(90 18 18)" font-size="10" font-weight="800" fill="#121A21" font-family="Plus Jakarta Sans">73</text></svg>
-            <div class="flex-1"><p class="font-jakarta font-extrabold text-[13px]">Growth-ready</p><p class="text-[10px] text-[#6A7581] mt-0.5">Updated after your last check-in</p></div>
-          </div>
-        </div>
-      </div>
+<main class="max-w-7xl mx-auto px-4 sm:px-6 py-12">
+  <div class="flex items-center justify-end gap-4 mb-6">
+    <div class="hidden sm:flex items-center gap-2 text-sm">
+      <span class="text-[#6A7581]">Sort by</span>
+      <select class="field-select h-9 pl-3 pr-8 rounded-full border border-[#E7EBEF] bg-white text-sm font-semibold text-[#121A21] outline-none">
+        <option>Newest</option>
+        <option>Oldest</option>
+        <option>Most read</option>
+      </select>
     </div>
   </div>
-</section>
 
-<!-- FEATURE STRIP -->
-<section class="max-w-6xl mx-auto px-4 sm:px-6 py-14 sm:py-16">
-  <div class="text-center max-w-xl mx-auto">
-    <h2 class="font-jakarta font-extrabold text-2xl sm:text-3xl tracking-tight">Everything You Need to Start, Grow, and Fund Your Business</h2>
-  </div>
-  <div id="featureCards" class="grid sm:grid-cols-3 gap-5 mt-9"></div>
-</section>
+  <div id="tagGrid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
 
-<!-- HOW IT WORKS -->
-<section class="bg-[#FCFCFC] border-y border-[#E7EBEF]">
-  <div class="max-w-5xl mx-auto px-4 sm:px-6 py-14 sm:py-16">
-    <div class="text-center max-w-xl mx-auto">
-      <p class="text-[11px] font-bold uppercase tracking-widest text-[#DC183C]">How It Works</p>
-      <h2 class="font-jakarta font-extrabold text-2xl sm:text-3xl tracking-tight mt-2">Three Steps to Your Next Move</h2>
-    </div>
-    <div id="stepsGrid" class="grid sm:grid-cols-3 gap-6 mt-10"></div>
-  </div>
-</section>
-
-<!-- PRICING -->
-<section class="max-w-5xl mx-auto px-4 sm:px-6 py-14 sm:py-16">
-  <div class="text-center max-w-xl mx-auto">
-    <h2 class="font-jakarta font-extrabold text-2xl sm:text-3xl tracking-tight">Find Your Perfect Plan</h2>
-    <p class="mt-3 text-[#6A7581]">Choose the plan that's right for your business journey. Start at no cost and upgrade anytime.</p>
+  <!-- PAGINATION (visual only, matches public-articles.html — 12 articles per page) -->
+  <div id="pagination" class="flex items-center justify-center gap-2 mt-12">
+    <button class="inline-flex items-center gap-1 h-10 px-4 rounded-full border border-[#E7EBEF] bg-white text-sm font-semibold text-[#6A7581] cursor-not-allowed" disabled><i data-lucide="chevron-left" class="w-4 h-4"></i> Prev</button>
+    <button class="w-10 h-10 rounded-full bg-[#DC183C] text-white text-sm font-bold">1</button>
+    <button class="w-10 h-10 rounded-full border border-[#E7EBEF] bg-white text-sm font-semibold hover:border-[#DC183C] hover:text-[#DC183C] transition">2</button>
+    <button class="w-10 h-10 rounded-full border border-[#E7EBEF] bg-white text-sm font-semibold hover:border-[#DC183C] hover:text-[#DC183C] transition">3</button>
+    <button class="inline-flex items-center gap-1 h-10 px-4 rounded-full border border-[#E7EBEF] bg-white text-sm font-semibold hover:border-[#DC183C] hover:text-[#DC183C] transition">Next <i data-lucide="chevron-right" class="w-4 h-4"></i></button>
   </div>
 
-  <div class="grid md:grid-cols-2 gap-6 mt-9 items-stretch">
-    <div class="bg-white rounded-2xl border-2 border-[#0C1F31] p-7">
-      <p class="text-[#6A7581] font-medium">Standard</p>
-      <h3 class="font-jakarta font-extrabold text-2xl mt-0.5">Member</h3>
-      <div class="mt-4 flex items-end gap-1.5"><span class="font-jakarta font-extrabold text-4xl">R0</span><span class="text-[#6A7581] text-sm mb-1.5">/monthly</span></div>
-      <div class="border-t border-[#E7EBEF] my-5"></div>
-      <ul class="space-y-4 text-sm">
-        <li class="flex items-start gap-2.5"><i data-lucide="check-circle-2" class="w-4.5 h-4.5 text-[#0C1F31] shrink-0 mt-0.5"></i><div><b>Standard Content Access</b><p class="text-[#6A7581]">Access to foundational articles and guides.</p></div></li>
-        <li class="flex items-start gap-2.5"><i data-lucide="check-circle-2" class="w-4.5 h-4.5 text-[#0C1F31] shrink-0 mt-0.5"></i><div><b>Apply for Funding</b><p class="text-[#6A7581]">Apply to multiple funders and track applications within the platform.</p></div></li>
-        <li class="flex items-start gap-2.5"><i data-lucide="check-circle-2" class="w-4.5 h-4.5 text-[#0C1F31] shrink-0 mt-0.5"></i><div><b>SME Solutions Marketplace</b><p class="text-[#6A7581]">Access to coupon codes and exclusive offers from partners.</p></div></li>
-        <li class="flex items-start gap-2.5"><i data-lucide="check-circle-2" class="w-4.5 h-4.5 text-[#0C1F31] shrink-0 mt-0.5"></i><div><b>Early Access to Features</b><p class="text-[#6A7581]">Get a sneak peek at upcoming functionality.</p></div></li>
-      </ul>
-      <a href="public-pricing.html" class="mt-7 flex items-center justify-center gap-2 h-12 rounded-full border-2 border-[#0C1F31] text-[#0C1F31] font-bold hover:bg-[#0C1F31] hover:text-white transition">Join Now</a>
-    </div>
+  <!-- Empty-state pattern used when a tag has zero posts (shown via dev brief, hidden by default) -->
+  <div id="tagEmpty" class="hidden text-center py-20">
+    <div class="w-14 h-14 rounded-full bg-[#FDECEF] text-[#DC183C] grid place-items-center mx-auto mb-4"><i data-lucide="tag" class="w-6 h-6"></i></div>
+    <h3 class="font-jakarta font-extrabold text-lg">No articles tagged yet</h3>
+    <p class="text-sm text-[#6A7581] mt-1.5 max-w-sm mx-auto">We haven't published anything under this tag yet. Try browsing by category instead.</p>
+    <a href="public-article-categories.html" class="inline-flex items-center gap-2 mt-5 px-5 h-11 rounded-full bg-[#0C1F31] text-white text-sm font-bold hover:bg-[#142b40] transition">Browse categories <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
+  </div>
 
-    <div class="bg-[#0C1F31] text-white rounded-2xl border-2 border-[#DC183C] p-7 relative shadow-xl">
-      <span class="absolute -top-3 left-7 px-3 py-1 rounded-full text-[11px] font-bold bg-[#FF9900] text-[#0C1F31]">MOST POPULAR</span>
-      <p class="text-white/60 font-medium">Premium</p>
-      <h3 class="font-jakarta font-extrabold text-2xl mt-0.5">Access</h3>
-      <div class="mt-4 flex items-end gap-1.5"><span class="font-jakarta font-extrabold text-4xl">R99</span><span class="text-white/60 text-sm mb-1.5">/monthly</span></div>
-      <div class="border-t border-white/15 my-5"></div>
-      <ul class="space-y-4 text-sm">
-        <li class="flex items-start gap-2.5"><i data-lucide="check-circle-2" class="w-4.5 h-4.5 text-[#FF9900] shrink-0 mt-0.5"></i><div><b>Everything on Standard Membership</b><p class="text-white/60">Access to all features available to Standard membership.</p></div></li>
-        <li class="flex items-start gap-2.5"><i data-lucide="check-circle-2" class="w-4.5 h-4.5 text-[#FF9900] shrink-0 mt-0.5"></i><div><b>Community Access</b><p class="text-white/60">Join our private network of South African SME owners.</p></div></li>
-        <li class="flex items-start gap-2.5"><i data-lucide="check-circle-2" class="w-4.5 h-4.5 text-[#FF9900] shrink-0 mt-0.5"></i><div><b>Connect with other SMEs</b><p class="text-white/60">Ability to connect with other small and medium enterprises.</p></div></li>
-        <li class="flex items-start gap-2.5"><i data-lucide="check-circle-2" class="w-4.5 h-4.5 text-[#FF9900] shrink-0 mt-0.5"></i><div><b>Private Messaging</b><p class="text-white/60">Direct message other members instead of only posting publicly.</p></div></li>
-      </ul>
-      <a href="public-pricing.html" class="mt-7 flex items-center justify-center gap-2 h-12 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold transition">Join Now</a>
+  <!-- MORE TAGS / EXPLORE -->
+  <div class="bg-white rounded-2xl border border-[#E7EBEF] p-7 sm:p-9 mt-14">
+    <h2 class="font-jakarta font-extrabold text-xl">Explore more tags</h2>
+    <p class="text-sm text-[#6A7581] mt-1.5 leading-relaxed max-w-2xl">Tags cut across categories to group articles by brand, topic or theme — browse a few popular ones below.</p>
+    <div class="flex flex-wrap gap-2 mt-4">
+      <a href="public-tag.html" class="chip px-3 py-1.5 rounded-full text-xs font-semibold bg-[#FCFCFC] border border-[#E7EBEF] text-[#121A21]">Old Mutual</a>
+      <a href="public-tag.html" class="chip px-3 py-1.5 rounded-full text-xs font-semibold bg-[#FCFCFC] border border-[#E7EBEF] text-[#121A21]">Standard Bank</a>
+      <a href="public-tag.html" class="chip px-3 py-1.5 rounded-full text-xs font-semibold bg-[#FCFCFC] border border-[#E7EBEF] text-[#121A21]">Load Shedding</a>
+      <a href="public-tag.html" class="chip px-3 py-1.5 rounded-full text-xs font-semibold bg-[#FCFCFC] border border-[#E7EBEF] text-[#121A21]">B-BBEE</a>
+      <a href="public-tag.html" class="chip px-3 py-1.5 rounded-full text-xs font-semibold bg-[#FCFCFC] border border-[#E7EBEF] text-[#121A21]">Cash Flow</a>
+      <a href="public-tag.html" class="chip px-3 py-1.5 rounded-full text-xs font-semibold bg-[#FCFCFC] border border-[#E7EBEF] text-[#121A21]">Women in Business</a>
     </div>
   </div>
-  <p class="text-center text-sm text-[#6A7581] mt-5">Upgrade to Premium anytime.</p>
-</section>
-
-<!-- FAQ -->
-<section class="bg-white border-y border-[#E7EBEF]">
-  <div class="max-w-3xl mx-auto px-4 sm:px-6 py-16 sm:py-20">
-    <div class="text-center mb-10"><h2 class="font-jakarta font-extrabold text-2xl sm:text-3xl">Frequently Asked Questions</h2></div>
-    <div id="faqList" class="space-y-3"></div>
-  </div>
-</section>
-
-<!-- WHAT'S INSIDE — platform recap, no invented numbers -->
-<section class="bg-white border-b border-[#E7EBEF]">
-  <div class="max-w-5xl mx-auto px-4 sm:px-6 py-14 sm:py-16 text-center">
-    <p class="text-[11px] font-bold uppercase tracking-widest text-[#DC183C]">What's Inside</p>
-    <h2 class="font-jakarta font-extrabold text-2xl sm:text-3xl mt-2">One Hub for Every Stage of the Journey</h2>
-    <div id="pillarsGrid" class="grid grid-cols-2 sm:grid-cols-4 gap-5 mt-9"></div>
-  </div>
-</section>
-
-<!-- FINAL CTA -->
-<section class="hero-bg text-white relative overflow-hidden">
-  <div class="absolute inset-0 dot-pattern opacity-70 pointer-events-none"></div>
-  <div class="max-w-2xl mx-auto px-4 sm:px-6 py-16 sm:py-20 relative text-center">
-    <h2 class="font-jakarta font-extrabold text-2xl sm:text-4xl">Ready to Build With Us?</h2>
-    <p class="mt-3 text-white/70 max-w-xl mx-auto">Sign up for R0 and get access to funding, resources, and a community built for South African entrepreneurs.</p>
-    <div class="mt-7 flex flex-col sm:flex-row items-center justify-center gap-3">
-      <a href="public-pricing.html" class="h-12 px-7 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold transition inline-flex items-center justify-center gap-2">Join Now <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
-    </div>
-    <p class="mt-5 text-sm text-white/60">Already a subscriber? <a href="public-auth.html" class="text-white font-semibold hover:underline">Sign in</a></p>
-  </div>
-</section>
+</main>
 
 <div class="lg:hidden" style="height:calc(64px + env(safe-area-inset-bottom))"></div>
 <footer class="bg-[#0C1F31] text-white">
@@ -329,71 +255,36 @@
   function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
   function showToast(m){const el=document.getElementById('toast');el.classList.remove('hidden');el.innerHTML=`<div class="bg-[#0C1F31] text-white rounded-full pl-3 pr-5 py-2.5 shadow-2xl flex items-center gap-2 text-sm font-semibold" style="border-left:4px solid #29A37A"><i data-lucide="check-circle" class="w-4 h-4" style="color:#29A37A"></i><span>${esc(m)}</span></div>`;lucide.createIcons();setTimeout(()=>{el.classList.add('hidden');el.innerHTML='';},2400);}
 
-  const FEATURES = [
-    {icon:'banknote',      title:'Access Funding Opportunities', desc:'Apply for business loans, grants, and investor funding through verified local and international partners.'},
-    {icon:'graduation-cap',title:'Learn from Experts',           desc:'Access guides, webinars, and real-world tips from industry leaders across finance and operations.'},
-    {icon:'users-round',   title:'Grow Your Network',            desc:'Connect with other SME owners, mentors, and partners across South Africa in one shared community.'}
-  ];
-  document.getElementById('featureCards').innerHTML = FEATURES.map(f=>`
-    <div class="bg-white rounded-2xl border border-[#E7EBEF] p-6 text-center card-lift">
-      <div class="w-12 h-12 rounded-xl bg-[#FDECEF] text-[#DC183C] grid place-items-center mx-auto"><i data-lucide="${f.icon}" class="w-5 h-5"></i></div>
-      <h3 class="font-jakarta font-bold text-lg mt-4">${esc(f.title)}</h3>
-      <p class="text-sm text-[#6A7581] mt-2 leading-relaxed">${esc(f.desc)}</p>
-    </div>`).join('');
-
-  const STEPS = [
-    {n:'01', icon:'user-plus', title:'Sign Up', desc:'Create your account in under a minute. Standard membership never asks for card details.'},
-    {n:'02', icon:'clipboard-check', title:'Take the Health Check', desc:'A few short questions give you a Business Health Score across cash flow, compliance, customers, operations and growth.'},
-    {n:'03', icon:'rocket', title:'Act on Your Plan', desc:'Get your top recommended actions, apply for funding, and join the conversation with other members.'}
-  ];
-  document.getElementById('stepsGrid').innerHTML = STEPS.map(s=>`
-    <div class="relative bg-white rounded-2xl border border-[#E7EBEF] p-6 card-lift">
-      <span class="absolute -top-3 -left-2 font-jakarta font-extrabold text-4xl text-[#0C1F31]/[0.06]">${s.n}</span>
-      <div class="relative w-12 h-12 rounded-xl bg-[#FDECEF] text-[#DC183C] grid place-items-center"><i data-lucide="${s.icon}" class="w-5 h-5"></i></div>
-      <h3 class="relative font-jakarta font-bold text-lg mt-4">${esc(s.title)}</h3>
-      <p class="relative text-sm text-[#6A7581] mt-2 leading-relaxed">${esc(s.desc)}</p>
-    </div>`).join('');
-
-  const PILLARS = [
-    {icon:'users', tint:'bg-[#FDECEF] text-[#DC183C]', title:'Community', desc:'Network with founders, mentors and industry leaders.'},
-    {icon:'calendar-days', tint:'bg-[#FFF1E0] text-[#AE6B0A]', title:'Events', desc:'Live sessions and workshops built to accelerate growth.'},
-    {icon:'banknote', tint:'bg-[#E4F5EE] text-[#29A37A]', title:'Funding', desc:'One application matches you with verified funders.'},
-    {icon:'library', tint:'bg-[#F0F5F9] text-slate-600', title:'Resources', desc:'Templates, guides and expert insight for every stage.'}
-  ];
-  document.getElementById('pillarsGrid').innerHTML = PILLARS.map(p=>`
-    <div class="bg-[#FCFCFC] rounded-2xl border border-[#E7EBEF] p-5">
-      <div class="w-11 h-11 rounded-xl ${p.tint} grid place-items-center mx-auto"><i data-lucide="${p.icon}" class="w-5 h-5"></i></div>
-      <h3 class="font-jakarta font-bold text-sm mt-3">${esc(p.title)}</h3>
-      <p class="text-xs text-[#6A7581] mt-1.5 leading-relaxed">${esc(p.desc)}</p>
-    </div>`).join('');
-
-  const FAQ = [
-    ['What is the main difference between the Standard and Premium memberships?', 'Premium unlocks deeper connections, exclusive events pricing, and full community access. Standard offers foundational content, funding applications and the solutions marketplace, so you can experience the hub before you upgrade.'],
-    ['Can I cancel Premium anytime?', 'Yes. Premium has no lock-in. Cancel anytime from your account settings and you’ll keep access until the end of your current billing period, then drop back to Standard.'],
-    ['Do I need a card to join as a Standard member?', 'No. Standard membership is R0 and never asks for payment details. You only enter card details if you choose to upgrade to Premium.'],
-    ['What payment methods do you accept?', 'Major South African debit and credit cards, processed securely by PayFast in ZAR.']
-  ];
-  document.getElementById('faqList').innerHTML = FAQ.map((f,i)=>`
-    <div class="faq-item border border-[#E7EBEF] rounded-xl overflow-hidden bg-white">
-      <button onclick="toggleFaq(${i})" class="w-full flex items-center justify-between gap-3 text-left px-5 py-4 font-semibold hover:bg-[#FCFCFC] transition">
-        <span>${esc(f[0])}</span>
-        <i data-lucide="chevron-down" class="faq-chev w-5 h-5 text-[#6A7581] shrink-0"></i>
-      </button>
-      <div class="faq-body"><p class="px-5 pb-5 text-sm text-[#6A7581] leading-relaxed">${esc(f[1])}</p></div>
-    </div>`).join('');
-  function toggleFaq(i){
-    const items = document.querySelectorAll('.faq-item');
-    const it = items[i]; const wasOpen = it.classList.contains('open');
-    items.forEach(x=>x.classList.remove('open'));
-    if(!wasOpen) it.classList.add('open');
+  function card(a){
+    return `
+      <a href="public-article.html" class="group bg-white rounded-2xl border border-[#E7EBEF] overflow-hidden card-lift flex flex-col">
+        <div class="relative aspect-[16/10] overflow-hidden">
+          <img src="${a.img}" alt="${esc(a.title)}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" />
+          <span class="absolute top-3 left-3 px-2.5 py-1 rounded-full text-[10px] font-bold bg-[#FDECEF] text-[#DC183C] shadow-sm">${esc(a.cat)}</span>
+        </div>
+        <div class="p-5 flex flex-col flex-1">
+          <h3 class="font-jakarta font-bold text-lg leading-snug group-hover:text-[#DC183C] transition line-clamp-2 min-h-[3.25rem]">${esc(a.title)}</h3>
+          <p class="text-sm text-[#6A7581] mt-2 leading-relaxed line-clamp-2">${esc(a.excerpt)}</p>
+          <div class="flex items-center gap-2.5 mt-auto pt-4 border-t border-[#E7EBEF]">
+            <span class="w-8 h-8 rounded-full bg-gradient-to-br from-[#DC183C] to-[#FF9900] grid place-items-center text-white text-[11px] font-bold">${esc(a.init)}</span>
+            <div class="text-xs"><p class="font-semibold text-[#121A21]">${esc(a.author)}</p><p class="text-[#6A7581]">${esc(a.date)} · ${a.read} min read</p></div>
+          </div>
+        </div>
+      </a>`;
   }
 
-  const BRIEF={title:'Membership Sales Landing Page',sub:'Marketing funnel · public, indexable — feeds into Membership Checkout',
-    purpose:'Covers <code>/membership-sales/</code>, the top-of-funnel marketing page that sells the community before handing off to registration. Redesigned from a thin layout that leaned on fabricated trust content — a partner-logo bar, a stock testimonial quote, and invented stats (50K+ members, R100M+ funding facilitated, 92% satisfaction). Following the same content-honesty principle already documented on <code>public-pricing.html</code> (&ldquo;the page sells the product on its own merits, not on claimed adoption numbers or quotes&rdquo;), all of that was replaced with real, checkable content: a How It Works section and a What&rsquo;s Inside recap, both describing the actual product rather than unverified numbers.',
-    data:'Same Plan/Member data model as public-pricing.html: Standard (R0, forever) and Premium (R99/month). The Premium comparison row was changed from a redundant &ldquo;Community Forum&rdquo; bullet (Standard already includes community posting per public-pricing.html) to &ldquo;Private Messaging,&rdquo; matching the same fix applied to public-premium.html so the two pages don&rsquo;t contradict each other.',
-    logic:'Every CTA on the page (hero, pricing cards, final band) routes to <code>public-pricing.html</code> so a visitor gets one consistent plan-selection experience regardless of which CTA they click. (public-membership-checkout.html was retired and moved to /archive.)',
-    components:'split hero with illustrative dashboard + Business Health Score preview · 3-card feature strip · 3-step "How It Works" · two-tier pricing cards · FAQ accordion · 4-pillar "What\'s Inside" recap · final CTA band.',
-    specs:'<b>Hero:</b> light rose-to-white gradient (<code>hero-bg-light</code>), <code>max-w-7xl</code>=1280px, <code>py-14 sm:py-20</code>. 2-col grid at lg, items-center. H1 Jakarta extrabold 30px/36px/44px, gradient second line via <code>.grad-text</code>. Preview: two overlapping white rounded-2xl cards using <code>.preview-card</code>/<code>.preview-card-2</code> layered shadows, rotated ±3deg — an Activity Feed card and a Business Health Score card with an SVG progress ring (<code>.ring-prog</code>, same pattern as public-pricing.html), no real screenshots.<br/><br/><b>Feature strip:</b> <code>max-w-6xl</code>, 3-col grid sm, card <code>rounded-2xl</code> border <code>#E7EBEF</code> <code>p-6</code>, centered icon tile 48px bg <code>#FDECEF</code>, hover lift via <code>.card-lift</code>.<br/><br/><b>How It Works:</b> <code>max-w-5xl</code>, off-white band bordered top/bottom, 3-col grid sm, numbered cards (large faint 01/02/03 watermark) walking Sign Up → Health Check → Act on Your Plan.<br/><br/><b>Pricing cards:</b> <code>max-w-5xl</code>, 2-col grid md. Standard: white, 2px border <code>#0C1F31</code>. Premium: bg <code>#0C1F31</code> 2px border <code>#DC183C</code>, "MOST POPULAR" ribbon bg <code>#FF9900</code>. Feature rows use <code>check-circle-2</code>, bold title + muted description per row.<br/><br/><b>FAQ:</b> identical accordion pattern to public-pricing.html, reused byte-for-byte (<code>.faq-item</code>/<code>.faq-body</code>/<code>.faq-chev</code>).<br/><br/><b>What\'s Inside:</b> <code>max-w-5xl</code> centered, 4-col grid sm (Community/Events/Funding/Resources), tinted icon tiles, mirrors the platform-pillar language used on public-home.html for cross-page consistency.<br/><br/><b>Final CTA:</b> <code>.hero-bg</code> navy gradient + <code>.dot-pattern</code>, <code>max-w-2xl</code> centered, evergreen copy with no member-count claim, single primary CTA.'};
+  // Cross-category posts tagged "Old Mutual" — this is the point of a tag archive:
+  // it groups by theme regardless of which category the post lives in.
+  const TAG_POSTS = [
+    {img:'assets/article-1.jpg',cat:'Managing a Business',title:'Protecting the Business You’ve Worked Hard to Build',excerpt:'Every day, entrepreneurs make decisions about growth, customers, employees and investment. Here is how to keep the business itself protected.',author:'Tshepho Joel',init:'TJ',date:'30 Sep 2026',read:5},
+    {img:'assets/article-2.jpg',cat:'Managing a Business',title:'Your Business Is Your Legacy. Here’s How to Keep It Safe',excerpt:'Supply disruptions, late-paying clients and rising costs all stretch an SME thin. A practical look at building resilience in.',author:'Tshepho Joel',init:'TJ',date:'30 Sep 2026',read:4},
+    {img:'assets/article-3.jpg',cat:'Business Planning',title:'Succession Planning for Family-Owned SMEs',excerpt:'What happens to the business if something happens to you. A founder-friendly guide to planning the handover early.',author:'Naledi Mokoena',init:'NM',date:'9 Mar 2026',read:6},
+    {img:'assets/article-4.jpg',cat:'Business Compliance',title:'Business Insurance 101: What SMEs Actually Need',excerpt:'From public liability to key-person cover, the policies worth the premium and the ones you can skip early on.',author:'Maryna Steyn',init:'MS',date:'18 Feb 2026',read:5}
+  ];
+
+  document.getElementById('tagGrid').innerHTML = TAG_POSTS.map(card).join('');
+
+  const BRIEF={title:'Tag Archive — Old Mutual',sub:'WordPress tag archive · public, currently unstyled on live',purpose:'Live tag archives (e.g. /tag/old-mutual/) render with zero site chrome today — no header nav, no footer, no card styling, broken multi-column wrap. This mockup gives tags the same design system as category archives, so any tag used across posts (brand mentions, cross-cutting themes) gets a presentable landing page instead of raw WordPress default markup. The hero deliberately drops the article-count subtext and related-tag chips seen in an earlier draft — Joel&rsquo;s call: don&rsquo;t surface a specific article count (it reads as thin/stale the moment it&rsquo;s out of date) and don&rsquo;t manufacture "related tags" the CMS can&rsquo;t actually compute yet.',data:'Taxonomy: <code>post_tag { name, posts[] }</code> — tags are assigned per-post and can span multiple categories, unlike the parent/child category taxonomy.',logic:'Grid is flat (no subcategory sectioning like public-category.html) since a tag cuts across categories — each card keeps its own category chip so provenance is still visible. Empty state shown when a tag has zero published posts. Pagination is visual-only (matches public-articles.html) at 12 articles per page.',components:'tag hero (breadcrumb + TAG eyebrow + H1) · sort control · flat article grid · pagination · empty state · explore-more-tags block.',specs:'<b>Hero:</b> same hero-bg gradient + dot-pattern as category archive. <b>TAG eyebrow:</b> 11px weight 700, bg <code>rgba(255,255,255,.1)</code>, border <code>rgba(255,255,255,.15)</code>, Lucide `tag` 12×12.<br/><b>H1:</b> Plus Jakarta Sans weight 800, 36px mobile / 48px desktop, 12px top margin from eyebrow — no subtext beneath it.<br/><b>Sort row:</b> right-aligned, 24px bottom margin, sort select 36px height rounded-full border <code>#E7EBEF</code> (desktop only) — no result-count label.<br/><b>Grid:</b> 1/2/3 columns, 24px gap, 12 per page — card component identical to public-articles.html / public-category.html for visual consistency.<br/><b>Pagination:</b> centred pill row, 48px top margin, active page bg <code>#DC183C</code>, inactive pages white with <code>#E7EBEF</code> border, Prev/Next as pill buttons with chevron icons — identical markup to public-articles.html.<br/><b>Empty state:</b> centred, 56×56 circular icon bg <code>#FDECEF</code> text <code>#DC183C</code>, H3 18px weight 800, body 14px <code>#6A7581</code> max-width 384px, CTA to category browse.<br/><b>Explore-more-tags block:</b> identical white card pattern to the "More in [Category]" block, chips link to other live tags.'};
   function toggleDevMode(){const on=document.body.classList.toggle('dev-on');const b=document.getElementById('devToggle');if(b)b.classList.toggle('on',on);if(on)showToast('Dev Mode on. Tap any ⓘ for implementation notes.');lucide.createIcons();}
   function closeOverlay(id){const el=document.getElementById(id);if(!el)return;el.classList.remove('open');setTimeout(()=>{if(el&&el.parentNode)el.remove();},300);}
   function openBrief(){const b=BRIEF;const sec=(i,l,h)=>`<div class="px-6 py-4 border-t border-slate-100"><p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] flex items-center gap-1.5 mb-2"><i data-lucide="${i}" class="w-3.5 h-3.5"></i>${l}</p><div class="text-sm text-slate-600 leading-relaxed">${h}</div></div>`;document.getElementById('overlay-root').innerHTML=`<div class="ov" id="ov"><div class="ov-bg" onclick="closeOverlay('ov')"></div><div class="drawer"><div class="sticky top-0 z-10 bg-[#0C1F31] text-white px-6 py-5 flex items-start justify-between"><div><p class="text-[10px] font-bold uppercase tracking-widest text-[#FF9900] mb-1">Dev Brief</p><h3 class="font-jakarta font-extrabold text-lg leading-tight">${b.title}</h3><p class="text-xs text-white/60 mt-1">${b.sub}</p></div><button onclick="closeOverlay('ov')" class="text-white/60 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button></div>${sec('target','Purpose',b.purpose)}${sec('database','Data model',b.data)}${sec('git-branch','Logic',b.logic)}${sec('ruler','Spec values',b.specs)}${sec('boxes','Components',b.components)}</div></div>`;requestAnimationFrame(()=>{const o=document.getElementById('ov');if(o)o.classList.add('open');});lucide.createIcons();}
