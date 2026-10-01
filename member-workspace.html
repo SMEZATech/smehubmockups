@@ -194,17 +194,30 @@
     <nav>
       <p class="text-[10px] font-bold uppercase tracking-widest text-white/40 px-2.5 mb-2">Member Workspace</p>
       <div class="flex flex-col gap-0.5">
+        <!-- Nav order and slugs match sme-success-core's nav() exactly -->
         <button data-view="overview" onclick="showView('overview')" class="navlink flex items-center gap-2.5 px-2.5 py-2.5 rounded-lg text-[13.5px] font-semibold text-white/75 hover:bg-white/[0.06] hover:text-white transition text-left">
           <i data-lucide="layout-dashboard" class="w-4 h-4 shrink-0 opacity-90"></i> Overview
         </button>
+        <button data-view="profile" onclick="showView('profile')" class="navlink flex items-center gap-2.5 px-2.5 py-2.5 rounded-lg text-[13.5px] font-semibold text-white/75 hover:bg-white/[0.06] hover:text-white transition text-left">
+          <i data-lucide="building-2" class="w-4 h-4 shrink-0 opacity-90"></i> Business Profile
+        </button>
         <button data-view="success-plan" onclick="showView('success-plan')" class="navlink flex items-center gap-2.5 px-2.5 py-2.5 rounded-lg text-[13.5px] font-semibold text-white/75 hover:bg-white/[0.06] hover:text-white transition text-left">
           <i data-lucide="list-checks" class="w-4 h-4 shrink-0 opacity-90"></i> My Success Plan
+        </button>
+        <button data-view="progress" onclick="showView('progress')" class="navlink flex items-center gap-2.5 px-2.5 py-2.5 rounded-lg text-[13.5px] font-semibold text-white/75 hover:bg-white/[0.06] hover:text-white transition text-left">
+          <i data-lucide="trending-up" class="w-4 h-4 shrink-0 opacity-90"></i> Progress
+        </button>
+        <button data-view="growth" onclick="showView('growth')" class="navlink flex items-center gap-2.5 px-2.5 py-2.5 rounded-lg text-[13.5px] font-semibold text-white/75 hover:bg-white/[0.06] hover:text-white transition text-left">
+          <i data-lucide="rocket" class="w-4 h-4 shrink-0 opacity-90"></i> Growth Hub
+        </button>
+        <button data-view="match" onclick="showView('match')" class="navlink flex items-center gap-2.5 px-2.5 py-2.5 rounded-lg text-[13.5px] font-semibold text-white/75 hover:bg-white/[0.06] hover:text-white transition text-left">
+          <i data-lucide="search-check" class="w-4 h-4 shrink-0 opacity-90"></i> Find a Solution
         </button>
         <button data-view="compliance" onclick="showView('compliance')" class="navlink flex items-center gap-2.5 px-2.5 py-2.5 rounded-lg text-[13.5px] font-semibold text-white/75 hover:bg-white/[0.06] hover:text-white transition text-left">
           <i data-lucide="shield-check" class="w-4 h-4 shrink-0 opacity-90"></i> Compliance
         </button>
         <button data-view="programmes" onclick="showView('programmes')" class="navlink flex items-center gap-2.5 px-2.5 py-2.5 rounded-lg text-[13.5px] font-semibold text-white/75 hover:bg-white/[0.06] hover:text-white transition text-left">
-          <i data-lucide="target" class="w-4 h-4 shrink-0 opacity-90"></i> Programmes
+          <i data-lucide="calendar-days" class="w-4 h-4 shrink-0 opacity-90"></i> Events
         </button>
         <button data-view="funding" onclick="showView('funding')" class="navlink flex items-center gap-2.5 px-2.5 py-2.5 rounded-lg text-[13.5px] font-semibold text-white/75 hover:bg-white/[0.06] hover:text-white transition text-left">
           <i data-lucide="banknote" class="w-4 h-4 shrink-0 opacity-90"></i> Funding
@@ -212,11 +225,26 @@
         <button data-view="cashflow" onclick="showView('cashflow')" class="navlink flex items-center gap-2.5 px-2.5 py-2.5 rounded-lg text-[13.5px] font-semibold text-white/75 hover:bg-white/[0.06] hover:text-white transition text-left">
           <i data-lucide="wallet" class="w-4 h-4 shrink-0 opacity-90"></i> Cash Flow
         </button>
+        <button data-view="invoices" onclick="showView('invoices')" class="navlink flex items-center gap-2.5 px-2.5 py-2.5 rounded-lg text-[13.5px] font-semibold text-white/75 hover:bg-white/[0.06] hover:text-white transition text-left">
+          <i data-lucide="receipt" class="w-4 h-4 shrink-0 opacity-90"></i> Get Paid
+        </button>
         <button data-view="documents" onclick="showView('documents')" class="navlink flex items-center gap-2.5 px-2.5 py-2.5 rounded-lg text-[13.5px] font-semibold text-white/75 hover:bg-white/[0.06] hover:text-white transition text-left">
           <i data-lucide="folder-check" class="w-4 h-4 shrink-0 opacity-90"></i> Documents
         </button>
+        <button data-view="experts" onclick="showView('experts')" class="navlink flex items-center gap-2.5 px-2.5 py-2.5 rounded-lg text-[13.5px] font-semibold text-white/75 hover:bg-white/[0.06] hover:text-white transition text-left">
+          <i data-lucide="user-round-search" class="w-4 h-4 shrink-0 opacity-90"></i> Experts
+        </button>
         <button data-view="resources" onclick="showView('resources')" class="navlink flex items-center gap-2.5 px-2.5 py-2.5 rounded-lg text-[13.5px] font-semibold text-white/75 hover:bg-white/[0.06] hover:text-white transition text-left">
           <i data-lucide="book-open" class="w-4 h-4 shrink-0 opacity-90"></i> Resources
+        </button>
+        <button data-view="perks" onclick="showView('perks')" class="navlink flex items-center gap-2.5 px-2.5 py-2.5 rounded-lg text-[13.5px] font-semibold text-white/75 hover:bg-white/[0.06] hover:text-white transition text-left">
+          <i data-lucide="gift" class="w-4 h-4 shrink-0 opacity-90"></i> Member Perks
+        </button>
+        <button data-view="passport" onclick="showView('passport')" class="navlink flex items-center gap-2.5 px-2.5 py-2.5 rounded-lg text-[13.5px] font-semibold text-white/75 hover:bg-white/[0.06] hover:text-white transition text-left">
+          <i data-lucide="file-text" class="w-4 h-4 shrink-0 opacity-90"></i> Business Passport
+        </button>
+        <button data-view="settings" onclick="showView('settings')" class="navlink flex items-center gap-2.5 px-2.5 py-2.5 rounded-lg text-[13.5px] font-semibold text-white/75 hover:bg-white/[0.06] hover:text-white transition text-left">
+          <i data-lucide="settings" class="w-4 h-4 shrink-0 opacity-90"></i> Settings
         </button>
       </div>
     </nav>
@@ -392,6 +420,36 @@
         </div>
       </div>
 
+      <!-- ============ VIEW: BUSINESS PROFILE ============ -->
+      <div class="view" id="view-profile">
+        <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-5 mb-6">
+          <div>
+            <h1 class="font-jakarta font-extrabold text-[26px] sm:text-[28px] tracking-tight flex items-center gap-2">Business Profile
+              <button onclick="openBrief('profile')" class="dev-badge w-5 h-5 rounded-full bg-[#DC183C] text-white items-center justify-center text-[10px] font-bold leading-none animate-pulse" title="Implementation notes">i</button>
+            </h1>
+            <p class="text-[14.5px] text-[#6A7581] leading-relaxed max-w-[62ch] mt-2">Facts about your business — the Health Check is what scores them. Tap the pencil beside any answer to change it.</p>
+          </div>
+          <button onclick="stubNav('Business Profile PDF')" class="shrink-0 inline-flex items-center gap-2 font-jakarta font-bold text-[13px] px-5 py-3 rounded-lg border-[1.5px] border-[#E7EBEF] hover:bg-[#F0F5F9] transition">
+            <i data-lucide="download" class="w-4 h-4"></i> Download PDF
+          </button>
+        </div>
+
+        <div class="rounded-2xl border border-[#E7EBEF] shadow-sm bg-white p-5 mb-5 reveal">
+          <div class="flex items-start justify-between gap-4">
+            <div>
+              <p class="text-[11px] font-extrabold uppercase tracking-wide text-[#DC183C] flex items-center gap-1.5">Profile completeness
+                <button onclick="openBrief('profile-completeness')" class="dev-badge w-4 h-4 rounded-full bg-[#DC183C] text-white items-center justify-center text-[9px] font-bold leading-none animate-pulse" title="Implementation notes">i</button>
+              </p>
+              <h2 class="font-jakarta font-extrabold text-lg mt-1">Everything essential is answered</h2>
+            </div>
+            <span class="shrink-0 px-2.5 py-1 rounded-full text-[11px] font-bold bg-[#FFF1E0] text-[#AE6B0A]">96% complete</span>
+          </div>
+          <div class="h-1.5 bg-[#F0F5F9] rounded-full overflow-hidden mt-3"><div class="h-full rounded-full accent-grad" style="width:96%"></div></div>
+        </div>
+
+        <div id="profile-sections" class="grid lg:grid-cols-2 gap-5"></div>
+      </div>
+
       <!-- ============ VIEW: MY SUCCESS PLAN ============ -->
       <div class="view" id="view-success-plan">
         <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-5 mb-6">
@@ -466,14 +524,82 @@
         </div>
       </div>
 
-      <!-- ============ VIEW: PROGRAMMES ============ -->
-      <div class="view" id="view-programmes">
+      <!-- ============ VIEW: PROGRESS ============ -->
+      <div class="view" id="view-progress">
+        <h1 class="font-jakarta font-extrabold text-[26px] sm:text-[28px] tracking-tight flex items-center gap-2 mb-6">Progress
+          <button onclick="openBrief('progress')" class="dev-badge w-5 h-5 rounded-full bg-[#DC183C] text-white items-center justify-center text-[10px] font-bold leading-none animate-pulse" title="Implementation notes">i</button>
+        </h1>
+
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+          <div class="rounded-2xl border border-[#E7EBEF] shadow-sm bg-white p-4 text-center reveal"><p class="font-jakarta font-extrabold text-2xl">68</p><p class="text-[11px] text-[#6A7581] mt-1">Your score now</p></div>
+          <div class="rounded-2xl border border-[#E7EBEF] shadow-sm bg-white p-4 text-center reveal" style="animation-delay:40ms"><p class="font-jakarta font-extrabold text-2xl text-[#29A37A]">+14</p><p class="text-[11px] text-[#6A7581] mt-1">Since your first check-in</p></div>
+          <div class="rounded-2xl border border-[#E7EBEF] shadow-sm bg-white p-4 text-center reveal" style="animation-delay:80ms"><p class="font-jakarta font-extrabold text-2xl">71</p><p class="text-[11px] text-[#6A7581] mt-1">Best score so far</p></div>
+          <div class="rounded-2xl border border-[#E7EBEF] shadow-sm bg-white p-4 text-center reveal" style="animation-delay:120ms"><p class="font-jakarta font-extrabold text-2xl">3</p><p class="text-[11px] text-[#6A7581] mt-1">Months in a row</p></div>
+        </div>
+
+        <div class="rounded-2xl border border-[#F0C98A] bg-[#FFF8EC] p-5 mt-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 reveal">
+          <div class="flex items-center gap-2.5"><i data-lucide="alarm-clock" class="w-5 h-5 text-[#AE6B0A] shrink-0"></i><p class="text-sm font-semibold text-[#7A4A05]">It's been 31 days — your score may be out of date.</p></div>
+          <button onclick="stubNav('Re-check now')" class="shrink-0 inline-flex items-center gap-2 font-jakarta font-bold text-[13px] px-4 py-2.5 rounded-lg bg-[#0C1F31] text-white hover:bg-[#16324a] transition">Re-check now</button>
+        </div>
+
+        <div class="rounded-2xl border border-[#E7EBEF] shadow-sm bg-white p-5 mt-5 reveal" style="animation-delay:80ms">
+          <p class="font-jakarta font-extrabold text-sm">Your score over time</p>
+          <p class="text-[11px] text-[#6A7581] mt-0.5">Last 7 check-ins</p>
+          <div class="h-28 flex items-end gap-2 mt-4">
+            <div class="flex-1 rounded-t accent-grad" style="height:48%"></div>
+            <div class="flex-1 rounded-t accent-grad" style="height:52%"></div>
+            <div class="flex-1 rounded-t accent-grad" style="height:55%"></div>
+            <div class="flex-1 rounded-t accent-grad" style="height:61%"></div>
+            <div class="flex-1 rounded-t accent-grad" style="height:58%"></div>
+            <div class="flex-1 rounded-t accent-grad" style="height:64%"></div>
+            <div class="flex-1 rounded-t accent-grad" style="height:68%"></div>
+          </div>
+        </div>
+
+        <div class="grid lg:grid-cols-2 gap-5 mt-5">
+          <div class="rounded-2xl border border-[#E7EBEF] shadow-sm bg-white p-5 reveal" style="animation-delay:100ms">
+            <p class="font-jakarta font-extrabold text-sm">What moved</p>
+            <div class="space-y-2.5 mt-3">
+              <div class="flex items-center justify-between text-[13.5px]"><span>Compliance</span><span class="font-bold text-[#DC183C]">-6</span></div>
+              <div class="flex items-center justify-between text-[13.5px]"><span>Cash flow</span><span class="font-bold text-[#29A37A]">+3</span></div>
+              <div class="flex items-center justify-between text-[13.5px]"><span>Growth readiness</span><span class="font-bold text-[#29A37A]">+2</span></div>
+            </div>
+            <button onclick="showView('success-plan')" class="mt-3 text-xs font-bold text-[#DC183C] hover:underline">Lowest area: Compliance → see what to do</button>
+          </div>
+          <div class="rounded-2xl border border-[#E7EBEF] shadow-sm bg-white p-5 reveal" style="animation-delay:140ms">
+            <p class="font-jakarta font-extrabold text-sm flex items-center gap-1.5">Badges
+              <button onclick="openBrief('progress-badges')" class="dev-badge w-4 h-4 rounded-full bg-[#DC183C] text-white items-center justify-center text-[9px] font-bold leading-none animate-pulse" title="Implementation notes">i</button>
+            </p>
+            <div id="progress-badges" class="grid grid-cols-2 gap-2.5 mt-3"></div>
+          </div>
+        </div>
+
+        <div class="rounded-2xl border border-[#E7EBEF] shadow-sm bg-white overflow-hidden mt-5 reveal" style="animation-delay:180ms">
+          <div class="px-5 py-4 border-b border-[#E7EBEF]"><p class="font-jakarta font-extrabold text-sm">Recent activity</p></div>
+          <div id="progress-activity" class="divide-y divide-[#F0F3F6]"></div>
+        </div>
+      </div>
+
+      <!-- ============ VIEW: GROWTH HUB ============ -->
+      <div class="view" id="view-growth">
+        <h1 class="font-jakarta font-extrabold text-[26px] sm:text-[28px] tracking-tight mb-1">Growth Hub</h1>
+        <p class="text-[11px] font-bold uppercase tracking-widest text-[#98A2AE] mb-6">Scaffolded in this mockup — not yet fully designed</p>
+        <div class="rounded-2xl border border-[#E7EBEF] shadow-sm bg-white p-8 max-w-xl reveal">
+          <div class="w-12 h-12 rounded-xl bg-[#F0F5F9] text-[#42505E] grid place-items-center"><i data-lucide="rocket" class="w-6 h-6"></i></div>
+          <p class="text-sm text-[#42505E] mt-4 leading-relaxed">Your next best moves, bucketed into tools and services tied to your ranked actions — grounded in what's actually live on this install, not SME IQ's invented/empty categories.</p>
+        </div>
+      </div>
+
+      <!-- ============ VIEW: FIND A SOLUTION (slug: match) ============ -->
+      <div class="view" id="view-match">
         <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-5 mb-6">
           <div>
             <span class="inline-flex items-center gap-1.5 text-[11px] font-bold tracking-wide px-3 py-1.5 rounded-full bg-[#DC183C]/[0.09] text-[#DC183C] mb-3">
               <i data-lucide="sparkles" class="w-3 h-3"></i> A Better Next Step
             </span>
-            <h1 class="font-jakarta font-extrabold text-[26px] sm:text-[28px] tracking-tight">Find the right programme</h1>
+            <h1 class="font-jakarta font-extrabold text-[26px] sm:text-[28px] tracking-tight flex items-center gap-2">Find a Solution
+              <button onclick="openBrief('match-overview')" class="dev-badge w-5 h-5 rounded-full bg-[#DC183C] text-white items-center justify-center text-[10px] font-bold leading-none animate-pulse" title="Implementation notes">i</button>
+            </h1>
             <p class="text-[14.5px] text-[#6A7581] leading-relaxed max-w-[60ch] mt-2">Your business check-in points to a few places where the right people, tools and timing can make the next move lighter.</p>
           </div>
           <button onclick="stubNav('Retake match')" class="shrink-0 inline-flex items-center gap-2 font-jakarta font-bold text-[13px] px-5 py-3 rounded-lg border-[1.5px] border-[#E7EBEF] hover:bg-[#F0F5F9] transition">
@@ -572,6 +698,16 @@
               </div>
             </div>
           </div>
+        </div>
+      </div>
+
+      <!-- ============ VIEW: EVENTS (slug: programmes) ============ -->
+      <div class="view" id="view-programmes">
+        <h1 class="font-jakarta font-extrabold text-[26px] sm:text-[28px] tracking-tight mb-1">Events</h1>
+        <p class="text-[11px] font-bold uppercase tracking-widest text-[#98A2AE] mb-6">Scaffolded in this mockup — not yet fully designed</p>
+        <div class="rounded-2xl border border-[#E7EBEF] shadow-sm bg-white p-8 max-w-xl reveal">
+          <div class="w-12 h-12 rounded-xl bg-[#F0F5F9] text-[#42505E] grid place-items-center"><i data-lucide="calendar-days" class="w-6 h-6"></i></div>
+          <p class="text-sm text-[#42505E] mt-4 leading-relaxed">Matched programmes and sessions, split into upcoming (registrable) and past/on-demand (webinar recordings) — expired events are never shown as live. (Internal slug stays "programmes" — see Overview's "Find a Solution" tab for the member-matching feature, which is a separate module.)</p>
         </div>
       </div>
 
@@ -766,6 +902,16 @@
         </div>
       </div>
 
+      <!-- ============ VIEW: GET PAID (slug: invoices) ============ -->
+      <div class="view" id="view-invoices">
+        <h1 class="font-jakarta font-extrabold text-[26px] sm:text-[28px] tracking-tight mb-1">Get Paid</h1>
+        <p class="text-[11px] font-bold uppercase tracking-widest text-[#98A2AE] mb-6">Scaffolded in this mockup — not yet fully designed</p>
+        <div class="rounded-2xl border border-[#E7EBEF] shadow-sm bg-white p-8 max-w-xl reveal">
+          <div class="w-12 h-12 rounded-xl bg-[#F0F5F9] text-[#42505E] grid place-items-center"><i data-lucide="receipt" class="w-6 h-6"></i></div>
+          <p class="text-sm text-[#42505E] mt-4 leading-relaxed">Tracks what customers owe you and generates ready-written WhatsApp/email chase messages you send yourself — zero server cost, not a tax-invoice generator. Free tier caps open invoices.</p>
+        </div>
+      </div>
+
       <!-- ============ VIEW: DOCUMENTS ============ -->
       <div class="view" id="view-documents">
         <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-5 mb-6">
@@ -792,6 +938,16 @@
         </div>
       </div>
 
+      <!-- ============ VIEW: EXPERTS ============ -->
+      <div class="view" id="view-experts">
+        <h1 class="font-jakarta font-extrabold text-[26px] sm:text-[28px] tracking-tight mb-1">Experts</h1>
+        <p class="text-[11px] font-bold uppercase tracking-widest text-[#98A2AE] mb-6">Scaffolded in this mockup — not yet fully designed</p>
+        <div class="rounded-2xl border border-[#E7EBEF] shadow-sm bg-white p-8 max-w-xl reveal">
+          <div class="w-12 h-12 rounded-xl bg-[#F0F5F9] text-[#42505E] grid place-items-center"><i data-lucide="user-round-search" class="w-6 h-6"></i></div>
+          <p class="text-sm text-[#42505E] mt-4 leading-relaxed">Vetted specialists matched to your weakest scored dimension, each with a plain-English reason why — no fabricated star ratings, since there are no real reviews yet.</p>
+        </div>
+      </div>
+
       <!-- ============ VIEW: RESOURCES ============ -->
       <div class="view" id="view-resources">
         <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-5 mb-6">
@@ -812,6 +968,36 @@
             <span class="text-[11px] text-[#6A7581]">Most recent first</span>
           </div>
           <div id="resources-list"></div>
+        </div>
+      </div>
+
+      <!-- ============ VIEW: MEMBER PERKS ============ -->
+      <div class="view" id="view-perks">
+        <h1 class="font-jakarta font-extrabold text-[26px] sm:text-[28px] tracking-tight mb-1">Member Perks</h1>
+        <p class="text-[11px] font-bold uppercase tracking-widest text-[#98A2AE] mb-6">Scaffolded in this mockup — not yet fully designed</p>
+        <div class="rounded-2xl border border-[#E7EBEF] shadow-sm bg-white p-8 max-w-xl reveal">
+          <div class="w-12 h-12 rounded-xl bg-[#F0F5F9] text-[#42505E] grid place-items-center"><i data-lucide="gift" class="w-6 h-6"></i></div>
+          <p class="text-sm text-[#42505E] mt-4 leading-relaxed">Paid-tier deals from live affiliate partners — never discounts anyone could already get for free. Free members see a locked teaser.</p>
+        </div>
+      </div>
+
+      <!-- ============ VIEW: BUSINESS PASSPORT ============ -->
+      <div class="view" id="view-passport">
+        <h1 class="font-jakarta font-extrabold text-[26px] sm:text-[28px] tracking-tight mb-1">Business Passport</h1>
+        <p class="text-[11px] font-bold uppercase tracking-widest text-[#98A2AE] mb-6">Scaffolded in this mockup — not yet fully designed</p>
+        <div class="rounded-2xl border border-[#E7EBEF] shadow-sm bg-white p-8 max-w-xl reveal">
+          <div class="w-12 h-12 rounded-xl bg-[#F0F5F9] text-[#42505E] grid place-items-center"><i data-lucide="file-text" class="w-6 h-6"></i></div>
+          <p class="text-sm text-[#42505E] mt-4 leading-relaxed">A single printable page combining your Business Profile, latest score and document status — built to hand to a lender. Strictly self-reported, no "verified/approved" language.</p>
+        </div>
+      </div>
+
+      <!-- ============ VIEW: SETTINGS ============ -->
+      <div class="view" id="view-settings">
+        <h1 class="font-jakarta font-extrabold text-[26px] sm:text-[28px] tracking-tight mb-1">Settings</h1>
+        <p class="text-[11px] font-bold uppercase tracking-widest text-[#98A2AE] mb-6">Scaffolded in this mockup — not yet fully designed</p>
+        <div class="rounded-2xl border border-[#E7EBEF] shadow-sm bg-white p-8 max-w-xl reveal">
+          <div class="w-12 h-12 rounded-xl bg-[#F0F5F9] text-[#42505E] grid place-items-center"><i data-lucide="settings" class="w-6 h-6"></i></div>
+          <p class="text-sm text-[#42505E] mt-4 leading-relaxed">Reminders, plan management, and POPIA data controls — view, export or permanently delete your own workspace data, with a typed-"DELETE" erasure flow that's honest about what it does and doesn't remove.</p>
         </div>
       </div>
 
@@ -900,7 +1086,7 @@
     { id:3, title:"Update your beneficial ownership record", desc:"Keep CIPC's records current to avoid annual return issues.", icon:'users', category:'Compliance', color:'#AE6B0A', done:false, time:'8 min', group:'active' },
     { id:4, title:'Set a weekly cash flow check-in', desc:'A 5-minute habit that catches shortfalls before they bite.', icon:'trending-up', category:'Finance', color:'#DC183C', done:true, time:null, group:'later' },
     { id:5, title:'Document your customer onboarding steps', desc:'Write down what happens today so it survives you being away.', icon:'clipboard-list', category:'Operations', color:'#6A7581', done:false, time:'15 min', group:'later' },
-    { id:6, title:'Explore the Business Growth Clinic', desc:'Your growth-readiness score points here — see why it was matched.', icon:'rocket', category:'Growth', color:'#AE6B0A', done:false, time:'3 min', group:'later', linkTo:'programmes' }
+    { id:6, title:'Explore the Business Growth Clinic', desc:'Your growth-readiness score points here — see why it was matched.', icon:'rocket', category:'Growth', color:'#AE6B0A', done:false, time:'3 min', group:'later', linkTo:'match' }
   ];
 
   function toggleAction(id){
@@ -1007,6 +1193,65 @@
         </div>
       </div>`;
   }
+  // ===== BUSINESS PROFILE =========================================================
+  // Section/field labels copied verbatim from class-smesc-businessprofile.php's fields().
+  const PROFILE_SECTIONS = [
+    { icon:'building-2', title:'The business', fields:[
+      ['Business name','SME South Africa'],['Industry','Professional Services'],['Province','Gauteng'],
+      ['Year founded','2015'],['CIPC registration number','2015/45471/07'],['Where do you operate from?','Shared or co-working']]},
+    { icon:'wallet', title:'Money', fields:[
+      ['Monthly revenue','R250k – R500k'],['Monthly expenses','R150k – R300k'],['Does the business have its own bank account?','Yes'],
+      ['Who do you bank with?','FNB'],['Can customers pay you by card or online?','Yes']]},
+    { icon:'users-round', title:'Customers', fields:[
+      ['Do customers owe you money that is more than 30 days late?','Yes'],['Who do you sell to?','Both'],
+      ['How much of your income comes from your biggest customer?','25–50%'],['Do you invoice and wait 30+ days to be paid?','Yes']]},
+    { icon:'users', title:'People', fields:[
+      ['How many people work in the business?','5–10'],['Do you run a formal payroll?','Yes']]},
+    { icon:'shield-check', title:'Compliance & standing', fields:[
+      ['Is the business registered for VAT?','Yes'],['VAT number','4480198233'],['B-BBEE level','Level 4'],
+      ['Current B-BBEE affidavit or certificate?','Yes'],['Share of the business that is black-owned','More than 50%'],['Does the business carry any insurance?','Yes']]},
+    { icon:'globe', title:'Systems & growth', fields:[
+      ['Do you use accounting software?','Yes'],['Does the business have a website?','Yes'],['Website address','smesouthafrica.co.za'],
+      ['Do you use a CRM or keep a customer list?','Yes'],['Have you applied for business funding before?','Yes — approved'],['Currently repaying a business loan?','No']]}
+  ];
+  function renderProfile(){
+    document.getElementById('profile-sections').innerHTML = PROFILE_SECTIONS.map((s,i)=>`
+      <div class="rounded-2xl border border-[#E7EBEF] shadow-sm bg-white p-5 reveal" style="animation-delay:${i*40}ms">
+        <div class="flex items-center gap-2.5 mb-1"><div class="w-8 h-8 rounded-lg bg-[#FDECEF] text-[#DC183C] grid place-items-center"><i data-lucide="${s.icon}" class="w-4 h-4"></i></div><p class="font-jakarta font-extrabold text-sm">${esc(s.title)}</p></div>
+        ${s.fields.map(([l,v])=>`
+        <div class="profile-row flex items-center justify-between gap-3 py-2.5 border-t border-[#F0F3F6] text-[13px]">
+          <span class="text-[#6A7581]">${esc(l)}</span>
+          <span class="font-bold text-right flex items-center gap-2"><span>${esc(v)}</span><button onclick="stubNav('Edit ${esc(l)}')" class="text-[#98A2AE] hover:text-[#DC183C] transition" aria-label="Edit"><i data-lucide="pencil" class="w-3 h-3"></i></button></span>
+        </div>`).join('')}
+      </div>`).join('');
+  }
+
+  // ===== PROGRESS =================================================================
+  const PROGRESS_BADGES = [
+    { t:'First check-in done', earned:true },
+    { t:'First compliance item filed', earned:true },
+    { t:'Score up two check-ins running', earned:true },
+    { t:'Checked in three months running', earned:false, hint:'Check in once more to earn this.' },
+    { t:'4 weeks of cash flow logged', earned:false, hint:'2 of 4 weeks logged so far.' },
+    { t:'Funding-ready badge', earned:false, hint:'Complete your document pack to earn this.' },
+    { t:'Success plan completed', earned:false, hint:'2 of 5 actions done.' }
+  ];
+  const PROGRESS_ACTIVITY = [
+    ['Check-in completed','2 days ago'],
+    ['Marked "Confirm your tax filing dates" in progress','5 days ago'],
+    ['Filed CIPC annual return','9 days ago']
+  ];
+  function renderProgress(){
+    document.getElementById('progress-badges').innerHTML = PROGRESS_BADGES.map(b=>`
+      <div class="flex items-start gap-2 text-[11.5px] ${b.earned?'':'opacity-50'}" title="${b.hint?esc(b.hint):''}">
+        <i data-lucide="${b.earned?'badge-check':'circle-dashed'}" class="w-3.5 h-3.5 shrink-0 mt-0.5" style="color:${b.earned?'#29A37A':'#98A2AE'}"></i>
+        <span>${esc(b.t)}</span>
+      </div>`).join('');
+    document.getElementById('progress-activity').innerHTML = PROGRESS_ACTIVITY.map(([t,d])=>`
+      <div class="flex items-center justify-between px-5 py-3 text-[13px]"><span>${esc(t)}</span><span class="text-[#98A2AE] text-xs">${d}</span></div>`).join('');
+    lucide.createIcons();
+  }
+
   function renderCompliance(){
     const sorted = [...complianceItems].sort((a,b) => {
       const order = { overdue:0, soon:1, upcoming:2 };
@@ -1399,6 +1644,42 @@
       data:'<code>member_documents</code>: <code>{ member_id, title, authority, issued_at, expires_at | null, file_ref }</code>. Status (<code>expired | soon | valid</code>) is computed, not stored — derived from <code>expires_at</code> vs. today at render time (e.g. "soon" = within 60 days).',
       logic:'"Upload document" is a stub in this round. Real version: file upload + metadata form; expiry status recomputes on every page load rather than via a scheduled job, so it\'s always accurate without needing reminders infrastructure for the status badge itself (reminders are a separate, later concern).',
       components:'Row list (icon chip · title/authority/issued-expires · expiry status pill), reused row shape from Compliance/Funding/Cash Flow.'
+    },
+    profile: {
+      title:'Business Profile', sub:'Facts, not scores — separate from the Health Check',
+      purpose:'This was the module most visibly missing from the first pass of this mockup, and the one Joel specifically flagged against the live build. It captures durable facts about the business — registration, money, team, compliance standing, systems — while the Health Check is the separate engine that turns facts like these into the five dimension scores. Keeping fact-capture and scoring as two different surfaces means a member can correct a wrong answer (e.g. updated CIPC number) without re-running an entire assessment.',
+      data:'Stored as member meta, one key per field (<code>smesc_bp_&lt;key&gt;</code>), grouped into 6 sections exactly as the live <code>class-smesc-businessprofile.php</code> defines them: The business, Money, Customers, People, Compliance &amp; standing, Systems &amp; growth. Required fields (name, industry, monthly revenue/expenses, headcount) are weighted double in the completeness score.',
+      logic:'Originally collected via a FluentForm wizard at signup, but the live tab view supports inline per-field editing — pencil icon swaps a display row for an editor, saving via a single-field PATCH rather than resubmitting the whole form. Clearing a field to blank actively deletes that answer, distinct from never having answered it. In this mockup, every pencil is a stub (<code>stubNav</code>) rather than a working inline editor.',
+      components:'Completeness banner (state-dependent heading + % pill + progress bar) · 6 field-section cards, each a header (icon + title) over a list of label/value rows with a trailing edit affordance.',
+      specs:'Completeness pill: green <code>#E9F7F1</code>/<code>#1E7D5D</code> only at 100%, amber <code>#FFF1E0</code>/<code>#AE6B0A</code> otherwise. Field rows: 13px label <code>#6A7581</code>, bold value right-aligned, hairline divider <code>#F0F3F6</code> between rows (not the heavier <code>#E7EBEF</code> used for card borders, since these are sub-divisions of one card, not separate cards).'
+    },
+    'profile-completeness': {
+      title:'Profile Completeness', sub:'Why the banner heading changes wording',
+      purpose:'A blunt "73% complete" with no context reads as a chore. The heading itself carries the real status so a member glancing at the top of the page knows where they stand without doing the maths: "Your profile is still filling in" (required fields missing) vs. "Everything essential is answered" (required done, optional gaps remain) vs. "Your profile is complete" (100%).',
+      data:'Computed from the same field set as the section cards: <code>answered_required / total_required</code> must hit 100% before the heading can say "essential," and <code>answered_all / total_all</code> drives the percentage shown.',
+      logic:'A "Still needed" amber alert listing missing required fields as clickable jump-links appears only below 100% required-completion (not shown in this mockup\'s static 96%-complete state, but documented here since it\'s part of the real component).',
+      components:'Heading (state-dependent copy) · percentage pill · progress bar.'
+    },
+    progress: {
+      title:'Progress', sub:'Score history and momentum — built from existing data, no new storage',
+      purpose:'Overview answers "where do I stand today." Progress answers "am I actually getting anywhere," which matters for retention — a member who only ever sees a static score has no reason to come back. Every number on this view is derived from data that already exists elsewhere (check-ins, plan completions, filed compliance items), nothing new is tracked just for this tab.',
+      data:'Reads the member\'s <code>business_health_checks</code> history (same table Overview\'s score card reads its latest row from), <code>success_plan_actions.status</code> changes, and <code>compliance_items</code> filing events, ordered by timestamp.',
+      logic:'A re-check is "due" at 28+ days since the last check-in — shown as an amber prompt rather than blocking anything. With only one check-in on record, the trend chart is documented to show "Your starting point" instead of a line ("one check-in is not a trend") — not shown in this mockup\'s 7-check-in sample state. "What moved" always ranks the biggest absolute delta first, regardless of direction.',
+      components:'4-tile stat row · re-check prompt card · trend bar chart (last 12 check-ins, capped) · dimension-delta list linking to the lowest-scoring dimension\'s fix · badge grid · chronological activity feed (max 12 items).'
+    },
+    'progress-badges': {
+      title:'Progress Badges', sub:'Earned only when genuinely true',
+      purpose:'Badges exist to acknowledge real milestones, not to manufacture false progress — every badge has a concrete, checkable condition, and an unearned badge shows its own hint explaining exactly what\'s missing rather than just greying out silently.',
+      data:'Seven fixed badges, each backed by a real query against existing tables (check-in count, compliance filings, consecutive score increases, cash-flow log streak, document-pack completeness, success-plan completion) — no badge is awarded by a human or a flag.',
+      logic:'Earned state never reverts for something a member already achieved (e.g. "First check-in done" stays earned even if they later skip a month) — only forward-looking streak badges can reset.',
+      components:'2-column icon + label grid, dimmed when unearned, with a hover-title explaining the gap.'
+    },
+    'match-overview': {
+      title:'Find a Solution', sub:'Rules-based matching, not AI — slug: match',
+      purpose:'Points a member to vetted providers/programmes without the black-box feel of an AI recommendation. "Deterministic" is the whole trust model here: the same inputs always produce the same match, and every match ships with the specific reasons behind it (see the "Why this match?" brief), so a member can check the logic rather than take it on faith.',
+      data:'<code>programme_matches</code>: <code>{ member_id, programme_id, match_score (0-100), computed_at, reasons: string[] }</code>, matched from the site\'s own published reviews/providers, prefilled using answers already captured in Business Profile rather than asking the member to repeat themselves.',
+      logic:'Recomputes whenever a new check-in is submitted or the provider catalogue changes. "Retake my match" in this mockup is a stub — the real action re-runs matching against the member\'s current scores without requiring a full new check-in.',
+      components:'Match-profile hero panel (why you\'re being matched) · match-strength score card · recommended-result card · "why this match" reasoning panel.'
     }
   };
 
@@ -1463,6 +1744,8 @@
   showView('overview');
   renderDimensions();
   renderOverviewActions();
+  renderProfile();
+  renderProgress();
   renderSuccessPlan();
   renderCompliance();
   renderReadiness();

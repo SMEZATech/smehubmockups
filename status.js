@@ -42,6 +42,7 @@ window.MOCKUP_STATUS = {
   "public-refunds.html": "finalised",
   "public-popia.html": "finalised",
   "public-advertising-disclosure.html": "finalised",
+  "member-workspace.html": "under-review",
   "member-hub.html": "finalised",
   "members.html": "finalised",
   "single-member.html": "finalised",
