@@ -810,11 +810,11 @@
             <h1 class="font-jakarta font-extrabold text-[26px] sm:text-[28px] tracking-tight flex items-center gap-2">Funding
               <button onclick="openBrief('funding')" class="dev-badge w-5 h-5 rounded-full bg-[#DC183C] text-white items-center justify-center text-[10px] font-bold leading-none animate-pulse" title="Implementation notes">i</button>
             </h1>
-            <p class="text-[14.5px] text-[#6A7581] leading-relaxed max-w-[62ch] mt-2">From getting funding-ready to tracking a decision — the same applications you'll find under Account Settings while we decide where this lives long-term.</p>
+            <p class="text-[14.5px] text-[#6A7581] leading-relaxed max-w-[62ch] mt-2">From getting funding-ready to tracking a decision — every application you've made through the SME Hub, in one place.</p>
           </div>
-          <a href="member-account.html#funding" class="shrink-0 inline-flex items-center gap-2 font-jakarta font-bold text-[13px] px-5 py-3 rounded-lg bg-[#0C1F31] text-white hover:bg-[#16324a] transition">
+          <button onclick="showNewFundingApp()" class="shrink-0 inline-flex items-center gap-2 font-jakarta font-bold text-[13px] px-5 py-3 rounded-lg bg-[#0C1F31] text-white hover:bg-[#16324a] transition">
             <i data-lucide="plus" class="w-4 h-4"></i> New application
-          </a>
+          </button>
         </div>
 
         <!-- Funding readiness checklist -->
@@ -834,31 +834,7 @@
           </div>
         </div>
 
-        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-5">
-          <div class="rounded-2xl border border-[#E7EBEF] bg-white p-4 reveal">
-            <p class="text-[10px] font-bold uppercase tracking-widest text-[#6A7581]">Total</p>
-            <p class="font-jakarta font-extrabold text-2xl mt-1">3</p>
-          </div>
-          <div class="rounded-2xl border border-[#E7EBEF] bg-white p-4 reveal" style="animation-delay:40ms">
-            <p class="text-[10px] font-bold uppercase tracking-widest text-[#6A7581]">In review</p>
-            <p class="font-jakarta font-extrabold text-2xl mt-1 text-[#AE6B0A]">1</p>
-          </div>
-          <div class="rounded-2xl border border-[#E7EBEF] bg-white p-4 reveal" style="animation-delay:80ms">
-            <p class="text-[10px] font-bold uppercase tracking-widest text-[#6A7581]">Approved</p>
-            <p class="font-jakarta font-extrabold text-2xl mt-1 text-[#29A37A]">1</p>
-          </div>
-          <div class="rounded-2xl border border-[#E7EBEF] bg-white p-4 reveal" style="animation-delay:120ms">
-            <p class="text-[10px] font-bold uppercase tracking-widest text-[#6A7581]">Docs needed</p>
-            <p class="font-jakarta font-extrabold text-2xl mt-1 text-[#DC183C]">1</p>
-          </div>
-        </div>
-
-        <div class="rounded-2xl border border-[#E7EBEF] shadow-sm bg-white overflow-hidden reveal" style="animation-delay:80ms">
-          <div class="px-5 py-4 border-b border-[#E7EBEF]">
-            <p class="font-jakarta font-extrabold text-sm">Your applications</p>
-          </div>
-          <div id="funding-list"></div>
-        </div>
+        <div id="funding-app-host"></div>
       </div>
 
       <!-- ============ VIEW: CASH FLOW ============ -->
@@ -955,20 +931,14 @@
             <h1 class="font-jakarta font-extrabold text-[26px] sm:text-[28px] tracking-tight flex items-center gap-2">Resources
               <button onclick="openBrief('resources')" class="dev-badge w-5 h-5 rounded-full bg-[#DC183C] text-white items-center justify-center text-[10px] font-bold leading-none animate-pulse" title="Implementation notes">i</button>
             </h1>
-            <p class="text-[14.5px] text-[#6A7581] leading-relaxed max-w-[62ch] mt-2">eBooks, templates, guides and reports you've downloaded — the same library you'll find under Account Settings while we decide where this lives long-term.</p>
+            <p class="text-[14.5px] text-[#6A7581] leading-relaxed max-w-[62ch] mt-2">eBooks, templates, guides and reports you've downloaded — re-download anything you've ever pulled from the library, no hunting through old emails.</p>
           </div>
           <a href="public-resources.html" class="shrink-0 inline-flex items-center gap-2 font-jakarta font-bold text-[13px] px-5 py-3 rounded-lg border-[1.5px] border-[#E7EBEF] hover:bg-[#F0F5F9] transition">
             <i data-lucide="compass" class="w-4 h-4"></i> Browse full library
           </a>
         </div>
 
-        <div class="rounded-2xl border border-[#E7EBEF] shadow-sm bg-white overflow-hidden reveal">
-          <div class="px-5 py-4 border-b border-[#E7EBEF] flex items-center justify-between">
-            <p class="font-jakarta font-extrabold text-sm">Your downloads</p>
-            <span class="text-[11px] text-[#6A7581]">Most recent first</span>
-          </div>
-          <div id="resources-list"></div>
-        </div>
+        <div id="downloads-host"></div>
       </div>
 
       <!-- ============ VIEW: MEMBER PERKS ============ -->
@@ -1363,70 +1333,608 @@
     lucide.createIcons();
   }
 
-  // ===== FUNDING (mirrors member-account.html's Settings → Funding, for now) ====
+  // ===== FUNDING =================================================================
+  // Moved here from member-account.html's Settings → Funding (2026-10-01) — Joel's
+  // call: everything business-related consolidates into Workspace, Account Settings
+  // stays for account/profile/notification admin only. Ported verbatim (data, logic,
+  // markup) and re-skinned onto Workspace's card system instead of settingsCard().
   const FUNDING_STATUS = {
-    review:   { label:'In review',           color:'#AE6B0A', bg:'#FFF1E0' },
-    docs:     { label:'Documents requested',  color:'#DC183C', bg:'#FDECEF' },
-    approved: { label:'Approved',            color:'#29A37A', bg:'#E4F5EE' }
+    draft:     { label:'Draft',                color:'#6A7581', bg:'#F0F5F9' },
+    submitted: { label:'Submitted',            color:'#3B82F6', bg:'#E5EFFB' },
+    review:    { label:'In review',            color:'#AE6B0A', bg:'#FFF1E0' },
+    docs:      { label:'Documents requested',  color:'#DC183C', bg:'#FDECEF' },
+    approved:  { label:'Approved',             color:'#29A37A', bg:'#E4F5EE' },
+    declined:  { label:'Declined',             color:'#6A7581', bg:'#F0F5F9' },
+    funded:    { label:'Funded',               color:'#29A37A', bg:'#E4F5EE' }
   };
-  const fundingApps = [
-    { id:'APP-2026-0481', product:'Asset Finance',        icon:'truck',                amount:'R1 200 000', status:'docs',     updated:'2 days ago' },
-    { id:'APP-2026-0512', product:'Working Capital Loan',  icon:'wallet',               amount:'R350 000',   status:'review',   updated:'5 days ago' },
-    { id:'APP-2026-0397', product:'Invoice Finance',       icon:'file-text',            amount:'R210 000',   status:'approved', updated:'3 weeks ago' }
+  const FUNDING_FILTERS = [['all','All'],['draft','Draft'],['submitted','Submitted'],['review','In review'],['docs','Documents requested'],['approved','Approved'],['declined','Declined'],['funded','Funded']];
+  const FUNDING_STEPS = ['Submitted','Documents','In review','Decision','Funded'];
+  const FUNDING_PRODUCTS = ['Asset Finance','Working Capital Loan','Invoice Finance','Bridging Finance'];
+  const FUNDING_ICON_MAP = { 'Asset Finance':'truck', 'Working Capital Loan':'wallet', 'Invoice Finance':'file-text', 'Bridging Finance':'arrow-right-left' };
+  const FUNDING_PREFILL = { company:'Langa Holdings', sector:'Fintech', stage:'Growing', yearsInBusiness:'2 - 4 Years' };
+  const SECTORS = ['Fintech','SaaS','Retail','Agritech','Cleantech','AI','Construction','Food','Other'];
+  const STAGES = ['Idea','Just Launched','Growing','Established'];
+  const YEARS_IN_BUSINESS = ['Less than 1 year','1 - 2 Years','2 - 4 Years','5 - 10 Years','10+ Years'];
+
+  let APPLICATIONS = [
+    { id:'APP-2026-0481', product:'Asset Finance', icon:'truck',
+      amount:1200000, term:'48 months', purpose:'Two delivery vehicles for Gauteng route expansion.',
+      submitted:'12 Jun 2026', updated:'2 days ago', status:'docs', step:1,
+      lender:'Business Partners Limited', contact:'Khanyi Mthembu',
+      documents:[
+        { name:'Company registration (CIPC)', state:'provided' },
+        { name:'6 months bank statements', state:'provided' },
+        { name:'Latest management accounts', state:'reupload' },
+        { name:'Tax clearance certificate', state:'pending' }
+      ],
+      timeline:[
+        { date:'12 Jun 2026', text:'Application created.', icon:'file-plus' },
+        { date:'12 Jun 2026', text:'Application submitted.', icon:'send' },
+        { date:'14 Jun 2026', text:'Matched with Business Partners Limited.', icon:'link' },
+        { date:'18 Jun 2026', text:'Viewed by lender (Khanyi Mthembu).', icon:'eye' },
+        { date:'21 Jun 2026', text:'Documents requested — see list.', icon:'file-warning' }
+      ]
+    },
+    { id:'APP-2026-0420', product:'Working Capital Loan', icon:'wallet',
+      amount:250000, term:'12 months', purpose:'Bridge stock purchase for Q3 retail orders.',
+      submitted:'2 Jun 2026', updated:'5 days ago', status:'review', step:2,
+      lender:'Lula Lend', contact:'Sipho Khumalo',
+      documents:[
+        { name:'Company registration (CIPC)', state:'provided' },
+        { name:'3 months bank statements', state:'provided' },
+        { name:'ID copies of directors', state:'provided' }
+      ],
+      timeline:[
+        { date:'2 Jun 2026', text:'Application submitted.', icon:'send' },
+        { date:'3 Jun 2026', text:'Matched with Lula Lend.', icon:'link' },
+        { date:'8 Jun 2026', text:'Lender opened the application.', icon:'eye' },
+        { date:'15 Jun 2026', text:'Underwriter assigned: Sipho Khumalo.', icon:'user-check' }
+      ]
+    },
+    { id:'APP-2026-0388', product:'Invoice Finance', icon:'file-text',
+      amount:480000, term:'90 days revolving', purpose:'Discount outstanding invoices from corporate clients.',
+      submitted:'24 May 2026', updated:'today', status:'approved', step:3,
+      lender:'Merchant Factors', contact:'Lerato Sibiya',
+      documents:[
+        { name:'Debtors age analysis', state:'provided' },
+        { name:'Top 5 client contracts', state:'provided' },
+        { name:'Bank statements (6 months)', state:'provided' }
+      ],
+      timeline:[
+        { date:'24 May 2026', text:'Application submitted.', icon:'send' },
+        { date:'26 May 2026', text:'Matched with Merchant Factors.', icon:'link' },
+        { date:'30 May 2026', text:'All documents received.', icon:'check' },
+        { date:'10 Jun 2026', text:'Underwriting complete.', icon:'shield-check' },
+        { date:'22 Jun 2026', text:'Approved — awaiting signed term sheet.', icon:'badge-check' }
+      ]
+    },
+    { id:'APP-2026-0357', product:'Bridging Finance', icon:'arrow-right-left',
+      amount:600000, term:'6 months', purpose:'Bridging finance for property transfer (tenant deposit).',
+      submitted:'12 May 2026', updated:'1 week ago', status:'submitted', step:0,
+      lender:null, contact:null,
+      documents:[
+        { name:'Sale agreement', state:'provided' },
+        { name:'Conveyancer letter', state:'pending' }
+      ],
+      timeline:[
+        { date:'12 May 2026', text:'Application submitted.', icon:'send' },
+        { date:'13 May 2026', text:'Awaiting lender match.', icon:'clock' }
+      ]
+    },
+    { id:'APP-2026-0509', product:'Working Capital Loan', icon:'wallet',
+      amount:75000, term:'6 months', purpose:'Smaller top-up for marketing spend ahead of Black Friday.',
+      submitted:'—', updated:'in progress', status:'draft', step:-1,
+      lender:null, contact:null,
+      documents:[
+        { name:'Company registration (CIPC)', state:'pending' },
+        { name:'Bank statements', state:'pending' },
+        { name:'Latest management accounts', state:'pending' }
+      ],
+      timeline:[
+        { date:'20 Jun 2026', text:'Draft created — not yet submitted.', icon:'file-pen' }
+      ]
+    }
   ];
-  function fundingRow(a){
-    const st = FUNDING_STATUS[a.status];
-    return `
-      <div class="flex items-center gap-3.5 px-5 py-4 border-b border-[#E7EBEF] last:border-b-0">
-        <div class="w-[38px] h-[38px] rounded-[10px] grid place-items-center shrink-0" style="background:${st.bg}">
-          <i data-lucide="${a.icon}" class="w-[18px] h-[18px]" style="color:${st.color}"></i>
-        </div>
-        <div class="flex-1 min-w-0">
-          <p class="text-[13.5px] font-bold">${esc(a.product)}</p>
-          <p class="text-[12px] text-[#6A7581] mt-0.5">${esc(a.id)} · Updated ${esc(a.updated)}</p>
-        </div>
-        <div class="flex flex-col items-end gap-1.5 shrink-0">
-          <span class="text-[13px] font-mono font-semibold">${esc(a.amount)}</span>
-          <span class="text-[10.5px] font-bold px-2 py-0.5 rounded-full" style="background:${st.bg};color:${st.color}">${st.label}</span>
-        </div>
-      </div>`;
+  let fundingAppState = { q:'', status:'all', sort:'newest', view:'list', activeId:null };
+
+  function setFundingFilter(s){ fundingAppState.status=s; renderFunding(); }
+  function setFundingSort(v){ fundingAppState.sort=v; renderFunding(); }
+  function setFundingQ(v){ fundingAppState.q=v; renderFundingList(); }
+  function fundingZAR(n){ return 'R '+Number(n).toLocaleString('en-ZA'); }
+
+  function uploadDoc(id, docIdx){
+    const a = APPLICATIONS.find(x=>x.id===id); if(!a) return;
+    const d = a.documents[docIdx]; if(!d) return;
+    d.state = 'provided';
+    a.updated='just now';
+    renderFundingList();
+    showToast('Uploaded: '+d.name);
   }
-  function renderFunding(){
-    document.getElementById('funding-list').innerHTML = fundingApps.map(fundingRow).join('');
+
+  function docBadge(s){
+    if(s==='provided') return `<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#E4F5EE] text-[#29A37A]"><i data-lucide="check" class="w-3 h-3"></i> Provided</span>`;
+    if(s==='reupload') return `<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#FDECEF] text-[#DC183C]"><i data-lucide="refresh-cw" class="w-3 h-3"></i> Re-upload</span>`;
+    return `<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#FFF1E0] text-[#AE6B0A]"><i data-lucide="clock" class="w-3 h-3"></i> Pending</span>`;
+  }
+
+  function fundingRowMenu(id){
+    return `<div class="relative inline-block">
+      <button onclick="event.stopPropagation();document.getElementById('fa-menu-${id}').classList.toggle('hidden')" class="w-8 h-8 rounded-lg border border-[#E7EBEF] hover:border-[#DC183C] hover:text-[#DC183C] text-[#6A7581] grid place-items-center transition"><i data-lucide="more-horizontal" class="w-4 h-4"></i></button>
+      <div id="fa-menu-${id}" class="hidden absolute right-0 mt-1 w-44 bg-white rounded-xl border border-[#E7EBEF] shadow-lg z-10 py-1">
+        <button onclick="event.stopPropagation();document.getElementById('fa-menu-${id}').classList.add('hidden');viewFundingApp('${id}')" class="w-full text-left px-3 py-2 text-xs font-semibold text-[#121A21] hover:bg-[#F0F5F9] flex items-center gap-2"><i data-lucide="pencil" class="w-3.5 h-3.5"></i> Update info</button>
+        <button onclick="event.stopPropagation();document.getElementById('fa-menu-${id}').classList.add('hidden');confirmWithdrawApp('${id}')" class="w-full text-left px-3 py-2 text-xs font-semibold text-[#DC183C] hover:bg-[#FDECEF] flex items-center gap-2"><i data-lucide="x-circle" class="w-3.5 h-3.5"></i> Withdraw</button>
+      </div>
+    </div>`;
+  }
+
+  function fundingTableRow(a, idx){
+    const s = FUNDING_STATUS[a.status];
+    const zebra = idx%2===0 ? 'bg-white' : 'bg-[#FCFCFC]';
+    return `<tr class="${zebra} hover:bg-[#FDECEF]/40 transition cursor-pointer border-b border-[#E7EBEF] last:border-0" onclick="viewFundingApp('${a.id}')">
+      <td class="px-4 py-3"><span class="inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-bold whitespace-nowrap" style="background:${s.bg};color:${s.color}">${s.label}</span></td>
+      <td class="px-4 py-3">
+        <div class="flex items-center gap-2.5 min-w-0">
+          <div class="w-8 h-8 rounded-lg bg-[#0C1F31] grid place-items-center shrink-0"><i data-lucide="${a.icon}" class="w-4 h-4 text-[#FF9900]"></i></div>
+          <p class="font-jakarta font-bold text-[#121A21] text-sm leading-tight">${esc(a.product)}</p>
+        </div>
+      </td>
+      <td class="px-4 py-3 text-[11px] font-mono text-[#6A7581]">${esc(a.id)}</td>
+      <td class="px-4 py-3 text-sm font-jakarta font-bold text-[#121A21] text-right whitespace-nowrap">${esc(fundingZAR(a.amount))}</td>
+      <td class="px-4 py-3 text-xs text-[#42505E] whitespace-nowrap">${esc(a.submitted)}</td>
+      <td class="px-4 py-3 text-xs text-[#6A7581] whitespace-nowrap">${esc(a.updated)}</td>
+      <td class="px-4 py-3 text-right whitespace-nowrap">
+        <div class="inline-flex items-center gap-1.5" onclick="event.stopPropagation()">
+          <button onclick="viewFundingApp('${a.id}')" class="bg-[#DC183C] hover:bg-[#B0142F] text-white rounded-full px-3 py-1.5 text-[11px] font-bold transition inline-flex items-center gap-1">View application <i data-lucide="arrow-right" class="w-3 h-3"></i></button>
+          ${fundingRowMenu(a.id)}
+        </div>
+      </td>
+    </tr>`;
+  }
+
+  function fundingMobileCard(a){
+    const s = FUNDING_STATUS[a.status];
+    return `<div class="rounded-xl border border-[#E7EBEF] p-4 cursor-pointer hover:border-[#DC183C] transition" onclick="viewFundingApp('${a.id}')">
+      <div class="flex items-start justify-between gap-2 mb-3">
+        <div class="flex items-center gap-2.5 min-w-0">
+          <div class="w-9 h-9 rounded-lg bg-[#0C1F31] grid place-items-center shrink-0"><i data-lucide="${a.icon}" class="w-4 h-4 text-[#FF9900]"></i></div>
+          <div class="min-w-0">
+            <p class="font-jakarta font-bold text-[#121A21] text-sm leading-tight">${esc(a.product)}</p>
+            <p class="text-[10px] font-mono text-[#6A7581] mt-0.5">${esc(a.id)}</p>
+          </div>
+        </div>
+        <span class="px-2 py-0.5 rounded-full text-[10px] font-bold whitespace-nowrap shrink-0" style="background:${s.bg};color:${s.color}">${s.label}</span>
+      </div>
+      <div class="grid grid-cols-2 gap-2 text-[11px] mb-3">
+        <div><p class="uppercase font-bold text-[#6A7581] tracking-wider">Amount</p><p class="font-jakarta font-bold text-[#121A21] text-sm">${esc(fundingZAR(a.amount))}</p></div>
+        <div><p class="uppercase font-bold text-[#6A7581] tracking-wider">Submitted</p><p class="text-[#42505E]">${esc(a.submitted)}</p></div>
+      </div>
+      <button onclick="event.stopPropagation();viewFundingApp('${a.id}')" class="w-full bg-[#DC183C] hover:bg-[#B0142F] text-white rounded-full px-3 py-2 text-xs font-bold transition inline-flex items-center justify-center gap-1.5">View application <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i></button>
+    </div>`;
+  }
+
+  function renderFundingList(){
+    const host = document.getElementById('fa-list'); if(!host) return;
+    let list = APPLICATIONS.slice();
+    if(fundingAppState.status!=='all') list = list.filter(a=>a.status===fundingAppState.status);
+    const q = (fundingAppState.q||'').toLowerCase();
+    if(q) list = list.filter(a => (a.product+' '+a.id+' '+a.purpose).toLowerCase().includes(q));
+    if(fundingAppState.sort==='amount') list.sort((a,b)=>b.amount-a.amount);
+    else if(fundingAppState.sort==='status') list.sort((a,b)=>a.status.localeCompare(b.status));
+    const empty = document.getElementById('fa-empty');
+    if(!list.length){ host.innerHTML=''; if(empty) empty.classList.remove('hidden'); lucide.createIcons(); return; }
+    if(empty) empty.classList.add('hidden');
+    const head = `<thead class="bg-[#FCFCFC] border-b border-[#E7EBEF]"><tr>
+      <th class="px-4 py-3 text-left text-[11px] font-bold uppercase tracking-wider text-[#0C1F31]">Status</th>
+      <th class="px-4 py-3 text-left text-[11px] font-bold uppercase tracking-wider text-[#0C1F31]">Product</th>
+      <th class="px-4 py-3 text-left text-[11px] font-bold uppercase tracking-wider text-[#0C1F31]">Reference</th>
+      <th class="px-4 py-3 text-right text-[11px] font-bold uppercase tracking-wider text-[#0C1F31]">Amount</th>
+      <th class="px-4 py-3 text-left text-[11px] font-bold uppercase tracking-wider text-[#0C1F31]">Submitted</th>
+      <th class="px-4 py-3 text-left text-[11px] font-bold uppercase tracking-wider text-[#0C1F31]">Last update</th>
+      <th class="px-4 py-3 text-right text-[11px] font-bold uppercase tracking-wider text-[#0C1F31]">Actions</th>
+    </tr></thead>`;
+    host.innerHTML = `
+      <div class="hidden md:block rounded-2xl border border-[#E7EBEF] overflow-hidden">
+        <div class="overflow-x-auto"><table class="w-full text-sm">${head}<tbody>${list.map((a,i)=>fundingTableRow(a,i)).join('')}</tbody></table></div>
+      </div>
+      <div class="md:hidden space-y-3">${list.map(fundingMobileCard).join('')}</div>`;
     lucide.createIcons();
   }
 
-  // ===== RESOURCES (mirrors member-account.html's Settings → Downloads, for now) =
-  const RESOURCE_TYPE_META = {
-    ebook:    { label:'eBook',    color:'#DC183C', bg:'#FDECEF' },
-    template: { label:'Template', color:'#3B82F6', bg:'#E5EFFB' },
-    guide:    { label:'Guide',    color:'#AE6B0A', bg:'#FFF1E0' }
-  };
-  const savedResources = [
-    { title:'One-Page Business Plan Template', type:'template', date:'14 Jun 2026', format:'DOCX', icon:'file-text' },
-    { title:'Pitching to Funders That Say Yes', type:'guide',    date:'11 Jun 2026', format:'PDF',  icon:'clipboard-list' },
-    { title:'Cash Flow Forecast (12 Months)',   type:'template', date:'2 Jun 2026',  format:'XLSX', icon:'file-text' },
-    { title:'Your Guide to AI Prompting',       type:'ebook',    date:'18 Jun 2026', format:'PDF',  icon:'book-open' }
-  ];
-  function resourceRow(r){
-    const m = RESOURCE_TYPE_META[r.type];
+  function showNewFundingApp(){ fundingAppState.view='new'; renderFunding(); window.scrollTo({top:0,behavior:'smooth'}); }
+  function backToFundingList(){ fundingAppState.view='list'; renderFunding(); }
+
+  function renderFundingNew(){
     return `
-      <div class="flex items-center gap-3.5 px-5 py-4 border-b border-[#E7EBEF] last:border-b-0">
-        <div class="w-[38px] h-[38px] rounded-[10px] grid place-items-center shrink-0" style="background:${m.bg}">
-          <i data-lucide="${r.icon}" class="w-[18px] h-[18px]" style="color:${m.color}"></i>
+      <button onclick="backToFundingList()" class="text-xs font-bold text-[#121A21] hover:text-[#DC183C] transition inline-flex items-center gap-1.5 mb-4"><i data-lucide="arrow-left" class="w-4 h-4"></i> Back to applications</button>
+      <div class="rounded-2xl border border-[#E7EBEF] bg-[#FCFCFC] p-4 mb-5 flex items-start gap-3">
+        <i data-lucide="sparkles" class="w-4 h-4 text-[#29A37A] mt-0.5 shrink-0"></i>
+        <p class="text-xs text-[#42505E]">We've pre-filled this from your <a href="member-account.html" class="font-bold text-[#DC183C] hover:underline">Profile</a> — check the details before you submit.</p>
+      </div>
+      <div class="rounded-2xl border border-[#E7EBEF] shadow-sm bg-white p-5 sm:p-6">
+        <h3 class="font-jakarta font-extrabold text-lg mb-4">Business details</h3>
+        <div class="grid sm:grid-cols-2 gap-4">
+          <div><label class="block text-[11px] font-bold uppercase tracking-wider text-[#6A7581] mb-1.5">Company name</label><input id="nf-company" value="${esc(FUNDING_PREFILL.company)}" class="w-full rounded-lg border border-[#D8DEE5] px-3 py-2.5 text-[13.5px] outline-none focus:border-[#DC183C]"></div>
+          <div><label class="block text-[11px] font-bold uppercase tracking-wider text-[#6A7581] mb-1.5">Industry</label><select id="nf-sector" class="w-full rounded-lg border border-[#D8DEE5] px-3 py-2.5 text-[13.5px] outline-none focus:border-[#DC183C]">${SECTORS.map(o=>`<option ${o===FUNDING_PREFILL.sector?'selected':''}>${esc(o)}</option>`).join('')}</select></div>
+          <div><label class="block text-[11px] font-bold uppercase tracking-wider text-[#6A7581] mb-1.5">Business stage</label><select id="nf-stage" class="w-full rounded-lg border border-[#D8DEE5] px-3 py-2.5 text-[13.5px] outline-none focus:border-[#DC183C]">${STAGES.map(o=>`<option ${o===FUNDING_PREFILL.stage?'selected':''}>${esc(o)}</option>`).join('')}</select></div>
+          <div><label class="block text-[11px] font-bold uppercase tracking-wider text-[#6A7581] mb-1.5">Years in business</label><select id="nf-years" class="w-full rounded-lg border border-[#D8DEE5] px-3 py-2.5 text-[13.5px] outline-none focus:border-[#DC183C]">${YEARS_IN_BUSINESS.map(o=>`<option ${o===FUNDING_PREFILL.yearsInBusiness?'selected':''}>${esc(o)}</option>`).join('')}</select></div>
         </div>
-        <div class="flex-1 min-w-0">
-          <p class="text-[13.5px] font-bold truncate">${esc(r.title)}</p>
-          <div class="flex items-center gap-2 mt-0.5">
-            <span class="text-[10px] font-bold px-2 py-0.5 rounded-full" style="background:${m.bg};color:${m.color}">${m.label}</span>
-            <span class="text-[12px] text-[#6A7581]">Downloaded ${esc(r.date)} · ${esc(r.format)}</span>
-          </div>
+        <h3 class="font-jakarta font-extrabold text-lg mt-6 pt-5 mb-4 border-t border-[#E7EBEF]">Funding request</h3>
+        <div class="grid sm:grid-cols-2 gap-4">
+          <div><label class="block text-[11px] font-bold uppercase tracking-wider text-[#6A7581] mb-1.5">Product</label><select id="nf-product" class="w-full rounded-lg border border-[#D8DEE5] px-3 py-2.5 text-[13.5px] outline-none focus:border-[#DC183C]">${FUNDING_PRODUCTS.map(o=>`<option>${esc(o)}</option>`).join('')}</select></div>
+          <div><label class="block text-[11px] font-bold uppercase tracking-wider text-[#6A7581] mb-1.5">Amount requested (ZAR)</label><input id="nf-amount" placeholder="e.g. 250000" class="w-full rounded-lg border border-[#D8DEE5] px-3 py-2.5 text-[13.5px] outline-none focus:border-[#DC183C]"></div>
+          <div><label class="block text-[11px] font-bold uppercase tracking-wider text-[#6A7581] mb-1.5">Preferred term</label><input id="nf-term" placeholder="e.g. 12 months" class="w-full rounded-lg border border-[#D8DEE5] px-3 py-2.5 text-[13.5px] outline-none focus:border-[#DC183C]"></div>
         </div>
-        <button onclick="stubNav('Re-download')" class="text-xs font-bold text-[#DC183C] hover:underline shrink-0">Download again</button>
+        <div class="mt-4"><label class="block text-[11px] font-bold uppercase tracking-wider text-[#6A7581] mb-1.5">Purpose</label><textarea id="nf-purpose" rows="3" placeholder="What will this funding be used for?" class="w-full rounded-lg border border-[#D8DEE5] px-3 py-2.5 text-[13.5px] outline-none focus:border-[#DC183C]"></textarea></div>
+        <div class="mt-6 flex items-center gap-3">
+          <button onclick="submitNewFundingApp()" class="font-jakarta font-bold text-[13px] px-6 py-3 rounded-lg bg-[#DC183C] hover:bg-[#B0142F] text-white transition">Submit application</button>
+          <button onclick="backToFundingList()" class="text-[#6A7581] hover:text-[#121A21] text-sm font-semibold px-3">Cancel</button>
+        </div>
       </div>`;
   }
+
+  function submitNewFundingApp(){
+    const g = id => document.getElementById(id);
+    const product = g('nf-product').value;
+    const amount = parseInt((g('nf-amount').value||'0').replace(/[^\d]/g,''),10) || 0;
+    const term = g('nf-term').value.trim() || '—';
+    const purpose = g('nf-purpose').value.trim() || 'No purpose provided.';
+    const newId = 'APP-2026-'+(1000+APPLICATIONS.length);
+    APPLICATIONS.unshift({
+      id:newId, product, icon:FUNDING_ICON_MAP[product]||'banknote',
+      amount, term, purpose,
+      submitted:'today', updated:'just now', status:'submitted', step:0,
+      lender:null, contact:null,
+      documents:[
+        { name:'Company registration (CIPC)', state:'pending' },
+        { name:'6 months bank statements', state:'pending' },
+        { name:'Latest management accounts', state:'pending' }
+      ],
+      timeline:[{ date:'today', text:'Application submitted.', icon:'send' }]
+    });
+    fundingAppState.view='detail'; fundingAppState.activeId=newId;
+    renderFunding();
+    showToast('Application submitted.');
+  }
+
+  function viewFundingApp(id){
+    fundingAppState.activeId = id;
+    fundingAppState.view = 'detail';
+    renderFunding();
+    window.scrollTo({top:0,behavior:'smooth'});
+  }
+  function confirmWithdrawApp(id){
+    const a = APPLICATIONS.find(x=>x.id===id); if(!a) return;
+    if(confirm('Withdraw application '+id+'? This cannot be undone.')){
+      a.status='declined'; a.step=-1; a.updated='just now';
+      a.timeline.push({ date:'today', text:'Withdrawn by applicant.', icon:'x-circle' });
+      if(fundingAppState.view==='detail') renderFunding();
+      else renderFundingList();
+      showToast('Application '+id+' withdrawn.');
+    }
+  }
+
+  function fundingContextCTA(a){
+    let title='', body='', cta='Continue', icon='arrow-right', tone='#0C1F31';
+    switch(a.status){
+      case 'draft': title='Finish your draft and submit.'; body='Complete the required fields so we can match you with a lender.'; cta='Continue application'; icon='edit-3'; break;
+      case 'submitted': title='Awaiting lender match.'; body='Your application is in the queue. We typically match within 2 business days.'; cta='Message support'; icon='clock'; break;
+      case 'review': title='Your application is being reviewed.'; body='The underwriter is assessing your file. We will notify you of any next steps.'; cta='View timeline'; icon='search'; break;
+      case 'docs': { const pending = a.documents.filter(d=>d.state!=='provided').length;
+        title=`You have ${pending} document${pending===1?'':'s'} outstanding — upload now.`; body='The lender cannot continue until every requested document is provided.'; cta='Upload documents'; icon='upload'; tone='#DC183C'; break; }
+      case 'approved': title='Congratulations — review your funding offer.'; body='An approval term sheet is ready. Sign to release funds.'; cta='Review offer'; icon='badge-check'; tone='#29A37A'; break;
+      case 'funded': title='Funds disbursed.'; body='This application is closed. A statement will be available in your account portal.'; cta='Download statement'; icon='download'; tone='#29A37A'; break;
+      case 'declined': title='Application closed.'; body='If circumstances change, you can submit a new application at any time.'; cta='Start a new application'; icon='refresh-cw'; break;
+    }
+    return `<div class="rounded-2xl overflow-hidden border border-[#E7EBEF] mt-6">
+      <div class="px-5 py-5 relative flex items-center justify-between gap-3 flex-wrap" style="background:${tone}">
+        <div class="absolute inset-0 opacity-30" style="background:radial-gradient(circle at 90% 50%, #FF9900 0%, transparent 60%);"></div>
+        <div class="relative min-w-0 flex items-start gap-3">
+          <div class="w-10 h-10 rounded-xl bg-white/10 grid place-items-center shrink-0"><i data-lucide="${icon}" class="w-5 h-5 text-[#FF9900]"></i></div>
+          <div class="min-w-0">
+            <p class="font-jakarta font-extrabold text-white text-base leading-tight">${esc(title)}</p>
+            <p class="text-xs text-white/70 mt-1">${esc(body)}</p>
+          </div>
+        </div>
+        <button onclick="showToast('${esc(cta)}.')" class="relative bg-[#DC183C] hover:bg-[#B0142F] text-white rounded-full px-5 py-2.5 font-jakarta font-bold text-sm transition flex items-center gap-2 shrink-0"><i data-lucide="${icon}" class="w-4 h-4"></i> ${esc(cta)}</button>
+      </div>
+    </div>`;
+  }
+
+  function fundingDocRow(a, d, i){
+    const sizes = ['1.2 MB','864 KB','2.1 MB','512 KB','1.7 MB','948 KB'];
+    const fname = (d.state==='provided') ? (d.name.toLowerCase().replace(/[^a-z0-9]+/g,'-').slice(0,28)+'.pdf') : '';
+    const size = sizes[i % sizes.length];
+    let action = '';
+    if(d.state==='provided') action = `<button onclick="showToast('Viewing '+${JSON.stringify(d.name)})" class="text-[11px] font-bold text-[#6A7581] hover:text-[#DC183C] border border-[#E7EBEF] rounded-full px-3 py-1.5 transition">View</button>`;
+    else if(d.state==='reupload') action = `<button onclick="uploadDoc('${a.id}',${i})" class="bg-[#FF9900] hover:bg-[#AE6B0A] text-[#0C1F31] rounded-full px-3 py-1.5 text-[11px] font-bold transition inline-flex items-center gap-1.5"><i data-lucide="refresh-cw" class="w-3 h-3"></i> Re-upload</button>`;
+    else action = `<button onclick="uploadDoc('${a.id}',${i})" class="bg-[#DC183C] hover:bg-[#B0142F] text-white rounded-full px-3 py-1.5 text-[11px] font-bold transition inline-flex items-center gap-1.5"><i data-lucide="upload" class="w-3 h-3"></i> Upload</button>`;
+    return `<div class="flex items-center gap-3 py-3 border-b border-[#E7EBEF] last:border-0">
+      <div class="w-9 h-9 rounded-lg bg-[#FCFCFC] border border-[#E7EBEF] grid place-items-center shrink-0"><i data-lucide="${d.state==='provided'?'file-check':'file'}" class="w-4 h-4 ${d.state==='provided'?'text-[#29A37A]':'text-[#6A7581]'}"></i></div>
+      <div class="min-w-0 flex-1">
+        <p class="text-sm font-semibold text-[#121A21] truncate">${esc(d.name)}</p>
+        ${fname?`<p class="text-[11px] font-mono text-[#6A7581] truncate">${fname} · ${size}</p>`:'<p class="text-[11px] text-[#6A7581]">No file uploaded yet</p>'}
+      </div>
+      ${docBadge(d.state)}
+      ${action}
+    </div>`;
+  }
+
+  function fundingDetailStepper(step){
+    return `<div class="flex items-center w-full">
+      ${FUNDING_STEPS.map((s,i)=>{
+        const done = step>i, cur = step===i;
+        const dotBg = done?'#29A37A':cur?'#FDECEF':'#FCFCFC';
+        const dotIconColor = done?'#fff':cur?'#DC183C':'#94A3B8';
+        const icon = done?'check':(cur?'circle-dot':'circle');
+        const lineColor = done?'#29A37A':'#E7EBEF';
+        return `<div class="flex items-center ${i===FUNDING_STEPS.length-1?'':'flex-1'} min-w-0">
+          <div class="flex flex-col items-center">
+            <div class="w-10 h-10 rounded-full grid place-items-center shrink-0 border-2" style="background:${dotBg};border-color:${done?'#29A37A':cur?'#DC183C':'#E7EBEF'};${cur?'box-shadow:0 0 0 3px #FDECEF':''}"><i data-lucide="${icon}" class="w-4 h-4" style="color:${dotIconColor}"></i></div>
+            <p class="text-[10px] font-bold mt-2 ${cur?'text-[#DC183C]':done?'text-[#29A37A]':'text-[#6A7581]'} uppercase tracking-wide text-center whitespace-nowrap">${s}</p>
+          </div>
+          ${i<FUNDING_STEPS.length-1?`<div class="flex-1 h-0.5 mx-2 -mt-6" style="background:${lineColor}"></div>`:''}
+        </div>`;
+      }).join('')}
+    </div>`;
+  }
+
+  function renderFundingDetail(id){
+    const a = APPLICATIONS.find(x=>x.id===id);
+    if(!a){ fundingAppState.view='list'; return renderFundingList(); }
+    const s = FUNDING_STATUS[a.status];
+    const provided = a.documents.filter(d=>d.state==='provided').length;
+
+    const glance = `<div class="rounded-2xl border border-[#E7EBEF] shadow-sm bg-white p-5">
+      <p class="text-[10px] font-bold uppercase tracking-widest text-[#0C1F31] mb-3">At a glance</p>
+      <div class="space-y-3">
+        <div><p class="text-[10px] font-bold uppercase tracking-wider text-[#6A7581]">Amount requested</p><p class="font-jakarta font-extrabold text-2xl text-[#121A21] mt-0.5">${esc(fundingZAR(a.amount))}</p></div>
+        <div><p class="text-[10px] font-bold uppercase tracking-wider text-[#6A7581]">Term</p><p class="text-sm font-semibold text-[#121A21] mt-0.5">${esc(a.term)}</p></div>
+        <div><p class="text-[10px] font-bold uppercase tracking-wider text-[#6A7581]">Purpose</p><p class="text-sm text-[#42505E] mt-0.5 leading-snug">${esc(a.purpose)}</p></div>
+        <div><p class="text-[10px] font-bold uppercase tracking-wider text-[#6A7581]">Industry</p><p class="text-sm text-[#121A21] mt-0.5">Manufacturing &amp; Logistics</p></div>
+        <div><p class="text-[10px] font-bold uppercase tracking-wider text-[#6A7581]">Application type</p><p class="text-sm text-[#121A21] mt-0.5">${esc(a.product)}</p></div>
+      </div>
+    </div>`;
+
+    const actions = `<div class="rounded-2xl border border-[#E7EBEF] shadow-sm bg-white p-5 mt-4">
+      <p class="text-[10px] font-bold uppercase tracking-widest text-[#0C1F31] mb-3">Actions</p>
+      <div class="space-y-2">
+        ${a.status!=='declined' && a.status!=='funded' ? `<button onclick="confirmWithdrawApp('${a.id}')" class="w-full text-left text-xs font-bold text-[#DC183C] hover:bg-[#FDECEF] rounded-lg px-3 py-2 transition flex items-center gap-2"><i data-lucide="x-circle" class="w-3.5 h-3.5"></i> Withdraw application</button>`:''}
+        <button onclick="showToast('Duplicated as draft.')" class="w-full text-left text-xs font-bold text-[#121A21] hover:bg-[#F0F5F9] rounded-lg px-3 py-2 transition flex items-center gap-2"><i data-lucide="copy" class="w-3.5 h-3.5 text-[#6A7581]"></i> Duplicate as draft</button>
+        <button onclick="showToast('Generating summary PDF.')" class="w-full text-left text-xs font-bold text-[#121A21] hover:bg-[#F0F5F9] rounded-lg px-3 py-2 transition flex items-center gap-2"><i data-lucide="download" class="w-3.5 h-3.5 text-[#6A7581]"></i> Download summary (PDF)</button>
+      </div>
+    </div>`;
+
+    const dl = (label,val)=>`<div><p class="text-[10px] font-bold uppercase tracking-wider text-[#6A7581]">${esc(label)}</p><p class="text-sm font-semibold text-[#121A21] mt-1">${val}</p></div>`;
+    const details = `<div class="rounded-2xl border border-[#E7EBEF] shadow-sm bg-white p-5 mt-5">
+      <p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] mb-4 flex items-center gap-1.5"><i data-lucide="file-text" class="w-3.5 h-3.5"></i> Application details</p>
+      <div class="grid sm:grid-cols-2 gap-x-6 gap-y-4">
+        ${dl('Amount requested', `<span class="font-mono">${esc(fundingZAR(a.amount))}</span>`)}
+        ${dl('Term', esc(a.term))}
+        ${dl('Monthly turnover stated', '<span class="font-mono">R 480,000</span>')}
+        ${dl('Years in business', '6 years')}
+        ${dl('Business type', '(Pty) Ltd')}
+        ${dl('Industry', 'Manufacturing &amp; Logistics')}
+      </div>
+      <div class="mt-4 pt-4 border-t border-[#E7EBEF]">
+        <p class="text-[10px] font-bold uppercase tracking-wider text-[#6A7581] mb-1">Purpose narrative</p>
+        <p class="text-sm text-[#42505E] leading-relaxed">${esc(a.purpose)}</p>
+      </div>
+    </div>`;
+
+    const docsSec = `<div class="rounded-2xl border border-[#E7EBEF] shadow-sm bg-white p-5 mt-5">
+      <div class="flex items-center justify-between gap-3 mb-1">
+        <p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] flex items-center gap-1.5"><i data-lucide="paperclip" class="w-3.5 h-3.5"></i> Documents</p>
+        <p class="text-[11px] font-semibold text-[#6A7581]">${provided} of ${a.documents.length} documents provided</p>
+      </div>
+      <div class="mt-3">${a.documents.map((d,i)=>fundingDocRow(a,d,i)).join('')}</div>
+    </div>`;
+
+    const timelineSec = `<div class="rounded-2xl border border-[#E7EBEF] shadow-sm bg-white p-5 mt-5">
+      <p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] mb-4 flex items-center gap-1.5"><i data-lucide="clock" class="w-3.5 h-3.5"></i> Activity timeline</p>
+      <ol class="relative border-l-2 border-[#E7EBEF] ml-3 space-y-5 pl-5">
+        ${a.timeline.slice().reverse().map((t,idx)=>{
+          const isLast = idx===0;
+          return `<li class="relative">
+            <div class="absolute -left-[27px] top-0 w-7 h-7 rounded-full grid place-items-center" style="background:${isLast?'#FDECEF':'#FCFCFC'};border:2px solid ${isLast?'#DC183C':'#E7EBEF'}"><i data-lucide="${t.icon}" class="w-3.5 h-3.5" style="color:${isLast?'#DC183C':'#6A7581'}"></i></div>
+            <p class="text-[11px] font-mono text-[#6A7581] mb-0.5">${esc(t.date)}</p>
+            <p class="text-sm text-[#121A21] font-semibold leading-snug">${esc(t.text)}</p>
+          </li>`;
+        }).join('')}
+      </ol>
+    </div>`;
+
+    setTimeout(()=>lucide.createIcons(), 0);
+    return `
+      <div class="flex items-center justify-between gap-3 mb-4 flex-wrap">
+        <button onclick="backToFundingList()" class="text-xs font-bold text-[#121A21] hover:text-[#DC183C] transition inline-flex items-center gap-1.5"><i data-lucide="arrow-left" class="w-4 h-4"></i> Back to applications</button>
+        <p class="text-[11px] font-mono text-[#6A7581]">${esc(a.id)}</p>
+      </div>
+
+      <div class="rounded-2xl border border-[#E7EBEF] bg-white p-6 mb-5">
+        <div class="flex items-start justify-between gap-4 flex-wrap">
+          <div class="flex items-start gap-4 min-w-0 flex-1">
+            <div class="w-14 h-14 rounded-2xl bg-[#0C1F31] grid place-items-center shrink-0"><i data-lucide="${a.icon}" class="w-7 h-7 text-[#FF9900]"></i></div>
+            <div class="min-w-0">
+              <h2 class="font-jakarta font-extrabold text-[#121A21] text-2xl leading-tight">${esc(a.product)}</h2>
+              <div class="mt-2"><span class="inline-flex items-center px-3 py-1.5 rounded-full text-xs font-bold" style="background:${s.bg};color:${s.color}">${s.label}</span></div>
+            </div>
+          </div>
+          <div class="text-right shrink-0">
+            <p class="text-[11px] text-[#6A7581]">Submitted ${esc(a.submitted)} · Updated ${esc(a.updated)}</p>
+            <button onclick="showToast('Opening edit form.')" class="mt-2 bg-[#DC183C] hover:bg-[#B0142F] text-white rounded-full px-4 py-2 text-xs font-bold transition inline-flex items-center gap-1.5"><i data-lucide="pencil" class="w-3.5 h-3.5"></i> Update info</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid lg:grid-cols-3 gap-5">
+        <aside class="lg:col-span-1">
+          ${glance}
+          ${actions}
+        </aside>
+        <div class="lg:col-span-2">
+          ${a.status!=='draft' ? `<div class="rounded-2xl border border-[#E7EBEF] shadow-sm bg-white p-6">
+            <p class="text-[10px] font-bold uppercase tracking-widest text-[#0C1F31] mb-5">Progress</p>
+            ${fundingDetailStepper(a.step)}
+          </div>` : ''}
+          ${details}
+          ${docsSec}
+          ${timelineSec}
+        </div>
+      </div>
+
+      ${fundingContextCTA(a)}`;
+  }
+
+  function renderFunding(){
+    const host = document.getElementById('funding-app-host'); if(!host) return;
+    if(fundingAppState.view==='new'){ host.innerHTML = renderFundingNew(); lucide.createIcons(); return; }
+    if(fundingAppState.view==='detail' && fundingAppState.activeId){ host.innerHTML = renderFundingDetail(fundingAppState.activeId); lucide.createIcons(); return; }
+
+    const total = APPLICATIONS.length;
+    const inReview = APPLICATIONS.filter(a=>a.status==='review'||a.status==='docs').length;
+    const approved = APPLICATIONS.filter(a=>a.status==='approved'||a.status==='funded').length;
+    const declined = APPLICATIONS.filter(a=>a.status==='declined').length;
+    const stat = (label,val,color)=>`<div class="rounded-2xl border border-[#E7EBEF] bg-white p-4">
+      <p class="text-[10px] font-bold uppercase tracking-widest text-[#6A7581]">${esc(label)}</p>
+      <div class="flex items-baseline gap-2 mt-1"><p class="font-jakarta font-extrabold text-2xl" style="color:${color}">${val}</p><span class="w-2 h-2 rounded-full" style="background:${color}"></span></div>
+    </div>`;
+    const chips = FUNDING_FILTERS.map(([id,l])=>`<button onclick="setFundingFilter('${id}')" class="shrink-0 px-3.5 py-1.5 rounded-full text-xs font-bold border ${fundingAppState.status===id?'bg-[#DC183C] text-white border-[#DC183C]':'border-[#E7EBEF] bg-white text-[#42505E] hover:bg-[#F0F5F9]'}">${l}</button>`).join('');
+
+    host.innerHTML = `
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-5">
+        ${stat('Total applications',total,'#0C1F31')}
+        ${stat('In review',inReview,'#AE6B0A')}
+        ${stat('Approved',approved,'#29A37A')}
+        ${stat('Declined',declined,'#6A7581')}
+      </div>
+      <div class="rounded-2xl border border-[#E7EBEF] shadow-sm bg-white p-4 mb-4">
+        <div class="flex flex-col sm:flex-row gap-3 sm:items-center">
+          <div class="relative flex-1">
+            <i data-lucide="search" class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#6A7581]"></i>
+            <input value="${esc(fundingAppState.q)}" oninput="setFundingQ(this.value)" placeholder="Search by product, reference or purpose…" class="w-full bg-[#FCFCFC] border border-[#E7EBEF] rounded-full pl-9 pr-3 py-2 text-sm outline-none focus:bg-white focus:border-[#DC183C] transition">
+          </div>
+          <select onchange="setFundingSort(this.value)" class="text-xs font-semibold border border-[#E7EBEF] rounded-full px-3 py-2 outline-none text-[#42505E] bg-white">
+            <option value="newest" ${fundingAppState.sort==='newest'?'selected':''}>Newest first</option>
+            <option value="amount" ${fundingAppState.sort==='amount'?'selected':''}>Highest amount</option>
+            <option value="status" ${fundingAppState.sort==='status'?'selected':''}>Status</option>
+          </select>
+        </div>
+        <div class="flex gap-2 overflow-x-auto no-scrollbar mt-3">${chips}</div>
+      </div>
+      <div id="fa-list"></div>
+      <div id="fa-empty" class="hidden text-center py-12 px-4 bg-white rounded-2xl border border-[#E7EBEF]">
+        <div class="w-14 h-14 mx-auto rounded-full bg-[#F0F5F9] grid place-items-center mb-3"><i data-lucide="banknote" class="w-6 h-6 text-[#6A7581]"></i></div>
+        <p class="font-jakarta font-bold">No applications match that filter</p>
+        <p class="text-sm text-[#6A7581] max-w-xs mx-auto mt-1">Adjust the status chips, or start a fresh application.</p>
+        <button onclick="showNewFundingApp()" class="mt-4 bg-[#DC183C] hover:bg-[#B0142F] text-white rounded-full px-5 py-2.5 font-jakarta font-bold text-sm transition inline-flex items-center gap-2"><i data-lucide="arrow-right" class="w-4 h-4"></i> Apply for funding →</button>
+      </div>`;
+    renderFundingList();
+    lucide.createIcons();
+  }
+
+  // ===== RESOURCES / DOWNLOADS ====================================================
+  // Moved here from member-account.html's Settings → Downloads (2026-10-01), same
+  // consolidation call as Funding above.
+  const DOWNLOAD_TYPES = [['all','All'],['ebook','eBooks'],['template','Templates'],['guide','Guides'],['report','Reports & Surveys']];
+  const DOWNLOAD_TYPE_META = {
+    ebook:    { label:'eBook',    color:'#DC183C', bg:'#FDECEF' },
+    template: { label:'Template', color:'#3B82F6', bg:'#E5EFFB' },
+    guide:    { label:'Guide',    color:'#AE6B0A', bg:'#FFF1E0' },
+    report:   { label:'Report',   color:'#29A37A', bg:'#E4F5EE' }
+  };
+  const DOWNLOADS = [
+    { id:'d1',  title:'Your Guide to AI Prompting',          type:'ebook',     date:'18 Jun 2026', format:'PDF', size:'2.4 MB', accessed:3, icon:'book-open' },
+    { id:'d2',  title:'One-Page Business Plan Template',     type:'template',  date:'14 Jun 2026', format:'DOCX',size:'180 KB', accessed:5, icon:'file-text' },
+    { id:'d3',  title:'Pitching to Funders That Say Yes',    type:'guide',     date:'11 Jun 2026', format:'PDF', size:'3.1 MB', accessed:2, icon:'clipboard-list' },
+    { id:'d4',  title:'Cash Flow Forecast (12 Months)',      type:'template',  date:'2 Jun 2026',  format:'XLSX',size:'92 KB',  accessed:8, icon:'file-text' },
+    { id:'d5',  title:'State of SA Small Business 2026',     type:'report',    date:'28 May 2026', format:'PDF', size:'6.8 MB', accessed:1, icon:'bar-chart' },
+    { id:'d6',  title:'Marketing Calendar Template',         type:'template',  date:'22 May 2026', format:'XLSX',size:'140 KB', accessed:4, icon:'file-text' },
+    { id:'d7',  title:'Selling on WhatsApp & Social',        type:'guide',     date:'15 May 2026', format:'PDF', size:'2.0 MB', accessed:2, icon:'clipboard-list' },
+    { id:'d8',  title:'Registering Your Business with CIPC', type:'guide',     date:'8 May 2026',  format:'PDF', size:'1.5 MB', accessed:6, icon:'clipboard-list' },
+    { id:'d9',  title:'Hiring Your First Five People',       type:'ebook',     date:'2 May 2026',  format:'PDF', size:'2.9 MB', accessed:1, icon:'book-open' },
+    { id:'d10', title:"The Bootstrapper's Handbook",         type:'ebook',     date:'24 Apr 2026', format:'PDF', size:'4.1 MB', accessed:3, icon:'book-open' }
+  ];
+  let downloadsState = { q:'', type:'all', sort:'newest' };
+
+  function setDownloadType(t){ downloadsState.type=t; renderResources(); }
+  function setDownloadSort(v){ downloadsState.sort=v; renderResources(); }
+  function setDownloadQ(v){ downloadsState.q=v; renderDownloadList(); }
+  function reDownload(id){
+    const d = DOWNLOADS.find(x=>x.id===id); if(!d) return;
+    showToast('Re-downloading '+d.title+'…');
+  }
+
+  function renderDownloadList(){
+    const host = document.getElementById('dl-list'); if(!host) return;
+    const q = (downloadsState.q||'').toLowerCase();
+    let list = DOWNLOADS.slice();
+    if(downloadsState.type!=='all') list = list.filter(d=>d.type===downloadsState.type);
+    if(q) list = list.filter(d=>d.title.toLowerCase().includes(q));
+    if(downloadsState.sort==='oldest') list.reverse();
+    else if(downloadsState.sort==='accessed') list.sort((a,b)=>b.accessed-a.accessed);
+    const empty = document.getElementById('dl-empty');
+    if(!list.length){ host.innerHTML=''; if(empty) empty.classList.remove('hidden'); lucide.createIcons(); return; }
+    if(empty) empty.classList.add('hidden');
+    host.innerHTML = list.map((d,i)=>{
+      const m = DOWNLOAD_TYPE_META[d.type];
+      return `<div class="flex items-center gap-3 px-4 py-3.5 ${i%2?'bg-[#FCFCFC]':''} border-b border-[#F0F3F6] last:border-0">
+        <div class="w-11 h-11 rounded-xl grid place-items-center shrink-0" style="background:${m.bg}"><i data-lucide="${d.icon}" class="w-5 h-5" style="color:${m.color}"></i></div>
+        <div class="min-w-0 flex-1">
+          <a href="public-resource.html" class="font-jakarta font-bold text-sm text-[#121A21] hover:text-[#DC183C] truncate block">${esc(d.title)}</a>
+          <div class="flex items-center gap-2 flex-wrap mt-1">
+            <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold" style="background:${m.bg};color:${m.color}">${m.label}</span>
+            <span class="text-[11px] text-[#6A7581]">Downloaded ${esc(d.date)}</span>
+            <span class="text-[11px] text-[#6A7581]">·</span>
+            <span class="text-[11px] text-[#6A7581] font-mono">${esc(d.format)} · ${esc(d.size)}</span>
+          </div>
+        </div>
+        <button onclick="reDownload('${d.id}')" class="text-xs font-bold text-[#DC183C] hover:text-[#B0142F] flex items-center gap-1.5 shrink-0 px-3 py-1.5 rounded-full hover:bg-[#FDECEF]/60 transition"><i data-lucide="download" class="w-3.5 h-3.5"></i><span class="hidden sm:inline">Download again</span></button>
+        <button onclick="showToast('Menu (mockup): Remove · Share')" class="w-8 h-8 grid place-items-center rounded-full text-[#6A7581] hover:bg-[#F0F5F9] hover:text-[#121A21] shrink-0"><i data-lucide="more-horizontal" class="w-4 h-4"></i></button>
+      </div>`;
+    }).join('');
+    lucide.createIcons();
+  }
+
   function renderResources(){
-    document.getElementById('resources-list').innerHTML = savedResources.map(resourceRow).join('');
+    const host = document.getElementById('downloads-host'); if(!host) return;
+    const total = DOWNLOADS.length;
+    const thisMonth = DOWNLOADS.filter(d=>/Jun 2026/.test(d.date)).length;
+    const storage = DOWNLOADS.length + ' documents';
+    const statCard = (label,val,color) => `<div class="rounded-2xl border border-[#E7EBEF] bg-white p-4">
+      <p class="text-[10px] font-bold uppercase tracking-widest text-[#6A7581]">${esc(label)}</p>
+      <p class="font-jakarta font-extrabold text-2xl mt-1" style="color:${color}">${esc(val)}</p>
+    </div>`;
+    const chips = DOWNLOAD_TYPES.map(([id,l])=>`<button onclick="setDownloadType('${id}')" class="shrink-0 px-3.5 py-1.5 rounded-full text-xs font-bold border ${downloadsState.type===id?'bg-[#DC183C] text-white border-[#DC183C]':'border-[#E7EBEF] bg-white text-[#42505E] hover:bg-[#F0F5F9]'}">${l}</button>`).join('');
+    host.innerHTML = `
+      <div class="grid grid-cols-3 gap-3 mb-5">
+        ${statCard('Total downloads', total, '#DC183C')}
+        ${statCard('This month', thisMonth, '#29A37A')}
+        ${statCard('Storage saved', storage, '#0C1F31')}
+      </div>
+      <div class="rounded-2xl border border-[#E7EBEF] shadow-sm bg-white p-4 mb-4">
+        <div class="flex flex-col sm:flex-row gap-3 sm:items-center">
+          <div class="relative flex-1">
+            <i data-lucide="search" class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#6A7581]"></i>
+            <input value="${esc(downloadsState.q)}" oninput="setDownloadQ(this.value)" placeholder="Search downloads…" class="w-full bg-[#FCFCFC] border border-[#E7EBEF] rounded-full pl-9 pr-3 py-2 text-sm outline-none focus:bg-white focus:border-[#DC183C] transition">
+          </div>
+          <select onchange="setDownloadSort(this.value)" class="text-xs font-semibold border border-[#E7EBEF] rounded-full px-3 py-2 outline-none text-[#42505E] bg-white">
+            <option value="newest" ${downloadsState.sort==='newest'?'selected':''}>Newest</option>
+            <option value="oldest" ${downloadsState.sort==='oldest'?'selected':''}>Oldest</option>
+            <option value="accessed" ${downloadsState.sort==='accessed'?'selected':''}>Most accessed</option>
+          </select>
+        </div>
+        <div class="flex gap-2 overflow-x-auto no-scrollbar mt-3">${chips}</div>
+      </div>
+      <div class="rounded-2xl border border-[#E7EBEF] shadow-sm bg-white overflow-hidden">
+        <div id="dl-list"></div>
+        <div id="dl-empty" class="hidden text-center py-12 px-4">
+          <div class="w-14 h-14 mx-auto rounded-full bg-[#F0F5F9] grid place-items-center mb-3"><i data-lucide="folder-search" class="w-6 h-6 text-[#6A7581]"></i></div>
+          <p class="font-jakarta font-bold">Nothing matches your filters yet</p>
+          <p class="text-sm text-[#6A7581] max-w-xs mx-auto mt-1">Try clearing the search, or browse the library to grab something new.</p>
+          <a href="public-resources.html" class="mt-4 bg-[#DC183C] hover:bg-[#B0142F] text-white rounded-full px-5 py-2.5 font-jakarta font-bold text-sm transition inline-flex items-center gap-2"><i data-lucide="compass" class="w-4 h-4"></i> Browse Resources →</a>
+        </div>
+      </div>`;
+    renderDownloadList();
     lucide.createIcons();
   }
 
@@ -1583,11 +2091,11 @@
       components:'Two-row legend (chip + explanation) reused verbatim as the small badge shown inline on every compliance list row.'
     },
     funding: {
-      title:'Funding', sub:'Duplicated view — same data as Account Settings → Funding',
-      purpose:'Deliberately duplicated, not migrated: while we decide whether funding tracking permanently lives inside this workspace or stays under Account Settings, both surfaces read from the same underlying data so a member sees identical status wherever they look. This mockup shows a compact list view only — the real Account Settings screen already has the fuller 3-screen system (list / new-application / detail) which this would either reuse or link out to once the location question is settled.',
-      data:'Same <code>funding_applications</code> table Account Settings reads: <code>{ id, member_id, product, amount, term, status: draft|submitted|review|docs|approved|declined|funded, submitted_at, updated_at }</code>. No separate table — this is one data source shown in two places.',
-      logic:'"New application" and per-row detail links are stubs in this round. Once the placement decision is made, whichever surface is NOT primary becomes a shallow link into the other, rather than keeping two independently-maintained UIs.',
-      components:'4-stat strip (Total / In review / Approved / Docs needed) · compact application list (reused row shape, no expand/detail in this view).'
+      title:'Funding', sub:'Moved from Account Settings (2026-10-01) — Workspace is now the single home',
+      purpose:'This used to be a duplicated preview while the placement question was open. Joel settled it: everything business-related consolidates into Workspace, Account Settings stays for account/profile/notification admin only. The full 3-screen system (list / new-application / detail, with the status pipeline tracker) moved here wholesale, not a trimmed-down copy — nothing was lost in the move.',
+      data:'<code>funding_applications</code>: <code>{ id, member_id, product, amount, term, purpose, status: draft|submitted|review|docs|approved|declined|funded, step, lender, contact, documents[], timeline[] }</code>. This is now the only surface reading/writing it — no second copy to keep in sync.',
+      logic:'List view supports status filter chips, search and sort. Detail view shows the 5-step pipeline (Submitted → Documents → In review → Decision → Funded), per-document upload/re-upload state, activity timeline, and a status-specific context CTA. "New application" pre-fills from the member\'s profile. All actions (withdraw, upload, submit) are optimistic client-side state in this mockup.',
+      components:'Readiness checklist (unchanged, sits above) · 4-stat strip · search/sort/status-filter bar · list (table on desktop, cards on mobile) · detail view (glance card, actions card, pipeline stepper, documents, timeline, context CTA) · new-application form.'
     },
     readiness: {
       title:'Funding Readiness Checklist', sub:'Adapted from SME IQ\'s FundingHub',
@@ -1597,11 +2105,11 @@
       components:'Header with live readiness score · checklist rows (reused toggle-row pattern from Compliance/Cash Flow) · conditional callout: red "Recommended next steps" (top 3 missing items + 2 CTAs) when incomplete, green all-clear state when 7/7.'
     },
     resources: {
-      title:'Resources', sub:'Duplicated view — same data as Account Settings → Downloads',
-      purpose:'Same reasoning as Funding: a member\'s downloaded-resources library shown here too, sourced from the same list as Account Settings, so nothing goes out of sync while the two-surface question is still open. "Browse full library" routes to the public catalogue (<code>public-resources.html</code>), not a duplicate catalogue browser.',
-      data:'Same <code>member_downloads</code> table Account Settings\' Downloads section reads: <code>{ member_id, resource_id, title, type: ebook|template|guide|report, downloaded_at, format }</code>.',
-      logic:'Read-only list in this round — filtering/search/sort (present in the full Account Settings version) is intentionally left out here to keep this a lightweight preview, not a second full implementation to maintain.',
-      components:'Row list (icon chip · title · type badge · date/format · re-download action), reused row shape from Compliance/Funding.'
+      title:'Resources', sub:'Moved from Account Settings → Downloads (2026-10-01)',
+      purpose:'Same consolidation call as Funding: a member\'s downloaded-resources history now lives only in Workspace. "Browse full library" still routes to the public catalogue (<code>public-resources.html</code>) rather than a duplicate browser — this view is the member\'s own history, not a second copy of the library.',
+      data:'<code>member_downloads</code>: <code>{ member_id, resource_id, title, type: ebook|template|guide|report, downloaded_at, format, size, accessed_count }</code>.',
+      logic:'Full search, type-filter chips and sort (newest/oldest/most accessed) — the complete feature, not a trimmed preview. "Download again" and the overflow menu are stubs in this round.',
+      components:'3-stat strip (Total downloads / This month / Storage saved) · search + sort + type-filter bar · row list (icon chip · title · type badge · date/format · re-download action) · empty state.'
     },
     momentum: {
       title:'Weekly Momentum', sub:'Adapted from SME IQ\'s WeeklyMomentum widget',
