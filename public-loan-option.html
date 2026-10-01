@@ -94,7 +94,7 @@
   <div id="chromeSearchOverlay" class="search-overlay">
     <div class="w-full max-w-2xl flex items-center gap-3">
       <div class="relative flex-1">
-        <i data-lucide="search" class="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400"></i>
+        <i data-lucide="search" class="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500"></i>
         <input id="chromeSearchInput" type="text" placeholder="Search articles, resources, funding…" class="w-full h-11 pl-11 pr-4 text-sm bg-slate-50 border border-[#DC183C] rounded-full focus:outline-none focus:ring-2 focus:ring-[#DC183C]/20" onkeydown="if(event.key==='Enter') location.href='public-search.html';" />
       </div>
       <button onclick="toggleChromeSearch()" class="text-slate-500 hover:text-[#121A21] p-2 transition-colors shrink-0" aria-label="Close search"><i data-lucide="x" class="w-5 h-5"></i></button>
@@ -357,7 +357,7 @@
         <a href="public-about.html" class="hover:text-white transition">About</a><span class="text-white/20">·</span>
             <a href="public-contact.html" class="hover:text-white transition">Contact</a><span class="text-white/20">·</span>
             <a href="public-advertise.html" class="hover:text-white transition">Advertise</a><span class="text-white/20">·</span>
-            <a href="public-help.html" class="hover:text-white transition">Help Center</a>
+            <a href="public-help.html" class="hover:text-white transition">Help Centre</a>
       </div>
       <p>© 2026 SME South Africa. All rights reserved.</p>
     </div>
@@ -383,7 +383,7 @@
     <a href="public-loan-option.html" class="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-slate-50 transition group">
       <span class="w-8 h-8 rounded-lg bg-[#FDECEF] text-[#DC183C] grid place-items-center shrink-0"><i data-lucide="${o.icon}" class="w-4 h-4"></i></span>
       <span class="text-sm font-semibold text-[#121A21] flex-1">${esc(o.name)}</span>
-      <i data-lucide="chevron-right" class="w-4 h-4 text-slate-300 group-hover:text-[#DC183C] group-hover:translate-x-0.5 transition"></i>
+      <i data-lucide="chevron-right" class="w-4 h-4 text-slate-500 group-hover:text-[#DC183C] group-hover:translate-x-0.5 transition"></i>
     </a>`).join('');
 
   /* ---------- FAQ accordion (funding pattern) ---------- */
@@ -397,7 +397,7 @@
     document.getElementById('faq').innerHTML=FAQS.map((f,i)=>`
       <div class="bg-white rounded-2xl border border-[#E7EBEF] overflow-hidden">
         <button onclick="toggleFaq(${i})" class="w-full flex items-center justify-between gap-4 px-5 py-4 text-left font-jakarta font-bold">
-          <span>${esc(f[0])}</span><i data-lucide="chevron-down" id="fi${i}" class="w-5 h-5 text-slate-400 transition-transform shrink-0"></i>
+          <span>${esc(f[0])}</span><i data-lucide="chevron-down" id="fi${i}" class="w-5 h-5 text-slate-500 transition-transform shrink-0"></i>
         </button>
         <div id="fb${i}" class="hidden px-5 pb-4 text-sm text-[#6A7581] leading-relaxed">${esc(f[1])}</div>
       </div>`).join('');

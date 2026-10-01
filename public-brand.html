@@ -114,7 +114,7 @@
   <div id="chromeSearchOverlay" class="search-overlay">
     <div class="w-full max-w-2xl flex items-center gap-3">
       <div class="relative flex-1">
-        <i data-lucide="search" class="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400"></i>
+        <i data-lucide="search" class="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500"></i>
         <input id="chromeSearchInput" type="text" placeholder="Search articles, resources, funding…" class="w-full h-11 pl-11 pr-4 text-sm bg-slate-50 border border-[#DC183C] rounded-full focus:outline-none focus:ring-2 focus:ring-[#DC183C]/20" onkeydown="if(event.key==='Enter') location.href='public-search.html';" />
       </div>
       <button onclick="toggleChromeSearch()" class="text-slate-500 hover:text-[#121A21] p-2 transition-colors shrink-0" aria-label="Close search"><i data-lucide="x" class="w-5 h-5"></i></button>
@@ -246,7 +246,7 @@
           </tbody>
         </table>
       </div>
-      <p class="text-xs text-slate-400 mt-3">Rates drop as your turnover grows. No monthly fees, no lock-in contract.</p>
+      <p class="text-xs text-slate-500 mt-3">Rates drop as your turnover grows. No monthly fees, no lock-in contract.</p>
     </section>
 
     <!-- PROS & CONS -->
@@ -337,7 +337,7 @@
             <input id="qw-name" class="w-full h-12 px-3 rounded-lg border border-[#E7EBEF] focus:border-[#DC183C] focus:ring-2 focus:ring-[#DC183C]/15 outline-none text-sm mb-3" placeholder="Thabo Mokoena" />
             <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1.5">Work email</label>
             <input id="qw-email" type="email" class="w-full h-12 px-3 rounded-lg border border-[#E7EBEF] focus:border-[#DC183C] focus:ring-2 focus:ring-[#DC183C]/15 outline-none text-sm mb-3" placeholder="you@business.co.za" />
-            <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1.5">Phone <span class="text-slate-400 font-normal normal-case">(optional)</span></label>
+            <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1.5">Phone <span class="text-slate-500 font-normal normal-case">(optional)</span></label>
             <div class="flex">
               <span class="inline-flex items-center px-3 h-12 rounded-l-lg border border-r-0 border-[#E7EBEF] bg-white text-xs font-semibold text-[#121A21]">+27</span>
               <input id="qw-phone" type="tel" class="w-full h-12 px-3 rounded-r-lg border border-[#E7EBEF] focus:border-[#DC183C] focus:ring-2 focus:ring-[#DC183C]/15 outline-none text-sm" placeholder="82 123 4567" />
@@ -460,7 +460,7 @@
         <a href="public-about.html" class="hover:text-white transition">About</a><span class="text-white/20">·</span>
             <a href="public-contact.html" class="hover:text-white transition">Contact</a><span class="text-white/20">·</span>
             <a href="public-advertise.html" class="hover:text-white transition">Advertise</a><span class="text-white/20">·</span>
-            <a href="public-help.html" class="hover:text-white transition">Help Center</a>
+            <a href="public-help.html" class="hover:text-white transition">Help Centre</a>
       </div>
       <p>© 2026 SME South Africa. All rights reserved.</p>
     </div>
@@ -505,7 +505,7 @@
     <div class="bg-white rounded-2xl border border-[#E7EBEF] overflow-hidden">
       <button onclick="toggleFaq(${i})" class="w-full flex items-center justify-between gap-3 text-left px-5 py-4 font-jakarta font-bold">
         <span>${esc(q)}</span>
-        <i data-lucide="chevron-down" class="w-5 h-5 text-slate-400 shrink-0 transition-transform" id="faq-ic-${i}"></i>
+        <i data-lucide="chevron-down" class="w-5 h-5 text-slate-500 shrink-0 transition-transform" id="faq-ic-${i}"></i>
       </button>
       <div class="faq-body" id="faq-body-${i}"><p class="px-5 pb-4 text-sm text-slate-600 leading-relaxed">${esc(a)}</p></div>
     </div>`).join('');
@@ -522,7 +522,7 @@
     <a href="public-brands.html" class="flex items-center gap-3 rounded-xl border border-[#E7EBEF] hover:border-[#121A21] p-3 transition card-lift">
       <div class="w-10 h-10 rounded-xl bg-[#FCFCFC] border border-[#E7EBEF] grid place-items-center font-jakarta font-extrabold text-sm shrink-0">${esc(mono)}</div>
       <div class="min-w-0"><p class="font-jakarta font-bold leading-tight">${esc(name)}</p><p class="text-xs text-slate-500">${esc(best)}</p></div>
-      <i data-lucide="arrow-right" class="w-4 h-4 text-slate-400 ml-auto shrink-0"></i>
+      <i data-lucide="arrow-right" class="w-4 h-4 text-slate-500 ml-auto shrink-0"></i>
     </a>`).join('');
 
   // ---- Dev brief ----
@@ -538,7 +538,7 @@
   function closeOverlay(id){ const el=document.getElementById(id); if(!el)return; el.classList.remove('open'); setTimeout(()=>{ if(el&&el.parentNode) el.remove(); },300); }
   function openBrief(id){ const b=BRIEFS[id]; if(!b)return;
     const sec=(icon,label,html)=>`<div class="px-6 py-4 border-t border-slate-100"><p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] flex items-center gap-1.5 mb-2"><i data-lucide="${icon}" class="w-3.5 h-3.5"></i>${label}</p><div class="text-sm text-slate-600 leading-relaxed">${html}</div></div>`;
-    document.getElementById('overlay-root').innerHTML=`<div class="ov" id="ov-brief"><div class="ov-bg" onclick="closeOverlay('ov-brief')"></div><div class="drawer"><div class="sticky top-0 z-10 bg-[#0C1F31] text-white px-6 py-5 flex items-start justify-between"><div class="min-w-0"><p class="text-[10px] font-bold uppercase tracking-widest text-[#FF9900] mb-1">Dev Brief</p><h3 class="font-jakarta font-extrabold text-lg leading-tight">${b.title}</h3><p class="text-xs text-white/60 mt-1">${b.sub}</p></div><button onclick="closeOverlay('ov-brief')" aria-label="Close" class="text-white/60 hover:text-white shrink-0 ml-3"><i data-lucide="x" class="w-5 h-5"></i></button></div>${sec('target','Purpose',b.purpose)}${sec('database','Data model',b.data)}${sec('git-branch','Logic',b.logic)}${sec('ruler','Spec values',b.specs)}${sec('boxes','Components',b.components)}<div class="px-6 py-4 border-t border-slate-100"><p class="text-[11px] text-slate-400 flex items-center gap-1.5"><i data-lucide="info" class="w-3.5 h-3.5"></i> Spec lives beside the feature — toggle Dev Mode off for the clean view.</p></div></div></div>`;
+    document.getElementById('overlay-root').innerHTML=`<div class="ov" id="ov-brief"><div class="ov-bg" onclick="closeOverlay('ov-brief')"></div><div class="drawer"><div class="sticky top-0 z-10 bg-[#0C1F31] text-white px-6 py-5 flex items-start justify-between"><div class="min-w-0"><p class="text-[10px] font-bold uppercase tracking-widest text-[#FF9900] mb-1">Dev Brief</p><h3 class="font-jakarta font-extrabold text-lg leading-tight">${b.title}</h3><p class="text-xs text-white/60 mt-1">${b.sub}</p></div><button onclick="closeOverlay('ov-brief')" aria-label="Close" class="text-white/60 hover:text-white shrink-0 ml-3"><i data-lucide="x" class="w-5 h-5"></i></button></div>${sec('target','Purpose',b.purpose)}${sec('database','Data model',b.data)}${sec('git-branch','Logic',b.logic)}${sec('ruler','Spec values',b.specs)}${sec('boxes','Components',b.components)}<div class="px-6 py-4 border-t border-slate-100"><p class="text-[11px] text-slate-500 flex items-center gap-1.5"><i data-lucide="info" class="w-3.5 h-3.5"></i> Spec lives beside the feature — toggle Dev Mode off for the clean view.</p></div></div></div>`;
     requestAnimationFrame(()=>{ const o=document.getElementById('ov-brief'); if(o)o.classList.add('open'); }); lucide.createIcons();
   }
 

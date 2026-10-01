@@ -99,7 +99,7 @@
   <div id="chromeSearchOverlay" class="search-overlay">
     <div class="w-full max-w-2xl flex items-center gap-3">
       <div class="relative flex-1">
-        <i data-lucide="search" class="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400"></i>
+        <i data-lucide="search" class="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500"></i>
         <input id="chromeSearchInput" type="text" placeholder="Search articles, resources, funding…" class="w-full h-11 pl-11 pr-4 text-sm bg-slate-50 border border-[#DC183C] rounded-full focus:outline-none focus:ring-2 focus:ring-[#DC183C]/20" onkeydown="if(event.key==='Enter') location.href='public-search.html';" />
       </div>
       <button onclick="toggleChromeSearch()" class="text-slate-500 hover:text-[#121A21] p-2 transition-colors shrink-0" aria-label="Close search"><i data-lucide="x" class="w-5 h-5"></i></button>
@@ -200,7 +200,7 @@
         <a href="public-about.html" class="hover:text-white transition">About</a><span class="text-white/20">·</span>
             <a href="public-contact.html" class="hover:text-white transition">Contact</a><span class="text-white/20">·</span>
             <a href="public-advertise.html" class="hover:text-white transition">Advertise</a><span class="text-white/20">·</span>
-            <a href="public-help.html" class="hover:text-white transition">Help Center</a>
+            <a href="public-help.html" class="hover:text-white transition">Help Centre</a>
       </div>
       <p>© 2026 SME South Africa. All rights reserved.</p>
     </div>
@@ -328,7 +328,7 @@
 
     function emptyState(){
       return `<div class="reveal bg-white border border-dashed border-[#E7EBEF] rounded-2xl py-16 px-6 text-center col-span-full">
-        <div class="w-16 h-16 mx-auto rounded-full bg-slate-100 grid place-items-center mb-5"><i data-lucide="calendar-x" class="w-7 h-7 text-slate-400"></i></div>
+        <div class="w-16 h-16 mx-auto rounded-full bg-slate-100 grid place-items-center mb-5"><i data-lucide="calendar-x" class="w-7 h-7 text-slate-500"></i></div>
         <h3 class="font-jakarta text-2xl font-extrabold text-[#0C1F31] mb-2">No events match your filters</h3>
         <p class="text-slate-500 max-w-sm mx-auto mb-6">Try widening your search or clearing the filters to see everything we have on.</p>
         <button onclick="setState({statusFilter:'All',typeFilter:'All',categoryFilter:'All',search:''})" class="bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold px-6 py-3 rounded-xl transition-colors">Clear all filters</button>
@@ -369,12 +369,12 @@
       <div class="flex flex-col sm:flex-row items-center justify-between gap-4 pt-8 mt-8 border-t border-[#E7EBEF]">
         <span class="text-sm text-slate-500 font-medium">Showing <b class="text-[#121A21]">${startIdx+1}–${Math.min(startIdx+list.length, allList.length)}</b></span>
         <div class="flex items-center gap-2">
-          <button ${state.page===1?'disabled':''} onclick="goPage(${state.page-1})" class="w-10 h-10 rounded-lg border border-[#E7EBEF] ${state.page===1?'text-slate-300 cursor-not-allowed':'text-slate-600 hover:bg-slate-50'} grid place-items-center transition"><i data-lucide="chevron-left" class="w-4 h-4"></i></button>
+          <button ${state.page===1?'disabled':''} onclick="goPage(${state.page-1})" class="w-10 h-10 rounded-lg border border-[#E7EBEF] ${state.page===1?'text-slate-500 cursor-not-allowed':'text-slate-600 hover:bg-slate-50'} grid place-items-center transition"><i data-lucide="chevron-left" class="w-4 h-4"></i></button>
           ${Array.from({length: totalPages}, (_, i)=>{
             const p = i+1;
             return `<button onclick="goPage(${p})" class="w-10 h-10 rounded-lg ${p===state.page?'bg-[#DC183C] text-white':'border border-[#E7EBEF] text-slate-600 hover:bg-slate-50'} font-bold text-sm shadow-sm transition">${p}</button>`;
           }).join('')}
-          <button ${state.page===totalPages?'disabled':''} onclick="goPage(${state.page+1})" class="w-10 h-10 rounded-lg border border-[#E7EBEF] ${state.page===totalPages?'text-slate-300 cursor-not-allowed':'text-slate-600 hover:bg-slate-50'} grid place-items-center transition"><i data-lucide="chevron-right" class="w-4 h-4"></i></button>
+          <button ${state.page===totalPages?'disabled':''} onclick="goPage(${state.page+1})" class="w-10 h-10 rounded-lg border border-[#E7EBEF] ${state.page===totalPages?'text-slate-500 cursor-not-allowed':'text-slate-600 hover:bg-slate-50'} grid place-items-center transition"><i data-lucide="chevron-right" class="w-4 h-4"></i></button>
         </div>
       </div>` : ''}
       ` : emptyState();
@@ -393,7 +393,7 @@
         <div class="reveal bg-white rounded-2xl shadow-sm border border-[#E7EBEF] p-4 sm:p-5 mb-8 relative z-20" style="animation-delay:120ms; overflow:visible;">
           <div class="flex flex-col lg:flex-row lg:items-center gap-3 relative z-30">
             <div class="flex items-center gap-2 overflow-x-auto no-scrollbar -mx-1 px-1">
-              <span class="shrink-0 text-xs font-bold text-slate-400 uppercase tracking-wide pr-1">Type</span>
+              <span class="shrink-0 text-xs font-bold text-slate-500 uppercase tracking-wide pr-1">Type</span>
               ${['All','ONLINE','IN-PERSON'].map(t=>chip(t, state.typeFilter===t, `setState({typeFilter:'${t}',page:1})`)).join('')}
             </div>
             <div class="hidden lg:block w-px h-7 bg-[#E7EBEF]"></div>
@@ -409,7 +409,7 @@
               </div>` : ''}
             </div>
             <div class="flex items-center gap-2 lg:ml-auto">
-              <div class="relative flex-1 lg:flex-initial lg:w-56"><i data-lucide="search" class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 w-4 h-4"></i><input id="searchInput" type="text" placeholder="Search events…" value="${esc(state.search)}" oninput="state.search=this.value; state.page=1; renderApp();" class="w-full pl-9 pr-3 py-2.5 rounded-lg border border-[#E7EBEF] text-sm bg-slate-50 outline-none focus:border-[#DC183C]" /></div>
+              <div class="relative flex-1 lg:flex-initial lg:w-56"><i data-lucide="search" class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 w-4 h-4"></i><input id="searchInput" type="text" placeholder="Search events…" value="${esc(state.search)}" oninput="state.search=this.value; state.page=1; renderApp();" class="w-full pl-9 pr-3 py-2.5 rounded-lg border border-[#E7EBEF] text-sm bg-slate-50 outline-none focus:border-[#DC183C]" /></div>
               <button onclick="setState({typeFilter:'All',categoryFilter:'All',search:'',page:1,topicOpen:false})" aria-label="Reset filters" class="shrink-0 w-11 h-11 grid place-items-center rounded-lg text-slate-500 bg-white border border-[#E7EBEF] hover:bg-slate-50"><i data-lucide="rotate-ccw" class="w-4 h-4"></i></button>
             </div>
           </div>
