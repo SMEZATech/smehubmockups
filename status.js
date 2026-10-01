@@ -23,8 +23,6 @@ window.MOCKUP_STATUS = {
   "public-solution-category.html": "finalised",
   "public-sustainability.html": "finalised",
   "public-pricing.html": "finalised",
-  "public-premium.html": "under-review",
-  "public-membership-sales.html": "under-review",
   "public-workspace.html": "under-review",
   "public-premium-checkout.html": "under-review",
   "public-brands.html": "finalised",
