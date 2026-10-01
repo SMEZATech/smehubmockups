@@ -519,5 +519,31 @@
     if(e.key==='Escape'){ const o=document.getElementById('chromeSearchOverlay'); if(o && o.classList.contains('active')) toggleChromeSearch(); }
   });
 </script>
+
+<!-- ===================== REVISION SHADE — live only, never shown on local/dev ===================== -->
+<div id="revisionShade" class="fixed inset-0 z-[999] hidden items-center justify-center bg-[#0C1F31]/96 backdrop-blur-sm text-center px-6">
+  <div class="max-w-md">
+    <div class="w-16 h-16 rounded-2xl bg-white/10 grid place-items-center mx-auto mb-6">
+      <svg viewBox="0 0 24 24" class="w-7 h-7 text-[#FF9900]" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+    </div>
+    <p class="text-[11px] font-bold uppercase tracking-widest text-[#FF9900] mb-3">Revision In Progress</p>
+    <h1 class="font-jakarta font-extrabold text-2xl sm:text-3xl text-white mb-3">This page is getting an update</h1>
+    <p class="text-sm text-white/60 leading-relaxed">We're reworking this mockup with fresh changes. Check back soon.</p>
+  </div>
+</div>
+<script>
+  // Shows the shade above only on the published site — localhost/file/dev previews stay clean for visual reference.
+  const REVISION_SHADE_ACTIVE = true;
+  (function(){
+    const h = location.hostname;
+    const isLocalHost = h === '' || h === 'localhost' || h === '127.0.0.1' || h === '::1';
+    if (REVISION_SHADE_ACTIVE && !isLocalHost) {
+      const shade = document.getElementById('revisionShade');
+      shade.classList.remove('hidden');
+      shade.classList.add('flex');
+      document.body.style.overflow = 'hidden';
+    }
+  })();
+</script>
 </body>
 </html>
