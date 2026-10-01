@@ -139,7 +139,7 @@
   <div id="headerSearchOverlay" class="search-overlay">
     <div class="w-full max-w-4xl flex items-center gap-4">
       <div class="relative flex-1">
-        <i data-lucide="search" class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400"></i>
+        <i data-lucide="search" class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500"></i>
         <input type="text" id="headerSearchInput" placeholder="Search members, groups, forums..." class="w-full h-12 pl-12 pr-4 text-base bg-slate-50 border border-[#DC183C] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#DC183C]/20 transition-all shadow-sm">
       </div>
       <button onclick="toggleHeaderSearch()" class="text-slate-500 hover:text-[#121A21] p-2 transition-colors shrink-0" aria-label="Close search">
@@ -279,7 +279,7 @@
 
       <!-- Links & Footer -->
       <div class="text-center">
-        <div class="flex flex-wrap items-center justify-center gap-x-3 gap-y-2 text-[11px] text-slate-400 leading-relaxed px-2">
+        <div class="flex flex-wrap items-center justify-center gap-x-3 gap-y-2 text-[11px] text-slate-500 leading-relaxed px-2">
             <a href="#" class="hover:text-slate-600">Advertising</a>
             <a href="#" class="hover:text-slate-600">Funding</a>
             <a href="#" class="hover:text-slate-600">Resources</a>
@@ -294,7 +294,7 @@
             <a href="#" class="hover:text-slate-600">Privacy</a>
             <a href="#" class="hover:text-slate-600">Terms</a>
         </div>
-        <p class="text-[11px] text-slate-400 mt-4">SME South Africa © 2026</p>
+        <p class="text-[11px] text-slate-500 mt-4">SME South Africa © 2026</p>
       </div>
     </aside>
 
@@ -306,13 +306,13 @@
   <div class="max-w-7xl mx-auto px-4 sm:px-6 py-5 flex flex-col sm:flex-row items-center justify-between gap-3">
     <div class="flex items-center gap-2 text-xs text-slate-500">
       <span>&copy; 2026 SME South Africa</span>
-      <span class="text-slate-300">&middot;</span>
-      <span class="font-bold text-slate-400 uppercase tracking-widest text-[10px]">Community</span>
+      <span class="text-slate-500">&middot;</span>
+      <span class="font-bold text-slate-500 uppercase tracking-widest text-[10px]">Community</span>
       <button onclick="openBrief('footer')" class="dev-badge w-4 h-4 rounded-full bg-[#DC183C] text-white items-center justify-center text-[9px] font-bold leading-none animate-pulse" title="Implementation notes">i</button>
     </div>
     <nav class="flex items-center gap-5 text-xs font-semibold text-slate-500">
       <a href="public-about.html" class="hover:text-[#DC183C] transition-colors">About</a>
-      <a href="public-help.html" class="hover:text-[#DC183C] transition-colors">Help Center</a>
+      <a href="public-help.html" class="hover:text-[#DC183C] transition-colors">Help Centre</a>
       <a href="public-terms.html" class="hover:text-[#DC183C] transition-colors">Terms</a>
       <a href="public-privacy.html" class="hover:text-[#DC183C] transition-colors">Privacy</a>
     </nav>
@@ -405,9 +405,9 @@ function renderHero(){
             </div>
             <p class="text-sm text-slate-500 mt-3 flex items-center gap-1.5 flex-wrap">
               <i data-lucide="hand-heart" class="w-4 h-4 text-[#29A37A]"></i> ${m.contribTotal} contributions
-              <span class="text-slate-300">&middot;</span>
+              <span class="text-slate-500">&middot;</span>
               <i data-lucide="users" class="w-4 h-4"></i> ${m.connectionsCount} connections
-              <span class="text-slate-300">&middot;</span> active ${esc(m.lastActive)}
+              <span class="text-slate-500">&middot;</span> active ${esc(m.lastActive)}
             </p>
           </div>
           <div class="flex items-center gap-2 shrink-0 flex-wrap sm:flex-nowrap justify-end">
@@ -457,9 +457,9 @@ function postCard(p){
   const t = TYPES[p.type];
   if(p.type==='activity'){
     return `<div class="flex items-center gap-3 px-1 py-2 text-sm text-slate-500">
-      <i data-lucide="sparkles" class="w-4 h-4 text-slate-400 shrink-0"></i>
+      <i data-lucide="sparkles" class="w-4 h-4 text-slate-500 shrink-0"></i>
       <span><span class="font-bold text-[#121A21]">${esc(MEMBER.name)}</span> ${esc(p.action)} <a href="single-group.html" class="font-semibold text-[#0C1F31] hover:text-[#DC183C]">${esc(p.group)}</a></span>
-      <span class="ml-auto text-xs text-slate-400 shrink-0">${esc(p.time)}</span>
+      <span class="ml-auto text-xs text-slate-500 shrink-0">${esc(p.time)}</span>
     </div>`;
   }
   let media = '';
@@ -475,13 +475,13 @@ function postCard(p){
         ${monogram(MEMBER.initials, 44)}
         <div class="min-w-0 flex-1">
           <p class="text-[14px] text-[#121A21] leading-snug"><span class="font-bold">${esc(MEMBER.name)}</span> <span class="text-slate-500">${esc(p.action)}</span></p>
-          <div class="flex items-center gap-1.5 mt-0.5 text-[12px] text-slate-400 font-medium flex-wrap">
+          <div class="flex items-center gap-1.5 mt-0.5 text-[12px] text-slate-500 font-medium flex-wrap">
             <span>${esc(p.time)}</span><span>&middot;</span>
             <a href="single-group.html" class="hover:text-[#DC183C]">in ${esc(p.group)}</a>
             <span class="ml-1 uppercase tracking-wider text-[9px] font-extrabold ${t.text} bg-slate-50 px-1.5 py-0.5 rounded border border-slate-100">${t.label}</span>
           </div>
         </div>
-        <button class="text-slate-400 hover:text-slate-600 p-1 rounded-md hover:bg-slate-50 transition"><i data-lucide="more-horizontal" class="w-5 h-5"></i></button>
+        <button class="text-slate-500 hover:text-slate-600 p-1 rounded-md hover:bg-slate-50 transition"><i data-lucide="more-horizontal" class="w-5 h-5"></i></button>
       </div>
       ${p.title ? `<h4 class="font-jakarta font-bold text-[16px] text-[#0C1F31] mb-2 leading-snug">${esc(p.title)}</h4>` : ''}
       <p class="text-[14.5px] text-[#121A21] leading-relaxed whitespace-pre-line">${esc(p.content)}</p>
@@ -534,9 +534,9 @@ function tabGroups(){
       <div class="w-11 h-11 rounded-lg bg-[#0C1F31] grid place-items-center shrink-0"><i data-lucide="users" class="w-5 h-5 text-[#FF9900]"></i></div>
       <div class="min-w-0 flex-1"><p class="font-jakarta font-bold text-[#121A21] truncate">${esc(g.name)}</p><p class="text-xs text-slate-500">${g.members.toLocaleString()} members</p></div>
       ${g.role==='Moderator' ? '<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#FFF1E0] text-[#AE6B0A] shrink-0">Moderator</span>' : '<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-slate-100 text-slate-500 shrink-0">Member</span>'}
-      <i data-lucide="chevron-right" class="w-4 h-4 text-slate-300 shrink-0"></i>
+      <i data-lucide="chevron-right" class="w-4 h-4 text-slate-500 shrink-0"></i>
     </a>`).join('');
-  return `<div class="flex items-center justify-between mb-3">${sectionLabel('Groups','groups')}<span class="text-xs font-bold text-slate-400">${M_GROUPS.length} groups</span></div><div class="space-y-3">${rows}</div>`;
+  return `<div class="flex items-center justify-between mb-3">${sectionLabel('Groups','groups')}<span class="text-xs font-bold text-slate-500">${M_GROUPS.length} groups</span></div><div class="space-y-3">${rows}</div>`;
 }
 
 /* ===== CONNECTIONS ===== */
@@ -547,14 +547,14 @@ function tabConnections(){
       <p class="font-jakarta font-bold text-sm text-[#121A21] mt-3">${esc(c.name)}</p>
       <p class="text-[11px] text-slate-500 mt-0.5">${esc(c.role)} &middot; ${esc(c.company)}</p>
     </a>`).join('');
-  return `<div class="flex items-center justify-between mb-3">${sectionLabel('Connections','connections')}<span class="text-xs font-bold text-slate-400">${MEMBER.connectionsCount} total</span></div>
+  return `<div class="flex items-center justify-between mb-3">${sectionLabel('Connections','connections')}<span class="text-xs font-bold text-slate-500">${MEMBER.connectionsCount} total</span></div>
     <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">${cards}</div>
     <button onclick="showToast('Loading more connections…',null)" class="w-full mt-4 py-2.5 rounded-full border border-slate-200 text-slate-600 hover:bg-slate-50 text-sm font-bold transition">Show all connections</button>`;
 }
 
 /* ===== dev mode ===== */
 const BRIEFS = {
-    footer:{ title:'Community Footer', sub:'Shared app-shell component', purpose:'The closing utility bar for every logged-in community screen (Feed, Members, Groups, Forums, Profile, Account). Deliberately minimal &mdash; a single thin row, not a marketing footer &mdash; so it closes the app experience the same way the BuddyBoss header opens it, bookending all 9 community templates consistently.', data:'Static link list: <code>{ label, href }[]</code> &mdash; About, Help Center, Terms, Privacy. No dynamic data.', logic:'Rendered identically on every community template (member-hub, members, single-member, single-post, groups, single-group, forums, single-discussion, member-account). All four links resolve to existing public pages.', components:'Copyright + Community tag (left) &middot; utility link row (right).', specs:'<b>Container:</b> <code>bg-white border-t border-slate-200</code> &mdash; light, matches the header, NOT the navy marketing surface used for hero bands elsewhere on the site. <code>max-w-7xl</code>, 20px vertical padding (<code>py-5</code>), stacks to a column below <code>sm</code>.<br/><b>Left group:</b> 12px (<code>text-xs</code>) slate-500, <code>&middot;</code> separator slate-300, "Community" tag 10px weight 800 uppercase tracking-widest slate-400 &mdash; a quiet reminder you\'re inside the app, not the marketing site.<br/><b>Right nav:</b> 12px weight 600 slate-500, 20px gap, hover <code>#DC183C</code>.<br/><br/><b>Why this differs from the (not-yet-built) public-site footer:</b> Articles/Resources/marketing pages are editorial and SEO-facing &mdash; that footer should be the tall, dark <code>navy</code> sitemap block with category columns, socials and a newsletter CTA, matching the hero-band treatment used across the public site. This community footer is the opposite on purpose: thin, light, utility-only &mdash; a logged-in member is inside a tool, not reading an article, so the chrome should get out of the way rather than sell anything.' },
+    footer:{ title:'Community Footer', sub:'Shared app-shell component', purpose:'The closing utility bar for every logged-in community screen (Feed, Members, Groups, Forums, Profile, Account). Deliberately minimal &mdash; a single thin row, not a marketing footer &mdash; so it closes the app experience the same way the BuddyBoss header opens it, bookending all 9 community templates consistently.', data:'Static link list: <code>{ label, href }[]</code> &mdash; About, Help Centre, Terms, Privacy. No dynamic data.', logic:'Rendered identically on every community template (member-hub, members, single-member, single-post, groups, single-group, forums, single-discussion, member-account). All four links resolve to existing public pages.', components:'Copyright + Community tag (left) &middot; utility link row (right).', specs:'<b>Container:</b> <code>bg-white border-t border-slate-200</code> &mdash; light, matches the header, NOT the navy marketing surface used for hero bands elsewhere on the site. <code>max-w-7xl</code>, 20px vertical padding (<code>py-5</code>), stacks to a column below <code>sm</code>.<br/><b>Left group:</b> 12px (<code>text-xs</code>) slate-500, <code>&middot;</code> separator slate-300, "Community" tag 10px weight 800 uppercase tracking-widest slate-400 &mdash; a quiet reminder you\'re inside the app, not the marketing site.<br/><b>Right nav:</b> 12px weight 600 slate-500, 20px gap, hover <code>#DC183C</code>.<br/><br/><b>Why this differs from the (not-yet-built) public-site footer:</b> Articles/Resources/marketing pages are editorial and SEO-facing &mdash; that footer should be the tall, dark <code>navy</code> sitemap block with category columns, socials and a newsletter CTA, matching the hero-band treatment used across the public site. This community footer is the opposite on purpose: thin, light, utility-only &mdash; a logged-in member is inside a tool, not reading an article, so the chrome should get out of the way rather than sell anything.' },
     
   suggested:{ title:'Suggested Members', sub:'Smart discovery — replaces &ldquo;New This Week&rdquo;', purpose:'Connects founders who can actually help each other. Shows <b>only</b> members who (1) share interests / sector / stage and (2) have a <b>completed profile</b> (green check). Same discovery widget as member-hub.html&rsquo;s right rail, kept in sync for consistency.', data:'Candidates = members with <code>profile_complete = true</code>, excluding existing connections. Match on overlap of {sector, stage, province, tags}.', logic:'Score each candidate by weighted overlap → sort descending → take top N. Each card shows its strongest match reason. Recomputed when a profile changes.', components:'Member row · avatar + completeness badge · match-reason chip · one-tap Connect.', specs:'<b>Card:</b> right rail, bg white, radius 16px (<code>rounded-2xl</code>), 1px border slate-100. Identical component to member-hub.html and single-post.html&rsquo;s right rail.' },
   profile:{ title:'Single Member Profile (Self-View)', sub:'BuddyBoss public profile', purpose:'The signed-in user viewing their own public profile page. This view provides controls to edit settings and copy the public profile link, and omits elements that only apply to viewing other members (like the "Groups in common" widget). Defaulting to the "About" tab creates a more professional, Instagram-style focus on the person rather than just their activity feed.', data:'<code>member { id, name, avatar, role, company, sector, stage, province, bio, website, socials, joined_at, last_active, contribution_total, connection_count, profile_complete }</code>.', logic:'Determines it is the self-view when <code>logged_in_user_id == profile_user_id</code>. Modifies the hero buttons to Edit/Settings. Replaces the right rail context widgets with the standard community discovery widgets (Upcoming Events, Suggested Connections).', components:'Profile hero (cover + avatar + name/role/company + status pills + stat line + Edit/Settings) · tab bar (About, Timeline, Groups, Connections) · About facts grid · Member recognition badges · right rail (Events, Suggestions).', specs:'<b>Layout:</b> identical shell to single-group.html — main <code>max-w-6xl</code>, content <code>lg:col-span-8</code> / rail <code>lg:col-span-4</code>, 24px gap.<br/><b>Hero cover:</b> 128/160px height, gradient <code>#0C1F31&rarr;#1a3a54</code>.<br/><b>Avatar:</b> 96px circular monogram, 4px white ring, pulled up 48/56px, small green &ldquo;active now&rdquo; dot bottom-right.<br/><b>Name row:</b> Plus Jakarta 800 24/30px + a `badge-check` (#29A37A) when <code>profile_complete</code>. Role/company 14px slate-500. Facet pills (sector/stage/province) 11px slate-100/slate-600. Stat line: contributions, connections, last-active, 14px slate-500 with Lucide icons.<br/><b>Actions:</b> "Copy public link" outline button alongside dark "Edit Profile" and gear "Settings" icon.<br/><b>Right Rail:</b> Identical to member-hub.html widgets to maintain a consistent discovery engine across the site.' }

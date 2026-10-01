@@ -106,7 +106,7 @@
   <div id="chromeSearchOverlay" class="search-overlay">
     <div class="w-full max-w-2xl flex items-center gap-3">
       <div class="relative flex-1">
-        <i data-lucide="search" class="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400"></i>
+        <i data-lucide="search" class="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500"></i>
         <input id="chromeSearchInput" type="text" placeholder="Search articles, resources, funding…" class="w-full h-11 pl-11 pr-4 text-sm bg-slate-50 border border-[#DC183C] rounded-full focus:outline-none focus:ring-2 focus:ring-[#DC183C]/20" onkeydown="if(event.key==='Enter') location.href='public-search.html';" />
       </div>
       <button onclick="toggleChromeSearch()" class="text-slate-500 hover:text-[#121A21] p-2 transition-colors shrink-0" aria-label="Close search"><i data-lucide="x" class="w-5 h-5"></i></button>
@@ -270,7 +270,7 @@
             </div>
           </div>
           <button class="mt-5 w-full h-12 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold transition flex items-center justify-center gap-2">Get Matched <i data-lucide="arrow-right" class="w-4 h-4"></i></button>
-          <p class="text-[11px] text-slate-400 text-center mt-3">By submitting you agree to be contacted about relevant solutions.</p>
+          <p class="text-[11px] text-slate-500 text-center mt-3">By submitting you agree to be contacted about relevant solutions.</p>
         </form>
       </div>
     </div>
@@ -339,7 +339,7 @@
         <a href="public-about.html" class="hover:text-white transition">About</a><span class="text-white/20">·</span>
             <a href="public-contact.html" class="hover:text-white transition">Contact</a><span class="text-white/20">·</span>
             <a href="public-advertise.html" class="hover:text-white transition">Advertise</a><span class="text-white/20">·</span>
-            <a href="public-help.html" class="hover:text-white transition">Help Center</a>
+            <a href="public-help.html" class="hover:text-white transition">Help Centre</a>
       </div>
       <p>© 2026 SME South Africa. All rights reserved.</p>
     </div>
@@ -385,7 +385,7 @@
   function closeOverlay(id){ const el=document.getElementById(id); if(!el)return; el.classList.remove('open'); setTimeout(()=>{ if(el&&el.parentNode) el.remove(); },300); }
   function openBrief(id){ const b=BRIEFS[id]; if(!b)return;
     const sec=(icon,label,html)=>`<div class="px-6 py-4 border-t border-slate-100"><p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] flex items-center gap-1.5 mb-2"><i data-lucide="${icon}" class="w-3.5 h-3.5"></i>${label}</p><div class="text-sm text-slate-600 leading-relaxed">${html}</div></div>`;
-    document.getElementById('overlay-root').innerHTML=`<div class="ov" id="ov-brief"><div class="ov-bg" onclick="closeOverlay('ov-brief')"></div><div class="drawer"><div class="sticky top-0 z-10 bg-[#0C1F31] text-white px-6 py-5 flex items-start justify-between"><div class="min-w-0"><p class="text-[10px] font-bold uppercase tracking-widest text-[#FF9900] mb-1">Dev Brief</p><h3 class="font-jakarta font-extrabold text-lg leading-tight">${b.title}</h3><p class="text-xs text-white/60 mt-1">${b.sub}</p></div><button onclick="closeOverlay('ov-brief')" aria-label="Close" class="text-white/60 hover:text-white shrink-0 ml-3"><i data-lucide="x" class="w-5 h-5"></i></button></div>${sec('target','Purpose',b.purpose)}${sec('database','Data model',b.data)}${sec('git-branch','Logic',b.logic)}${sec('ruler','Spec values',b.specs)}${sec('boxes','Components',b.components)}<div class="px-6 py-4 border-t border-slate-100"><p class="text-[11px] text-slate-400 flex items-center gap-1.5"><i data-lucide="info" class="w-3.5 h-3.5"></i> Spec lives beside the feature — toggle Dev Mode off for the clean view.</p></div></div></div>`;
+    document.getElementById('overlay-root').innerHTML=`<div class="ov" id="ov-brief"><div class="ov-bg" onclick="closeOverlay('ov-brief')"></div><div class="drawer"><div class="sticky top-0 z-10 bg-[#0C1F31] text-white px-6 py-5 flex items-start justify-between"><div class="min-w-0"><p class="text-[10px] font-bold uppercase tracking-widest text-[#FF9900] mb-1">Dev Brief</p><h3 class="font-jakarta font-extrabold text-lg leading-tight">${b.title}</h3><p class="text-xs text-white/60 mt-1">${b.sub}</p></div><button onclick="closeOverlay('ov-brief')" aria-label="Close" class="text-white/60 hover:text-white shrink-0 ml-3"><i data-lucide="x" class="w-5 h-5"></i></button></div>${sec('target','Purpose',b.purpose)}${sec('database','Data model',b.data)}${sec('git-branch','Logic',b.logic)}${sec('ruler','Spec values',b.specs)}${sec('boxes','Components',b.components)}<div class="px-6 py-4 border-t border-slate-100"><p class="text-[11px] text-slate-500 flex items-center gap-1.5"><i data-lucide="info" class="w-3.5 h-3.5"></i> Spec lives beside the feature — toggle Dev Mode off for the clean view.</p></div></div></div>`;
     requestAnimationFrame(()=>{ const o=document.getElementById('ov-brief'); if(o)o.classList.add('open'); }); lucide.createIcons();
   }
 

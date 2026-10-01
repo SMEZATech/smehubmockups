@@ -112,7 +112,7 @@
   <div id="headerSearchOverlay" class="search-overlay">
     <div class="w-full max-w-4xl flex items-center gap-4">
       <div class="relative flex-1">
-        <i data-lucide="search" class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400"></i>
+        <i data-lucide="search" class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500"></i>
         <input type="text" id="headerSearchInput" placeholder="Search members, groups, forums..." class="w-full h-12 pl-12 pr-4 text-base bg-slate-50 border border-[#DC183C] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#DC183C]/20 transition-all shadow-sm">
       </div>
       <button onclick="toggleHeaderSearch()" class="text-slate-500 hover:text-[#121A21] p-2 transition-colors shrink-0" aria-label="Close search">
@@ -137,7 +137,7 @@
       
       <div class="sm:ml-auto flex items-center gap-2" id="controls-row">
         <div class="relative w-full sm:w-64">
-          <i data-lucide="search" class="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400"></i>
+          <i data-lucide="search" class="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500"></i>
           <input id="g-search" oninput="render()" placeholder="Search groups…" class="bg-white border border-slate-200 rounded-full pl-10 pr-4 h-10 text-[13px] outline-none focus:border-[#DC183C] focus:ring-1 focus:ring-[#DC183C] w-full transition">
         </div>
         <select id="g-sort" onchange="render()" class="h-10 text-[13px] font-semibold border border-slate-200 rounded-full px-4 outline-none text-[#121A21] bg-white cursor-pointer hover:bg-slate-50 transition">
@@ -150,7 +150,7 @@
 
     <!-- Create Group Form (Hidden by default) -->
     <div id="create-group-form" class="hidden bg-white rounded-2xl border border-[#E7EBEF] p-6 sm:p-8">
-      <div class="border-b border-slate-100 flex gap-6 text-sm font-bold text-slate-400 mb-6 pb-3 overflow-x-auto no-scrollbar">
+      <div class="border-b border-slate-100 flex gap-6 text-sm font-bold text-slate-500 mb-6 pb-3 overflow-x-auto no-scrollbar">
         <span class="text-[#DC183C] whitespace-nowrap">1. Details</span>
         <span class="whitespace-nowrap">2. Settings</span>
         <span class="whitespace-nowrap">3. Forum</span>
@@ -218,13 +218,13 @@
   <div class="max-w-7xl mx-auto px-4 sm:px-6 py-5 flex flex-col sm:flex-row items-center justify-between gap-3">
     <div class="flex items-center gap-2 text-xs text-slate-500">
       <span>&copy; 2026 SME South Africa</span>
-      <span class="text-slate-300">&middot;</span>
-      <span class="font-bold text-slate-400 uppercase tracking-widest text-[10px]">Community</span>
+      <span class="text-slate-500">&middot;</span>
+      <span class="font-bold text-slate-500 uppercase tracking-widest text-[10px]">Community</span>
       <button onclick="openBrief('footer')" class="dev-badge w-4 h-4 rounded-full bg-[#DC183C] text-white items-center justify-center text-[9px] font-bold leading-none animate-pulse" title="Implementation notes">i</button>
     </div>
     <nav class="flex items-center gap-5 text-xs font-semibold text-slate-500">
       <a href="public-about.html" class="hover:text-[#DC183C] transition-colors">About</a>
-      <a href="public-help.html" class="hover:text-[#DC183C] transition-colors">Help Center</a>
+      <a href="public-help.html" class="hover:text-[#DC183C] transition-colors">Help Centre</a>
       <a href="public-terms.html" class="hover:text-[#DC183C] transition-colors">Terms</a>
       <a href="public-privacy.html" class="hover:text-[#DC183C] transition-colors">Privacy</a>
     </nav>
@@ -310,7 +310,7 @@ function card(g,i){
         <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[10px] font-bold ${g.privacy==='Public'?'bg-[#F0F5F9] text-[#29A37A]':'bg-slate-100 text-slate-500'}"><i data-lucide="${g.privacy==='Public'?'globe':'lock'}" class="w-3 h-3"></i> ${g.privacy}</span>
       </div>
       <p class="text-[13px] text-slate-500 leading-relaxed line-clamp-2 sm:line-clamp-1 mb-2">${esc(g.desc)}</p>
-      <p class="text-[11px] font-semibold text-slate-400 flex items-center gap-1.5"><i data-lucide="users" class="w-3.5 h-3.5 text-slate-300"></i> ${g.members.toLocaleString()} members</p>
+      <p class="text-[11px] font-semibold text-slate-500 flex items-center gap-1.5"><i data-lucide="users" class="w-3.5 h-3.5 text-slate-500"></i> ${g.members.toLocaleString()} members</p>
     </div>
     
     <div class="shrink-0 mt-2 sm:mt-0 w-full sm:w-auto">
@@ -333,12 +333,12 @@ function render(){
   const host = document.getElementById('results');
   host.innerHTML = list.length
     ? `${list.map(g=>card(g,g._i)).join('')}`
-    : `<div class="bg-white rounded-2xl border border-[#E7EBEF] py-16 text-center text-slate-400"><i data-lucide="layout-grid" class="w-10 h-10 mx-auto mb-3 text-slate-300"></i><p class="font-semibold text-sm">No groups found.</p>${state.seg==='mine'?'<button onclick="setSeg(\'all\')" class="text-[13px] font-bold text-[#DC183C] mt-3 hover:underline">Browse all groups</button>':''}</div>`;
+    : `<div class="bg-white rounded-2xl border border-[#E7EBEF] py-16 text-center text-slate-500"><i data-lucide="layout-grid" class="w-10 h-10 mx-auto mb-3 text-slate-500"></i><p class="font-semibold text-sm">No groups found.</p>${state.seg==='mine'?'<button onclick="setSeg(\'all\')" class="text-[13px] font-bold text-[#DC183C] mt-3 hover:underline">Browse all groups</button>':''}</div>`;
   lucide.createIcons();
 }
 
 const BRIEFS = {
-    footer:{ title:'Community Footer', sub:'Shared app-shell component', purpose:'The closing utility bar for every logged-in community screen (Feed, Members, Groups, Forums, Profile, Account). Deliberately minimal &mdash; a single thin row, not a marketing footer &mdash; so it closes the app experience the same way the BuddyBoss header opens it, bookending all 9 community templates consistently.', data:'Static link list: <code>{ label, href }[]</code> &mdash; About, Help Center, Terms, Privacy. No dynamic data.', logic:'Rendered identically on every community template (member-hub, members, single-member, single-post, groups, single-group, forums, single-discussion, member-account). All four links resolve to existing public pages.', components:'Copyright + Community tag (left) &middot; utility link row (right).', specs:'<b>Container:</b> <code>bg-white border-t border-slate-200</code> &mdash; light, matches the header, NOT the navy marketing surface used for hero bands elsewhere on the site. <code>max-w-7xl</code>, 20px vertical padding (<code>py-5</code>), stacks to a column below <code>sm</code>.<br/><b>Left group:</b> 12px (<code>text-xs</code>) slate-500, <code>&middot;</code> separator slate-300, "Community" tag 10px weight 800 uppercase tracking-widest slate-400 &mdash; a quiet reminder you\'re inside the app, not the marketing site.<br/><b>Right nav:</b> 12px weight 600 slate-500, 20px gap, hover <code>#DC183C</code>.<br/><br/><b>Why this differs from the (not-yet-built) public-site footer:</b> Articles/Resources/marketing pages are editorial and SEO-facing &mdash; that footer should be the tall, dark <code>navy</code> sitemap block with category columns, socials and a newsletter CTA, matching the hero-band treatment used across the public site. This community footer is the opposite on purpose: thin, light, utility-only &mdash; a logged-in member is inside a tool, not reading an article, so the chrome should get out of the way rather than sell anything.' },
+    footer:{ title:'Community Footer', sub:'Shared app-shell component', purpose:'The closing utility bar for every logged-in community screen (Feed, Members, Groups, Forums, Profile, Account). Deliberately minimal &mdash; a single thin row, not a marketing footer &mdash; so it closes the app experience the same way the BuddyBoss header opens it, bookending all 9 community templates consistently.', data:'Static link list: <code>{ label, href }[]</code> &mdash; About, Help Centre, Terms, Privacy. No dynamic data.', logic:'Rendered identically on every community template (member-hub, members, single-member, single-post, groups, single-group, forums, single-discussion, member-account). All four links resolve to existing public pages.', components:'Copyright + Community tag (left) &middot; utility link row (right).', specs:'<b>Container:</b> <code>bg-white border-t border-slate-200</code> &mdash; light, matches the header, NOT the navy marketing surface used for hero bands elsewhere on the site. <code>max-w-7xl</code>, 20px vertical padding (<code>py-5</code>), stacks to a column below <code>sm</code>.<br/><b>Left group:</b> 12px (<code>text-xs</code>) slate-500, <code>&middot;</code> separator slate-300, "Community" tag 10px weight 800 uppercase tracking-widest slate-400 &mdash; a quiet reminder you\'re inside the app, not the marketing site.<br/><b>Right nav:</b> 12px weight 600 slate-500, 20px gap, hover <code>#DC183C</code>.<br/><br/><b>Why this differs from the (not-yet-built) public-site footer:</b> Articles/Resources/marketing pages are editorial and SEO-facing &mdash; that footer should be the tall, dark <code>navy</code> sitemap block with category columns, socials and a newsletter CTA, matching the hero-band treatment used across the public site. This community footer is the opposite on purpose: thin, light, utility-only &mdash; a logged-in member is inside a tool, not reading an article, so the chrome should get out of the way rather than sell anything.' },
      groupsdir:{ title:'Groups Directory', sub:'Browse, filter & join groups', purpose:'Discovery for community groups. Uses a clean list view for quick scanning. Segments (All / My groups / Create Group), search and sort. Joining a group multiplies engagement surface — members in groups post far more than those who aren&rsquo;t.', data:'<code>groups[] { id, name, privacy, member_count, created_at, my_membership }</code>.', logic:'Public groups join instantly; Private create a join request. "Create Group" acts as a native tab that unmounts the directory and mounts the BuddyBoss multi-step form. Cards deep-link to the single-group page.', components:'Segmented tabs · search · sort · list-view cards · join toggle · create-group form · sidebar with guidelines & events.' } };
 function toggleDevMode(){const on=document.body.classList.toggle('dev-on');const b=document.getElementById('devToggle');if(b)b.classList.toggle('on',on);if(on)showToast('Dev Mode on — tap any ⓘ for implementation notes.',null);lucide.createIcons();}
 function closeOverlay(id){const el=document.getElementById(id);if(!el)return;el.classList.remove('open');setTimeout(()=>{if(el&&el.parentNode)el.remove();},300);}

@@ -136,7 +136,7 @@
   <div id="headerSearchOverlay" class="search-overlay">
     <div class="w-full max-w-4xl flex items-center gap-4">
       <div class="relative flex-1">
-        <i data-lucide="search" class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400"></i>
+        <i data-lucide="search" class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500"></i>
         <input type="text" id="headerSearchInput" placeholder="Search members, groups, forums..." class="w-full h-12 pl-12 pr-4 text-base bg-slate-50 border border-[#DC183C] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#DC183C]/20 transition-all shadow-sm">
       </div>
       <button onclick="toggleHeaderSearch()" class="text-slate-500 hover:text-[#121A21] p-2 transition-colors shrink-0" aria-label="Close search">
@@ -147,6 +147,7 @@
 </header>
 
 <main class="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
+  <h1 class="sr-only">Community Post</h1>
   <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
 
     <aside class="hidden lg:flex flex-col gap-5 lg:col-span-3">
@@ -164,15 +165,15 @@
         </div>
         <div class="grid grid-cols-3 border-t border-slate-100 text-center pb-2">
           <div class="py-3 border-r border-slate-100">
-            <p class="text-[9px] font-bold uppercase tracking-widest text-slate-400">Interest</p>
+            <p class="text-[9px] font-bold uppercase tracking-widest text-slate-500">Interest</p>
             <p class="font-jakarta font-bold text-sm text-[#121A21] mt-1">Funding</p>
           </div>
           <div class="py-3 border-r border-slate-100">
-            <p class="text-[9px] font-bold uppercase tracking-widest text-slate-400">Sector</p>
+            <p class="text-[9px] font-bold uppercase tracking-widest text-slate-500">Sector</p>
             <p class="font-jakarta font-bold text-sm text-[#121A21] mt-1">Fintech</p>
           </div>
           <div class="py-3">
-            <p class="text-[9px] font-bold uppercase tracking-widest text-slate-400">Region</p>
+            <p class="text-[9px] font-bold uppercase tracking-widest text-slate-500">Region</p>
             <p class="font-jakarta font-bold text-sm text-[#121A21] mt-1">GP</p>
           </div>
         </div>
@@ -209,11 +210,11 @@
         </button>
         <button class="w-full px-5 py-3 flex items-center justify-between hover:bg-slate-50 transition text-left border-t border-slate-100">
           <span class="text-sm font-medium text-slate-600 flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-slate-300"></span> Resolved asks</span>
-          <span class="text-xs font-bold text-slate-400">11</span>
+          <span class="text-xs font-bold text-slate-500">11</span>
         </button>
         <button class="w-full px-5 py-3 flex items-center justify-between hover:bg-slate-50 transition text-left border-t border-slate-100">
           <span class="text-sm font-medium text-slate-600 flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-[#29A37A]"></span> Wins shared</span>
-          <span class="text-xs font-bold text-slate-400">4</span>
+          <span class="text-xs font-bold text-slate-500">4</span>
         </button>
       </div>
     </aside>
@@ -236,7 +237,7 @@
               <p class="text-[15px] text-[#121A21] leading-snug">
                 <a href="single-member.html" class="font-bold hover:text-[#DC183C] transition">Naledi Mokoena</a> <span class="text-slate-500 font-normal">shared a photo</span>
               </p>
-              <div class="flex items-center gap-1.5 mt-0.5 text-[12px] text-slate-400 font-medium">
+              <div class="flex items-center gap-1.5 mt-0.5 text-[12px] text-slate-500 font-medium">
                 <span>8h ago</span>
                 <span>·</span>
                 <i data-lucide="users" class="w-3.5 h-3.5"></i>
@@ -244,7 +245,7 @@
               </div>
             </div>
             <div class="flex items-center gap-1">
-              <button id="menu-btn" onclick="toggleMenu()" aria-label="More options" class="w-8 h-8 grid place-items-center rounded-full hover:bg-slate-100 text-slate-400 transition">
+              <button id="menu-btn" onclick="toggleMenu()" aria-label="More options" class="w-8 h-8 grid place-items-center rounded-full hover:bg-slate-100 text-slate-500 transition">
                 <i data-lucide="more-horizontal" class="w-5 h-5"></i>
               </button>
               <button onclick="openBrief('post')" class="dev-badge w-4 h-4 rounded-full bg-[#DC183C] text-white items-center justify-center text-[9px] font-bold leading-none animate-pulse" title="Implementation notes">i</button>
@@ -319,7 +320,7 @@
           <div class="flex-1 min-w-0">
             <textarea id="comment-input" rows="2" placeholder="Add a comment — be specific and kind." class="w-full text-sm bg-white border border-slate-200 rounded-xl px-3.5 py-2.5 outline-none focus:border-[#DC183C] focus:ring-1 focus:ring-[#DC183C] transition resize-none shadow-sm"></textarea>
             <div class="flex items-center justify-between mt-2">
-              <div class="flex items-center gap-1 text-slate-400">
+              <div class="flex items-center gap-1 text-slate-500">
                 <button class="w-7 h-7 grid place-items-center rounded-full hover:bg-slate-200 hover:text-slate-600 transition" title="Attach image"><i data-lucide="image" class="w-4 h-4"></i></button>
                 <button class="w-7 h-7 grid place-items-center rounded-full hover:bg-slate-200 hover:text-slate-600 transition" title="Add link"><i data-lucide="link" class="w-4 h-4"></i></button>
                 <button class="w-7 h-7 grid place-items-center rounded-full hover:bg-slate-200 hover:text-slate-600 transition" title="Mention"><i data-lucide="at-sign" class="w-4 h-4"></i></button>
@@ -336,7 +337,7 @@
 
     <aside class="hidden lg:flex flex-col gap-5 lg:col-span-3">
 
-      <div class="w-full bg-slate-50 rounded-2xl border border-slate-200 flex flex-col items-center justify-center text-slate-400 aspect-[6/5] shadow-inner overflow-hidden">
+      <div class="w-full bg-slate-50 rounded-2xl border border-slate-200 flex flex-col items-center justify-center text-slate-500 aspect-[6/5] shadow-inner overflow-hidden">
         <img src="https://placehold.co/300x250/F8FAFC/94A3B8?text=Advertisement" alt="Ad Placeholder" class="w-full h-full object-cover">
       </div>
 
@@ -454,7 +455,7 @@
 
     <!-- Links & Footer -->
     <div class="text-center">
-      <div class="flex flex-wrap items-center justify-center gap-x-3 gap-y-2 text-[11px] text-slate-400 leading-relaxed px-2">
+      <div class="flex flex-wrap items-center justify-center gap-x-3 gap-y-2 text-[11px] text-slate-500 leading-relaxed px-2">
           <a href="#" class="hover:text-slate-600">Advertising</a>
           <a href="#" class="hover:text-slate-600">Funding</a>
           <a href="#" class="hover:text-slate-600">Resources</a>
@@ -469,7 +470,7 @@
           <a href="#" class="hover:text-slate-600">Privacy</a>
           <a href="#" class="hover:text-slate-600">Terms</a>
       </div>
-      <p class="text-[11px] text-slate-400 mt-4">SME South Africa © 2026</p>
+      <p class="text-[11px] text-slate-500 mt-4">SME South Africa © 2026</p>
     </div>
   </aside>
 
@@ -481,13 +482,13 @@
   <div class="max-w-7xl mx-auto px-4 sm:px-6 py-5 flex flex-col sm:flex-row items-center justify-between gap-3">
     <div class="flex items-center gap-2 text-xs text-slate-500">
       <span>&copy; 2026 SME South Africa</span>
-      <span class="text-slate-300">&middot;</span>
-      <span class="font-bold text-slate-400 uppercase tracking-widest text-[10px]">Community</span>
+      <span class="text-slate-500">&middot;</span>
+      <span class="font-bold text-slate-500 uppercase tracking-widest text-[10px]">Community</span>
       <button onclick="openBrief('footer')" class="dev-badge w-4 h-4 rounded-full bg-[#DC183C] text-white items-center justify-center text-[9px] font-bold leading-none animate-pulse" title="Implementation notes">i</button>
     </div>
     <nav class="flex items-center gap-5 text-xs font-semibold text-slate-500">
       <a href="public-about.html" class="hover:text-[#DC183C] transition-colors">About</a>
-      <a href="public-help.html" class="hover:text-[#DC183C] transition-colors">Help Center</a>
+      <a href="public-help.html" class="hover:text-[#DC183C] transition-colors">Help Centre</a>
       <a href="public-terms.html" class="hover:text-[#DC183C] transition-colors">Terms</a>
       <a href="public-privacy.html" class="hover:text-[#DC183C] transition-colors">Privacy</a>
     </nav>
@@ -631,7 +632,7 @@
     const curvedConnector = isReply ? `<div class="absolute -left-[18px] top-6 w-4 h-4 border-b-2 border-l-2 border-slate-200 rounded-bl-xl"></div>` : '';
     const repliesHtml = (c.replies && c.replies.length) ? `<div class="mt-3 space-y-2 relative">${c.replies.map(r=>renderComment(r, true)).join('')}</div>` : '';
     const authorBadge = c.authorBadge ? `<span class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full bg-[#FDECEF] text-[#DC183C] text-[9px] font-extrabold uppercase tracking-widest ml-2"><i data-lucide="mic" class="w-2.5 h-2.5"></i> Author</span>` : '';
-    const likeClass = c.liked ? 'text-[#DC183C]' : 'text-slate-400 hover:text-[#DC183C]';
+    const likeClass = c.liked ? 'text-[#DC183C]' : 'text-slate-500 hover:text-[#DC183C]';
     const heartClass = c.liked ? 'w-3.5 h-3.5 fill-current' : 'w-3.5 h-3.5';
     
     return `
@@ -644,7 +645,7 @@
               <div class="flex items-center flex-wrap">
                 <a href="single-member.html" class="font-bold text-[13px] text-[#121A21] hover:text-[#DC183C] transition">${esc(c.author)}</a>
                 ${authorBadge}
-                <span class="text-[11px] text-slate-400 ml-2 hidden sm:inline">· ${esc(c.time)}</span>
+                <span class="text-[11px] text-slate-500 ml-2 hidden sm:inline">· ${esc(c.time)}</span>
               </div>
               <p class="text-[14px] text-[#121A21] mt-1.5 leading-relaxed">${esc(c.text)}</p>
               <div class="flex items-center gap-4 mt-3 text-[12px]">
@@ -653,7 +654,7 @@
                   <span>${c.likes > 0 ? c.likes : 'Like'}</span>
                 </button>
                 <button onclick="replyTo('${esc(c.author)}')" class="text-slate-500 hover:text-[#121A21] font-semibold transition flex items-center gap-1"><i data-lucide="corner-down-right" class="w-3.5 h-3.5"></i> Reply</button>
-                <span class="text-[11px] text-slate-400 sm:hidden ml-auto">${esc(c.time)}</span>
+                <span class="text-[11px] text-slate-500 sm:hidden ml-auto">${esc(c.time)}</span>
               </div>
               ${repliesHtml}
             </div>
@@ -707,7 +708,7 @@
     setTimeout(()=>{ if(el && el.parentNode) el.remove(); }, 300);
   }
   const BRIEFS = {
-    footer:{ title:'Community Footer', sub:'Shared app-shell component', purpose:'The closing utility bar for every logged-in community screen (Feed, Members, Groups, Forums, Profile, Account). Deliberately minimal &mdash; a single thin row, not a marketing footer &mdash; so it closes the app experience the same way the BuddyBoss header opens it, bookending all 9 community templates consistently.', data:'Static link list: <code>{ label, href }[]</code> &mdash; About, Help Center, Terms, Privacy. No dynamic data.', logic:'Rendered identically on every community template (member-hub, members, single-member, single-post, groups, single-group, forums, single-discussion, member-account). All four links resolve to existing public pages.', components:'Copyright + Community tag (left) &middot; utility link row (right).', specs:'<b>Container:</b> <code>bg-white border-t border-slate-200</code> &mdash; light, matches the header, NOT the navy marketing surface used for hero bands elsewhere on the site. <code>max-w-7xl</code>, 20px vertical padding (<code>py-5</code>), stacks to a column below <code>sm</code>.<br/><b>Left group:</b> 12px (<code>text-xs</code>) slate-500, <code>&middot;</code> separator slate-300, "Community" tag 10px weight 800 uppercase tracking-widest slate-400 &mdash; a quiet reminder you\'re inside the app, not the marketing site.<br/><b>Right nav:</b> 12px weight 600 slate-500, 20px gap, hover <code>#DC183C</code>.<br/><br/><b>Why this differs from the (not-yet-built) public-site footer:</b> Articles/Resources/marketing pages are editorial and SEO-facing &mdash; that footer should be the tall, dark <code>navy</code> sitemap block with category columns, socials and a newsletter CTA, matching the hero-band treatment used across the public site. This community footer is the opposite on purpose: thin, light, utility-only &mdash; a logged-in member is inside a tool, not reading an article, so the chrome should get out of the way rather than sell anything.' },
+    footer:{ title:'Community Footer', sub:'Shared app-shell component', purpose:'The closing utility bar for every logged-in community screen (Feed, Members, Groups, Forums, Profile, Account). Deliberately minimal &mdash; a single thin row, not a marketing footer &mdash; so it closes the app experience the same way the BuddyBoss header opens it, bookending all 9 community templates consistently.', data:'Static link list: <code>{ label, href }[]</code> &mdash; About, Help Centre, Terms, Privacy. No dynamic data.', logic:'Rendered identically on every community template (member-hub, members, single-member, single-post, groups, single-group, forums, single-discussion, member-account). All four links resolve to existing public pages.', components:'Copyright + Community tag (left) &middot; utility link row (right).', specs:'<b>Container:</b> <code>bg-white border-t border-slate-200</code> &mdash; light, matches the header, NOT the navy marketing surface used for hero bands elsewhere on the site. <code>max-w-7xl</code>, 20px vertical padding (<code>py-5</code>), stacks to a column below <code>sm</code>.<br/><b>Left group:</b> 12px (<code>text-xs</code>) slate-500, <code>&middot;</code> separator slate-300, "Community" tag 10px weight 800 uppercase tracking-widest slate-400 &mdash; a quiet reminder you\'re inside the app, not the marketing site.<br/><b>Right nav:</b> 12px weight 600 slate-500, 20px gap, hover <code>#DC183C</code>.<br/><br/><b>Why this differs from the (not-yet-built) public-site footer:</b> Articles/Resources/marketing pages are editorial and SEO-facing &mdash; that footer should be the tall, dark <code>navy</code> sitemap block with category columns, socials and a newsletter CTA, matching the hero-band treatment used across the public site. This community footer is the opposite on purpose: thin, light, utility-only &mdash; a logged-in member is inside a tool, not reading an article, so the chrome should get out of the way rather than sell anything.' },
     
     activity: {
       title:'Your Activity', sub:'The member&rsquo;s own posts, by type &amp; status',
