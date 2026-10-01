@@ -4,7 +4,8 @@
  * Allowed: "finalised" | "under-review" | "under-work" | "not-started"
  */
 window.MOCKUP_STATUS = {
-  "public-home.html": "finalised",
+  "public-home.html": "under-review",
+  "public-health-check.html": "under-review",
   "public-articles.html": "finalised",
   "public-article-categories.html": "finalised",
   "public-category.html": "finalised",
