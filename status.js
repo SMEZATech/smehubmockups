@@ -4,11 +4,13 @@
  * Allowed: "finalised" | "under-review" | "under-work" | "not-started"
  */
 window.MOCKUP_STATUS = {
-  "public-home.html": "finalised",
+  "public-home.html": "under-review",
+  "public-health-check.html": "under-review",
   "public-articles.html": "finalised",
   "public-article-categories.html": "finalised",
   "public-category.html": "finalised",
   "public-subcategory.html": "finalised",
+  "public-tag.html": "under-review",
   "public-author.html": "finalised",
   "public-article.html": "finalised",
   "public-resources.html": "finalised",
@@ -22,6 +24,8 @@ window.MOCKUP_STATUS = {
   "public-solution-category.html": "finalised",
   "public-sustainability.html": "finalised",
   "public-pricing.html": "finalised",
+  "public-workspace.html": "under-review",
+  "public-premium-checkout.html": "under-review",
   "public-brands.html": "finalised",
   "public-brand.html": "finalised",
   "public-deals.html": "not-started",
@@ -74,7 +78,8 @@ window.MOCKUP_STATUS = {
   "public-support-ticket.html": "finalised",
   "public-support-detailed-ticket.html": "finalised",
   "public-search.html": "finalised",
-  "public-404.html": "finalised"
+  "public-404.html": "finalised",
+  "public-unauthorized.html": "under-review"
 };
 window.MOCKUP_STATUS_PUBLISHED = "2026-09-28T06:52:39.300Z";
 /* Developer builds (staging) — { mockup file: { url, status } }; status: "pending-review" | "reviewed" | "approved" */

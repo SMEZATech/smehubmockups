@@ -1,30 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>Speakers — Events — SME South Africa</title>
-  <meta name="description" content="Meet the founders, funders and operators who speak at SME South Africa events — investors, advisors and industry leaders sharing what actually works." />
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Unlock the Full Power of the SME Hub</title>
+  <meta name="description" content="You've got the basics. Now get your full Business Health Score, Compliance Calendar, Cash Flow tracker and Document Vault — the tools reserved for our Premium members." />
   <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <script src="https://cdn.tailwindcss.com"></script><script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
   <script>tailwind.config={theme:{extend:{fontFamily:{jakarta:['Plus Jakarta Sans','sans-serif'],inter:['Inter','system-ui','sans-serif']}}}};</script>
   <style>
     html,body{font-family:'Inter',system-ui,sans-serif;} .font-jakarta{font-family:'Plus Jakarta Sans',sans-serif;letter-spacing:.005em;}
-    html{scroll-behavior:smooth;}
-    .card-lift{transition:box-shadow .3s cubic-bezier(.2,.7,.2,1),transform .3s cubic-bezier(.2,.7,.2,1);}
-    .card-lift:hover{box-shadow:0 16px 32px -12px rgba(12,31,49,.15);transform:translateY(-3px);}
-    @keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}} .reveal{animation:fadeUp .5s cubic-bezier(.2,.7,.2,1) backwards;}
+    .hero-bg{background:linear-gradient(115deg,#0C1F31 0%,#0C1F31 50%,#2b1626 80%,#5e1a2c 115%);}
+    .grad-text{background:linear-gradient(100deg,#DC183C,#FF9900);-webkit-background-clip:text;background-clip:text;color:transparent;}
+    .dot-pattern{background-image:radial-gradient(rgba(255,255,255,.07) 1px,transparent 1.5px);background-size:22px 22px;}
+    .card-lift{transition:box-shadow .2s,transform .2s;} .card-lift:hover{box-shadow:0 14px 30px -12px rgba(10,44,61,.22);transform:translateY(-3px);}
+    .glow-card{box-shadow:0 30px 60px -20px rgba(0,0,0,.5),0 12px 24px -8px rgba(0,0,0,.3);}
+    /* Module compare cards — Standard vs Premium, two lines, no table (reused byte-for-byte from public-pricing.html) */
+    .tier-row{display:flex;align-items:flex-start;gap:.5rem;font-size:.8125rem;line-height:1.45;padding:.4rem 0;}
+    .tier-row+.tier-row{border-top:1px dashed #E7EBEF;margin-top:.15rem;padding-top:.55rem;}
+    .tier-row i{flex-shrink:0;margin-top:.15rem;}
+    .tier-row--std{color:#6A7581;} .tier-row--std i{color:#CBD5E1;} .tier-row--std b{color:#121A21;}
+    .tier-row--off i{color:#DC183C;opacity:.55;}
+    .tier-row--prem{color:#121A21;font-weight:500;} .tier-row--prem i{color:#29A37A;} .tier-row--prem b{color:#DC183C;}
     .dev-badge{display:none;} body.dev-on .dev-badge{display:inline-flex;} #devToggle.on{background:#DC183C;color:#fff;border-color:#DC183C;}
     .ov{position:fixed;inset:0;z-index:60;} .ov-bg{position:absolute;inset:0;background:rgba(12,31,49,.45);backdrop-filter:blur(2px);opacity:0;transition:opacity .3s;} .ov.open .ov-bg{opacity:1;}
     .drawer{position:absolute;right:0;top:0;height:100%;width:100%;max-width:440px;background:#fff;box-shadow:-12px 0 40px rgba(12,31,49,.25);overflow-y:auto;transform:translateX(100%);transition:transform .3s cubic-bezier(.2,.7,.2,1);} .ov.open .drawer{transform:translateX(0);}
-    .search-overlay{position:absolute;inset:0;background:#fff;z-index:20;display:flex;align-items:center;justify-content:center;padding:0 1rem;opacity:0;pointer-events:none;transform:translateY(-8px);transition:all .25s cubic-bezier(.2,.8,.2,1);}
+      .search-overlay{position:absolute;inset:0;background:#fff;z-index:20;display:flex;align-items:center;justify-content:center;padding:0 1rem;opacity:0;pointer-events:none;transform:translateY(-8px);transition:all .25s cubic-bezier(.2,.8,.2,1);}
     .search-overlay.active{opacity:1;pointer-events:auto;transform:translateY(0);}
     @media (min-width:640px){ .search-overlay{padding:0 1.5rem;} }
 </style>
 </head>
 <body class="bg-[#FCFCFC] text-[#121A21] antialiased">
-
-<!-- HEADER -->
 <header class="bg-white border-b border-[#E7EBEF] sticky top-0 z-30 relative">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center gap-3">
     <a href="public-home.html" class="flex items-center gap-2.5 shrink-0">
@@ -62,7 +68,6 @@
           <a href="public-loan-option.html" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-[#DC183C] transition">Working Capital Loans</a>
         </div>
       </div>
-      <a href="public-workspace.html" class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition inline-flex items-center gap-1.5">Workspace <span class="text-[9px] font-extrabold uppercase tracking-wide bg-[#FDECEF] text-[#DC183C] px-1.5 py-0.5 rounded-full">Premium</span></a>
       <a href="public-solutions.html" class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition">Solutions</a>
       <a href="podcast.html"          class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition">Podcast</a>
       <a href="public-shop.html"      class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition">Shop</a>
@@ -81,7 +86,6 @@
       <a href="public-articles.html"  class="px-2 py-3 text-sm font-semibold text-slate-700 hover:text-[#DC183C] border-b border-slate-100">Articles</a>
       <a href="public-resources.html" class="px-2 py-3 text-sm font-semibold text-slate-700 hover:text-[#DC183C] border-b border-slate-100">Resources</a>
       <a href="public-funding.html"   class="px-2 py-3 text-sm font-semibold text-slate-700 hover:text-[#DC183C] border-b border-slate-100">Funding</a>
-      <a href="public-workspace.html" class="px-2 py-3 text-sm font-semibold text-slate-700 hover:text-[#DC183C] border-b border-slate-100 flex items-center gap-2">Workspace <span class="text-[9px] font-extrabold uppercase tracking-wide bg-[#FDECEF] text-[#DC183C] px-1.5 py-0.5 rounded-full">Premium</span></a>
       <a href="public-solutions.html" class="px-2 py-3 text-sm font-semibold text-slate-700 hover:text-[#DC183C] border-b border-slate-100">Solutions</a>
       <a href="podcast.html"          class="px-2 py-3 text-sm font-semibold text-slate-700 hover:text-[#DC183C] border-b border-slate-100">Podcast</a>
       <a href="public-shop.html"      class="px-2 py-3 text-sm font-semibold text-slate-700 hover:text-[#DC183C] border-b border-slate-100">Shop</a>
@@ -99,15 +103,14 @@
   </div>
 </header>
 
-<!-- Mobile bottom tab bar — thumb-reach quick nav -->
+<!-- Mobile bottom tab bar -->
 <nav aria-label="Quick nav" class="lg:hidden fixed bottom-0 inset-x-0 z-40 bg-white border-t border-[#E7EBEF] shadow-[0_-4px_16px_-4px_rgba(12,31,49,0.08)]" style="padding-bottom:env(safe-area-inset-bottom)">
   <div class="grid grid-cols-5">
     <a href="public-home.html" class="flex flex-col items-center justify-center gap-1 py-2.5 text-slate-500 hover:text-[#121A21] transition">
       <i data-lucide="house" class="w-5 h-5"></i>
       <span class="font-jakarta text-[11px] font-bold">Home</span>
     </a>
-    <a href="public-articles.html" class="relative flex flex-col items-center justify-center gap-1 py-2.5 text-[#DC183C]">
-      <span class="absolute top-0 left-1/2 -translate-x-1/2 w-8 h-0.5 rounded-full bg-[#DC183C]"></span>
+    <a href="public-articles.html" class="flex flex-col items-center justify-center gap-1 py-2.5 text-slate-500 hover:text-[#121A21] transition">
       <i data-lucide="lightbulb" class="w-5 h-5"></i>
       <span class="font-jakarta text-[11px] font-bold">Insights</span>
     </a>
@@ -119,7 +122,8 @@
       <i data-lucide="book-open" class="w-5 h-5"></i>
       <span class="font-jakarta text-[11px] font-bold">Resources</span>
     </a>
-    <a href="public-auth.html#join" class="flex flex-col items-center justify-center gap-1 py-2.5 text-slate-500 hover:text-[#121A21] transition">
+    <a href="public-premium-checkout.html" class="relative flex flex-col items-center justify-center gap-1 py-2.5 text-[#DC183C]">
+      <span class="absolute top-0 left-1/2 -translate-x-1/2 w-8 h-0.5 rounded-full bg-[#DC183C]"></span>
       <i data-lucide="user-round-plus" class="w-5 h-5"></i>
       <span class="font-jakarta text-[11px] font-bold">Sign Up</span>
     </a>
@@ -127,39 +131,56 @@
 </nav>
 
 <!-- HERO -->
-<section class="bg-white border-b border-[#E7EBEF]">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-10 sm:py-14">
-    <nav aria-label="Breadcrumb" class="text-xs text-[#6A7581] flex items-center flex-wrap gap-x-1.5 mb-5"><a href="public-home.html" class="hover:text-[#DC183C] transition">Home</a><span class="text-slate-500">›</span><a href="events.html" class="hover:text-[#DC183C] transition">Events</a><span class="text-slate-500">›</span><span class="text-[#121A21] font-medium truncate">Speakers</span></nav>
-    <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-5">
-      <div class="max-w-2xl">
-        <h1 class="font-jakarta font-extrabold text-3xl sm:text-4xl text-[#0C1F31] tracking-tight flex items-center gap-2">Speakers
-          <button onclick="openBrief()" class="dev-badge w-6 h-6 rounded-full bg-[#DC183C] text-white items-center justify-center text-[11px] font-bold mt-1.5" title="Implementation notes">i</button>
-        </h1>
-        <p class="text-[#6A7581] leading-relaxed mt-3">Founders, funders and operators who've spoken at SME South Africa events — investors, advisors and industry leaders sharing what actually works, not theory.</p>
-      </div>
-      <div class="relative w-full sm:w-72 shrink-0">
-        <i data-lucide="search" class="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500"></i>
-        <input id="speakerSearch" type="text" oninput="filterSpeakers()" placeholder="Search speakers or companies…" class="w-full h-11 pl-11 pr-4 text-sm bg-[#F0F5F9] border border-transparent rounded-full focus:outline-none focus:ring-2 focus:ring-[#DC183C]/20 focus:bg-white focus:border-[#DC183C] transition" />
-      </div>
+<section class="hero-bg text-white relative overflow-hidden">
+  <div class="absolute inset-0 dot-pattern opacity-70 pointer-events-none"></div>
+  <div class="absolute top-0 right-0 w-2/3 h-full opacity-50 pointer-events-none" style="background:radial-gradient(55% 55% at 80% 25%, rgba(255,153,0,.20), transparent 70%)"></div>
+  <div class="max-w-3xl mx-auto px-4 sm:px-6 py-16 sm:py-20 text-center relative">
+    <span class="inline-flex items-center gap-1.5 bg-gradient-to-r from-[#DC183C] to-[#FF9900] text-white text-[11px] font-extrabold uppercase tracking-widest px-3.5 py-1.5 rounded-full">
+      <i data-lucide="crown" class="w-3.5 h-3.5"></i> Premium
+    </span>
+    <h1 class="font-jakarta font-extrabold text-4xl sm:text-5xl leading-[1.05] tracking-tight mt-5">Unlock the Full Power of
+      <button onclick="openBrief()" class="dev-badge align-middle ml-1 w-6 h-6 rounded-full bg-[#FF9900] text-[#0C1F31] items-center justify-center text-[11px] font-bold">i</button>
+      <span class="block grad-text mt-1">the SME Hub</span>
+    </h1>
+    <p class="mt-5 text-lg text-white/70 max-w-lg mx-auto leading-relaxed">You've got the basics. Now get your full Business Health Score, a personalised Success Plan, and the compliance and cash flow tools reserved for Premium members.</p>
+
+    <div class="mt-8 inline-flex items-end gap-1.5"><span class="font-jakarta font-extrabold text-5xl">R99</span><span class="text-white/60 mb-2">/month</span></div>
+    <div class="mt-5 flex flex-wrap items-center justify-center gap-3">
+      <a href="public-premium-checkout.html" class="inline-flex items-center gap-2 px-7 h-12 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold transition">Upgrade to Premium <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
     </div>
+    <p class="mt-4 text-sm text-white/50 flex items-center justify-center gap-1.5"><i data-lucide="shield-check" class="w-4 h-4"></i> No hidden fees.</p>
   </div>
 </section>
 
-<!-- SPEAKER GRID -->
-<main class="max-w-7xl mx-auto px-4 sm:px-6 py-12">
-  <p id="speakerCount" class="text-sm text-[#6A7581] mb-6">12 speakers</p>
-  <div id="speakerGrid" class="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6"></div>
-  <p id="speakerEmpty" class="hidden text-center text-[#6A7581] py-16">No speakers match "<span id="speakerEmptyQuery"></span>".</p>
+<!-- WHAT CHANGES — Standard vs Premium, six real differences -->
+<main class="max-w-6xl mx-auto px-4 sm:px-6 py-16 sm:py-20">
+  <div class="text-center max-w-xl mx-auto">
+    <p class="text-[11px] font-bold uppercase tracking-widest text-[#DC183C]">Standard vs Premium</p>
+    <h2 class="font-jakarta font-extrabold text-2xl sm:text-3xl tracking-tight mt-2">What Changes When You Upgrade</h2>
+    <p class="mt-3 text-[#6A7581]">Everything below is a genuine gap between the two tiers, not a marketing checklist.</p>
+  </div>
+
+  <div id="compareGrid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 mt-10"></div>
+
+  <div class="hero-bg rounded-2xl p-8 sm:p-10 mt-10 text-center text-white relative overflow-hidden">
+    <div class="absolute inset-0 dot-pattern opacity-70 pointer-events-none"></div>
+    <div class="relative">
+      <i data-lucide="crown" class="w-7 h-7 mx-auto text-[#FF9900]"></i>
+      <h3 class="font-jakarta font-extrabold text-xl sm:text-2xl mt-3">Ready to Level Up?</h3>
+      <div class="mt-3 flex items-end justify-center gap-1.5"><span class="font-jakarta font-extrabold text-4xl">R99</span><span class="text-white/60 mb-1">/month</span></div>
+      <p class="mt-2 text-sm text-white/60 max-w-md mx-auto leading-relaxed">Your full Business Health Score, Success Plan, Compliance Calendar and Cash Flow tracker — unlocked immediately.</p>
+      <a href="public-premium-checkout.html" class="inline-flex items-center gap-2 mt-6 px-7 h-12 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold transition">Upgrade to Premium <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
+    </div>
+  </div>
 </main>
 
-<!-- FOOTER -->
 <div class="lg:hidden" style="height:calc(64px + env(safe-area-inset-bottom))"></div>
 <footer class="bg-[#0C1F31] text-white">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 py-12">
     <div class="grid grid-cols-2 md:grid-cols-6 gap-8">
       <div class="col-span-2">
         <a href="public-home.html" class="flex items-center gap-2.5"><img src="assets/logo-v1-lockup-reversed.svg" alt="SME South Africa" class="h-9 w-auto" /></a>
-        <p class="text-sm text-white/55 mt-4 max-w-xs leading-relaxed">South Africa's leading SME community — connecting founders with funding, mentorship, events, and the tools to scale.</p>
+        <p class="text-sm text-white/55 mt-4 max-w-xs leading-relaxed">South Africa's leading SME community, connecting founders with funding, mentorship, events, and the tools to scale.</p>
         <div class="flex items-center gap-2 mt-5">
           <a href="#" aria-label="X" class="w-9 h-9 rounded-lg bg-white/8 hover:bg-white/15 grid place-items-center transition"><svg viewBox="0 0 24 24" class="w-4 h-4" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24h-6.66l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
           <a href="#" aria-label="LinkedIn" class="w-9 h-9 rounded-lg bg-white/8 hover:bg-white/15 grid place-items-center transition"><svg viewBox="0 0 24 24" class="w-4 h-4" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0z"/></svg></a>
@@ -172,8 +193,6 @@
       <div>
         <p class="text-[11px] font-bold uppercase tracking-widest text-[#FF9900]">Platform</p>
         <ul class="mt-4 space-y-2.5 text-sm text-white/70 list-none">
-          <li><a href="public-workspace.html" class="hover:text-white">SME Workspace</a></li>
-          <li><a href="public-pricing.html" class="hover:text-white">Pricing</a></li>
           <li><a href="public-resources.html" class="hover:text-white">Resources Library</a></li>
           <li><a href="public-funding.html" class="hover:text-white">Funding Portal</a></li>
           <li><a href="public-solutions.html" class="hover:text-white">Solutions Directory</a></li>
@@ -224,81 +243,48 @@
   </div>
 </footer>
 
-<div id="overlay-root"></div>
-<div id="toast" class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-[90]"></div>
+<div id="overlay-root"></div><div id="toast" class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-50"></div>
 <script>
-  function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c])); }
+  function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
   function showToast(m){const el=document.getElementById('toast');el.classList.remove('hidden');el.innerHTML=`<div class="bg-[#0C1F31] text-white rounded-full pl-3 pr-5 py-2.5 shadow-2xl flex items-center gap-2 text-sm font-semibold" style="border-left:4px solid #29A37A"><i data-lucide="check-circle" class="w-4 h-4" style="color:#29A37A"></i><span>${esc(m)}</span></div>`;lucide.createIcons();setTimeout(()=>{el.classList.add('hidden');el.innerHTML='';},2400);}
 
-  // ===== SPEAKERS (same roster shown in event-single-in-person.html's Keynote Speakers grid) =====
-  const SPEAKERS = [
-    { initials:'DM', name:'Dr. Dineo Molefe',   role:'Head of Advisory',     company:'Base Capital',        from:'#0C1F31', to:'#5e1a2c' },
-    { initials:'TN', name:'Thandi Ngwenya',     role:'General Partner',      company:'Horizon Ventures',    from:'#DC183C', to:'#FF9900' },
-    { initials:'SM', name:'Sipho Mabaso',       role:'Investment Lead',      company:'SEFA',                from:'#29A37A', to:'#0C1F31' },
-    { initials:'LK', name:'Lerato Kgomo',       role:'Angel Investor',       company:'Jozi Angels',         from:'#FF9900', to:'#DC183C' },
-    { initials:'JM', name:'Jaco van der Merwe', role:'Managing Director',    company:'FinGrowth SA',        from:'#94A3B8', to:'#94A3B8' },
-    { initials:'AN', name:'Aisha Naidoo',       role:'CEO & Founder',        company:'TechHealth',          from:'#94A3B8', to:'#94A3B8' },
-    { initials:'KD', name:'Kabelo Dube',        role:'Partner',              company:'Savannah Fund',       from:'#94A3B8', to:'#94A3B8' },
-    { initials:'SJ', name:'Sarah Jones',        role:'Head of SME',          company:'Standard Bank',       from:'#94A3B8', to:'#94A3B8' },
-    { initials:'BM', name:'Bheki Mthembu',      role:'Principal',            company:'Enygma Ventures',     from:'#94A3B8', to:'#94A3B8' },
-    { initials:'GW', name:'Grant Williams',     role:'Co-Founder',           company:'PayFast',             from:'#94A3B8', to:'#94A3B8' },
-    { initials:'MB', name:'Michelle Botha',     role:'Chief Legal Officer',  company:'SME South Africa',    from:'#94A3B8', to:'#94A3B8' },
-    { initials:'ZM', name:'Zola Matsapola',     role:'Director',             company:'IDC Innovation Fund', from:'#94A3B8', to:'#94A3B8' }
+  const COMPARE = [
+    {icon:'layout-dashboard', tint:'bg-[#FDECEF] text-[#DC183C]', title:'Business Health Score',
+      std:'Not included', prem:'A score across 5 dimensions, refreshed with every check-in'},
+    {icon:'list-checks', tint:'bg-[#E4F5EE] text-[#29A37A]', title:'Success Plan',
+      std:'Not included', prem:'A personalised, ordered action list built from your score'},
+    {icon:'shield-check', tint:'bg-[#FFF1E0] text-[#AE6B0A]', title:'Compliance Calendar',
+      std:'Not included', prem:'Every SARS, CIPC and labour deadline, plus a funder-ready evidence pack'},
+    {icon:'wallet', tint:'bg-[#FDECEF] text-[#DC183C]', title:'Cash Flow Tracker',
+      std:'Not included', prem:'A simple money-in / money-out log tied to your Cash Flow score'},
+    {icon:'folder-check', tint:'bg-[#E4F5EE] text-[#29A37A]', title:'Document Vault',
+      std:'Not included', prem:'Compliance documents in one place, with expiry tracked automatically'},
+    {icon:'target', tint:'bg-[#FFF1E0] text-[#AE6B0A]', title:'Growth Programmes',
+      std:'Not included', prem:'Matched to programmes based on your check-in results'}
   ];
+  document.getElementById('compareGrid').innerHTML = COMPARE.map(c=>`
+    <div class="bg-white rounded-2xl border border-[#E7EBEF] p-6 card-lift">
+      <div class="flex items-center gap-3 mb-4">
+        <div class="w-11 h-11 rounded-xl ${c.tint} grid place-items-center shrink-0"><i data-lucide="${c.icon}" class="w-5 h-5"></i></div>
+        <h3 class="font-jakarta font-bold text-base">${esc(c.title)}</h3>
+      </div>
+      <div class="tier-row tier-row--std tier-row--off"><i data-lucide="x" class="w-3.5 h-3.5"></i><span><b>Standard</b> — ${esc(c.std)}</span></div>
+      <div class="tier-row tier-row--prem"><i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i><span><b>Premium</b> — ${esc(c.prem)}</span></div>
+    </div>`).join('');
 
-  function speakerCard(s){
-    return `
-      <a href="event-speaker.html" class="group bg-white border border-[#E7EBEF] rounded-2xl p-5 text-center flex flex-col items-center card-lift reveal">
-        <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-full grid place-items-center font-jakarta font-extrabold text-white text-xl mb-3 shadow-md" style="background:linear-gradient(135deg, ${s.from}, ${s.to})">${esc(s.initials)}</div>
-        <h3 class="font-jakarta font-extrabold text-[#0C1F31] text-[15px] group-hover:text-[#DC183C] transition">${esc(s.name)}</h3>
-        <p class="text-[12px] text-[#DC183C] font-semibold mt-0.5 mb-1">${esc(s.role)}</p>
-        <p class="text-[11px] text-[#6A7581] uppercase tracking-wide font-bold">${esc(s.company)}</p>
-      </a>`;
-  }
-  function renderSpeakers(list){
-    document.getElementById('speakerGrid').innerHTML = list.map(speakerCard).join('');
-    document.getElementById('speakerCount').textContent = `${list.length} speaker${list.length===1?'':'s'}`;
-    lucide.createIcons();
-  }
-  function filterSpeakers(){
-    const q = document.getElementById('speakerSearch').value.trim().toLowerCase();
-    const list = !q ? SPEAKERS : SPEAKERS.filter(s => s.name.toLowerCase().includes(q) || s.company.toLowerCase().includes(q) || s.role.toLowerCase().includes(q));
-    renderSpeakers(list);
-    document.getElementById('speakerGrid').classList.toggle('hidden', list.length === 0);
-    document.getElementById('speakerEmpty').classList.toggle('hidden', list.length !== 0);
-    document.getElementById('speakerEmptyQuery').textContent = q;
-  }
-  renderSpeakers(SPEAKERS);
-
-  const BRIEF = {
-    title:'Speakers Archive', sub:'CPT <code>speaker</code> archive template',
-    purpose:'The directory a member browses to find "who\'s speaking" before committing to an event, and the destination for "View all speakers" links from event pages — pairs with the single Speaker Profile page (<code>event-speaker.html</code>) the same way public-articles.html pairs with public-article.html.',
-    data:'Same <code>speaker</code> records as the single profile page: <code>{ post_title, meta_role, meta_company, meta_avatar }</code>. This grid only needs the summary fields — bio, socials and talk history load on the single profile.',
-    logic:'Client-side search filters the in-memory <code>SPEAKERS</code> array by name, role or company — no page reload. Real build: <code>WP_Query</code> on the <code>speaker</code> CPT, with the same filter re-implemented as a debounced AJAX search (<code>public-search.html</code>\'s pattern) once the roster is too large to ship inline. Every card links to the single Speaker Profile template, resolved by the speaker\'s own post ID rather than always to the same demo page.',
-    components:'Search input · responsive grid (2-col mobile, 4-col desktop) of speaker cards (gradient monogram avatar · name · role · company) · empty state.',
-    specs:'Card: bg white rounded-2xl border #E7EBEF, hover lift + shadow (card-lift). Avatar 64/80px rounded-full gradient (per-speaker, falls back to slate-400 flat when no brand pairing is set). Name Plus Jakarta 800 15px #0C1F31, hover #DC183C. Role 12px #DC183C 600. Company 11px #6A7581 uppercase tracking-wide 700.'
-  };
-  function toggleDevMode(){const on=document.body.classList.toggle('dev-on');const b=document.getElementById('devToggle');if(b)b.classList.toggle('on',on);if(on)showToast('Dev Mode on — tap any ⓘ for the BRIEF.');lucide.createIcons();}
+  const BRIEF={title:'Premium Upgrade Landing Page',sub:'Marketing / conversion page · public, indexable — feeds into Membership Checkout',
+    purpose:'Covers <code>/premium/</code>, a focused single-tier upsell page distinct from public-pricing.html (which compares both tiers) and public-membership-sales.html (which sells the whole community top-of-funnel). This page assumes the visitor already knows the hub and is deciding whether to pay for Premium specifically, so it leads with the price and a direct Standard-vs-Premium contrast rather than re-explaining what the platform is. Redesigned from a flat, two-card feature dump into the same dark hero + tier-row comparison language already proven on public-pricing.html, so a visitor arriving from either page recognises the pattern instantly.',
+    data:'Single plan: Premium, R99/month. Six comparison cards, each a genuine Standard-vs-Premium gap, all drawn from what member-workspace.html actually builds: Business Health Score, Success Plan, Compliance Calendar, Cash Flow Tracker, Document Vault, Growth Programmes. Messaging, connections, webinars and rich-media posts are free for every member (confirmed against the Workspace mockup and public-pricing.html) and were removed from this list rather than left as a Premium-exclusive contradiction. "50% off every in-person event" was also removed — not a sustainable discount to promise.',
+    logic:'Both CTAs ("Upgrade to Premium") and the mobile tab bar route to <code>public-premium-checkout.html</code>, the dedicated Premium registration page, rather than the raw MemberPress form this page links to live today. (public-membership-checkout.html was retired and moved to /archive; its Premium path was rebuilt as public-premium-checkout.html.)',
+    components:'dark hero with Premium crown pill + price · six-card Standard-vs-Premium comparison grid (icon + two tier-rows) · closing price-repeat CTA panel on the same dark treatment as the hero.',
+    specs:'<b>Hero:</b> hero-bg navy gradient + 70% dot-pattern + top-right radial <code>rgba(255,153,0,.20)</code> glow (55%×55% at 80%/25%, 50% opacity), <code>max-w-3xl</code>=768px centred, <code>py-16 sm:py-20</code>. Crown pill: <code>#DC183C→#FF9900</code> gradient bg, white text, 11px weight 800 uppercase, rounded-full. H1 Jakarta extrabold 36px/48px, second line in <code>.grad-text</code> (red→orange gradient-clip, same token used on every pillar page). Price row: Jakarta extrabold 48px (<code>text-5xl</code>) + "/month" white/60. CTA height 48px rounded-full bg <code>#DC183C</code>, arrow-right icon. Trust line: shield-check icon + white/50 12px.<br/><br/><b>Comparison grid:</b> <code>max-w-6xl</code>=1152px, 2/3-col grid, 20px gap (<code>gap-5</code>). Card: white <code>rounded-2xl</code> border <code>#E7EBEF</code> <code>p-6</code>, hover lift. Header row: 44px icon tile per-card tint + Jakarta bold 16px title. Two <code>.tier-row</code> lines reused byte-for-byte from public-pricing.html — Standard line <code>x</code> icon <code>#DC183C</code>/55%, Premium line <code>check-circle-2</code> <code>#29A37A</code> weight 500 text with <code>#DC183C</code> bold label.<br/><br/><b>Closing panel:</b> same hero-bg + dot-pattern treatment as the hero (not a flat navy block — ties the page together visually), <code>rounded-2xl</code> <code>p-8</code>→<code>sm:p-10</code>, centred, crown icon, repeats the price, single CTA with arrow icon.'};
+  function toggleDevMode(){const on=document.body.classList.toggle('dev-on');const b=document.getElementById('devToggle');if(b)b.classList.toggle('on',on);if(on)showToast('Dev Mode on. Tap any ⓘ for implementation notes.');lucide.createIcons();}
   function closeOverlay(id){const el=document.getElementById(id);if(!el)return;el.classList.remove('open');setTimeout(()=>{if(el&&el.parentNode)el.remove();},300);}
-  function openBrief(){
-    const b=BRIEF;
-    const sec=(i,l,h)=>`<div class="px-6 py-4 border-t border-slate-100"><p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] flex items-center gap-1.5 mb-2"><i data-lucide="${i}" class="w-3.5 h-3.5"></i>${l}</p><div class="text-sm text-slate-600 leading-relaxed">${h}</div></div>`;
-    document.getElementById('overlay-root').innerHTML=`<div class="ov" id="ov"><div class="ov-bg" onclick="closeOverlay('ov')"></div><div class="drawer"><div class="sticky top-0 z-10 bg-[#0C1F31] text-white px-6 py-5 flex items-start justify-between"><div><p class="text-[10px] font-bold uppercase tracking-widest text-[#FF9900] mb-1">Dev Brief</p><h3 class="font-jakarta font-extrabold text-lg leading-tight">${b.title}</h3><p class="text-xs text-white/60 mt-1">${b.sub}</p></div><button onclick="closeOverlay('ov')" class="text-white/60 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button></div>${sec('target','Purpose',b.purpose)}${sec('database','Data model',b.data)}${sec('git-branch','Logic',b.logic)}${sec('boxes','Components',b.components)}${sec('ruler','Spec values',b.specs)}</div></div>`;
-    requestAnimationFrame(()=>{const o=document.getElementById('ov');if(o)o.classList.add('open');});
-    lucide.createIcons();
-  }
-
-  document.addEventListener('keydown', e=>{
-    if(e.key==='Escape'){
-      document.querySelectorAll('.ov.open').forEach(o=>closeOverlay(o.id));
-      const o=document.getElementById('chromeSearchOverlay'); if(o && o.classList.contains('active')) toggleChromeSearch();
-    }
-  });
+  function openBrief(){const b=BRIEF;const sec=(i,l,h)=>`<div class="px-6 py-4 border-t border-slate-100"><p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] flex items-center gap-1.5 mb-2"><i data-lucide="${i}" class="w-3.5 h-3.5"></i>${l}</p><div class="text-sm text-slate-600 leading-relaxed">${h}</div></div>`;document.getElementById('overlay-root').innerHTML=`<div class="ov" id="ov"><div class="ov-bg" onclick="closeOverlay('ov')"></div><div class="drawer"><div class="sticky top-0 z-10 bg-[#0C1F31] text-white px-6 py-5 flex items-start justify-between"><div><p class="text-[10px] font-bold uppercase tracking-widest text-[#FF9900] mb-1">Dev Brief</p><h3 class="font-jakarta font-extrabold text-lg leading-tight">${b.title}</h3><p class="text-xs text-white/60 mt-1">${b.sub}</p></div><button onclick="closeOverlay('ov')" class="text-white/60 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button></div>${sec('target','Purpose',b.purpose)}${sec('database','Data model',b.data)}${sec('git-branch','Logic',b.logic)}${sec('ruler','Spec values',b.specs)}${sec('boxes','Components',b.components)}</div></div>`;requestAnimationFrame(()=>{const o=document.getElementById('ov');if(o)o.classList.add('open');});lucide.createIcons();}
 
   lucide.createIcons();
 </script>
 <script>
-  // ===== Recommended header/footer behaviour =====
   function toggleChromeSearch(){
     const o = document.getElementById('chromeSearchOverlay');
     const opening = o.classList.toggle('active');
@@ -320,6 +306,9 @@
   }
   document.addEventListener('click', e=>{
     if(!e.target.closest('nav .relative')) Object.values(CHROME_DROPS).forEach(id=>document.getElementById(id).classList.add('hidden'));
+  });
+  document.addEventListener('keydown', e=>{
+    if(e.key==='Escape'){ const o=document.getElementById('chromeSearchOverlay'); if(o && o.classList.contains('active')) toggleChromeSearch(); }
   });
 </script>
 </body>
