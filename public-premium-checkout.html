@@ -99,11 +99,11 @@
   </div>
 </header>
 
-<div class="max-w-6xl mx-auto px-4 sm:px-6 pt-6">
+<div class="checkout-step max-w-6xl mx-auto px-4 sm:px-6 pt-6">
   <nav aria-label="Breadcrumb" class="text-xs text-[#6A7581] flex items-center flex-wrap gap-x-1.5"><a href="member-hub.html" class="hover:text-[#DC183C] transition">Home</a><span class="text-slate-500">›</span><a href="public-pricing.html" class="hover:text-[#DC183C] transition">Pricing</a><span class="text-slate-500">›</span><span class="text-[#121A21] font-medium truncate">Upgrade to Premium</span></nav>
 </div>
 
-<section class="max-w-6xl mx-auto px-4 sm:px-6 pt-4 pb-2">
+<section class="checkout-step max-w-6xl mx-auto px-4 sm:px-6 pt-4 pb-2">
   <p class="text-[12px] font-bold uppercase tracking-widest text-[#DC183C] flex items-center gap-1.5"><i data-lucide="crown" class="w-3.5 h-3.5"></i> Premium Membership
     <button onclick="openBrief()" class="dev-badge align-middle w-5 h-5 rounded-full bg-[#FF9900] text-[#0C1F31] items-center justify-center text-[10px] font-bold">i</button>
   </p>
@@ -111,7 +111,7 @@
   <p class="mt-2 text-[#6A7581] max-w-xl">Unlock your full Business Health Score, Success Plan, Compliance Calendar, Cash Flow tracker and Document Vault. R99/month.</p>
 </section>
 
-<main class="max-w-6xl mx-auto px-4 sm:px-6 pb-16">
+<main class="checkout-step max-w-6xl mx-auto px-4 sm:px-6 pb-16">
   <div class="grid lg:grid-cols-3 gap-6 mt-4">
 
     <!-- FORM -->
@@ -197,6 +197,40 @@
   </div>
 </main>
 
+<!-- ===================== SUCCESS — shown after payment, replaces the checkout form ===================== -->
+<main id="successView" class="hidden max-w-2xl mx-auto px-4 sm:px-6 pb-20 pt-6 text-center">
+  <div class="w-16 h-16 rounded-full bg-[#ECFDF5] grid place-items-center mx-auto">
+    <i data-lucide="check-circle-2" class="w-8 h-8 text-[#29A37A]"></i>
+  </div>
+  <h1 class="font-jakarta font-extrabold text-2xl sm:text-3xl tracking-tight mt-5">You're on Premium</h1>
+  <p class="mt-2 text-[#6A7581] max-w-md mx-auto">Your full Business Health Score, Success Plan, Compliance Calendar, Cash Flow tracker and Document Vault are unlocked.</p>
+
+  <div class="bg-white rounded-2xl border border-[#E7EBEF] p-6 mt-7 text-left">
+    <div class="flex items-center justify-between pb-4 border-b border-[#E7EBEF]">
+      <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-bold bg-[#FDECEF] text-[#DC183C]"><i data-lucide="crown" class="w-3 h-3"></i> PREMIUM</span>
+      <span id="receiptRef" class="text-[11px] font-mono text-[#94A3B8]"></span>
+    </div>
+    <div class="flex items-center justify-between mt-4 text-sm">
+      <span class="text-[#6A7581]">Plan</span><span class="font-semibold">Premium — R99/month</span>
+    </div>
+    <div class="flex items-center justify-between mt-2.5 text-sm">
+      <span class="text-[#6A7581]">Charged today</span><span class="font-semibold">R99.00</span>
+    </div>
+    <div class="flex items-center justify-between mt-2.5 text-sm">
+      <span class="text-[#6A7581]">Payment method</span><span class="font-semibold">Visa •••• 4242</span>
+    </div>
+    <div class="flex items-center justify-between mt-2.5 text-sm">
+      <span class="text-[#6A7581]">Next billing date</span><span id="receiptNextBill" class="font-semibold"></span>
+    </div>
+    <p class="text-[11px] text-[#6A7581] mt-4 pt-4 border-t border-[#E7EBEF] flex items-center gap-1.5"><i data-lucide="mail" class="w-3.5 h-3.5 text-[#94A3B8]"></i> A receipt has been sent to joel@smesouthafrica.co.za.</p>
+  </div>
+
+  <div class="flex flex-col sm:flex-row items-center justify-center gap-3 mt-7">
+    <a href="member-workspace.html" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 h-12 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold transition"><i data-lucide="sparkles" class="w-4 h-4"></i> Go to your Workspace</a>
+    <a href="member-account.html#membership" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 h-12 rounded-full border border-[#E7EBEF] hover:bg-slate-50 font-bold transition">Manage billing</a>
+  </div>
+</main>
+
 <!-- ===================== FOOTER (shared member chrome — identical to member-hub.html) ===================== -->
 <footer class="bg-white border-t border-slate-200 mt-10">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 py-5 flex flex-col sm:flex-row items-center justify-between gap-3">
@@ -223,14 +257,33 @@
   document.getElementById('planFeatures').innerHTML = PLAN_FEATURES.map(f=>`<div class="flex items-start gap-2"><i data-lucide="check" class="w-4 h-4 text-[#29A37A] shrink-0 mt-0.5"></i><span>${esc(f)}</span></div>`).join('');
 
   function submitUpgrade(){
-    showToast('Payment received. Welcome to Premium.');
+    const btn = document.getElementById('submitBtn');
+    btn.disabled = true;
+    btn.innerHTML = '<i data-lucide="loader-2" class="w-4 h-4 animate-spin"></i> <span>Processing payment…</span>';
+    lucide.createIcons();
+
+    setTimeout(() => {
+      document.querySelectorAll('.checkout-step').forEach(el => el.classList.add('hidden'));
+
+      const ref = 'SME-' + Math.random().toString(36).slice(2, 8).toUpperCase();
+      document.getElementById('receiptRef').textContent = ref;
+      const nextBill = new Date();
+      nextBill.setMonth(nextBill.getMonth() + 1);
+      document.getElementById('receiptNextBill').textContent = nextBill.toLocaleDateString('en-ZA', { day: 'numeric', month: 'long', year: 'numeric' });
+
+      const success = document.getElementById('successView');
+      success.classList.remove('hidden');
+      lucide.createIcons();
+      window.scrollTo({ top: 0, behavior: 'instant' });
+      showToast('Payment received. Welcome to Premium.');
+    }, 700);
   }
 
   const BRIEF={title:'Premium Checkout — Upgrade to Premium',sub:'In-app upgrade for an already-authenticated Standard member + PayFast handoff · requires login',
     purpose:'Reached only from an "Upgrade to Premium" CTA while logged in (member-account.html, member-workspace.html, the mobile tab bar\'s Upgrade entry) — this is not a public signup page. Since the visitor is already a known Standard member, their name, email and phone are never re-asked: the account card pulls them from the session the same way member-account.html does. Billing address is pre-filled from their stored profile where we have it, shown editable in case it\'s changed. A separate, logged-out flow (<code>public-auth.html</code> → <code>public-pricing.html</code>) still exists for brand-new signups; this page is the upgrade path only, so there\'s no "sign in instead" note and no link back to the Standard plan — reversible if we ever want to be, via the ★ Change plan action in account settings.',
     data:'MemberPress: <code>Member { id }</code> (read-only, from session) + <code>Address { street, city, province, postal_code }</code> (read/write, pre-filled from the member\'s stored profile) + <code>Transaction { membership_id:"premium", amount:99, gateway:"PayFast", status }</code>. No password field — the member already has one.',
-    logic:'No plan switcher and no collapsible sections — billing and payment are always visible since this visitor is already committed to Premium. The account and billing cards both carry a small "From your account" badge to signal auto-filled data; editing billing fields is allowed, editing the account card routes to member-account.html instead of inline editing.',
-    components:'account summary (read-only, avatar + name + email + phone) · pre-filled billing address · payment fields · consent checkbox · sticky Premium order summary.',
+    logic:'No plan switcher and no collapsible sections — billing and payment are always visible since this visitor is already committed to Premium. The account and billing cards both carry a small "From your account" badge to signal auto-filled data; editing billing fields is allowed, editing the account card routes to member-account.html instead of inline editing. Submit swaps every <code>.checkout-step</code> element for <code>#successView</code> (this is the screen the Mohlanka review flagged as missing entirely — there was previously no step after payment at all, just a toast) — a receipt card with a generated reference, the next billing date, and two exits: straight into the Workspace, or billing management in Account Settings.',
+    components:'account summary (read-only, avatar + name + email + phone) · pre-filled billing address · payment fields · consent checkbox · sticky Premium order summary · post-payment success screen with receipt.',
     specs:'<b>Page shell:</b> content <code>max-w-6xl</code>=1152px. Eyebrow "Premium Membership" 12px bold uppercase tracking-widest <code>#DC183C</code> with crown icon. H1 Jakarta extrabold 800, 30px mobile / 36px desktop. Sub 16px <code>#6A7581</code> max-width 576px.<br/><br/><b>Layout grid:</b> <code>lg:grid-cols-3 gap-6</code>=24px — form spans <code>lg:col-span-2</code>, order summary sticky at <code>lg:top-24</code>=96px.<br/><br/><b>Form section cards:</b> white <code>rounded-2xl</code>=16px, border 1px <code>#E7EBEF</code>, <code>p-6</code>=24px, stacked <code>space-y-5</code>=20px, identical field styling to the archived membership-checkout mockup (<code>.field</code> 48px height, <code>rounded-xl</code>, focus ring <code>rgba(220,24,60,.12)</code>). "From your account" badge: <code>#ECFDF5</code> bg, <code>#0F6A31</code> text, 10px bold uppercase pill.<br/><br/><b>Order summary card:</b> white <code>rounded-2xl</code> border-2 <code>#DC183C</code> <code>p-5</code>=20px (no tab switcher — single fixed Premium plan). PREMIUM eyebrow pill bg <code>#FDECEF</code> text <code>#DC183C</code>. Price Jakarta extrabold <code>text-3xl</code>=30px. Feature list 14px rows with Lucide <code>check</code> 16px <code>#29A37A</code>. Total row + PayFast trust note below.<br/><b>Submit button:</b> full width, <code>rounded-full</code>, bg <code>#DC183C</code> → hover <code>#B0142F</code>, white bold, crown icon.'};
   function toggleDevMode(){const on=document.body.classList.toggle('dev-on');const b=document.getElementById('devToggle');if(b)b.classList.toggle('on',on);if(on)showToast('Dev Mode on. Tap any ⓘ for implementation notes.');lucide.createIcons();}
   function closeOverlay(id){const el=document.getElementById(id);if(!el)return;el.classList.remove('open');setTimeout(()=>{if(el&&el.parentNode)el.remove();},300);}
