@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Upgrade to Premium: SME South Africa</title>
-  <meta name="description" content="Create your SME South Africa account and upgrade straight to Premium membership." />
+  <meta name="description" content="Upgrade your SME South Africa account to Premium membership." />
   <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <script src="https://cdn.tailwindcss.com"></script><script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
@@ -15,7 +15,6 @@
     .dev-badge{display:none;} body.dev-on .dev-badge{display:inline-flex;} #devToggle.on{background:#DC183C;color:#fff;border-color:#DC183C;}
     .ov{position:fixed;inset:0;z-index:60;} .ov-bg{position:absolute;inset:0;background:rgba(12,31,49,.45);backdrop-filter:blur(2px);opacity:0;transition:opacity .3s;} .ov.open .ov-bg{opacity:1;}
     .drawer{position:absolute;right:0;top:0;height:100%;width:100%;max-width:440px;background:#fff;box-shadow:-12px 0 40px rgba(12,31,49,.25);overflow-y:auto;transform:translateX(100%);transition:transform .3s cubic-bezier(.2,.7,.2,1);} .ov.open .drawer{transform:translateX(0);}
-    .strength-seg{height:4px;border-radius:2px;background:#E7EBEF;transition:background .2s;}
       .search-overlay{position:absolute;inset:0;background:#fff;z-index:20;display:flex;align-items:center;justify-content:center;padding:0 1rem;opacity:0;pointer-events:none;transform:translateY(-8px);transition:all .25s cubic-bezier(.2,.8,.2,1);}
     .search-overlay.active{opacity:1;pointer-events:auto;transform:translateY(0);}
     @media (min-width:640px){ .search-overlay{padding:0 1.5rem;} }
@@ -140,46 +139,40 @@
     <form onsubmit="event.preventDefault();submitUpgrade()" class="lg:col-span-2 space-y-5">
 
       <div class="bg-white rounded-2xl border border-[#E7EBEF] p-6">
-        <h3 class="font-jakarta font-extrabold text-lg">Your details</h3>
-        <div class="grid sm:grid-cols-2 gap-4 mt-4">
-          <div><label class="block text-sm font-semibold mb-1.5">First name</label><input required class="field" placeholder="Thabo" /></div>
-          <div><label class="block text-sm font-semibold mb-1.5">Last name</label><input required class="field" placeholder="Nkosi" /></div>
+        <div class="flex items-center justify-between">
+          <h3 class="font-jakarta font-extrabold text-lg">Your details</h3>
+          <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-[#ECFDF5] text-[#0F6A31] text-[10px] font-bold uppercase tracking-wide"><i data-lucide="check-circle" class="w-3 h-3"></i> From your account</span>
         </div>
-        <div class="mt-4"><label class="block text-sm font-semibold mb-1.5">Business email</label><input type="email" required class="field" placeholder="you@business.co.za" /></div>
-        <div class="mt-4"><label class="block text-sm font-semibold mb-1.5">Phone</label>
-          <div class="flex">
-            <span class="inline-flex items-center gap-1 px-3 h-12 rounded-l-xl border border-r-0 border-[#E7EBEF] bg-[#FCFCFC] text-sm font-semibold whitespace-nowrap">🇿🇦 +27</span>
-            <input required class="field rounded-l-none" placeholder="82 123 4567" />
+        <div class="mt-4 flex items-center gap-4">
+          <span class="w-14 h-14 rounded-full bg-gradient-to-br from-[#DC183C] to-[#FF9900] grid place-items-center text-white font-jakarta font-extrabold text-lg shrink-0">TJ</span>
+          <div class="min-w-0">
+            <p class="font-jakarta font-extrabold text-[#121A21] truncate">Tshepho Joel</p>
+            <p class="text-sm text-[#6A7581] truncate">joel@smesouthafrica.co.za &middot; +27 82 123 4567</p>
           </div>
         </div>
-        <div class="grid sm:grid-cols-2 gap-4 mt-4">
-          <div>
-            <label class="block text-sm font-semibold mb-1.5">Password</label>
-            <input id="pw" oninput="checkStrength()" type="password" required class="field" placeholder="Create a password" />
-            <div class="flex gap-1 mt-2" id="pwBars"><div class="flex-1 strength-seg"></div><div class="flex-1 strength-seg"></div><div class="flex-1 strength-seg"></div></div>
-            <p class="text-[11px] text-[#6A7581] mt-1.5" id="pwHint">Must be "Medium" strength or stronger.</p>
-          </div>
-          <div><label class="block text-sm font-semibold mb-1.5">Confirm password</label><input type="password" required class="field" placeholder="Re-enter password" /></div>
-        </div>
-        <p class="text-xs text-[#6A7581] mt-4">Already have a Standard account? <a href="public-auth.html" class="text-[#DC183C] font-semibold hover:underline">Sign in</a> and upgrade from your account settings instead.</p>
+        <p class="text-xs text-[#6A7581] mt-4 flex items-center gap-1.5"><i data-lucide="lock" class="w-3.5 h-3.5 text-[#94A3B8]"></i> Pulled from your Standard account — <a href="member-account.html" class="text-[#DC183C] font-semibold hover:underline">update in Account Settings</a> if anything's changed.</p>
       </div>
 
       <div class="bg-white rounded-2xl border border-[#E7EBEF] p-6 space-y-4">
-        <h3 class="font-jakarta font-extrabold text-lg">Billing address</h3>
-        <div><label class="block text-sm font-semibold mb-1.5">Street address</label><input class="field" placeholder="12 Sandton Drive" /></div>
+        <div class="flex items-center justify-between">
+          <h3 class="font-jakarta font-extrabold text-lg">Billing address</h3>
+          <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-[#ECFDF5] text-[#0F6A31] text-[10px] font-bold uppercase tracking-wide"><i data-lucide="check-circle" class="w-3 h-3"></i> From your account</span>
+        </div>
+        <div><label class="block text-sm font-semibold mb-1.5">Street address</label><input class="field" value="12 Sandton Drive" /></div>
         <div class="grid sm:grid-cols-2 gap-4">
-          <div><label class="block text-sm font-semibold mb-1.5">City</label><input class="field" placeholder="Johannesburg" /></div>
+          <div><label class="block text-sm font-semibold mb-1.5">City</label><input class="field" value="Johannesburg" /></div>
           <div><label class="block text-sm font-semibold mb-1.5">Province</label>
             <select class="field">
-              <option value="" disabled selected>Select province</option>
-              <option>Gauteng</option><option>Western Cape</option><option>KwaZulu-Natal</option><option>Eastern Cape</option><option>Free State</option><option>Limpopo</option><option>Mpumalanga</option><option>North West</option><option>Northern Cape</option>
+              <option disabled>Select province</option>
+              <option selected>Gauteng</option><option>Western Cape</option><option>KwaZulu-Natal</option><option>Eastern Cape</option><option>Free State</option><option>Limpopo</option><option>Mpumalanga</option><option>North West</option><option>Northern Cape</option>
             </select>
           </div>
         </div>
         <div class="grid sm:grid-cols-2 gap-4">
-          <div><label class="block text-sm font-semibold mb-1.5">Postal code</label><input class="field" placeholder="2196" inputmode="numeric" /></div>
+          <div><label class="block text-sm font-semibold mb-1.5">Postal code</label><input class="field" value="2196" inputmode="numeric" /></div>
           <div><label class="block text-sm font-semibold mb-1.5">Country</label><input class="field" value="South Africa" disabled /></div>
         </div>
+        <p class="text-xs text-[#6A7581] flex items-center gap-1.5"><i data-lucide="lock" class="w-3.5 h-3.5 text-[#94A3B8]"></i> Pre-filled from your profile — edit any field if your billing address is different.</p>
       </div>
 
       <div class="bg-white rounded-2xl border border-[#E7EBEF] p-6 space-y-4">
@@ -221,7 +214,6 @@
         <div class="flex items-center justify-between"><span class="text-[#6A7581] text-sm">Today's total</span><span class="font-jakarta font-extrabold text-xl">R99</span></div>
         <p class="mt-3 text-[11px] text-center text-[#6A7581] flex items-center justify-center gap-1.5"><i data-lucide="shield-check" class="w-3 h-3 text-[#29A37A]"></i> Billed monthly via PayFast. Cancel anytime.</p>
       </div>
-      <p class="text-[11px] text-center text-[#6A7581] mt-3">Just want to try the community first? <a href="public-pricing.html" class="text-[#DC183C] font-semibold hover:underline">See the Standard plan</a></p>
     </aside>
   </div>
 </main>
@@ -232,7 +224,7 @@
     <div class="grid grid-cols-2 md:grid-cols-6 gap-8">
       <div class="col-span-2">
         <a href="public-home.html" class="flex items-center gap-2.5"><img src="assets/logo-v1-lockup-reversed.svg" alt="SME South Africa" class="h-9 w-auto" /></a>
-        <p class="text-sm text-white/55 mt-4 max-w-xs leading-relaxed">South Africa's leading SME community, connecting founders with funding, mentorship, events, and the tools to scale.</p>
+        <p class="text-sm text-white/55 mt-4 max-w-xs leading-relaxed">South Africa's leading SME community — connecting founders with funding, mentorship, events, and the tools to scale.</p>
         <div class="flex items-center gap-2 mt-5">
           <a href="#" aria-label="X" class="w-9 h-9 rounded-lg bg-white/8 hover:bg-white/15 grid place-items-center transition"><svg viewBox="0 0 24 24" class="w-4 h-4" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24h-6.66l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
           <a href="#" aria-label="LinkedIn" class="w-9 h-9 rounded-lg bg-white/8 hover:bg-white/15 grid place-items-center transition"><svg viewBox="0 0 24 24" class="w-4 h-4" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0z"/></svg></a>
@@ -244,7 +236,7 @@
       </div>
       <div>
         <p class="text-[11px] font-bold uppercase tracking-widest text-[#FF9900]">Platform</p>
-        <ul class="mt-4 space-y-2.5 text-sm text-white/70">
+        <ul class="mt-4 space-y-2.5 text-sm text-white/70 list-none">
           <li><a href="public-workspace.html" class="hover:text-white">SME Workspace</a></li>
           <li><a href="public-resources.html" class="hover:text-white">Resources Library</a></li>
           <li><a href="public-funding.html" class="hover:text-white">Funding Portal</a></li>
@@ -254,7 +246,7 @@
       </div>
       <div>
         <p class="text-[11px] font-bold uppercase tracking-widest text-[#FF9900]">Insights</p>
-        <ul class="mt-4 space-y-2.5 text-sm text-white/70">
+        <ul class="mt-4 space-y-2.5 text-sm text-white/70 list-none">
           <li><a href="public-articles.html" class="hover:text-white">All Articles</a></li>
           <li><a href="public-founder-focus-category.html" class="hover:text-white">Founder Focus</a></li>
           <li><a href="public-funding-summit-category.html" class="hover:text-white">Funding Summit</a></li>
@@ -264,7 +256,7 @@
       </div>
       <div>
         <p class="text-[11px] font-bold uppercase tracking-widest text-[#FF9900]">Community</p>
-        <ul class="mt-4 space-y-2.5 text-sm text-white/70">
+        <ul class="mt-4 space-y-2.5 text-sm text-white/70 list-none">
           <li><a href="member-hub.html" class="hover:text-white">Community Forum</a></li>
           <li><a href="events.html" class="hover:text-white">Events &amp; Webinars</a></li>
           <li><a href="newsletter.html" class="hover:text-white">Newsletter</a></li>
@@ -274,7 +266,7 @@
       </div>
       <div>
         <p class="text-[11px] font-bold uppercase tracking-widest text-[#FF9900]">Legal</p>
-        <ul class="mt-4 space-y-2.5 text-sm text-white/70">
+        <ul class="mt-4 space-y-2.5 text-sm text-white/70 list-none">
           <li><a href="public-terms.html" class="hover:text-white">Terms &amp; Conditions</a></li>
           <li><a href="public-privacy.html" class="hover:text-white">Privacy Policy</a></li>
           <li><a href="public-refunds.html" class="hover:text-white">Refunds Policy</a></li>
@@ -288,7 +280,7 @@
         <a href="public-about.html" class="hover:text-white transition">About</a><span class="text-white/20">·</span>
             <a href="public-contact.html" class="hover:text-white transition">Contact</a><span class="text-white/20">·</span>
             <a href="public-advertise.html" class="hover:text-white transition">Advertise</a><span class="text-white/20">·</span>
-            <a href="public-help.html" class="hover:text-white transition">Help Center</a>
+            <a href="public-help.html" class="hover:text-white transition">Help Centre</a>
       </div>
       <p>© 2026 SME South Africa. All rights reserved.</p>
     </div>
@@ -303,29 +295,16 @@
   const PLAN_FEATURES = ['Everything in Standard, plus:', 'Direct messaging with any member', 'Connections & networking requests', '50% off every in-person event', 'Monthly webinars with industry leaders', 'Images and video in every post', 'SME Workspace — full Business Score & modules'];
   document.getElementById('planFeatures').innerHTML = PLAN_FEATURES.map(f=>`<div class="flex items-start gap-2"><i data-lucide="check" class="w-4 h-4 text-[#29A37A] shrink-0 mt-0.5"></i><span>${esc(f)}</span></div>`).join('');
 
-  function checkStrength(){
-    const v = document.getElementById('pw').value;
-    let score = 0;
-    if(v.length>=8) score++;
-    if(/[A-Z]/.test(v) && /[0-9]/.test(v)) score++;
-    if(/[^A-Za-z0-9]/.test(v) && v.length>=10) score++;
-    const bars = document.querySelectorAll('#pwBars .strength-seg');
-    const colors = ['#DC183C','#FF9900','#29A37A'];
-    bars.forEach((b,i)=>{ b.style.background = i<score ? colors[score-1] : '#E7EBEF'; });
-    const hint = document.getElementById('pwHint');
-    hint.textContent = !v ? 'Must be "Medium" strength or stronger.' : score<=1 ? 'Weak — add a number, a capital letter or a symbol.' : score===2 ? 'Medium — good to go.' : 'Strong.';
-  }
-
   function submitUpgrade(){
     showToast('Payment received. Welcome to Premium.');
   }
 
-  const BRIEF={title:'Premium Checkout — Upgrade to Premium',sub:'MemberPress registration (paid-membership) + PayFast handoff · public, indexable form page',
-    purpose:'Covers <code>/register/paid-membership/</code>, which lives today as a completely unstyled MemberPress default form — no header, no footer, broken logo, plain browser inputs, bleeding into unrelated theme widgets below it. This is the destination for every "Upgrade to Premium" / "Join Now" CTA across the site (public-pricing.html, public-premium.html, public-membership-sales.html, public-workspace.html). Deliberately locked to Premium only — no plan switcher — since a visitor who clicked "Upgrade" already made that choice; a Standard-only signup path would be a separate page (<code>/register/free-membership/</code>) if/when that\'s rebuilt.',
-    data:'MemberPress: <code>Member { first_name, last_name, email, phone, password }</code> + <code>Transaction { membership_id:"premium", amount:99, gateway:"PayFast", status }</code>. Same Premium tier as public-pricing.html — R99/month, PayFast recurring billing.',
-    logic:'No plan switcher and no collapsible sections — billing and payment are always visible since every visitor to this page is buying Premium. Password strength is the same simple 3-tier client-side heuristic used elsewhere on the site. A note above the submit button offers existing Standard members a path to sign in and upgrade from account settings instead of re-registering.',
-    components:'account form · billing address · payment fields · password strength meter · consent checkbox · sticky Premium order summary.',
-    specs:'<b>Page shell:</b> content <code>max-w-6xl</code>=1152px. Eyebrow "Premium Membership" 12px bold uppercase tracking-widest <code>#DC183C</code> with crown icon. H1 Jakarta extrabold 800, 30px mobile / 36px desktop. Sub 16px <code>#6A7581</code> max-width 576px.<br/><br/><b>Layout grid:</b> <code>lg:grid-cols-3 gap-6</code>=24px — form spans <code>lg:col-span-2</code>, order summary sticky at <code>lg:top-24</code>=96px.<br/><br/><b>Form section cards:</b> white <code>rounded-2xl</code>=16px, border 1px <code>#E7EBEF</code>, <code>p-6</code>=24px, stacked <code>space-y-5</code>=20px, identical field styling to the archived membership-checkout mockup (<code>.field</code> 48px height, <code>rounded-xl</code>, focus ring <code>rgba(220,24,60,.12)</code>).<br/><b>Password strength:</b> 3 segments height 4px <code>rounded-full</code>, fill red→orange→green by score.<br/><br/><b>Order summary card:</b> white <code>rounded-2xl</code> border-2 <code>#DC183C</code> <code>p-5</code>=20px (no tab switcher — single fixed Premium plan). PREMIUM eyebrow pill bg <code>#FDECEF</code> text <code>#DC183C</code>. Price Jakarta extrabold <code>text-3xl</code>=30px. Feature list 14px rows with Lucide <code>check</code> 16px <code>#29A37A</code>. Total row + PayFast trust note below.<br/><b>Submit button:</b> full width, <code>rounded-full</code>, bg <code>#DC183C</code> → hover <code>#B0142F</code>, white bold, crown icon.'};
+  const BRIEF={title:'Premium Checkout — Upgrade to Premium',sub:'In-app upgrade for an already-authenticated Standard member + PayFast handoff · requires login',
+    purpose:'Reached only from an "Upgrade to Premium" CTA while logged in (member-account.html, member-workspace.html, the mobile tab bar\'s Upgrade entry) — this is not a public signup page. Since the visitor is already a known Standard member, their name, email and phone are never re-asked: the account card pulls them from the session the same way member-account.html does. Billing address is pre-filled from their stored profile where we have it, shown editable in case it\'s changed. A separate, logged-out flow (<code>public-auth.html</code> → <code>public-pricing.html</code>) still exists for brand-new signups; this page is the upgrade path only, so there\'s no "sign in instead" note and no link back to the Standard plan — reversible if we ever want to be, via the ★ Change plan action in account settings.',
+    data:'MemberPress: <code>Member { id }</code> (read-only, from session) + <code>Address { street, city, province, postal_code }</code> (read/write, pre-filled from the member\'s stored profile) + <code>Transaction { membership_id:"premium", amount:99, gateway:"PayFast", status }</code>. No password field — the member already has one.',
+    logic:'No plan switcher and no collapsible sections — billing and payment are always visible since this visitor is already committed to Premium. The account and billing cards both carry a small "From your account" badge to signal auto-filled data; editing billing fields is allowed, editing the account card routes to member-account.html instead of inline editing.',
+    components:'account summary (read-only, avatar + name + email + phone) · pre-filled billing address · payment fields · consent checkbox · sticky Premium order summary.',
+    specs:'<b>Page shell:</b> content <code>max-w-6xl</code>=1152px. Eyebrow "Premium Membership" 12px bold uppercase tracking-widest <code>#DC183C</code> with crown icon. H1 Jakarta extrabold 800, 30px mobile / 36px desktop. Sub 16px <code>#6A7581</code> max-width 576px.<br/><br/><b>Layout grid:</b> <code>lg:grid-cols-3 gap-6</code>=24px — form spans <code>lg:col-span-2</code>, order summary sticky at <code>lg:top-24</code>=96px.<br/><br/><b>Form section cards:</b> white <code>rounded-2xl</code>=16px, border 1px <code>#E7EBEF</code>, <code>p-6</code>=24px, stacked <code>space-y-5</code>=20px, identical field styling to the archived membership-checkout mockup (<code>.field</code> 48px height, <code>rounded-xl</code>, focus ring <code>rgba(220,24,60,.12)</code>). "From your account" badge: <code>#ECFDF5</code> bg, <code>#0F6A31</code> text, 10px bold uppercase pill.<br/><br/><b>Order summary card:</b> white <code>rounded-2xl</code> border-2 <code>#DC183C</code> <code>p-5</code>=20px (no tab switcher — single fixed Premium plan). PREMIUM eyebrow pill bg <code>#FDECEF</code> text <code>#DC183C</code>. Price Jakarta extrabold <code>text-3xl</code>=30px. Feature list 14px rows with Lucide <code>check</code> 16px <code>#29A37A</code>. Total row + PayFast trust note below.<br/><b>Submit button:</b> full width, <code>rounded-full</code>, bg <code>#DC183C</code> → hover <code>#B0142F</code>, white bold, crown icon.'};
   function toggleDevMode(){const on=document.body.classList.toggle('dev-on');const b=document.getElementById('devToggle');if(b)b.classList.toggle('on',on);if(on)showToast('Dev Mode on. Tap any ⓘ for implementation notes.');lucide.createIcons();}
   function closeOverlay(id){const el=document.getElementById(id);if(!el)return;el.classList.remove('open');setTimeout(()=>{if(el&&el.parentNode)el.remove();},300);}
   function openBrief(){const b=BRIEF;const sec=(i,l,h)=>`<div class="px-6 py-4 border-t border-slate-100"><p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] flex items-center gap-1.5 mb-2"><i data-lucide="${i}" class="w-3.5 h-3.5"></i>${l}</p><div class="text-sm text-slate-600 leading-relaxed">${h}</div></div>`;document.getElementById('overlay-root').innerHTML=`<div class="ov" id="ov"><div class="ov-bg" onclick="closeOverlay('ov')"></div><div class="drawer"><div class="sticky top-0 z-10 bg-[#0C1F31] text-white px-6 py-5 flex items-start justify-between"><div><p class="text-[10px] font-bold uppercase tracking-widest text-[#FF9900] mb-1">Dev Brief</p><h3 class="font-jakarta font-extrabold text-lg leading-tight">${b.title}</h3><p class="text-xs text-white/60 mt-1">${b.sub}</p></div><button onclick="closeOverlay('ov')" class="text-white/60 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button></div>${sec('target','Purpose',b.purpose)}${sec('database','Data model',b.data)}${sec('git-branch','Logic',b.logic)}${sec('ruler','Spec values',b.specs)}${sec('boxes','Components',b.components)}</div></div>`;requestAnimationFrame(()=>{const o=document.getElementById('ov');if(o)o.classList.add('open');});lucide.createIcons();}
