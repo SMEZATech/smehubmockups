@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Unlock the Full Power of the SME Hub</title>
-  <meta name="description" content="You've got the basics. Now get the connections, the tools, and the discounts reserved for our Premium members." />
+  <meta name="description" content="You've got the basics. Now get your full Business Health Score, Compliance Calendar, Cash Flow tracker and Document Vault — the tools reserved for our Premium members." />
   <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <script src="https://cdn.tailwindcss.com"></script><script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
@@ -142,13 +142,13 @@
       <button onclick="openBrief()" class="dev-badge align-middle ml-1 w-6 h-6 rounded-full bg-[#FF9900] text-[#0C1F31] items-center justify-center text-[11px] font-bold">i</button>
       <span class="block grad-text mt-1">the SME Hub</span>
     </h1>
-    <p class="mt-5 text-lg text-white/70 max-w-lg mx-auto leading-relaxed">You've got the basics. Now get direct messaging, a stronger network, and the discounts reserved for Premium members.</p>
+    <p class="mt-5 text-lg text-white/70 max-w-lg mx-auto leading-relaxed">You've got the basics. Now get your full Business Health Score, a personalised Success Plan, and the compliance and cash flow tools reserved for Premium members.</p>
 
     <div class="mt-8 inline-flex items-end gap-1.5"><span class="font-jakarta font-extrabold text-5xl">R99</span><span class="text-white/60 mb-2">/month</span></div>
     <div class="mt-5 flex flex-wrap items-center justify-center gap-3">
       <a href="public-premium-checkout.html" class="inline-flex items-center gap-2 px-7 h-12 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold transition">Upgrade to Premium <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
     </div>
-    <p class="mt-4 text-sm text-white/50 flex items-center justify-center gap-1.5"><i data-lucide="shield-check" class="w-4 h-4"></i> Cancel anytime. No hidden fees.</p>
+    <p class="mt-4 text-sm text-white/50 flex items-center justify-center gap-1.5"><i data-lucide="shield-check" class="w-4 h-4"></i> No hidden fees.</p>
   </div>
 </section>
 
@@ -168,7 +168,7 @@
       <i data-lucide="crown" class="w-7 h-7 mx-auto text-[#FF9900]"></i>
       <h3 class="font-jakarta font-extrabold text-xl sm:text-2xl mt-3">Ready to Level Up?</h3>
       <div class="mt-3 flex items-end justify-center gap-1.5"><span class="font-jakarta font-extrabold text-4xl">R99</span><span class="text-white/60 mb-1">/month</span></div>
-      <p class="mt-2 text-sm text-white/60 max-w-md mx-auto leading-relaxed">Direct messaging, event discounts, and the full community — all unlocked immediately.</p>
+      <p class="mt-2 text-sm text-white/60 max-w-md mx-auto leading-relaxed">Your full Business Health Score, Success Plan, Compliance Calendar and Cash Flow tracker — unlocked immediately.</p>
       <a href="public-premium-checkout.html" class="inline-flex items-center gap-2 mt-6 px-7 h-12 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold transition">Upgrade to Premium <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
     </div>
   </div>
@@ -249,18 +249,18 @@
   function showToast(m){const el=document.getElementById('toast');el.classList.remove('hidden');el.innerHTML=`<div class="bg-[#0C1F31] text-white rounded-full pl-3 pr-5 py-2.5 shadow-2xl flex items-center gap-2 text-sm font-semibold" style="border-left:4px solid #29A37A"><i data-lucide="check-circle" class="w-4 h-4" style="color:#29A37A"></i><span>${esc(m)}</span></div>`;lucide.createIcons();setTimeout(()=>{el.classList.add('hidden');el.innerHTML='';},2400);}
 
   const COMPARE = [
-    {icon:'message-circle', tint:'bg-[#FDECEF] text-[#DC183C]', title:'Private Messaging',
-      std:'Not included', prem:'Message any member directly, one-to-one'},
-    {icon:'user-round-plus', tint:'bg-[#E4F5EE] text-[#29A37A]', title:'Connections',
-      std:'Not included', prem:'Send and accept connection requests, build a verified network'},
-    {icon:'calendar-days', tint:'bg-[#FFF1E0] text-[#AE6B0A]', title:'Offline Events',
-      std:'Full ticket price', prem:'50% off every in-person event'},
-    {icon:'video', tint:'bg-[#FDECEF] text-[#DC183C]', title:'Monthly Webinars',
-      std:'Not included', prem:'Live monthly sessions with industry leaders'},
-    {icon:'image', tint:'bg-[#E4F5EE] text-[#29A37A]', title:'Rich Media Posts',
-      std:'Text posts only', prem:'Images and video in every post you share'},
-    {icon:'message-square-heart', tint:'bg-[#FFF1E0] text-[#AE6B0A]', title:'Interactive Content',
-      std:'Read only', prem:'Comment and react on articles, guides and member posts'}
+    {icon:'layout-dashboard', tint:'bg-[#FDECEF] text-[#DC183C]', title:'Business Health Score',
+      std:'Not included', prem:'A score across 5 dimensions, refreshed with every check-in'},
+    {icon:'list-checks', tint:'bg-[#E4F5EE] text-[#29A37A]', title:'Success Plan',
+      std:'Not included', prem:'A personalised, ordered action list built from your score'},
+    {icon:'shield-check', tint:'bg-[#FFF1E0] text-[#AE6B0A]', title:'Compliance Calendar',
+      std:'Not included', prem:'Every SARS, CIPC and labour deadline, plus a funder-ready evidence pack'},
+    {icon:'wallet', tint:'bg-[#FDECEF] text-[#DC183C]', title:'Cash Flow Tracker',
+      std:'Not included', prem:'A simple money-in / money-out log tied to your Cash Flow score'},
+    {icon:'folder-check', tint:'bg-[#E4F5EE] text-[#29A37A]', title:'Document Vault',
+      std:'Not included', prem:'Compliance documents in one place, with expiry tracked automatically'},
+    {icon:'target', tint:'bg-[#FFF1E0] text-[#AE6B0A]', title:'Growth Programmes',
+      std:'Not included', prem:'Matched to programmes based on your check-in results'}
   ];
   document.getElementById('compareGrid').innerHTML = COMPARE.map(c=>`
     <div class="bg-white rounded-2xl border border-[#E7EBEF] p-6 card-lift">
@@ -274,7 +274,7 @@
 
   const BRIEF={title:'Premium Upgrade Landing Page',sub:'Marketing / conversion page · public, indexable — feeds into Membership Checkout',
     purpose:'Covers <code>/premium/</code>, a focused single-tier upsell page distinct from public-pricing.html (which compares both tiers) and public-membership-sales.html (which sells the whole community top-of-funnel). This page assumes the visitor already knows the hub and is deciding whether to pay for Premium specifically, so it leads with the price and a direct Standard-vs-Premium contrast rather than re-explaining what the platform is. Redesigned from a flat, two-card feature dump into the same dark hero + tier-row comparison language already proven on public-pricing.html, so a visitor arriving from either page recognises the pattern instantly.',
-    data:'Single plan: Premium, R99/month. Six comparison cards, each a genuine Standard-vs-Premium gap: Private Messaging, Connections, Offline Events, Monthly Webinars, Rich Media Posts, Interactive Content. "Community Forum" was dropped from the original seven-item list — public-pricing.html already lists community posting under Standard, so keeping it here as a Premium-exclusive contradicted that page; fixed rather than carried the inconsistency forward.',
+    data:'Single plan: Premium, R99/month. Six comparison cards, each a genuine Standard-vs-Premium gap, all drawn from what member-workspace.html actually builds: Business Health Score, Success Plan, Compliance Calendar, Cash Flow Tracker, Document Vault, Growth Programmes. Messaging, connections, webinars and rich-media posts are free for every member (confirmed against the Workspace mockup and public-pricing.html) and were removed from this list rather than left as a Premium-exclusive contradiction. "50% off every in-person event" was also removed — not a sustainable discount to promise.',
     logic:'Both CTAs ("Upgrade to Premium") and the mobile tab bar route to <code>public-premium-checkout.html</code>, the dedicated Premium registration page, rather than the raw MemberPress form this page links to live today. (public-membership-checkout.html was retired and moved to /archive; its Premium path was rebuilt as public-premium-checkout.html.)',
     components:'dark hero with Premium crown pill + price · six-card Standard-vs-Premium comparison grid (icon + two tier-rows) · closing price-repeat CTA panel on the same dark treatment as the hero.',
     specs:'<b>Hero:</b> hero-bg navy gradient + 70% dot-pattern + top-right radial <code>rgba(255,153,0,.20)</code> glow (55%×55% at 80%/25%, 50% opacity), <code>max-w-3xl</code>=768px centred, <code>py-16 sm:py-20</code>. Crown pill: <code>#DC183C→#FF9900</code> gradient bg, white text, 11px weight 800 uppercase, rounded-full. H1 Jakarta extrabold 36px/48px, second line in <code>.grad-text</code> (red→orange gradient-clip, same token used on every pillar page). Price row: Jakarta extrabold 48px (<code>text-5xl</code>) + "/month" white/60. CTA height 48px rounded-full bg <code>#DC183C</code>, arrow-right icon. Trust line: shield-check icon + white/50 12px.<br/><br/><b>Comparison grid:</b> <code>max-w-6xl</code>=1152px, 2/3-col grid, 20px gap (<code>gap-5</code>). Card: white <code>rounded-2xl</code> border <code>#E7EBEF</code> <code>p-6</code>, hover lift. Header row: 44px icon tile per-card tint + Jakarta bold 16px title. Two <code>.tier-row</code> lines reused byte-for-byte from public-pricing.html — Standard line <code>x</code> icon <code>#DC183C</code>/55%, Premium line <code>check-circle-2</code> <code>#29A37A</code> weight 500 text with <code>#DC183C</code> bold label.<br/><br/><b>Closing panel:</b> same hero-bg + dot-pattern treatment as the hero (not a flat navy block — ties the page together visually), <code>rounded-2xl</code> <code>p-8</code>→<code>sm:p-10</code>, centred, crown icon, repeats the price, single CTA with arrow icon.'};
