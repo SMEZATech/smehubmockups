@@ -6,12 +6,15 @@
 window.MOCKUP_STATUS = {
   "public-home.html": "under-review",
   "public-health-check.html": "under-review",
+  "public-community.html": "under-review",
+  "public-podcast-episode.html": "under-review",
   "public-workspace.html": "under-review",
   "public-premium-checkout.html": "under-review",
   "public-articles.html": "finalised",
   "public-article-categories.html": "finalised",
   "public-category.html": "finalised",
   "public-subcategory.html": "finalised",
+  "public-tag.html": "under-review",
   "public-author.html": "finalised",
   "public-article.html": "finalised",
   "public-resources.html": "finalised",
@@ -24,7 +27,6 @@ window.MOCKUP_STATUS = {
   "public-solution-categories.html": "finalised",
   "public-solution-category.html": "finalised",
   "public-sustainability.html": "finalised",
-  "public-pricing.html": "finalised",
   "public-brands.html": "finalised",
   "public-brand.html": "finalised",
   "public-deals.html": "not-started",
@@ -78,7 +80,9 @@ window.MOCKUP_STATUS = {
   "public-support-ticket.html": "finalised",
   "public-support-detailed-ticket.html": "finalised",
   "public-search.html": "finalised",
-  "public-404.html": "finalised"
+  "public-404.html": "finalised",
+  "public-unauthorized.html": "under-review",
+  "public-forgot-password.html": "under-review"
 };
 window.MOCKUP_STATUS_PUBLISHED = "2026-09-28T06:52:39.300Z";
 /* Developer builds (staging) — { mockup file: { url, status } }; status: "pending-review" | "reviewed" | "approved" */
@@ -100,7 +104,6 @@ window.MOCKUP_DEV = {
   "public-solution-categories.html": {"url":"https://smesastg.wpengine.com/review-category/","status":"approved"},
   "public-solution-category.html": {"url":"https://smesastg.wpengine.com/reviews/affiliate-networks/","status":"reviewed"},
   "public-sustainability.html": {"url":"https://smesastg.wpengine.com/sustainability-solutions/","status":"approved"},
-  "public-pricing.html": {"url":"https://smesastg.wpengine.com/pricing","status":"approved"},
   "public-brands.html": {"url":"https://smesastg.wpengine.com/brands/","status":"reviewed"},
   "public-brand.html": {"url":"https://smesastg.wpengine.com/brands/partnerstack/","status":"approved"},
   "public-guides.html": {"url":"https://smesastg.wpengine.com/sme-resources/guides/","status":"approved"},

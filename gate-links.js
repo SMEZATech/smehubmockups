@@ -9,6 +9,22 @@
   var hasStatus = Object.keys(STATUS).length > 0;
   if (!hasStatus) return;
 
+  /*
+   * Review mode: lets reviewers click through unfinished pages. Never on by default
+   * on the published site. On when running locally (localhost / file), or when opened
+   * with ?review=all (remembered for the tab session; ?review=off clears it).
+   */
+  var reviewAll = false;
+  try {
+    var q = (location.search.match(/[?&]review=(all|off)\b/) || [])[1];
+    if (q === 'all') sessionStorage.setItem('smeReviewAll', '1');
+    if (q === 'off') sessionStorage.removeItem('smeReviewAll');
+    reviewAll = sessionStorage.getItem('smeReviewAll') === '1';
+  } catch (_) {}
+  var host = location.hostname;
+  if (location.protocol === 'file:' || host === 'localhost' || host === '127.0.0.1') reviewAll = true;
+  if (reviewAll) return;
+
   function fileFromHref(href){
     if (!href) return null;
     if (/^(https?:|mailto:|tel:|javascript:)/i.test(href)) return null;

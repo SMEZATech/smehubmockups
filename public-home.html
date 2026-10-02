@@ -41,6 +41,23 @@
       .search-overlay{position:absolute;inset:0;background:#fff;z-index:20;display:flex;align-items:center;justify-content:center;padding:0 1rem;opacity:0;pointer-events:none;transform:translateY(-8px);transition:all .25s cubic-bezier(.2,.8,.2,1);}
     .search-overlay.active{opacity:1;pointer-events:auto;transform:translateY(0);}
     @media (min-width:640px){ .search-overlay{padding:0 1.5rem;} }
+
+    /* ---- Hero community preview ---- */
+    .hero-tab { background:#F0F5F9; color:#42505E; }
+    .hero-tab:hover { background:#E4ECF2; }
+    .hero-tab.is-active { background:#0C1F31; color:#fff; }
+    .hero-live-dot { animation:heroPulse 1.8s ease-in-out infinite; }
+    @keyframes heroPulse { 0%,100%{ box-shadow:0 0 0 0 rgba(41,163,122,.55);} 50%{ box-shadow:0 0 0 5px rgba(41,163,122,0);} }
+    .hero-float { animation:heroBob 5.5s ease-in-out infinite; }
+    @keyframes heroBob { 0%,100%{ transform:translateY(0);} 50%{ transform:translateY(-6px);} }
+    .hero-dots span { display:inline-block; width:5px; height:5px; border-radius:9999px; background:#6A7581; margin:0 1.5px; animation:heroDot 1.1s infinite ease-in-out; }
+    .hero-dots span:nth-child(2){ animation-delay:.15s; } .hero-dots span:nth-child(3){ animation-delay:.3s; }
+    @keyframes heroDot { 0%,80%,100%{ opacity:.25; transform:translateY(0);} 40%{ opacity:1; transform:translateY(-3px);} }
+    .hero-swap { animation:heroSwap .45s cubic-bezier(.2,.7,.2,1); }
+    @keyframes heroSwap { from{ opacity:0; transform:translateY(8px);} to{ opacity:1; transform:translateY(0);} }
+    .hero-like.is-liked { color:#DC183C; }
+    .hero-like.is-liked svg { fill:#DC183C; }
+    @media (prefers-reduced-motion: reduce){ .hero-live-dot,.hero-float,.hero-dots span,.hero-swap{ animation:none !important; } }
 </style>
 </head>
 <body class="bg-[#FCFCFC] text-[#121A21] antialiased">
@@ -53,7 +70,7 @@
     </a>
     <nav class="hidden lg:flex items-center gap-1 ml-auto">
       <div class="relative" onmouseleave="closeChromeDrop('articles')">
-        <button onclick="toggleChromeDrop('articles')" class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition inline-flex items-center gap-1">Articles <i data-lucide="chevron-down" class="w-3.5 h-3.5"></i></button>
+        <button onclick="toggleChromeDrop('articles')" class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition inline-flex items-center gap-1">Insights <i data-lucide="chevron-down" class="w-3.5 h-3.5"></i></button>
         <div id="dropArticles" class="hidden absolute left-0 top-full mt-1 w-64 bg-white rounded-xl border border-[#E7EBEF] shadow-xl py-2 z-30">
           <a href="public-category.html" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-[#DC183C] transition">Starting a Business</a>
           <a href="public-category.html" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-[#DC183C] transition">Managing a Business</a>
@@ -89,7 +106,7 @@
     <div class="flex items-center gap-1 sm:gap-2 ml-2 sm:ml-3">
       <button onclick="toggleChromeSearch()" aria-label="Search" class="w-9 h-9 grid place-items-center rounded-full hover:bg-slate-100 text-slate-600"><i data-lucide="search" class="w-4 h-4"></i></button>
       <a href="public-auth.html" class="hidden sm:inline-flex items-center px-3 h-9 rounded-full text-sm font-bold text-[#121A21] hover:bg-slate-100 transition">Sign in</a>
-      <a href="public-pricing.html" class="inline-flex items-center px-4 h-9 rounded-full text-sm font-bold text-white bg-[#DC183C] hover:bg-[#B0142F] transition">Join Now</a>
+      <a href="public-auth.html#join" class="inline-flex items-center px-4 h-9 rounded-full text-sm font-bold text-white bg-[#DC183C] hover:bg-[#B0142F] transition">Join Now</a>
       <button onclick="toggleChromeBurger()" aria-label="Menu" class="lg:hidden w-9 h-9 grid place-items-center rounded-full hover:bg-slate-100 text-slate-600 ml-1">
         <i id="chromeBurgerIcon" data-lucide="menu" class="w-5 h-5"></i>
       </button>
@@ -97,7 +114,7 @@
   </div>
   <div id="chromeBurgerPanel" class="hidden lg:hidden border-t border-[#E7EBEF] bg-white">
     <nav class="max-w-7xl mx-auto px-4 sm:px-6 py-2 flex flex-col">
-      <a href="public-articles.html"  class="px-2 py-3 text-sm font-semibold text-slate-700 hover:text-[#DC183C] border-b border-slate-100">Articles</a>
+      <a href="public-articles.html"  class="px-2 py-3 text-sm font-semibold text-slate-700 hover:text-[#DC183C] border-b border-slate-100">Insights</a>
       <a href="public-resources.html" class="px-2 py-3 text-sm font-semibold text-slate-700 hover:text-[#DC183C] border-b border-slate-100">Resources</a>
       <a href="public-funding.html"   class="px-2 py-3 text-sm font-semibold text-slate-700 hover:text-[#DC183C] border-b border-slate-100">Funding</a>
       <a href="public-solutions.html" class="px-2 py-3 text-sm font-semibold text-slate-700 hover:text-[#DC183C] border-b border-slate-100">Solutions</a>
@@ -109,7 +126,7 @@
     <div class="w-full max-w-2xl flex items-center gap-3">
       <div class="relative flex-1">
         <i data-lucide="search" class="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500"></i>
-        <input id="chromeSearchInput" type="text" placeholder="Search articles, resources, funding…" class="w-full h-11 pl-11 pr-4 text-sm bg-slate-50 border border-[#DC183C] rounded-full focus:outline-none focus:ring-2 focus:ring-[#DC183C]/20" onkeydown="if(event.key==='Enter') location.href='public-search.html';" />
+        <input id="chromeSearchInput" type="text" placeholder="Search insights, resources, funding…" class="w-full h-11 pl-11 pr-4 text-sm bg-slate-50 border border-[#DC183C] rounded-full focus:outline-none focus:ring-2 focus:ring-[#DC183C]/20" onkeydown="if(event.key==='Enter') location.href='public-search.html';" />
       </div>
       <button onclick="toggleChromeSearch()" class="text-slate-500 hover:text-[#121A21] p-2 transition-colors shrink-0" aria-label="Close search"><i data-lucide="x" class="w-5 h-5"></i></button>
     </div>
@@ -147,7 +164,7 @@
 <!-- ===================== HERO (dark) ===================== -->
 <section id="hero" data-section-label="Hero" class="hero-bg text-white relative overflow-hidden">
   <div class="absolute top-0 right-0 w-2/3 h-full opacity-50 pointer-events-none" style="background:radial-gradient(55% 55% at 80% 25%, rgba(220,24,60,.28), transparent 70%)"></div>
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-14 sm:py-20 grid lg:grid-cols-2 gap-10 lg:gap-14 items-center relative">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 pt-10 pb-6 sm:py-20 grid lg:grid-cols-2 gap-6 lg:gap-14 items-center relative">
     <!-- Left: copy -->
     <div class="reveal">
       <h1 class="font-jakarta font-extrabold text-5xl sm:text-6xl leading-[1.02] tracking-tight">
@@ -157,8 +174,8 @@
       <p class="mt-5 text-lg sm:text-xl text-white/70 leading-relaxed max-w-xl">
         South Africa's community for SME owners. Share wins, ask for help, and grow together with people who get it.
       </p>
-      <div class="mt-7 flex flex-wrap items-center gap-3">
-        <a href="member-hub.html" class="inline-flex items-center gap-2 px-6 h-12 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold transition">
+      <div class="mt-7 hidden lg:flex flex-wrap items-center gap-3">
+        <a href="public-community.html" class="inline-flex items-center gap-2 px-6 h-12 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold transition">
           Join the Community <i data-lucide="arrow-right" class="w-4 h-4"></i>
         </a>
         <a href="public-health-check.html" class="inline-flex items-center gap-2 px-6 h-12 rounded-full border border-white/25 text-white hover:bg-white/10 font-bold transition">
@@ -166,26 +183,47 @@
         </a>
       </div>
     </div>
-    <!-- Right: hero image with floating chips, hidden on mobile, copy + CTAs carry the hero on small screens -->
-    <div class="hidden lg:block reveal" style="animation-delay:120ms">
-      <div class="relative">
-        <img src="assets/hero-entrepreneurs.jpg" alt="South African entrepreneurs collaborating" class="w-full rounded-3xl shadow-2xl object-cover aspect-[4/3]" />
-        <!-- top-right pill -->
-        <div class="absolute -top-4 -right-2 sm:-right-4 bg-white text-[#121A21] rounded-full shadow-xl px-4 py-2.5 flex items-center gap-2">
-          <i data-lucide="users" class="w-4 h-4 text-[#DC183C]"></i><span class="font-jakarta font-bold text-sm">SME Community</span>
+    <!-- Right: live community preview. Explains the platform by showing it: feed, groups, events. -->
+    <div class="reveal" style="animation-delay:120ms">
+      <div class="relative max-w-[500px] mx-auto lg:ml-auto lg:mr-0 sm:mb-10 lg:mb-0">
+        <div id="heroApp" class="relative bg-white text-[#121A21] rounded-3xl shadow-2xl overflow-hidden ring-1 ring-white/10">
+          <div class="flex items-center justify-between px-5 pt-4 pb-3 border-b border-[#E7EBEF]">
+            <div class="flex items-center gap-2.5">
+              <span class="w-9 h-9 rounded-xl bg-[#0C1F31] grid place-items-center"><i data-lucide="users-round" class="w-[18px] h-[18px] text-white"></i></span>
+              <div>
+                <p class="font-jakarta font-extrabold text-sm leading-none">SME Community</p>
+                <p class="text-[11px] text-[#6A7581] mt-1.5 flex items-center gap-1.5"><span class="hero-live-dot w-1.5 h-1.5 rounded-full bg-[#29A37A]"></span>Members are talking right now</p>
+              </div>
+            </div>
+            <span class="hidden sm:inline-flex items-center gap-1 text-[11px] font-bold text-[#DC183C] bg-[#FDECEF] rounded-full px-2.5 py-1"><i data-lucide="sparkles" class="w-3 h-3"></i>Your people</span>
+          </div>
+          <div class="flex gap-1.5 px-5 pt-3.5" role="tablist" aria-label="Community preview">
+            <button role="tab" data-hero-tab="feed" onclick="heroTab('feed',true)" class="hero-tab is-active inline-flex items-center gap-1.5 px-3.5 h-8 rounded-full text-[12.5px] font-bold transition"><i data-lucide="message-circle" class="w-3.5 h-3.5"></i>Feed</button>
+            <button role="tab" data-hero-tab="groups" onclick="heroTab('groups',true)" class="hero-tab inline-flex items-center gap-1.5 px-3.5 h-8 rounded-full text-[12.5px] font-bold transition"><i data-lucide="users" class="w-3.5 h-3.5"></i>Groups</button>
+            <button role="tab" data-hero-tab="events" onclick="heroTab('events',true)" class="hero-tab inline-flex items-center gap-1.5 px-3.5 h-8 rounded-full text-[12.5px] font-bold transition"><i data-lucide="calendar-days" class="w-3.5 h-3.5"></i>Events</button>
+          </div>
+          <div class="px-5 pb-5 pt-3.5 min-h-[330px]">
+            <div data-hero-pane="feed" id="heroFeed"></div>
+            <div data-hero-pane="groups" id="heroGroups" class="hidden"></div>
+            <div data-hero-pane="events" id="heroEvents" class="hidden"></div>
+          </div>
         </div>
-        <!-- bottom-left card -->
-        <div class="absolute -bottom-5 -left-2 sm:-left-4 bg-white text-[#121A21] rounded-2xl shadow-xl border border-[#E7EBEF] px-4 py-3 flex items-center gap-3">
-          <div class="w-10 h-10 rounded-xl bg-[#E4F5EE] text-[#29A37A] grid place-items-center shrink-0"><i data-lucide="trending-up" class="w-5 h-5"></i></div>
-          <div><p class="font-jakarta font-extrabold text-base leading-none text-[#121A21]">Verified Funding</p><p class="text-xs text-[#6A7581] mt-1">Matched to your business</p></div>
+        <div class="hidden sm:flex absolute -top-4 -right-1 sm:-right-4 bg-white text-[#121A21] rounded-full shadow-xl px-4 py-2.5 items-center gap-2 hero-float">
+          <i data-lucide="heart-handshake" class="w-4 h-4 text-[#DC183C]"></i><span class="font-jakarta font-bold text-sm">Ask. Share. Grow together.</span>
         </div>
+        <div id="heroNotif" class="relative mt-3 sm:mt-0 sm:absolute sm:-bottom-9 sm:-left-6 bg-white text-[#121A21] rounded-2xl shadow-xl border border-[#E7EBEF] px-4 py-3 flex items-center gap-3 max-w-[260px] hero-float" style="animation-delay:1.2s" aria-live="polite"></div>
       </div>
+    </div>
+    <!-- Mobile CTAs: sit below the community preview (desktop keeps them under the headline) -->
+    <div class="lg:hidden flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+      <a href="public-community.html" class="inline-flex items-center justify-center gap-2 px-6 h-12 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold transition">Join the Community <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
+      <a href="public-health-check.html" class="inline-flex items-center justify-center gap-2 px-6 h-12 rounded-full border border-white/25 text-white hover:bg-white/10 font-bold transition">Start the Health Check</a>
     </div>
   </div>
 </section>
 
 <!-- ===================== PLATFORM OVERVIEW ===================== -->
-<section id="platform-overview" data-section-label="Platform overview" class="max-w-7xl mx-auto px-4 sm:px-6 py-16 sm:py-20">
+<section id="platform-overview" data-section-label="Platform overview" class="max-w-7xl mx-auto px-4 sm:px-6 pt-10 pb-16 sm:py-20">
   <div class="text-center max-w-2xl mx-auto mb-12">
     <p class="text-[12px] font-bold uppercase tracking-widest text-[#DC183C]">Platform</p>
     <h2 class="font-jakarta font-extrabold text-3xl sm:text-4xl mt-2">Everything to Build &amp; Grow Your Business
@@ -199,8 +237,8 @@
       <div class="p-6">
         <div class="w-12 h-12 rounded-xl grid place-items-center bg-[#FDECEF] text-[#DC183C] mb-4"><i data-lucide="users" class="w-6 h-6"></i></div>
         <h3 class="font-jakarta font-bold text-lg">Community Connect</h3>
-        <p class="text-sm text-[#6A7581] mt-2 leading-relaxed">Network with 100,000+ SME owners, mentors, and industry leaders across South Africa.</p>
-        <a href="member-hub.html" class="inline-flex items-center gap-1 text-sm font-bold text-[#DC183C] mt-4 hover:gap-2 transition-all">Join the community <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
+        <p class="text-sm text-[#6A7581] mt-2 leading-relaxed">Network with SME owners, mentors, and industry leaders across South Africa.</p>
+        <a href="public-community.html" class="inline-flex items-center gap-1 text-sm font-bold text-[#DC183C] mt-4 hover:gap-2 transition-all">Join the community <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
       </div>
     </div>
     <div class="bg-white rounded-2xl border border-[#E7EBEF] overflow-hidden card-lift reveal" style="animation-delay:60ms">
@@ -349,7 +387,6 @@
         <p class="text-[11px] font-bold uppercase tracking-widest text-[#FF9900]">Platform</p>
         <ul class="mt-4 space-y-2.5 text-sm text-white/70 list-none">
           <li><a href="public-workspace.html" class="hover:text-white">SME Workspace</a></li>
-          <li><a href="public-pricing.html" class="hover:text-white">Pricing</a></li>
           <li><a href="public-resources.html" class="hover:text-white">Resources Library</a></li>
           <li><a href="public-funding.html" class="hover:text-white">Funding Portal</a></li>
           <li><a href="public-solutions.html" class="hover:text-white">Solutions Directory</a></li>
@@ -360,7 +397,7 @@
       <div>
         <p class="text-[11px] font-bold uppercase tracking-widest text-[#FF9900]">Insights</p>
         <ul class="mt-4 space-y-2.5 text-sm text-white/70 list-none">
-          <li><a href="public-articles.html" class="hover:text-white">All Articles</a></li>
+          <li><a href="public-articles.html" class="hover:text-white">All Insights</a></li>
           <li><a href="public-founder-focus-category.html" class="hover:text-white">Founder Focus</a></li>
           <li><a href="public-funding-summit-category.html" class="hover:text-white">Funding Summit</a></li>
           <li><a href="public-category.html" class="hover:text-white">Business Opportunities</a></li>
@@ -492,9 +529,9 @@
     hero: {
       title:'Public Hero', sub:'Top-of-funnel conversion surface',
       purpose:'The logged-out front door. Two jobs now: convert a visitor into a member (<b>Join the Community</b> → MemberPress) or send them straight into the free Business Health Check (<b>Start the Health Check</b> → signup), which doubles as the entry point into the new Workspace section further down the page. Pure community positioning, deliberately no funding mention in the hero (funding still gets its own Platform Pillar and full section elsewhere on the page). The "Award-Winning Platform" trophy badge that used to sit here was removed in the 1 Oct 2026 mockup review: no award or year was ever named (leftover from the site\'s prior online-magazine positioning), so it was an unsubstantiated claim rather than a trust signal.',
-      data:'Static copy only, no live counters. Hero image = static asset (assets/hero-entrepreneurs.jpg). Floating chips are evergreen value statements (SME Community, Verified Funding), not metrics.',
+      data:'Static copy only, no live counters. The right-hand visual is a built-in, illustrative community preview (no photo asset): a feed with a live reply, a Groups tab and an Events tab, plus a rotating notification card. All names, posts and groups are placeholder copy and deliberately contain no counters or member numbers.',
       logic:'Primary CTA routes to MemberPress register/login. Secondary CTA routes to the same signup flow anchored to the Health Check step. Public, indexable page. The Funding Summit pill is a dismissible promo slot.',
-      components:'promo pill · 2-col hero (copy + image) · two CTAs · two floating image chips.',
+      components:'promo pill · 2-col hero (copy + interactive community preview) · two CTAs · floating tagline pill · rotating notification card.',
       specs:'<b>Container:</b> <code>max-w-7xl</code> = 1280px, padding 56px top+bottom mobile / 80px desktop (<code>py-14 sm:py-20</code>). 2-col grid on lg with 40–56px gap, items-center.<br/><b>Background:</b> navy hero-bg gradient + right-side radial <code>rgba(220,24,60,0.28)</code> glow (55%×55% at 80%/25%), 50% opacity.<br/><br/><b>H1:</b> Plus Jakarta Sans weight 800, 48px mobile / 60px desktop (<code>text-5xl sm:text-6xl</code>), leading 1.02, tight tracking, colour <code>#FFFFFF</code>. Highlight "Alone." with <code>#DC183C→#FF9900</code> gradient text.<br/><b>Hero sub:</b> 18px mobile / 20px desktop (<code>text-lg sm:text-xl</code>), <code>rgba(255,255,255,0.70)</code>, relaxed leading, max-width 576px. 20px top margin.<br/><b>CTA row:</b> 28px top margin, wraps on narrow screens. Primary: height 48px (<code>h-12</code>) padding-x 24px (<code>px-6</code>) rounded-full bg <code>#DC183C</code> hover <code>#B0142F</code>, white weight 700 with Lucide `arrow-right` 16×16. Secondary: same height/padding, outline border white/25, white text, hover bg white/10, no icon, so it reads as the lighter-weight action next to the primary CTA.<br/><br/><b>Hero image:</b> aspect 4:3, rounded-3xl (24px), shadow-2xl. Hidden below <code>lg</code>.<br/><b>Top-right pill:</b> white bg, rounded-full, padding-x 16px padding-y 10px, offset -16px top / -8px right. Lucide `users` 16×16 <code>#DC183C</code>, Plus Jakarta Sans weight 700 14px <code>#121A21</code>.<br/><b>Bottom-left card:</b> white rounded-2xl 1px border <code>#E7EBEF</code>, shadow-xl, padding 16px/12px. Icon tile 40×40 rounded-xl bg <code>#E4F5EE</code> text <code>#29A37A</code> with `trending-up` 20×20. Title Plus Jakarta Sans weight 800 16px <code>#121A21</code>. Sub 12px <code>#6A7581</code>.'
     },
     pillars: {
@@ -509,7 +546,7 @@
       title:'Your Workspace', sub:'Closing section, replaces the old generic "Ready to Start Your Journey?" band',
       purpose:'The homepage previously never mentioned Workspace, Premium or pricing at all (flagged in the 1 Oct 2026 mockup review as the top blocker before launch). This section gives Workspace the closing position on the page, it was the old "Get Started" CTA\'s slot, which just repeated the hero\'s community pitch with no real reason to exist as a second, separate band. Deliberately avoids the word "Premium" here: a visitor hitting that word before they\'ve seen any value reads it as a paywall, not a product. The copy frames cost honestly ("unlocks once you see where you stand") without naming the plan.',
       data:'Four cards pulled 1:1 from member-workspace.html\'s real views: Business Health Score (Overview), Success Plan, Compliance Calendar, Cash Flow Tracker. Document Vault and Programme matching exist too but are mentioned in the band copy rather than given their own card, keeping the grid at four.',
-      logic:'Single CTA only, "Start the Health Check" to public-health-check.html, the new quiz → account → score-reveal flow that ends by handing the member into member-workspace.html. No second "See Premium" button: this section is about getting someone to take the check, not comparing tiers (that\'s public-pricing.html\'s job).',
+      logic:'Single CTA only, "Start the Health Check" to public-health-check.html, the new quiz → account → score-reveal flow that ends by handing the member into member-workspace.html. No second "See Premium" button: this section is about getting someone to take the check, not comparing tiers (that\'s archive/public-pricing.html\'s job).',
       components:'4-card module grid (translucent cards over the dark hero-bg) · single centred CTA with two no-friction trust badges.',
       specs:'<b>Section:</b> <code>max-w-7xl</code>=1280px wrapper, <code>py-16 sm:py-20</code>, inner <code>rounded-3xl hero-bg</code> card <code>p-8 sm:p-14</code>, same dark treatment the old "Get Started" band used, so the page still ends on a strong dark close.<br/><b>Header:</b> centred, kicker adds a <code>sparkles</code> icon, 40px bottom margin.<br/><b>Card grid:</b> 1/2/4 columns, 20px gap. Card: <code>bg-white/[0.06]</code> + 1px <code>border-white/15</code> + backdrop-blur, 4px top-accent, icon tile <code>bg-white/10</code> text <code>#FF9900</code> (adapted from the light-background card version used mid-page in earlier drafts).<br/><b>CTA block:</b> centred, trust badges 13px white/60, single pill CTA 48px height bg <code>#DC183C</code> hover <code>#B0142F</code> with arrow-right icon.'
     },
@@ -530,6 +567,122 @@
     requestAnimationFrame(()=>{ const o=document.getElementById('ov-brief'); if(o)o.classList.add('open'); }); lucide.createIcons();
   }
 
+
+  // ===== Hero community preview (interactive: tabs, likes, join, remind, live replies) =====
+  const HERO_POSTS = [
+    { name:'Thandi Mokoena', role:'Bakery owner, Soweto', tag:'Cash flow', text:'Just landed my first corporate catering order. How do you handle cash flow when big clients pay on 60 days?', reply:{ name:'Sipho Dlamini', role:'Logistics', text:'Invoice finance worked for us. Happy to share what to look out for.' } },
+    { name:'Aisha Patel', role:'Online retailer, Durban', tag:'eCommerce', text:'Which courier are you all using for same-day delivery? Mine keeps missing the cut-off.', reply:{ name:'Pieter van Wyk', role:'eCommerce', text:'We switched last quarter. Message me and I will send the comparison.' } },
+    { name:'Lerato Khumalo', role:'Founder, Johannesburg', tag:'Compliance', text:'Our tax clearance expires next month. What do you wish you had known before applying?', reply:{ name:'Nomsa Zulu', role:'Accountant', text:'Start the SARS eFiling request early and keep your supporting documents handy.' } }
+  ];
+  const HERO_GROUPS = [
+    { icon:'banknote', tint:'bg-[#E4F5EE] text-[#29A37A]', name:'Funding & Finance', desc:'Grants, loans and getting funding-ready' },
+    { icon:'heart-handshake', tint:'bg-[#FDECEF] text-[#DC183C]', name:'Women in Business', desc:'Founders backing founders' },
+    { icon:'shopping-bag', tint:'bg-[#FFF1E0] text-[#AE6B0A]', name:'Retail & eCommerce', desc:'Selling online and in store' },
+    { icon:'rocket', tint:'bg-[#F0F5F9] text-[#0C1F31]', name:'Startups & Side Hustles', desc:'From first idea to first customer' }
+  ];
+  const HERO_EVENTS = [
+    { icon:'video', tint:'bg-[#FDECEF] text-[#DC183C]', title:'Cash flow for small teams', when:'Thursday evening, live online' },
+    { icon:'mic', tint:'bg-[#FFF1E0] text-[#AE6B0A]', title:'Getting funding-ready', when:'Next Tuesday, live online' },
+    { icon:'map-pin', tint:'bg-[#E4F5EE] text-[#29A37A]', title:'SME networking breakfast', when:'This month, in person' }
+  ];
+  const HERO_NOTIFS = [
+    { icon:'message-circle', tint:'bg-[#FDECEF] text-[#DC183C]', title:'Sipho replied to your post', sub:'Invoice finance worked for us' },
+    { icon:'user-plus', tint:'bg-[#F0F5F9] text-[#0C1F31]', title:'New connection request', sub:'Aisha wants to connect' },
+    { icon:'calendar-days', tint:'bg-[#FFF1E0] text-[#AE6B0A]', title:'Webinar starting soon', sub:'Cash flow for small teams' },
+    { icon:'trending-up', tint:'bg-[#E4F5EE] text-[#29A37A]', title:'Funding match found', sub:'Matched to your business' }
+  ];
+  const heroInitials = n => n.split(/\s+/).map(s=>s[0]).slice(0,2).join('').toUpperCase();
+  const heroAvatar = (n,size=36) => '<span class="rounded-full bg-gradient-to-br from-[#DC183C] to-[#FF9900] grid place-items-center font-jakarta font-bold text-white shrink-0" style="width:'+size+'px;height:'+size+'px;font-size:'+Math.round(size*0.36)+'px">'+heroInitials(n)+'</span>';
+  const heroReduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let heroPost = 0, heroAuto = !heroReduce, heroTimers = [], heroNotifIdx = 0;
+  const heroClear = () => { heroTimers.forEach(clearTimeout); heroTimers = []; };
+
+  function renderHeroPost(i, instant){
+    heroClear();
+    const p = HERO_POSTS[i];
+    const feed = document.getElementById('heroFeed');
+    feed.innerHTML = `
+      <div class="hero-swap">
+        <div class="rounded-2xl border border-[#E7EBEF] p-4">
+          <div class="flex items-start gap-3">
+            ${heroAvatar(p.name,40)}
+            <div class="min-w-0 flex-1">
+              <div class="flex items-center justify-between gap-2">
+                <p class="font-jakarta font-bold text-sm leading-tight">${esc(p.name)} <span class="font-normal text-[#6A7581]">· ${esc(p.role)}</span></p>
+              </div>
+              <span class="inline-block mt-1.5 text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-[#FDECEF] text-[#DC183C]">${esc(p.tag)}</span>
+            </div>
+          </div>
+          <p class="text-[14px] leading-relaxed mt-3 text-[#121A21]">${esc(p.text)}</p>
+          <div class="flex items-center gap-4 mt-3.5 pt-3 border-t border-[#E7EBEF] text-[12.5px] font-semibold text-[#6A7581]">
+            <button class="hero-like inline-flex items-center gap-1.5 hover:text-[#DC183C] transition" onclick="heroLike(this)" aria-pressed="false"><i data-lucide="heart" class="w-4 h-4"></i><span>Like</span></button>
+            <span class="inline-flex items-center gap-1.5"><i data-lucide="message-circle" class="w-4 h-4"></i>Reply</span>
+            <span class="inline-flex items-center gap-1.5 ml-auto text-[#29A37A]"><i data-lucide="badge-check" class="w-4 h-4"></i>Helpful answers</span>
+          </div>
+        </div>
+        <div id="heroReplySlot" class="mt-3 min-h-[74px]"></div>
+      </div>`;
+    lucide.createIcons();
+    const slot = document.getElementById('heroReplySlot');
+    const showReply = () => {
+      slot.innerHTML = `<div class="hero-swap flex items-start gap-2.5 pl-3 border-l-2 border-[#E7EBEF]">${heroAvatar(p.reply.name,32)}<div class="bg-[#F0F5F9] rounded-2xl rounded-tl-md px-3.5 py-2.5"><p class="text-[12px] font-bold leading-tight">${esc(p.reply.name)} <span class="font-normal text-[#6A7581]">· ${esc(p.reply.role)}</span></p><p class="text-[13px] leading-snug mt-1 text-[#121A21]">${esc(p.reply.text)}</p></div></div>`;
+    };
+    if(instant || heroReduce){ showReply(); }
+    else {
+      heroTimers.push(setTimeout(()=>{ slot.innerHTML = `<div class="flex items-center gap-2.5 pl-3 border-l-2 border-[#E7EBEF]">${heroAvatar(p.reply.name,32)}<div class="bg-[#F0F5F9] rounded-2xl px-3.5 py-3 hero-dots"><span></span><span></span><span></span></div></div>`; }, 700));
+      heroTimers.push(setTimeout(showReply, 2300));
+    }
+    if(heroAuto && !heroReduce){
+      heroTimers.push(setTimeout(()=>{ heroPost = (heroPost+1) % HERO_POSTS.length; renderHeroPost(heroPost); }, 8200));
+    }
+  }
+  function heroLike(btn){
+    heroAuto = false; heroClear();
+    const on = btn.classList.toggle('is-liked');
+    btn.setAttribute('aria-pressed', on);
+    btn.querySelector('span').textContent = on ? 'Liked' : 'Like';
+  }
+  function heroTab(name, byUser){
+    if(byUser){ heroAuto = false; }
+    document.querySelectorAll('[data-hero-tab]').forEach(b => b.classList.toggle('is-active', b.dataset.heroTab===name));
+    document.querySelectorAll('[data-hero-pane]').forEach(p => p.classList.toggle('hidden', p.dataset.heroPane!==name));
+    if(name==='feed'){ renderHeroPost(heroPost, !!byUser); }
+    else { heroClear(); const pane = document.querySelector('[data-hero-pane="'+name+'"]'); pane.classList.remove('hero-swap'); void pane.offsetWidth; pane.classList.add('hero-swap'); }
+  }
+  function heroToggle(btn, onText, offText){
+    heroAuto = false;
+    const on = btn.dataset.on !== '1';
+    btn.dataset.on = on ? '1' : '0';
+    btn.textContent = on ? onText : offText;
+    btn.className = btn.className.replace(/bg-\[#[0-9A-Fa-f]+\]|text-white|text-\[#[0-9A-Fa-f]+\]|border-\[#[0-9A-Fa-f]+\]|border /g,'').trim() + (on ? ' bg-[#E4F5EE] text-[#29A37A]' : ' bg-[#0C1F31] text-white');
+  }
+  function renderHeroStatic(){
+    document.getElementById('heroGroups').innerHTML = '<div class="space-y-2.5">' + HERO_GROUPS.map(g => `
+      <div class="flex items-center gap-3 rounded-2xl border border-[#E7EBEF] p-3">
+        <div class="w-10 h-10 rounded-xl grid place-items-center shrink-0 ${g.tint}"><i data-lucide="${g.icon}" class="w-5 h-5"></i></div>
+        <div class="min-w-0 flex-1"><p class="font-jakarta font-bold text-sm leading-tight">${esc(g.name)}</p><p class="text-[12px] text-[#6A7581] mt-0.5 truncate">${esc(g.desc)}</p></div>
+        <button onclick="heroToggle(this,'Joined','Join')" data-on="0" class="shrink-0 px-3.5 h-8 rounded-full text-[12px] font-bold transition bg-[#0C1F31] text-white">Join</button>
+      </div>`).join('') + '</div>';
+    document.getElementById('heroEvents').innerHTML = '<div class="space-y-2.5">' + HERO_EVENTS.map(e => `
+      <div class="flex items-center gap-3 rounded-2xl border border-[#E7EBEF] p-3">
+        <div class="w-10 h-10 rounded-xl grid place-items-center shrink-0 ${e.tint}"><i data-lucide="${e.icon}" class="w-5 h-5"></i></div>
+        <div class="min-w-0 flex-1"><p class="font-jakarta font-bold text-sm leading-tight">${esc(e.title)}</p><p class="text-[12px] text-[#6A7581] mt-0.5">${esc(e.when)}</p></div>
+        <button onclick="heroToggle(this,'Reminder set','Remind me')" data-on="0" class="shrink-0 px-3.5 h-8 rounded-full text-[12px] font-bold transition bg-[#0C1F31] text-white">Remind me</button>
+      </div>`).join('') + '</div>';
+  }
+  function renderHeroNotif(){
+    const n = HERO_NOTIFS[heroNotifIdx % HERO_NOTIFS.length];
+    const el = document.getElementById('heroNotif');
+    el.innerHTML = `<div class="hero-swap flex items-center gap-3"><div class="w-10 h-10 rounded-xl grid place-items-center shrink-0 ${n.tint}"><i data-lucide="${n.icon}" class="w-5 h-5"></i></div><div><p class="font-jakarta font-extrabold text-[13px] leading-tight">${esc(n.title)}</p><p class="text-xs text-[#6A7581] mt-0.5">${esc(n.sub)}</p></div></div>`;
+    lucide.createIcons();
+  }
+  function initHeroApp(){
+    if(!document.getElementById('heroApp')) return;
+    renderHeroStatic(); renderHeroPost(0); renderHeroNotif();
+    if(!heroReduce){ setInterval(()=>{ heroNotifIdx++; renderHeroNotif(); }, 5200); }
+  }
+
+  initHeroApp();
   renderStepper(); renderPanel(); renderFounders(); lucide.createIcons();
 </script>
 <script src="status.js"></script>
@@ -588,5 +741,6 @@
     }
   })();
 </script>
+<script src="member-chrome.js"></script>
 </body>
 </html>

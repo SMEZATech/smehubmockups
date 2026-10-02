@@ -33,7 +33,7 @@
     </a>
     <nav class="hidden lg:flex items-center gap-1 ml-auto">
       <div class="relative" onmouseleave="closeChromeDrop('articles')">
-        <button onclick="toggleChromeDrop('articles')" class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition inline-flex items-center gap-1">Articles <i data-lucide="chevron-down" class="w-3.5 h-3.5"></i></button>
+        <button onclick="toggleChromeDrop('articles')" class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition inline-flex items-center gap-1">Insights <i data-lucide="chevron-down" class="w-3.5 h-3.5"></i></button>
         <div id="dropArticles" class="hidden absolute left-0 top-full mt-1 w-64 bg-white rounded-xl border border-[#E7EBEF] shadow-xl py-2 z-30">
           <a href="public-category.html" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-[#DC183C] transition">Starting a Business</a>
           <a href="public-category.html" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-[#DC183C] transition">Managing a Business</a>
@@ -70,7 +70,7 @@
     <div class="flex items-center gap-1 sm:gap-2 ml-2 sm:ml-3">
       <button onclick="toggleChromeSearch()" aria-label="Search" class="w-9 h-9 grid place-items-center rounded-full hover:bg-slate-100 text-slate-600"><i data-lucide="search" class="w-4 h-4"></i></button>
       <a href="public-auth.html" class="hidden sm:inline-flex items-center px-3 h-9 rounded-full text-sm font-bold text-[#121A21] hover:bg-slate-100 transition">Sign in</a>
-      <a href="public-pricing.html" class="inline-flex items-center px-4 h-9 rounded-full text-sm font-bold text-white bg-[#DC183C] hover:bg-[#B0142F] transition">Join Now</a>
+      <a href="public-auth.html#join" class="inline-flex items-center px-4 h-9 rounded-full text-sm font-bold text-white bg-[#DC183C] hover:bg-[#B0142F] transition">Join Now</a>
       <button onclick="toggleChromeBurger()" aria-label="Menu" class="lg:hidden w-9 h-9 grid place-items-center rounded-full hover:bg-slate-100 text-slate-600 ml-1">
         <i id="chromeBurgerIcon" data-lucide="menu" class="w-5 h-5"></i>
       </button>
@@ -78,7 +78,7 @@
   </div>
   <div id="chromeBurgerPanel" class="hidden lg:hidden border-t border-[#E7EBEF] bg-white">
     <nav class="max-w-7xl mx-auto px-4 sm:px-6 py-2 flex flex-col">
-      <a href="public-articles.html"  class="px-2 py-3 text-sm font-semibold text-slate-700 hover:text-[#DC183C] border-b border-slate-100">Articles</a>
+      <a href="public-articles.html"  class="px-2 py-3 text-sm font-semibold text-slate-700 hover:text-[#DC183C] border-b border-slate-100">Insights</a>
       <a href="public-resources.html" class="px-2 py-3 text-sm font-semibold text-slate-700 hover:text-[#DC183C] border-b border-slate-100">Resources</a>
       <a href="public-funding.html"   class="px-2 py-3 text-sm font-semibold text-slate-700 hover:text-[#DC183C] border-b border-slate-100">Funding</a>
       <a href="public-solutions.html" class="px-2 py-3 text-sm font-semibold text-slate-700 hover:text-[#DC183C] border-b border-slate-100">Solutions</a>
@@ -91,7 +91,7 @@
     <div class="w-full max-w-2xl flex items-center gap-3">
       <div class="relative flex-1">
         <i data-lucide="search" class="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500"></i>
-        <input id="chromeSearchInput" type="text" placeholder="Search articles, resources, funding…" class="w-full h-11 pl-11 pr-4 text-sm bg-slate-50 border border-[#DC183C] rounded-full focus:outline-none focus:ring-2 focus:ring-[#DC183C]/20" onkeydown="if(event.key==='Enter') location.href='public-search.html';" />
+        <input id="chromeSearchInput" type="text" placeholder="Search insights, resources, funding…" class="w-full h-11 pl-11 pr-4 text-sm bg-slate-50 border border-[#DC183C] rounded-full focus:outline-none focus:ring-2 focus:ring-[#DC183C]/20" onkeydown="if(event.key==='Enter') location.href='public-search.html';" />
       </div>
       <button onclick="toggleChromeSearch()" class="text-slate-500 hover:text-[#121A21] p-2 transition-colors shrink-0" aria-label="Close search"><i data-lucide="x" class="w-5 h-5"></i></button>
     </div>
@@ -130,7 +130,7 @@
 <section class="hero-bg text-white relative overflow-hidden"><div class="absolute inset-0 dot-pattern opacity-70 pointer-events-none"></div>
   <div class="max-w-7xl mx-auto px-4 sm:px-6 pt-12 pb-14 relative">
     <!-- Breadcrumb (global pattern) -->
-    <nav aria-label="Breadcrumb" class="text-xs text-white/55 flex items-center flex-wrap gap-x-1.5 mb-4"><a href="public-home.html" class="hover:text-white transition">Home</a><span class="text-white/30">›</span><span class="text-white/85 font-medium truncate">Articles</span></nav>
+    <nav aria-label="Breadcrumb" class="text-xs text-white/55 flex items-center flex-wrap gap-x-1.5 mb-4"><a href="public-home.html" class="hover:text-white transition">Home</a><span class="text-white/30">›</span><span class="text-white/85 font-medium truncate">Insights</span></nav>
     <h1 class="font-jakarta font-extrabold text-4xl sm:text-5xl tracking-tight">SME Insights
       <button onclick="openBrief()" class="dev-badge align-middle ml-1 w-6 h-6 rounded-full bg-[#FF9900] text-[#0C1F31] items-center justify-center text-[11px] font-bold">i</button>
     </h1>
@@ -163,7 +163,7 @@
   <div class="flex flex-col sm:flex-row gap-3 mt-10">
     <div class="relative flex-1">
       <i data-lucide="search" class="w-4 h-4 text-[#6A7581] absolute left-3.5 top-1/2 -translate-y-1/2"></i>
-      <input id="search" oninput="render()" class="field" placeholder="Search articles by title, topic, or category…" />
+      <input id="search" oninput="render()" class="field" placeholder="Search insights by title, topic, or category…" />
     </div>
   </div>
 
@@ -172,7 +172,7 @@
 
   <!-- GRID -->
   <div id="grid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-8"></div>
-  <div id="empty" class="hidden text-center py-16 text-[#6A7581]"><i data-lucide="search-x" class="w-8 h-8 mx-auto mb-3"></i><p class="font-semibold">No articles match your search.</p></div>
+  <div id="empty" class="hidden text-center py-16 text-[#6A7581]"><i data-lucide="search-x" class="w-8 h-8 mx-auto mb-3"></i><p class="font-semibold">No insights match your search.</p></div>
 
   <!-- PAGINATION (visual only) -->
   <div id="pagination" class="flex items-center justify-center gap-2 mt-12">
@@ -215,7 +215,7 @@
       <div>
         <p class="text-[11px] font-bold uppercase tracking-widest text-[#FF9900]">Insights</p>
         <ul class="mt-4 space-y-2.5 text-sm text-white/70">
-          <li><a href="public-articles.html" class="hover:text-white">All Articles</a></li>
+          <li><a href="public-articles.html" class="hover:text-white">All Insights</a></li>
           <li><a href="public-founder-focus-category.html" class="hover:text-white">Founder Focus</a></li>
           <li><a href="public-funding-summit-category.html" class="hover:text-white">Funding Summit</a></li>
           <li><a href="public-category.html" class="hover:text-white">Business Opportunities</a></li>
@@ -314,7 +314,7 @@
     lucide.createIcons();
   }
 
-  const BRIEF={title:'Article Archive',sub:'WordPress archive · public, indexable',purpose:'The SME Insights hub, the top-of-funnel SEO surface listing all posts with a featured story, search, category filter and sort. Standalone archive at /articles.',data:'Posts: <code>{ id, title, category, excerpt, hero, author{name,initials}, published_at, read_minutes, featured }</code>. Categories are a CMS taxonomy.',logic:'Featured = the post flagged <code>featured</code> (else newest). Search filters title/excerpt/category/author client-side; category chips and sort re-query. Public + indexable (archive + Article schema).',components:'archive hero · featured card · search + sort · category chips · article grid.',specs:'<b>Archive hero:</b> container <code>max-w-7xl</code> = 1280px, padding 48px top / 56px bottom (<code>pt-12 pb-14</code>), navy hero-bg gradient + dot-pattern 70% opacity, white text.<br/><b>Breadcrumb:</b> 12px <code>rgba(255,255,255,0.55)</code>, `›` at <code>rgba(255,255,255,0.30)</code>, current at <code>rgba(255,255,255,0.85)</code> weight 500, 16px bottom margin.<br/><b>H1 (SME Insights):</b> Plus Jakarta Sans weight 800, 36px mobile / 48px desktop, colour <code>#FFFFFF</code>, tight tracking.<br/><b>Hero sub:</b> 18px (<code>text-lg</code>), <code>rgba(255,255,255,0.70)</code>, max-width 672px (<code>max-w-2xl</code>), 16px top margin.<br/><b>Browse-by-category link:</b> 14px weight 700, <code>rgba(255,255,255,0.90)</code>, Lucide `layout-grid` + `arrow-right` icons at 16×16, 20px top margin.<br/><br/><b>Main container:</b> <code>max-w-7xl</code> = 1280px, padding 48px top (<code>pt-12</code>).<br/><b>Featured card:</b> white, border 1px <code>#E7EBEF</code>, rounded-3xl (24px), shadow-xl, 2-col grid on desktop. Image aspect 16:11 mobile / auto desktop with hover scale 1.05 over 500ms. FEATURED tag: 11px weight 700, padding 12px/4px, rounded-full, bg <code>#FF9900</code>, text <code>#0C1F31</code>.<br/><b>Featured content pad:</b> 28px mobile / 36px desktop (<code>p-7 sm:p-9</code>).<br/><b>Featured category chip:</b> 11px weight 700 uppercase, bg <code>#FDECEF</code>, text <code>#DC183C</code>, padding 10px/4px, rounded-full.<br/><b>Featured H2:</b> Plus Jakarta Sans weight 800, 24px mobile / 32px desktop, hover colour <code>#DC183C</code>, 12px top margin.<br/><b>Featured excerpt:</b> 16px, <code>#6A7581</code>, relaxed leading, 12px top margin.<br/><b>Author row:</b> avatar 40×40 rounded-full gradient <code>#DC183C→#FF9900</code>, initials 14px weight 700 white. Name 14px weight 700 <code>#121A21</code>, meta 14px <code>#6A7581</code>. 24px top margin.<br/><br/><b>Search field:</b> full width, uses global <code>.field</code> style, Lucide `search` 16×16 <code>#6A7581</code> at 14px left. 40px top margin.<br/><b>Category chips:</b> 20px top margin, 8px gap, height 36px (<code>h-9</code>), padding 16px, 14px weight 600, rounded-full. Active: bg <code>#DC183C</code> white text. Inactive: white bg <code>#121A21</code> text 1px border <code>#E7EBEF</code>.<br/><b>Article grid:</b> 1/2/3 columns, 24px gap, 32px top margin.<br/><b>Article card:</b> white rounded-2xl (16px), border 1px <code>#E7EBEF</code>, image 16:10, hover scale 1.05.<br/><b>Card category chip:</b> 10px weight 700 uppercase, bg <code>#FDECEF</code> text <code>#DC183C</code>, top-left 12px.<br/><b>Card H3:</b> Plus Jakarta Sans weight 700, 18px, tight leading, hover <code>#DC183C</code>, line-clamp 2, min-height 52px.<br/><b>Card excerpt:</b> 14px <code>#6A7581</code>, line-clamp 2, 8px top margin.<br/><b>Card footer meta:</b> 12px, avatar 32×32 rounded-full <code>#DC183C→#FF9900</code>, top border 1px <code>#E7EBEF</code>, 16px top padding.<br/><br/><b>Pagination:</b> pills, active 40×40 rounded-full <code>#DC183C</code> white 14px weight 700. Inactive 40×40 white 1px <code>#E7EBEF</code>. Prev/Next height 40px padding 16px, hover border+text <code>#DC183C</code>. 8px gap. 48px top margin.'};
+  const BRIEF={title:'Insight Archive',sub:'WordPress archive · public, indexable',purpose:'The SME Insights hub, the top-of-funnel SEO surface listing all posts with a featured story, search, category filter and sort. Standalone archive at /articles.',data:'Posts: <code>{ id, title, category, excerpt, hero, author{name,initials}, published_at, read_minutes, featured }</code>. Categories are a CMS taxonomy.',logic:'Featured = the post flagged <code>featured</code> (else newest). Search filters title/excerpt/category/author client-side; category chips and sort re-query. Public + indexable (archive + Article schema).',components:'archive hero · featured card · search + sort · category chips · article grid.',specs:'<b>Archive hero:</b> container <code>max-w-7xl</code> = 1280px, padding 48px top / 56px bottom (<code>pt-12 pb-14</code>), navy hero-bg gradient + dot-pattern 70% opacity, white text.<br/><b>Breadcrumb:</b> 12px <code>rgba(255,255,255,0.55)</code>, `›` at <code>rgba(255,255,255,0.30)</code>, current at <code>rgba(255,255,255,0.85)</code> weight 500, 16px bottom margin.<br/><b>H1 (SME Insights):</b> Plus Jakarta Sans weight 800, 36px mobile / 48px desktop, colour <code>#FFFFFF</code>, tight tracking.<br/><b>Hero sub:</b> 18px (<code>text-lg</code>), <code>rgba(255,255,255,0.70)</code>, max-width 672px (<code>max-w-2xl</code>), 16px top margin.<br/><b>Browse-by-category link:</b> 14px weight 700, <code>rgba(255,255,255,0.90)</code>, Lucide `layout-grid` + `arrow-right` icons at 16×16, 20px top margin.<br/><br/><b>Main container:</b> <code>max-w-7xl</code> = 1280px, padding 48px top (<code>pt-12</code>).<br/><b>Featured card:</b> white, border 1px <code>#E7EBEF</code>, rounded-3xl (24px), shadow-xl, 2-col grid on desktop. Image aspect 16:11 mobile / auto desktop with hover scale 1.05 over 500ms. FEATURED tag: 11px weight 700, padding 12px/4px, rounded-full, bg <code>#FF9900</code>, text <code>#0C1F31</code>.<br/><b>Featured content pad:</b> 28px mobile / 36px desktop (<code>p-7 sm:p-9</code>).<br/><b>Featured category chip:</b> 11px weight 700 uppercase, bg <code>#FDECEF</code>, text <code>#DC183C</code>, padding 10px/4px, rounded-full.<br/><b>Featured H2:</b> Plus Jakarta Sans weight 800, 24px mobile / 32px desktop, hover colour <code>#DC183C</code>, 12px top margin.<br/><b>Featured excerpt:</b> 16px, <code>#6A7581</code>, relaxed leading, 12px top margin.<br/><b>Author row:</b> avatar 40×40 rounded-full gradient <code>#DC183C→#FF9900</code>, initials 14px weight 700 white. Name 14px weight 700 <code>#121A21</code>, meta 14px <code>#6A7581</code>. 24px top margin.<br/><br/><b>Search field:</b> full width, uses global <code>.field</code> style, Lucide `search` 16×16 <code>#6A7581</code> at 14px left. 40px top margin.<br/><b>Category chips:</b> 20px top margin, 8px gap, height 36px (<code>h-9</code>), padding 16px, 14px weight 600, rounded-full. Active: bg <code>#DC183C</code> white text. Inactive: white bg <code>#121A21</code> text 1px border <code>#E7EBEF</code>.<br/><b>Article grid:</b> 1/2/3 columns, 24px gap, 32px top margin.<br/><b>Article card:</b> white rounded-2xl (16px), border 1px <code>#E7EBEF</code>, image 16:10, hover scale 1.05.<br/><b>Card category chip:</b> 10px weight 700 uppercase, bg <code>#FDECEF</code> text <code>#DC183C</code>, top-left 12px.<br/><b>Card H3:</b> Plus Jakarta Sans weight 700, 18px, tight leading, hover <code>#DC183C</code>, line-clamp 2, min-height 52px.<br/><b>Card excerpt:</b> 14px <code>#6A7581</code>, line-clamp 2, 8px top margin.<br/><b>Card footer meta:</b> 12px, avatar 32×32 rounded-full <code>#DC183C→#FF9900</code>, top border 1px <code>#E7EBEF</code>, 16px top padding.<br/><br/><b>Pagination:</b> pills, active 40×40 rounded-full <code>#DC183C</code> white 14px weight 700. Inactive 40×40 white 1px <code>#E7EBEF</code>. Prev/Next height 40px padding 16px, hover border+text <code>#DC183C</code>. 8px gap. 48px top margin.'};
   function toggleDevMode(){const on=document.body.classList.toggle('dev-on');const b=document.getElementById('devToggle');if(b)b.classList.toggle('on',on);if(on)showToast('Dev Mode on, tap any ⓘ for implementation notes.');lucide.createIcons();}
   function closeOverlay(id){const el=document.getElementById(id);if(!el)return;el.classList.remove('open');setTimeout(()=>{if(el&&el.parentNode)el.remove();},300);}
   function openBrief(){const b=BRIEF;const sec=(i,l,h)=>`<div class="px-6 py-4 border-t border-slate-100"><p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] flex items-center gap-1.5 mb-2"><i data-lucide="${i}" class="w-3.5 h-3.5"></i>${l}</p><div class="text-sm text-slate-600 leading-relaxed">${h}</div></div>`;document.getElementById('overlay-root').innerHTML=`<div class="ov" id="ov"><div class="ov-bg" onclick="closeOverlay('ov')"></div><div class="drawer"><div class="sticky top-0 z-10 bg-[#0C1F31] text-white px-6 py-5 flex items-start justify-between"><div><p class="text-[10px] font-bold uppercase tracking-widest text-[#FF9900] mb-1">Dev Brief</p><h3 class="font-jakarta font-extrabold text-lg leading-tight">${b.title}</h3><p class="text-xs text-white/60 mt-1">${b.sub}</p></div><button onclick="closeOverlay('ov')" class="text-white/60 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button></div>${sec('target','Purpose',b.purpose)}${sec('database','Data model',b.data)}${sec('git-branch','Logic',b.logic)}${sec('ruler','Spec values',b.specs)}${sec('boxes','Components',b.components)}</div></div>`;requestAnimationFrame(()=>{const o=document.getElementById('ov');if(o)o.classList.add('open');});lucide.createIcons();}
@@ -351,5 +351,6 @@
     if(e.key==='Escape'){ const o=document.getElementById('chromeSearchOverlay'); if(o && o.classList.contains('active')) toggleChromeSearch(); }
   });
 </script>
+<script src="member-chrome.js"></script>
 </body>
 </html>
