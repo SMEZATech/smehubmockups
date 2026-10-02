@@ -151,3 +151,5 @@ window.MOCKUP_DEV = {
 window.MOCKUP_GROUPS = {
   "podcast.html": "Site pages"
 };
+/* Built by Tshepho (Mission Control "Built" toggle): developer must not build these; they count as ready */
+window.MOCKUP_BUILT_LOCAL = ["member-workspace.html", "public-workspace.html", "public-health-check.html"];

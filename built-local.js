@@ -1,13 +1,7 @@
 /*
- * Mockups already BUILT on Tshepho's Local site (sme-south-africa.local) in the sme-community and
- * sme-success-core plugins. Developer: do not build or change these; Tshepho owns them.
- * Kept out of status.js on purpose: Mission Control rewrites status.js when it publishes.
+ * "Built by Tshepho" (on his Local site): developer must not build or change these pages; they count as ready.
+ * Source of truth is window.MOCKUP_BUILT_LOCAL in status.js, set from Mission Control (the Built toggle on each row).
+ * This file only supplies a fallback for an older status.js that has no list yet.
  */
-window.MOCKUP_BUILT_LOCAL = [
-  // My Business (sme-success-core)
-  'member-workspace.html', 'public-workspace.html', 'public-health-check.html',
-  // Community (sme-community)
-  'member-hub.html', 'members.html', 'single-member.html', 'single-post.html', 'groups.html', 'single-group.html',
-  'forums.html', 'single-discussion.html', 'member-account.html', 'member-messages.html', 'member-notifications.html'
-];
-window.MOCKUP_BUILT_LOCAL_LABEL = "Built on Tshepho's Local";
+window.MOCKUP_BUILT_LOCAL = window.MOCKUP_BUILT_LOCAL || ['member-workspace.html', 'public-workspace.html', 'public-health-check.html'];
+window.MOCKUP_BUILT_LOCAL_LABEL = 'Built by Tshepho';
