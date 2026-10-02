@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Account Settings | SME HUB</title>
-  <meta name="description" content="SME South Africa — Account settings: notifications, privacy, membership, orders, downloads, funding applications and security." />
+  <meta name="description" content="SME South Africa, Account settings: notifications, privacy, membership, orders, downloads, funding applications and security." />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -201,7 +201,7 @@
   </div>
 </header>
 
-<!-- Mobile bottom tab bar — Home / Community / Workspace / Account -->
+<!-- Mobile bottom tab bar, Home / Community / Workspace / Account -->
 <nav aria-label="Quick nav" class="lg:hidden fixed bottom-0 inset-x-0 z-40 bg-white border-t border-[#E7EBEF] shadow-[0_-4px_16px_-4px_rgba(12,31,49,0.08)]" style="padding-bottom:env(safe-area-inset-bottom)">
   <div class="grid grid-cols-4">
     <a href="member-hub.html" class="flex flex-col items-center justify-center gap-1 py-2.5 text-slate-500 hover:text-[#121A21] transition">
@@ -382,7 +382,7 @@ function setNotifications(){
   const body = `
     <div class="pb-5 mb-5 border-b border-slate-100">
       <h3 class="font-jakarta font-bold uppercase text-sm text-[#121A21] tracking-wide mb-1">Email digest</h3>
-      <p class="text-xs text-slate-500 mb-3">Batched email summary — sent via Kit (ConvertKit), staggered to protect deliverability.</p>
+      <p class="text-xs text-slate-500 mb-3">Batched email summary, sent via Kit (ConvertKit), staggered to protect deliverability.</p>
       ${digestUI}
     </div>
     <h3 class="font-jakarta font-bold uppercase text-sm text-[#121A21] tracking-wide mb-1">In-app notifications</h3>
@@ -395,10 +395,10 @@ function setDigest(d){ state.notif.digest=d; renderSettingsContent(); showToast(
 function toggleNotif(k){ state.notif[k]=!state.notif[k]; renderSettingsContent(); }
 
 /* ===================== SETTINGS · NEWSLETTER (SME Brief) ===================== */
-// Same four editions as the public SME Brief archive (newsletter.html) — this tab is
+// Same four editions as the public SME Brief archive (newsletter.html), this tab is
 // just that subscription, managed from inside the account instead of via an email link.
 const NEWSLETTER_EDITIONS = [
-  ['weekly',    'The SME Weekly',  'Tue',  'News, funding and founder stories — every week.'],
+  ['weekly',    'The SME Weekly',  'Tue',  'News, funding and founder stories, every week.'],
   ['funding',   'Funding Alerts',  'ASAP', 'New funding windows and deadlines, sent the moment they open.'],
   ['solutions', 'SME Solutions',   'Thu',  'Tools, templates and partner offers worth knowing about.'],
   ['events',    'SME Events',      'Fri',  'Upcoming events, webinars and the Funding Summit calendar.']
@@ -428,7 +428,7 @@ function setNewsletter(){
       <a href="newsletter.html" target="_blank" class="inline-flex items-center gap-1.5 text-sm font-bold text-[#DC183C] hover:text-[#B0142F] transition">Browse the full archive <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i></a>
       ${anyOn ? `<button onclick="unsubscribeAllNewsletter()" class="text-sm font-semibold text-slate-500 hover:text-[#DC183C] transition text-left sm:text-right">Unsubscribe from all editions</button>` : ''}
     </div>`;
-  return settingsCard('Newsletter', 'Pick which SME Brief editions land in your inbox — sent via Kit, never bundled with in-app notifications above.', body);
+  return settingsCard('Newsletter', 'Pick which SME Brief editions land in your inbox, sent via Kit, never bundled with in-app notifications above.', body);
 }
 
 const PRIVACY_OPTIONS = ['Public','Only Me','My Connections'];
@@ -469,7 +469,7 @@ function setBlocked(){
       <button onclick="unblock(${i})" class="text-xs font-bold text-[#DC183C] border border-slate-200 hover:border-[#DC183C] rounded-full px-3 py-1.5 transition shrink-0">Unblock</button>
     </div>`).join('') : `<div class="py-10 text-center text-slate-500"><i data-lucide="shield-check" class="w-8 h-8 mx-auto mb-2"></i><p class="text-sm font-semibold">You haven't blocked anyone.</p></div>`;
   const body = `
-    <p class="text-sm text-slate-600 mb-4">Blocked members can't message you, see your posts, or send you connection requests — and they aren't told they've been blocked.</p>
+    <p class="text-sm text-slate-600 mb-4">Blocked members can't message you, see your posts, or send you connection requests, and they aren't told they've been blocked.</p>
     <div class="divide-y divide-slate-100">${rows}</div>`;
   return settingsCard('Blocked Members', "People you've blocked on SME HUB.", body);
 }
@@ -529,7 +529,7 @@ function setMembership(){
         <div class="relative flex items-center justify-between flex-wrap gap-3">
           <div><p class="text-[10px] font-bold uppercase tracking-widest text-[#FF9900]">Current plan</p>
             <h3 class="font-jakarta font-extrabold text-2xl text-white mt-0.5 flex items-center gap-2">Standard Member <span class="text-[10px] bg-white/15 text-white px-2 py-0.5 rounded-full uppercase tracking-wide">Active</span></h3>
-            <p class="text-xs text-white/60 mt-1">Next billing date: — &nbsp;·&nbsp; No card on file</p>
+            <p class="text-xs text-white/60 mt-1">Next billing date:, &nbsp;·&nbsp; No card on file</p>
           </div>
           <button onclick="showToast('Upgrade flow handled by MemberPress.',null)" class="bg-[#DC183C] hover:bg-[#B0142F] text-white rounded-full px-5 py-2.5 font-jakarta font-bold text-sm transition flex items-center gap-2"><i data-lucide="crown" class="w-4 h-4"></i> Upgrade to Premium</button>
         </div>
@@ -612,18 +612,18 @@ function setOrders(){
       ${ordersPagination()}
     </div>
     <div class="grid sm:grid-cols-2 gap-3">
-      <button onclick="showToast('Opening delivery address management — WooCommerce.',null)" class="border border-slate-200 hover:border-[#DC183C] hover:text-[#DC183C] text-slate-600 rounded-2xl p-4 text-left transition flex items-center gap-3">
+      <button onclick="showToast('Opening delivery address management, WooCommerce.',null)" class="border border-slate-200 hover:border-[#DC183C] hover:text-[#DC183C] text-slate-600 rounded-2xl p-4 text-left transition flex items-center gap-3">
         <div class="w-9 h-9 rounded-lg bg-slate-100 grid place-items-center shrink-0"><i data-lucide="map-pin" class="w-4 h-4 text-slate-500"></i></div>
         <div><p class="text-sm font-semibold text-[#121A21]">Delivery addresses</p><p class="text-xs text-slate-500">Saved shipping addresses</p></div>
         <i data-lucide="chevron-right" class="w-4 h-4 text-slate-500 ml-auto"></i>
       </button>
-      <button onclick="showToast('Opening payment methods — WooCommerce.',null)" class="border border-slate-200 hover:border-[#DC183C] hover:text-[#DC183C] text-slate-600 rounded-2xl p-4 text-left transition flex items-center gap-3">
+      <button onclick="showToast('Opening payment methods, WooCommerce.',null)" class="border border-slate-200 hover:border-[#DC183C] hover:text-[#DC183C] text-slate-600 rounded-2xl p-4 text-left transition flex items-center gap-3">
         <div class="w-9 h-9 rounded-lg bg-slate-100 grid place-items-center shrink-0"><i data-lucide="credit-card" class="w-4 h-4 text-slate-500"></i></div>
         <div><p class="text-sm font-semibold text-[#121A21]">Payment methods</p><p class="text-xs text-slate-500">Saved cards &amp; billing</p></div>
         <i data-lucide="chevron-right" class="w-4 h-4 text-slate-500 ml-auto"></i>
       </button>
     </div>
-    <p class="text-xs text-slate-500 mt-5 flex items-center gap-1.5"><i data-lucide="info" class="w-3.5 h-3.5"></i> The SME SA store sells branded merchandise. Orders are managed securely by <span class="font-jakarta">WooCommerce</span> — payment and address management hands off to the WooCommerce secure account page. Resource downloads and funding applications now live in your <a href="member-workspace.html" class="font-bold text-[#DC183C] hover:underline">Workspace</a>.</p>`;
+    <p class="text-xs text-slate-500 mt-5 flex items-center gap-1.5"><i data-lucide="info" class="w-3.5 h-3.5"></i> The SME SA store sells branded merchandise. Orders are managed securely by <span class="font-jakarta">WooCommerce</span>, payment and address management hands off to the WooCommerce secure account page. Resource downloads and funding applications now live in your <a href="member-workspace.html" class="font-bold text-[#DC183C] hover:underline">Workspace</a>.</p>`;
   return settingsCard('My Orders', 'Your SME South Africa merchandise orders.', body);
 }
 
@@ -656,8 +656,8 @@ function setExportData(){
       <div><p class="text-sm font-semibold text-[#121A21]">Your data, your rights</p><p class="text-xs text-slate-600 mt-1 leading-relaxed">Under the Protection of Personal Information Act (POPIA), you can request a full export of the personal information SME South Africa holds about you at any time.</p></div>
     </div>
     <div class="flex items-center justify-between gap-4 flex-wrap">
-      <div><h3 class="font-jakarta font-bold uppercase text-sm text-[#121A21] tracking-wide">Download my data</h3><p class="text-xs text-slate-500 mt-0.5 max-w-md">Export everything we hold — profile, orders, downloads, funding applications and group activity — as a JSON file. We email a secure link when it is ready.</p></div>
-      <button onclick="showToast('Export requested — link will be emailed.', null)" class="border border-slate-200 hover:border-[#DC183C] hover:text-[#DC183C] text-slate-700 rounded-full px-5 py-2.5 font-jakarta font-bold text-sm transition flex items-center gap-2 shrink-0"><i data-lucide="download" class="w-4 h-4"></i> Request export</button>
+      <div><h3 class="font-jakarta font-bold uppercase text-sm text-[#121A21] tracking-wide">Download my data</h3><p class="text-xs text-slate-500 mt-0.5 max-w-md">Export everything we hold, profile, orders, downloads, funding applications and group activity, as a JSON file. We email a secure link when it is ready.</p></div>
+      <button onclick="showToast('Export requested, link will be emailed.', null)" class="border border-slate-200 hover:border-[#DC183C] hover:text-[#DC183C] text-slate-700 rounded-full px-5 py-2.5 font-jakarta font-bold text-sm transition flex items-center gap-2 shrink-0"><i data-lucide="download" class="w-4 h-4"></i> Request export</button>
     </div>`;
   return settingsCard('Export Data', 'Download a copy of everything we hold about you.', body);
 }
@@ -758,21 +758,21 @@ const BRIEFS = {
   set_notifications:{ title:'Settings · Notifications', sub:'Email digest + in-app events',
     purpose:'Per-member control of email digest cadence and six in-app event types, all mapped to the Ask/Win/Share model.',
     data:'<code>{ digest: daily|weekly|none, reply, mention, sectorAsk, winConn, event, suggested }</code> (booleans).',
-    logic:'Email digests sent via <b>Kit (ConvertKit)</b> — staggered batches, never a single 10k+ blast (WP Engine CPU). In-app events fan out from a queue.',
+    logic:'Email digests sent via <b>Kit (ConvertKit)</b>, staggered batches, never a single 10k+ blast (WP Engine CPU). In-app events fan out from a queue.',
     components:'Radio cards (digest) · toggle rows (events).',
     specs:'<b>Settings shell:</b> <code>&lt;main&gt;</code> inner <code>max-w-6xl</code> = 1152px padding-y 24px; page kicker 11px weight 700 uppercase tracking-widest <code>#DC183C</code>, h1 Plus Jakarta 800 24px. Grid 12-col at lg 24px gap: sidebar <code>lg:col-span-3</code> sticky <code>lg:top-24</code> (96px offset), content <code>lg:col-span-9</code>.<br/><b>Settings nav:</b> card bg white rounded-2xl border slate-100 padding 8px (<code>p-2</code>); rows (<code>.snav</code>) padding 14px/10px (<code>px-3.5 py-2.5</code>) rounded-xl (12px) 14px weight 600, Lucide icon 16&times;16 slate-400; active row highlighted; per-row info badge 16&times;16.<br/><b>settingsCard:</b> bg white rounded-2xl border slate-100; header padding 20px/24px horiz (<code>px-5 sm:px-6</code>) 16px vert (<code>py-4</code>) + bottom border slate-100, title Plus Jakarta 800 18px (<code>text-lg</code>) <code>#121A21</code>, sub 14px slate-500; body padding 20px mobile / 24px sm (<code>p-5 sm:p-6</code>).<br/><b>Field:</b> label 11px weight 700 uppercase tracking-wider slate-500 (6px bottom, <code>mb-1.5</code>); hint 12px slate-400.<br/><b>Input / select:</b> full width, bg slate-50, 1px slate-200, radius 12px (<code>rounded-xl</code>), padding 14px/10px (<code>px-3.5 py-2.5</code>), 14px, focus border <code>#DC183C</code> + white bg.<br/><b>Toggle row:</b> padding-y 14px (<code>py-3.5</code>), label 14px weight 600 <code>#121A21</code>, sub 12px slate-500, <code>.switch</code> control (on = brand fill).<br/><br/><b>Email digest:</b> heading Plus Jakarta 700 uppercase 14px <code>#121A21</code>; sub 12px slate-500. Radio cards <code>grid sm:grid-cols-3</code> 8px gap; each <code>.rcard</code> 1px slate-200 rounded-xl (12px) padding 12px centred, selected = border <code>#DC183C</code> + bg <code>#FDECEF</code>; title Plus Jakarta 700 14px capitalize, sub 11px slate-500.<br/><b>In-app events:</b> <code>divide-y divide-slate-100</code> toggle rows &mdash; padding-y 14px (<code>py-3.5</code>), label 14px weight 600 <code>#121A21</code>, sub 12px slate-500, <code>.switch</code> 42&times;24 track (off <code>#CBD5E1</code>, on <code>#29A37A</code>) 20px knob.' },
-  set_newsletter:{ title:'Settings · Newsletter', sub:'SME Brief subscription — same 4 editions as the public archive',
+  set_newsletter:{ title:'Settings · Newsletter', sub:'SME Brief subscription, same 4 editions as the public archive',
     purpose:'Lets a logged-in member manage their SME Brief (email newsletter) subscription from inside the account, instead of only via the unsubscribe/preferences link in the email footer. Mirrors the exact same four editions offered on the public newsletter archive (<code>newsletter.html</code>) so the two surfaces never drift out of sync.',
-    data:'Kit (ConvertKit) subscriber tags, one per edition: <code>{ weekly, funding, solutions, events }</code> (booleans). Same subscriber record used by the public subscribe form — toggling here calls the same Kit Subscribers API, just authenticated instead of anonymous.',
-    logic:'Each toggle maps 1:1 to a Kit tag add/remove call. "Unsubscribe from all editions" removes every tag in one request rather than four sequential ones. This is a preference surface only — it never touches the in-app notification digest (Notifications tab); those are two separate systems (Kit email vs in-app queue) that happen to share this member.',
+    data:'Kit (ConvertKit) subscriber tags, one per edition: <code>{ weekly, funding, solutions, events }</code> (booleans). Same subscriber record used by the public subscribe form, toggling here calls the same Kit Subscribers API, just authenticated instead of anonymous.',
+    logic:'Each toggle maps 1:1 to a Kit tag add/remove call. "Unsubscribe from all editions" removes every tag in one request rather than four sequential ones. This is a preference surface only, it never touches the in-app notification digest (Notifications tab); those are two separate systems (Kit email vs in-app queue) that happen to share this member.',
     components:'Four toggle rows (edition name + send-day chip + one-line description) · archive link · conditional "unsubscribe from all" action.',
-    specs:'<b>Container:</b> <code>settingsCard</code> (see Settings shell in the Notifications brief).<br/><b>Row:</b> reuses the toggle-row pattern (padding-y 14px, label 14px weight 600 <code>#121A21</code>, sub 12px slate-500, <code>.switch</code> control) with one addition — a send-day chip inline after the label: 10px, bg slate-100, text slate-500, rounded 4px, padding 8px/2px, matching the chip on the public archive\\u2019s subscribe widget exactly (same edition names + days: The SME Weekly/Tue, Funding Alerts/ASAP, SME Solutions/Thu, SME Events/Fri).<br/><b>Footer row:</b> top border slate-100, 20px top padding (<code>pt-5</code>); archive link 14px weight 700 <code>#DC183C</code> + Lucide <code>arrow-up-right</code> 14&times;14; unsubscribe-all is plain text slate-400 hover <code>#DC183C</code>, only rendered when at least one edition is on.' },
+    specs:'<b>Container:</b> <code>settingsCard</code> (see Settings shell in the Notifications brief).<br/><b>Row:</b> reuses the toggle-row pattern (padding-y 14px, label 14px weight 600 <code>#121A21</code>, sub 12px slate-500, <code>.switch</code> control) with one addition, a send-day chip inline after the label: 10px, bg slate-100, text slate-500, rounded 4px, padding 8px/2px, matching the chip on the public archive\\u2019s subscribe widget exactly (same edition names + days: The SME Weekly/Tue, Funding Alerts/ASAP, SME Solutions/Thu, SME Events/Fri).<br/><b>Footer row:</b> top border slate-100, 20px top padding (<code>pt-5</code>); archive link 14px weight 700 <code>#DC183C</code> + Lucide <code>arrow-up-right</code> 14&times;14; unsubscribe-all is plain text slate-400 hover <code>#DC183C</code>, only rendered when at least one edition is on.' },
   set_privacy:{ title:'Settings · Privacy', sub:'Per-field profile visibility (BuddyBoss default)',
-    purpose:'The BuddyBoss-standard "Profile Visibility Settings" table — each xprofile field on the member\'s profile gets its own visibility level, so a member can share their bio publicly while keeping a nickname private, for example.',
+    purpose:'The BuddyBoss-standard "Profile Visibility Settings" table, each xprofile field on the member\'s profile gets its own visibility level, so a member can share their bio publicly while keeping a nickname private, for example.',
     data:'<code>xprofile_fields[] { id, label, visibility: Public|Only Me|My Connections, editable }</code>. Non-editable rows (First Name, Nickname, Job Position) follow the platform default per BuddyBoss core-field rules.',
-    logic:'Each editable row writes its own visibility level independently — no page-level save button, changes apply immediately (BuddyBoss default UX). Visibility gates what peer-view profile pages and search indexing can show for that field.',
+    logic:'Each editable row writes its own visibility level independently, no page-level save button, changes apply immediately (BuddyBoss default UX). Visibility gates what peer-view profile pages and search indexing can show for that field.',
     components:'Two-column table (General Information / Visibility) · zebra rows · per-row Visibility dropdown for editable fields, plain text for fixed fields.',
-    specs:'<b>Container:</b> <code>settingsCard</code> (see Settings shell in the Notifications brief).<br/><b>Table:</b> 1px slate-100 rounded-2xl border, no internal cell borders — rows separated by alternating <code>bg-slate-50/60</code> / white zebra striping.<br/><b>Header row:</b> white bg, 1px bottom border slate-100, both columns Plus Jakarta 700 14px <code>#121A21</code>.<br/><b>Field label:</b> 14px weight 600 <code>#DC183C</code> (styled as a link, matching the BuddyBoss reference).<br/><b>Fixed value:</b> 14px slate-600 plain text.<br/><b>Visibility select:</b> max-width 200px, bg white 1px slate-200 rounded-lg (8px) padding 12px/8px, focus border <code>#DC183C</code>.' },
+    specs:'<b>Container:</b> <code>settingsCard</code> (see Settings shell in the Notifications brief).<br/><b>Table:</b> 1px slate-100 rounded-2xl border, no internal cell borders, rows separated by alternating <code>bg-slate-50/60</code> / white zebra striping.<br/><b>Header row:</b> white bg, 1px bottom border slate-100, both columns Plus Jakarta 700 14px <code>#121A21</code>.<br/><b>Field label:</b> 14px weight 600 <code>#DC183C</code> (styled as a link, matching the BuddyBoss reference).<br/><b>Fixed value:</b> 14px slate-600 plain text.<br/><b>Visibility select:</b> max-width 200px, bg white 1px slate-200 rounded-lg (8px) padding 12px/8px, focus border <code>#DC183C</code>.' },
   set_membership:{ title:'Settings · Membership', sub:'MemberPress integration',
     purpose:'Member-facing plan summary: current plan, next billing date, usage bars and upgrade CTA.',
     data:'Plan, status, next_billing, usage counters. Sourced from <b>MemberPress</b>; SME HUB stores no card data.',
@@ -780,21 +780,21 @@ const BRIEFS = {
     components:'Plan banner · usage bars · plan comparison · upgrade CTA.',
     specs:'<b>Container:</b> <code>settingsCard</code> (see Settings shell in the Notifications brief).<br/><b>Plan banner:</b> rounded-2xl 1px slate-100, inner bg <code>#0C1F31</code> padding 20px (<code>px-5 py-5</code>) + radial <code>#DC183C</code> 40%. Kicker 10px weight 700 uppercase tracking-widest <code>#FF9900</code>; plan name Plus Jakarta 800 24px (<code>text-2xl</code>) white + status chip 10px bg <code>rgba(255,255,255,0.15)</code> white rounded-full; meta 12px white/60. Upgrade CTA bg <code>#DC183C</code> hover <code>#B0142F</code> rounded-full padding 20px/10px Plus Jakarta 700 14px + Lucide <code>crown</code> 16&times;16.<br/><b>Usage bars:</b> 16px apart (<code>space-y-4</code>); label 14px weight 600 <code>#121A21</code>, value 12px weight 700 slate-400; track height 8px (<code>h-2</code>) rounded-full slate-100, fill per-metric colour (<code>#DC183C</code> / <code>#0C1F31</code> / <code>#FF9900</code>).<br/><b>Plan compare:</b> <code>grid sm:grid-cols-2</code> 12px gap; Standard card 1px slate-200 rounded-2xl padding 16px; Premium card 2px border <code>#DC183C</code> bg <code>#FDECEF</code>/40, heading <code>#DC183C</code> + Lucide <code>crown</code>. Bullets 14px slate-500/600.<br/><b>Footnote:</b> 12px slate-400, MemberPress in <code>font-jakarta</code>.' },
   set_orders:{ title:'Settings · My Orders', sub:'WooCommerce store integration',
-    purpose:'Surfaces the member\'s WooCommerce purchase history, digital downloads and links to address/payment management — all inside the SME HUB member account, so members never need to visit a separate store account page. This is the "one place" goal in action.',
-    data:'Pulled live from WooCommerce via its REST API: <code>orders[]</code>, <code>downloads[]</code>, <code>addresses</code>. Scoped to the authenticated WordPress user (same user record shared by BuddyBoss, MemberPress and WooCommerce — no separate login).',
-    logic:'Order history and downloads render inline. Addresses and payment methods hand off to the WooCommerce My Account secure page (never rebuild card-handling UI in custom code). Download links use WooCommerce\'s own signed URLs with expiry. Order data falls under POPIA and is included in the data export scope — the data-export endpoint already covers this.',
+    purpose:'Surfaces the member\'s WooCommerce purchase history, digital downloads and links to address/payment management, all inside the SME HUB member account, so members never need to visit a separate store account page. This is the "one place" goal in action.',
+    data:'Pulled live from WooCommerce via its REST API: <code>orders[]</code>, <code>downloads[]</code>, <code>addresses</code>. Scoped to the authenticated WordPress user (same user record shared by BuddyBoss, MemberPress and WooCommerce, no separate login).',
+    logic:'Order history and downloads render inline. Addresses and payment methods hand off to the WooCommerce My Account secure page (never rebuild card-handling UI in custom code). Download links use WooCommerce\'s own signed URLs with expiry. Order data falls under POPIA and is included in the data export scope, the data-export endpoint already covers this.',
     components:'Order history rows · status pills · download buttons · address & payment quick-links.',
     specs:'<b>Container:</b> <code>settingsCard</code> (see Settings shell in the Notifications brief).<br/><b>Tracking banner:</b> rounded-2xl 1px border <code>#E4F5EE</code> bg <code>#E4F5EE</code>/30 padding 16px flex; icon disc 40&times;40 (<code>w-10 h-10</code>) rounded-full <code>#29A37A</code>, Lucide <code>truck</code> 20&times;20 white; title Plus Jakarta 700 14px; Track link 12px weight 700 <code>#29A37A</code>.<br/><b>Order-history card:</b> rounded-2xl 1px slate-100 padding 16px; heading Plus Jakarta 700 uppercase 14px; Full-history link 12px weight 700 <code>#DC183C</code> + Lucide <code>external-link</code> 14&times;14.<br/><b>Order row:</b> flex, padding-y 16px (<code>py-4</code>) bottom border slate-100; product thumb 48&times;48 (<code>w-12 h-12</code>) rounded-xl slate-100, Lucide <code>shirt</code> 24&times;24 slate-400; order id 12px <code>font-jakarta</code> slate-400; status pill padding 8px/2px rounded-full 10px weight 700 &mdash; Delivered bg <code>#E4F5EE</code> text <code>#29A37A</code>, Refunded bg <code>#FDECEF</code> text <code>#DC183C</code>. Product 14px weight 600 <code>#121A21</code>; variant/date 12px slate-400, total weight 600 <code>#121A21</code>; tracking 11px slate-400 + Lucide <code>package</code> 14&times;14 <code>#29A37A</code>. View-order button 1px slate-200 outline hover border/text <code>#DC183C</code> rounded-full padding 16px/6px 12px weight 700.<br/><b>Quick-links:</b> <code>grid sm:grid-cols-2</code> 12px gap; buttons 1px slate-200 rounded-2xl padding 16px hover border/text <code>#DC183C</code>, icon tile 36&times;36 (<code>w-9 h-9</code>) rounded-lg slate-100 (Lucide <code>map-pin</code> / <code>credit-card</code> 16&times;16), Lucide <code>chevron-right</code> 16&times;16.' },
   set_invites:{ title:'Settings · Group Invites', sub:'Invite founders to the platform',
     purpose:'The BuddyBoss "Group Invites" tab. A member invites peers by email or a personal referral link, within a monthly quota, and tracks who has joined.',
     data:'<code>invites[] { email, status: pending|joined, sent_at }</code> · referral code per user · monthly quota.',
-    logic:'Validate email; enforce quota; send via <b>Kit (ConvertKit)</b> in staggered batches (never a bulk blast — WP Engine CPU). Status flips to <i>joined</i> on registration attributed to the ref code.',
+    logic:'Validate email; enforce quota; send via <b>Kit (ConvertKit)</b> in staggered batches (never a bulk blast, WP Engine CPU). Status flips to <i>joined</i> on registration attributed to the ref code.',
     components:'Email input + send · copyable referral link · sent-invite list with status pills + resend.',
     specs:'<b>Container:</b> <code>settingsCard</code> (see Settings shell in the Notifications brief).<br/><b>Compose card:</b> bg slate-50 1px slate-200 rounded-2xl padding 16px (<code>p-4</code>); email input bg white 1px slate-200 rounded-xl (12px) padding 14px/10px, focus border <code>#DC183C</code>. Send button bg <code>#DC183C</code> hover <code>#B0142F</code> rounded-full padding 20px/10px Plus Jakarta 700 14px white + Lucide <code>send</code> 16&times;16.<br/><b>Referral link:</b> readonly input bg white 1px slate-200 rounded-xl <code>font-jakarta</code> slate-500; Copy button 1px slate-200 outline rounded-full.<br/><b>Invite rows:</b> padding-y 12px (<code>py-3</code>); mail disc 36&times;36 rounded-full slate-100. Status pill padding 8px/2px rounded-full 10px weight 700 &mdash; Joined bg <code>#E4F5EE</code> text <code>#29A37A</code>, Pending bg slate-100 text slate-500 + Resend link 11px weight 700 <code>#DC183C</code>.' },
   set_export:{ title:'Settings · Export Data', sub:'POPIA data export',
     purpose:'Satisfies the POPIA data-subject access right: a member can request a full export of the personal information SME South Africa holds about them.',
     data:'All personal data: profile, orders, downloads, funding applications, group activity. Export bundled as JSON.',
-    logic:'Export is async — queue a job, generate JSON, email a time-limited secure link (never a synchronous heavy WP Engine request).',
+    logic:'Export is async, queue a job, generate JSON, email a time-limited secure link (never a synchronous heavy WP Engine request).',
     components:'POPIA rights notice · export-request button.',
     specs:'<b>Container:</b> <code>settingsCard</code> (see Settings shell in the Notifications brief).<br/><b>POPIA notice:</b> rounded-2xl 1px border <code>#29A37A</code>/30 bg <code>#E4F5EE</code>/40 padding 16px flex; Lucide <code>shield-check</code> 20&times;20 <code>#29A37A</code>; title 14px weight 600 <code>#121A21</code>, body 12px slate-600 relaxed.<br/><b>Export row:</b> heading Plus Jakarta 700 uppercase 14px, sub 12px slate-500 max-width 28rem; Request-export button 1px slate-200 outline hover border/text <code>#DC183C</code> rounded-full padding 20px/10px Plus Jakarta 700 14px + Lucide <code>download</code> 16&times;16.' },
 };
@@ -803,7 +803,7 @@ function toggleDevMode(){
   const on = document.body.classList.toggle('dev-on');
   const btn = document.getElementById('devToggle');
   if(btn) btn.classList.toggle('on', on);
-  if(on) showToast('Dev Mode on — tap any ⓘ for implementation notes.', null);
+  if(on) showToast('Dev Mode on, tap any ⓘ for implementation notes.', null);
   lucide.createIcons();
 }
 function closeOverlay(id){
@@ -831,7 +831,7 @@ function openBrief(id){
         ${sec('git-branch','Logic', b.logic)}
         ${b.specs ? sec('ruler','Spec values', b.specs) : ''}
         ${sec('boxes','Components', b.components)}
-        <div class="px-6 py-4 border-t border-slate-100"><p class="text-[11px] text-slate-500 flex items-center gap-1.5"><i data-lucide="info" class="w-3.5 h-3.5"></i> Spec lives beside the feature — toggle Dev Mode off for the clean stakeholder view.</p></div>
+        <div class="px-6 py-4 border-t border-slate-100"><p class="text-[11px] text-slate-500 flex items-center gap-1.5"><i data-lucide="info" class="w-3.5 h-3.5"></i> Spec lives beside the feature, toggle Dev Mode off for the clean stakeholder view.</p></div>
       </div>
     </div>`;
   requestAnimationFrame(()=>{ const o=document.getElementById('ov-brief'); if(o) o.classList.add('open'); });
@@ -852,7 +852,7 @@ function showToast(msg, kind){
 /* ===================== INIT ===================== */
 document.addEventListener('keydown', e=>{ if(e.key==='Escape') document.querySelectorAll('.ov.open').forEach(o=>closeOverlay(o.id)); });
 
-/* Deep-link support: #funding, #profile, etc. — lets other pages (e.g. the member workspace) land straight on a settings tab */
+/* Deep-link support: #funding, #profile, etc., lets other pages (e.g. the member workspace) land straight on a settings tab */
 (function(){
   var hashId = (location.hash || '').replace('#','');
   if(hashId && SETTINGS_NAV.some(function(s){ return s.id === hashId; })) state.settingsTab = hashId;

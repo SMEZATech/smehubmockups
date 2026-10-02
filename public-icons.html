@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Icon Library — SME South Africa</title>
+  <title>Icon Library, SME South Africa</title>
   <meta name="description" content="Lucide icons used across the SME South Africa mockups, grouped by page. Download individually or in bulk." />
   <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
@@ -36,7 +36,7 @@
   <div class="max-w-7xl mx-auto px-4 sm:px-6 py-12 relative">
     <p class="text-[12px] font-bold uppercase tracking-widest text-white/50">Developer resource <button onclick="openBrief()" class="dev-badge align-middle ml-1 w-5 h-5 rounded-full bg-[#FF9900] text-[#0C1F31] items-center justify-center text-[10px] font-bold">i</button></p>
     <h1 class="font-jakarta font-extrabold text-4xl sm:text-5xl mt-1">Icon Library</h1>
-    <p class="mt-3 text-white/70 max-w-2xl">Every Lucide icon used across the mockups, <span class="text-white font-semibold">grouped by the page that uses it</span> — so you can grab exactly the set for, say, the Funding page. We use <span class="text-white font-semibold">Lucide</span> only. Download any icon as SVG, or grab them all as a ZIP.</p>
+    <p class="mt-3 text-white/70 max-w-2xl">Every Lucide icon used across the mockups, <span class="text-white font-semibold">grouped by the page that uses it</span>, so you can grab exactly the set for, say, the Funding page. We use <span class="text-white font-semibold">Lucide</span> only. Download any icon as SVG, or grab them all as a ZIP.</p>
     <div class="mt-6 flex flex-col sm:flex-row gap-3 sm:items-center">
       <div class="relative flex-1 max-w-md">
         <i data-lucide="search" class="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-white/40"></i>
@@ -150,7 +150,7 @@
   function cleanSvg(svg){ const c=svg.cloneNode(true); c.removeAttribute('class'); c.setAttribute('width','24'); c.setAttribute('height','24'); return '<?xml version="1.0" encoding="UTF-8"?>\n'+c.outerHTML.replace(/<svg /,'<svg xmlns="http://www.w3.org/2000/svg" '); }
   function dl(card){ const svg=card.querySelector('svg'); if(!svg)return; const name=card.dataset.name; const blob=new Blob([cleanSvg(svg)],{type:'image/svg+xml'}); const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=name+'.svg'; a.click(); URL.revokeObjectURL(a.href); showToast(name+'.svg downloaded'); }
   async function zipIcons(iconNames, zipName){
-    if(typeof JSZip==='undefined'){ showToast('Zip library still loading — try again.'); return; }
+    if(typeof JSZip==='undefined'){ showToast('Zip library still loading, try again.'); return; }
     const zip=new JSZip(); const folder=zip.folder(zipName.replace('.zip',''));
     iconNames.forEach(n=>{ const card=document.querySelector(`[data-name="${n}"] svg`); if(card) folder.file(n+'.svg', cleanSvg(card)); });
     const content=await zip.generateAsync({type:'blob'}); const a=document.createElement('a'); a.href=URL.createObjectURL(content); a.download=zipName; a.click(); URL.revokeObjectURL(a.href);
@@ -158,8 +158,8 @@
   function downloadAll(){ const all=new Set(); pages.forEach(p=>p.icons.forEach(i=>all.add(i))); showToast('Building ZIP…'); zipIcons([...all].sort(),'sme-icons.zip'); }
   function downloadPage(file){ const p=pages.find(x=>x.file===file); if(!p)return; setPage(file); setTimeout(()=>{ showToast('Building ZIP…'); zipIcons(p.icons,'sme-icons-'+file.replace('.html','')+'.zip'); },50); }
 
-  const BRIEF={title:'Icon Library',sub:'Lucide · grouped by page',purpose:'Single source of truth for icons, grouped by the page that uses each one — so the developer can pull exactly the set a given screen needs. Every mockup uses Lucide; brand logos (Google/LinkedIn/X) are inline SVGs.',data:'Built at runtime: the page fetches each mockup’s HTML and extracts every <code>data-lucide</code> name. A few JS-rendered icon sets are added manually (EXTRA map).',logic:'Filter by page chip or search. Per-icon SVG download, per-page ZIP, or all-unique ZIP (JSZip). In production, import from the lucide package — don’t hand-copy SVGs.',components:'Page filter · grouped icon grids · per-icon / per-page / all-unique download.'};
-  function toggleDevMode(){const on=document.body.classList.toggle('dev-on');const b=document.getElementById('devToggle');if(b)b.classList.toggle('on',on);if(on)showToast('Dev Mode on — tap the ⓘ for notes.');lucide.createIcons();}
+  const BRIEF={title:'Icon Library',sub:'Lucide · grouped by page',purpose:'Single source of truth for icons, grouped by the page that uses each one, so the developer can pull exactly the set a given screen needs. Every mockup uses Lucide; brand logos (Google/LinkedIn/X) are inline SVGs.',data:'Built at runtime: the page fetches each mockup’s HTML and extracts every <code>data-lucide</code> name. A few JS-rendered icon sets are added manually (EXTRA map).',logic:'Filter by page chip or search. Per-icon SVG download, per-page ZIP, or all-unique ZIP (JSZip). In production, import from the lucide package, don’t hand-copy SVGs.',components:'Page filter · grouped icon grids · per-icon / per-page / all-unique download.'};
+  function toggleDevMode(){const on=document.body.classList.toggle('dev-on');const b=document.getElementById('devToggle');if(b)b.classList.toggle('on',on);if(on)showToast('Dev Mode on, tap the ⓘ for notes.');lucide.createIcons();}
   function openBrief(){const b=BRIEF;const sec=(i,l,h)=>`<div class="px-6 py-4 border-t border-slate-100"><p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] flex items-center gap-1.5 mb-2"><i data-lucide="${i}" class="w-3.5 h-3.5"></i>${l}</p><div class="text-sm text-slate-600 leading-relaxed">${h}</div></div>`;document.getElementById('overlay-root').innerHTML=`<div class="fixed inset-0 z-[60]" id="ov"><div class="absolute inset-0 bg-black/40" onclick="document.getElementById('ov').remove()"></div><div class="absolute right-0 top-0 h-full w-full max-w-[440px] bg-white overflow-y-auto"><div class="sticky top-0 z-10 bg-[#0C1F31] text-white px-6 py-5 flex items-start justify-between"><div><p class="text-[10px] font-bold uppercase tracking-widest text-[#FF9900] mb-1">Dev Brief</p><h3 class="font-jakarta font-extrabold text-lg leading-tight">${b.title}</h3><p class="text-xs text-white/60 mt-1">${b.sub}</p></div><button onclick="document.getElementById('ov').remove()" class="text-white/60 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button></div>${sec('target','Purpose',b.purpose)}${sec('database','Data model',b.data)}${sec('git-branch','Logic',b.logic)}${sec('boxes','Components',b.components)}</div></div>`;lucide.createIcons();}
 
   scan(); lucide.createIcons();

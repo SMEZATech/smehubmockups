@@ -181,7 +181,7 @@
   </div>
 </header>
 
-<!-- Mobile bottom tab bar — Home / Community / Workspace / Account -->
+<!-- Mobile bottom tab bar, Home / Community / Workspace / Account -->
 <nav aria-label="Quick nav" class="lg:hidden fixed bottom-0 inset-x-0 z-40 bg-white border-t border-[#E7EBEF] shadow-[0_-4px_16px_-4px_rgba(12,31,49,0.08)]" style="padding-bottom:env(safe-area-inset-bottom)">
   <div class="grid grid-cols-4">
     <a href="member-hub.html" class="flex flex-col items-center justify-center gap-1 py-2.5 text-slate-500 hover:text-[#121A21] transition">
@@ -356,7 +356,7 @@
                   <span class="text-[11px] text-slate-500">· 2 days ago</span>
                 </div>
                 <div class="prose text-[14px]">
-                  <p>Adding to Tshepho's point — the Loom video approach is gold. I rarely reply to cold emails, but if someone takes the time to record a 60-second video showing me exactly how their tool saves *my* specific business money, I will almost always take the meeting.</p>
+                  <p>Adding to Tshepho's point, the Loom video approach is gold. I rarely reply to cold emails, but if someone takes the time to record a 60-second video showing me exactly how their tool saves *my* specific business money, I will almost always take the meeting.</p>
                 </div>
                 <div class="mt-3 flex items-center gap-4 text-[12px] font-bold text-slate-500">
                   <button class="hover:text-[#DC183C] transition-colors flex items-center gap-1"><i data-lucide="corner-up-left" class="w-3.5 h-3.5"></i> Reply</button>
@@ -542,7 +542,7 @@
     } 
   };
 
-  function toggleDevMode(){const on=document.body.classList.toggle('dev-on');const b=document.getElementById('devToggle');if(b)b.classList.toggle('on',on);if(on)showToast('Dev Mode on — tap any ⓘ for implementation notes.',null);lucide.createIcons();}
+  function toggleDevMode(){const on=document.body.classList.toggle('dev-on');const b=document.getElementById('devToggle');if(b)b.classList.toggle('on',on);if(on)showToast('Dev Mode on, tap any ⓘ for implementation notes.',null);lucide.createIcons();}
   function closeOverlay(id){const el=document.getElementById(id);if(!el)return;el.classList.remove('open');setTimeout(()=>{if(el&&el.parentNode)el.remove();},300);}
   function openBrief(id){const b=BRIEFS[id];if(!b)return;const sec=(icon,label,html)=>`<div class="px-6 py-4 border-t border-slate-100"><p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] flex items-center gap-1.5 mb-2"><i data-lucide="${icon}" class="w-3.5 h-3.5"></i>${label}</p><div class="text-sm text-slate-600 leading-relaxed">${html}</div></div>`;document.getElementById('overlay-root').innerHTML=`<div class="ov" id="ov-brief"><div class="ov-bg" onclick="closeOverlay('ov-brief')"></div><div class="drawer"><div class="sticky top-0 z-10 bg-[#0C1F31] text-white px-6 py-5 flex items-start justify-between"><div class="min-w-0"><p class="text-[10px] font-bold uppercase tracking-widest text-[#FF9900] mb-1">Dev Brief</p><h3 class="font-jakarta font-extrabold text-lg leading-tight">${b.title}</h3><p class="text-xs text-white/60 mt-1">${b.sub}</p></div><button onclick="closeOverlay('ov-brief')" class="text-white/60 hover:text-white shrink-0 ml-3"><i data-lucide="x" class="w-5 h-5"></i></button></div>${sec('target','Purpose',b.purpose)}${sec('database','Data model',b.data)}${sec('git-branch','Logic',b.logic)}${b.specs ? sec('ruler','Spec values', b.specs) : ''}${sec('boxes','Components',b.components)}</div></div>`;requestAnimationFrame(()=>{const o=document.getElementById('ov-brief');if(o)o.classList.add('open');});lucide.createIcons();}
 

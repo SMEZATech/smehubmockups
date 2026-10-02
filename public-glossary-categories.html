@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Glossary Categories — SME South Africa</title>
-  <meta name="description" content="Browse the SME South Africa business glossary by topic — funding, marketing, operations, legal, strategy and finance." />
+  <title>Glossary Categories, SME South Africa</title>
+  <meta name="description" content="Browse the SME South Africa business glossary by topic, funding, marketing, operations, legal, strategy and finance." />
   <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <script src="https://cdn.tailwindcss.com"></script><script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
@@ -97,7 +97,7 @@
   </div>
 </header>
 
-<!-- Mobile bottom tab bar — thumb-reach quick nav -->
+<!-- Mobile bottom tab bar, thumb-reach quick nav -->
 <nav aria-label="Quick nav" class="lg:hidden fixed bottom-0 inset-x-0 z-40 bg-white border-t border-[#E7EBEF] shadow-[0_-4px_16px_-4px_rgba(12,31,49,0.08)]" style="padding-bottom:env(safe-area-inset-bottom)">
   <div class="grid grid-cols-5">
     <a href="public-home.html" class="flex flex-col items-center justify-center gap-1 py-2.5 text-slate-500 hover:text-[#121A21] transition">
@@ -130,7 +130,7 @@
     <h1 class="font-jakarta font-extrabold text-3xl sm:text-[2.6rem] leading-tight">Glossary <span class="bg-gradient-to-r from-[#DC183C] to-[#FF9900] bg-clip-text text-transparent">Categories</span>
       <button onclick="openBrief()" class="dev-badge align-middle ml-1 w-6 h-6 rounded-full bg-[#FF9900] text-[#0C1F31] items-center justify-center text-[11px] font-bold">i</button>
     </h1>
-    <p class="mt-3 text-white/70 max-w-xl mx-auto">Six topic areas, one plain-English glossary — jump straight to the words that matter for funding, marketing, operations, legal, strategy or finance.</p>
+    <p class="mt-3 text-white/70 max-w-xl mx-auto">Six topic areas, one plain-English glossary, jump straight to the words that matter for funding, marketing, operations, legal, strategy or finance.</p>
   </div>
 </section>
 
@@ -151,7 +151,7 @@
     <div class="grid grid-cols-2 md:grid-cols-6 gap-8">
       <div class="col-span-2">
         <a href="public-home.html" class="flex items-center gap-2.5"><img src="assets/logo-v1-lockup-reversed.svg" alt="SME South Africa" class="h-9 w-auto" /></a>
-        <p class="text-sm text-white/55 mt-4 max-w-xs leading-relaxed">South Africa's leading SME community — connecting founders with funding, mentorship, events, and the tools to scale.</p>
+        <p class="text-sm text-white/55 mt-4 max-w-xs leading-relaxed">South Africa's leading SME community, connecting founders with funding, mentorship, events, and the tools to scale.</p>
         <div class="flex items-center gap-2 mt-5">
           <a href="#" aria-label="X" class="w-9 h-9 rounded-lg bg-white/8 hover:bg-white/15 grid place-items-center transition"><svg viewBox="0 0 24 24" class="w-4 h-4" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24h-6.66l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
           <a href="#" aria-label="LinkedIn" class="w-9 h-9 rounded-lg bg-white/8 hover:bg-white/15 grid place-items-center transition"><svg viewBox="0 0 24 24" class="w-4 h-4" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0z"/></svg></a>
@@ -220,15 +220,15 @@
   function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
   function showToast(m){const el=document.getElementById('toast');el.classList.remove('hidden');el.innerHTML=`<div class="bg-[#0C1F31] text-white rounded-full pl-3 pr-5 py-2.5 shadow-2xl flex items-center gap-2 text-sm font-semibold" style="border-left:4px solid #29A37A"><i data-lucide="check-circle" class="w-4 h-4" style="color:#29A37A"></i><span>${esc(m)}</span></div>`;lucide.createIcons();setTimeout(()=>{el.classList.add('hidden');el.innerHTML='';},3000);}
 
-  // Same six-category taxonomy as public-glossary-category.html — keep these two files in sync.
+  // Same six-category taxonomy as public-glossary-category.html, keep these two files in sync.
   // Counts below mirror that file's TERMS array (funding 13 · marketing 14 · operations 11 · legal 7 · strategy 12 · finance 12).
   const CATEGORIES = [
-    { slug:'funding',    label:'Funding',              count:13, icon:'banknote',      tint:'bg-[#FDECEF] text-[#DC183C]', blurb:'Debt, equity, grants, VC — the words that show up in term sheets, DFI applications and investor calls.' },
-    { slug:'marketing',  label:'Marketing',            count:14, icon:'megaphone',     tint:'bg-[#FFF1E0] text-[#AE6B0A]', blurb:'Positioning, brand and channel terms — everything from CAC to SEO to product-market fit.' },
-    { slug:'operations', label:'Operations',           count:11, icon:'settings',      tint:'bg-[#E4F5EE] text-[#29A37A]', blurb:'Day-to-day running of the business — cash flow, inventory, staffing and process language.' },
-    { slug:'legal',      label:'Legal & Compliance',   count:7,  icon:'scale',         tint:'bg-[#F0F5F9] text-[#0C1F31]', blurb:'CIPC, FICA, POPIA, B-BBEE — the compliance terms every SA founder should recognise.' },
-    { slug:'strategy',   label:'Strategy',             count:12, icon:'compass',       tint:'bg-[#FDECEF] text-[#DC183C]', blurb:'Frameworks and planning concepts — SWOT, pivot, MVP, exit strategy.' },
-    { slug:'finance',    label:'Finance & Accounting', count:12, icon:'calculator',    tint:'bg-[#FFF1E0] text-[#AE6B0A]', blurb:'Bookkeeping, tax and reporting terms — from EBITDA to zero-based budgeting.' }
+    { slug:'funding',    label:'Funding',              count:13, icon:'banknote',      tint:'bg-[#FDECEF] text-[#DC183C]', blurb:'Debt, equity, grants, VC, the words that show up in term sheets, DFI applications and investor calls.' },
+    { slug:'marketing',  label:'Marketing',            count:14, icon:'megaphone',     tint:'bg-[#FFF1E0] text-[#AE6B0A]', blurb:'Positioning, brand and channel terms, everything from CAC to SEO to product-market fit.' },
+    { slug:'operations', label:'Operations',           count:11, icon:'settings',      tint:'bg-[#E4F5EE] text-[#29A37A]', blurb:'Day-to-day running of the business, cash flow, inventory, staffing and process language.' },
+    { slug:'legal',      label:'Legal & Compliance',   count:7,  icon:'scale',         tint:'bg-[#F0F5F9] text-[#0C1F31]', blurb:'CIPC, FICA, POPIA, B-BBEE, the compliance terms every SA founder should recognise.' },
+    { slug:'strategy',   label:'Strategy',             count:12, icon:'compass',       tint:'bg-[#FDECEF] text-[#DC183C]', blurb:'Frameworks and planning concepts, SWOT, pivot, MVP, exit strategy.' },
+    { slug:'finance',    label:'Finance & Accounting', count:12, icon:'calculator',    tint:'bg-[#FFF1E0] text-[#AE6B0A]', blurb:'Bookkeeping, tax and reporting terms, from EBITDA to zero-based budgeting.' }
   ];
 
   function categoryCard(c){
@@ -241,8 +241,8 @@
   }
   document.getElementById('categoryGrid').innerHTML = CATEGORIES.map(categoryCard).join('');
 
-  const BRIEF={title:'Glossary Categories',sub:'Directory of the six glossary taxonomy terms',purpose:'The missing link between the full A–Z glossary archive and the single-category view. A member browsing by topic (rather than searching or scrolling A–Z) lands here first, then drills into one category. Pairs with <code>public-glossary-category.html</code> the same way <code>public-article-categories.html</code> pairs with <code>public-category.html</code>.',data:'<code>CATEGORIES</code>: <code>{slug, label, count, icon, tint, blurb}</code> — <code>slug</code> matches the WP taxonomy term slug used by <code>?cat=</code> on the category page; <code>count</code> is a cached term tally, refreshed whenever the taxonomy changes.',logic:'<b>Build as a normal WordPress page</b> — no taxonomy-archive template swap needed, this is a static directory linking into the real <code>glossary_category</code> taxonomy archive. Each card links to <code>/glossary/category/{slug}/</code> (mocked here as <code>public-glossary-category.html?cat={slug}</code>). Term counts should pull live from <code>wp_count_terms</code> rather than being hand-maintained once built.',components:'Hero (breadcrumb + H1 + subtitle) · responsive 3-col grid of category cards (icon tile, label, blurb, live term count) · footer strip linking back to the full A–Z archive.',specs:'<b>Hero:</b> hero-bg gradient, <code>max-w-3xl</code>, <code>py-10 sm:py-12</code>, centered, matches public-glossary.html exactly.<br/><b>Card:</b> <code>bg #FFFFFF</code>, border <code>#E7EBEF</code>, <code>rounded-2xl</code>, <code>p-6</code>, card-lift hover (red border + shadow).<br/><b>Icon tile:</b> 48×48px (<code>w-12 h-12</code>), <code>rounded-xl</code>, tint cycles the same red/amber/green/navy-neutral palette as the article categories page.<br/><b>Label:</b> 20px Plus Jakarta 800, hover <code>#DC183C</code>. <b>Blurb:</b> 14px <code>#6A7581</code>.<br/><b>Count footer:</b> 14px weight 700 <code>#DC183C</code>, top-border <code>#E7EBEF</code>, arrow-right 16×16.<br/><b>Grid:</b> <code>lg:grid-cols-3</code>, <code>sm:grid-cols-2</code> mobile, <code>gap-5</code>.'};
-  function toggleDevMode(){const on=document.body.classList.toggle('dev-on');const b=document.getElementById('devToggle');if(b)b.classList.toggle('on',on);if(on)showToast('Dev Mode on — tap any ⓘ for the BRIEF.');lucide.createIcons();}
+  const BRIEF={title:'Glossary Categories',sub:'Directory of the six glossary taxonomy terms',purpose:'The missing link between the full A–Z glossary archive and the single-category view. A member browsing by topic (rather than searching or scrolling A–Z) lands here first, then drills into one category. Pairs with <code>public-glossary-category.html</code> the same way <code>public-article-categories.html</code> pairs with <code>public-category.html</code>.',data:'<code>CATEGORIES</code>: <code>{slug, label, count, icon, tint, blurb}</code>, <code>slug</code> matches the WP taxonomy term slug used by <code>?cat=</code> on the category page; <code>count</code> is a cached term tally, refreshed whenever the taxonomy changes.',logic:'<b>Build as a normal WordPress page</b>, no taxonomy-archive template swap needed, this is a static directory linking into the real <code>glossary_category</code> taxonomy archive. Each card links to <code>/glossary/category/{slug}/</code> (mocked here as <code>public-glossary-category.html?cat={slug}</code>). Term counts should pull live from <code>wp_count_terms</code> rather than being hand-maintained once built.',components:'Hero (breadcrumb + H1 + subtitle) · responsive 3-col grid of category cards (icon tile, label, blurb, live term count) · footer strip linking back to the full A–Z archive.',specs:'<b>Hero:</b> hero-bg gradient, <code>max-w-3xl</code>, <code>py-10 sm:py-12</code>, centered, matches public-glossary.html exactly.<br/><b>Card:</b> <code>bg #FFFFFF</code>, border <code>#E7EBEF</code>, <code>rounded-2xl</code>, <code>p-6</code>, card-lift hover (red border + shadow).<br/><b>Icon tile:</b> 48×48px (<code>w-12 h-12</code>), <code>rounded-xl</code>, tint cycles the same red/amber/green/navy-neutral palette as the article categories page.<br/><b>Label:</b> 20px Plus Jakarta 800, hover <code>#DC183C</code>. <b>Blurb:</b> 14px <code>#6A7581</code>.<br/><b>Count footer:</b> 14px weight 700 <code>#DC183C</code>, top-border <code>#E7EBEF</code>, arrow-right 16×16.<br/><b>Grid:</b> <code>lg:grid-cols-3</code>, <code>sm:grid-cols-2</code> mobile, <code>gap-5</code>.'};
+  function toggleDevMode(){const on=document.body.classList.toggle('dev-on');const b=document.getElementById('devToggle');if(b)b.classList.toggle('on',on);if(on)showToast('Dev Mode on, tap any ⓘ for the BRIEF.');lucide.createIcons();}
   function closeOverlay(id){const el=document.getElementById(id);if(!el)return;el.classList.remove('open');setTimeout(()=>{if(el&&el.parentNode)el.remove();},300);}
   function openBrief(){const b=BRIEF;const sec=(i,l,h)=>`<div class="px-6 py-4 border-t border-slate-100"><p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] flex items-center gap-1.5 mb-2"><i data-lucide="${i}" class="w-3.5 h-3.5"></i>${l}</p><div class="text-sm text-slate-600 leading-relaxed">${h}</div></div>`;document.getElementById('overlay-root').innerHTML=`<div class="ov" id="ov"><div class="ov-bg" onclick="closeOverlay('ov')"></div><div class="drawer"><div class="sticky top-0 z-10 bg-[#0C1F31] text-white px-6 py-5 flex items-start justify-between"><div><p class="text-[10px] font-bold uppercase tracking-widest text-[#FF9900] mb-1">Dev Brief</p><h3 class="font-jakarta font-extrabold text-lg leading-tight">${b.title}</h3><p class="text-xs text-white/60 mt-1">${b.sub}</p></div><button onclick="closeOverlay('ov')" class="text-white/60 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button></div>${sec('target','Purpose',b.purpose)}${sec('database','Data model',b.data)}${sec('git-branch','Logic',b.logic)}${sec('boxes','Components',b.components)}${sec('ruler','Spec values',b.specs)}</div></div>`;requestAnimationFrame(()=>{const o=document.getElementById('ov');if(o)o.classList.add('open');});lucide.createIcons();}
 

@@ -22,7 +22,7 @@
 </head>
 <body class="bg-[#FCFCFC] text-[#121A21] antialiased">
 
-<!-- ============================ HEADER (shared member chrome — identical to member-account.html / member-hub.html / member-workspace.html) ============================ -->
+<!-- ============================ HEADER (shared member chrome, identical to member-account.html / member-hub.html / member-workspace.html) ============================ -->
 <header class="bg-white border-b border-slate-200 sticky top-0 z-40 shadow-sm relative">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
 
@@ -129,7 +129,7 @@
             <p class="text-sm text-[#6A7581] truncate">joel@smesouthafrica.co.za &middot; +27 82 123 4567</p>
           </div>
         </div>
-        <p class="text-xs text-[#6A7581] mt-4 flex items-center gap-1.5"><i data-lucide="lock" class="w-3.5 h-3.5 text-[#94A3B8]"></i> Pulled from your Standard account — <a href="member-account.html" class="text-[#DC183C] font-semibold hover:underline">update in Account Settings</a> if anything's changed.</p>
+        <p class="text-xs text-[#6A7581] mt-4 flex items-center gap-1.5"><i data-lucide="lock" class="w-3.5 h-3.5 text-[#94A3B8]"></i> Pulled from your Standard account, <a href="member-account.html" class="text-[#DC183C] font-semibold hover:underline">update in Account Settings</a> if anything's changed.</p>
       </div>
 
       <div class="bg-white rounded-2xl border border-[#E7EBEF] p-6 space-y-4">
@@ -151,7 +151,7 @@
           <div><label class="block text-sm font-semibold mb-1.5">Postal code</label><input class="field" value="2196" inputmode="numeric" /></div>
           <div><label class="block text-sm font-semibold mb-1.5">Country</label><input class="field" value="South Africa" disabled /></div>
         </div>
-        <p class="text-xs text-[#6A7581] flex items-center gap-1.5"><i data-lucide="lock" class="w-3.5 h-3.5 text-[#94A3B8]"></i> Pre-filled from your profile — edit any field if your billing address is different.</p>
+        <p class="text-xs text-[#6A7581] flex items-center gap-1.5"><i data-lucide="lock" class="w-3.5 h-3.5 text-[#94A3B8]"></i> Pre-filled from your profile, edit any field if your billing address is different.</p>
       </div>
 
       <div class="bg-white rounded-2xl border border-[#E7EBEF] p-6 space-y-4">
@@ -197,7 +197,7 @@
   </div>
 </main>
 
-<!-- ===================== SUCCESS — shown after payment, replaces the checkout form ===================== -->
+<!-- ===================== SUCCESS, shown after payment, replaces the checkout form ===================== -->
 <main id="successView" class="hidden max-w-2xl mx-auto px-4 sm:px-6 pb-20 pt-6 text-center">
   <div class="w-16 h-16 rounded-full bg-[#ECFDF5] grid place-items-center mx-auto">
     <i data-lucide="check-circle-2" class="w-8 h-8 text-[#29A37A]"></i>
@@ -211,7 +211,7 @@
       <span id="receiptRef" class="text-[11px] font-mono text-[#94A3B8]"></span>
     </div>
     <div class="flex items-center justify-between mt-4 text-sm">
-      <span class="text-[#6A7581]">Plan</span><span class="font-semibold">Premium — R99/month</span>
+      <span class="text-[#6A7581]">Plan</span><span class="font-semibold">Premium, R99/month</span>
     </div>
     <div class="flex items-center justify-between mt-2.5 text-sm">
       <span class="text-[#6A7581]">Charged today</span><span class="font-semibold">R99.00</span>
@@ -231,7 +231,7 @@
   </div>
 </main>
 
-<!-- ===================== FOOTER (shared member chrome — identical to member-hub.html) ===================== -->
+<!-- ===================== FOOTER (shared member chrome, identical to member-hub.html) ===================== -->
 <footer class="bg-white border-t border-slate-200 mt-10">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 py-5 flex flex-col sm:flex-row items-center justify-between gap-3">
     <div class="flex items-center gap-2 text-xs text-slate-500">
@@ -279,12 +279,12 @@
     }, 700);
   }
 
-  const BRIEF={title:'Premium Checkout — Upgrade to Premium',sub:'In-app upgrade for an already-authenticated Standard member + PayFast handoff · requires login',
-    purpose:'Reached only from an "Upgrade to Premium" CTA while logged in (member-account.html, member-workspace.html, the mobile tab bar\'s Upgrade entry) — this is not a public signup page. Since the visitor is already a known Standard member, their name, email and phone are never re-asked: the account card pulls them from the session the same way member-account.html does. Billing address is pre-filled from their stored profile where we have it, shown editable in case it\'s changed. A separate, logged-out flow (<code>public-auth.html</code> → <code>public-pricing.html</code>) still exists for brand-new signups; this page is the upgrade path only, so there\'s no "sign in instead" note and no link back to the Standard plan — reversible if we ever want to be, via the ★ Change plan action in account settings.',
-    data:'MemberPress: <code>Member { id }</code> (read-only, from session) + <code>Address { street, city, province, postal_code }</code> (read/write, pre-filled from the member\'s stored profile) + <code>Transaction { membership_id:"premium", amount:99, gateway:"PayFast", status }</code>. No password field — the member already has one.',
-    logic:'No plan switcher and no collapsible sections — billing and payment are always visible since this visitor is already committed to Premium. The account and billing cards both carry a small "From your account" badge to signal auto-filled data; editing billing fields is allowed, editing the account card routes to member-account.html instead of inline editing. Submit swaps every <code>.checkout-step</code> element for <code>#successView</code> (this is the screen the Mohlanka review flagged as missing entirely — there was previously no step after payment at all, just a toast) — a receipt card with a generated reference, the next billing date, and two exits: straight into the Workspace, or billing management in Account Settings.',
+  const BRIEF={title:'Premium Checkout, Upgrade to Premium',sub:'In-app upgrade for an already-authenticated Standard member + PayFast handoff · requires login',
+    purpose:'Reached only from an "Upgrade to Premium" CTA while logged in (member-account.html, member-workspace.html, the mobile tab bar\'s Upgrade entry), this is not a public signup page. Since the visitor is already a known Standard member, their name, email and phone are never re-asked: the account card pulls them from the session the same way member-account.html does. Billing address is pre-filled from their stored profile where we have it, shown editable in case it\'s changed. A separate, logged-out flow (<code>public-auth.html</code> → <code>public-pricing.html</code>) still exists for brand-new signups; this page is the upgrade path only, so there\'s no "sign in instead" note and no link back to the Standard plan, reversible if we ever want to be, via the ★ Change plan action in account settings.',
+    data:'MemberPress: <code>Member { id }</code> (read-only, from session) + <code>Address { street, city, province, postal_code }</code> (read/write, pre-filled from the member\'s stored profile) + <code>Transaction { membership_id:"premium", amount:99, gateway:"PayFast", status }</code>. No password field, the member already has one.',
+    logic:'No plan switcher and no collapsible sections, billing and payment are always visible since this visitor is already committed to Premium. The account and billing cards both carry a small "From your account" badge to signal auto-filled data; editing billing fields is allowed, editing the account card routes to member-account.html instead of inline editing. Submit swaps every <code>.checkout-step</code> element for <code>#successView</code> (this is the screen the Mohlanka review flagged as missing entirely, there was previously no step after payment at all, just a toast), a receipt card with a generated reference, the next billing date, and two exits: straight into the Workspace, or billing management in Account Settings.',
     components:'account summary (read-only, avatar + name + email + phone) · pre-filled billing address · payment fields · consent checkbox · sticky Premium order summary · post-payment success screen with receipt.',
-    specs:'<b>Page shell:</b> content <code>max-w-6xl</code>=1152px. Eyebrow "Premium Membership" 12px bold uppercase tracking-widest <code>#DC183C</code> with crown icon. H1 Jakarta extrabold 800, 30px mobile / 36px desktop. Sub 16px <code>#6A7581</code> max-width 576px.<br/><br/><b>Layout grid:</b> <code>lg:grid-cols-3 gap-6</code>=24px — form spans <code>lg:col-span-2</code>, order summary sticky at <code>lg:top-24</code>=96px.<br/><br/><b>Form section cards:</b> white <code>rounded-2xl</code>=16px, border 1px <code>#E7EBEF</code>, <code>p-6</code>=24px, stacked <code>space-y-5</code>=20px, identical field styling to the archived membership-checkout mockup (<code>.field</code> 48px height, <code>rounded-xl</code>, focus ring <code>rgba(220,24,60,.12)</code>). "From your account" badge: <code>#ECFDF5</code> bg, <code>#0F6A31</code> text, 10px bold uppercase pill.<br/><br/><b>Order summary card:</b> white <code>rounded-2xl</code> border-2 <code>#DC183C</code> <code>p-5</code>=20px (no tab switcher — single fixed Premium plan). PREMIUM eyebrow pill bg <code>#FDECEF</code> text <code>#DC183C</code>. Price Jakarta extrabold <code>text-3xl</code>=30px. Feature list 14px rows with Lucide <code>check</code> 16px <code>#29A37A</code>. Total row + PayFast trust note below.<br/><b>Submit button:</b> full width, <code>rounded-full</code>, bg <code>#DC183C</code> → hover <code>#B0142F</code>, white bold, crown icon.'};
+    specs:'<b>Page shell:</b> content <code>max-w-6xl</code>=1152px. Eyebrow "Premium Membership" 12px bold uppercase tracking-widest <code>#DC183C</code> with crown icon. H1 Jakarta extrabold 800, 30px mobile / 36px desktop. Sub 16px <code>#6A7581</code> max-width 576px.<br/><br/><b>Layout grid:</b> <code>lg:grid-cols-3 gap-6</code>=24px, form spans <code>lg:col-span-2</code>, order summary sticky at <code>lg:top-24</code>=96px.<br/><br/><b>Form section cards:</b> white <code>rounded-2xl</code>=16px, border 1px <code>#E7EBEF</code>, <code>p-6</code>=24px, stacked <code>space-y-5</code>=20px, identical field styling to the archived membership-checkout mockup (<code>.field</code> 48px height, <code>rounded-xl</code>, focus ring <code>rgba(220,24,60,.12)</code>). "From your account" badge: <code>#ECFDF5</code> bg, <code>#0F6A31</code> text, 10px bold uppercase pill.<br/><br/><b>Order summary card:</b> white <code>rounded-2xl</code> border-2 <code>#DC183C</code> <code>p-5</code>=20px (no tab switcher, single fixed Premium plan). PREMIUM eyebrow pill bg <code>#FDECEF</code> text <code>#DC183C</code>. Price Jakarta extrabold <code>text-3xl</code>=30px. Feature list 14px rows with Lucide <code>check</code> 16px <code>#29A37A</code>. Total row + PayFast trust note below.<br/><b>Submit button:</b> full width, <code>rounded-full</code>, bg <code>#DC183C</code> → hover <code>#B0142F</code>, white bold, crown icon.'};
   function toggleDevMode(){const on=document.body.classList.toggle('dev-on');const b=document.getElementById('devToggle');if(b)b.classList.toggle('on',on);if(on)showToast('Dev Mode on. Tap any ⓘ for implementation notes.');lucide.createIcons();}
   function closeOverlay(id){const el=document.getElementById(id);if(!el)return;el.classList.remove('open');setTimeout(()=>{if(el&&el.parentNode)el.remove();},300);}
   function openBrief(){const b=BRIEF;const sec=(i,l,h)=>`<div class="px-6 py-4 border-t border-slate-100"><p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] flex items-center gap-1.5 mb-2"><i data-lucide="${i}" class="w-3.5 h-3.5"></i>${l}</p><div class="text-sm text-slate-600 leading-relaxed">${h}</div></div>`;document.getElementById('overlay-root').innerHTML=`<div class="ov" id="ov"><div class="ov-bg" onclick="closeOverlay('ov')"></div><div class="drawer"><div class="sticky top-0 z-10 bg-[#0C1F31] text-white px-6 py-5 flex items-start justify-between"><div><p class="text-[10px] font-bold uppercase tracking-widest text-[#FF9900] mb-1">Dev Brief</p><h3 class="font-jakarta font-extrabold text-lg leading-tight">${b.title}</h3><p class="text-xs text-white/60 mt-1">${b.sub}</p></div><button onclick="closeOverlay('ov')" class="text-white/60 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button></div>${sec('target','Purpose',b.purpose)}${sec('database','Data model',b.data)}${sec('git-branch','Logic',b.logic)}${sec('ruler','Spec values',b.specs)}${sec('boxes','Components',b.components)}</div></div>`;requestAnimationFrame(()=>{const o=document.getElementById('ov');if(o)o.classList.add('open');});lucide.createIcons();}
@@ -292,7 +292,7 @@
   lucide.createIcons();
 </script>
 <script>
-  // Header search (shared pattern — see member-account.html / member-workspace.html)
+  // Header search (shared pattern, see member-account.html / member-workspace.html)
   function toggleHeaderSearch(){
     const o = document.getElementById('headerSearchOverlay');
     if(!o) return;
