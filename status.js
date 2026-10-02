@@ -4,6 +4,8 @@
  * Allowed: "finalised" | "under-review" | "under-work" | "not-started"
  */
 window.MOCKUP_STATUS = {
+  "member-finish-profile.html": "under-review",
+  "public-error.html": "under-review",
   "member-messages.html": "under-review",
   "member-notifications.html": "under-review",
   "member-photo.html": "under-review",

@@ -96,6 +96,7 @@
       .search-overlay { padding: 0 1.5rem; }
     }
   </style>
+<script src="plan.js"></script>
 </head>
 <body class="bg-[#FCFCFC] text-[#121A21] antialiased relative">
 
@@ -105,7 +106,7 @@
     
     <!-- Logo (Left) -->
     <a href="public-home.html" class="flex items-center shrink-0 group mr-6 py-2">
-      <img src="https://smesouthafrica.co.za/wp-content/uploads/2025/10/Asset-1-1.webp" alt="SME South Africa" class="h-10 sm:h-11 w-auto object-contain group-hover:scale-105 transition-transform" />
+      <img src="assets/logo-v1-lockup.svg" alt="SME South Africa" class="h-9 w-auto group-hover:scale-105 transition-transform" />
     </a>
 
     <!-- Primary Navigation (Center - BuddyBoss Style) -->
@@ -232,6 +233,7 @@
 
 <main class="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
 
+<div class="flex items-center gap-1 text-[10px] font-bold mb-3"><span class="uppercase tracking-widest text-slate-400 mr-1">Preview</span><a href="?inbox=has" class="h-6 leading-6 px-2.5 rounded-full bg-slate-100 text-slate-600 hover:bg-slate-200 inbox-has">Has messages</a><a href="?inbox=empty" class="h-6 leading-6 px-2.5 rounded-full bg-slate-100 text-slate-600 hover:bg-slate-200 inbox-empty">No messages yet</a></div>
 <div class="flex items-center justify-between mb-4">
   <h1 class="font-jakarta font-extrabold text-[26px] tracking-tight flex items-center gap-2">Messages <button onclick="openBrief('messages')" class="dev-badge w-5 h-5 rounded-full bg-[#DC183C] text-white items-center justify-center text-[10px] font-bold leading-none animate-pulse" title="Implementation notes">i</button></h1>
   <button onclick="newMessage()" class="inline-flex items-center gap-2 h-10 px-4 rounded-full bg-[#0C1F31] hover:bg-[#16324a] text-white font-jakarta font-bold text-[13px] transition"><i data-lucide="square-pen" class="w-4 h-4"></i> New message</button>
@@ -324,6 +326,9 @@
       ['them','I can send you the VAT checklist template I mentioned.','Wed 11:10'],
       ['me','That would be great, thank you.','Wed 11:12'] ] }
   ];
+  // Preview: most members have no messages yet (?inbox=empty, or the Preview switch above the inbox).
+  const INBOX_EMPTY = (function(){ try { const q = new URLSearchParams(location.search).get('inbox'); if(q) sessionStorage.setItem('smeInbox', q); return sessionStorage.getItem('smeInbox') === 'empty'; } catch(e){ return false; } })();
+  if(INBOX_EMPTY) CONVOS.length = 0;
   let tab = 'all', active = null, mobileThread = false;
 
   function renderTabs(){
@@ -352,7 +357,9 @@
   function backToList(){ mobileThread = false; document.getElementById('m-thread').classList.add('hidden'); document.getElementById('m-thread').classList.remove('flex'); document.getElementById('m-list').classList.remove('hidden'); }
   function renderThread(){
     const t = document.getElementById('m-thread'); const c = CONVOS.find(x => x.id === active);
-    if(!c){ t.innerHTML = `<div class="m-auto text-center p-8"><div class="w-14 h-14 rounded-full bg-slate-100 grid place-items-center mx-auto"><i data-lucide="messages-square" class="w-7 h-7 text-slate-400"></i></div><p class="font-jakarta font-bold mt-3">Select a conversation</p><p class="text-sm text-slate-500 mt-1">Or start a new one.</p></div>`; lucide.createIcons(); return; }
+    if(!c){ t.innerHTML = !CONVOS.length ? `<div class="m-auto text-center p-8 max-w-md"><div class="w-16 h-16 rounded-2xl bg-[#FDECEF] text-[#DC183C] grid place-items-center mx-auto"><i data-lucide="message-square-heart" class="w-8 h-8"></i></div><p class="font-jakarta font-extrabold text-lg mt-4">No conversations yet</p><p class="text-sm text-slate-500 mt-1.5 leading-relaxed">Messages are private, one to one, between members who are connected. Most people start by thanking someone for a helpful answer, or asking a founder in their industry a question.</p>
+      <div class="mt-5 text-left rounded-2xl border border-slate-200 divide-y divide-slate-100">${[['Naledi Mokoena','NM','Catering, Gauteng'],['Sipho Dlamini','SD','Logistics, Gauteng'],['Thandi Mabasa','TM','Bookkeeper, Pretoria']].map(p => `<div class="flex items-center gap-3 px-4 py-3"><div class="w-9 h-9 rounded-full bg-gradient-to-br from-[#0C1F31] to-[#42505E] grid place-items-center text-white text-[11px] font-bold">${p[1]}</div><div class="flex-1 min-w-0"><p class="text-[13.5px] font-bold">${p[0]}</p><p class="text-[12px] text-slate-500">${p[2]}, one of your connections</p></div><button onclick="newMessage()" class="h-8 px-3 rounded-full border border-slate-200 text-[12px] font-bold hover:border-[#0C1F31]">Message</button></div>`).join('')}</div>
+      <a href="members.html" class="inline-flex items-center gap-2 mt-5 h-10 px-5 rounded-full bg-[#DC183C] text-white font-bold text-sm"><i data-lucide="user-plus" class="w-4 h-4"></i> Find members to connect with</a></div>` : `<div class="m-auto text-center p-8"><div class="w-14 h-14 rounded-full bg-slate-100 grid place-items-center mx-auto"><i data-lucide="messages-square" class="w-7 h-7 text-slate-400"></i></div><p class="font-jakarta font-bold mt-3">Select a conversation</p><p class="text-sm text-slate-500 mt-1">Or start a new one.</p></div>`; lucide.createIcons(); return; }
     const req = c.request && !c.handled;
     t.innerHTML = `<div class="flex items-center gap-3 px-4 py-3 border-b border-slate-200 bg-white"><button onclick="backToList()" aria-label="Back" class="lg:hidden p-1.5 -ml-1.5 text-slate-500"><i data-lucide="arrow-left" class="w-5 h-5"></i></button>
         <div class="w-10 h-10 rounded-full bg-gradient-to-br from-[#0C1F31] to-[#42505E] grid place-items-center text-white text-xs font-bold shrink-0">${c.ini}</div>
@@ -406,7 +413,9 @@
   function nmSend(){ if(!window.__to) return showToast('Choose who to message.'); const v = document.getElementById('nm-text').value.trim(); if(!v) return showToast('Write a message first.'); let c = CONVOS.find(x => x.name === window.__to); if(!c){ c = { id: 50 + CONVOS.length, name: window.__to, ini: window.__to.split(' ').map(w => w[0]).join(''), role:'Member', online:false, conn:true, unread:0, msgs:[] }; CONVOS.unshift(c); } c.msgs.push(['me', v, 'Now']); closeOverlay('ov-new'); tab = 'all'; renderTabs(); openConvo(c.id); showToast('Message sent.'); }
   document.addEventListener('click', () => { const m = document.getElementById('tmenu'); if(m) m.classList.add('hidden'); });
   renderTabs(); renderList(); renderThread();
-  if(window.innerWidth >= 1024) openConvo(1);
+  document.querySelectorAll(INBOX_EMPTY ? '.inbox-empty' : '.inbox-has').forEach(a => a.className = a.className.replace('bg-slate-100 text-slate-600 hover:bg-slate-200', 'bg-[#0C1F31] text-white'));
+  if(INBOX_EMPTY){ const th = document.getElementById('m-thread'); th.classList.remove('hidden'); th.classList.add('flex'); document.getElementById('m-list').classList.add('hidden', 'lg:flex'); }
+  if(window.innerWidth >= 1024 && CONVOS.length) openConvo(1);
 
   lucide.createIcons();
 </script>

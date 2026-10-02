@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Verify your email | SME South Africa</title>
-  <meta name="description" content="Verify your email to finish creating your SME South Africa account." />
+  <title>Something went wrong | SME South Africa</title>
+  <meta name="description" content="SME South Africa, error and offline page." />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -104,9 +104,9 @@
 <main class="max-w-xl mx-auto px-4 sm:px-6 py-10 sm:py-14">
 
 <div class="text-center">
-  <div id="ve-states" class="mb-6 flex flex-wrap justify-center gap-1.5 text-[11px]"><span class="font-bold uppercase tracking-widest text-slate-400 self-center mr-1">Mockup state</span></div>
-  <div id="ve-card" class="bg-white rounded-2xl border border-slate-200 shadow-sm p-7 sm:p-9"></div>
-  <p class="text-[12.5px] text-slate-400 mt-5">Need help? <a href="public-help.html" class="font-bold text-[#DC183C] hover:underline">Contact support</a></p>
+  <div id="er-states" class="mb-6 flex flex-wrap justify-center gap-1.5 text-[11px]"></div>
+  <div id="er-card" class="bg-white rounded-2xl border border-slate-200 shadow-sm p-7 sm:p-9"></div>
+  <p class="text-[12.5px] text-slate-400 mt-5">Still stuck? <a href="public-help.html" class="font-bold text-[#DC183C] hover:underline">Help Centre</a> or email <span class="font-semibold text-slate-500">support@smesouthafrica.co.za</span></p>
 </div>
 
 </main>
@@ -115,13 +115,12 @@
 <div id="overlay-root"></div><div id="toast" class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-[100]"></div>
 <script>
   const BRIEFS = {
-    verify: { title:'Email verification', sub:'Pending, verified, expired and already-verified states',
-      purpose:'Every sign-up passes through here. Today the live screens are scattered; this is the one design for all four outcomes so no member is left on a dead end.',
-      data:'users.email_verified_at, verification_tokens(user_id, token_hash, expires_at, used_at), resend log for rate limiting.',
-      logic:'Pending: show the address, a one-tap link to Gmail or Outlook where the domain matches, tips for spam folders, Resend with a 60-second cooldown and a Use a different email option that invalidates the old token. Verified: next steps are photo and finish profile, with a clear Skip. Expired: one button to send a new link. Already verified: send to sign in. Token is single use, hashed at rest, 24 hours (align with the live verify flow before build). Resend limited per address and per IP. Wording avoids saying whether an email exists (no account enumeration) on the public resend path.',
-      components:'Centre card, state switcher (mockup only), email chip, provider shortcut, resend with countdown, change-email dialog, next-step tiles.' }
+    errors: { title:'Error, offline and maintenance', sub:'500, 429, 503 and no connection, one calm page',
+      purpose:'A member who hits an error should know whether it is them or us, what happened to their work, and what to do next, without blame or jargon.',
+      data:'Error reference (request id) for 500s, logged with the URL and member id so support can find it.',
+      logic:'500: our fault, show a reference. Offline: detected by the browser, the page retries on reconnect and keeps form input. 429: ask to wait. 503: maintenance window with an honest time. Never show stack traces. The 404 page stays separate (public-404.html). Applies to the public site, the community and My Business.',
+      components:'State switch (mockup only), icon, message, Try again, home link, reference.' }
   };
-
   function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c])); }
   function showToast(msg){
     const el = document.getElementById('toast'); el.classList.remove('hidden');
@@ -147,31 +146,24 @@
   document.addEventListener('click', function(e){ if(!e.target.closest('#dropCommunity') && !e.target.closest('[onclick*=toggleHeaderDrop]')) closeHeaderDrop('community'); });
   document.addEventListener('keydown', function(e){ if(e.key === 'Escape'){ document.querySelectorAll('.ov.open').forEach(o => closeOverlay(o.id)); } });
 
-  const STATES = { pending:'Check your inbox', verified:'Verified', expired:'Link expired', already:'Already verified' };
-  let st = new URLSearchParams(location.search).get('state'); if(!STATES[st]) st = 'pending';
-  let email = 'tshepho@example.com', cd = 0, timer = null;
-  function states(){ const h = document.getElementById('ve-states'); h.innerHTML = '<span class="font-bold uppercase tracking-widest text-slate-400 self-center mr-1">Mockup state</span>' + Object.keys(STATES).map(k => `<button onclick="st='${k}';render()" class="h-7 px-3 rounded-full font-bold ${st === k ? 'bg-[#0C1F31] text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}">${STATES[k]}</button>`).join(''); }
-  function mailLink(){ const d = email.split('@')[1] || ''; if(/gmail|googlemail/i.test(d)) return ['Open Gmail', 'https://mail.google.com']; if(/outlook|hotmail|live/i.test(d)) return ['Open Outlook', 'https://outlook.live.com']; return null; }
-  function render(){
-    states(); const c = document.getElementById('ve-card'); const ml = mailLink();
-    const icon = (n, bg, fg) => `<div class="w-16 h-16 rounded-2xl mx-auto grid place-items-center" style="background:${bg};color:${fg}"><i data-lucide="${n}" class="w-8 h-8"></i></div>`;
-    if(st === 'pending') c.innerHTML = `${icon('mail', '#FDECEF', '#DC183C')}<h1 class="font-jakarta font-extrabold text-2xl tracking-tight mt-5 flex items-center justify-center gap-2">Check your inbox <button onclick="openBrief('verify')" class="dev-badge w-5 h-5 rounded-full bg-[#DC183C] text-white items-center justify-center text-[10px] font-bold leading-none animate-pulse" title="Implementation notes">i</button></h1>
-      <p class="text-slate-500 mt-2 leading-relaxed">We sent a verification link to<br><b class="text-[#121A21]" id="ve-mail">${esc(email)}</b></p>
-      ${ml ? `<a href="${ml[1]}" target="_blank" rel="noopener" class="inline-flex items-center gap-2 mt-5 h-11 px-6 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-jakarta font-bold text-sm transition">${ml[0]} <i data-lucide="arrow-up-right" class="w-4 h-4"></i></a>` : ''}
-      <div class="mt-6 rounded-xl bg-slate-50 border border-slate-200 p-4 text-left text-[13px] text-slate-600"><p class="font-bold text-[#121A21] mb-1">Not there after a minute?</p><ul class="list-disc pl-5 space-y-1"><li>Look in Spam or Promotions.</li><li>Check the address above for a typo.</li><li>The link works once and expires in 24 hours.</li></ul></div>
-      <div class="mt-5 flex flex-col sm:flex-row gap-2 justify-center"><button id="ve-resend" onclick="resend()" class="h-11 px-5 rounded-full border border-slate-200 text-sm font-bold hover:border-[#0C1F31] transition disabled:opacity-50 disabled:cursor-not-allowed">Resend email</button><button onclick="changeEmail()" class="h-11 px-5 rounded-full text-sm font-bold text-[#DC183C] hover:bg-[#FDECEF] transition">Use a different email</button></div><p id="ve-note" class="text-[12.5px] text-slate-400 mt-3 h-4"></p>`;
-    if(st === 'verified') c.innerHTML = `${icon('badge-check', '#E4F5EE', '#29A37A')}<h1 class="font-jakarta font-extrabold text-2xl tracking-tight mt-5">Email verified</h1><p class="text-slate-500 mt-2 leading-relaxed">You are in. Two quick things will make the community useful from day one.</p>
-      <div class="mt-6 space-y-2.5 text-left"><a href="member-photo.html" class="flex items-center gap-3 rounded-xl border border-slate-200 hover:border-[#0C1F31] p-4 transition"><i data-lucide="camera" class="w-5 h-5 text-[#DC183C]"></i><div><p class="font-jakarta font-bold text-sm">Add a profile photo</p><p class="text-[12.5px] text-slate-500">Members connect with people they can see.</p></div></a><a href="member-account.html" class="flex items-center gap-3 rounded-xl border border-slate-200 hover:border-[#0C1F31] p-4 transition"><i data-lucide="user-round-check" class="w-5 h-5 text-[#DC183C]"></i><div><p class="font-jakarta font-bold text-sm">Finish your profile</p><p class="text-[12.5px] text-slate-500">One short form, about a minute.</p></div></a></div>
-      <a href="member-hub.html" class="inline-block mt-5 text-sm font-bold text-slate-500 hover:text-[#DC183C]">Skip, take me to the community</a>`;
-    if(st === 'expired') c.innerHTML = `${icon('timer-off', '#FFF1E0', '#AE6B0A')}<h1 class="font-jakarta font-extrabold text-2xl tracking-tight mt-5">That link has expired</h1><p class="text-slate-500 mt-2 leading-relaxed">Verification links work once and last 24 hours. We can send a fresh one to <b class="text-[#121A21]">${esc(email)}</b>.</p><button onclick="st='pending';render();resend()" class="mt-6 h-11 px-6 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-jakarta font-bold text-sm transition">Send a new link</button><div><button onclick="changeEmail()" class="mt-3 text-sm font-bold text-slate-500 hover:text-[#DC183C]">Use a different email</button></div>`;
-    if(st === 'already') c.innerHTML = `${icon('check-circle-2', '#E4F5EE', '#29A37A')}<h1 class="font-jakarta font-extrabold text-2xl tracking-tight mt-5">You are already verified</h1><p class="text-slate-500 mt-2 leading-relaxed">This link has been used, so there is nothing more to do. Sign in to carry on.</p><a href="public-auth.html" class="inline-block mt-6 h-11 leading-[44px] px-7 rounded-full bg-[#0C1F31] hover:bg-[#16324a] text-white font-jakarta font-bold text-sm transition">Sign in</a>`;
-    lucide.createIcons(); tickUi();
+  const ER = {
+    server:  { t:'Something went wrong on our side', icon:'server-crash', c:['#FDECEF','#DC183C'], b:'It is not you. We have been told and are on it. Your work is saved up to your last action.', ref:true },
+    offline: { t:'You are offline', icon:'wifi-off', c:['#FFF1E0','#AE6B0A'], b:'Check your data or Wi-Fi. We will reconnect automatically and anything you typed is kept on this page.' },
+    busy:    { t:'We are busier than usual', icon:'hourglass', c:['#E5EFFB','#3B82F6'], b:'Too many requests right now. Wait a few seconds and try again.' },
+    maint:   { t:'Back shortly', icon:'wrench', c:['#F0F5F9','#0C1F31'], b:'We are making improvements and will be back within the hour. Funding applications already sent are not affected.' }
+  };
+  let er = new URLSearchParams(location.search).get('state'); if(!ER[er]) er = 'server';
+  function erRender(){
+    document.getElementById('er-states').innerHTML = '<span class="font-bold uppercase tracking-widest text-slate-400 self-center mr-1">Mockup state</span>' + [['server','Server error (500)'],['offline','Offline'],['busy','Too many requests (429)'],['maint','Maintenance (503)']].map(x => `<button onclick="er='${x[0]}';erRender()" class="h-7 px-3 rounded-full font-bold ${er === x[0] ? 'bg-[#0C1F31] text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}">${x[1]}</button>`).join('');
+    const e = ER[er], ref = 'Ref ' + Math.random().toString(36).slice(2, 8).toUpperCase();
+    document.getElementById('er-card').innerHTML = `<div class="w-16 h-16 rounded-2xl mx-auto grid place-items-center" style="background:${e.c[0]};color:${e.c[1]}"><i data-lucide="${e.icon}" class="w-8 h-8"></i></div><h1 class="font-jakarta font-extrabold text-2xl tracking-tight mt-5 flex items-center justify-center gap-2">${e.t} <button onclick="openBrief('errors')" class="dev-badge w-5 h-5 rounded-full bg-[#DC183C] text-white items-center justify-center text-[10px] font-bold leading-none animate-pulse" title="Implementation notes">i</button></h1><p class="text-slate-500 mt-2 leading-relaxed max-w-md mx-auto">${e.b}</p>
+      <div class="mt-6 flex flex-col sm:flex-row gap-2 justify-center"><button onclick="erRetry(this)" class="h-11 px-6 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-jakarta font-bold text-sm transition">${er === 'maint' ? 'Check again' : 'Try again'}</button><a href="public-home.html" class="h-11 leading-[44px] px-6 rounded-full border border-slate-200 text-sm font-bold hover:border-[#0C1F31] transition">Go to the home page</a></div>
+      ${e.ref ? `<p class="text-[11px] text-slate-400 mt-5 font-mono">${ref}. Quote this if you contact us.</p>` : ''}`;
+    lucide.createIcons();
   }
-  function tickUi(){ const b = document.getElementById('ve-resend'); if(!b) return; b.disabled = cd > 0; b.textContent = cd > 0 ? 'Resend in ' + cd + 's' : 'Resend email'; }
-  function resend(){ if(cd > 0) return; cd = 60; showToast('A new link is on its way.'); const n = document.getElementById('ve-note'); if(n) n.textContent = 'Sent just now. Only the newest link works.'; clearInterval(timer); timer = setInterval(() => { cd--; tickUi(); if(cd <= 0) clearInterval(timer); }, 1000); tickUi(); }
-  function changeEmail(){ dialog('ov-ce', `<div class="p-6"><p class="font-jakarta font-extrabold text-lg">Use a different email</p><p class="text-sm text-slate-500 mt-1">We will send the link to the new address and the old one stops working.</p><input id="ce-in" type="email" placeholder="you@business.co.za" class="mt-4 w-full h-11 rounded-lg border border-slate-200 px-3 text-sm outline-none focus:border-[#DC183C]"><p id="ce-err" class="text-[12.5px] text-[#DC183C] font-semibold mt-2 hidden">Enter a valid email address.</p><div class="mt-4 flex gap-3 justify-end"><button onclick="closeOverlay('ov-ce')" class="h-10 px-5 rounded-full border border-slate-200 text-sm font-bold">Cancel</button><button onclick="saveEmail()" class="h-10 px-5 rounded-full bg-[#DC183C] text-white text-sm font-bold">Send link</button></div></div>`); }
-  function saveEmail(){ const v = document.getElementById('ce-in').value.trim(); if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v)){ document.getElementById('ce-err').classList.remove('hidden'); return; } email = v; closeOverlay('ov-ce'); st = 'pending'; cd = 0; render(); resend(); }
-  render();
+  function erRetry(b){ b.disabled = true; b.textContent = 'Trying...'; setTimeout(() => { b.disabled = false; b.textContent = 'Try again'; showToast(er === 'offline' ? 'Still offline. We will keep trying.' : 'Still not ready. Try again in a moment.'); }, 900); }
+  window.addEventListener('offline', () => { er = 'offline'; erRender(); });
+  erRender();
 
   lucide.createIcons();
 </script>

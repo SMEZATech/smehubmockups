@@ -101,8 +101,9 @@
         </div>
       </div>
       <a href="public-solutions.html" class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition">Solutions</a>
+      <a href="podcast.html"          class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition">Podcast</a>
     </nav>
-    <div class="flex items-center gap-1 sm:gap-2 ml-2 sm:ml-3">
+    <div class="flex items-center gap-1 sm:gap-2 ml-auto lg:ml-3">
       <button onclick="toggleChromeSearch()" aria-label="Search" class="w-9 h-9 grid place-items-center rounded-full hover:bg-slate-100 text-slate-600"><i data-lucide="search" class="w-4 h-4"></i></button>
       <a href="public-auth.html" class="hidden sm:inline-flex items-center px-3 h-9 rounded-full text-sm font-bold text-[#121A21] hover:bg-slate-100 transition">Sign in</a>
       <a href="public-auth.html#join" class="inline-flex items-center px-4 h-9 rounded-full text-sm font-bold text-white bg-[#DC183C] hover:bg-[#B0142F] transition">Join Now</a>
@@ -117,6 +118,7 @@
       <a href="public-resources.html" class="px-2 py-3 text-sm font-semibold text-slate-700 hover:text-[#DC183C] border-b border-slate-100">Resources</a>
       <a href="public-funding.html"   class="px-2 py-3 text-sm font-semibold text-slate-700 hover:text-[#DC183C] border-b border-slate-100">Funding</a>
       <a href="public-solutions.html" class="px-2 py-3 text-sm font-semibold text-slate-700 hover:text-[#DC183C] border-b border-slate-100">Solutions</a>
+      <a href="podcast.html"          class="px-2 py-3 text-sm font-semibold text-slate-700 hover:text-[#DC183C] border-b border-slate-100">Podcast</a>
       <a href="public-auth.html" class="px-2 py-3 text-sm font-semibold text-slate-700 hover:text-[#DC183C]">Sign in</a>
     </nav>
   </div>
@@ -133,29 +135,7 @@
 
 <!-- Mobile bottom tab bar -->
 <nav aria-label="Quick nav" class="lg:hidden fixed bottom-0 inset-x-0 z-40 bg-white border-t border-[#E7EBEF] shadow-[0_-4px_16px_-4px_rgba(12,31,49,0.08)]" style="padding-bottom:env(safe-area-inset-bottom)">
-  <div class="grid grid-cols-5">
-    <a href="public-home.html" class="flex flex-col items-center justify-center gap-1 py-2.5 text-slate-500 hover:text-[#121A21] transition">
-      <i data-lucide="house" class="w-5 h-5"></i>
-      <span class="font-jakarta text-[11px] font-bold">Home</span>
-    </a>
-    <a href="public-articles.html" class="flex flex-col items-center justify-center gap-1 py-2.5 text-slate-500 hover:text-[#121A21] transition">
-      <i data-lucide="lightbulb" class="w-5 h-5"></i>
-      <span class="font-jakarta text-[11px] font-bold">Insights</span>
-    </a>
-    <a href="public-funding.html" class="flex flex-col items-center justify-center gap-1 py-2.5 text-slate-500 hover:text-[#121A21] transition">
-      <i data-lucide="banknote" class="w-5 h-5"></i>
-      <span class="font-jakarta text-[11px] font-bold">Funding</span>
-    </a>
-    <a href="public-resources.html" class="flex flex-col items-center justify-center gap-1 py-2.5 text-slate-500 hover:text-[#121A21] transition">
-      <i data-lucide="book-open" class="w-5 h-5"></i>
-      <span class="font-jakarta text-[11px] font-bold">Resources</span>
-    </a>
-    <a href="public-health-check.html" class="relative flex flex-col items-center justify-center gap-1 py-2.5 text-[#DC183C]">
-      <span class="absolute top-0 left-1/2 -translate-x-1/2 w-8 h-0.5 rounded-full bg-[#DC183C]"></span>
-      <i data-lucide="activity" class="w-5 h-5"></i>
-      <span class="font-jakarta text-[11px] font-bold">Health Check</span>
-    </a>
-  </div>
+  <div class="grid grid-cols-5"><a href="public-home.html" class="relative flex flex-col items-center justify-center gap-1 py-2.5 text-slate-500 hover:text-[#121A21] transition"><i data-lucide="house" class="w-5 h-5"></i><span class="font-jakarta text-[11px] font-bold">Home</span></a><a href="public-articles.html" class="relative flex flex-col items-center justify-center gap-1 py-2.5 text-slate-500 hover:text-[#121A21] transition"><i data-lucide="lightbulb" class="w-5 h-5"></i><span class="font-jakarta text-[11px] font-bold">Insights</span></a><a href="public-funding.html" class="relative flex flex-col items-center justify-center gap-1 py-2.5 text-slate-500 hover:text-[#121A21] transition"><i data-lucide="banknote" class="w-5 h-5"></i><span class="font-jakarta text-[11px] font-bold">Funding</span></a><a href="podcast.html" class="relative flex flex-col items-center justify-center gap-1 py-2.5 text-slate-500 hover:text-[#121A21] transition"><i data-lucide="mic" class="w-5 h-5"></i><span class="font-jakarta text-[11px] font-bold">Podcast</span></a><a href="public-auth.html#join" class="relative flex flex-col items-center justify-center gap-1 py-2.5 text-slate-500 hover:text-[#121A21] transition"><i data-lucide="user-round-plus" class="w-5 h-5"></i><span class="font-jakarta text-[11px] font-bold">Sign up</span></a></div>
 </nav>
 
 <div class="hc-stage">
@@ -240,10 +220,14 @@
     <h2 class="font-jakarta font-extrabold text-2xl sm:text-[28px] tracking-tight">Create your account to see your score</h2>
     <p class="mt-2 text-[#6A7581]">Takes about 10 seconds. We'll use this to save your results and build My Business.</p>
     <div class="mt-6 space-y-4">
-      <button type="button" onclick="showToast('Google sign-up, not wired in this mockup.')" class="w-full h-12 rounded-xl border border-[#E7EBEF] hover:bg-slate-50 transition flex items-center justify-center gap-2.5 font-semibold text-sm">
+<div class="grid sm:grid-cols-2 gap-3">      <button type="button" onclick="hcSocial('Google')" class="w-full h-12 rounded-xl border border-[#E7EBEF] hover:bg-slate-50 transition flex items-center justify-center gap-2.5 font-semibold text-sm">
         <svg width="18" height="18" viewBox="0 0 48 48"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3c-1.6 4.7-6.1 8-11.3 8-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.1 8 3l5.7-5.7C34.6 6.1 29.6 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.7-.4-3.5z"/><path fill="#FF3D00" d="m6.3 14.7 6.6 4.8C14.5 15.9 18.9 13 24 13c3.1 0 5.8 1.1 8 3l5.7-5.7C34.6 6.1 29.6 4 24 4c-7.4 0-13.8 4.1-17.1 10.1z"/><path fill="#4CAF50" d="M24 44c5.5 0 10.4-1.9 14.3-5.1l-6.6-5.6c-2 1.5-4.6 2.5-7.7 2.5-5.2 0-9.6-3.3-11.3-8l-6.6 5c3.3 6.5 9.9 11 17.9 11z"/><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.3-2.2 4.2-4.1 5.6l6.6 5.6c-.5.4 7.2-5.3 7.2-15.2 0-1.3-.1-2.7-.4-3.5z"/></svg>
         Continue with Google
       </button>
+      <button type="button" onclick="hcSocial('LinkedIn')" class="w-full h-12 rounded-xl border border-[#E7EBEF] hover:bg-slate-50 transition flex items-center justify-center gap-2.5 font-semibold text-sm">
+        <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24" rx="4" fill="#0A66C2"/><path fill="#fff" d="M7.1 9.5h2.6V18H7.1zM8.4 5.5a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3zM11.3 9.5h2.5v1.2h.04c.35-.66 1.2-1.36 2.47-1.36 2.64 0 3.13 1.74 3.13 4V18h-2.6v-4.1c0-.98-.02-2.24-1.37-2.24-1.37 0-1.58 1.07-1.58 2.17V18h-2.6z"/></svg>
+        Continue with LinkedIn
+      </button></div>
       <div class="flex items-center gap-3"><div class="flex-1 h-px bg-[#E7EBEF]"></div><span class="text-[11px] font-bold uppercase tracking-wide text-[#6A7581]">Or use email</span><div class="flex-1 h-px bg-[#E7EBEF]"></div></div>
       <div><label class="block text-sm font-semibold mb-1.5">Full name</label><input id="hcName" required class="field" placeholder="Thabo Nkosi" /></div>
       <div><label class="block text-sm font-semibold mb-1.5">Business email</label><input id="hcEmail" type="email" required class="field" placeholder="you@business.co.za" /></div>
@@ -263,13 +247,13 @@
       <div><label class="block text-sm font-semibold mb-1.5">Industry</label>
         <select id="hcIndustry" class="field">
           <option value="" disabled selected>Select industry</option>
-          <option>Retail</option><option>Fintech</option><option>Agriculture</option><option>Manufacturing</option><option>Services</option><option>Other</option>
+<option>Agriculture</option><option>Construction</option><option>Education</option><option>Hospitality and tourism</option><option>Health</option><option>Manufacturing</option><option>Professional services</option><option>Retail</option><option>Technology</option><option>Transport and logistics</option><option>Other</option>
         </select>
       </div>
-      <div><label class="block text-sm font-semibold mb-1.5">Phone</label>
+      <div><label class="block text-sm font-semibold mb-1.5">Mobile number <span class="font-normal text-[#6A7581]">(optional, for deadline reminders on WhatsApp)</span></label>
         <div class="flex">
           <span class="inline-flex items-center gap-1 px-3 h-12 rounded-l-xl border border-r-0 border-[#E7EBEF] bg-[#FCFCFC] text-sm font-semibold whitespace-nowrap">🇿🇦 +27</span>
-          <input id="hcPhone" required class="field rounded-l-none" placeholder="82 123 4567" />
+          <input id="hcPhone" class="field rounded-l-none" placeholder="82 123 4567" />
         </div>
       </div>
       <button onclick="hcSubmitBusiness()" class="w-full h-12 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold transition shadow-lg shadow-[#DC183C]/20 flex items-center justify-center gap-2">See my score <i data-lucide="arrow-right" class="w-4 h-4"></i></button>
@@ -277,35 +261,46 @@
   </div>
 
   <!-- ============ REVEAL ============ -->
-  <div id="hc-reveal" class="hc-step text-center">
-    <div class="hc-card hc-card--dark text-white relative overflow-hidden">
-      <div class="absolute inset-0 dot-pattern opacity-60 pointer-events-none"></div>
-      <div class="relative">
-        <span class="inline-flex items-center gap-1.5 bg-white/10 border border-white/15 text-white/90 text-[11px] font-extrabold uppercase tracking-widest px-3.5 py-1.5 rounded-full">
-          <i data-lucide="check-circle-2" class="w-3.5 h-3.5 text-[#29A37A]"></i> My Business is ready
-        </span>
-        <h1 class="font-jakarta font-extrabold text-2xl sm:text-3xl tracking-tight mt-4">Here's where you stand, <span id="hcRevealName">there</span></h1>
-        <div class="flex justify-center my-7">
-          <svg width="170" height="170" viewBox="0 0 170 170">
-            <circle cx="85" cy="85" r="70" fill="none" stroke="rgba(255,255,255,.14)" stroke-width="16"/>
-            <circle id="hcRing" cx="85" cy="85" r="70" fill="none" stroke="#FF9900" stroke-width="16" stroke-linecap="round" transform="rotate(-90 85 85)" stroke-dasharray="439.8" stroke-dashoffset="439.8" style="transition:stroke-dashoffset 1.1s cubic-bezier(.2,.8,.2,1)"/>
-            <text id="hcScoreText" x="85" y="92" text-anchor="middle" class="font-jakarta font-extrabold" style="font-size:44px;fill:#fff">0</text>
-            <text x="85" y="112" text-anchor="middle" style="font-size:12px;fill:rgba(255,255,255,.55)">out of 100</text>
-          </svg>
+  <div id="hc-reveal" class="hc-step">
+    <div class="grid lg:grid-cols-[1.05fr_1fr] gap-5 items-stretch">
+      <div class="hc-card hc-card--dark text-white relative overflow-hidden lg:p-10 flex flex-col">
+        <div class="absolute inset-0 dot-pattern opacity-60 pointer-events-none"></div>
+        <div class="absolute -right-24 -top-24 w-72 h-72 rounded-full opacity-40 pointer-events-none" style="background:radial-gradient(circle, #DC183C 0%, transparent 65%)"></div>
+        <div class="relative flex-1 flex flex-col text-center lg:text-left">
+          <span class="self-center lg:self-start inline-flex items-center gap-1.5 bg-white/10 border border-white/15 text-white/90 text-[11px] font-extrabold uppercase tracking-widest px-3.5 py-1.5 rounded-full">
+            <i data-lucide="check-circle-2" class="w-3.5 h-3.5 text-[#29A37A]"></i> <span id="hcRevealTag">My Business is ready</span>
+          </span>
+          <h1 class="font-jakarta font-extrabold text-2xl sm:text-3xl lg:text-4xl tracking-tight mt-4">Here's where you stand, <span id="hcRevealName">there</span></h1>
+          <div class="flex flex-col sm:flex-row items-center gap-6 lg:gap-8 my-7">
+            <svg width="190" height="190" viewBox="0 0 170 170" class="shrink-0">
+              <circle cx="85" cy="85" r="70" fill="none" stroke="rgba(255,255,255,.14)" stroke-width="16"/>
+              <circle id="hcRing" cx="85" cy="85" r="70" fill="none" stroke="#FF9900" stroke-width="16" stroke-linecap="round" transform="rotate(-90 85 85)" stroke-dasharray="439.8" stroke-dashoffset="439.8" style="transition:stroke-dashoffset 1.1s cubic-bezier(.2,.7,.2,1)"/>
+              <text id="hcScoreText" x="85" y="92" text-anchor="middle" class="font-jakarta font-extrabold" style="font-size:44px;fill:#fff">0</text>
+              <text x="85" y="112" text-anchor="middle" style="font-size:12px;fill:rgba(255,255,255,.55)">out of 100</text>
+            </svg>
+            <div class="text-center sm:text-left">
+              <p id="hcBand" class="font-jakarta font-extrabold text-xl"></p>
+              <p id="hcDelta" class="hidden mt-2 inline-flex items-center gap-1.5 text-[12px] font-bold px-3 py-1.5 rounded-full"></p>
+              <p id="hcCoachNote" class="text-white/70 leading-relaxed mt-3 max-w-sm"></p>
+            </div>
+          </div>
+          <div class="mt-auto flex flex-col sm:flex-row gap-3 justify-center lg:justify-start">
+            <a id="hcGoBtn" href="member-workspace.html" class="inline-flex items-center justify-center gap-2 px-7 h-12 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold transition shadow-lg shadow-[#DC183C]/20">Go to My Business <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
+            <a href="member-workspace.html#progress" class="inline-flex items-center justify-center gap-2 px-6 h-12 rounded-full border border-white/25 hover:bg-white/10 text-white font-bold transition">See my plan</a>
+          </div>
         </div>
-        <p id="hcCoachNote" class="text-white/70 max-w-md mx-auto leading-relaxed"></p>
       </div>
-    </div>
-
-    <div class="hc-card text-left mt-5">
-      <p class="text-[11px] font-extrabold uppercase tracking-widest text-[#6A7581] mb-4">Your five dimensions</p>
-      <div id="hcDimsList" class="space-y-4"></div>
-    </div>
-
-    <div class="mt-7">
-      <a href="member-workspace.html" class="inline-flex items-center gap-2 px-7 h-12 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold transition shadow-lg shadow-[#DC183C]/20">
-        Go to My Business <i data-lucide="arrow-right" class="w-4 h-4"></i>
-      </a>
+      <div class="flex flex-col gap-5">
+        <div class="hc-card text-left">
+          <p class="text-[11px] font-extrabold uppercase tracking-widest text-[#6A7581] mb-4">Your five dimensions</p>
+          <div id="hcDimsList" class="space-y-4"></div>
+        </div>
+        <div class="hc-card text-left">
+          <p class="text-[11px] font-extrabold uppercase tracking-widest text-[#6A7581] mb-3">Your first moves</p>
+          <div id="hcMoves" class="space-y-2.5"></div>
+          <p class="text-[11.5px] text-[#6A7581] mt-4">Your score is based on your own answers. It is a guide for you, not a credit assessment.</p>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -331,7 +326,7 @@
       </div>
       <div>
         <p class="text-[11px] font-bold uppercase tracking-widest text-[#FF9900]">Platform</p>
-        <ul class="mt-4 space-y-2.5 text-sm text-white/70 list-none">
+        <ul class="mt-4 space-y-2.5 text-sm text-white/70">
           <li><a href="public-workspace.html" class="hover:text-white">My Business</a></li>
           <li><a href="public-resources.html" class="hover:text-white">Resources Library</a></li>
           <li><a href="public-funding.html" class="hover:text-white">Funding Portal</a></li>
@@ -341,7 +336,7 @@
       </div>
       <div>
         <p class="text-[11px] font-bold uppercase tracking-widest text-[#FF9900]">Insights</p>
-        <ul class="mt-4 space-y-2.5 text-sm text-white/70 list-none">
+        <ul class="mt-4 space-y-2.5 text-sm text-white/70">
           <li><a href="public-articles.html" class="hover:text-white">All Insights</a></li>
           <li><a href="public-founder-focus-category.html" class="hover:text-white">Founder Focus</a></li>
           <li><a href="public-funding-summit-category.html" class="hover:text-white">Funding Summit</a></li>
@@ -351,7 +346,7 @@
       </div>
       <div>
         <p class="text-[11px] font-bold uppercase tracking-widest text-[#FF9900]">Community</p>
-        <ul class="mt-4 space-y-2.5 text-sm text-white/70 list-none">
+        <ul class="mt-4 space-y-2.5 text-sm text-white/70">
           <li><a href="member-hub.html" class="hover:text-white">Community Forum</a></li>
           <li><a href="events.html" class="hover:text-white">Events &amp; Webinars</a></li>
           <li><a href="newsletter.html" class="hover:text-white">Newsletter</a></li>
@@ -361,7 +356,7 @@
       </div>
       <div>
         <p class="text-[11px] font-bold uppercase tracking-widest text-[#FF9900]">Legal</p>
-        <ul class="mt-4 space-y-2.5 text-sm text-white/70 list-none">
+        <ul class="mt-4 space-y-2.5 text-sm text-white/70">
           <li><a href="public-terms.html" class="hover:text-white">Terms &amp; Conditions</a></li>
           <li><a href="public-privacy.html" class="hover:text-white">Privacy Policy</a></li>
           <li><a href="public-refunds.html" class="hover:text-white">Refunds Policy</a></li>
@@ -425,11 +420,14 @@
         {label:"Yes, we're ready for it", score:100}
       ]}
   ];
-  const HC_TOTAL_STEPS = HC_QUESTIONS.length + 2; // 5 questions + account + business
+  // ?mode=checkin: a signed-in member re-checking from My Business. Same five questions, no account or business steps.
+  const HC_CHECKIN = new URLSearchParams(location.search).get('mode') === 'checkin';
+  const HC_TOTAL_STEPS = HC_CHECKIN ? HC_QUESTIONS.length : HC_QUESTIONS.length + 2; // 5 questions + account + business
   let hcQIndex = 0;
   const hcAnswers = {};
 
   function hcShow(id){
+    const main = document.querySelector('main'); if(main){ main.classList.toggle('max-w-2xl', id !== 'hc-reveal'); main.classList.toggle('max-w-6xl', id === 'hc-reveal'); }
     document.querySelectorAll('.hc-step').forEach(s=>s.classList.remove('active'));
     document.getElementById(id).classList.add('active');
     window.scrollTo({top:0, behavior:'instant'});
@@ -472,6 +470,7 @@
         hcQIndex++;
         hcRenderQuestion();
       } else {
+        if(HC_CHECKIN){ hcRenderReveal(); document.getElementById('hcProgressWrap').classList.add('hidden'); hcShow('hc-reveal'); return; }
         hcUpdateProgress(HC_QUESTIONS.length + 1, 'Almost there · Your account');
         hcShow('hc-account');
       }
@@ -494,6 +493,22 @@
       hcShow('hc-account');
     }
   }
+  // Social sign-up: the provider returns name and email, so the member skips the email form.
+  function hcSocial(p){
+    hcAnswers._name = 'Tshepho Joel'; hcAnswers._email = 'tshepho@example.com';
+    showToast('Signed up with ' + p + '.');
+    hcUpdateProgress(HC_QUESTIONS.length + 2, 'Last step · Your business');
+    hcShow('hc-business');
+  }
+  if(HC_CHECKIN){
+    document.addEventListener('DOMContentLoaded', function(){
+      const intro = document.getElementById('hc-intro');
+      const h = intro.querySelector('h1'); if(h) h.firstChild.textContent = 'Monthly check-in ';
+      const tag = intro.querySelector('span.inline-flex'); if(tag) tag.textContent = '2-minute check-in';
+      const p = intro.querySelector('p.mt-4'); if(p) p.textContent = 'The same five questions as last time. Your last score was 71 on 1 September. Answer for how things are today and we will show what moved.';
+      const btn = intro.querySelector('button[onclick="hcStart()"]'); if(btn) btn.firstChild.textContent = 'Start my check-in ';
+    });
+  }
   function hcSubmitAccount(){
     const name = document.getElementById('hcName').value.trim();
     const email = document.getElementById('hcEmail').value.trim();
@@ -507,7 +522,7 @@
   function hcSubmitBusiness(){
     const company = document.getElementById('hcCompany').value.trim();
     const phone = document.getElementById('hcPhone').value.trim();
-    if(!company || !phone){ showToast('Fill in all fields to see your score.'); return; }
+    if(!company){ showToast('Add your company name to see your score.'); return; }
     hcAnswers._company = company;
     hcRenderReveal();
     document.getElementById('hcProgressWrap').classList.add('hidden');
@@ -517,7 +532,7 @@
     const dims = HC_QUESTIONS.map(q => ({ name:q.name, score:hcAnswers[q.dim] || 50, color:q.color }));
     const composite = Math.round(dims.reduce((sum,d)=>sum+d.score,0) / dims.length);
     const firstName = (hcAnswers._name || '').split(' ')[0] || 'there';
-    document.getElementById('hcRevealName').textContent = firstName;
+    document.getElementById('hcRevealName').textContent = HC_CHECKIN ? 'Tshepho' : firstName;
 
     const circumference = 439.8;
     const ring = document.getElementById('hcRing');
@@ -534,6 +549,20 @@
       if(n >= composite) clearInterval(counter);
     }, 25);
 
+    const band = composite >= 80 ? 'Strong' : composite >= 65 ? 'Solid base' : composite >= 50 ? 'Getting there' : 'Needs attention';
+    document.getElementById('hcBand').textContent = band;
+    const MOVES = { cash_flow:['Chase what you are owed','Get paid shows who owes you and writes the reminder.','wallet'], compliance:['Check your next SARS and CIPC dates','The compliance calendar lists every deadline for a business like yours.','shield-check'], customers:['Spread your income','See solutions that help you reach new customers.','users'], operations:['Take one job off your plate','Solutions and member deals for the tools that save hours.','settings-2'], growth_readiness:['Know what funding fits','Funding options are ranked for your business, free.','trending-up'] };
+    const low = dims.map((d, i) => Object.assign({ dim: HC_QUESTIONS[i].dim }, d)).sort((a, b) => a.score - b.score).slice(0, 3);
+    document.getElementById('hcMoves').innerHTML = low.map((d, i) => { const m = MOVES[d.dim] || ['Open your plan', 'Your plan starts with your lowest score.', 'list-checks']; return `<div class="flex items-start gap-3 rounded-xl border border-[#E7EBEF] p-3.5"><span class="w-7 h-7 rounded-full bg-[#0C1F31] text-white grid place-items-center text-[12px] font-bold shrink-0">${i + 1}</span><div><p class="font-jakarta font-bold text-[14px]">${m[0]}</p><p class="text-[12.5px] text-[#6A7581] mt-0.5">${m[1]}</p></div></div>`; }).join('');
+    if(HC_CHECKIN){
+      const prev = 71, diff = composite - prev, up = diff >= 0;
+      const dl = document.getElementById('hcDelta'); dl.classList.remove('hidden');
+      dl.className = 'mt-2 inline-flex items-center gap-1.5 text-[12px] font-bold px-3 py-1.5 rounded-full ' + (up ? 'bg-[#29A37A]/20 text-[#7EE0BE]' : 'bg-[#DC183C]/25 text-[#FFB3C0]');
+      dl.textContent = (up ? '+' : '') + diff + ' since your last check-in (' + prev + ')';
+      document.getElementById('hcRevealTag').textContent = 'Check-in saved';
+      document.getElementById('hcGoBtn').innerHTML = 'Back to My Business <i data-lucide="arrow-right" class="w-4 h-4"></i>';
+      lucide.createIcons();
+    }
     document.getElementById('hcDimsList').innerHTML = dims.map(d => `
       <div>
         <div class="flex justify-between items-baseline mb-1.5">
@@ -546,7 +575,7 @@
       </div>`).join('');
 
     const lowest = dims.reduce((a,b)=> b.score < a.score ? b : a);
-    document.getElementById('hcCoachNote').textContent = `${lowest.name} is your lowest score right now, your plan on My Business home starts there.`;
+    document.getElementById('hcCoachNote').textContent = `${lowest.name} is your lowest score right now, your plan in My Business starts there.`;
   }
 
   const BRIEF={title:'Business Health Check',sub:'Quiz → account → business details → score reveal, ends in My Business · public, indexable entry point',
@@ -588,6 +617,7 @@
     if(e.key==='Escape'){ const o=document.getElementById('chromeSearchOverlay'); if(o && o.classList.contains('active')) toggleChromeSearch(); }
   });
 </script>
+<script>if(new URLSearchParams(location.search).get('mode')==='checkin'){ window.SME_MEMBER_PAGE = true; }</script>
 <script src="member-chrome.js"></script>
 <script>
   // Opening-soon end state: ?state=soon (the live site shows it to members whose wave has not opened yet).

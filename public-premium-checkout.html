@@ -19,6 +19,7 @@
     .search-overlay.active{opacity:1;pointer-events:auto;transform:translateY(0);}
     @media (min-width:640px){ .search-overlay{padding:0 1.5rem;} }
 </style>
+<script src="plan.js"></script>
 </head>
 <body class="bg-[#FCFCFC] text-[#121A21] antialiased">
 
@@ -27,7 +28,7 @@
   <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
 
     <a href="public-home.html" class="flex items-center shrink-0 group mr-6 py-2">
-      <img src="https://smesouthafrica.co.za/wp-content/uploads/2025/10/Asset-1-1.webp" alt="SME South Africa" class="h-10 sm:h-11 w-auto object-contain group-hover:scale-105 transition-transform" />
+      <img src="assets/logo-v1-lockup.svg" alt="SME South Africa" class="h-9 w-auto group-hover:scale-105 transition-transform" />
     </a>
 
     <nav class="hidden md:flex items-center justify-center gap-2 flex-1 px-4 h-full">
@@ -263,6 +264,7 @@
     lucide.createIcons();
 
     setTimeout(() => {
+      try { sessionStorage.setItem('smePlan', 'premium'); } catch (_) {}  // the member is Premium from here on (MemberPress on live)
       document.querySelectorAll('.checkout-step').forEach(el => el.classList.add('hidden'));
 
       const ref = 'SME-' + Math.random().toString(36).slice(2, 8).toUpperCase();
@@ -304,5 +306,11 @@
     if(e.key==='Escape'){ const o=document.getElementById('headerSearchOverlay'); if(o && o.classList.contains('active')) toggleHeaderSearch(); }
   });
 </script>
+<script>
+  // Already Premium? Do not sell it again: show the success view with the member's plan instead.
+  if (window.SME_PLAN === 'premium') { document.addEventListener('DOMContentLoaded', function(){ document.querySelectorAll('.checkout-step').forEach(function(el){ el.classList.add('hidden'); }); var s = document.getElementById('successView'); if (s) { s.classList.remove('hidden'); var h = s.querySelector('h1'); if (h) h.textContent = "You're already on Premium"; var r = document.getElementById('receiptRef'); if (r) r.textContent = 'Active'; var n = document.getElementById('receiptNextBill'); if (n) { var d = new Date(); d.setMonth(d.getMonth() + 1); n.textContent = d.toLocaleDateString('en-ZA', { day:'numeric', month:'long', year:'numeric' }); } } }); }
+</script>
+<script>window.SME_MEMBER_PAGE=true;</script>
+<script src="member-chrome.js"></script>
 </body>
 </html>

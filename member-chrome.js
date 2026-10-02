@@ -83,12 +83,13 @@
   if (!window.SME_MEMBER_PAGE && /public-home\.html$/.test(location.pathname)) { location.replace('member-hub.html'); return; }
 
   /* ---------- ONE member header, same on every signed-in page (2026-10-02) ----------
-   * Desktop: Home, Connect, Messaging, Notifications, My Business. Mobile tab bar: the same five plus My Account.
+   * Desktop and the mobile tab bar: Home, Connect, Messaging, Notifications, My Business. My Account is in the avatar menu.
    * Replaces whatever header the page shipped with, so community pages and public pages can never drift apart. */
   var oldHeader = document.querySelector('header');
   if (!oldHeader) { mountSwitch(); return; }
 
   var unread = { messaging: 3, notifications: 4 };
+  try { if (sessionStorage.getItem('smeInbox') === 'empty') unread.messaging = 0; var nfm = sessionStorage.getItem('smeNotifs'); if (nfm === 'empty' || nfm === 'few') unread.notifications = 0; } catch (_) {}
   var NAV = [
     ['home', 'member-hub.html', 'home', 'Home'],
     ['connect', 'members.html', 'users', 'Connect'],
@@ -125,7 +126,7 @@
   var headerHTML =
     '<header id="smeMemberHeader" class="bg-white border-b border-slate-200 sticky top-0 z-40 shadow-sm relative">' +
       '<div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-3">' +
-        '<a href="member-hub.html" class="flex items-center shrink-0 py-2"><img src="https://smesouthafrica.co.za/wp-content/uploads/2025/10/Asset-1-1.webp" alt="SME South Africa" class="h-10 sm:h-11 w-auto object-contain"></a>' +
+        '<a href="member-hub.html" class="flex items-center shrink-0 py-2"><img src="assets/logo-v1-lockup.svg" alt="SME South Africa" class="h-9 w-auto"></a>' +
         '<nav aria-label="Main" class="hidden md:flex items-center justify-center gap-1 flex-1 h-full">' + desk + '</nav>' +
         '<div id="smeMemberCluster" class="flex items-center gap-1 sm:gap-2 shrink-0">' +
           '<button type="button" id="smeSearchBtn" aria-label="Search" class="w-9 h-9 grid place-items-center rounded-full hover:bg-slate-100 text-slate-600"><i data-lucide="search" class="w-[18px] h-[18px]"></i></button>' +
@@ -156,21 +157,21 @@
   var newHeader = el(headerHTML);
   oldHeader.parentNode.replaceChild(newHeader, oldHeader);
 
-  /* mobile bottom tab bar: the same five, plus My Account last */
+  /* mobile bottom tab bar: the same five as the desktop nav */
   var tabBar = document.querySelector('nav[aria-label="Quick nav"]');
   if (!tabBar) {
     tabBar = el('<nav aria-label="Quick nav"></nav>');
     document.body.appendChild(tabBar);
   }
-  var T = NAV.concat([ACCOUNT]);
+  var T = NAV;  /* five only: My Account lives in the avatar menu (Joel, 2026-10-02: six was too many) */
   tabBar.className = 'md:hidden fixed bottom-0 inset-x-0 z-40 bg-white border-t border-[#E7EBEF] shadow-[0_-4px_16px_-4px_rgba(12,31,49,0.08)]';
   tabBar.style.paddingBottom = 'env(safe-area-inset-bottom)';
-  tabBar.innerHTML = '<div class="grid grid-cols-6">' + T.map(function(t){
+  tabBar.innerHTML = '<div class="grid grid-cols-5">' + T.map(function(t){
     var on = activeKey === t[0];
     return '<a href="' + t[1] + '" class="relative flex flex-col items-center justify-center gap-1 py-2.5 min-w-0 transition ' + (on ? 'text-[#DC183C]' : 'text-slate-500 hover:text-[#121A21]') + '">' +
       (on ? '<span class="absolute top-0 left-1/2 -translate-x-1/2 w-8 h-0.5 rounded-full bg-[#DC183C]"></span>' : '') +
       '<span class="relative"><i data-lucide="' + t[2] + '" class="w-5 h-5"></i>' + badge(unread[t[0]], 'absolute -top-1.5 -right-2.5 !min-w-[15px] !h-[15px] !text-[9px] ring-2 ring-white') + '</span>' +
-      '<span class="font-jakarta text-[9.5px] font-bold tracking-tight leading-none whitespace-nowrap max-w-full truncate">' + t[3].replace('My Account', 'Account') + '</span></a>';
+      '<span class="font-jakarta text-[10.5px] font-bold tracking-tight leading-none whitespace-nowrap max-w-full truncate">' + t[3].replace('My Account', 'Account') + '</span></a>';
   }).join('') + '</div>';
 
   /* for a member the home page is the community: every Home link goes to the hub */

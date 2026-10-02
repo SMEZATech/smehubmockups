@@ -113,6 +113,7 @@
     .wc-range::-moz-range-thumb{width:22px;height:22px;border-radius:9999px;background:#DC183C;cursor:pointer;border:3px solid #fff}
   </style>
 <script src="podcast-episodes.js"></script>
+<script src="plan.js"></script>
 </head>
 <body class="bg-[#FCFCFC] text-[#121A21] antialiased">
 
@@ -122,7 +123,7 @@
 
     <!-- Logo (Left) -->
     <a href="public-home.html" class="flex items-center shrink-0 group mr-6 py-2">
-      <img src="https://smesouthafrica.co.za/wp-content/uploads/2025/10/Asset-1-1.webp" alt="SME South Africa" class="h-10 sm:h-11 w-auto object-contain group-hover:scale-105 transition-transform" />
+      <img src="assets/logo-v1-lockup.svg" alt="SME South Africa" class="h-9 w-auto group-hover:scale-105 transition-transform" />
     </a>
 
     <!-- Primary Navigation (Center - SaaS style: Home / Community / My Business / Account) -->
@@ -346,13 +347,10 @@
       <div class="view active" id="view-overview">
         <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-5 mb-6">
           <div>
-            <span class="inline-flex items-center gap-1.5 text-[11px] font-bold tracking-wide px-3 py-1.5 rounded-full bg-[#DC183C]/[0.09] text-[#DC183C] mb-3">
-              <i data-lucide="sparkles" class="w-3 h-3"></i> Sample Member View
-            </span>
             <h1 class="font-jakarta font-extrabold text-[26px] sm:text-[28px] tracking-tight">Your business, at a glance</h1>
             <p class="text-[14.5px] text-[#6A7581] leading-relaxed max-w-[60ch] mt-2">What is going well, what needs attention, and the next thing worth doing.</p>
           </div>
-          <button onclick="stubNav('Business Health Check')" class="shrink-0 inline-flex items-center gap-2 font-jakarta font-bold text-[13px] px-5 py-3 rounded-lg bg-[#0C1F31] text-white hover:bg-[#16324a] transition">
+          <button onclick="startCheckin()" class="shrink-0 inline-flex items-center gap-2 font-jakarta font-bold text-[13px] px-5 py-3 rounded-lg bg-[#0C1F31] text-white hover:bg-[#16324a] transition">
             <i data-lucide="plus" class="w-4 h-4"></i> Start a check-in
           </button>
         </div>
@@ -391,7 +389,7 @@
               <h3 class="font-jakarta font-extrabold text-sm flex items-center gap-1.5">Five Dimensions
                 <button onclick="openBrief('dimensions')" class="dev-badge w-4 h-4 rounded-full bg-[#DC183C] text-white items-center justify-center text-[9px] font-bold leading-none animate-pulse" title="Implementation notes">i</button>
               </h3>
-              <button onclick="stubNav('Dimension breakdown')" class="text-xs font-bold text-[#DC183C] hover:underline">View breakdown →</button>
+              <button onclick="openBreakdown()" class="text-xs font-bold text-[#DC183C] hover:underline">View breakdown →</button>
             </div>
             <div id="dims-list" class="space-y-3.5"></div>
           </div>
@@ -440,6 +438,15 @@
             <a href="public-premium-checkout.html" class="mt-4 inline-flex items-center justify-center gap-2 h-11 rounded-lg bg-[#DC183C] hover:bg-[#B0142F] text-white font-jakarta font-bold text-sm transition"><i data-lucide="crown" class="w-4 h-4"></i> Get Premium</a>
             <p class="text-[11.5px] text-white/45 mt-2.5">Your score, calendar, funding, solutions, deals and learning stay free.</p>
           </div>
+          <div class="premium-only-flex flex-col rounded-2xl border border-[#E7EBEF] shadow-sm bg-white p-5 reveal">
+            <p class="text-[11px] font-extrabold uppercase tracking-wide text-[#29A37A] mb-1 flex items-center gap-1.5"><i data-lucide="crown" class="w-3.5 h-3.5"></i> Premium</p>
+            <p class="font-jakarta font-extrabold text-lg leading-snug">Working for you this week</p>
+            <div class="mt-3 divide-y divide-[#F0F3F6]">
+              <button onclick="showView('compliance')" class="w-full text-left flex items-center gap-3 py-3"><div class="w-9 h-9 rounded-[10px] bg-[#FFF1E0] text-[#AE6B0A] grid place-items-center shrink-0"><i data-lucide="bell-ring" class="w-4 h-4"></i></div><div class="min-w-0 flex-1"><p class="text-[13.5px] font-bold">Autopilot is on</p><p class="text-[12px] text-[#6A7581]">Next: provisional tax reminder, Monday 08:00</p></div></button>
+              <button onclick="showView('documents')" class="w-full text-left flex items-center gap-3 py-3"><div class="w-9 h-9 rounded-[10px] bg-[#FDECEF] text-[#DC183C] grid place-items-center shrink-0"><i data-lucide="folder-check" class="w-4 h-4"></i></div><div class="min-w-0 flex-1"><p class="text-[13.5px] font-bold">1 document has expired</p><p class="text-[12px] text-[#6A7581]">Tax clearance certificate. Renew it before you apply.</p></div></button>
+              <button onclick="showView('invoices')" class="w-full text-left flex items-center gap-3 py-3"><div class="w-9 h-9 rounded-[10px] bg-[#E4F5EE] text-[#29A37A] grid place-items-center shrink-0"><i data-lucide="receipt" class="w-4 h-4"></i></div><div class="min-w-0 flex-1"><p class="text-[13.5px] font-bold">Unlimited invoices</p><p class="text-[12px] text-[#6A7581]">Track every customer who owes you</p></div></button>
+            </div>
+          </div>
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-[1fr_1fr] gap-5 mt-5">
@@ -479,7 +486,43 @@
       <!-- ============ VIEW: PROGRESS (own tab again, 2026-10-02: momentum, achievements, history) ============ -->
       <div class="view" id="view-progress">
         <h1 class="font-jakarta font-extrabold text-[26px] sm:text-[28px] tracking-tight flex items-center gap-2 mb-1">Progress<button onclick="openBrief('progress')" class="dev-badge w-5 h-5 rounded-full bg-[#DC183C] text-white items-center justify-center text-[10px] font-bold leading-none animate-pulse" title="Implementation notes">i</button></h1>
-        <p class="text-[14.5px] text-[#6A7581] leading-relaxed max-w-[62ch] mb-6">What to do this week, how your business is moving, and what you have earned.</p>
+        <p class="text-[14.5px] text-[#6A7581] leading-relaxed max-w-[62ch] mb-6">How your business is moving this week, what to do next, and your score over time.</p>
+        <div class="grid grid-cols-1 lg:grid-cols-[1.4fr_1fr] gap-5 mb-5">
+          <!-- Weekly momentum -->
+          <div class="rounded-2xl border border-[#E7EBEF] shadow-sm bg-white p-5 reveal" style="animation-delay:280ms">
+            <div class="flex items-center justify-between mb-4">
+              <p class="font-jakarta font-extrabold text-lg flex items-center gap-1.5">This week's momentum
+                <button onclick="openBrief('momentum')" class="dev-badge w-4 h-4 rounded-full bg-[#DC183C] text-white items-center justify-center text-[9px] font-bold leading-none animate-pulse" title="Implementation notes">i</button>
+              </p>
+              <span class="inline-flex items-center gap-1 text-[11px] font-bold text-[#29A37A] bg-[#E4F5EE] px-2.5 py-1 rounded-full"><i data-lucide="trending-up" class="w-3 h-3"></i> +3 pts</span>
+            </div>
+            <div class="grid grid-cols-3 gap-3">
+              <div class="text-center">
+                <p class="font-jakarta font-extrabold text-2xl">2</p>
+                <p class="text-[11px] text-[#6A7581] mt-0.5">Actions done</p>
+              </div>
+              <div class="text-center border-x border-[#E7EBEF]">
+                <p class="font-jakarta font-extrabold text-2xl">1</p>
+                <p class="text-[11px] text-[#6A7581] mt-0.5">Risk resolved</p>
+              </div>
+              <div class="text-center">
+                <p class="font-jakarta font-extrabold text-2xl">9</p>
+                <p class="text-[11px] text-[#6A7581] mt-0.5">Pts to Excellent</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Achievements strip -->
+          <div class="rounded-2xl border border-[#E7EBEF] shadow-sm bg-white p-5 reveal" style="animation-delay:320ms">
+            <div class="flex items-center justify-between mb-3.5">
+              <p class="font-jakarta font-extrabold text-lg flex items-center gap-1.5">Achievements
+                <button onclick="openBrief('achievements')" class="dev-badge w-4 h-4 rounded-full bg-[#DC183C] text-white items-center justify-center text-[9px] font-bold leading-none animate-pulse" title="Implementation notes">i</button>
+              </p>
+              <span class="text-[11px] font-bold text-[#6A7581]">2 of 5</span>
+            </div>
+            <div class="flex items-center gap-2.5" id="achievements-strip"></div>
+          </div>
+        </div>
         <div class="mb-5">
           <!-- Three things preview -->
           <div class="rounded-2xl border border-[#E7EBEF] shadow-sm bg-white reveal" style="animation-delay:200ms">
@@ -527,60 +570,24 @@
             </div>
           </div>
         </details>
-        <div id="stale-check" class="rounded-2xl border border-[#F0C98A] bg-[#FFF8EC] p-4 mb-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 reveal">
-          <div class="flex items-center gap-2.5"><i data-lucide="alarm-clock" class="w-5 h-5 text-[#AE6B0A] shrink-0"></i><p class="text-sm font-semibold text-[#7A4A05]">It has been 31 days, so your score may be out of date.</p></div>
-          <button onclick="stubNav('Re-check now')" class="shrink-0 inline-flex items-center gap-2 font-jakarta font-bold text-[13px] px-4 py-2.5 rounded-lg bg-[#0C1F31] text-white hover:bg-[#16324a] transition">Re-check now</button>
-        </div>
+        
+        
+        
 
 
-        <div class="grid grid-cols-1 lg:grid-cols-[1.4fr_1fr] gap-5">
-          <!-- Weekly momentum -->
-          <div class="rounded-2xl border border-[#E7EBEF] shadow-sm bg-white p-5 reveal" style="animation-delay:280ms">
-            <div class="flex items-center justify-between mb-4">
-              <p class="font-jakarta font-extrabold text-lg flex items-center gap-1.5">This week's momentum
-                <button onclick="openBrief('momentum')" class="dev-badge w-4 h-4 rounded-full bg-[#DC183C] text-white items-center justify-center text-[9px] font-bold leading-none animate-pulse" title="Implementation notes">i</button>
-              </p>
-              <span class="inline-flex items-center gap-1 text-[11px] font-bold text-[#29A37A] bg-[#E4F5EE] px-2.5 py-1 rounded-full"><i data-lucide="trending-up" class="w-3 h-3"></i> +3 pts</span>
-            </div>
-            <div class="grid grid-cols-3 gap-3">
-              <div class="text-center">
-                <p class="font-jakarta font-extrabold text-2xl">2</p>
-                <p class="text-[11px] text-[#6A7581] mt-0.5">Actions done</p>
-              </div>
-              <div class="text-center border-x border-[#E7EBEF]">
-                <p class="font-jakarta font-extrabold text-2xl">1</p>
-                <p class="text-[11px] text-[#6A7581] mt-0.5">Risk resolved</p>
-              </div>
-              <div class="text-center">
-                <p class="font-jakarta font-extrabold text-2xl">9</p>
-                <p class="text-[11px] text-[#6A7581] mt-0.5">Pts to Excellent</p>
-              </div>
-            </div>
-          </div>
-
-          <!-- Achievements strip -->
-          <div class="rounded-2xl border border-[#E7EBEF] shadow-sm bg-white p-5 reveal" style="animation-delay:320ms">
-            <div class="flex items-center justify-between mb-3.5">
-              <p class="font-jakarta font-extrabold text-lg flex items-center gap-1.5">Achievements
-                <button onclick="openBrief('achievements')" class="dev-badge w-4 h-4 rounded-full bg-[#DC183C] text-white items-center justify-center text-[9px] font-bold leading-none animate-pulse" title="Implementation notes">i</button>
-              </p>
-              <span class="text-[11px] font-bold text-[#6A7581]">2 of 5</span>
-            </div>
-            <div class="flex items-center gap-2.5" id="achievements-strip"></div>
-          </div>
-        </div>
+        
       
 
         <div class="mt-5"><div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
-          <div class="rounded-2xl border border-[#E7EBEF] shadow-sm bg-white p-4 text-center reveal"><p class="font-jakarta font-extrabold text-2xl">68</p><p class="text-[11px] text-[#6A7581] mt-1">Your score now</p></div>
+          <div class="rounded-2xl border border-[#E7EBEF] shadow-sm bg-white p-4 text-center reveal"><p class="font-jakarta font-extrabold text-2xl">71</p><p class="text-[11px] text-[#6A7581] mt-1">Your score now</p></div>
           <div class="rounded-2xl border border-[#E7EBEF] shadow-sm bg-white p-4 text-center reveal" style="animation-delay:40ms"><p class="font-jakarta font-extrabold text-2xl text-[#29A37A]">+14</p><p class="text-[11px] text-[#6A7581] mt-1">Since your first check-in</p></div>
           <div class="rounded-2xl border border-[#E7EBEF] shadow-sm bg-white p-4 text-center reveal" style="animation-delay:80ms"><p class="font-jakarta font-extrabold text-2xl">71</p><p class="text-[11px] text-[#6A7581] mt-1">Best score so far</p></div>
           <div class="rounded-2xl border border-[#E7EBEF] shadow-sm bg-white p-4 text-center reveal" style="animation-delay:120ms"><p class="font-jakarta font-extrabold text-2xl">3</p><p class="text-[11px] text-[#6A7581] mt-1">Months in a row</p></div>
         </div>
 
         <div class="rounded-2xl border border-[#F0C98A] bg-[#FFF8EC] p-5 mt-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 reveal">
-          <div class="flex items-center gap-2.5"><i data-lucide="alarm-clock" class="w-5 h-5 text-[#AE6B0A] shrink-0"></i><p class="text-sm font-semibold text-[#7A4A05]">It's been 31 days, your score may be out of date.</p></div>
-          <button onclick="stubNav('Re-check now')" class="shrink-0 inline-flex items-center gap-2 font-jakarta font-bold text-[13px] px-4 py-2.5 rounded-lg bg-[#0C1F31] text-white hover:bg-[#16324a] transition">Re-check now</button>
+          <div class="flex items-center gap-2.5"><i data-lucide="alarm-clock" class="w-5 h-5 text-[#AE6B0A] shrink-0"></i><p class="text-sm font-semibold text-[#7A4A05]">It has been 31 days since your last check-in, so your score may be out of date.</p></div>
+          <button onclick="startCheckin()" class="shrink-0 inline-flex items-center gap-2 font-jakarta font-bold text-[13px] px-4 py-2.5 rounded-lg bg-[#0C1F31] text-white hover:bg-[#16324a] transition">Re-check now</button>
         </div>
 
         <div class="rounded-2xl border border-[#E7EBEF] shadow-sm bg-white p-5 mt-5 reveal" style="animation-delay:80ms">
@@ -632,7 +639,7 @@
             <p class="text-[14.5px] text-[#6A7581] leading-relaxed max-w-[62ch] mt-2">The facts about your business. The Health Check scores them. Use Edit on any section to update it.</p>
           </div>
           <div class="flex gap-2 shrink-0 flex-wrap">
-            <button onclick="stubNav('Business Profile PDF')" class="inline-flex items-center gap-2 font-jakarta font-bold text-[13px] px-5 py-3 rounded-lg border-[1.5px] border-[#E7EBEF] hover:bg-[#F0F5F9] transition"><i data-lucide="download" class="w-4 h-4"></i> Download PDF</button>
+            <button onclick="downloadProfilePdf()" class="inline-flex items-center gap-2 font-jakarta font-bold text-[13px] px-5 py-3 rounded-lg border-[1.5px] border-[#E7EBEF] hover:bg-[#F0F5F9] transition"><i data-lucide="download" class="w-4 h-4"></i> Download PDF</button>
             <button onclick="emailProfile()" class="inline-flex items-center gap-2 font-jakarta font-bold text-[13px] px-5 py-3 rounded-lg bg-[#0C1F31] text-white hover:bg-[#16324a] transition"><i data-lucide="mail" class="w-4 h-4"></i> Email me a copy</button>
           </div>
         </div>
@@ -658,12 +665,19 @@
       
       <!-- ============ VIEW: EVENTS (slug: programmes) ============ -->
       <div class="view" id="view-programmes">
-        <div class="mb-6"><h1 class="font-jakarta font-extrabold text-[26px] sm:text-[28px] tracking-tight flex items-center gap-2">Events<button onclick="openBrief('events')" class="dev-badge w-5 h-5 rounded-full bg-[#DC183C] text-white items-center justify-center text-[10px] font-bold leading-none animate-pulse" title="Implementation notes">i</button></h1><p class="text-[14.5px] text-[#6A7581] leading-relaxed max-w-[62ch] mt-2">Webinars are free for every member. In-person events are 50% off for Premium members.</p></div>
-        <div class="rounded-2xl border border-[#E7EBEF] shadow-sm bg-white overflow-hidden max-w-3xl">
-          <a href="event-single-online.html" class="flex items-center gap-4 p-4 hover:bg-[#FCFCFC] transition border-t border-[#E7EBEF] first:border-t-0"><div class="shrink-0 w-14 text-center bg-[#FFF1E0] rounded-lg py-1.5 border border-[#FF9900]/20"><p class="text-[9px] font-bold uppercase text-[#AE6B0A] tracking-widest">Oct</p><p class="font-jakarta font-extrabold text-xl text-[#121A21] leading-none mt-0.5">29</p></div><div class="min-w-0 flex-1"><p class="font-jakarta font-bold text-[14.5px] leading-snug">Business Compliance Essentials</p><p class="text-[12.5px] text-[#6A7581] mt-0.5">Webinar on Zoom, 11:00 to 12:00 SAST, hosted by Karabo Kgophane</p></div><span class="shrink-0 text-[10.5px] font-extrabold uppercase tracking-wide px-2.5 py-1 rounded-full bg-[#E4F5EE] text-[#1E7F5E]">Free</span></a>
-          <a href="event-single-in-person.html" class="flex items-center gap-4 p-4 hover:bg-[#FCFCFC] transition border-t border-[#E7EBEF] first:border-t-0"><div class="shrink-0 w-14 text-center bg-[#FFF1E0] rounded-lg py-1.5 border border-[#FF9900]/20"><p class="text-[9px] font-bold uppercase text-[#AE6B0A] tracking-widest">2027</p><p class="font-jakarta font-extrabold text-xl text-[#121A21] leading-none mt-0.5">TBA</p></div><div class="min-w-0 flex-1"><p class="font-jakarta font-bold text-[14.5px] leading-snug">SME Funding Summit</p><p class="text-[12.5px] text-[#6A7581] mt-0.5">In person, Sandton. Date to be announced, join the list to hear first</p></div><span class="shrink-0 text-[10.5px] font-extrabold uppercase tracking-wide px-2.5 py-1 rounded-full bg-[#FDECEF] text-[#DC183C]">50% off with Premium</span></a>
+        <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-5 mb-6">
+          <div><h1 class="font-jakarta font-extrabold text-[26px] sm:text-[28px] tracking-tight flex items-center gap-2">Events<button onclick="openBrief('events')" class="dev-badge w-5 h-5 rounded-full bg-[#DC183C] text-white items-center justify-center text-[10px] font-bold leading-none animate-pulse" title="Implementation notes">i</button></h1>
+            <p class="text-[14.5px] text-[#6A7581] leading-relaxed max-w-[62ch] mt-2">Webinars, workshops and summits for South African SMEs, live and on replay. Webinars are free for every member.<span class="standard-only-inline"> In-person events are 50% off with Premium.</span><span class="premium-only-inline"> Your Premium 50% off applies to every in-person event.</span></p></div>
+          <a href="events.html" class="shrink-0 inline-flex items-center gap-2 font-jakarta font-bold text-[13px] px-5 py-3 rounded-lg border-[1.5px] border-[#E7EBEF] hover:bg-[#F0F5F9] transition"><i data-lucide="calendar-days" class="w-4 h-4"></i> Events page</a>
         </div>
-        <p class="text-[12.5px] text-[#6A7581] mt-4">See every event, past recordings and speakers on the <a href="events.html" class="font-bold text-[#DC183C] hover:underline">events page</a>.</p>
+        <div class="rounded-2xl border border-[#E7EBEF] bg-white p-4 mb-6 flex flex-col lg:flex-row lg:items-center gap-3">
+          <div id="ev-when" class="flex gap-2 overflow-x-auto no-scrollbar"></div>
+          <div class="hidden lg:block w-px h-7 bg-[#E7EBEF]"></div>
+          <div id="ev-type" class="flex gap-2 overflow-x-auto no-scrollbar"></div>
+          <div class="relative lg:ml-auto lg:w-64"><i data-lucide="search" class="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-[#98A2AE]"></i><input id="ev-search" oninput="evPage=1;renderEvents()" placeholder="Search events" class="w-full h-10 pl-10 pr-3 rounded-full border border-[#E7EBEF] bg-[#FCFCFC] text-sm outline-none focus:border-[#DC183C]"></div>
+        </div>
+        <div id="ev-grid" class="grid sm:grid-cols-2 xl:grid-cols-3 gap-5"></div>
+        <div id="ev-pager"></div>
       </div>
 
 
@@ -679,7 +693,7 @@
             </h1>
             <p class="text-[14.5px] text-[#6A7581] leading-relaxed max-w-[62ch] mt-2">Every recurring deadline that keeps your business in good standing, SARS, CIPC and labour, in one list. Ticking an item off improves your Compliance score.</p>
           </div>
-          <button onclick="stubNav('Mark as filed')" class="shrink-0 inline-flex items-center gap-2 font-jakarta font-bold text-[13px] px-5 py-3 rounded-lg border-[1.5px] border-[#E7EBEF] hover:bg-[#F0F5F9] transition">
+          <button onclick="addDeadline()" class="shrink-0 inline-flex items-center gap-2 font-jakarta font-bold text-[13px] px-5 py-3 rounded-lg border-[1.5px] border-[#E7EBEF] hover:bg-[#F0F5F9] transition">
             <i data-lucide="calendar-plus" class="w-4 h-4"></i> Add a deadline
           </button>
         </div>
@@ -742,7 +756,7 @@
                   <div class="flex items-center justify-between text-[12px]"><span class="text-[#6A7581]">CIPC</span><span class="font-bold">1 document</span></div>
                   <div class="flex items-center justify-between text-[12px]"><span class="text-[#6A7581]">Dept of Labour</span><span class="font-bold">1 document</span></div>
                 </div>
-                <button onclick="stubNav('Generate compliance pack')" class="w-full inline-flex items-center justify-center gap-2 font-jakarta font-bold text-[13px] px-5 py-3 rounded-lg bg-[#0C1F31] text-white hover:bg-[#16324a] transition">
+                <button onclick="compliancePack()" class="w-full inline-flex items-center justify-center gap-2 font-jakarta font-bold text-[13px] px-5 py-3 rounded-lg bg-[#0C1F31] text-white hover:bg-[#16324a] transition">
                   <i data-lucide="file-down" class="w-4 h-4"></i> Generate PDF
                 </button>
               </div>
@@ -884,7 +898,7 @@
         <p class="text-[11px] font-bold uppercase tracking-widest text-[#6A7581] mb-2.5">Business summary (free)</p>
         <div class="bg-white border border-[#D8DEE5] rounded-lg shadow-md p-6 sm:p-9 max-w-3xl">
           <div class="flex items-start justify-between gap-4 border-b border-[#E7EBEF] pb-5">
-            <div><button onclick="stubNav('Upload your business logo')" class="mb-3 w-14 h-14 rounded-xl border border-dashed border-[#C9D1DA] bg-[#F6F8FA] grid place-items-center text-[11px] font-bold text-[#6A7581] hover:border-[#DC183C] hover:text-[#DC183C] transition" title="Add your own logo">Add logo</button><p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C]">Business summary</p><h2 class="font-jakarta font-extrabold text-2xl mt-1">Langa Holdings</h2><p class="text-[13px] text-[#6A7581] mt-0.5">Prepared 2 October 2026 by the business owner</p></div>
+            <div><button id="pack-logo" onclick="pickLogo()" class="mb-3 w-14 h-14 rounded-xl border border-dashed border-[#C9D1DA] bg-[#F6F8FA] grid place-items-center text-[11px] font-bold text-[#6A7581] hover:border-[#DC183C] hover:text-[#DC183C] transition" title="Add your own logo">Add logo</button><p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C]">Business summary</p><h2 class="font-jakarta font-extrabold text-2xl mt-1">Langa Holdings</h2><p class="text-[13px] text-[#6A7581] mt-0.5">Prepared 2 October 2026 by the business owner</p></div>
             <div class="text-right shrink-0"><p class="text-[10px] font-bold uppercase tracking-widest text-[#6A7581]">Health score</p><p class="font-jakarta font-extrabold text-3xl text-[#0C1F31]">71<span class="text-sm text-[#6A7581]">/100</span></p></div>
           </div>
           <div class="grid sm:grid-cols-2 gap-x-8 gap-y-3 mt-5 text-[13.5px]">
@@ -920,12 +934,12 @@
             <h1 class="font-jakarta font-extrabold text-[26px] sm:text-[28px] tracking-tight flex items-center gap-2">Documents<button onclick="openBrief('documents')" class="dev-badge w-5 h-5 rounded-full bg-[#DC183C] text-white items-center justify-center text-[10px] font-bold leading-none animate-pulse" title="Implementation notes">i</button></h1>
             <p class="text-[14.5px] text-[#6A7581] leading-relaxed max-w-[62ch] mt-2">Your compliance and funding documents in one vault, with expiry tracked, so a lapsed tax clearance never catches you out.</p>
           </div>
-          <button onclick="stubNav('Upload document')" class="shrink-0 inline-flex items-center gap-2 font-jakarta font-bold text-[13px] px-5 py-3 rounded-lg bg-[#0C1F31] text-white hover:bg-[#16324a] transition"><i data-lucide="upload" class="w-4 h-4"></i> Upload document</button>
+          <button onclick="uploadVaultDoc()" class="shrink-0 inline-flex items-center gap-2 font-jakarta font-bold text-[13px] px-5 py-3 rounded-lg bg-[#0C1F31] text-white hover:bg-[#16324a] transition"><i data-lucide="upload" class="w-4 h-4"></i> Upload document</button>
         </div>
         <div id="pack-vault" class="premium-block">
           <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-3 mb-3">
             <div><p class="text-[11px] font-bold uppercase tracking-widest text-[#6A7581]">Document vault</p><p class="text-[13.5px] text-[#6A7581] mt-1 max-w-[60ch]">Tax clearance, accounts, bank statements and IDs in one vault, with expiry tracked so nothing lapses before an application.</p></div>
-            <button onclick="stubNav('Upload document')" class="shrink-0 inline-flex items-center gap-2 font-jakarta font-bold text-[13px] px-5 py-3 rounded-lg border-[1.5px] border-[#E7EBEF] hover:bg-[#F0F5F9] transition"><i data-lucide="upload" class="w-4 h-4"></i> Upload document</button>
+            <button onclick="uploadVaultDoc()" class="shrink-0 inline-flex items-center gap-2 font-jakarta font-bold text-[13px] px-5 py-3 rounded-lg border-[1.5px] border-[#E7EBEF] hover:bg-[#F0F5F9] transition"><i data-lucide="upload" class="w-4 h-4"></i> Upload document</button>
           </div>
           <div class="rounded-2xl border border-[#E7EBEF] shadow-sm bg-white overflow-hidden reveal">
           <div class="px-5 py-4 border-b border-[#E7EBEF] flex items-center justify-between">
@@ -984,9 +998,10 @@
           <div><h1 class="font-jakarta font-extrabold text-[26px] sm:text-[28px] tracking-tight flex items-center gap-2">Guides<button onclick="openBrief('lguides')" class="dev-badge w-5 h-5 rounded-full bg-[#DC183C] text-white items-center justify-center text-[10px] font-bold leading-none animate-pulse" title="Implementation notes">i</button></h1><p class="text-[14.5px] text-[#6A7581] leading-relaxed max-w-[62ch] mt-2">In-depth, evergreen guides to every major topic for South African SMEs. Read them online, nothing to download.</p></div>
           <a href="public-guides.html" class="shrink-0 inline-flex items-center gap-2 font-jakarta font-bold text-[13px] px-5 py-3 rounded-lg border-[1.5px] border-[#E7EBEF] hover:bg-[#F0F5F9] transition"><i data-lucide="compass" class="w-4 h-4"></i> Open on the site</a>
         </div>
-        <div class="relative max-w-xl"><i data-lucide="search" class="w-4 h-4 absolute left-4 top-1/2 -translate-y-1/2 text-[#98A2AE]"></i><input id="lg-search" oninput="renderGuides()" placeholder="Search guides by title, topic, or category" class="w-full h-12 pl-11 pr-4 rounded-full border border-[#E7EBEF] bg-white text-sm outline-none focus:border-[#DC183C]"></div>
+        <div class="relative max-w-xl"><i data-lucide="search" class="w-4 h-4 absolute left-4 top-1/2 -translate-y-1/2 text-[#98A2AE]"></i><input id="lg-search" oninput="lgPage=1;renderGuides()" placeholder="Search guides by title, topic, or category" class="w-full h-12 pl-11 pr-4 rounded-full border border-[#E7EBEF] bg-white text-sm outline-none focus:border-[#DC183C]"></div>
         <div id="lg-chips" class="flex flex-wrap gap-2 mt-4"></div>
         <div id="lg-grid" class="grid sm:grid-cols-2 xl:grid-cols-3 gap-5 mt-6"></div>
+        <div id="lg-pager"></div>
         <p id="lg-empty" class="hidden text-center text-sm text-[#6A7581] py-12">No guides match that search.</p>
         <p class="text-[12.5px] text-[#6A7581] mt-8">Looking for news, how-tos or definitions? <a href="public-articles.html" class="font-bold text-[#DC183C] hover:underline">Insights</a> and the <a href="public-glossary.html" class="font-bold text-[#DC183C] hover:underline">Glossary</a> are on the main site.</p>
       </div>
@@ -998,8 +1013,9 @@
           <a href="podcast.html" class="shrink-0 inline-flex items-center gap-2 font-jakarta font-bold text-[13px] px-5 py-3 rounded-lg border-[1.5px] border-[#E7EBEF] hover:bg-[#F0F5F9] transition"><i data-lucide="rss" class="w-4 h-4"></i> Subscribe</a>
         </div>
         <div id="pod-featured"></div>
-        <p class="text-[11px] font-bold uppercase tracking-widest text-[#6A7581] mt-8 mb-2.5">All episodes</p>
+        <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-3 mt-8 mb-3"><p class="text-[11px] font-bold uppercase tracking-widest text-[#6A7581]">All episodes</p><div class="relative sm:w-80"><i data-lucide="search" class="w-4 h-4 absolute left-4 top-1/2 -translate-y-1/2 text-[#98A2AE]"></i><input id="pod-search" oninput="podPage=1;renderPodcast()" placeholder="Search episodes or guests" class="w-full h-11 pl-11 pr-4 rounded-full border border-[#E7EBEF] bg-white text-sm outline-none focus:border-[#DC183C]"></div></div>
         <div id="pod-list" class="rounded-2xl border border-[#E7EBEF] shadow-sm bg-white overflow-hidden"></div>
+        <div id="pod-pager"></div>
         <p class="text-[12.5px] text-[#6A7581] mt-8">Looking for news, how-tos or definitions? <a href="public-articles.html" class="font-bold text-[#DC183C] hover:underline">Insights</a> and the <a href="public-glossary.html" class="font-bold text-[#DC183C] hover:underline">Glossary</a> are on the main site.</p>
       </div>
 
@@ -1009,7 +1025,10 @@
           <div><h1 class="font-jakarta font-extrabold text-[26px] sm:text-[28px] tracking-tight flex items-center gap-2">Founder stories<button onclick="openBrief('lstories')" class="dev-badge w-5 h-5 rounded-full bg-[#DC183C] text-white items-center justify-center text-[10px] font-bold leading-none animate-pulse" title="Implementation notes">i</button></h1><p class="text-[14.5px] text-[#6A7581] leading-relaxed max-w-[62ch] mt-2">Real South African founders on what they built, what went wrong, and what they would do again.</p></div>
           <a href="public-founder-focus-category.html" class="shrink-0 inline-flex items-center gap-2 font-jakarta font-bold text-[13px] px-5 py-3 rounded-lg border-[1.5px] border-[#E7EBEF] hover:bg-[#F0F5F9] transition"><i data-lucide="compass" class="w-4 h-4"></i> Open on the site</a>
         </div>
-        <div id="st-host"></div>
+        <div class="relative max-w-xl"><i data-lucide="search" class="w-4 h-4 absolute left-4 top-1/2 -translate-y-1/2 text-[#98A2AE]"></i><input id="st-search" oninput="stPage=1;renderStories()" placeholder="Search stories by founder, business or industry" class="w-full h-12 pl-11 pr-4 rounded-full border border-[#E7EBEF] bg-white text-sm outline-none focus:border-[#DC183C]"></div>
+        <div id="st-chips" class="flex flex-wrap gap-2 mt-4"></div>
+        <div id="st-host" class="mt-6"></div>
+        <div id="st-pager"></div>
         <p class="text-[12.5px] text-[#6A7581] mt-8">Looking for news, how-tos or definitions? <a href="public-articles.html" class="font-bold text-[#DC183C] hover:underline">Insights</a> and the <a href="public-glossary.html" class="font-bold text-[#DC183C] hover:underline">Glossary</a> are on the main site.</p>
       </div>
 
@@ -1094,13 +1113,11 @@
       setTimeout(()=>{ el.classList.add('hidden'); el.innerHTML=''; }, 250);
     }, 2400);
   }
-  function stubNav(label){
-    showToast(`${label}, not part of this concept round yet.`, null);
-  }
+  function stubNav(label){ showToast(label + ' opened.', null); }  // no callers left: every button has a real action
 
   // ===== PLAN + VIEW SWITCHING (rewritten 2026-10-02) ===========================
   // Demo plan: Standard by default (a free member who finished the Health Check). Add ?plan=premium to see the paid state.
-  const MEMBER_PLAN = (new URLSearchParams(location.search).get('plan') === 'premium') ? 'premium' : 'standard';
+  const MEMBER_PLAN = window.SME_PLAN || 'standard';  // from plan.js: ?plan=, checkout, or the Plan switch
   document.body.classList.add(MEMBER_PLAN === 'premium' ? 'plan-premium' : 'plan-standard');
 
   // Sidebar group -> ordered sub-tabs. One entry per merged module; a single tab means no strip is shown.
@@ -1174,7 +1191,7 @@
 
 
   // ===== HOME: plan lives here now; funding status card (2026-10-02) ===================
-  function openHomePlan(){ showView('overview'); const d = document.getElementById('home-plan'); if(d){ d.open = true; setTimeout(() => d.scrollIntoView({ behavior:'smooth', block:'start' }), 50); } }
+  function openHomePlan(){ showView('progress'); const d = document.getElementById('home-plan'); if(d){ d.open = true; setTimeout(() => d.scrollIntoView({ behavior:'smooth', block:'start' }), 50); } }
 
 
   // ===== HASH ROUTING (#funding-new etc.) so apply links from anywhere land in the right place =====
@@ -1280,25 +1297,78 @@
   const LEARN_CATS = ['All','Funding','Compliance','Operations','Marketing','Technology','Industry'];
   const LEARN_STORIES=[{"img": "https://smesouthafrica.co.za/wp-content/uploads/2026/07/wikus-mostert.jpg", "tag": "Agri-Business", "title": "Peanut Farming is a Passion for Wikus Mostert from Schweizer-Reneke", "excerpt": "Navigating yield volatility and supply chain demands in modern agriculture. Wikus shares the operational realities and profound rewards of large-scale peanut farming in South Africa.", "by": "Maryna Steyn", "when": "2 Jul 2026 · 4 min read", "featured": true}, {"img": "https://smesouthafrica.co.za/wp-content/uploads/2026/06/Nicolene-Elhadad.jpg", "tag": "Retail", "title": "How Xpresso Café Scaled From One Store to 80+ Stores Nationwide", "excerpt": "Nicolene Elhadad on franchising models, maintaining quality control, and the unit economics of flat-pricing.", "by": "Omega Fumba", "when": "3 Jun 2026 · 5 min read", "section": "Retail & Franchising"}, {"img": "https://smesouthafrica.co.za/wp-content/uploads/2026/07/retang-phaahla.jpg", "tag": "FMCG", "title": "Retang Phaahla Turns Generations of Knowledge Into a Thriving Business", "excerpt": "Packaging heritage and convincing retail buyers that an indigenous brand belongs on the premium shelf.", "by": "Omega Fumba", "when": "25 Jun 2026 · 4 min read", "section": "Retail & Franchising"}, {"img": "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&q=80&w=600&h=375", "tag": "E-commerce", "title": "The Pivot From Brick-and-Mortar to a National D2C Empire", "excerpt": "How adopting a direct-to-consumer logistics model completely transformed this retail startup's margins.", "by": "Maryna Steyn", "when": "18 May 2026 · 6 min read", "section": "Retail & Franchising"}, {"img": "https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&q=80&w=600&h=375", "tag": "Boutique", "title": "Curating Local Design: Building a Premium Independent Boutique", "excerpt": "Lessons on inventory management, local sourcing, and building immense customer loyalty.", "by": "Lungile Msomi", "when": "12 May 2026 · 5 min read", "section": "Retail & Franchising"}, {"img": "https://smesouthafrica.co.za/wp-content/uploads/2026/05/Carl-van-Blerk.jpg", "tag": "Social Enterprise", "title": "The Award-winning Business that Addresses Poverty and Hunger", "excerpt": "Carl van Blerk explains how building a sustainable social enterprise requires the exact same financial discipline as a traditional startup.", "by": "Maryna Steyn", "when": "27 May 2026 · 5 min read", "section": "Impact & Services"}, {"img": "https://smesouthafrica.co.za/wp-content/uploads/2026/06/Gauri-Singh-1.png", "tag": "Youth", "title": "Young Entrepreneur Pursues Passion from an Early Age", "excerpt": "Gauri Singh on balancing education with running a growing service business, and why starting young is the ultimate competitive advantage.", "by": "Maryna Steyn", "when": "10 Jun 2026 · 3 min read", "section": "Impact & Services"}, {"img": "https://smesouthafrica.co.za/wp-content/uploads/2026/05/Nikki-Pretorius.jpg", "tag": "Training", "title": "Firearm Training is Serious Business, But Rewarding Too", "excerpt": "Nikki Pretorius breaks down the rigorous compliance and operational hurdles of running a highly regulated training academy.", "by": "Maryna Steyn", "when": "21 May 2026 · 7 min read", "section": "Impact & Services"}, {"img": "https://images.unsplash.com/photo-1573164713988-8665fc963095?auto=format&fit=crop&q=80&w=600&h=375", "tag": "Tech", "title": "Building a B2B SaaS Platform from South Africa to the World", "excerpt": "The honest reality of raising venture capital while headquartered in Johannesburg.", "by": "Lungile Msomi", "when": "15 Apr 2026 · 6 min read", "section": "Impact & Services"}];
   let lgCat = 'All';
+
+
+  // ===== Pagination shared by Learn, Events (9 per page) =====
+  const PER_PAGE = 9;
+  function pagerHTML(total, page, fn){
+    const pages = Math.ceil(total / PER_PAGE); if(pages <= 1) return '';
+    const b = (p, label, dis, on) => `<button ${dis ? 'disabled' : ''} onclick="${fn}(${p})" class="min-w-10 h-10 px-3 rounded-lg text-sm font-bold transition ${on ? 'bg-[#DC183C] text-white' : 'border border-[#E7EBEF] bg-white text-[#42505E] hover:border-[#0C1F31]'} ${dis ? 'opacity-40 cursor-not-allowed' : ''}">${label}</button>`;
+    const from = (page - 1) * PER_PAGE + 1, to = Math.min(page * PER_PAGE, total);
+    return `<div class="flex flex-col sm:flex-row items-center justify-between gap-3 mt-6 pt-5 border-t border-[#E7EBEF]"><span class="text-[13px] text-[#6A7581]">Showing <b class="text-[#121A21]">${from} to ${to}</b> of ${total}</span><div class="flex items-center gap-1.5">${b(page - 1, '<i data-lucide="chevron-left" class="w-4 h-4"></i>', page === 1)}${Array.from({ length: pages }, (_, i) => b(i + 1, i + 1, false, i + 1 === page)).join('')}${b(page + 1, '<i data-lucide="chevron-right" class="w-4 h-4"></i>', page === pages)}</div></div>`;
+  }
+  function pageSlice(list, page){ return list.slice((page - 1) * PER_PAGE, page * PER_PAGE); }
+  function scrollViewTop(){ window.scrollTo({ top: 0, behavior: 'smooth' }); }
+  let lgPage = 1, podPage = 1, stPage = 1, stTopic = 'All';
+  function goGuides(p){ lgPage = p; renderGuides(); scrollViewTop(); }
+  function goPod(p){ podPage = p; renderPodcast(); document.getElementById('pod-list').scrollIntoView({ behavior:'smooth', block:'start' }); }
+  function goStories(p){ stPage = p; renderStories(); scrollViewTop(); }
   function renderGuides(){
     const q = ((document.getElementById('lg-search') || {}).value || '').toLowerCase().trim();
-    document.getElementById('lg-chips').innerHTML = LEARN_CATS.map(c => `<button onclick="lgCat='${c}';renderGuides()" class="px-4 h-9 rounded-full text-sm font-semibold border transition ${c === lgCat ? 'bg-[#DC183C] text-white border-[#DC183C]' : 'bg-white text-[#121A21] border-[#E7EBEF] hover:border-[#0C1F31]'}">${c}</button>`).join('');
-    const list = LEARN_GUIDES.filter(g => (lgCat === 'All' || g.cat === lgCat) && (!q || (g.title + ' ' + g.excerpt + ' ' + g.cat).toLowerCase().includes(q)));
-    document.getElementById('lg-empty').classList.toggle('hidden', list.length > 0);
-    document.getElementById('lg-grid').innerHTML = list.map(g => `<a href="public-guide.html" class="group bg-white rounded-2xl border border-[#E7EBEF] p-5 hover:shadow-md transition flex flex-col"><span class="self-start inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-[#FDECEF] text-[#DC183C]">${esc(g.cat)}</span><h3 class="font-jakarta font-bold text-lg leading-snug mt-3 group-hover:text-[#DC183C] transition line-clamp-2">${esc(g.title)}</h3><p class="text-sm text-[#6A7581] mt-2 leading-relaxed line-clamp-3 flex-1">${esc(g.excerpt)}</p><div class="flex items-center gap-2 mt-4 pt-4 border-t border-[#E7EBEF] text-xs text-[#6A7581]"><i data-lucide="clock" class="w-3.5 h-3.5"></i><span class="font-semibold">${g.read} min read</span><span class="ml-auto inline-flex items-center gap-1 text-[#DC183C] font-bold">Read Guide <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i></span></div></a>`).join('');
+    document.getElementById('lg-chips').innerHTML = LEARN_CATS.map(c => `<button onclick="lgCat='${c}';lgPage=1;renderGuides()" class="px-4 h-9 rounded-full text-sm font-semibold border transition ${c === lgCat ? 'bg-[#DC183C] text-white border-[#DC183C]' : 'bg-white text-[#121A21] border-[#E7EBEF] hover:border-[#0C1F31]'}">${c}</button>`).join('');
+    const all = LEARN_GUIDES.filter(g => (lgCat === 'All' || g.cat === lgCat) && (!q || (g.title + ' ' + g.excerpt + ' ' + g.cat).toLowerCase().includes(q)));
+    if(lgPage > Math.max(1, Math.ceil(all.length / PER_PAGE))) lgPage = 1;
+    document.getElementById('lg-empty').classList.toggle('hidden', all.length > 0);
+    document.getElementById('lg-grid').innerHTML = pageSlice(all, lgPage).map(g => `<a href="public-guide.html" class="group bg-white rounded-2xl border border-[#E7EBEF] p-5 hover:shadow-md transition flex flex-col"><span class="self-start inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-[#FDECEF] text-[#DC183C]">${esc(g.cat)}</span><h3 class="font-jakarta font-bold text-lg leading-snug mt-3 group-hover:text-[#DC183C] transition line-clamp-2">${esc(g.title)}</h3><p class="text-sm text-[#6A7581] mt-2 leading-relaxed line-clamp-3 flex-1">${esc(g.excerpt)}</p><div class="flex items-center gap-2 mt-4 pt-4 border-t border-[#E7EBEF] text-xs text-[#6A7581]"><i data-lucide="clock" class="w-3.5 h-3.5"></i><span class="font-semibold">${g.read} min read</span><span class="ml-auto inline-flex items-center gap-1 text-[#DC183C] font-bold">Read Guide <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i></span></div></a>`).join('');
+    document.getElementById('lg-pager').innerHTML = pagerHTML(all.length, lgPage, 'goGuides');
+    lucide.createIcons();
+  }
+  function renderStories(){
+    const host = document.getElementById('st-host'); if(!host) return;
+    const q = ((document.getElementById('st-search') || {}).value || '').toLowerCase().trim();
+    const topics = ['All', ...Array.from(new Set(LEARN_STORIES.map(x => x.tag)))];
+    document.getElementById('st-chips').innerHTML = topics.map(t => `<button onclick="stTopic='${t.replace(/'/g, "\\'")}';stPage=1;renderStories()" class="px-4 h-9 rounded-full text-sm font-semibold border transition ${t === stTopic ? 'bg-[#DC183C] text-white border-[#DC183C]' : 'bg-white text-[#121A21] border-[#E7EBEF] hover:border-[#0C1F31]'}">${esc(t)}</button>`).join('');
+    const all = LEARN_STORIES.filter(x => (stTopic === 'All' || x.tag === stTopic) && (!q || (x.title + ' ' + x.excerpt + ' ' + x.tag + ' ' + (x.section || '')).toLowerCase().includes(q)));
+    if(stPage > Math.max(1, Math.ceil(all.length / PER_PAGE))) stPage = 1;
+    const feat = (!q && stTopic === 'All' && stPage === 1) ? all.find(x => x.featured) : null;
+    const rest = all.filter(x => x !== feat);
+    const featHTML = feat ? `<a href="public-article.html" class="group block bg-white rounded-3xl border border-[#E7EBEF] overflow-hidden shadow-sm hover:shadow-md transition mb-6"><div class="grid md:grid-cols-2"><div class="relative aspect-[16/11] md:aspect-auto bg-[#F0F5F9] overflow-hidden"><img src="${esc(feat.img)}" alt="${esc(feat.title)}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500"><span class="absolute top-4 left-4 px-3 py-1 rounded-full text-[11px] font-bold bg-[#FF9900] text-[#0C1F31]">FEATURED</span></div><div class="p-6 sm:p-8 flex flex-col justify-center"><span class="self-start px-2.5 py-1 rounded-full text-[11px] font-bold bg-[#FDECEF] text-[#DC183C] uppercase tracking-[0.08em]">${esc(feat.tag)}</span><h2 class="font-jakarta font-extrabold text-xl sm:text-2xl leading-tight mt-3 group-hover:text-[#DC183C] transition">${esc(feat.title)}</h2><p class="text-[#6A7581] mt-3 text-[14.5px] leading-relaxed line-clamp-3">${esc(feat.excerpt)}</p><p class="text-[12.5px] text-[#6A7581] mt-4">${esc(feat.when)}</p></div></div></a>` : '';
+    host.innerHTML = all.length ? featHTML + `<div class="grid sm:grid-cols-2 xl:grid-cols-3 gap-5">${pageSlice(rest, stPage).map(storyCard).join('')}</div>` : '<p class="text-center text-sm text-[#6A7581] py-12">No stories match that search.</p>';
+    document.getElementById('st-pager').innerHTML = pagerHTML(rest.length, stPage, 'goStories');
     lucide.createIcons();
   }
 
-  // ---- founder stories: featured + the same topic sections as the site
-  function storyCard(x){ return `<a href="public-article.html" class="group bg-white rounded-2xl border border-[#E7EBEF] overflow-hidden hover:shadow-md transition flex flex-col"><div class="relative aspect-[16/10] bg-[#F0F5F9] overflow-hidden"><img src="${esc(x.img)}" alt="${esc(x.title)}" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition duration-500"><span class="absolute top-3 left-3 px-2.5 py-1 rounded-full text-[10px] font-bold bg-[#FDECEF] text-[#DC183C] uppercase tracking-[0.08em]">${esc(x.tag)}</span></div><div class="p-5 flex flex-col flex-1"><h3 class="font-jakarta font-bold text-[16px] leading-snug group-hover:text-[#DC183C] transition line-clamp-2 mb-2">${esc(x.title)}</h3><p class="text-[13.5px] text-[#6A7581] leading-relaxed line-clamp-2">${esc(x.excerpt)}</p><p class="text-[12px] text-[#6A7581] mt-auto pt-4">${esc(x.when)}</p></div></a>`; }
-  function renderStories(){
-    const host = document.getElementById('st-host'); if(!host) return;
-    const feat = LEARN_STORIES.find(x => x.featured);
-    const sections = []; LEARN_STORIES.filter(x => !x.featured).forEach(x => { let s = sections.find(y => y.t === x.section); if(!s){ s = { t:x.section, items:[] }; sections.push(s); } s.items.push(x); });
-    host.innerHTML = (feat ? `<a href="public-article.html" class="group block bg-white rounded-3xl border border-[#E7EBEF] overflow-hidden shadow-sm hover:shadow-md transition"><div class="grid md:grid-cols-2"><div class="relative aspect-[16/11] md:aspect-auto bg-[#F0F5F9] overflow-hidden"><img src="${esc(feat.img)}" alt="${esc(feat.title)}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500"><span class="absolute top-4 left-4 px-3 py-1 rounded-full text-[11px] font-bold bg-[#FF9900] text-[#0C1F31]">FEATURED</span></div><div class="p-6 sm:p-8 flex flex-col justify-center"><span class="self-start px-2.5 py-1 rounded-full text-[11px] font-bold bg-[#FDECEF] text-[#DC183C] uppercase tracking-[0.08em]">${esc(feat.tag)}</span><h2 class="font-jakarta font-extrabold text-xl sm:text-2xl leading-tight mt-3 group-hover:text-[#DC183C] transition">${esc(feat.title)}</h2><p class="text-[#6A7581] mt-3 text-[14.5px] leading-relaxed line-clamp-3">${esc(feat.excerpt)}</p><p class="text-[12.5px] text-[#6A7581] mt-4">${esc(feat.when)}</p></div></div></a>` : '') +
-      sections.map(sec => `<h2 class="font-jakarta font-extrabold text-xl tracking-tight mt-10 mb-4">${esc(sec.t)}</h2><div class="grid sm:grid-cols-2 xl:grid-cols-4 gap-5">${sec.items.map(storyCard).join('')}</div>`).join('');
+
+  // ===== EVENTS (same titles, images and card design as events.html) =====
+  const EV_TITLES = ['Annual SME Funding Gala 2026','How to Use Predictive Analytics to Forecast Growth','Alternate Channels To Achieve Business Growth','How to Create a Market Penetration Strategy','Marketing Your Event Management Business','The Township Economy Playbook','Tax & Accounting Basics for 2027','Social Media Marketing for B2B','Pitching to Venture Capitalists','Alternative Finance & Grant Options','Managing Cash Flow in a Downturn','Building a Remote Culture','Mental Health for Startup Founders','B-BBEE Compliance Strategies','Legal Structuring for Early Startups','E-commerce Expansion Workshop'];
+  const EV_IMAGES = ['1556761175-5973dc0f32e7','1551288049-bebda4e38f71','1552664730-d307ca884978','1542744173-8e7e53415bb0','1511795409834-ef04bbd61622','1600880292203-757bb62b4baf','1554224155-6726b3ff858f','1611162617474-5b21e879e113','1559523161-0fc0d8b38a7a','1553729459-efe14ef6055d','1454165804606-c3d57bc86b40','1522071820081-009f0129c71c','1505373877841-8d25f7d46678','1450101499163-c8848c66ca85','1589829085413-56de8ae18c73','1556742049-0cfed4f6a45d'];
+  const EV_CATS = ['Funding & Investment','Tech & Innovation','Business Planning','Marketing & Sales','Operations','Strategy & Growth','Finance & Compliance','HR & People'];
+  const EVENTS = EV_TITLES.map((t, i) => { const d = new Date(); d.setDate(d.getDate() + (i < 4 ? 5 + i * 9 : -8 - i * 6)); d.setHours(10, 0, 0, 0); return { id:i + 1, title:t, type: i % 3 === 0 ? 'IN-PERSON' : 'ONLINE', cat: EV_CATS[i % EV_CATS.length], img:'https://images.unsplash.com/photo-' + EV_IMAGES[i] + '?auto=format&fit=crop&q=80&w=600', when:d, upcoming: i < 4 }; });
+  let evPage = 1, evWhen = 'Upcoming', evType = 'All';
+  function goEvents(p){ evPage = p; renderEvents(); scrollViewTop(); }
+  function evPrice(e){
+    if(e.type === 'ONLINE') return '<span class="text-[10.5px] font-extrabold uppercase tracking-wide px-2.5 py-1 rounded-full bg-[#E4F5EE] text-[#1E7F5E]">Free</span>';
+    return MEMBER_PLAN === 'premium' ? '<span class="text-[10.5px] font-extrabold uppercase tracking-wide px-2.5 py-1 rounded-full bg-[#E4F5EE] text-[#1E7F5E]">Your 50% off applies</span>' : '<span class="text-[10.5px] font-extrabold uppercase tracking-wide px-2.5 py-1 rounded-full bg-[#FDECEF] text-[#DC183C]">50% off with Premium</span>';
+  }
+  function renderEvents(){
+    const chip = (l, on, fn) => `<button onclick="${fn}" class="shrink-0 px-4 h-9 rounded-full text-sm font-semibold border transition ${on ? 'bg-[#DC183C] text-white border-[#DC183C]' : 'bg-white text-[#42505E] border-[#E7EBEF] hover:border-[#0C1F31]'}">${l}</button>`;
+    document.getElementById('ev-when').innerHTML = ['Upcoming','Past','All'].map(w => chip(w === 'Past' ? 'Past and replays' : w, evWhen === w, `evWhen='${w}';evPage=1;renderEvents()`)).join('');
+    document.getElementById('ev-type').innerHTML = [['All','Any format'],['ONLINE','Online'],['IN-PERSON','In person']].map(t => chip(t[1], evType === t[0], `evType='${t[0]}';evPage=1;renderEvents()`)).join('');
+    const q = ((document.getElementById('ev-search') || {}).value || '').toLowerCase().trim();
+    let all = EVENTS.filter(e => (evWhen === 'All' || (evWhen === 'Upcoming') === e.upcoming) && (evType === 'All' || e.type === evType) && (!q || (e.title + ' ' + e.cat).toLowerCase().includes(q)));
+    all.sort((a, b) => a.upcoming && b.upcoming ? a.when - b.when : b.when - a.when);
+    if(evPage > Math.max(1, Math.ceil(all.length / PER_PAGE))) evPage = 1;
+    const fmt = d => d.toLocaleDateString('en-ZA', { weekday:'short', day:'numeric', month:'short', year:'numeric' });
+    document.getElementById('ev-grid').innerHTML = all.length ? pageSlice(all, evPage).map(e => `<article class="bg-white rounded-2xl shadow-sm border border-[#E7EBEF] overflow-hidden flex flex-col hover:shadow-lg transition group"><div class="h-44 bg-[#0C1F31] relative overflow-hidden"><img src="${e.img}" alt="${esc(e.title)}" loading="lazy" onerror="this.style.display='none'" class="w-full h-full object-cover opacity-90 group-hover:scale-105 transition duration-500"><div class="absolute top-3 left-3 flex items-center gap-2"><span class="px-3 py-1 rounded-full text-[11px] font-bold bg-[#FDECEF] text-[#DC183C]">${esc(e.cat)}</span>${e.upcoming ? '<span class="px-3 py-1 rounded-full text-[10px] font-bold bg-[#FF9900] text-[#0C1F31] uppercase tracking-wider">Upcoming</span>' : '<span class="px-3 py-1 rounded-full text-[10px] font-bold bg-white/90 text-[#0C1F31] uppercase tracking-wider">Replay</span>'}</div></div>
+      <div class="p-5 flex-1 flex flex-col"><div class="flex items-center justify-between gap-2 mb-2"><span class="text-[#6A7581] font-bold text-[11px] tracking-widest inline-flex items-center gap-1.5"><i data-lucide="${e.type === 'IN-PERSON' ? 'map-pin' : 'video'}" class="w-3.5 h-3.5"></i> ${e.type === 'IN-PERSON' ? 'IN PERSON' : 'ONLINE'}</span>${evPrice(e)}</div><h3 class="text-[16px] font-jakarta font-extrabold text-[#0C1F31] leading-snug mb-2 group-hover:text-[#DC183C] transition">${esc(e.title)}</h3><p class="font-bold text-[13px] mt-auto pt-3">${fmt(e.when)} · 10:00 SAST</p>
+      <a href="${e.type === 'IN-PERSON' ? 'event-single-in-person.html' : 'event-single-online.html'}" class="mt-4 w-full inline-flex items-center justify-center bg-[#0C1F31] hover:bg-[#16324A] text-white font-bold text-sm py-3 rounded-xl transition">${e.upcoming ? (e.type === 'ONLINE' ? 'Register free' : 'Get tickets') : 'Watch the replay'}</a></div></article>`).join('')
+      : `<div class="col-span-full bg-white border border-dashed border-[#E7EBEF] rounded-2xl py-14 px-6 text-center"><div class="w-14 h-14 mx-auto rounded-full bg-[#F0F5F9] grid place-items-center mb-4"><i data-lucide="calendar-x" class="w-6 h-6 text-[#6A7581]"></i></div><p class="font-jakarta font-extrabold text-lg">No events match</p><p class="text-sm text-[#6A7581] mt-1">Try another filter, or see past events and replays.</p><button onclick="evWhen='All';evType='All';document.getElementById('ev-search').value='';renderEvents()" class="mt-4 h-10 px-5 rounded-full bg-[#DC183C] text-white text-sm font-bold">Show all events</button></div>`;
+    document.getElementById('ev-pager').innerHTML = pagerHTML(all.length, evPage, 'goEvents');
     lucide.createIcons();
   }
+
+  // ---- founder stories: card
+  function storyCard(x){ return `<a href="public-article.html" class="group bg-white rounded-2xl border border-[#E7EBEF] overflow-hidden hover:shadow-md transition flex flex-col"><div class="relative aspect-[16/10] bg-[#F0F5F9] overflow-hidden"><img src="${esc(x.img)}" alt="${esc(x.title)}" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition duration-500"><span class="absolute top-3 left-3 px-2.5 py-1 rounded-full text-[10px] font-bold bg-[#FDECEF] text-[#DC183C] uppercase tracking-[0.08em]">${esc(x.tag)}</span></div><div class="p-5 flex flex-col flex-1"><h3 class="font-jakarta font-bold text-[16px] leading-snug group-hover:text-[#DC183C] transition line-clamp-2 mb-2">${esc(x.title)}</h3><p class="text-[13.5px] text-[#6A7581] leading-relaxed line-clamp-2">${esc(x.excerpt)}</p><p class="text-[12px] text-[#6A7581] mt-auto pt-4">${esc(x.when)}</p></div></a>`; }
 
   // ---- podcast: featured latest episode, simple list, one mini player (mobile first)
   let podAudio = null, podCur = null, podRate = 1;
@@ -1308,7 +1378,11 @@
     if(!P || !f) { if(f) f.innerHTML = '<p class="text-sm text-[#6A7581]">Episodes load from the podcast feed.</p>'; return; }
     const eps = P.episodes; const e0 = eps[0];
     f.innerHTML = `<div class="rounded-3xl bg-[#0C1F31] text-white overflow-hidden"><div class="p-5 sm:p-7 flex flex-col sm:flex-row gap-5 sm:items-center"><img src="${esc(e0.image || P.show.image)}" alt="" class="w-full sm:w-44 aspect-square rounded-2xl object-cover bg-white/10 shrink-0"><div class="min-w-0"><p class="text-[10px] font-bold uppercase tracking-widest text-[#FF9900]">Latest episode</p><h2 class="font-jakarta font-extrabold text-xl sm:text-2xl leading-tight mt-1.5">${esc(e0.title)}</h2><p class="text-[13px] text-white/60 mt-2">${esc(e0.guest || '')}${e0.guest ? ' · ' : ''}${esc(e0.date)} · ${esc(e0.duration)}</p><p class="text-[13.5px] text-white/70 mt-3 leading-relaxed line-clamp-3">${esc(e0.summary || '')}</p><button onclick="podPlay(0)" class="mt-5 inline-flex items-center gap-2.5 h-12 px-6 rounded-full bg-[#DC183C] hover:bg-[#B0142F] font-jakarta font-bold text-sm transition"><i data-lucide="play" class="w-5 h-5"></i> Play episode</button></div></div></div>`;
-    l.innerHTML = eps.map((e, i) => `<div class="flex items-center gap-3 p-3.5 sm:p-4 border-t border-[#F0F3F6] first:border-t-0"><img src="${esc(e.image || P.show.image)}" alt="" loading="lazy" class="w-14 h-14 rounded-xl object-cover bg-[#F0F5F9] shrink-0"><div class="min-w-0 flex-1"><p class="font-jakarta font-bold text-[14px] leading-snug line-clamp-2">${esc(e.title)}</p><p class="text-[12px] text-[#6A7581] mt-0.5">${esc(e.date)} · ${esc(e.duration)}</p></div><button onclick="podPlay(${i})" aria-label="Play ${esc(e.title)}" class="w-11 h-11 rounded-full border border-[#E7EBEF] hover:border-[#DC183C] hover:text-[#DC183C] grid place-items-center shrink-0 transition ${podCur === i ? 'bg-[#FDECEF] text-[#DC183C] border-[#DC183C]' : ''}">${playIcon(podCur === i && podAudio && !podAudio.paused)}</button></div>`).join('');
+    const q = ((document.getElementById('pod-search') || {}).value || '').toLowerCase().trim();
+    const idx = eps.map((e, i) => i).filter(i => !q || (eps[i].title + ' ' + (eps[i].guest || '') + ' ' + (eps[i].summary || '')).toLowerCase().includes(q));
+    if(podPage > Math.max(1, Math.ceil(idx.length / PER_PAGE))) podPage = 1;
+    l.innerHTML = idx.length ? pageSlice(idx, podPage).map(i => { const e = eps[i]; return `<div class="flex items-center gap-3 p-3.5 sm:p-4 border-t border-[#F0F3F6] first:border-t-0"><img src="${esc(e.image || P.show.image)}" alt="" loading="lazy" class="w-14 h-14 rounded-xl object-cover bg-[#F0F5F9] shrink-0"><div class="min-w-0 flex-1"><p class="font-jakarta font-bold text-[14px] leading-snug line-clamp-2">${esc(e.title)}</p><p class="text-[12px] text-[#6A7581] mt-0.5">${esc(e.date)} · ${esc(e.duration)}</p></div><button data-ep="${i}" onclick="podPlay(${i})" aria-label="Play ${esc(e.title)}" class="w-11 h-11 rounded-full border border-[#E7EBEF] hover:border-[#DC183C] hover:text-[#DC183C] grid place-items-center shrink-0 transition ${podCur === i ? 'bg-[#FDECEF] text-[#DC183C] border-[#DC183C]' : ''}">${playIcon(podCur === i && podAudio && !podAudio.paused)}</button></div>`; }).join('') : '<p class="text-center text-sm text-[#6A7581] py-10">No episodes match that search.</p>';
+    document.getElementById('pod-pager').innerHTML = pagerHTML(idx.length, podPage, 'goPod');
     lucide.createIcons();
   }
   function podFmt(t){ if(!isFinite(t)) return '0:00'; const m = Math.floor(t / 60), s = Math.floor(t % 60); return m + ':' + String(s).padStart(2, '0'); }
@@ -1329,7 +1403,7 @@
     podSync();
   }
   function podSync(){ const on = podAudio && !podAudio.paused; const t = document.getElementById('pp-toggle'); if(t){ t.innerHTML = `<i data-lucide="${on ? 'pause' : 'play'}" class="w-5 h-5 ${on ? '' : 'ml-0.5'}"></i>`; } renderPodList(); lucide.createIcons(); }
-  function renderPodList(){ const l = document.getElementById('pod-list'); if(!l || !window.PODCAST) return; l.querySelectorAll('button').forEach((b, i) => { const on = podCur === i && podAudio && !podAudio.paused; b.className = b.className.replace(/\s*bg-\[#FDECEF\] text-\[#DC183C\] border-\[#DC183C\]/, '') + (podCur === i ? ' bg-[#FDECEF] text-[#DC183C] border-[#DC183C]' : ''); b.innerHTML = playIcon(on); }); }
+  function renderPodList(){ const l = document.getElementById('pod-list'); if(!l || !window.PODCAST) return; l.querySelectorAll('button[data-ep]').forEach(b => { const i = +b.dataset.ep; const on = podCur === i && podAudio && !podAudio.paused; b.className = b.className.replace(/\s*bg-\[#FDECEF\] text-\[#DC183C\] border-\[#DC183C\]/, '') + (podCur === i ? ' bg-[#FDECEF] text-[#DC183C] border-[#DC183C]' : ''); b.innerHTML = playIcon(on); }); }
   function podToggle(){ if(!podAudio) return; if(podAudio.paused) podAudio.play().catch(() => {}); else podAudio.pause(); }
   function podSkip(n){ if(podAudio) podAudio.currentTime = Math.max(0, (podAudio.currentTime || 0) + n); }
   function podSeek(v){ if(podAudio && isFinite(podAudio.duration)) podAudio.currentTime = podAudio.duration * v / 1000; }
@@ -1368,6 +1442,66 @@
       ${d.code ? `<div id="deal-code" class="hidden mt-4 rounded-xl bg-[#F0F5F9] border border-[#E7EBEF] px-4 py-3 flex items-center justify-between gap-3"><code class="font-bold text-[15px] tracking-wider text-[#0C1F31]">${d.code}</code><button onclick="copyText('${d.code}','Code copied')" class="text-[12px] font-bold text-[#DC183C] hover:underline">Copy</button></div>` : ''}
       <div class="mt-5 flex flex-col sm:flex-row gap-3"><a href="${d.url || '#'}" ${d.url && d.url !== '#' ? 'target="_blank" rel="noopener"' : ''} class="inline-flex items-center justify-center gap-2 h-11 px-5 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-jakarta font-bold text-sm transition">Get this deal <i data-lucide="arrow-up-right" class="w-4 h-4"></i></a>${d.code ? `<button onclick="document.getElementById('deal-code').classList.remove('hidden');this.remove()" class="inline-flex items-center justify-center gap-2 h-11 px-5 rounded-full border border-[#D8DEE5] font-jakarta font-bold text-sm hover:border-[#0C1F31] transition"><i data-lucide="eye" class="w-4 h-4"></i> Reveal my code</button>` : ''}</div>
       <p class="text-[11.5px] text-[#6A7581] mt-4">${esc(d.terms)}</p></div>`);
+  }
+
+
+  // ===== Former stubs, now real (2026-10-02) =====
+  // Check-in: the same Health Check, in member mode (skips account + business steps, returns here).
+  function startCheckin(){ location.href = 'public-health-check.html?mode=checkin'; }
+  function openBreakdown(){
+    const sorted = DIMENSIONS.slice().sort((a, b) => a.score - b.score);
+    const why = { 'Cash flow':'How reliably money in covers money out, and whether customers pay on time.', 'Compliance':'SARS, CIPC and labour filings up to date.', 'Customers':'How spread your income is across customers, and repeat business.', 'Operations':'Whether the business runs without depending on you for everything.', 'Growth readiness':'Systems, people and money to take on more work.' };
+    wsModal('ov-dims', `<div class="p-6"><div class="flex items-start justify-between"><div><p class="font-jakarta font-extrabold text-lg">Your five dimensions</p><p class="text-[12.5px] text-[#6A7581] mt-0.5">Lowest first. Your plan starts with the lowest two.</p></div><button onclick="closeOverlay('ov-dims')" aria-label="Close" class="text-[#98A2AE] hover:text-[#121A21]"><i data-lucide="x" class="w-5 h-5"></i></button></div>
+      <div class="mt-5 space-y-4">${sorted.map(d => `<div><div class="flex items-center justify-between text-[13.5px]"><b>${esc(d.name)}</b><span class="font-mono font-bold">${d.score}</span></div><div class="h-2 bg-[#F0F5F9] rounded-full overflow-hidden mt-1.5"><div class="h-full rounded-full" style="width:${d.score}%;background:${d.color}"></div></div><p class="text-[12px] text-[#6A7581] mt-1">${esc(why[d.name] || '')} ${esc(d.note)}.</p></div>`).join('')}</div>
+      <div class="mt-6 flex gap-3"><button onclick="closeOverlay('ov-dims');openHomePlan()" class="h-10 px-5 rounded-full bg-[#DC183C] text-white text-sm font-bold">See my plan</button><button onclick="closeOverlay('ov-dims');startCheckin()" class="h-10 px-5 rounded-full border border-[#D8DEE5] text-sm font-bold hover:border-[#0C1F31]">Re-check</button></div></div>`);
+  }
+  function downloadProfilePdf(){ showToast('Langa-Holdings-business-profile.pdf downloaded.', null); }
+  function addDeadline(){
+    wsModal('ov-dl', `<div class="p-6"><p class="font-jakarta font-extrabold text-lg">Add a deadline</p><p class="text-[12.5px] text-[#6A7581] mt-1">For anything our list does not cover, like a licence renewal or a lease date.</p>
+      <label class="block text-[11px] font-bold uppercase tracking-wider text-[#6A7581] mt-4 mb-1.5">What is due</label><input id="dl-t" placeholder="e.g. Liquor licence renewal" class="w-full h-11 rounded-lg border border-[#D8DEE5] px-3 text-sm outline-none focus:border-[#DC183C]">
+      <div class="grid grid-cols-2 gap-3 mt-3"><div><label class="block text-[11px] font-bold uppercase tracking-wider text-[#6A7581] mb-1.5">Due date</label><input id="dl-d" type="date" class="w-full h-11 rounded-lg border border-[#D8DEE5] px-3 text-sm"></div><div><label class="block text-[11px] font-bold uppercase tracking-wider text-[#6A7581] mb-1.5">Repeats</label><select id="dl-r" class="w-full h-11 rounded-lg border border-[#D8DEE5] px-3 text-sm bg-white"><option>Once</option><option>Monthly</option><option>Yearly</option></select></div></div>
+      <p id="dl-e" class="hidden text-[12.5px] font-semibold text-[#DC183C] mt-2">Add what is due and a date.</p>
+      <div class="mt-5 flex gap-3"><button onclick="saveDeadline()" class="h-11 px-5 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold text-sm">Add deadline</button><button onclick="closeOverlay('ov-dl')" class="h-11 px-5 rounded-full border border-[#D8DEE5] text-sm font-bold">Cancel</button></div></div>`);
+  }
+  function saveDeadline(){
+    const t = document.getElementById('dl-t').value.trim(), d = document.getElementById('dl-d').value, r = document.getElementById('dl-r').value;
+    if(!t || !d){ document.getElementById('dl-e').classList.remove('hidden'); return; }
+    const due = new Date(d + 'T00:00:00'), days = Math.round((due - new Date()) / 864e5);
+    complianceItems.push({ id: Date.now() % 1e6, title:t, desc:'Added by you' + (r !== 'Once' ? ', repeats ' + r.toLowerCase() : '') + '.', dueLabel: days < 0 ? Math.abs(days) + ' days overdue' : days <= 7 ? 'Due in ' + days + ' days' : 'Due ' + due.toLocaleDateString('en-ZA', { day:'numeric', month:'long', year:'numeric' }), status: days < 0 ? 'overdue' : days <= 7 ? 'soon' : 'upcoming', verified:false, filed:false, day: due.getDate() });
+    closeOverlay('ov-dl'); renderCompliance(); showToast('Deadline added.', null);
+  }
+  function compliancePack(){
+    const filed = complianceItems.filter(c => c.filed);
+    wsModal('ov-pack', `<div class="p-6"><p class="font-jakarta font-extrabold text-lg">Compliance evidence pack</p><p class="text-[12.5px] text-[#6A7581] mt-1">${filed.length} item${filed.length === 1 ? '' : 's'} you marked as filed. It records what you told us, so funders may still ask for the originals.</p>
+      <div class="mt-4 rounded-xl border border-[#E7EBEF] divide-y divide-[#F0F3F6]">${filed.length ? filed.map(c => `<div class="flex items-center gap-3 px-4 py-3 text-[13px]"><i data-lucide="check-circle-2" class="w-4 h-4 text-[#29A37A] shrink-0"></i><span class="flex-1 font-semibold">${esc(c.title)}</span><span class="text-[#6A7581]">${esc(c.dueLabel)}</span></div>`).join('') : '<p class="px-4 py-6 text-center text-sm text-[#6A7581]">Mark items as filed and they appear here.</p>'}</div>
+      <div class="mt-5 flex gap-3"><button ${filed.length ? '' : 'disabled'} onclick="closeOverlay('ov-pack');showToast('Compliance-evidence-pack.pdf downloaded.', null)" class="h-11 px-5 rounded-full bg-[#0C1F31] hover:bg-[#16324a] text-white font-bold text-sm disabled:opacity-40">Download PDF</button><button onclick="closeOverlay('ov-pack')" class="h-11 px-5 rounded-full border border-[#D8DEE5] text-sm font-bold">Close</button></div></div>`);
+  }
+  function pickLogo(){
+    const i = document.createElement('input'); i.type = 'file'; i.accept = 'image/png,image/jpeg,image/svg+xml';
+    i.onchange = () => { const f = i.files[0]; if(!f) return; if(f.size > 2 * 1024 * 1024) return showToast('That logo is over 2 MB. Choose a smaller file.', null);
+      const r = new FileReader(); r.onload = () => { const b = document.getElementById('pack-logo'); b.innerHTML = `<img src="${r.result}" alt="Your logo" class="w-full h-full object-contain p-1">`; b.classList.remove('border-dashed'); showToast('Logo added to your business summary.', null); }; r.readAsDataURL(f); };
+    i.click();
+  }
+  function uploadVaultDoc(){
+    if(MEMBER_PLAN !== 'premium'){ location.href = 'public-premium-checkout.html'; return; }
+    wsModal('ov-up', `<div class="p-6"><p class="font-jakarta font-extrabold text-lg">Upload a document</p>
+      <label class="block text-[11px] font-bold uppercase tracking-wider text-[#6A7581] mt-4 mb-1.5">Document</label><select id="up-t" class="w-full h-11 rounded-lg border border-[#D8DEE5] px-3 text-sm bg-white"><option>Tax Clearance Certificate</option><option>Annual Financial Statements</option><option>Bank statements (6 months)</option><option>Director ID</option><option>B-BBEE Affidavit</option><option>Proof of address</option><option>Other</option></select>
+      <div class="grid grid-cols-2 gap-3 mt-3"><div><label class="block text-[11px] font-bold uppercase tracking-wider text-[#6A7581] mb-1.5">Issued</label><input id="up-i" type="date" class="w-full h-11 rounded-lg border border-[#D8DEE5] px-3 text-sm"></div><div><label class="block text-[11px] font-bold uppercase tracking-wider text-[#6A7581] mb-1.5">Expires (if any)</label><input id="up-x" type="date" class="w-full h-11 rounded-lg border border-[#D8DEE5] px-3 text-sm"></div></div>
+      <label class="mt-3 flex items-center gap-3 rounded-xl border-2 border-dashed border-[#D8DEE5] hover:border-[#DC183C] p-4 cursor-pointer"><i data-lucide="upload-cloud" class="w-5 h-5 text-[#DC183C]"></i><span class="text-[13px]"><b id="up-fn">Choose a PDF or photo</b><span class="block text-[#6A7581] text-[12px]">PDF, JPG or PNG, up to 10 MB</span></span><input id="up-f" type="file" accept="application/pdf,image/jpeg,image/png" class="hidden" onchange="document.getElementById('up-fn').textContent=this.files[0]?this.files[0].name:'Choose a PDF or photo'"></label>
+      <p id="up-e" class="hidden text-[12.5px] font-semibold text-[#DC183C] mt-2">Choose a file to upload.</p>
+      <div class="mt-5 flex gap-3"><button onclick="saveVaultDoc()" class="h-11 px-5 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold text-sm">Upload</button><button onclick="closeOverlay('ov-up')" class="h-11 px-5 rounded-full border border-[#D8DEE5] text-sm font-bold">Cancel</button></div></div>`);
+  }
+  function saveVaultDoc(){
+    const f = document.getElementById('up-f').files[0]; if(!f){ document.getElementById('up-e').classList.remove('hidden'); return; }
+    const t = document.getElementById('up-t').value, i = document.getElementById('up-i').value, x = document.getElementById('up-x').value;
+    const fmt = v => v ? new Date(v + 'T00:00:00').toLocaleDateString('en-ZA', { day:'numeric', month:'short', year:'numeric' }) : '—';
+    const days = x ? (new Date(x + 'T00:00:00') - new Date()) / 864e5 : 9999;
+    vaultDocs.unshift({ title:t, authority:'Uploaded by you', issued: fmt(i) === '—' ? 'today' : fmt(i), expires: fmt(x), status: days < 0 ? 'expired' : days < 60 ? 'soon' : 'valid', icon:'file-text' });
+    closeOverlay('ov-up'); renderDocuments(); showToast(t + ' uploaded.', null);
+  }
+  function removeDownload(id){
+    const d = DOWNLOADS.find(x => x.id === id); if(!d) return;
+    const i = DOWNLOADS.indexOf(d); DOWNLOADS.splice(i, 1); renderResources(); showToast('Removed from your list. You can download it again from the library.', null);
   }
 
   // ===== FUNDING OPTIONS + CALCULATOR (2026-10-02) ================================
@@ -1512,11 +1646,11 @@
   (function(){
     const home = document.getElementById('view-overview');
     if(home) home.insertAdjacentHTML('afterbegin', `
-      <div class="standard-only-flex items-center justify-between gap-4 bg-white rounded-2xl border border-[#E7EBEF] shadow-sm p-4 sm:p-5 mb-5 flex-col sm:flex-row">
-        <div class="flex items-center gap-3"><div class="w-10 h-10 rounded-xl bg-[#F0F5F9] text-[#0C1F31] grid place-items-center shrink-0"><i data-lucide="sparkles" class="w-5 h-5"></i></div>
-          <div><p class="font-jakarta font-extrabold text-[14px]">You are on the Standard plan</p>
-          <p class="text-[12.5px] text-[#6A7581]">Your Health Score, Compliance Calendar, Funding and Learn are free. Documents, Autopilot reminders and unlimited invoices unlock with Premium.</p></div></div>
-        <a href="public-premium-checkout.html" class="shrink-0 inline-flex items-center gap-2 font-jakarta font-bold text-[13px] px-4 py-2.5 rounded-lg bg-[#DC183C] hover:bg-[#B0142F] text-white transition">Upgrade, R99/month</a>
+      <div class="premium-only-flex items-center justify-between gap-4 rounded-2xl border border-[#BFE6D6] bg-[#F1FAF6] p-4 sm:p-5 mb-5 flex-col sm:flex-row">
+        <div class="flex items-center gap-3"><div class="w-10 h-10 rounded-xl bg-[#0C1F31] text-[#FF9900] grid place-items-center shrink-0"><i data-lucide="crown" class="w-5 h-5"></i></div>
+          <div><p class="font-jakarta font-extrabold text-[14px]">You are on Premium</p>
+          <p class="text-[12.5px] text-[#42505E]">Autopilot is watching your deadlines (next reminder Monday 08:00). Documents and unlimited invoices are on.</p></div></div>
+        <button onclick="showView('settings')" class="shrink-0 inline-flex items-center gap-2 font-jakarta font-bold text-[13px] px-4 py-2.5 rounded-lg border border-[#BFE6D6] bg-white hover:border-[#0C1F31] transition">Plan and billing</button>
       </div>`);
     const comp = document.getElementById('view-compliance');
     if(comp) comp.insertAdjacentHTML('beforeend', `
@@ -2088,36 +2222,56 @@
   function showNewFundingApp(){ fundingAppState.view='new'; renderFunding(); window.scrollTo({top:0,behavior:'smooth'}); }
   function backToFundingList(){ fundingAppState.view='list'; renderFunding(); }
 
+  // ONE application form, the same fields and order as the public wizard (public-funding.html).
+  // Fields map to smesa_funding_apps (business_name, reg_no, amount_requested, claimed_turnover, business_years)
+  // plus what partner lender APIs need (SA ID, mobile, province, bank, consent to share). Prefilled from the profile.
+  const FF = {
+    amounts:['R10,000 to R50,000','R50,000 to R250,000','R250,000 to R1,000,000','R1,000,000 to R5,000,000'],
+    industries:['Agriculture','Construction','Education','Hospitality and tourism','Health','Manufacturing','Professional services','Retail','Technology','Transport and logistics','Other'],
+    years:['Less than 1 year','1 to 2 years','3 to 5 years','More than 5 years'],
+    turnover:['R0 to R50k','R50k to R100k','R100k to R250k','R250k to R500k','R500k and more'],
+    provinces:['Eastern Cape','Free State','Gauteng','KwaZulu-Natal','Limpopo','Mpumalanga','North West','Northern Cape','Western Cape'],
+    banks:['Absa','Capitec Business','Discovery Bank','FNB','Investec','Nedbank','Standard Bank','TymeBank','Other']
+  };
+  function ffSel(id, list, val){ return `<select id="${id}" class="w-full rounded-lg border border-[#D8DEE5] px-3 py-2.5 text-[13.5px] outline-none focus:border-[#DC183C] bg-white"><option value="">Select</option>${list.map(o => `<option ${o === val ? 'selected' : ''}>${o}</option>`).join('')}</select>`; }
+  function ffIn(id, val, ph, type){ return `<input id="${id}" type="${type || 'text'}" value="${esc(val || '')}" placeholder="${esc(ph || '')}" class="w-full rounded-lg border border-[#D8DEE5] px-3 py-2.5 text-[13.5px] outline-none focus:border-[#DC183C]">`; }
+  function ffL(t, req, hint){ return `<label class="block text-[11px] font-bold uppercase tracking-wider text-[#6A7581] mb-1.5">${t}${req ? ' <span class="text-[#DC183C]">*</span>' : ''}${hint ? ` <span class="normal-case tracking-normal font-medium text-[#98A2AE]">${hint}</span>` : ''}</label>`; }
   function renderFundingNew(){
+    const H = t => `<h3 class="font-jakarta font-extrabold text-lg mt-6 pt-5 mb-4 border-t border-[#E7EBEF] first:mt-0 first:pt-0 first:border-0">${t}</h3>`;
+    const amt = fundingAppState.amount ? (fundingAppState.amount <= 50000 ? FF.amounts[0] : fundingAppState.amount <= 250000 ? FF.amounts[1] : fundingAppState.amount <= 1000000 ? FF.amounts[2] : FF.amounts[3]) : '';
     return `
       <button onclick="backToFundingList()" class="text-xs font-bold text-[#121A21] hover:text-[#DC183C] transition inline-flex items-center gap-1.5 mb-4"><i data-lucide="arrow-left" class="w-4 h-4"></i> Back to applications</button>
-      <div class="rounded-2xl border border-[#E7EBEF] bg-[#FCFCFC] p-4 mb-5 flex items-start gap-3">
-        <i data-lucide="sparkles" class="w-4 h-4 text-[#29A37A] mt-0.5 shrink-0"></i>
-        <p class="text-xs text-[#42505E]">We've pre-filled this from your <a href="member-account.html" class="font-bold text-[#DC183C] hover:underline">Profile</a>, check the details before you submit.</p>
-      </div>
+      <div class="rounded-2xl border border-[#E7EBEF] bg-[#FCFCFC] p-4 mb-5 flex items-start gap-3"><i data-lucide="sparkles" class="w-4 h-4 text-[#29A37A] mt-0.5 shrink-0"></i><p class="text-xs text-[#42505E]">We pre-filled this from your <button onclick="showView('profile')" class="font-bold text-[#DC183C] hover:underline">Business profile</button>. Check it before you submit. It is the same form as on the funding page, so nothing is asked twice.<button onclick="openBrief('fundingform')" class="dev-badge ml-1 w-4 h-4 rounded-full bg-[#DC183C] text-white items-center justify-center text-[9px] font-bold leading-none animate-pulse align-middle" title="Implementation notes">i</button></p></div>
       <div class="rounded-2xl border border-[#E7EBEF] shadow-sm bg-white p-5 sm:p-6">
-        <h3 class="font-jakarta font-extrabold text-lg mb-4">Business details</h3>
+        ${H('1. Your business')}
         <div class="grid sm:grid-cols-2 gap-4">
-          <div><label class="block text-[11px] font-bold uppercase tracking-wider text-[#6A7581] mb-1.5">Company name</label><input id="nf-company" value="${esc(FUNDING_PREFILL.company)}" class="w-full rounded-lg border border-[#D8DEE5] px-3 py-2.5 text-[13.5px] outline-none focus:border-[#DC183C]"></div>
-          <div><label class="block text-[11px] font-bold uppercase tracking-wider text-[#6A7581] mb-1.5">Industry</label><select id="nf-sector" class="w-full rounded-lg border border-[#D8DEE5] px-3 py-2.5 text-[13.5px] outline-none focus:border-[#DC183C]">${SECTORS.map(o=>`<option ${o===FUNDING_PREFILL.sector?'selected':''}>${esc(o)}</option>`).join('')}</select></div>
-          <div><label class="block text-[11px] font-bold uppercase tracking-wider text-[#6A7581] mb-1.5">Business stage</label><select id="nf-stage" class="w-full rounded-lg border border-[#D8DEE5] px-3 py-2.5 text-[13.5px] outline-none focus:border-[#DC183C]">${STAGES.map(o=>`<option ${o===FUNDING_PREFILL.stage?'selected':''}>${esc(o)}</option>`).join('')}</select></div>
-          <div><label class="block text-[11px] font-bold uppercase tracking-wider text-[#6A7581] mb-1.5">Years in business</label><select id="nf-years" class="w-full rounded-lg border border-[#D8DEE5] px-3 py-2.5 text-[13.5px] outline-none focus:border-[#DC183C]">${YEARS_IN_BUSINESS.map(o=>`<option ${o===FUNDING_PREFILL.yearsInBusiness?'selected':''}>${esc(o)}</option>`).join('')}</select></div>
+          <div>${ffL('Company name', 1)}${ffIn('nf-company', FUNDING_PREFILL.company)}</div>
+          <div>${ffL('Company registration number', 1)}${ffIn('nf-reg', '2015/45471/07', 'YYYY/NNNNNN/NN')}</div>
+          <div>${ffL('Industry', 1)}${ffSel('nf-sector', FF.industries, 'Professional services')}</div>
+          <div>${ffL('Years in business', 1)}${ffSel('nf-years', FF.years, '3 to 5 years')}</div>
+          <div>${ffL('Monthly turnover', 1)}${ffSel('nf-turnover', FF.turnover, 'R250k to R500k')}</div>
+          <div>${ffL('Province', 1)}${ffSel('nf-prov', FF.provinces, 'Gauteng')}</div>
+          <div class="sm:col-span-2">${ffL('Business bank', 1)}${ffSel('nf-bank', FF.banks, 'FNB')}</div>
         </div>
-        <h3 class="font-jakarta font-extrabold text-lg mt-6 pt-5 mb-4 border-t border-[#E7EBEF]">Funding request</h3>
+        ${H('2. What you need')}
         <div class="grid sm:grid-cols-2 gap-4">
-          <div><label class="block text-[11px] font-bold uppercase tracking-wider text-[#6A7581] mb-1.5">Product</label><select id="nf-product" class="w-full rounded-lg border border-[#D8DEE5] px-3 py-2.5 text-[13.5px] outline-none focus:border-[#DC183C]">${FUNDING_PRODUCTS.map(o=>`<option ${o===fundingAppState.product?'selected':''}>${esc(o)}</option>`).join('')}</select></div>
-          <div><label class="block text-[11px] font-bold uppercase tracking-wider text-[#6A7581] mb-1.5">Amount requested (ZAR)</label><input id="nf-amount" value="${fundingAppState.amount?esc(String(fundingAppState.amount)):''}" placeholder="e.g. 250000" class="w-full rounded-lg border border-[#D8DEE5] px-3 py-2.5 text-[13.5px] outline-none focus:border-[#DC183C]"></div>
-          <div><label class="block text-[11px] font-bold uppercase tracking-wider text-[#6A7581] mb-1.5">Preferred term</label><input id="nf-term" placeholder="e.g. 12 months" class="w-full rounded-lg border border-[#D8DEE5] px-3 py-2.5 text-[13.5px] outline-none focus:border-[#DC183C]"></div>
+          <div>${ffL('Funding amount', 1)}${ffSel('nf-amount', FF.amounts, amt)}</div>
+          <div>${ffL('Type of funding', 0, 'leave blank if unsure')}${ffSel('nf-product', FUNDING_PRODUCTS, fundingAppState.product || '')}</div>
+          <div class="sm:col-span-2">${ffL('What is it for?', 1)}<textarea id="nf-purpose" rows="3" placeholder="For example: stock for a confirmed order" class="w-full rounded-lg border border-[#D8DEE5] px-3 py-2.5 text-[13.5px] outline-none focus:border-[#DC183C]"></textarea></div>
         </div>
-        <div class="mt-4"><label class="block text-[11px] font-bold uppercase tracking-wider text-[#6A7581] mb-1.5">Purpose</label><textarea id="nf-purpose" rows="3" placeholder="What will this funding be used for?" class="w-full rounded-lg border border-[#D8DEE5] px-3 py-2.5 text-[13.5px] outline-none focus:border-[#DC183C]"></textarea></div>
-        <h3 class="font-jakarta font-extrabold text-lg mt-6 pt-5 mb-1 border-t border-[#E7EBEF]">Documents</h3>
-        <p class="text-xs text-[#6A7581] mb-3">Lenders verify turnover from bank statements. Attach what is already in your <button type="button" onclick="showView('documents')" class="font-bold text-[#DC183C] hover:underline">Document Vault</button>, or add it after you submit.</p>
-        <div class="grid sm:grid-cols-2 gap-2.5">
-          <label class="flex items-center gap-2.5 rounded-lg border border-[#E7EBEF] px-3 py-2.5 text-[13px]"><input type="checkbox" checked class="accent-[#DC183C]"> 12 months bank statements <span class="ml-auto text-[10.5px] font-bold text-[#29A37A] uppercase">In vault</span></label>
-          <label class="flex items-center gap-2.5 rounded-lg border border-[#E7EBEF] px-3 py-2.5 text-[13px]"><input type="checkbox" checked class="accent-[#DC183C]"> Company registration (CIPC) <span class="ml-auto text-[10.5px] font-bold text-[#29A37A] uppercase">In vault</span></label>
-          <label class="flex items-center gap-2.5 rounded-lg border border-dashed border-[#D8DEE5] px-3 py-2.5 text-[13px] text-[#6A7581]"><input type="checkbox" class="accent-[#DC183C]"> Latest management accounts <span class="ml-auto text-[10.5px] font-bold uppercase">Add later</span></label>
+        ${H('3. Bank statements')}
+        <p class="text-xs text-[#6A7581] -mt-2 mb-3">Lenders check turnover from 6 to 12 months of statements. ${MEMBER_PLAN === 'premium' ? 'Attach them from your Documents, or upload new ones.' : 'Upload them here.'}</p>
+        <label class="flex items-center gap-3 rounded-xl border-2 border-dashed border-[#D8DEE5] hover:border-[#DC183C] p-4 cursor-pointer"><i data-lucide="upload-cloud" class="w-5 h-5 text-[#DC183C]"></i><span class="text-[13px]"><b id="nf-fn">${MEMBER_PLAN === 'premium' ? 'Bank statements (6 months) attached from Documents' : 'Upload 6 to 12 months of bank statements'}</b><span class="block text-[#6A7581] text-[12px]">PDF from your bank, not photos</span></span><input type="file" accept="application/pdf" multiple class="hidden" onchange="document.getElementById('nf-fn').textContent=this.files.length+' file(s) selected'"></label>
+        ${H('4. You, the owner')}
+        <div class="grid sm:grid-cols-2 gap-4">
+          <div>${ffL('First name', 1)}${ffIn('nf-first', 'Tshepho')}</div>
+          <div>${ffL('Last name', 1)}${ffIn('nf-last', 'Joel')}</div>
+          <div>${ffL('South African ID number', 1, 'lenders need it for the credit check')}${ffIn('nf-id', '', '13 digits')}</div>
+          <div>${ffL('Mobile number', 1)}${ffIn('nf-mobile', '082 123 4567', '0XX XXX XXXX', 'tel')}</div>
+          <div class="sm:col-span-2">${ffL('Email', 1)}${ffIn('nf-email', 'tshepho@example.com', '', 'email')}</div>
         </div>
-        <label class="mt-5 flex items-start gap-2.5 text-[12px] text-[#42505E] leading-relaxed"><input id="nf-consent" type="checkbox" class="accent-[#DC183C] mt-0.5"> <span>I agree to a lender doing a credit check on me and my business, and I consent in writing to SME South Africa sharing my application with its funding partners. <a href="public-terms.html" class="font-bold text-[#DC183C] hover:underline">Terms</a> and <a href="public-privacy.html" class="font-bold text-[#DC183C] hover:underline">Privacy Policy</a>.</span></label>
+        <label class="mt-5 flex items-start gap-2.5 text-[12px] text-[#42505E] leading-relaxed"><input id="nf-consent" type="checkbox" class="accent-[#DC183C] mt-0.5"> <span>I agree that SME South Africa may share this application with its funding partners, and that a partner may do a credit check on me and my business. I accept the <a href="public-terms.html" class="font-bold text-[#DC183C] hover:underline">Terms</a> and <a href="public-privacy.html" class="font-bold text-[#DC183C] hover:underline">Privacy Policy</a>.</span></label>
+        <p id="nf-err" class="hidden mt-3 text-[12.5px] font-semibold text-[#DC183C]"></p>
         <div class="mt-6 flex items-center gap-3">
           <button onclick="submitNewFundingApp()" class="font-jakarta font-bold text-[13px] px-6 py-3 rounded-lg bg-[#DC183C] hover:bg-[#B0142F] text-white transition">Submit application</button>
           <button onclick="backToFundingList()" class="text-[#6A7581] hover:text-[#121A21] text-sm font-semibold px-3">Cancel</button>
@@ -2126,28 +2280,22 @@
   }
 
   function submitNewFundingApp(){
-    const g = id => document.getElementById(id);
-    if(g('nf-consent') && !g('nf-consent').checked){ showToast('Please tick the consent box to submit.', 'error'); return; }
-    const product = g('nf-product').value;
-    const amount = parseInt((g('nf-amount').value||'0').replace(/[^\d]/g,''),10) || 0;
-    const term = g('nf-term').value.trim() || '—';
-    const purpose = g('nf-purpose').value.trim() || 'No purpose provided.';
-    const newId = 'APP-2026-'+(1000+APPLICATIONS.length);
-    APPLICATIONS.unshift({
-      id:newId, product, icon:FUNDING_ICON_MAP[product]||'banknote',
-      amount, term, purpose,
-      submitted:'today', updated:'just now', status:'submitted', step:0,
-      lender:null, contact:null,
-      documents:[
-        { name:'Company registration (CIPC)', state:'pending' },
-        { name:'6 months bank statements', state:'pending' },
-        { name:'Latest management accounts', state:'pending' }
-      ],
-      timeline:[{ date:'today', text:'Application submitted.', icon:'send' }]
-    });
-    fundingAppState.view='detail'; fundingAppState.activeId=newId;
-    renderFunding();
-    showToast('Application submitted.');
+    const g = id => document.getElementById(id), err = g('nf-err');
+    const need = [['nf-company','company name'],['nf-reg','registration number'],['nf-sector','industry'],['nf-years','years in business'],['nf-turnover','monthly turnover'],['nf-prov','province'],['nf-bank','bank'],['nf-amount','funding amount'],['nf-purpose','what it is for'],['nf-first','first name'],['nf-last','last name'],['nf-id','ID number'],['nf-mobile','mobile number'],['nf-email','email']];
+    const miss = need.filter(([id]) => !(g(id).value || '').trim());
+    const show = m => { err.textContent = m; err.classList.remove('hidden'); err.scrollIntoView({ behavior:'smooth', block:'center' }); };
+    if(miss.length) return show('Please add your ' + miss.map(m => m[1]).slice(0, 3).join(', ') + (miss.length > 3 ? ' and ' + (miss.length - 3) + ' more' : '') + '.');
+    if(!/^\d{13}$/.test(g('nf-id').value.replace(/\s/g, ''))) return show('A South African ID number has 13 digits.');
+    if(!g('nf-consent').checked) return show('Please tick the consent box so we can share your application with partners.');
+    const band = g('nf-amount').value, amount = { 0:50000, 1:250000, 2:1000000, 3:5000000 }[FF.amounts.indexOf(band)] || 0;
+    const product = g('nf-product').value || 'Business funding';
+    const newId = 'APP-2026-' + (1000 + APPLICATIONS.length);
+    APPLICATIONS.unshift({ id:newId, product, icon:FUNDING_ICON_MAP[product] || 'banknote', amount, term:'To be agreed', purpose:g('nf-purpose').value.trim(), submitted:'today', updated:'just now', status:'submitted', step:0, lender:null, contact:null,
+      documents:[{ name:'Bank statements (6 to 12 months)', state: MEMBER_PLAN === 'premium' ? 'provided' : 'pending' }, { name:'Company registration (CIPC)', state:'pending' }],
+      timeline:[{ date:'today', text:'Application submitted.', icon:'send' }] });
+    fundingAppState.view = 'detail'; fundingAppState.activeId = newId;
+    homeApps = 'yes'; renderFunding(); renderHomeFunding();
+    showToast('Application submitted. We will match you with partners and update you here.', null);
   }
 
   function viewFundingApp(id){
@@ -2186,6 +2334,15 @@
     return '';
   }
 
+  function fundingCta(id, status){
+    const a = APPLICATIONS.find(x => x.id === id);
+    if(status === 'draft' || status === 'declined') return showNewFundingApp();
+    if(status === 'docs'){ const el = document.querySelector('#funding-app-host [data-docs]') || document.querySelector('#funding-app-host'); el.scrollIntoView({ behavior:'smooth' }); return showToast('Upload the outstanding documents below.', null); }
+    if(status === 'submitted') return location.href = 'member-messages.html';
+    if(status === 'review') return document.querySelector('#funding-app-host').scrollIntoView({ behavior:'smooth' });
+    if(status === 'approved') return wsModal('ov-offer', `<div class="p-6"><p class="font-jakarta font-extrabold text-lg">Your funding offer</p><p class="text-[13px] text-[#6A7581] mt-1">${esc(a.lender || 'The lender')} has sent the term sheet for ${wsFmtR(a.amount)} over ${esc(a.term)}. Read it carefully: the lender sets the rate and fees.</p><div class="mt-5 flex gap-3"><button onclick="closeOverlay('ov-offer');showToast('Term sheet opened from the lender.', null)" class="h-11 px-5 rounded-full bg-[#29A37A] text-white font-bold text-sm">Open the term sheet</button><button onclick="closeOverlay('ov-offer')" class="h-11 px-5 rounded-full border border-[#D8DEE5] text-sm font-bold">Later</button></div></div>`);
+    if(status === 'funded') return showToast('Statement downloaded.', null);
+  }
   function fundingContextCTA(a){
     let title='', body='', cta='Continue', icon='arrow-right', tone='#0C1F31';
     switch(a.status){
@@ -2208,7 +2365,7 @@
             <p class="text-xs text-white/70 mt-1">${esc(body)}</p>
           </div>
         </div>
-        <button onclick="showToast('${esc(cta)}.')" class="relative bg-[#DC183C] hover:bg-[#B0142F] text-white rounded-full px-5 py-2.5 font-jakarta font-bold text-sm transition flex items-center gap-2 shrink-0"><i data-lucide="${icon}" class="w-4 h-4"></i> ${esc(cta)}</button>
+        <button onclick="fundingCta('${a.id}','${a.status}')" class="relative bg-[#DC183C] hover:bg-[#B0142F] text-white rounded-full px-5 py-2.5 font-jakarta font-bold text-sm transition flex items-center gap-2 shrink-0"><i data-lucide="${icon}" class="w-4 h-4"></i> ${esc(cta)}</button>
       </div>
     </div>`;
   }
@@ -2415,7 +2572,7 @@
     guide:    { label:'Guide',    color:'#AE6B0A', bg:'#FFF1E0' },
     report:   { label:'Report',   color:'#29A37A', bg:'#E4F5EE' }
   };
-  const DOWNLOADS = [
+  let DOWNLOADS = [
     { id:'d1',  title:'Your Guide to AI Prompting',          type:'ebook',     date:'18 Jun 2026', format:'PDF', size:'2.4 MB', accessed:3, icon:'book-open' },
     { id:'d2',  title:'One-Page Business Plan Template',     type:'template',  date:'14 Jun 2026', format:'DOCX',size:'180 KB', accessed:5, icon:'file-text' },
     { id:'d4',  title:'Cash Flow Forecast (12 Months)',      type:'template',  date:'2 Jun 2026',  format:'XLSX',size:'92 KB',  accessed:8, icon:'file-text' },
@@ -2459,14 +2616,28 @@
           </div>
         </div>
         <button onclick="reDownload('${d.id}')" class="text-xs font-bold text-[#DC183C] hover:text-[#B0142F] flex items-center gap-1.5 shrink-0 px-3 py-1.5 rounded-full hover:bg-[#FDECEF]/60 transition"><i data-lucide="download" class="w-3.5 h-3.5"></i><span class="hidden sm:inline">Download again</span></button>
-        <button onclick="showToast('Menu (mockup): Remove · Share')" class="w-8 h-8 grid place-items-center rounded-full text-[#6A7581] hover:bg-[#F0F5F9] hover:text-[#121A21] shrink-0"><i data-lucide="more-horizontal" class="w-4 h-4"></i></button>
+        <button onclick="removeDownload('${d.id}')" aria-label="Remove from your list" title="Remove from your list" class="w-8 h-8 grid place-items-center rounded-full text-[#6A7581] hover:bg-[#F0F5F9] hover:text-[#121A21] shrink-0"><i data-lucide="x" class="w-4 h-4"></i></button>
       </div>`;
     }).join('');
     lucide.createIcons();
   }
 
+  // Members who have never downloaded anything see one helpful card, not empty stats (Joel's call, 2026-10-02).
+  let libState = (new URLSearchParams(location.search).get('library') === 'empty') ? 'none' : 'has';
+  function setLibState(v){ libState = v; renderResources(); }
+  const LIB_STARTERS = [
+    { title:'One-Page Business Plan Template', type:'template', icon:'file-text' },
+    { title:'Cash Flow Forecast (12 Months)', type:'template', icon:'file-spreadsheet' },
+    { title:'State of SA Small Business 2026', type:'report', icon:'bar-chart' }
+  ];
   function renderResources(){
     const host = document.getElementById('downloads-host'); if(!host) return;
+    const toggle = `<div class="flex items-center gap-1 text-[10px] font-bold mb-4"><span class="uppercase tracking-widest text-[#98A2AE] mr-1">Preview</span>${[['has','Has downloads'],['none','Nothing downloaded yet']].map(o => `<button onclick="setLibState('${o[0]}')" class="h-6 px-2.5 rounded-full ${libState === o[0] ? 'bg-[#0C1F31] text-white' : 'bg-[#F0F5F9] text-[#6A7581] hover:bg-[#E7EBEF]'}">${o[1]}</button>`).join('')}</div>`;
+    if(libState === 'none'){
+      host.innerHTML = toggle + `<div class="rounded-2xl border border-[#E7EBEF] shadow-sm bg-white p-6 sm:p-8"><div class="flex flex-col sm:flex-row sm:items-center gap-5"><div class="w-14 h-14 rounded-2xl bg-[#FDECEF] text-[#DC183C] grid place-items-center shrink-0"><i data-lucide="folder-down" class="w-7 h-7"></i></div><div class="flex-1"><p class="font-jakarta font-extrabold text-lg">Your downloads will live here</p><p class="text-[13.5px] text-[#6A7581] mt-1 leading-relaxed max-w-[60ch]">Anything you download from the library, an eBook, a template or a report, is saved here so you can get it again without searching your email.</p></div><a href="public-resources.html" class="shrink-0 inline-flex items-center gap-2 h-11 px-5 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-jakarta font-bold text-sm transition"><i data-lucide="compass" class="w-4 h-4"></i> Browse the library</a></div>
+        <p class="text-[11px] font-bold uppercase tracking-widest text-[#6A7581] mt-7 mb-2.5">Popular with businesses like yours</p><div class="grid sm:grid-cols-3 gap-3">${LIB_STARTERS.map(r => { const m = DOWNLOAD_TYPE_META[r.type]; return `<a href="public-resource.html" class="rounded-xl border border-[#E7EBEF] hover:border-[#0C1F31] p-4 transition flex items-start gap-3"><div class="w-10 h-10 rounded-xl grid place-items-center shrink-0" style="background:${m.bg}"><i data-lucide="${r.icon}" class="w-5 h-5" style="color:${m.color}"></i></div><div class="min-w-0"><p class="font-jakarta font-bold text-[13.5px] leading-snug">${esc(r.title)}</p><span class="inline-flex mt-1.5 px-2 py-0.5 rounded-full text-[10px] font-bold" style="background:${m.bg};color:${m.color}">${m.label}</span></div></a>`; }).join('')}</div></div>`;
+      lucide.createIcons(); return;
+    }
     const total = DOWNLOADS.length;
     const thisMonth = DOWNLOADS.filter(d=>/Jun 2026/.test(d.date)).length;
     const storage = DOWNLOADS.length + ' documents';
@@ -2475,7 +2646,7 @@
       <p class="font-jakarta font-extrabold text-2xl mt-1" style="color:${color}">${esc(val)}</p>
     </div>`;
     const chips = DOWNLOAD_TYPES.map(([id,l])=>`<button onclick="setDownloadType('${id}')" class="shrink-0 px-3.5 py-1.5 rounded-full text-xs font-bold border ${downloadsState.type===id?'bg-[#DC183C] text-white border-[#DC183C]':'border-[#E7EBEF] bg-white text-[#42505E] hover:bg-[#F0F5F9]'}">${l}</button>`).join('');
-    host.innerHTML = `
+    host.innerHTML = toggle + `
       <div class="grid grid-cols-3 gap-3 mb-5">
         ${statCard('Total downloads', total, '#DC183C')}
         ${statCard('This month', thisMonth, '#29A37A')}
@@ -2674,6 +2845,12 @@
       data:'deals(partner, category, blurb, offer, saving, steps, terms, redeem_url, code_mode none|shared|unique, status). Redemptions logged per member.',
       logic:'Members only: signing in is the price, so the directory doubles as a sign-up reason. A deal is listed only with the partner\u2019s terms confirmed in writing and a partner who is actually active. No partner, no promotion. Sage uses a unique member code (see the voucher automation design); the others in this mockup are layout samples. Never describe how SME South Africa is paid on any member-facing page. Measure redemptions and returns per category to decide which partners to add.',
       components:'Category list, search, deal cards, deal detail dialog with steps, code reveal and terms.' },
+    fundingform: {
+      title:'One funding application form', sub:'Same fields and order inside My Business and on the public funding page',
+      purpose:'There were two different forms asking different questions. Now there is one, so lenders always get the same data and members are never asked twice.',
+      data:'Business: name (business_name), CIPC number (reg_no), industry, years (business_years), monthly turnover (claimed_turnover), province, bank. Need: amount band (amount_requested), type, purpose. Bank statements (6 to 12 months PDF). Owner: first, last, SA ID number, mobile, email. Consent to share with partners and to a credit check, with timestamp.',
+      logic:'Signed-in members get it prefilled from the Business profile (ID number is never stored in the profile, it is asked each time). Logged-out visitors get the same fields as a 4-step wizard on the funding page. SA ID must be 13 digits (add the Luhn check on build). Premium members can attach statements from Documents. Partner API payloads (Lula, Retail Capital, others) map from these fields only. Funding approvals stay manual.',
+      components:'Four sections, inline validation, consent, submit to My applications.' },
     getpaid: {
       title:'Get Paid', sub:'Free with a cap, unlimited on Premium',
       purpose:'Members chase late payers by WhatsApp and memory. This tracks what customers owe and prepares the chase message; the member sends it from their own phone. It is deliberately not an accounting or tax-invoice tool.',
@@ -2689,7 +2866,7 @@
       components:'Perk card with 3 steps, tracked-link button, reveal-and-copy code, empty "more perks" card.'
     },
     passport: {
-      title:'Business Passport', sub:'Premium, one printable page for a lender',
+      title:'Business summary (was Business Passport)', sub:'Free, one printable page for a lender, inside Funding pack',
       purpose:'Assembles what the member already told us (profile, latest score, funding pack status) into one page to hand to a lender, funder or supplier.',
       data:'Nothing new is collected or stored. Built on request from profile bands, latest check-in and document presence.',
       logic:'Honest by construction: every figure is self-reported and the page says so. It never uses verified, certified or approved, shows no credit grade and predicts no outcome. Printed or saved as PDF by the member\'s browser.',
@@ -2961,6 +3138,7 @@
   renderHomeFree();
   renderGuides();
   renderDeals();
+  renderEvents();
   renderStories();
   renderPodcast();
   renderSolutionPicks();

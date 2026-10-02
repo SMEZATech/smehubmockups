@@ -96,6 +96,7 @@
     .search-overlay.active { opacity:1; pointer-events:auto; transform:translateY(0); }
     @media (min-width:640px){ .search-overlay{ padding:0 1.5rem; } }
 </style>
+<script src="plan.js"></script>
 </head>
 <body class="bg-[#FCFCFC] text-[#121A21] font-inter">
 
@@ -105,7 +106,7 @@
 
     <!-- Logo (Left) -->
     <a href="public-home.html" class="flex items-center shrink-0 group mr-6 py-2">
-      <img src="https://smesouthafrica.co.za/wp-content/uploads/2025/10/Asset-1-1.webp" alt="SME South Africa" class="h-10 sm:h-11 w-auto object-contain group-hover:scale-105 transition-transform" />
+      <img src="assets/logo-v1-lockup.svg" alt="SME South Africa" class="h-9 w-auto group-hover:scale-105 transition-transform" />
     </a>
 
     <!-- Primary Navigation (Center - BuddyBoss Style) -->
@@ -525,30 +526,32 @@ function setInvites(){
 }
 
 function setMembership(){
-  const usage = [['Posts this month',24,50,'#DC183C'],['Connections',148,250,'#0C1F31'],['Events attended',3,5,'#FF9900']];
+  // Plan-aware (plan.js). Free = Standard, paid = Premium R99/month. Billing itself is MemberPress.
+  const premium = (window.SME_PLAN === 'premium');
+  const next = new Date(); next.setMonth(next.getMonth() + 1);
+  const nextTxt = next.toLocaleDateString('en-ZA', { day:'numeric', month:'long', year:'numeric' });
+  const li = t => `<li class="flex gap-2"><i data-lucide="check" class="w-4 h-4 mt-0.5 text-[#29A37A] shrink-0"></i><span>${t}</span></li>`;
+  const free = ['Community, groups, messaging','Business Health Score and Progress','Compliance calendar','Funding options, calculator and applications','One-page business summary','Get paid: up to 3 open invoices','Solutions, member deals and Learn'];
+  const paid = ['Compliance Autopilot reminders before every SARS and CIPC date','Documents vault with expiry tracking','Unlimited open invoices','50% off in-person events'];
+  const banner = premium
+    ? `<div class="relative flex items-center justify-between flex-wrap gap-3"><div><p class="text-[10px] font-bold uppercase tracking-widest text-[#FF9900]">Current plan</p>
+        <h3 class="font-jakarta font-extrabold text-2xl text-white mt-0.5 flex items-center gap-2"><i data-lucide="crown" class="w-5 h-5 text-[#FF9900]"></i>Premium <span class="text-[10px] bg-[#29A37A] text-white px-2 py-0.5 rounded-full uppercase tracking-wide">Active</span></h3>
+        <p class="text-xs text-white/60 mt-1">R99 a month &nbsp;·&nbsp; Next payment ${nextTxt} &nbsp;·&nbsp; Visa ending 4242</p></div>
+        <a href="member-workspace.html#settings" class="bg-white/10 hover:bg-white/20 text-white rounded-full px-5 py-2.5 font-jakarta font-bold text-sm transition">Change or cancel</a></div>`
+    : `<div class="relative flex items-center justify-between flex-wrap gap-3"><div><p class="text-[10px] font-bold uppercase tracking-widest text-[#FF9900]">Current plan</p>
+        <h3 class="font-jakarta font-extrabold text-2xl text-white mt-0.5 flex items-center gap-2">Standard <span class="text-[10px] bg-white/15 text-white px-2 py-0.5 rounded-full uppercase tracking-wide">Free</span></h3>
+        <p class="text-xs text-white/60 mt-1">No card on file. Everything below stays free.</p></div>
+        <a href="public-premium-checkout.html" class="bg-[#DC183C] hover:bg-[#B0142F] text-white rounded-full px-5 py-2.5 font-jakarta font-bold text-sm transition flex items-center gap-2"><i data-lucide="crown" class="w-4 h-4"></i> Upgrade, R99/month</a></div>`;
+  const receipts = premium ? `<h3 class="font-jakarta font-bold uppercase text-sm text-[#121A21] tracking-wide mt-7 mb-3">Receipts</h3>
+      <div class="border border-slate-200 rounded-2xl divide-y divide-slate-100">${[0,1].map(i => { const d = new Date(); d.setMonth(d.getMonth() - i); return `<div class="flex items-center justify-between px-4 py-3 text-sm"><span class="font-semibold">${d.toLocaleDateString('en-ZA',{day:'numeric',month:'short',year:'numeric'})}</span><span class="text-slate-500">Premium, monthly</span><span class="font-semibold">R99.00</span><button onclick="showToast('Receipt downloaded.',null)" class="text-xs font-bold text-[#DC183C] hover:underline">PDF</button></div>`; }).join('')}</div>` : '';
   const body = `
-    <div class="rounded-2xl overflow-hidden border border-slate-100 mb-6">
-      <div class="bg-[#0C1F31] px-5 py-5 relative">
-        <div class="absolute inset-0 opacity-40" style="background:radial-gradient(circle at 80% 30%, #DC183C 0%, transparent 60%);"></div>
-        <div class="relative flex items-center justify-between flex-wrap gap-3">
-          <div><p class="text-[10px] font-bold uppercase tracking-widest text-[#FF9900]">Current plan</p>
-            <h3 class="font-jakarta font-extrabold text-2xl text-white mt-0.5 flex items-center gap-2">Standard Member <span class="text-[10px] bg-white/15 text-white px-2 py-0.5 rounded-full uppercase tracking-wide">Active</span></h3>
-            <p class="text-xs text-white/60 mt-1">Next billing date:, &nbsp;·&nbsp; No card on file</p>
-          </div>
-          <button onclick="showToast('Upgrade flow handled by MemberPress.',null)" class="bg-[#DC183C] hover:bg-[#B0142F] text-white rounded-full px-5 py-2.5 font-jakarta font-bold text-sm transition flex items-center gap-2"><i data-lucide="crown" class="w-4 h-4"></i> Upgrade to Premium</button>
-        </div>
-      </div>
-    </div>
-    <h3 class="font-jakarta font-bold uppercase text-sm text-[#121A21] tracking-wide mb-3">Usage this cycle</h3>
-    <div class="space-y-4">
-      ${usage.map(([l,v,m,c])=>`<div><div class="flex items-center justify-between mb-1.5"><span class="text-sm font-semibold text-[#121A21]">${l}</span><span class="text-xs font-bold text-slate-500">${v} / ${m}</span></div><div class="h-2 rounded-full bg-slate-100 overflow-hidden"><div class="h-full rounded-full" style="width:${Math.round(v/m*100)}%;background:${c}"></div></div></div>`).join('')}
-    </div>
-    <div class="mt-6 grid sm:grid-cols-2 gap-3">
-      <div class="border border-slate-200 rounded-2xl p-4"><p class="font-jakarta font-bold text-[#121A21] flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-[#29A37A]"></i> Standard includes</p><ul class="text-sm text-slate-500 mt-2 space-y-1"><li>Community feed &amp; profile</li><li>Up to 250 connections</li><li>Join public groups</li></ul></div>
-      <div class="border-2 border-[#DC183C] rounded-2xl p-4 bg-[#FDECEF]/40"><p class="font-jakarta font-bold text-[#DC183C] flex items-center gap-2"><i data-lucide="crown" class="w-4 h-4"></i> Premium adds</p><ul class="text-sm text-slate-600 mt-2 space-y-1"><li>Priority funding applications</li><li>Unlimited connections</li><li>Event discounts &amp; replays</li></ul></div>
-    </div>
-    <p class="text-xs text-slate-500 mt-5 flex items-center gap-1.5"><i data-lucide="info" class="w-3.5 h-3.5"></i> Billing &amp; subscriptions are managed by <span class="font-jakarta">MemberPress</span>. SME HUB does not store card data.</p>`;
-  return settingsCard('Membership', 'Your plan, usage and upgrade options.', body);
+    <div class="rounded-2xl overflow-hidden border border-slate-100 mb-6"><div class="bg-[#0C1F31] px-5 py-5 relative"><div class="absolute inset-0 opacity-40" style="background:radial-gradient(circle at 80% 30%, #DC183C 0%, transparent 60%);"></div>${banner}</div></div>
+    <div class="grid sm:grid-cols-2 gap-3">
+      <div class="border border-slate-200 rounded-2xl p-4"><p class="font-jakarta font-bold text-[#121A21]">Free for every member</p><ul class="text-sm text-slate-600 mt-2 space-y-1.5">${free.map(li).join('')}</ul></div>
+      <div class="border-2 ${premium ? 'border-[#29A37A] bg-[#E4F5EE]/40' : 'border-[#DC183C] bg-[#FDECEF]/40'} rounded-2xl p-4"><p class="font-jakarta font-bold ${premium ? 'text-[#1E7F5E]' : 'text-[#DC183C]'} flex items-center gap-2"><i data-lucide="crown" class="w-4 h-4"></i> ${premium ? 'Your Premium extras' : 'Premium adds'}</p><ul class="text-sm text-slate-600 mt-2 space-y-1.5">${paid.map(li).join('')}</ul></div>
+    </div>${receipts}
+    <p class="text-xs text-slate-500 mt-5 flex items-center gap-1.5"><i data-lucide="info" class="w-3.5 h-3.5"></i> Billing is handled securely by our payment provider. SME South Africa does not store card details.</p>`;
+  return settingsCard('Membership', premium ? 'Your plan, next payment and receipts.' : 'Your plan, and what Premium adds.', body);
 }
 
 const ORDERS = [

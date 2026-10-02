@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Profile photo | SME HUB</title>
-  <meta name="description" content="SME South Africa, Profile photo: upload, crop and save." />
+  <title>Finish your profile | SME HUB</title>
+  <meta name="description" content="SME South Africa, finish your profile in one screen." />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -233,33 +233,22 @@
 
 <main class="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
 
-<div class="max-w-2xl mx-auto">
-  <a href="member-account.html" class="inline-flex items-center gap-1.5 text-sm font-bold text-slate-500 hover:text-[#DC183C] mb-4"><i data-lucide="arrow-left" class="w-4 h-4"></i> Account Settings</a>
+<div class="max-w-xl mx-auto">
+  <div class="flex items-center gap-1 text-[10px] font-bold mb-3"><span class="uppercase tracking-widest text-slate-400 mr-1">Preview</span><button onclick="qfMode('all')" data-qf="all" class="h-6 px-2.5 rounded-full">Four things missing</button><button onclick="qfMode('one')" data-qf="one" class="h-6 px-2.5 rounded-full">One thing missing</button></div>
   <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
-    <div class="px-6 py-5 border-b border-slate-100"><h1 class="font-jakarta font-extrabold text-xl flex items-center gap-2">Profile photo <button onclick="openBrief('photo')" class="dev-badge w-5 h-5 rounded-full bg-[#DC183C] text-white items-center justify-center text-[10px] font-bold leading-none animate-pulse" title="Implementation notes">i</button></h1><p class="text-sm text-slate-500 mt-1">Members connect with people they can see. A clear photo of your face works best.</p></div>
-    <div class="p-6">
-      <div id="ph-empty">
-        <div id="ph-drop" class="rounded-2xl border-2 border-dashed border-slate-300 hover:border-[#DC183C] bg-slate-50 p-10 text-center transition cursor-pointer" onclick="document.getElementById('ph-file').click()" ondragover="event.preventDefault();this.classList.add('border-[#DC183C]')" ondragleave="this.classList.remove('border-[#DC183C]')" ondrop="event.preventDefault();pick(event.dataTransfer.files[0])">
-          <div class="w-16 h-16 rounded-full bg-gradient-to-br from-[#DC183C] to-[#FF9900] grid place-items-center text-white font-jakarta font-bold text-xl mx-auto" id="ph-cur">TJ</div>
-          <p class="font-jakarta font-bold mt-4">Drag a photo here, or choose one</p><p class="text-[12.5px] text-slate-500 mt-1">JPG or PNG, at least 400 &times; 400 px, up to 5 MB</p>
-          <button class="mt-4 h-11 px-6 rounded-full bg-[#0C1F31] hover:bg-[#16324a] text-white font-jakarta font-bold text-sm transition">Choose photo</button></div>
-        <input id="ph-file" type="file" accept="image/jpeg,image/png" capture="user" class="hidden" onchange="pick(this.files[0])">
-        <p id="ph-err" class="hidden mt-3 rounded-lg bg-[#FDECEF] text-[#B0142F] text-[13px] font-semibold px-4 py-3 flex gap-2 items-start"><i data-lucide="alert-circle" class="w-4 h-4 mt-0.5 shrink-0"></i><span id="ph-errt"></span></p>
-        <ul class="mt-5 grid sm:grid-cols-3 gap-3 text-[12.5px] text-slate-600"><li class="rounded-xl bg-slate-50 p-3"><b class="block text-[#121A21] mb-0.5">Face the camera</b>Just you, centred.</li><li class="rounded-xl bg-slate-50 p-3"><b class="block text-[#121A21] mb-0.5">Good light</b>Window light beats a dark room.</li><li class="rounded-xl bg-slate-50 p-3"><b class="block text-[#121A21] mb-0.5">No logos or text</b>Your logo belongs on your business profile.</li></ul>
-        <div class="mt-5 text-right"><button onclick="removePhoto()" class="text-[13px] font-bold text-slate-500 hover:text-[#DC183C]">Remove current photo</button></div>
-      </div>
-      <div id="ph-crop" class="hidden">
-        <div class="grid sm:grid-cols-[320px_1fr] gap-6 items-start">
-          <div><div id="ph-stage" class="relative w-[300px] h-[300px] max-w-full mx-auto bg-[#0C1F31] rounded-xl overflow-hidden touch-none select-none cursor-grab"><img id="ph-img" alt="Photo to crop" class="absolute origin-center max-w-none pointer-events-none"><div class="absolute inset-0 pointer-events-none" style="box-shadow:inset 0 0 0 999px rgba(12,31,49,.55);clip-path:none;border-radius:0"></div><div class="absolute inset-[18px] rounded-full pointer-events-none" style="box-shadow:0 0 0 999px rgba(12,31,49,.55);border:2px solid #fff"></div></div>
-            <p class="text-[12px] text-slate-400 text-center mt-2">Drag to position. Use the slider to zoom.</p></div>
-          <div><label class="text-[12px] font-bold uppercase tracking-wider text-slate-400">Zoom</label><input id="ph-zoom" type="range" min="1" max="3" step="0.01" value="1" oninput="applyT()" class="w-full accent-[#DC183C] mt-1">
-            <div class="flex gap-2 mt-3"><button onclick="rot()" class="h-9 px-3 rounded-lg border border-slate-200 text-[13px] font-bold hover:border-[#0C1F31] inline-flex items-center gap-1.5"><i data-lucide="rotate-cw" class="w-4 h-4"></i> Rotate</button><button onclick="document.getElementById('ph-file').click()" class="h-9 px-3 rounded-lg border border-slate-200 text-[13px] font-bold hover:border-[#0C1F31]">Choose another</button></div>
-            <p class="text-[12px] font-bold uppercase tracking-wider text-slate-400 mt-5 mb-2">How it looks</p><div class="flex items-end gap-3"><canvas id="pv96" width="96" height="96" class="rounded-full"></canvas><canvas id="pv48" width="48" height="48" class="rounded-full"></canvas><canvas id="pv32" width="32" height="32" class="rounded-full"></canvas></div></div></div>
-        <div class="mt-6 flex gap-3 justify-end border-t border-slate-100 pt-5"><button onclick="cancelCrop()" class="h-11 px-5 rounded-full border border-slate-200 text-sm font-bold hover:border-[#0C1F31]">Cancel</button><button id="ph-save" onclick="save()" class="h-11 px-6 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white text-sm font-bold transition">Save photo</button></div>
-      </div>
-      <div id="ph-done" class="hidden text-center py-6"><img id="ph-final" class="w-28 h-28 rounded-full mx-auto object-cover ring-4 ring-[#E4F5EE]" alt="Your new photo"><p class="font-jakarta font-bold text-lg mt-4">Looking good</p><p class="text-sm text-slate-500 mt-1">Your photo shows on your profile, posts and messages. It can take a minute to appear everywhere.</p><div class="mt-5 flex gap-3 justify-center"><a href="member-account.html" class="h-11 leading-[44px] px-6 rounded-full bg-[#0C1F31] text-white text-sm font-bold">Back to settings</a><button onclick="again()" class="h-11 px-5 rounded-full border border-slate-200 text-sm font-bold">Change it</button></div></div>
+    <div class="px-6 pt-6 pb-4">
+      <p class="text-[11px] font-extrabold uppercase tracking-widest text-[#DC183C]">Finish your profile</p>
+      <h1 class="font-jakarta font-extrabold text-2xl tracking-tight mt-1 flex items-center gap-2">A few details and you are done <button onclick="openBrief('quickfinish')" class="dev-badge w-5 h-5 rounded-full bg-[#DC183C] text-white items-center justify-center text-[10px] font-bold leading-none animate-pulse" title="Implementation notes">i</button></h1>
+      <p class="text-sm text-slate-500 mt-1.5">Members connect with people they can see and place. This takes under a minute.</p>
+      <div class="mt-4 flex items-center gap-3"><div class="flex-1 h-2 bg-slate-100 rounded-full overflow-hidden"><div id="qf-bar" class="h-full rounded-full bg-gradient-to-r from-[#DC183C] to-[#FF9900] transition-all" style="width:40%"></div></div><span id="qf-pct" class="text-[12px] font-bold text-slate-500">40%</span></div>
+    </div>
+    <div id="qf-fields" class="px-6 pb-6 space-y-4"></div>
+    <div class="px-6 py-4 bg-slate-50 border-t border-slate-100 flex items-center justify-between gap-3">
+      <a href="member-hub.html" class="text-sm font-bold text-slate-500 hover:text-[#121A21]">Skip for now</a>
+      <button id="qf-save" onclick="qfSave()" class="h-11 px-6 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-jakarta font-bold text-sm transition">Save and finish</button>
     </div>
   </div>
+  <div id="qf-done" class="hidden bg-white rounded-2xl border border-slate-200 shadow-sm p-8 text-center"><div class="w-16 h-16 rounded-2xl bg-[#E4F5EE] text-[#29A37A] grid place-items-center mx-auto"><i data-lucide="badge-check" class="w-8 h-8"></i></div><p class="font-jakarta font-extrabold text-xl mt-4">Your profile is complete</p><p class="text-sm text-slate-500 mt-1.5">You now show up in suggested connections and your posts carry your business name.</p><div class="mt-6 flex gap-3 justify-center flex-wrap"><a href="members.html" class="h-11 leading-[44px] px-6 rounded-full bg-[#DC183C] text-white font-bold text-sm">Find people to connect with</a><a href="member-workspace.html" class="h-11 leading-[44px] px-6 rounded-full border border-slate-200 font-bold text-sm">Go to My Business</a></div></div>
 </div>
 
 </main>
@@ -292,13 +281,12 @@
 <div id="overlay-root"></div>
 <script>
   const BRIEFS = {
-    photo: { title:'Profile photo upload and crop', sub:'Choose, position, zoom, rotate, save',
-      purpose:'A profile photo is the single biggest driver of profile completeness and connection acceptance, and photo-only members were previously sent to a page with no upload. This is the one upload flow every entry point should use.',
-      data:'users.avatar_attachment_id; original kept, 400x400 square crop stored plus 96, 48 and 32 px derivatives.',
-      logic:'Accepts JPG and PNG, 400x400 px minimum, 5 MB maximum, each rejected with the reason and the fix. Crop is a circle over a square stage: drag to position, slider zooms from 1x to 3x, rotate in 90 degree steps; the crop cannot expose empty space. Previews at three sizes. On mobile the file picker offers the camera (capture=user). Remove falls back to initials. Server re-encodes the image (strips EXIF location data) and rejects anything that is not a real image whatever its extension. Needs the BuddyBoss avatar map on live and Local to keep working.',
-      components:'Drop zone, error banner, crop stage, zoom slider, rotate, three live previews, success state, remove confirmation.' }
+    quickfinish: { title:'Quick-Finish profile', sub:'One screen, only what is missing (live at /finish-profile/)',
+      purpose:'Members with an incomplete profile are gated from some community features. Sending them through the full profile editor lost most of them. This screen asks only for the fields still missing, on one page.',
+      data:'The required xprofile fields (photo, job position, company or business name, industry) read through smesa_pc_required_fields; values saved exactly as the BuddyBoss profile editor saves them (xprofile_set_field_data, keeps visibility, fires the update hooks so Kit and FluentCRM tagging still run).',
+      logic:'Show only fields that are empty for this member (the preview shows four missing or just the photo). Photo uses the same upload rules as the photo screen, with a link to crop. Skip is always available. Live A/B: 10% of gated members get this form (review before raising to 50% then 100%, each needs Joel\u2019s yes).',
+      components:'Progress bar, missing fields only, photo picker, save, success state.' }
   };
-
   function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c])); }
   function showToast(msg){
     const el = document.getElementById('toast'); el.classList.remove('hidden');
@@ -324,46 +312,27 @@
   document.addEventListener('click', function(e){ if(!e.target.closest('#dropCommunity') && !e.target.closest('[onclick*=toggleHeaderDrop]')) closeHeaderDrop('community'); });
   document.addEventListener('keydown', function(e){ if(e.key === 'Escape'){ document.querySelectorAll('.ov.open').forEach(o => closeOverlay(o.id)); } });
 
-  const S = 300, R = 132; // stage size, circle radius (stage 300, inset 18 => 264 wide)
-  let nat = { w:0, h:0 }, base = 1, pos = { x:0, y:0 }, angle = 0, drag = null, imgObj = null;
-  function fail(m){ const e = document.getElementById('ph-err'); document.getElementById('ph-errt').textContent = m; e.classList.remove('hidden'); }
-  function pick(f){
-    document.getElementById('ph-err').classList.add('hidden'); if(!f) return;
-    if(!/^image\/(jpeg|png)$/.test(f.type)) return fail('That file type is not supported. Use a JPG or PNG photo.');
-    if(f.size > 5 * 1024 * 1024) return fail('That photo is ' + (f.size / 1048576).toFixed(1) + ' MB. The limit is 5 MB, so choose a smaller one or lower its quality.');
-    const r = new FileReader(); r.onload = () => { const im = new Image(); im.onload = () => {
-      if(im.width < 400 || im.height < 400) return fail('That photo is ' + im.width + ' \u00d7 ' + im.height + ' px. It needs to be at least 400 \u00d7 400 px so it stays sharp.');
-      imgObj = im; nat = { w: im.width, h: im.height }; angle = 0; base = Math.max(264 / nat.w, 264 / nat.h); pos = { x:0, y:0 };
-      document.getElementById('ph-img').src = r.result; document.getElementById('ph-zoom').value = 1;
-      document.getElementById('ph-empty').classList.add('hidden'); document.getElementById('ph-crop').classList.remove('hidden'); applyT();
-    }; im.src = r.result; }; r.readAsDataURL(f);
+  const QF_INDUSTRIES = ['Agriculture','Construction','Education','Hospitality and tourism','Health','Manufacturing','Professional services','Retail','Technology','Transport and logistics','Other'];
+  let qfShow = 'all', qfPhoto = null;
+  function qfMode(m){ qfShow = m; qfRender(); }
+  function qfRender(){
+    document.querySelectorAll('[data-qf]').forEach(b => b.className = 'h-6 px-2.5 rounded-full ' + (b.dataset.qf === qfShow ? 'bg-[#0C1F31] text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'));
+    const photo = `<div class="flex items-center gap-4"><div id="qf-av" class="w-16 h-16 rounded-full bg-gradient-to-br from-[#DC183C] to-[#FF9900] grid place-items-center text-white font-jakarta font-bold text-lg overflow-hidden shrink-0">${qfPhoto ? `<img src="${qfPhoto}" class="w-full h-full object-cover" alt="Your photo">` : 'TJ'}</div><div><p class="font-jakarta font-bold text-sm">Profile photo</p><p class="text-[12px] text-slate-500">A clear photo of your face. JPG or PNG, up to 5 MB.</p><input id="qf-file" type="file" accept="image/jpeg,image/png" capture="user" class="hidden" onchange="qfPick(this.files[0])"><button onclick="document.getElementById('qf-file').click()" class="mt-2 h-9 px-4 rounded-full border border-slate-200 text-[13px] font-bold hover:border-[#0C1F31]">${qfPhoto ? 'Change photo' : 'Add a photo'}</button> <a href="member-photo.html" class="text-[12px] font-bold text-[#DC183C] ml-2">Crop and position</a></div></div>`;
+    const fld = (id, label, inner) => `<div><label for="${id}" class="block text-sm font-semibold mb-1.5">${label}</label>${inner}</div>`;
+    const inp = (id, ph) => `<input id="${id}" placeholder="${ph}" class="w-full h-11 rounded-lg border border-slate-200 px-3 text-sm outline-none focus:border-[#DC183C]">`;
+    const sel = `<select id="qf-ind" class="w-full h-11 rounded-lg border border-slate-200 px-3 text-sm bg-white"><option value="">Select your industry</option>${QF_INDUSTRIES.map(i => `<option>${i}</option>`).join('')}</select>`;
+    document.getElementById('qf-fields').innerHTML = qfShow === 'one' ? photo : photo + fld('qf-job', 'Your job position', inp('qf-job', 'e.g. Founder, Director')) + fld('qf-co', 'Your company or business name', inp('qf-co', 'e.g. Langa Holdings')) + fld('qf-ind', 'Your industry', sel) + '<p id="qf-err" class="hidden text-[12.5px] font-semibold text-[#DC183C]"></p>';
+    const pct = qfShow === 'one' ? 80 : 40; document.getElementById('qf-bar').style.width = pct + '%'; document.getElementById('qf-pct').textContent = pct + '%';
+    lucide.createIcons();
   }
-  function dims(){ const z = +document.getElementById('ph-zoom').value; const sw = (angle % 180 ? nat.h : nat.w) * base * z, sh = (angle % 180 ? nat.w : nat.h) * base * z; return { z, sw, sh }; }
-  function clamp(){ const d = dims(); const mx = Math.max(0, (d.sw - 264) / 2), my = Math.max(0, (d.sh - 264) / 2); pos.x = Math.min(mx, Math.max(-mx, pos.x)); pos.y = Math.min(my, Math.max(-my, pos.y)); }
-  function applyT(){
-    clamp(); const d = dims(); const im = document.getElementById('ph-img');
-    im.style.width = nat.w * base * d.z + 'px'; im.style.height = nat.h * base * d.z + 'px';
-    im.style.left = (S / 2 - nat.w * base * d.z / 2 + pos.x) + 'px'; im.style.top = (S / 2 - nat.h * base * d.z / 2 + pos.y) + 'px'; im.style.transform = 'rotate(' + angle + 'deg)'; previews();
+  function qfPick(f){ if(!f) return; if(f.size > 5 * 1024 * 1024) return showToast('That photo is over 5 MB.'); const r = new FileReader(); r.onload = () => { qfPhoto = r.result; qfRender(); }; r.readAsDataURL(f); }
+  function qfSave(){
+    const err = document.getElementById('qf-err');
+    if(qfShow === 'all'){ const miss = [['qf-job','job position'],['qf-co','business name'],['qf-ind','industry']].filter(([id]) => !document.getElementById(id).value.trim()); if(miss.length){ err.textContent = 'Please add your ' + miss.map(m => m[1]).join(', ') + '.'; err.classList.remove('hidden'); return; } }
+    if(!qfPhoto) return showToast('Add a photo to finish, or choose Skip for now.');
+    document.querySelector('.max-w-xl > .bg-white').classList.add('hidden'); document.getElementById('qf-done').classList.remove('hidden'); lucide.createIcons();
   }
-  function draw(cv){
-    const ctx = cv.getContext('2d'); const d = dims(); const k = cv.width / 264; ctx.clearRect(0, 0, cv.width, cv.height);
-    ctx.save(); ctx.translate(cv.width / 2 + pos.x * k, cv.height / 2 + pos.y * k); ctx.rotate(angle * Math.PI / 180);
-    const w = nat.w * base * d.z * k, h = nat.h * base * d.z * k; ctx.drawImage(imgObj, -w / 2, -h / 2, w, h); ctx.restore();
-  }
-  function previews(){ ['pv96', 'pv48', 'pv32'].forEach(id => draw(document.getElementById(id))); }
-  function rot(){ angle = (angle + 90) % 360; applyT(); }
-  const st = document.getElementById('ph-stage');
-  st.addEventListener('pointerdown', e => { drag = { x:e.clientX - pos.x, y:e.clientY - pos.y }; st.setPointerCapture(e.pointerId); st.classList.add('cursor-grabbing'); });
-  st.addEventListener('pointermove', e => { if(!drag) return; pos = { x:e.clientX - drag.x, y:e.clientY - drag.y }; applyT(); });
-  st.addEventListener('pointerup', () => { drag = null; st.classList.remove('cursor-grabbing'); });
-  function save(){
-    const b = document.getElementById('ph-save'); b.disabled = true; b.textContent = 'Saving...';
-    const cv = document.createElement('canvas'); cv.width = cv.height = 400; draw(cv);
-    setTimeout(() => { document.getElementById('ph-final').src = cv.toDataURL('image/jpeg', .9); document.getElementById('ph-crop').classList.add('hidden'); document.getElementById('ph-done').classList.remove('hidden'); b.disabled = false; b.textContent = 'Save photo'; showToast('Profile photo updated.'); }, 600);
-  }
-  function cancelCrop(){ document.getElementById('ph-crop').classList.add('hidden'); document.getElementById('ph-empty').classList.remove('hidden'); document.getElementById('ph-file').value = ''; }
-  function again(){ document.getElementById('ph-done').classList.add('hidden'); document.getElementById('ph-empty').classList.remove('hidden'); document.getElementById('ph-file').value = ''; }
-  function removePhoto(){ confirmDialog('Remove your photo?', 'Your initials show instead until you add another.', 'Remove', () => showToast('Photo removed.')); }
+  qfRender();
 
   lucide.createIcons();
 </script>

@@ -96,6 +96,7 @@
       .search-overlay { padding: 0 1.5rem; }
     }
   </style>
+<script src="plan.js"></script>
 </head>
 <body class="bg-[#FCFCFC] text-[#121A21] antialiased relative">
 
@@ -105,7 +106,7 @@
     
     <!-- Logo (Left) -->
     <a href="public-home.html" class="flex items-center shrink-0 group mr-6 py-2">
-      <img src="https://smesouthafrica.co.za/wp-content/uploads/2025/10/Asset-1-1.webp" alt="SME South Africa" class="h-10 sm:h-11 w-auto object-contain group-hover:scale-105 transition-transform" />
+      <img src="assets/logo-v1-lockup.svg" alt="SME South Africa" class="h-9 w-auto group-hover:scale-105 transition-transform" />
     </a>
 
     <!-- Primary Navigation (Center - BuddyBoss Style) -->
@@ -233,6 +234,7 @@
 <main class="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
 
 <div class="max-w-3xl mx-auto">
+  <div class="flex items-center gap-1 text-[10px] font-bold mb-3"><span class="uppercase tracking-widest text-slate-400 mr-1">Preview</span><a href="?notifs=has" data-nf="has" class="h-6 leading-6 px-2.5 rounded-full bg-slate-100 text-slate-600 hover:bg-slate-200">Busy</a><a href="?notifs=few" data-nf="few" class="h-6 leading-6 px-2.5 rounded-full bg-slate-100 text-slate-600 hover:bg-slate-200">A few</a><a href="?notifs=empty" data-nf="empty" class="h-6 leading-6 px-2.5 rounded-full bg-slate-100 text-slate-600 hover:bg-slate-200">None yet</a></div>
   <div class="flex items-start justify-between gap-3 mb-4">
     <div><h1 class="font-jakarta font-extrabold text-[26px] tracking-tight flex items-center gap-2">Notifications <button onclick="openBrief('notifications')" class="dev-badge w-5 h-5 rounded-full bg-[#DC183C] text-white items-center justify-center text-[10px] font-bold leading-none animate-pulse" title="Implementation notes">i</button></h1>
       <p class="text-[14px] text-slate-500 mt-1">Everything that needs you, in one place.</p></div>
@@ -321,6 +323,10 @@
     { id:20, k:'group', t:'You were approved to join <b>Gauteng Founders</b>.', ago:'12 Sep', unread:false },
     { id:21, k:'system', t:'Welcome to SME South Africa. Finish your profile to get better matches.', ago:'2 Sep', unread:false, href:'member-account.html' }
   ];
+  // Preview: busy, a few, or none yet (?notifs=has|few|empty). Most members have few or none.
+  const NOTIF_MODE = (function(){ try { const q = new URLSearchParams(location.search).get('notifs'); if(q) sessionStorage.setItem('smeNotifs', q); return sessionStorage.getItem('smeNotifs') || 'has'; } catch(e){ return 'has'; } })();
+  if(NOTIF_MODE === 'empty'){ N = []; EARLIER.length = 0; }
+  if(NOTIF_MODE === 'few'){ N = [N[7], N[5]].map(x => Object.assign({}, x, { unread:false })); EARLIER.length = 0; }
   let filter = 'all', earlierShown = false;
   function renderFilters(){
     const n = N.filter(x => x.unread).length;
@@ -346,6 +352,9 @@
     let list = N.concat(earlierShown ? EARLIER : []);
     if(filter === 'unread') list = list.filter(x => x.unread); else if(filter !== 'all') list = list.filter(x => x.k === filter);
     const el = document.getElementById('n-list');
+    if(!list.length && filter === 'all'){ document.getElementById('n-more').classList.add('hidden'); el.innerHTML = `<div class="bg-white rounded-2xl border border-slate-200 p-8 sm:p-10 text-center"><div class="w-16 h-16 rounded-2xl bg-[#F0F5F9] grid place-items-center mx-auto"><i data-lucide="bell" class="w-8 h-8 text-slate-400"></i></div><p class="font-jakarta font-extrabold text-lg mt-4">No notifications yet</p><p class="text-sm text-slate-500 mt-1.5 max-w-md mx-auto leading-relaxed">We only tell you about things that need you. They will show up here when:</p>
+      <div class="mt-5 grid sm:grid-cols-2 gap-2.5 text-left max-w-lg mx-auto">${[['message-circle','Someone replies to you or mentions you'],['user-plus','A member wants to connect'],['landmark','Your funding application moves'],['calendar-days','A deadline or an event you joined is close']].map(x => `<div class="flex items-center gap-3 rounded-xl border border-slate-200 p-3 text-[13px] font-semibold"><i data-lucide="${x[0]}" class="w-4 h-4 text-[#DC183C] shrink-0"></i>${x[1]}</div>`).join('')}</div>
+      <div class="mt-6 flex gap-3 justify-center flex-wrap"><a href="member-hub.html" class="h-10 leading-10 px-5 rounded-full bg-[#DC183C] text-white font-bold text-sm">Join a conversation</a><a href="member-account.html" class="h-10 leading-10 px-5 rounded-full border border-slate-200 font-bold text-sm">Notification settings</a></div></div>`; lucide.createIcons(); return; }
     if(!list.length){ el.innerHTML = `<div class="bg-white rounded-2xl border border-slate-200 p-10 text-center"><div class="w-14 h-14 rounded-full bg-[#E4F5EE] grid place-items-center mx-auto"><i data-lucide="check" class="w-7 h-7 text-[#29A37A]"></i></div><p class="font-jakarta font-bold mt-3">${filter === 'unread' ? 'You are all caught up' : 'Nothing here yet'}</p><p class="text-sm text-slate-500 mt-1">${filter === 'unread' ? 'No unread notifications.' : 'When something happens in this category, it shows up here.'}</p></div>`; lucide.createIcons(); return; }
     const fresh = list.filter(x => x.unread), older = list.filter(x => !x.unread);
     el.innerHTML = (fresh.length ? `<p class="text-[11px] font-extrabold uppercase tracking-widest text-slate-400 mb-2 mt-1">New</p><div class="bg-white rounded-2xl border border-slate-200 overflow-hidden">${fresh.map(row).join('')}</div>` : '') + (older.length ? `<p class="text-[11px] font-extrabold uppercase tracking-widest text-slate-400 mb-2 mt-5">Earlier</p><div class="bg-white rounded-2xl border border-slate-200 overflow-hidden">${older.map(row).join('')}</div>` : '');
@@ -362,6 +371,8 @@
   function removeN(id){ N = N.filter(x => x.id !== id); const i = EARLIER.findIndex(x => x.id === id); if(i > -1) EARLIER.splice(i, 1); renderFilters(); render(); showToast('Notification removed.'); }
   function muteKind(k){ showToast(KIND[k][2] + ' notifications turned off. Change this in Account Settings.'); }
   function loadEarlier(){ earlierShown = true; document.getElementById('n-more').classList.add('hidden'); render(); }
+  document.querySelectorAll('[data-nf="' + NOTIF_MODE + '"]').forEach(a => a.className = a.className.replace('bg-slate-100 text-slate-600 hover:bg-slate-200', 'bg-[#0C1F31] text-white'));
+  if(NOTIF_MODE !== 'has') document.getElementById('n-more').classList.add('hidden');
   renderFilters(); render();
 
   lucide.createIcons();
