@@ -2224,51 +2224,37 @@
 
   // ONE application form, the same fields and order as the public wizard (public-funding.html).
   // Fields map to smesa_funding_apps (business_name, reg_no, amount_requested, claimed_turnover, business_years)
-  // plus what partner lender APIs need (SA ID, mobile, province, bank, consent to share). Prefilled from the profile.
-  const FF = {
-    amounts:['R10,000 to R50,000','R50,000 to R250,000','R250,000 to R1,000,000','R1,000,000 to R5,000,000'],
-    industries:['Agriculture','Construction','Education','Hospitality and tourism','Health','Manufacturing','Professional services','Retail','Technology','Transport and logistics','Other'],
-    years:['Less than 1 year','1 to 2 years','3 to 5 years','More than 5 years'],
-    turnover:['R0 to R50k','R50k to R100k','R100k to R250k','R250k to R500k','R500k and more'],
-    provinces:['Eastern Cape','Free State','Gauteng','KwaZulu-Natal','Limpopo','Mpumalanga','North West','Northern Cape','Western Cape'],
-    banks:['Absa','Capitec Business','Discovery Bank','FNB','Investec','Nedbank','Standard Bank','TymeBank','Other']
-  };
-  function ffSel(id, list, val){ return `<select id="${id}" class="w-full rounded-lg border border-[#D8DEE5] px-3 py-2.5 text-[13.5px] outline-none focus:border-[#DC183C] bg-white"><option value="">Select</option>${list.map(o => `<option ${o === val ? 'selected' : ''}>${o}</option>`).join('')}</select>`; }
+  // plus what partner lender APIs need (mobile, province, bank, consent to share). We do not collect ID numbers. Prefilled from the profile.
+  // Mirrors the live FluentForm 132 (funding_application) option for option.
+  const FF = {"amounts": ["R150,000 - R250,000", "R250,000 - R1 Million", "R1 Million - R2 Million", "More than R2 Million"], "industries": ["Accommodation", "Advertising and Marketing", "IT and Communications", "Manufacturing", "Agriculture and Farming", "Construction/Mining", "Education and Training", "Retail, Restaurants, Bar, Pub", "Maintenance Services", "Professional Services", "Transportation/Logistics", "Wholesale/Distribution", "Security", "Beauty Salons/Spas", "Food Service (Catering)", "Automotive", "Health", "Media and Production", "Property", "Finance/Insurance", "Funeral Homes", "Cleaning/Landscaping/Gardening", "Event Planning/Coordination", "Other"], "years": ["1 - 2 Years", "2 - 4 Years", "4 -5 Years", "5 - 10 Years", "10 + Years"], "turnover": ["R100K - R200K", "R300K - R500K", "R500K+"]};
+  function ffSel(id, list, val){ return `<select id="${id}" class="w-full rounded-lg border border-[#D8DEE5] px-3 py-2.5 text-[13.5px] outline-none focus:border-[#DC183C] bg-white"><option value="">Select</option>${list.map(o => `<option value="${o}" ${o === val ? 'selected' : ''}>${o.replace(' - ', ' to ').replace('4 -5', '4 to 5')}</option>`).join('')}</select>`; }
   function ffIn(id, val, ph, type){ return `<input id="${id}" type="${type || 'text'}" value="${esc(val || '')}" placeholder="${esc(ph || '')}" class="w-full rounded-lg border border-[#D8DEE5] px-3 py-2.5 text-[13.5px] outline-none focus:border-[#DC183C]">`; }
   function ffL(t, req, hint){ return `<label class="block text-[11px] font-bold uppercase tracking-wider text-[#6A7581] mb-1.5">${t}${req ? ' <span class="text-[#DC183C]">*</span>' : ''}${hint ? ` <span class="normal-case tracking-normal font-medium text-[#98A2AE]">${hint}</span>` : ''}</label>`; }
   function renderFundingNew(){
     const H = t => `<h3 class="font-jakarta font-extrabold text-lg mt-6 pt-5 mb-4 border-t border-[#E7EBEF] first:mt-0 first:pt-0 first:border-0">${t}</h3>`;
-    const amt = fundingAppState.amount ? (fundingAppState.amount <= 50000 ? FF.amounts[0] : fundingAppState.amount <= 250000 ? FF.amounts[1] : fundingAppState.amount <= 1000000 ? FF.amounts[2] : FF.amounts[3]) : '';
+    const amt = fundingAppState.amount ? (fundingAppState.amount <= 250000 ? FF.amounts[0] : fundingAppState.amount <= 1000000 ? FF.amounts[1] : fundingAppState.amount <= 2000000 ? FF.amounts[2] : FF.amounts[3]) : '';
     return `
       <button onclick="backToFundingList()" class="text-xs font-bold text-[#121A21] hover:text-[#DC183C] transition inline-flex items-center gap-1.5 mb-4"><i data-lucide="arrow-left" class="w-4 h-4"></i> Back to applications</button>
       <div class="rounded-2xl border border-[#E7EBEF] bg-[#FCFCFC] p-4 mb-5 flex items-start gap-3"><i data-lucide="sparkles" class="w-4 h-4 text-[#29A37A] mt-0.5 shrink-0"></i><p class="text-xs text-[#42505E]">We pre-filled this from your <button onclick="showView('profile')" class="font-bold text-[#DC183C] hover:underline">Business profile</button>. Check it before you submit. It is the same form as on the funding page, so nothing is asked twice.<button onclick="openBrief('fundingform')" class="dev-badge ml-1 w-4 h-4 rounded-full bg-[#DC183C] text-white items-center justify-center text-[9px] font-bold leading-none animate-pulse align-middle" title="Implementation notes">i</button></p></div>
       <div class="rounded-2xl border border-[#E7EBEF] shadow-sm bg-white p-5 sm:p-6">
         ${H('1. Your business')}
         <div class="grid sm:grid-cols-2 gap-4">
-          <div>${ffL('Company name', 1)}${ffIn('nf-company', FUNDING_PREFILL.company)}</div>
-          <div>${ffL('Company registration number', 1)}${ffIn('nf-reg', '2015/45471/07', 'YYYY/NNNNNN/NN')}</div>
-          <div>${ffL('Industry', 1)}${ffSel('nf-sector', FF.industries, 'Professional services')}</div>
-          <div>${ffL('Years in business', 1)}${ffSel('nf-years', FF.years, '3 to 5 years')}</div>
-          <div>${ffL('Monthly turnover', 1)}${ffSel('nf-turnover', FF.turnover, 'R250k to R500k')}</div>
-          <div>${ffL('Province', 1)}${ffSel('nf-prov', FF.provinces, 'Gauteng')}</div>
-          <div class="sm:col-span-2">${ffL('Business bank', 1)}${ffSel('nf-bank', FF.banks, 'FNB')}</div>
-        </div>
-        ${H('2. What you need')}
-        <div class="grid sm:grid-cols-2 gap-4">
           <div>${ffL('Funding amount', 1)}${ffSel('nf-amount', FF.amounts, amt)}</div>
-          <div>${ffL('Type of funding', 0, 'leave blank if unsure')}${ffSel('nf-product', FUNDING_PRODUCTS, fundingAppState.product || '')}</div>
-          <div class="sm:col-span-2">${ffL('What is it for?', 1)}<textarea id="nf-purpose" rows="3" placeholder="For example: stock for a confirmed order" class="w-full rounded-lg border border-[#D8DEE5] px-3 py-2.5 text-[13.5px] outline-none focus:border-[#DC183C]"></textarea></div>
+          <div>${ffL('Company name', 1)}${ffIn('nf-company', FUNDING_PREFILL.company)}</div>
+          <div>${ffL('Industry', 1)}${ffSel('nf-sector', FF.industries, 'Professional Services')}</div>
+          <div>${ffL('How long have you been in business?', 1)}${ffSel('nf-years', FF.years, '5 - 10 Years')}</div>
+          <div>${ffL('Company registration number', 1)}${ffIn('nf-reg', '2015/45471/07', 'YYYY/NNNNNN/NN')}</div>
+          <div>${ffL('Monthly turnover', 1)}${ffSel('nf-turnover', FF.turnover, 'R300K - R500K')}</div>
         </div>
-        ${H('3. Bank statements')}
-        <p class="text-xs text-[#6A7581] -mt-2 mb-3">Lenders check turnover from 6 to 12 months of statements. ${MEMBER_PLAN === 'premium' ? 'Attach them from your Documents, or upload new ones.' : 'Upload them here.'}</p>
-        <label class="flex items-center gap-3 rounded-xl border-2 border-dashed border-[#D8DEE5] hover:border-[#DC183C] p-4 cursor-pointer"><i data-lucide="upload-cloud" class="w-5 h-5 text-[#DC183C]"></i><span class="text-[13px]"><b id="nf-fn">${MEMBER_PLAN === 'premium' ? 'Bank statements (6 months) attached from Documents' : 'Upload 6 to 12 months of bank statements'}</b><span class="block text-[#6A7581] text-[12px]">PDF from your bank, not photos</span></span><input type="file" accept="application/pdf" multiple class="hidden" onchange="document.getElementById('nf-fn').textContent=this.files.length+' file(s) selected'"></label>
-        ${H('4. You, the owner')}
+        ${H('2. Bank statements')}
+        <p class="text-xs text-[#6A7581] -mt-2 mb-3">Lenders check turnover from your statements. ${MEMBER_PLAN === 'premium' ? 'Attach them from your Documents, or upload new ones.' : 'Upload them here.'}</p>
+        <label class="flex items-center gap-3 rounded-xl border-2 border-dashed border-[#D8DEE5] hover:border-[#DC183C] p-4 cursor-pointer"><i data-lucide="upload-cloud" class="w-5 h-5 text-[#DC183C]"></i><span class="text-[13px]"><b id="nf-fn">${MEMBER_PLAN === 'premium' ? 'Bank statements attached from Documents' : 'Upload bank statements'}</b><span class="block text-[#6A7581] text-[12px]">PDF from your bank, not photos</span></span><input type="file" accept="application/pdf" multiple class="hidden" onchange="document.getElementById('nf-fn').textContent=this.files.length+' file(s) selected'"></label>
+        ${H('3. Personal information')}
         <div class="grid sm:grid-cols-2 gap-4">
           <div>${ffL('First name', 1)}${ffIn('nf-first', 'Tshepho')}</div>
           <div>${ffL('Last name', 1)}${ffIn('nf-last', 'Joel')}</div>
-          <div>${ffL('South African ID number', 1, 'lenders need it for the credit check')}${ffIn('nf-id', '', '13 digits')}</div>
-          <div>${ffL('Mobile number', 1)}${ffIn('nf-mobile', '082 123 4567', '0XX XXX XXXX', 'tel')}</div>
-          <div class="sm:col-span-2">${ffL('Email', 1)}${ffIn('nf-email', 'tshepho@example.com', '', 'email')}</div>
+          <div>${ffL('Work email address', 1)}${ffIn('nf-email', 'tshepho@example.com', '', 'email')}</div>
+          <div>${ffL('Work number', 1)}${ffIn('nf-mobile', '082 123 4567', '0XX XXX XXXX', 'tel')}</div>
         </div>
         <label class="mt-5 flex items-start gap-2.5 text-[12px] text-[#42505E] leading-relaxed"><input id="nf-consent" type="checkbox" class="accent-[#DC183C] mt-0.5"> <span>I agree that SME South Africa may share this application with its funding partners, and that a partner may do a credit check on me and my business. I accept the <a href="public-terms.html" class="font-bold text-[#DC183C] hover:underline">Terms</a> and <a href="public-privacy.html" class="font-bold text-[#DC183C] hover:underline">Privacy Policy</a>.</span></label>
         <p id="nf-err" class="hidden mt-3 text-[12.5px] font-semibold text-[#DC183C]"></p>
@@ -2281,16 +2267,15 @@
 
   function submitNewFundingApp(){
     const g = id => document.getElementById(id), err = g('nf-err');
-    const need = [['nf-company','company name'],['nf-reg','registration number'],['nf-sector','industry'],['nf-years','years in business'],['nf-turnover','monthly turnover'],['nf-prov','province'],['nf-bank','bank'],['nf-amount','funding amount'],['nf-purpose','what it is for'],['nf-first','first name'],['nf-last','last name'],['nf-id','ID number'],['nf-mobile','mobile number'],['nf-email','email']];
+    const need = [['nf-amount','funding amount'],['nf-company','company name'],['nf-sector','industry'],['nf-years','years in business'],['nf-reg','registration number'],['nf-turnover','monthly turnover'],['nf-first','first name'],['nf-last','last name'],['nf-email','work email'],['nf-mobile','work number']];
     const miss = need.filter(([id]) => !(g(id).value || '').trim());
     const show = m => { err.textContent = m; err.classList.remove('hidden'); err.scrollIntoView({ behavior:'smooth', block:'center' }); };
     if(miss.length) return show('Please add your ' + miss.map(m => m[1]).slice(0, 3).join(', ') + (miss.length > 3 ? ' and ' + (miss.length - 3) + ' more' : '') + '.');
-    if(!/^\d{13}$/.test(g('nf-id').value.replace(/\s/g, ''))) return show('A South African ID number has 13 digits.');
     if(!g('nf-consent').checked) return show('Please tick the consent box so we can share your application with partners.');
-    const band = g('nf-amount').value, amount = { 0:50000, 1:250000, 2:1000000, 3:5000000 }[FF.amounts.indexOf(band)] || 0;
-    const product = g('nf-product').value || 'Business funding';
+    const band = g('nf-amount').value, amount = { 0:250000, 1:1000000, 2:2000000, 3:5000000 }[FF.amounts.indexOf(band)] || 0;
+    const product = fundingAppState.product || 'Business funding';
     const newId = 'APP-2026-' + (1000 + APPLICATIONS.length);
-    APPLICATIONS.unshift({ id:newId, product, icon:FUNDING_ICON_MAP[product] || 'banknote', amount, term:'To be agreed', purpose:g('nf-purpose').value.trim(), submitted:'today', updated:'just now', status:'submitted', step:0, lender:null, contact:null,
+    APPLICATIONS.unshift({ id:newId, product, icon:FUNDING_ICON_MAP[product] || 'banknote', amount, term:'To be agreed', purpose:'', submitted:'today', updated:'just now', status:'submitted', step:0, lender:null, contact:null,
       documents:[{ name:'Bank statements (6 to 12 months)', state: MEMBER_PLAN === 'premium' ? 'provided' : 'pending' }, { name:'Company registration (CIPC)', state:'pending' }],
       timeline:[{ date:'today', text:'Application submitted.', icon:'send' }] });
     fundingAppState.view = 'detail'; fundingAppState.activeId = newId;
@@ -2848,8 +2833,8 @@
     fundingform: {
       title:'One funding application form', sub:'Same fields and order inside My Business and on the public funding page',
       purpose:'There were two different forms asking different questions. Now there is one, so lenders always get the same data and members are never asked twice.',
-      data:'Business: name (business_name), CIPC number (reg_no), industry, years (business_years), monthly turnover (claimed_turnover), province, bank. Need: amount band (amount_requested), type, purpose. Bank statements (6 to 12 months PDF). Owner: first, last, SA ID number, mobile, email. Consent to share with partners and to a credit check, with timestamp.',
-      logic:'Signed-in members get it prefilled from the Business profile (ID number is never stored in the profile, it is asked each time). Logged-out visitors get the same fields as a 4-step wizard on the funding page. SA ID must be 13 digits (add the Luhn check on build). Premium members can attach statements from Documents. Partner API payloads (Lula, Retail Capital, others) map from these fields only. Funding approvals stay manual.',
+      data:'Exactly the live FluentForm 132: funding amount (amount_requested), company name (business_name), industry, years in business (business_years), CIPC number (reg_no), monthly turnover (claimed_turnover), bank statements upload, first name, last name, work email, work number. No ID number: SME South Africa does not collect it (a partner asks for it on their own platform if they need it). Consent to share with partners and to a credit check, with timestamp.',
+      logic:'Signed-in members get it prefilled from the Business profile. Logged-out visitors get the same fields as a 4-step wizard on the funding page. Premium members can attach statements from Documents. Partner API payloads (Lula, Retail Capital, others) map from these fields only. Funding approvals stay manual.',
       components:'Four sections, inline validation, consent, submit to My applications.' },
     getpaid: {
       title:'Get Paid', sub:'Free with a cap, unlimited on Premium',

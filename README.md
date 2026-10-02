@@ -18,7 +18,7 @@ Recreated in the strict 2026 brand; hands off to the member hub at the **Join / 
 | [public-resources.html](public-resources.html) | Resource library (MemberPress-gated downloads) |
 | [public-funding.html](public-funding.html) | Funding products, eligibility, **working loan calculator**, FAQ |
 | [public-solutions.html](public-solutions.html) | Solutions comparison — 27 categories |
-| [public-shop.html](public-shop.html) | WooCommerce merch — working cart |
+| [public-shop.html](public-shop.html) | WooCommerce merch, kept but not linked from any header or footer (no demand yet, Joel 2026-10-02) |
 
 ### Member community hub (logged-in)
 | File | Module |

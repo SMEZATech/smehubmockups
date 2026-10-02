@@ -118,7 +118,7 @@
     verify: { title:'Email verification', sub:'Pending, verified, expired and already-verified states',
       purpose:'Every sign-up passes through here. Today the live screens are scattered; this is the one design for all four outcomes so no member is left on a dead end.',
       data:'users.email_verified_at, verification_tokens(user_id, token_hash, expires_at, used_at), resend log for rate limiting.',
-      logic:'Pending: show the address, a one-tap link to Gmail or Outlook where the domain matches, tips for spam folders, Resend with a 60-second cooldown and a Use a different email option that invalidates the old token. Verified: next steps are photo and finish profile, with a clear Skip. Expired: one button to send a new link. Already verified: send to sign in. Token is single use, hashed at rest, 24 hours (align with the live verify flow before build). Resend limited per address and per IP. Wording avoids saying whether an email exists (no account enumeration) on the public resend path.',
+      logic:'Pending: show the address, a one-tap link to Gmail or Outlook where the domain matches, tips for spam folders, Resend with a 60-second cooldown and a Use a different email option that invalidates the old token. Verified: next steps are photo and finish profile, with a clear Skip. Expired: one button to send a new link. Already verified: send to sign in. Decided (Joel, 2026-10-02): token is single use, hashed at rest and lasts 24 hours. Resend limited per address and per IP. Wording avoids saying whether an email exists (no account enumeration) on the public resend path.',
       components:'Centre card, state switcher (mockup only), email chip, provider shortcut, resend with countdown, change-email dialog, next-step tiles.' }
   };
 
