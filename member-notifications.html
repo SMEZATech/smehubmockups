@@ -106,7 +106,7 @@
     
     <!-- Logo (Left) -->
     <a href="public-home.html" class="flex items-center shrink-0 group mr-6 py-2">
-      <img src="assets/logo-v1-lockup.svg" alt="SME South Africa" class="h-9 w-auto group-hover:scale-105 transition-transform" />
+      <img src="assets/logo-v1-lockup.svg" alt="SME South Africa" class="h-[42px] lg:h-[50px] w-auto" />
     </a>
 
     <!-- Primary Navigation (Center - BuddyBoss Style) -->
@@ -276,7 +276,7 @@
 <script>
   const BRIEFS = {
     notifications: { title:'Notifications', sub:'The full list behind the header bell',
-      purpose:'The bell badge showed a count but had no page behind it. This is the inbox for everything that needs the member: mentions, replies, connection requests, group invitations, events, funding status and compliance deadlines.',
+      purpose:'<b>Live today:</b> BuddyBoss notifications at /members/&lt;username&gt;/notifications/. <b>Built on Local:</b> sme-south-africa.local/community/notifications/ (sme-community). The bell badge showed a count but had no page behind it. This is the inbox for everything that needs the member: mentions, replies, connection requests, group invitations, events, funding status and compliance deadlines.',
       data:'notifications(id, user_id, kind, actor_id, object_type, object_id, text, read_at, acted_at, created_at). Kinds: mention, reply, conn, group, event, funding, system.',
       logic:'Unread rows are tinted with a dot, grouped New then Earlier. Connection requests and group invitations carry inline actions so the member does not leave the page, and the resolved result replaces the buttons. Per-item menu: mark read or unread, turn off that kind (writes the preference in Account Settings), remove. Filters by kind. Funding and compliance items are transactional and must stay on even if a kind is muted. In-app notifications are separate from email: email obeys the comms ceiling, this list does not. Retain 90 days, then archive.',
       components:'Filter chips, New/Earlier groups, notification row with icon, inline actions, row menu, empty state, load earlier.' }

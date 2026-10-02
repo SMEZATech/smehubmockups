@@ -28,7 +28,7 @@
   <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
 
     <a href="public-home.html" class="flex items-center shrink-0 group mr-6 py-2">
-      <img src="assets/logo-v1-lockup.svg" alt="SME South Africa" class="h-9 w-auto group-hover:scale-105 transition-transform" />
+      <img src="assets/logo-v1-lockup.svg" alt="SME South Africa" class="h-[42px] lg:h-[50px] w-auto" />
     </a>
 
     <nav class="hidden md:flex items-center justify-center gap-2 flex-1 px-4 h-full">
@@ -264,7 +264,7 @@
     lucide.createIcons();
 
     setTimeout(() => {
-      try { sessionStorage.setItem('smePlan', 'premium'); } catch (_) {}  // the member is Premium from here on (MemberPress on live)
+      try { sessionStorage.setItem('smePlan', 'premium'); sessionStorage.setItem('smePremiumWelcome', '1'); } catch (_) {}  // the member is Premium from here on (MemberPress on live)
       document.querySelectorAll('.checkout-step').forEach(el => el.classList.add('hidden'));
 
       const ref = 'SME-' + Math.random().toString(36).slice(2, 8).toUpperCase();

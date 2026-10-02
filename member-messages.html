@@ -106,7 +106,7 @@
     
     <!-- Logo (Left) -->
     <a href="public-home.html" class="flex items-center shrink-0 group mr-6 py-2">
-      <img src="assets/logo-v1-lockup.svg" alt="SME South Africa" class="h-9 w-auto group-hover:scale-105 transition-transform" />
+      <img src="assets/logo-v1-lockup.svg" alt="SME South Africa" class="h-[42px] lg:h-[50px] w-auto" />
     </a>
 
     <!-- Primary Navigation (Center - BuddyBoss Style) -->
@@ -280,7 +280,7 @@
 <script>
   const BRIEFS = {
     messages: { title:'Messages', sub:'Private one-to-one conversations',
-      purpose:'A private inbox between connected members, with a requests tray so strangers cannot land in the main inbox. Replaces the header inbox icon that went nowhere.',
+      purpose:'<b>Live today:</b> BuddyBoss messages at /members/&lt;username&gt;/messages/. <b>Built on Local:</b> sme-south-africa.local/community/messages/ (sme-community). A private inbox between connected members, with a requests tray so strangers cannot land in the main inbox. Replaces the header inbox icon that went nowhere.',
       data:'conversations(id, user_a, user_b, status accepted|request|blocked), messages(id, conversation_id, sender_id, body, image_id, created_at, read_at), blocks(user_id, blocked_id), message_reports.',
       logic:'Connections go straight to the inbox. A message from a non-connection arrives as a Request: the recipient can Accept, Decline or Block, and the sender cannot see read receipts until accepted. Read receipts show Seen on the sender\u2019s last message. Deleting a conversation is for the deleting user only. Blocking hides both ways. Decided (Joel, 2026-10-02): photos are allowed in messages, JPG or PNG up to 5 MB, re-encoded server side with location data stripped. Every thread shows a safety line about up-front fees and OTPs. Rate limit new conversations to stop spam. Mail notification for new messages must obey the comms ceiling (transactional class).',
       components:'Conversation list, search, All/Unread/Requests tabs, thread, request banner, composer with photo, new message dialog, conversation menu, report dialog, empty states.' }

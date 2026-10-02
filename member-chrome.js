@@ -36,6 +36,15 @@
    * same screens inside My Business (the live site does this with a 302 for logged-in visitors only).
    * Logged-out visitors and search engines keep the public page.
    */
+  /* Pages that live inside My Business for a signed-in member: the hub page and every link to it go there instead
+   * (single guides, stories and episodes stay on their own pages, with the member header). */
+  var MB = { 'podcast.html': 'podcast', 'public-guides.html': 'guides', 'public-founder-focus-category.html': 'stories',
+             'public-resources.html': 'resources', 'events.html': 'programmes', 'public-solutions.html': 'solutions',
+             'public-solution-categories.html': 'solutions', 'public-workspace.html': 'overview' };
+  if (mode === 'member') {
+    var _p0 = (location.pathname.split('/').pop() || '');
+    if (MB[_p0] && !window.SME_MEMBER_PAGE) { location.replace('member-workspace.html#' + MB[_p0]); return; }
+  }
   if (mode === 'member') {
     var _page = (location.pathname.split('/').pop() || '');
     if (_page === 'public-funding.html') {
@@ -47,6 +56,8 @@
       var a = e.target.closest && e.target.closest('a[href]');
       if (!a) return;
       var h = a.getAttribute('href') || '';
+      var hf = h.split(/[?#]/)[0];
+      if (MB[hf]) { e.preventDefault(); location.href = 'member-workspace.html#' + MB[hf]; return; }
       if (!/^public-funding\.html/.test(h)) return;
       e.preventDefault();
       location.href = 'member-workspace.html#' + (/[?&]apply=1|#apply/.test(h) ? 'funding-new' : 'funding-options');
@@ -103,7 +114,7 @@
     'members.html': 'connect', 'groups.html': 'connect', 'single-group.html': 'connect', 'single-member.html': 'connect',
     'forums.html': 'connect', 'single-discussion.html': 'connect', 'member-group-manage.html': 'connect',
     'member-messages.html': 'messaging', 'member-notifications.html': 'notifications',
-    'member-workspace.html': 'business', 'member-account.html': 'account', 'member-photo.html': 'account'
+    'member-workspace.html': 'business', 'member-account.html': 'account', 'member-finish-profile.html': 'account'
   };
   var here = (location.pathname.split('/').pop() || '');
   var activeKey = PAGE_KEY[here] || '';
@@ -126,7 +137,7 @@
   var headerHTML =
     '<header id="smeMemberHeader" class="bg-white border-b border-slate-200 sticky top-0 z-40 shadow-sm relative">' +
       '<div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-3">' +
-        '<a href="member-hub.html" class="flex items-center shrink-0 py-2"><img src="assets/logo-v1-lockup.svg" alt="SME South Africa" class="h-9 w-auto"></a>' +
+        '<a href="member-hub.html" class="flex items-center shrink-0 py-2"><img src="assets/logo-v1-lockup.svg" alt="SME South Africa" class="h-[42px] lg:h-[50px] w-auto"></a>' +
         '<nav aria-label="Main" class="hidden md:flex items-center justify-center gap-1 flex-1 h-full">' + desk + '</nav>' +
         '<div id="smeMemberCluster" class="flex items-center gap-1 sm:gap-2 shrink-0">' +
           '<button type="button" id="smeSearchBtn" aria-label="Search" class="w-9 h-9 grid place-items-center rounded-full hover:bg-slate-100 text-slate-600"><i data-lucide="search" class="w-[18px] h-[18px]"></i></button>' +
@@ -138,11 +149,11 @@
               mItem('member-account.html', 'receipt', 'Orders') +
               group('Explore') +
               mItem('public-articles.html', 'newspaper', 'Insights') +
-              mItem('public-guides.html', 'book-open', 'Guides') +
-              mItem('public-resources.html', 'folder-open', 'Resources') +
-              mItem('public-solutions.html', 'layout-grid', 'Solutions') +
-              mItem('events.html', 'calendar-days', 'Events') +
-              mItem('podcast.html', 'mic', 'Podcast') +
+              mItem('member-workspace.html#guides', 'book-open', 'Guides') +
+              mItem('member-workspace.html#resources', 'folder-open', 'Library') +
+              mItem('member-workspace.html#solutions', 'layout-grid', 'Solutions') +
+              mItem('member-workspace.html#programmes', 'calendar-days', 'Events') +
+              mItem('member-workspace.html#podcast', 'mic', 'Podcast') +
               mItem('public-help.html', 'life-buoy', 'Help Centre') +
               '<div class="border-t border-[#E7EBEF] mt-2 pt-1">' +
                 (typeof window.toggleDevMode === 'function' ? '<div class="flex items-center justify-between px-3 py-2.5"><span class="text-[10px] font-bold uppercase tracking-widest text-slate-500">Dev Mode</span><button id="devToggle" type="button" onclick="toggleDevMode()" class="w-8 h-4 rounded-full bg-slate-200 relative transition-colors focus:outline-none" aria-pressed="false"><span class="absolute left-0.5 top-0.5 w-3 h-3 rounded-full bg-white shadow-sm transition-transform duration-200"></span></button></div>' : '') +

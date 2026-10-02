@@ -106,7 +106,7 @@
     
     <!-- Logo (Left) -->
     <a href="public-home.html" class="flex items-center shrink-0 group mr-6 py-2">
-      <img src="assets/logo-v1-lockup.svg" alt="SME South Africa" class="h-9 w-auto group-hover:scale-105 transition-transform" />
+      <img src="assets/logo-v1-lockup.svg" alt="SME South Africa" class="h-[42px] lg:h-[50px] w-auto" />
     </a>
 
     <!-- Primary Navigation (Center - BuddyBoss Style) -->
@@ -275,7 +275,7 @@
 <script>
   const BRIEFS = {
     groupmanage: { title:'Group organiser and invitations', sub:'Members, requests, invitations, settings, and what the invitee sees',
-      purpose:'Organisers had no tools to run a group, and an invitation led nowhere. This covers both sides: the organiser console and the invitee\u2019s accept or decline screen.',
+      purpose:'<b>Live today:</b> BuddyBoss group admin at /groups/&lt;group&gt;/admin/. Not yet built in sme-community. Organisers had no tools to run a group, and an invitation led nowhere. This covers both sides: the organiser console and the invitee\u2019s accept or decline screen.',
       data:'group_members(group_id, user_id, role organiser|mod|member, status), group_requests(answer), group_invites(group_id, invitee user or email, token, sent_at, resent_count, revoked_at), group_bans, group_settings(privacy, approve_posts, members_can_invite, join_question, rules).',
       logic:'Roles: organisers change settings, roles and delete; moderators approve posts and requests and remove content; members post. Remove lets someone ask again, Ban does not and is silent. Requests show the member\u2019s answer to the join question; decline is silent. Invitations by name or email, 20 a day, revocable and resendable, plus a resettable invite link that still routes through approval. The invitee sees the rules before accepting, and accepting shows their name and business to members. Delete needs the group name typed. Invitation emails are transactional and obey the comms ceiling rules for that class. The last organiser cannot be demoted or leave without naming a successor.',
       components:'Tabs, member list with role chips and menu, request cards, invite form, link control, pending list, settings form with switches, danger zone, invitee card.' }

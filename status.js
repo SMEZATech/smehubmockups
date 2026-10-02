@@ -60,7 +60,6 @@ window.MOCKUP_STATUS = {
   "member-account.html": "finalised",
   "member-messages.html": "finalised",
   "member-notifications.html": "finalised",
-  "member-photo.html": "finalised",
   "member-group-manage.html": "finalised",
   "member-finish-profile.html": "finalised",
   "events.html": "finalised",
@@ -93,6 +92,7 @@ window.MOCKUP_STATUS = {
 window.MOCKUP_STATUS_PUBLISHED = "2026-10-02T19:12:34.982Z";
 /* Developer builds (staging), { mockup file: { url, status } }; status: "pending-review" | "reviewed" | "approved" */
 window.MOCKUP_DEV = {
+  "member-finish-profile.html": {"url":"https://smesouthafrica.co.za/finish-profile/?preview=1","status":"pending-review"},
   "public-home.html": {"url":"https://smesastg.wpengine.com/","status":"reviewed"},
   "public-articles.html": {"url":"https://smesastg.wpengine.com/sme-articles/","status":"approved"},
   "public-article-categories.html": {"url":"https://smesastg.wpengine.com/article-categories/","status":"reviewed"},

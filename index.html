@@ -11,6 +11,7 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
   <script src="status.js"></script>
+  <script src="built-local.js"></script>
   <script src="shared-notes.js"></script>
   <script src="feedback.js"></script>
   <script>
@@ -401,7 +402,8 @@
   const DEV = window.MOCKUP_DEV || {};
   const GROUP_OVERRIDES = window.MOCKUP_GROUPS || {};
   // Modules Joel has already built herself: shown as "Built" so the developer does not pick them up.
-  const BUILT = ['public-workspace.html','public-health-check.html','member-workspace.html'];
+  // Built on Tshepho's Local (built-local.js): developer must not build or change these.
+  const BUILT = window.MOCKUP_BUILT_LOCAL || ['public-workspace.html','public-health-check.html','member-workspace.html'];
   const DEVMETA = { 'pending-review':{label:'Pending review',c:'#FF9900'}, 'reviewed':{label:'Reviewed',c:'#3B82F6'}, 'approved':{label:'Approved',c:'#29A37A'} };
   const isLive = f => STATUS[f] === 'finalised';
   const DEFAULT_NAV = [
@@ -473,7 +475,6 @@
       { label:'Account Settings', file:'member-account.html', icon:'settings' },
       { label:'Messages',         file:'member-messages.html', icon:'inbox' },
       { label:'Notifications',    file:'member-notifications.html', icon:'bell' },
-      { label:'Profile Photo',    file:'member-photo.html', icon:'camera' },
       { label:'Group Organiser',  file:'member-group-manage.html', icon:'users-round' },
       { label:'Finish Profile',   file:'member-finish-profile.html', icon:'user-round-check' }
     ]},
@@ -690,14 +691,14 @@
       reviewed: { c:'#3B82F6', label:'Reviewed, dev build' },
       dev:      { c:'#FF9900', label:'Dev build pending review' },
       nodev:    { c:'#8A97A4', label:'Designed, no dev build yet' },
-      built:    { c:'#8B5CF6', label:'Already built' },
+      built:    { c:'#8B5CF6', label:"Built on Tshepho's Local" },
       design:   { c:'#DC183C', label:'Not designed yet' }
     };
     function stateOf(file){
+      if(BUILT.indexOf(file) >= 0) return 'built';  // Built on Tshepho's Local wins over any dev-build state
       if(readyForLiveFiles.indexOf(file) >= 0) return 'ready';
       if(signedOffFiles.indexOf(file) >= 0) return 'reviewed';
       if(pendingDevFiles.indexOf(file) >= 0) return 'dev';
-      if(BUILT.indexOf(file) >= 0 && !DEV[file]) return 'built';
       if(isLive(file)) return DEV[file] ? 'dev' : 'nodev';
       return 'design';
     }
@@ -708,6 +709,7 @@
       ['reviewed','Reviewed', f => stateOf(f) === 'reviewed'],
       ['dev','Dev pending', f => stateOf(f) === 'dev'],
       ['nodev','No dev yet', f => stateOf(f) === 'nodev'],
+      ['built',"Built on Local", f => stateOf(f) === 'built'],
       ['design','Not designed', f => stateOf(f) === 'design']
     ];
     const treeItems = [];
@@ -855,7 +857,7 @@
           `<a href="compare.html?m=${encodeURIComponent(file)}" class="inline-flex items-center gap-1.5 px-3 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-[#121A21] text-xs font-bold transition" title="Compare dev build vs mockup"><i data-lucide="git-compare" class="w-4 h-4"></i><span class="hidden sm:inline">Compare</span></a>`+
           `<a href="${dev.url}" target="_blank" rel="noopener" class="inline-flex items-center gap-1.5 px-3 h-8 rounded-full bg-[#0C1F31] hover:bg-[#16314a] text-white text-xs font-bold transition" title="Open the developer build"><i data-lucide="external-link" class="w-4 h-4"></i><span class="hidden sm:inline">Dev build</span></a>`;
         db.classList.remove('hidden'); db.classList.add('flex'); lucide.createIcons();
-      } else if(BUILT.indexOf(file)>=0){ db.innerHTML = `<span class="inline-flex items-center gap-1.5 px-2.5 h-8 rounded-full text-[11px] font-bold" style="background:#8B5CF61f;color:#7C3AED" title="Joel has already built this module. Developer: do not rebuild."><i data-lucide="badge-check" class="w-3.5 h-3.5"></i> Built, no dev work needed</span>`; db.classList.remove('hidden'); db.classList.add('flex'); lucide.createIcons();
+      } else if(BUILT.indexOf(file)>=0){ db.innerHTML = `<span class="inline-flex items-center gap-1.5 px-2.5 h-8 rounded-full text-[11px] font-bold" style="background:#8B5CF61f;color:#7C3AED" title="Built on Tshepho's Local (sme-south-africa.local). Developer: do not build or change this page."><i data-lucide="badge-check" class="w-3.5 h-3.5"></i> Built on Tshepho's Local</span>`; db.classList.remove('hidden'); db.classList.add('flex'); lucide.createIcons();
       } else { db.classList.add('hidden'); db.classList.remove('flex'); db.innerHTML=''; }
     }
     document.querySelectorAll('.nav-item').forEach(n=> n.classList.toggle('active', n.dataset.file===file || n.dataset.devfile===file));
