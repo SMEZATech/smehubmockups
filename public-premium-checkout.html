@@ -75,7 +75,7 @@
             <a href="member-account.html" class="block px-3 py-2 rounded-lg hover:bg-slate-50 hover:text-[#DC183C] transition-colors">Account Settings</a>
           </div>
           <div class="p-2 border-t border-slate-100">
-            <a href="#" class="block px-3 py-2 text-sm font-semibold text-[#DC183C] hover:bg-[#FDECEF] rounded-lg transition-colors">Sign Out</a>
+            <a href="public-home.html?as=visitor" class="block px-3 py-2 text-sm font-semibold text-[#DC183C] hover:bg-[#FDECEF] rounded-lg transition-colors">Sign Out</a>
           </div>
           <div class="px-5 py-3 border-t border-slate-100 bg-slate-50 flex items-center justify-between">
             <span class="text-[10px] font-bold uppercase tracking-widest text-slate-500">Dev Mode</span>
@@ -100,7 +100,7 @@
 </header>
 
 <div class="checkout-step max-w-6xl mx-auto px-4 sm:px-6 pt-6">
-  <nav aria-label="Breadcrumb" class="text-xs text-[#6A7581] flex items-center flex-wrap gap-x-1.5"><a href="member-hub.html" class="hover:text-[#DC183C] transition">Home</a><span class="text-slate-500">›</span><a href="public-pricing.html" class="hover:text-[#DC183C] transition">Pricing</a><span class="text-slate-500">›</span><span class="text-[#121A21] font-medium truncate">Upgrade to Premium</span></nav>
+  <nav aria-label="Breadcrumb" class="text-xs text-[#6A7581] flex items-center flex-wrap gap-x-1.5"><a href="member-hub.html" class="hover:text-[#DC183C] transition">Home</a><span class="text-slate-500">›</span><a href="member-workspace.html" class="hover:text-[#DC183C] transition">Workspace</a><span class="text-slate-500">›</span><span class="text-[#121A21] font-medium truncate">Upgrade to Premium</span></nav>
 </div>
 
 <section class="checkout-step max-w-6xl mx-auto px-4 sm:px-6 pt-4 pb-2">
@@ -280,7 +280,7 @@
   }
 
   const BRIEF={title:'Premium Checkout, Upgrade to Premium',sub:'In-app upgrade for an already-authenticated Standard member + PayFast handoff · requires login',
-    purpose:'Reached only from an "Upgrade to Premium" CTA while logged in (member-account.html, member-workspace.html, the mobile tab bar\'s Upgrade entry), this is not a public signup page. Since the visitor is already a known Standard member, their name, email and phone are never re-asked: the account card pulls them from the session the same way member-account.html does. Billing address is pre-filled from their stored profile where we have it, shown editable in case it\'s changed. A separate, logged-out flow (<code>public-auth.html</code> → <code>public-pricing.html</code>) still exists for brand-new signups; this page is the upgrade path only, so there\'s no "sign in instead" note and no link back to the Standard plan, reversible if we ever want to be, via the ★ Change plan action in account settings.',
+    purpose:'Reached only from an "Upgrade to Premium" CTA while logged in (member-account.html, member-workspace.html, the mobile tab bar\'s Upgrade entry), this is not a public signup page. Since the visitor is already a known Standard member, their name, email and phone are never re-asked: the account card pulls them from the session the same way member-account.html does. Billing address is pre-filled from their stored profile where we have it, shown editable in case it\'s changed. A separate, logged-out flow (<code>public-auth.html</code> → <code>archive/public-pricing.html</code>) still exists for brand-new signups; this page is the upgrade path only, so there\'s no "sign in instead" note and no link back to the Standard plan, reversible if we ever want to be, via the ★ Change plan action in account settings.',
     data:'MemberPress: <code>Member { id }</code> (read-only, from session) + <code>Address { street, city, province, postal_code }</code> (read/write, pre-filled from the member\'s stored profile) + <code>Transaction { membership_id:"premium", amount:99, gateway:"PayFast", status }</code>. No password field, the member already has one.',
     logic:'No plan switcher and no collapsible sections, billing and payment are always visible since this visitor is already committed to Premium. The account and billing cards both carry a small "From your account" badge to signal auto-filled data; editing billing fields is allowed, editing the account card routes to member-account.html instead of inline editing. Submit swaps every <code>.checkout-step</code> element for <code>#successView</code> (this is the screen the Mohlanka review flagged as missing entirely, there was previously no step after payment at all, just a toast), a receipt card with a generated reference, the next billing date, and two exits: straight into the Workspace, or billing management in Account Settings.',
     components:'account summary (read-only, avatar + name + email + phone) · pre-filled billing address · payment fields · consent checkbox · sticky Premium order summary · post-payment success screen with receipt.',

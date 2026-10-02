@@ -66,7 +66,11 @@
   .no-scrollbar::-webkit-scrollbar { display:none; }
   .no-scrollbar { -ms-overflow-style:none; scrollbar-width:none; }
 
-  /* ===== Workspace secondary nav (SaaS tab strip, replaces the old sidebar) ===== */
+  /* ===== Workspace left sidebar (desktop) ===== */
+  .app-sidebar .navlink.active { background:#DC183C; color:#fff; }
+  @media (max-width: 1023px) { .app-sidebar { display:none; } }
+
+  /* ===== Workspace mobile nav (tab strip + More grid, below lg only) ===== */
   .wtab { color:#6A7581; }
   .wtab.active { color:#DC183C; border-bottom-color:#DC183C !important; }
   .more-item.active { border-color:#DC183C !important; background:#FDECEF; }
@@ -150,7 +154,7 @@
             <a href="member-account.html" class="block px-3 py-2 rounded-lg hover:bg-slate-50 hover:text-[#DC183C] transition-colors">Account Settings</a>
           </div>
           <div class="p-2 border-t border-slate-100">
-            <a href="#" class="block px-3 py-2 text-sm font-semibold text-[#DC183C] hover:bg-[#FDECEF] rounded-lg transition-colors">Sign Out</a>
+            <a href="public-home.html?as=visitor" class="block px-3 py-2 text-sm font-semibold text-[#DC183C] hover:bg-[#FDECEF] rounded-lg transition-colors">Sign Out</a>
           </div>
           <div class="px-5 py-3 border-t border-slate-100 bg-slate-50 flex items-center justify-between">
             <span class="text-[10px] font-bold uppercase tracking-widest text-slate-500">Dev Mode</span>
@@ -178,16 +182,20 @@
   </div>
 </header>
 
-<!-- Mobile bottom tab bar, Home / Community / Workspace / Account -->
+<!-- Mobile bottom tab bar, Home / Connect / Events / Workspace / Account -->
 <nav aria-label="Quick nav" class="lg:hidden fixed bottom-0 inset-x-0 z-40 bg-white border-t border-[#E7EBEF] shadow-[0_-4px_16px_-4px_rgba(12,31,49,0.08)]" style="padding-bottom:env(safe-area-inset-bottom)">
-  <div class="grid grid-cols-4">
+  <div class="grid grid-cols-5">
     <a href="member-hub.html" class="flex flex-col items-center justify-center gap-1 py-2.5 text-slate-500 hover:text-[#121A21] transition">
       <i data-lucide="home" class="w-5 h-5"></i>
       <span class="font-jakarta text-[11px] font-bold">Home</span>
     </a>
     <a href="members.html" class="flex flex-col items-center justify-center gap-1 py-2.5 text-slate-500 hover:text-[#121A21] transition">
       <i data-lucide="users" class="w-5 h-5"></i>
-      <span class="font-jakarta text-[11px] font-bold">Community</span>
+      <span class="font-jakarta text-[11px] font-bold">Connect</span>
+    </a>
+    <a href="events.html" class="flex flex-col items-center justify-center gap-1 py-2.5 text-slate-500 hover:text-[#121A21] transition">
+      <i data-lucide="calendar-days" class="w-5 h-5"></i>
+      <span class="font-jakarta text-[11px] font-bold">Events</span>
     </a>
     <a href="member-workspace.html" class="relative flex flex-col items-center justify-center gap-1 py-2.5 text-[#DC183C]">
       <span class="absolute top-0 left-1/2 -translate-x-1/2 w-8 h-0.5 rounded-full bg-[#DC183C]"></span>
@@ -201,10 +209,118 @@
   </div>
 </nav>
 
-<div class="max-w-7xl mx-auto px-4 sm:px-6">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col lg:flex-row gap-6 lg:items-start">
 
-  <!-- ===================== WORKSPACE SECONDARY NAV (SaaS tab strip, replaces the old left sidebar) ===================== -->
-  <div class="sticky top-16 z-30 bg-[#FCFCFC]/95 backdrop-blur-sm border-b border-[#E7EBEF] -mx-4 sm:-mx-6 px-4 sm:px-6">
+  <!-- ===================== SIDEBAR ===================== -->
+  <aside class="app-sidebar hidden lg:flex w-64 shrink-0 flex-col gap-6 bg-[#0C1F31] text-white rounded-2xl overflow-hidden p-5 lg:sticky lg:top-24">
+
+    <!-- Member preview -->
+    <div class="bg-white rounded-2xl border border-slate-100 overflow-hidden reveal -mx-5 -mt-5">
+      <div class="h-16 bg-[#0C1F31] relative">
+        <div class="absolute inset-0 opacity-40" style="background: radial-gradient(circle at 30% 50%, #FFF1E0 0%, transparent 65%);"></div>
+        <div class="absolute -bottom-8 left-1/2 -translate-x-1/2">
+          <div class="w-16 h-16 rounded-full bg-gradient-to-br from-[#DC183C] to-[#FF9900] grid place-items-center font-jakarta font-extrabold text-white text-xl ring-4 ring-white">TJ</div>
+        </div>
+      </div>
+      <div class="pt-10 pb-4 px-4 text-center">
+        <a href="member-account.html" class="font-jakarta font-extrabold uppercase text-base text-[#121A21] tracking-wide hover:text-[#DC183C] transition">Tshepho Joel</a>
+        <p class="text-xs text-slate-500 mt-0.5">Founder at <span class="font-bold text-[#121A21]">Langa Holdings</span></p>
+        <a href="member-account.html" class="inline-flex items-center gap-1 mt-2 text-[11px] font-bold text-[#DC183C] uppercase tracking-wide hover:underline">View profile <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i></a>
+      </div>
+      <div class="grid grid-cols-3 border-t border-slate-100 text-center pb-2">
+        <div class="py-2.5 border-r border-slate-100">
+          <p class="text-[8.5px] font-bold uppercase tracking-widest text-slate-500">Plan</p>
+          <p class="font-jakarta font-bold text-xs text-[#121A21] mt-1">Growing</p>
+        </div>
+        <div class="py-2.5 border-r border-slate-100">
+          <p class="text-[8.5px] font-bold uppercase tracking-widest text-slate-500">Sector</p>
+          <p class="font-jakarta font-bold text-xs text-[#121A21] mt-1">Fintech</p>
+        </div>
+        <div class="py-2.5">
+          <p class="text-[8.5px] font-bold uppercase tracking-widest text-slate-500">Region</p>
+          <p class="font-jakarta font-bold text-xs text-[#121A21] mt-1">GP</p>
+        </div>
+      </div>
+    </div>
+
+    <nav>
+      <p class="text-[10px] font-bold uppercase tracking-widest text-white/40 px-2.5 mb-2">Member Workspace</p>
+      <div class="flex flex-col gap-0.5">
+        <!-- Nav order and slugs match sme-success-core's nav() exactly -->
+        <button data-view="overview" onclick="showView('overview')" class="navlink flex items-center gap-2.5 px-2.5 py-2.5 rounded-lg text-[13.5px] font-semibold text-white/75 hover:bg-white/[0.06] hover:text-white transition text-left">
+          <i data-lucide="layout-dashboard" class="w-4 h-4 shrink-0 opacity-90"></i> Overview
+        </button>
+        <button data-view="profile" onclick="showView('profile')" class="navlink flex items-center gap-2.5 px-2.5 py-2.5 rounded-lg text-[13.5px] font-semibold text-white/75 hover:bg-white/[0.06] hover:text-white transition text-left">
+          <i data-lucide="building-2" class="w-4 h-4 shrink-0 opacity-90"></i> Business Profile
+        </button>
+        <button data-view="success-plan" onclick="showView('success-plan')" class="navlink flex items-center gap-2.5 px-2.5 py-2.5 rounded-lg text-[13.5px] font-semibold text-white/75 hover:bg-white/[0.06] hover:text-white transition text-left">
+          <i data-lucide="list-checks" class="w-4 h-4 shrink-0 opacity-90"></i> My Success Plan
+        </button>
+        <button data-view="progress" onclick="showView('progress')" class="navlink flex items-center gap-2.5 px-2.5 py-2.5 rounded-lg text-[13.5px] font-semibold text-white/75 hover:bg-white/[0.06] hover:text-white transition text-left">
+          <i data-lucide="trending-up" class="w-4 h-4 shrink-0 opacity-90"></i> Progress
+        </button>
+        <button data-view="growth" onclick="showView('growth')" class="navlink flex items-center gap-2.5 px-2.5 py-2.5 rounded-lg text-[13.5px] font-semibold text-white/75 hover:bg-white/[0.06] hover:text-white transition text-left">
+          <i data-lucide="rocket" class="w-4 h-4 shrink-0 opacity-90"></i> Growth Hub
+        </button>
+        <button data-view="match" onclick="showView('match')" class="navlink flex items-center gap-2.5 px-2.5 py-2.5 rounded-lg text-[13.5px] font-semibold text-white/75 hover:bg-white/[0.06] hover:text-white transition text-left">
+          <i data-lucide="search-check" class="w-4 h-4 shrink-0 opacity-90"></i> Find a Solution
+        </button>
+        <button data-view="compliance" onclick="showView('compliance')" class="navlink flex items-center gap-2.5 px-2.5 py-2.5 rounded-lg text-[13.5px] font-semibold text-white/75 hover:bg-white/[0.06] hover:text-white transition text-left">
+          <i data-lucide="shield-check" class="w-4 h-4 shrink-0 opacity-90"></i> Compliance
+        </button>
+        <button data-view="programmes" onclick="showView('programmes')" class="navlink flex items-center gap-2.5 px-2.5 py-2.5 rounded-lg text-[13.5px] font-semibold text-white/75 hover:bg-white/[0.06] hover:text-white transition text-left">
+          <i data-lucide="calendar-days" class="w-4 h-4 shrink-0 opacity-90"></i> Events
+        </button>
+        <button data-view="funding" onclick="showView('funding')" class="navlink flex items-center gap-2.5 px-2.5 py-2.5 rounded-lg text-[13.5px] font-semibold text-white/75 hover:bg-white/[0.06] hover:text-white transition text-left">
+          <i data-lucide="banknote" class="w-4 h-4 shrink-0 opacity-90"></i> Funding
+        </button>
+        <button data-view="cashflow" onclick="showView('cashflow')" class="navlink flex items-center gap-2.5 px-2.5 py-2.5 rounded-lg text-[13.5px] font-semibold text-white/75 hover:bg-white/[0.06] hover:text-white transition text-left">
+          <i data-lucide="wallet" class="w-4 h-4 shrink-0 opacity-90"></i> Cash Flow
+        </button>
+        <button data-view="invoices" onclick="showView('invoices')" class="navlink flex items-center gap-2.5 px-2.5 py-2.5 rounded-lg text-[13.5px] font-semibold text-white/75 hover:bg-white/[0.06] hover:text-white transition text-left">
+          <i data-lucide="receipt" class="w-4 h-4 shrink-0 opacity-90"></i> Get Paid
+        </button>
+        <button data-view="documents" onclick="showView('documents')" class="navlink flex items-center gap-2.5 px-2.5 py-2.5 rounded-lg text-[13.5px] font-semibold text-white/75 hover:bg-white/[0.06] hover:text-white transition text-left">
+          <i data-lucide="folder-check" class="w-4 h-4 shrink-0 opacity-90"></i> Documents
+        </button>
+        <button data-view="experts" onclick="showView('experts')" class="navlink flex items-center gap-2.5 px-2.5 py-2.5 rounded-lg text-[13.5px] font-semibold text-white/75 hover:bg-white/[0.06] hover:text-white transition text-left">
+          <i data-lucide="user-round-search" class="w-4 h-4 shrink-0 opacity-90"></i> Experts
+        </button>
+        <button data-view="resources" onclick="showView('resources')" class="navlink flex items-center gap-2.5 px-2.5 py-2.5 rounded-lg text-[13.5px] font-semibold text-white/75 hover:bg-white/[0.06] hover:text-white transition text-left">
+          <i data-lucide="book-open" class="w-4 h-4 shrink-0 opacity-90"></i> Resources
+        </button>
+        <button data-view="perks" onclick="showView('perks')" class="navlink flex items-center gap-2.5 px-2.5 py-2.5 rounded-lg text-[13.5px] font-semibold text-white/75 hover:bg-white/[0.06] hover:text-white transition text-left">
+          <i data-lucide="gift" class="w-4 h-4 shrink-0 opacity-90"></i> Member Perks
+        </button>
+        <button data-view="passport" onclick="showView('passport')" class="navlink flex items-center gap-2.5 px-2.5 py-2.5 rounded-lg text-[13.5px] font-semibold text-white/75 hover:bg-white/[0.06] hover:text-white transition text-left">
+          <i data-lucide="file-text" class="w-4 h-4 shrink-0 opacity-90"></i> Business Passport
+        </button>
+        <button data-view="settings" onclick="showView('settings')" class="navlink flex items-center gap-2.5 px-2.5 py-2.5 rounded-lg text-[13.5px] font-semibold text-white/75 hover:bg-white/[0.06] hover:text-white transition text-left">
+          <i data-lucide="settings" class="w-4 h-4 shrink-0 opacity-90"></i> Settings
+        </button>
+      </div>
+    </nav>
+
+    <nav>
+      <p class="text-[10px] font-bold uppercase tracking-widest text-white/40 px-2.5 mb-2">Community</p>
+      <div class="flex flex-col gap-0.5">
+        <a href="member-hub.html" class="flex items-center gap-2.5 px-2.5 py-2.5 rounded-lg text-[13.5px] font-semibold text-white/75 hover:bg-white/[0.06] hover:text-white transition text-left">
+          <i data-lucide="users" class="w-4 h-4 shrink-0 opacity-90"></i> Community
+        </a>
+        <a href="member-account.html" class="flex items-center gap-2.5 px-2.5 py-2.5 rounded-lg text-[13.5px] font-semibold text-white/75 hover:bg-white/[0.06] hover:text-white transition text-left">
+          <i data-lucide="circle-user" class="w-4 h-4 shrink-0 opacity-90"></i> Account
+        </a>
+        <a href="public-help.html" class="flex items-center gap-2.5 px-2.5 py-2.5 rounded-lg text-[13.5px] font-semibold text-white/75 hover:bg-white/[0.06] hover:text-white transition text-left">
+          <i data-lucide="life-buoy" class="w-4 h-4 shrink-0 opacity-90"></i> Get Help
+        </a>
+      </div>
+    </nav>
+  </aside>
+
+  <div class="flex-1 flex flex-col min-w-0">
+
+  <!-- ===================== MOBILE WORKSPACE NAV (below lg only; desktop uses the sidebar above) (SaaS tab strip, replaces the old left sidebar) ===================== -->
+  <div class="lg:hidden sticky top-16 z-30 bg-[#FCFCFC]/95 backdrop-blur-sm border-b border-[#E7EBEF] -mx-4 sm:-mx-6 px-4 sm:px-6">
     <div class="flex items-center gap-1 max-w-[1180px] mx-auto overflow-x-auto no-scrollbar">
       <button data-view="overview" onclick="showView('overview')" class="navlink wtab shrink-0 flex items-center gap-2 px-3.5 h-12 text-[13.5px] font-bold font-jakarta border-b-[3px] border-transparent transition-colors whitespace-nowrap">
         <i data-lucide="layout-dashboard" class="w-4 h-4"></i> Overview
@@ -310,7 +426,7 @@
   </div>
 
   <!-- ===================== MAIN ===================== -->
-  <main class="py-7 sm:py-8 max-w-[1180px] w-full mx-auto">
+  <main class="py-7 sm:py-8 max-w-[1180px] w-full">
 
       <!-- ============ VIEW: OVERVIEW ============ -->
       <div class="view active" id="view-overview">
@@ -1014,6 +1130,7 @@
       </div>
 
     </main>
+  </div>
 </div>
 
 <!-- Overlay root (Dev Mode briefs) -->
@@ -2092,7 +2209,7 @@
   const BRIEFS = {
     score: {
       title:'Business Health Score', sub:'Deterministic 5-dimension composite',
-      purpose:'The member-facing headline of SME Success Core, a single number members can watch move over time. It exists to make the value of a check-in legible in 3 seconds, and to anchor everything else in this module (Success Plan, compliance alerts, programme matches) as things that came <i>from</i> this score rather than generic content.',
+      purpose:'<b style="color:#DC183C">BUILD STATUS: ALREADY BUILT.</b> Joel has personally built this module, so the developer must not build or rebuild it. This mockup is a visual and behaviour reference only.<br/><br/>The member-facing headline of SME Success Core, a single number members can watch move over time. It exists to make the value of a check-in legible in 3 seconds, and to anchor everything else in this module (Success Plan, compliance alerts, programme matches) as things that came <i>from</i> this score rather than generic content.',
       data:'<code>business_health_checks</code>: one row per completed check-in, <code>{ member_id, submitted_at, dimension_scores: {cash_flow, compliance, customers, operations, growth_readiness}, composite_score, delta_from_previous }</code>. Composite is a deterministic weighted average of the five dimensions, not an LLM output, same inputs must always produce the same score.',
       logic:'Score and delta are read directly off the member\'s latest <code>business_health_checks</code> row, no live computation on page load. A new check-in inserts a new row; the delta badge compares to the immediately prior row for the same member.',
       components:'SVG ring (stroke-dasharray) · delta badge · one-line coaching note (templated off which dimension is lowest).',

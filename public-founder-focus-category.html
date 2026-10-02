@@ -32,7 +32,7 @@
     </a>
     <nav class="hidden lg:flex items-center gap-1 ml-auto">
       <div class="relative" onmouseleave="closeChromeDrop('articles')">
-        <button onclick="toggleChromeDrop('articles')" class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition inline-flex items-center gap-1">Articles <i data-lucide="chevron-down" class="w-3.5 h-3.5"></i></button>
+        <button onclick="toggleChromeDrop('articles')" class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition inline-flex items-center gap-1">Insights <i data-lucide="chevron-down" class="w-3.5 h-3.5"></i></button>
         <div id="dropArticles" class="hidden absolute left-0 top-full mt-1 w-64 bg-white rounded-xl border border-[#E7EBEF] shadow-xl py-2 z-30">
           <a href="public-category.html" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-[#DC183C] transition">Starting a Business</a>
           <a href="public-category.html" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-[#DC183C] transition">Managing a Business</a>
@@ -69,7 +69,7 @@
     <div class="flex items-center gap-1 sm:gap-2 ml-2 sm:ml-3">
       <button onclick="toggleChromeSearch()" aria-label="Search" class="w-9 h-9 grid place-items-center rounded-full hover:bg-slate-100 text-slate-600"><i data-lucide="search" class="w-4 h-4"></i></button>
       <a href="public-auth.html" class="hidden sm:inline-flex items-center px-3 h-9 rounded-full text-sm font-bold text-[#121A21] hover:bg-slate-100 transition">Sign in</a>
-      <a href="public-pricing.html" class="inline-flex items-center px-4 h-9 rounded-full text-sm font-bold text-white bg-[#DC183C] hover:bg-[#B0142F] transition">Join Now</a>
+      <a href="public-auth.html#join" class="inline-flex items-center px-4 h-9 rounded-full text-sm font-bold text-white bg-[#DC183C] hover:bg-[#B0142F] transition">Join Now</a>
       <button onclick="toggleChromeBurger()" aria-label="Menu" class="lg:hidden w-9 h-9 grid place-items-center rounded-full hover:bg-slate-100 text-slate-600 ml-1">
         <i id="chromeBurgerIcon" data-lucide="menu" class="w-5 h-5"></i>
       </button>
@@ -77,7 +77,7 @@
   </div>
   <div id="chromeBurgerPanel" class="hidden lg:hidden border-t border-[#E7EBEF] bg-white">
     <nav class="max-w-7xl mx-auto px-4 sm:px-6 py-2 flex flex-col">
-      <a href="public-articles.html"  class="px-2 py-3 text-sm font-semibold text-slate-700 hover:text-[#DC183C] border-b border-slate-100">Articles</a>
+      <a href="public-articles.html"  class="px-2 py-3 text-sm font-semibold text-slate-700 hover:text-[#DC183C] border-b border-slate-100">Insights</a>
       <a href="public-resources.html" class="px-2 py-3 text-sm font-semibold text-slate-700 hover:text-[#DC183C] border-b border-slate-100">Resources</a>
       <a href="public-funding.html"   class="px-2 py-3 text-sm font-semibold text-slate-700 hover:text-[#DC183C] border-b border-slate-100">Funding</a>
       <a href="public-solutions.html" class="px-2 py-3 text-sm font-semibold text-slate-700 hover:text-[#DC183C] border-b border-slate-100">Solutions</a>
@@ -90,7 +90,7 @@
     <div class="w-full max-w-2xl flex items-center gap-3">
       <div class="relative flex-1">
         <i data-lucide="search" class="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500"></i>
-        <input id="chromeSearchInput" type="text" placeholder="Search articles, resources, funding…" class="w-full h-11 pl-11 pr-4 text-sm bg-slate-50 border border-[#DC183C] rounded-full focus:outline-none focus:ring-2 focus:ring-[#DC183C]/20" onkeydown="if(event.key==='Enter') location.href='public-search.html';" />
+        <input id="chromeSearchInput" type="text" placeholder="Search insights, resources, funding…" class="w-full h-11 pl-11 pr-4 text-sm bg-slate-50 border border-[#DC183C] rounded-full focus:outline-none focus:ring-2 focus:ring-[#DC183C]/20" onkeydown="if(event.key==='Enter') location.href='public-search.html';" />
       </div>
       <button onclick="toggleChromeSearch()" class="text-slate-500 hover:text-[#121A21] p-2 transition-colors shrink-0" aria-label="Close search"><i data-lucide="x" class="w-5 h-5"></i></button>
     </div>
@@ -134,7 +134,7 @@
       <nav aria-label="Breadcrumb" class="text-xs text-white/55 flex items-center flex-wrap gap-x-1.5 mb-4">
         <a href="public-home.html" class="hover:text-white transition">Home</a>
         <span class="text-white/30">›</span>
-        <a href="public-articles.html" class="hover:text-white transition">Articles</a>
+        <a href="public-articles.html" class="hover:text-white transition">Insights</a>
         <span class="text-white/30">›</span>
         <span class="text-white/85 font-medium truncate">Founder Focus</span>
       </nav>
@@ -400,12 +400,12 @@
         <h2 class="font-jakarta font-extrabold text-xl">More in Founder Focus</h2>
         <p class="text-sm text-[#6A7581] mt-1.5 leading-relaxed max-w-2xl">Retail, Tech & Innovation, Impact, Agriculture, and Youth, explore every sub-topic in this category.</p>
         <div class="flex flex-wrap gap-2 mt-4">
-          <a href="#" class="inline-flex items-center px-3 py-1.5 rounded-full text-xs font-semibold bg-[#FCFCFC] border border-[#E7EBEF] text-[#121A21] hover:bg-[#FDECEF] hover:text-[#DC183C] hover:border-[#DC183C] transition-colors">Retail & Franchising</a>
-          <a href="#" class="inline-flex items-center px-3 py-1.5 rounded-full text-xs font-semibold bg-[#FCFCFC] border border-[#E7EBEF] text-[#121A21] hover:bg-[#FDECEF] hover:text-[#DC183C] hover:border-[#DC183C] transition-colors">Tech & Innovation</a>
-          <a href="#" class="inline-flex items-center px-3 py-1.5 rounded-full text-xs font-semibold bg-[#FCFCFC] border border-[#E7EBEF] text-[#121A21] hover:bg-[#FDECEF] hover:text-[#DC183C] hover:border-[#DC183C] transition-colors">Impact & Services</a>
-          <a href="#" class="inline-flex items-center px-3 py-1.5 rounded-full text-xs font-semibold bg-[#FCFCFC] border border-[#E7EBEF] text-[#121A21] hover:bg-[#FDECEF] hover:text-[#DC183C] hover:border-[#DC183C] transition-colors">Agriculture</a>
-          <a href="#" class="inline-flex items-center px-3 py-1.5 rounded-full text-xs font-semibold bg-[#FCFCFC] border border-[#E7EBEF] text-[#121A21] hover:bg-[#FDECEF] hover:text-[#DC183C] hover:border-[#DC183C] transition-colors">Youth</a>
-          <a href="#" class="inline-flex items-center px-3 py-1.5 rounded-full text-xs font-semibold bg-[#FCFCFC] border border-[#E7EBEF] text-[#121A21] hover:bg-[#FDECEF] hover:text-[#DC183C] hover:border-[#DC183C] transition-colors">Bio-Tech</a>
+          <a href="public-subcategory.html" class="inline-flex items-center px-3 py-1.5 rounded-full text-xs font-semibold bg-[#FCFCFC] border border-[#E7EBEF] text-[#121A21] hover:bg-[#FDECEF] hover:text-[#DC183C] hover:border-[#DC183C] transition-colors">Retail & Franchising</a>
+          <a href="public-subcategory.html" class="inline-flex items-center px-3 py-1.5 rounded-full text-xs font-semibold bg-[#FCFCFC] border border-[#E7EBEF] text-[#121A21] hover:bg-[#FDECEF] hover:text-[#DC183C] hover:border-[#DC183C] transition-colors">Tech & Innovation</a>
+          <a href="public-subcategory.html" class="inline-flex items-center px-3 py-1.5 rounded-full text-xs font-semibold bg-[#FCFCFC] border border-[#E7EBEF] text-[#121A21] hover:bg-[#FDECEF] hover:text-[#DC183C] hover:border-[#DC183C] transition-colors">Impact & Services</a>
+          <a href="public-subcategory.html" class="inline-flex items-center px-3 py-1.5 rounded-full text-xs font-semibold bg-[#FCFCFC] border border-[#E7EBEF] text-[#121A21] hover:bg-[#FDECEF] hover:text-[#DC183C] hover:border-[#DC183C] transition-colors">Agriculture</a>
+          <a href="public-subcategory.html" class="inline-flex items-center px-3 py-1.5 rounded-full text-xs font-semibold bg-[#FCFCFC] border border-[#E7EBEF] text-[#121A21] hover:bg-[#FDECEF] hover:text-[#DC183C] hover:border-[#DC183C] transition-colors">Youth</a>
+          <a href="public-subcategory.html" class="inline-flex items-center px-3 py-1.5 rounded-full text-xs font-semibold bg-[#FCFCFC] border border-[#E7EBEF] text-[#121A21] hover:bg-[#FDECEF] hover:text-[#DC183C] hover:border-[#DC183C] transition-colors">Bio-Tech</a>
         </div>
       </div>
       <a href="public-article-categories.html" class="shrink-0 inline-flex items-center gap-2 px-5 h-11 rounded-full bg-[#0C1F31] text-white text-sm font-bold hover:bg-[#142b40] transition">All categories <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
@@ -457,7 +457,7 @@
       <div>
         <p class="text-[11px] font-bold uppercase tracking-widest text-[#FF9900]">Insights</p>
         <ul class="mt-4 space-y-2.5 text-sm text-white/70">
-          <li><a href="public-articles.html" class="hover:text-white">All Articles</a></li>
+          <li><a href="public-articles.html" class="hover:text-white">All Insights</a></li>
           <li><a href="public-founder-focus-category.html" class="hover:text-white">Founder Focus</a></li>
           <li><a href="public-funding-summit-category.html" class="hover:text-white">Funding Summit</a></li>
           <li><a href="public-category.html" class="hover:text-white">Business Opportunities</a></li>
@@ -535,5 +535,6 @@
     if(e.key==='Escape'){ const o=document.getElementById('chromeSearchOverlay'); if(o && o.classList.contains('active')) toggleChromeSearch(); }
   });
 </script>
+<script src="member-chrome.js"></script>
 </body>
 </html>

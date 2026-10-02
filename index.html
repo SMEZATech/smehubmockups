@@ -249,6 +249,11 @@
           <button onclick="setVP('tablet')" id="vp-tablet" class="vp-btn px-3 h-8 rounded-full text-xs font-bold flex items-center gap-1.5" title="Tablet"><i data-lucide="tablet" class="w-4 h-4"></i></button>
           <button onclick="setVP('mobile')" id="vp-mobile" class="vp-btn px-3 h-8 rounded-full text-xs font-bold flex items-center gap-1.5" title="Mobile"><i data-lucide="smartphone" class="w-4 h-4"></i></button>
         </div>
+        <!-- Preview as visitor / signed-in member (public header + mobile tab bar) -->
+        <div class="hidden sm:flex items-center gap-1 bg-slate-100 rounded-full p-1" role="group" aria-label="Preview public pages as" title="Preview public pages as a visitor or a signed-in member">
+          <button onclick="setViewAs('visitor')" id="va-visitor" class="vp-btn active px-3 h-8 rounded-full text-xs font-bold">Visitor</button>
+          <button onclick="setViewAs('member')"  id="va-member"  class="vp-btn px-3 h-8 rounded-full text-xs font-bold">Member</button>
+        </div>
         <div id="devBar" class="hidden items-center gap-2"></div>
         <button onclick="openCurrentNotes()" class="hidden sm:inline-flex items-center gap-1.5 px-3 h-9 rounded-full bg-slate-100 hover:bg-slate-200 text-[#121A21] text-xs font-bold transition" title="Review notes for this mockup"><i data-lucide="message-square-text" class="w-4 h-4"></i><span id="topNotesLbl">Notes</span></button>
         <button onclick="reloadFrame()" class="w-9 h-9 grid place-items-center rounded-full hover:bg-slate-100 text-slate-600" title="Reload"><i data-lucide="rotate-cw" class="w-4 h-4"></i></button>
@@ -406,6 +411,8 @@
   const STATUS = window.MOCKUP_STATUS || {};
   const DEV = window.MOCKUP_DEV || {};
   const GROUP_OVERRIDES = window.MOCKUP_GROUPS || {};
+  // Modules Joel has already built herself: shown as "Built" so the developer does not pick them up.
+  const BUILT = ['public-workspace.html','public-health-check.html','member-workspace.html'];
   const DEVMETA = { 'pending-review':{label:'Pending review',c:'#FF9900'}, 'reviewed':{label:'Reviewed',c:'#3B82F6'}, 'approved':{label:'Approved',c:'#29A37A'} };
   const isLive = f => STATUS[f] === 'finalised';
   const DEFAULT_NAV = [
@@ -420,25 +427,26 @@
       { label:'POPIA',                  file:'public-popia.html',                  icon:'lock' },
       { label:'Advertising Disclosure', file:'public-advertising-disclosure.html', icon:'info' },
       { label:'Sustainability',         file:'public-sustainability.html',         icon:'leaf' },
-      { label:'Pricing / Plans',        file:'public-pricing.html',                icon:'credit-card' },
+      { label:'Community',              file:'public-community.html',              icon:'users-round' },
       { label:'SME Workspace',          file:'public-workspace.html',              icon:'gauge' },
       { label:'Business Health Check',  file:'public-health-check.html',           icon:'activity' },
       { label:'Premium Checkout',       file:'public-premium-checkout.html',       icon:'crown' },
       { label:'Author page',            file:'public-author.html',                 icon:'feather' },
       { label:'Login / Sign up',        file:'public-auth.html',                   icon:'log-in' }
     ]},
-    { group:'Articles', tag:'Editorial', accent:'#DC183C', icon:'newspaper', items:[
-      { label:'Articles',              file:'public-articles.html',           icon:'newspaper' },
-      { label:'Single Article',        file:'public-article.html',            icon:'file-text' },
+    { group:'Insights', tag:'Editorial', accent:'#DC183C', icon:'newspaper', items:[
+      { label:'Insights',              file:'public-articles.html',           icon:'newspaper' },
+      { label:'Single Insight',        file:'public-article.html',            icon:'file-text' },
       { label:'Categories Archive',    file:'public-article-categories.html', icon:'layout-grid' },
-      { label:'Articles Categories',   file:'public-category.html',           icon:'folder' },
-      { label:'Articles Subcategories',file:'public-subcategory.html',        icon:'folder-tree' },
+      { label:'Insight Categories',   file:'public-category.html',           icon:'folder' },
+      { label:'Insight Subcategories',file:'public-subcategory.html',        icon:'folder-tree' },
+      { label:'Tag Archive',           file:'public-tag.html',                icon:'tag' },
       { label:'Founder Focus',         file:'public-founder-focus-category.html', icon:'sparkles' },
       { label:'Funding Summit',        file:'public-funding-summit-category.html', icon:'megaphone' }
     ]},
     { group:'Funding', tag:'Money', accent:'#29A37A', icon:'banknote', items:[
       { label:'Funding',          file:'public-funding.html',          icon:'banknote' },
-      { label:'Funding Articles', file:'public-funding-category.html', icon:'newspaper' },
+      { label:'Funding Insights', file:'public-funding-category.html', icon:'newspaper' },
       { label:'Loan Option',      file:'public-loan-option.html',      icon:'landmark' }
     ]},
     { group:'Resources', tag:'Library', accent:'#3B82F6', icon:'folder-open', items:[
@@ -483,7 +491,8 @@
     { group:'Newsletter', tag:'Comms', accent:'#3B82F6', icon:'mail', items:[
       { label:'Newsletter',       file:'newsletter.html',       icon:'mail' },
       { label:'Newsletter Issue', file:'newsletter-issue.html', icon:'mail-open' },
-      { label:'Podcast',          file:'podcast.html',          icon:'mic-2' }
+      { label:'Podcast',          file:'podcast.html',          icon:'mic-2' },
+      { label:'Podcast Episode',  file:'public-podcast-episode.html', icon:'headphones' }
     ]},
     { group:'Shop', tag:'Commerce', accent:'#29A37A', icon:'shopping-bag', items:[
       { label:'Shop',            file:'public-shop.html',     icon:'shopping-bag' },
@@ -497,7 +506,9 @@
       { label:'Support Tickets',file:'public-support-ticket.html',  icon:'headphones' },
       { label:'Ticket detail',  file:'public-support-detailed-ticket.html', icon:'message-square' },
       { label:'Search results', file:'public-search.html',       icon:'search' },
-      { label:'404 page',       file:'public-404.html',          icon:'file-x' }
+      { label:'404 page',       file:'public-404.html',          icon:'file-x' },
+      { label:'Unauthorized / Locked', file:'public-unauthorized.html', icon:'lock' },
+      { label:'Forgot password', file:'public-forgot-password.html', icon:'key-round' }
     ]},
     { group:'Reference', tag:'Brand', accent:'#6A7581', icon:'palette', items:[
       { label:'Brand CI 2026', file:'brand_ci.html',     icon:'palette' },
@@ -540,7 +551,7 @@
   // Anything not listed here (e.g. a custom group created via a MOCKUP_GROUPS override)
   // falls back to 'Public Site', a safe default so a new group never renders unlabelled.
   const SUPERCATEGORY = {
-    'Single Pages':'Public Site', 'Articles':'Public Site', 'Funding':'Public Site', 'Resources':'Public Site',
+    'Single Pages':'Public Site', 'Insights':'Public Site', 'Funding':'Public Site', 'Resources':'Public Site',
     'Glossary':'Public Site', 'Solutions':'Public Site', 'Events':'Public Site', 'Newsletter':'Public Site',
     'Shop':'Public Site', 'Help and System':'Public Site',
     'Community':'Community & Members',
@@ -746,7 +757,7 @@
     function navItemButton(it, sec){
       return `<button onclick="load('${it.file}','${esc(sec.group)}','${esc(it.label)}','${sec.accent}')" data-file="${it.file}" class="nav-item w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-semibold text-white/80 hover:bg-white/5 hover:text-white transition text-left">
                   <i data-lucide="${it.icon}" class="w-4 h-4 shrink-0"></i><span class="truncate">${it.label}</span>
-                  ${DEV[it.file]?`<span class="ml-auto shrink-0 inline-flex items-center gap-1 text-[8px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded-full" style="background:${(DEVMETA[DEV[it.file].status]||{c:'#6A7581'}).c}26;color:${(DEVMETA[DEV[it.file].status]||{c:'#6A7581'}).c}"><i data-lucide="code-2" class="w-2.5 h-2.5"></i> Dev</span>`:`<span class="ml-auto shrink-0 inline-flex items-center gap-1 text-[8px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded-full bg-white/10 text-white/50"><i data-lucide="circle-dashed" class="w-2.5 h-2.5"></i> No dev</span>`}
+                  ${DEV[it.file]?`<span class="ml-auto shrink-0 inline-flex items-center gap-1 text-[8px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded-full" style="background:${(DEVMETA[DEV[it.file].status]||{c:'#6A7581'}).c}26;color:${(DEVMETA[DEV[it.file].status]||{c:'#6A7581'}).c}"><i data-lucide="code-2" class="w-2.5 h-2.5"></i> Dev</span>`:(BUILT.indexOf(it.file)>=0?`<span class="ml-auto shrink-0 inline-flex items-center gap-1 text-[8px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded-full" style="background:#8B5CF626;color:#B79CFB" title="Already built by Joel, no developer work needed"><i data-lucide="badge-check" class="w-2.5 h-2.5"></i> Built</span>`:`<span class="ml-auto shrink-0 inline-flex items-center gap-1 text-[8px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded-full bg-white/10 text-white/50"><i data-lucide="circle-dashed" class="w-2.5 h-2.5"></i> No dev</span>`)}
                 </button>`;
     }
 
@@ -903,6 +914,7 @@
           `<a href="compare.html?m=${encodeURIComponent(file)}" class="inline-flex items-center gap-1.5 px-3 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-[#121A21] text-xs font-bold transition" title="Compare dev build vs mockup"><i data-lucide="git-compare" class="w-4 h-4"></i><span class="hidden sm:inline">Compare</span></a>`+
           `<a href="${dev.url}" target="_blank" rel="noopener" class="inline-flex items-center gap-1.5 px-3 h-8 rounded-full bg-[#0C1F31] hover:bg-[#16314a] text-white text-xs font-bold transition" title="Open the developer build"><i data-lucide="external-link" class="w-4 h-4"></i><span class="hidden sm:inline">Dev build</span></a>`;
         db.classList.remove('hidden'); db.classList.add('flex'); lucide.createIcons();
+      } else if(BUILT.indexOf(file)>=0){ db.innerHTML = `<span class="inline-flex items-center gap-1.5 px-2.5 h-8 rounded-full text-[11px] font-bold" style="background:#8B5CF61f;color:#7C3AED" title="Joel has already built this module. Developer: do not rebuild."><i data-lucide="badge-check" class="w-3.5 h-3.5"></i> Built, no dev work needed</span>`; db.classList.remove('hidden'); db.classList.add('flex'); lucide.createIcons();
       } else { db.classList.add('hidden'); db.classList.remove('flex'); db.innerHTML=''; }
     }
     document.querySelectorAll('.nav-item').forEach(n=> n.classList.toggle('active', n.dataset.file===file || n.dataset.devfile===file));
@@ -910,6 +922,9 @@
     closeSidebar();
   }
   function reloadFrame(){ const f=document.getElementById('frame'); f.src = f.src; }
+  function syncViewAs(){ let m='visitor'; try{ m=sessionStorage.getItem('smeViewAs')||'visitor'; }catch(_){} ['visitor','member'].forEach(k=>{ const e=document.getElementById('va-'+k); if(e) e.classList.toggle('active',k===m); }); }
+  function setViewAs(m){ try{ sessionStorage.setItem('smeViewAs',m); }catch(_){} syncViewAs(); reloadFrame(); }
+  syncViewAs();
 
   // ---- Sidebar search, filters items across every section, including the
   // workflow lanes (Ready for live / Reviewed / Development). Purely a DOM

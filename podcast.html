@@ -107,7 +107,7 @@
     </a>
     <nav class="hidden lg:flex items-center gap-1 ml-auto">
       <div class="relative" onmouseleave="closeChromeDrop('articles')">
-        <button onclick="toggleChromeDrop('articles')" class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition inline-flex items-center gap-1">Articles <i data-lucide="chevron-down" class="w-3.5 h-3.5"></i></button>
+        <button onclick="toggleChromeDrop('articles')" class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition inline-flex items-center gap-1">Insights <i data-lucide="chevron-down" class="w-3.5 h-3.5"></i></button>
         <div id="dropArticles" class="hidden absolute left-0 top-full mt-1 w-64 bg-white rounded-xl border border-[#E7EBEF] shadow-xl py-2 z-30">
           <a href="public-category.html" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-[#DC183C] transition">Starting a Business</a>
           <a href="public-category.html" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-[#DC183C] transition">Managing a Business</a>
@@ -144,7 +144,7 @@
     <div class="flex items-center gap-1 sm:gap-2 ml-2 sm:ml-3">
       <button onclick="toggleChromeSearch()" aria-label="Search" class="w-9 h-9 grid place-items-center rounded-full hover:bg-slate-100 text-slate-600"><i data-lucide="search" class="w-4 h-4"></i></button>
       <a href="public-auth.html" class="hidden sm:inline-flex items-center px-3 h-9 rounded-full text-sm font-bold text-[#121A21] hover:bg-slate-100 transition">Sign in</a>
-      <a href="public-pricing.html" class="inline-flex items-center px-4 h-9 rounded-full text-sm font-bold text-white bg-[#DC183C] hover:bg-[#B0142F] transition">Join Now</a>
+      <a href="public-auth.html#join" class="inline-flex items-center px-4 h-9 rounded-full text-sm font-bold text-white bg-[#DC183C] hover:bg-[#B0142F] transition">Join Now</a>
       <button onclick="toggleChromeBurger()" aria-label="Menu" class="lg:hidden w-9 h-9 grid place-items-center rounded-full hover:bg-slate-100 text-slate-600 ml-1">
         <i id="chromeBurgerIcon" data-lucide="menu" class="w-5 h-5"></i>
       </button>
@@ -152,7 +152,7 @@
   </div>
   <div id="chromeBurgerPanel" class="hidden lg:hidden border-t border-[#E7EBEF] bg-white">
     <nav class="max-w-7xl mx-auto px-4 sm:px-6 py-2 flex flex-col">
-      <a href="public-articles.html"  class="px-2 py-3 text-sm font-semibold text-slate-700 hover:text-[#DC183C] border-b border-slate-100">Articles</a>
+      <a href="public-articles.html"  class="px-2 py-3 text-sm font-semibold text-slate-700 hover:text-[#DC183C] border-b border-slate-100">Insights</a>
       <a href="public-resources.html" class="px-2 py-3 text-sm font-semibold text-slate-700 hover:text-[#DC183C] border-b border-slate-100">Resources</a>
       <a href="public-funding.html"   class="px-2 py-3 text-sm font-semibold text-slate-700 hover:text-[#DC183C] border-b border-slate-100">Funding</a>
       <a href="public-solutions.html" class="px-2 py-3 text-sm font-semibold text-slate-700 hover:text-[#DC183C] border-b border-slate-100">Solutions</a>
@@ -165,7 +165,7 @@
     <div class="w-full max-w-2xl flex items-center gap-3">
       <div class="relative flex-1">
         <i data-lucide="search" class="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500"></i>
-        <input id="chromeSearchInput" type="text" placeholder="Search articles, resources, funding…" class="w-full h-11 pl-11 pr-4 text-sm bg-slate-50 border border-[#DC183C] rounded-full focus:outline-none focus:ring-2 focus:ring-[#DC183C]/20" onkeydown="if(event.key==='Enter') location.href='public-search.html';" />
+        <input id="chromeSearchInput" type="text" placeholder="Search insights, resources, funding…" class="w-full h-11 pl-11 pr-4 text-sm bg-slate-50 border border-[#DC183C] rounded-full focus:outline-none focus:ring-2 focus:ring-[#DC183C]/20" onkeydown="if(event.key==='Enter') location.href='public-search.html';" />
       </div>
       <button onclick="toggleChromeSearch()" class="text-slate-500 hover:text-[#121A21] p-2 transition-colors shrink-0" aria-label="Close search"><i data-lucide="x" class="w-5 h-5"></i></button>
     </div>
@@ -264,15 +264,14 @@
             <span class="flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#DC183C]/20 text-[#DC183C] text-[10px] font-bold uppercase tracking-widest border border-[#DC183C]/20">
               <span class="w-1.5 h-1.5 rounded-full bg-[#DC183C] animate-pulse"></span> Now Playing
             </span>
-            <span class="text-xs font-semibold text-white/50">Episode 24</span>
+            <span id="ftEp" class="text-xs font-semibold text-white/50">Episode</span>
           </div>
           
           <h2 class="font-jakarta font-extrabold text-2xl sm:text-3xl text-white leading-tight mb-4 relative z-10">
-            How We Raised R10M Without a VC
+            <span id="ftTitle">Latest episode</span>
           </h2>
-          <p class="text-white/60 text-[15px] leading-relaxed mb-8 relative z-10">
-            From bootstrapped to R10M, Naledi Mokoena unpacks the alternative funding sources most SA founders haven't tried, how to structure the deal, and the exact pitch that got lenders to say yes.
-          </p>
+          <p id="ftSummary" class="text-white/60 text-[15px] leading-relaxed mb-6 relative z-10"></p>
+          <a id="ftLink" href="public-podcast-episode.html" class="relative z-10 inline-flex items-center gap-2 self-start px-5 h-11 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white text-sm font-bold transition mb-8"><i data-lucide="headphones" class="w-4 h-4"></i>Listen to this episode</a>
           
           <div class="flex items-center gap-4 relative z-10 border-t border-white/10 pt-6">
             <div class="flex items-center gap-1.5">
@@ -282,9 +281,9 @@
               <div class="soundwave-bar"></div>
               <div class="soundwave-bar"></div>
             </div>
-            <span class="text-xs font-semibold text-white/70">38:42</span>
+            <span id="ftDur" class="text-xs font-semibold text-white/70"></span>
             <span class="text-white/20">|</span>
-            <span class="text-xs font-semibold text-white/70">Jul 12, 2026</span>
+            <span id="ftDate" class="text-xs font-semibold text-white/70"></span>
           </div>
         </div>
 
@@ -292,8 +291,8 @@
         <div class="md:col-span-5 bg-[#0A131A] p-8 sm:p-12 flex flex-col justify-center items-center border-l border-[#2A3441]">
           <div class="w-full max-w-[280px]">
             <!-- Album Art -->
-            <div class="w-full aspect-square rounded-2xl bg-gradient-to-br from-[#1a2d40] to-[#0C1F31] border border-white/5 shadow-xl mb-8 flex items-center justify-center relative overflow-hidden group cursor-pointer">
-              <img src="https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&q=80&w=400&h=400" alt="Podcast Guest" class="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:scale-105 transition-transform duration-700" />
+            <div id="ftArtTile" onclick="location.href=document.getElementById('ftLink').getAttribute('href')" class="w-full aspect-square rounded-2xl bg-gradient-to-br from-[#1a2d40] to-[#0C1F31] border border-white/5 shadow-xl mb-8 flex items-center justify-center relative overflow-hidden group cursor-pointer">
+              <img id="ftArt" src="" alt="SME Podcast artwork" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
               <div class="absolute inset-0 bg-[#0C1F31]/40 group-hover:bg-[#0C1F31]/20 transition-colors duration-500"></div>
               
               <!-- Giant Play Button -->
@@ -306,19 +305,19 @@
             <div class="w-full">
               <!-- Progress Bar -->
               <div class="w-full h-1.5 bg-white/10 rounded-full mb-3 cursor-pointer relative">
-                <div class="absolute top-0 left-0 h-full bg-[#DC183C] rounded-full w-1/3"></div>
-                <div class="absolute top-1/2 left-1/3 -translate-y-1/2 -translate-x-1/2 w-3 h-3 bg-white rounded-full shadow"></div>
+                <div class="absolute top-0 left-0 h-full bg-[#DC183C] rounded-full w-0"></div>
+                <div class="absolute top-1/2 left-0 -translate-y-1/2 w-3 h-3 bg-white rounded-full shadow"></div>
               </div>
               <div class="flex items-center justify-between text-[10px] font-semibold text-white/40 font-inter mb-6">
-                <span>12:34</span>
-                <span>-26:08</span>
+                <span>0:00</span>
+                <span id="ftClock"></span>
               </div>
               
               <!-- Action Buttons -->
               <div class="flex items-center justify-between">
                 <button class="text-white/50 hover:text-white transition" aria-label="Rewind 15s"><i data-lucide="rotate-ccw" class="w-5 h-5"></i></button>
                 <button class="w-12 h-12 rounded-full bg-white text-[#121A21] flex items-center justify-center hover:scale-105 transition shadow-md" aria-label="Play/Pause">
-                  <i data-lucide="pause" class="w-5 h-5 fill-current"></i>
+                  <i data-lucide="play" class="w-5 h-5 ml-0.5 fill-current"></i>
                 </button>
                 <button class="text-white/50 hover:text-white transition" aria-label="Forward 15s"><i data-lucide="rotate-cw" class="w-5 h-5"></i></button>
               </div>
@@ -333,146 +332,20 @@
       <div>
         <h2 class="font-jakarta font-extrabold text-3xl text-[#121A21] tracking-tight">The Latest</h2>
       </div>
-      <a href="#" class="hidden sm:inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-widest text-[#6A7581] hover:text-[#DC183C] transition-colors">
+      <a href="#all-episodes" class="hidden sm:inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-widest text-[#6A7581] hover:text-[#DC183C] transition-colors">
         All Episodes <i data-lucide="arrow-right" class="w-4 h-4"></i>
       </a>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-20">
-      
-      <!-- Episode Card 1 -->
-      <a href="#" class="episode-card group bg-white rounded-2xl border border-[#E7EBEF] p-6 card-lift flex flex-col h-full relative">
-        <div class="flex items-start justify-between mb-5">
-          <span class="inline-flex items-center justify-center px-2.5 py-1 rounded bg-[#0C1F31] text-white font-jakarta font-extrabold text-[10px] tracking-widest uppercase">EP 23</span>
-          <span class="text-xs font-semibold text-[#6A7581] flex items-center gap-1.5"><i data-lucide="clock" class="w-3.5 h-3.5"></i> 42 min</span>
-        </div>
-        
-        <h3 class="font-jakarta font-bold text-lg text-[#121A21] leading-snug group-hover:text-[#DC183C] transition-colors mb-3">
-          The Township Economy Playbook
-        </h3>
-        <p class="text-sm text-[#6A7581] leading-relaxed line-clamp-3 mb-6 flex-1">
-          Sipho Dlamini details how his retail startup bypassed traditional malls to build a multi-million rand distribution network directly in the townships.
-        </p>
-        
-        <div class="flex items-center justify-between pt-5 border-t border-[#E7EBEF] mt-auto">
-          <span class="text-xs font-semibold text-[#6A7581]">8 Jul 2026</span>
-          <div class="play-btn w-10 h-10 rounded-full border border-[#E7EBEF] flex items-center justify-center text-[#121A21] transition-colors group-hover:bg-[#DC183C] group-hover:text-white group-hover:border-[#DC183C]">
-            <i data-lucide="play" class="w-4 h-4 ml-0.5 fill-current"></i>
-          </div>
-        </div>
-      </a>
+    <div id="latestGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-20"></div>
 
-      <!-- Episode Card 2 -->
-      <a href="#" class="episode-card group bg-white rounded-2xl border border-[#E7EBEF] p-6 card-lift flex flex-col h-full relative">
-        <div class="flex items-start justify-between mb-5">
-          <span class="inline-flex items-center justify-center px-2.5 py-1 rounded bg-[#0C1F31] text-white font-jakarta font-extrabold text-[10px] tracking-widest uppercase">EP 22</span>
-          <span class="text-xs font-semibold text-[#6A7581] flex items-center gap-1.5"><i data-lucide="clock" class="w-3.5 h-3.5"></i> 35 min</span>
-        </div>
-        
-        <h3 class="font-jakarta font-bold text-lg text-[#121A21] leading-snug group-hover:text-[#DC183C] transition-colors mb-3">
-          Pricing, Margins & Survival
-        </h3>
-        <p class="text-sm text-[#6A7581] leading-relaxed line-clamp-3 mb-6 flex-1">
-          Why underpricing your competitors is a race to the bottom. Aisha Bashir shares her framework for pricing based on value, not fear.
-        </p>
-        
-        <div class="flex items-center justify-between pt-5 border-t border-[#E7EBEF] mt-auto">
-          <span class="text-xs font-semibold text-[#6A7581]">5 Jul 2026</span>
-          <div class="play-btn w-10 h-10 rounded-full border border-[#E7EBEF] flex items-center justify-center text-[#121A21] transition-colors group-hover:bg-[#DC183C] group-hover:text-white group-hover:border-[#DC183C]">
-            <i data-lucide="play" class="w-4 h-4 ml-0.5 fill-current"></i>
-          </div>
-        </div>
-      </a>
-
-      <!-- Episode Card 3 -->
-      <a href="#" class="episode-card group bg-white rounded-2xl border border-[#E7EBEF] p-6 card-lift flex flex-col h-full relative">
-        <div class="flex items-start justify-between mb-5">
-          <span class="inline-flex items-center justify-center px-2.5 py-1 rounded bg-[#0C1F31] text-white font-jakarta font-extrabold text-[10px] tracking-widest uppercase">EP 21</span>
-          <span class="text-xs font-semibold text-[#6A7581] flex items-center gap-1.5"><i data-lucide="clock" class="w-3.5 h-3.5"></i> 48 min</span>
-        </div>
-        
-        <h3 class="font-jakarta font-bold text-lg text-[#121A21] leading-snug group-hover:text-[#DC183C] transition-colors mb-3">
-          From Side-Hustle to 12 Staff
-        </h3>
-        <p class="text-sm text-[#6A7581] leading-relaxed line-clamp-3 mb-6 flex-1">
-          The brutal reality of making your first formal hires. Ravi Naidoo walks us through compliance, culture, and learning to delegate.
-        </p>
-        
-        <div class="flex items-center justify-between pt-5 border-t border-[#E7EBEF] mt-auto">
-          <span class="text-xs font-semibold text-[#6A7581]">1 Jul 2026</span>
-          <div class="play-btn w-10 h-10 rounded-full border border-[#E7EBEF] flex items-center justify-center text-[#121A21] transition-colors group-hover:bg-[#DC183C] group-hover:text-white group-hover:border-[#DC183C]">
-            <i data-lucide="play" class="w-4 h-4 ml-0.5 fill-current"></i>
-          </div>
-        </div>
-      </a>
-
-      <!-- Episode Card 4 -->
-      <a href="#" class="episode-card group bg-white rounded-2xl border border-[#E7EBEF] p-6 card-lift flex flex-col h-full relative">
-        <div class="flex items-start justify-between mb-5">
-          <span class="inline-flex items-center justify-center px-2.5 py-1 rounded bg-[#0C1F31] text-white font-jakarta font-extrabold text-[10px] tracking-widest uppercase">EP 20</span>
-          <span class="text-xs font-semibold text-[#6A7581] flex items-center gap-1.5"><i data-lucide="clock" class="w-3.5 h-3.5"></i> 51 min</span>
-        </div>
-        
-        <h3 class="font-jakarta font-bold text-lg text-[#121A21] leading-snug group-hover:text-[#DC183C] transition-colors mb-3">
-          Funding Demystified (Investor Panel)
-        </h3>
-        <p class="text-sm text-[#6A7581] leading-relaxed line-clamp-3 mb-6 flex-1">
-          Three active SA investors break down what they actually look for in a pitch deck, and why a good business isn't always a fundable one.
-        </p>
-        
-        <div class="flex items-center justify-between pt-5 border-t border-[#E7EBEF] mt-auto">
-          <span class="text-xs font-semibold text-[#6A7581]">28 Jun 2026</span>
-          <div class="play-btn w-10 h-10 rounded-full border border-[#E7EBEF] flex items-center justify-center text-[#121A21] transition-colors group-hover:bg-[#DC183C] group-hover:text-white group-hover:border-[#DC183C]">
-            <i data-lucide="play" class="w-4 h-4 ml-0.5 fill-current"></i>
-          </div>
-        </div>
-      </a>
-
-      <!-- Episode Card 5 -->
-      <a href="#" class="episode-card group bg-white rounded-2xl border border-[#E7EBEF] p-6 card-lift flex flex-col h-full relative">
-        <div class="flex items-start justify-between mb-5">
-          <span class="inline-flex items-center justify-center px-2.5 py-1 rounded bg-[#0C1F31] text-white font-jakarta font-extrabold text-[10px] tracking-widest uppercase">EP 19</span>
-          <span class="text-xs font-semibold text-[#6A7581] flex items-center gap-1.5"><i data-lucide="clock" class="w-3.5 h-3.5"></i> 29 min</span>
-        </div>
-        
-        <h3 class="font-jakarta font-bold text-lg text-[#121A21] leading-snug group-hover:text-[#DC183C] transition-colors mb-3">
-          Marketing With No Budget
-        </h3>
-        <p class="text-sm text-[#6A7581] leading-relaxed line-clamp-3 mb-6 flex-1">
-          Kabelo Dube grew his e-commerce brand to R2M ARR using purely organic social media. Here is his exact 30-day content framework.
-        </p>
-        
-        <div class="flex items-center justify-between pt-5 border-t border-[#E7EBEF] mt-auto">
-          <span class="text-xs font-semibold text-[#6A7581]">24 Jun 2026</span>
-          <div class="play-btn w-10 h-10 rounded-full border border-[#E7EBEF] flex items-center justify-center text-[#121A21] transition-colors group-hover:bg-[#DC183C] group-hover:text-white group-hover:border-[#DC183C]">
-            <i data-lucide="play" class="w-4 h-4 ml-0.5 fill-current"></i>
-          </div>
-        </div>
-      </a>
-
-      <!-- Episode Card 6 -->
-      <a href="#" class="episode-card group bg-white rounded-2xl border border-[#E7EBEF] p-6 card-lift flex flex-col h-full relative">
-        <div class="flex items-start justify-between mb-5">
-          <span class="inline-flex items-center justify-center px-2.5 py-1 rounded bg-[#0C1F31] text-white font-jakarta font-extrabold text-[10px] tracking-widest uppercase">EP 18</span>
-          <span class="text-xs font-semibold text-[#6A7581] flex items-center gap-1.5"><i data-lucide="clock" class="w-3.5 h-3.5"></i> 45 min</span>
-        </div>
-        
-        <h3 class="font-jakarta font-bold text-lg text-[#121A21] leading-snug group-hover:text-[#DC183C] transition-colors mb-3">
-          SME Procurement & Tenders
-        </h3>
-        <p class="text-sm text-[#6A7581] leading-relaxed line-clamp-3 mb-6 flex-1">
-          Lerato Sebata has spent her career on the buyer's side of the table. She explains exactly why corporate procurement rejects SME vendors.
-        </p>
-        
-        <div class="flex items-center justify-between pt-5 border-t border-[#E7EBEF] mt-auto">
-          <span class="text-xs font-semibold text-[#6A7581]">21 Jun 2026</span>
-          <div class="play-btn w-10 h-10 rounded-full border border-[#E7EBEF] flex items-center justify-center text-[#121A21] transition-colors group-hover:bg-[#DC183C] group-hover:text-white group-hover:border-[#DC183C]">
-            <i data-lucide="play" class="w-4 h-4 ml-0.5 fill-current"></i>
-          </div>
-        </div>
-      </a>
-
-    </div>
+    <!-- ALL EPISODES -->
+    <section id="all-episodes" class="mb-20 scroll-mt-24">
+      <div class="flex items-end justify-between gap-4 mb-6">
+        <h2 class="font-jakarta font-extrabold text-3xl text-[#121A21] tracking-tight">All Episodes</h2>
+      </div>
+      <div id="allEpisodes" class="bg-white rounded-2xl border border-[#E7EBEF] divide-y divide-[#E7EBEF] overflow-hidden"></div>
+    </section>
 
     <div class="bg-[#0C1F31] rounded-3xl border border-[#2A3441] p-10 sm:p-16 mb-20 text-center relative overflow-hidden shadow-xl">
       <div class="absolute inset-0 opacity-10 pointer-events-none" style="background:repeating-linear-gradient(45deg,transparent,transparent 8px,rgba(255,255,255,.18) 8px,rgba(255,255,255,.18) 16px)"></div>
@@ -530,7 +403,7 @@
       <div>
         <p class="text-[11px] font-bold uppercase tracking-widest text-[#FF9900]">Insights</p>
         <ul class="mt-4 space-y-2.5 text-sm text-white/70">
-          <li><a href="public-articles.html" class="hover:text-white">All Articles</a></li>
+          <li><a href="public-articles.html" class="hover:text-white">All Insights</a></li>
           <li><a href="public-founder-focus-category.html" class="hover:text-white">Founder Focus</a></li>
           <li><a href="public-funding-summit-category.html" class="hover:text-white">Funding Summit</a></li>
           <li><a href="public-category.html" class="hover:text-white">Business Opportunities</a></li>
@@ -571,7 +444,44 @@
 </footer>
 
 <div id="overlay-root"></div>
+<script src="podcast-episodes.js"></script>
 <script>
+    (function(){
+      const P=window.PODCAST, EPS=P.episodes, latest=EPS[0];
+      const E=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+      const link=e=>'public-podcast-episode.html?ep='+e.n;
+      document.getElementById('ftEp').textContent='Episode '+latest.n;
+      document.getElementById('ftTitle').textContent=latest.title;
+      document.getElementById('ftSummary').textContent=latest.summary.length>260?latest.summary.slice(0,257).replace(/\s+\S*$/,'')+'...':latest.summary;
+      document.getElementById('ftLink').href=link(latest);
+      document.getElementById('ftDur').textContent=latest.duration;
+      document.getElementById('ftDate').textContent=latest.date;
+      document.getElementById('ftClock').textContent='-'+latest.clock.replace(/^0/,'');
+      document.getElementById('ftArt').src=latest.image||P.show.image;
+      document.getElementById('latestGrid').innerHTML=EPS.slice(1,7).map(e=>`
+      <a href="${link(e)}" class="episode-card group bg-white rounded-2xl border border-[#E7EBEF] p-6 card-lift flex flex-col h-full relative">
+        <div class="flex items-start justify-between mb-5">
+          <span class="inline-flex items-center justify-center px-2.5 py-1 rounded bg-[#0C1F31] text-white font-jakarta font-extrabold text-[10px] tracking-widest uppercase">EP ${e.n}</span>
+          <span class="text-xs font-semibold text-[#6A7581] flex items-center gap-1.5"><i data-lucide="clock" class="w-3.5 h-3.5"></i> ${E(e.duration)}</span>
+        </div>
+        <h3 class="font-jakarta font-bold text-lg text-[#121A21] leading-snug group-hover:text-[#DC183C] transition-colors mb-3">${E(e.title)}</h3>
+        <p class="text-sm text-[#6A7581] leading-relaxed line-clamp-3 mb-6 flex-1">${E(e.summary)}</p>
+        <div class="flex items-center justify-between pt-5 border-t border-[#E7EBEF] mt-auto">
+          <span class="text-xs font-semibold text-[#6A7581]">${E(e.date)}${e.guest?' · '+E(e.guest):''}</span>
+          <div class="play-btn w-10 h-10 rounded-full border border-[#E7EBEF] flex items-center justify-center text-[#121A21] transition-colors group-hover:bg-[#DC183C] group-hover:text-white group-hover:border-[#DC183C]"><i data-lucide="play" class="w-4 h-4 ml-0.5 fill-current"></i></div>
+        </div>
+      </a>`).join('');
+      document.getElementById('allEpisodes').innerHTML=EPS.map(e=>`
+      <a href="${link(e)}" class="group flex items-center gap-4 p-4 sm:p-5 hover:bg-[#FCFCFC] transition">
+        <img src="${E(e.image||P.show.image)}" alt="" class="w-14 h-14 rounded-xl object-cover shrink-0" />
+        <div class="min-w-0 flex-1">
+          <p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C]">Episode ${e.n}${e.guest?' · '+E(e.guest):''}</p>
+          <p class="font-jakarta font-bold text-[15px] leading-snug group-hover:text-[#DC183C] transition-colors truncate">${E(e.title)}</p>
+          <p class="text-xs text-[#6A7581] mt-0.5">${E(e.date)} · ${E(e.duration)}</p>
+        </div>
+        <i data-lucide="chevron-right" class="w-5 h-5 text-slate-300 group-hover:text-[#DC183C] shrink-0"></i>
+      </a>`).join('');
+    })();
     const BRIEF={title:'Podcast Page',sub:'WordPress page + episode CPT / podcast feed',purpose:'Public landing page for The SME Podcast. Hero pitch, a featured &ldquo;now playing&rdquo; episode, a grid of the latest episodes, and a newsletter capture. Standalone WP page at /podcast pulling from an Episode custom post type or RSS feed.',data:'Episodes: <code>{number,title,guest,description,duration,publishDate,artwork,audioUrl,platformLinks}</code> from an Episode CPT / podcast feed. Featured episode flagged manually or newest-first. Newsletter form: <code>{email}</code> &rarr; Kit / CRM (tag: Podcast).',logic:'Featured player is a design simulation, wire the play button, progress bar and controls to an audio embed (Spotify / Apple / native <code>&lt;audio&gt;</code>). Cards link to individual episode pages. Platform buttons deep-link to Spotify, Apple Podcasts &amp; YouTube. Newsletter posts to the ESP and fires a welcome auto-responder. Public + indexable.',components:'hero (title + platform links + artwork) &middot; featured player card &middot; latest-episodes grid &middot; newsletter CTA.',specs:'<b>Hero:</b> container <code>max-w-7xl</code> = 1280px, padding top 48px mobile / 80px desktop (<code>pt-12 sm:pt-20</code>), bottom 160px mobile / 192px desktop (<code>pb-40 sm:pb-48</code>, extra room for the overlapping player). Navy hero-bg gradient (135deg, <code>#0C1F31</code>&rarr;<code>#1a0b17</code>&rarr;<code>#3d111d</code>) + dot-pattern 24px at 60% opacity + two blur blobs (<code>#DC183C</code>/10 600px, <code>#FF9900</code>/10 400px). 12-col grid at lg, 48px gap (<code>gap-12</code>), items-center, copy <code>col-span-7</code>, artwork <code>col-span-5</code>.<br/><b>Breadcrumb:</b> 12px <code>rgba(255,255,255,0.55)</code>, &rsaquo; <code>rgba(255,255,255,0.30)</code>, current <code>rgba(255,255,255,0.85)</code> weight 500, 24px bottom margin.<br/><b>H1:</b> Plus Jakarta Sans weight 800, 48px mobile (<code>text-5xl</code>) / 60px sm (<code>text-6xl</code>) / 72px lg (<code>text-[4.5rem]</code>), leading 1.05, tight tracking, colour <code>#FFFFFF</code>. &ldquo;Find the signal.&rdquo; uses grad-text <code>#DC183C</code>&rarr;<code>#FF9900</code> (135deg).<br/><b>Hero sub:</b> 18px (<code>text-lg</code>), <code>rgba(255,255,255,0.75)</code>, relaxed leading, max-width 576px, 24px top margin.<br/><b>Start Listening button:</b> height 56px (<code>h-14</code>), padding-x 32px (<code>px-8</code>), rounded-full, bg <code>#DC183C</code> hover <code>#B0142F</code>, white Jakarta weight 700, shadow <code>#DC183C</code>/25, Lucide <code>play-circle</code> 20&times;20. 40px top margin.<br/><b>Listen-on label:</b> 12px weight 700 uppercase tracking widest <code>rgba(255,255,255,0.50)</code>.<br/><b>Platform icons:</b> 44&times;44 (<code>w-11 h-11</code>) rounded-full, tinted /10 bg + border /20, brand hover fill, Spotify <code>#1ED760</code>, Apple <code>#B620E0</code>, YouTube <code>#FF0000</code>; inline SVG 22&times;22. 12px gap.<br/><b>Hero artwork:</b> lg only, height 460px, rounded 2rem (32px) with bottom-left radius 6rem (96px), 1px border <code>rgba(255,255,255,0.10)</code>, shadow-2xl, gradient glow rotate-6.<br/><br/><b>Featured player card:</b> lives in <code>max-w-7xl</code> main, overlaps hero by 96px mobile / 128px desktop (<code>-mt-24 sm:-mt-32</code>), 80px bottom margin. bg <code>#121A21</code>, rounded-3xl (24px), 1px border <code>#2A3441</code>, shadow-2xl. 12-col grid, info <code>col-span-7</code>, player <code>col-span-5</code>.<br/><b>Info pane:</b> padding 32px mobile / 48px desktop (<code>p-8 sm:p-12</code>), <code>#DC183C</code>/10 blur blob top-right.<br/><b>Now-Playing badge:</b> padding 12px/4px rounded-full bg <code>#DC183C</code>/20 text <code>#DC183C</code> 10px weight 700 uppercase tracking widest, 6px pulsing dot. Episode meta 12px weight 600 <code>rgba(255,255,255,0.50)</code>.<br/><b>Episode H2:</b> Plus Jakarta Sans weight 800, 24px mobile / 30px desktop (<code>text-2xl sm:text-3xl</code>), colour <code>#FFFFFF</code>, leading-tight, 16px bottom margin.<br/><b>Episode desc:</b> 15px <code>rgba(255,255,255,0.60)</code> relaxed leading, 32px bottom margin.<br/><b>Meta row:</b> top border 1px <code>rgba(255,255,255,0.10)</code>, 24px top padding. Soundwave bars 4px wide <code>#FF9900</code> (animated). Duration / date 12px weight 600 <code>rgba(255,255,255,0.70)</code>, divider <code>rgba(255,255,255,0.20)</code>.<br/><b>Player pane:</b> bg <code>#0A131A</code>, left border 1px <code>#2A3441</code>, padding 32px / 48px, inner max-width 280px.<br/><b>Album art:</b> aspect-square rounded-2xl (16px), gradient <code>#1a2d40</code>&rarr;<code>#0C1F31</code>, 1px border <code>rgba(255,255,255,0.05)</code>, 32px bottom margin. Play overlay 80&times;80 (<code>w-20 h-20</code>) rounded-full bg <code>#DC183C</code>/90, Lucide <code>play</code> 32&times;32.<br/><b>Progress bar:</b> height 6px (<code>h-1.5</code>) track <code>rgba(255,255,255,0.10)</code> rounded-full, fill <code>#DC183C</code>, 12px white knob. Time labels 10px weight 600 <code>rgba(255,255,255,0.40)</code>.<br/><b>Controls:</b> rewind / forward Lucide <code>rotate-ccw</code> / <code>rotate-cw</code> 20&times;20 <code>rgba(255,255,255,0.50)</code>; centre play/pause 48&times;48 (<code>w-12 h-12</code>) rounded-full white bg, text <code>#121A21</code>, Lucide <code>pause</code> 20&times;20.<br/><br/><b>Latest heading:</b> Plus Jakarta Sans weight 800 30px (<code>text-3xl</code>) <code>#121A21</code> tight tracking, 32px bottom margin. &ldquo;All Episodes&rdquo; link 12px weight 700 uppercase tracking widest <code>#6A7581</code> hover <code>#DC183C</code>, Lucide <code>arrow-right</code> 16&times;16.<br/><b>Episode grid:</b> 1 / 2 / 3 columns (<code>md:grid-cols-2 lg:grid-cols-3</code>), 24px gap (<code>gap-6</code>), 80px bottom margin.<br/><b>Episode card:</b> bg <code>#FFFFFF</code> rounded-2xl (16px) 1px border <code>#E7EBEF</code> padding 24px (<code>p-6</code>), flex-col full height. card-lift hover, translateY -4px, shadow <code>0 16px 32px -12px rgba(10,44,61,.15)</code>, border <code>#DC183C</code>.<br/><b>EP badge:</b> padding 10px/4px rounded (4px) bg <code>#0C1F31</code> white Plus Jakarta Sans weight 800 10px tracking widest uppercase. Duration 12px weight 600 <code>#6A7581</code> with Lucide <code>clock</code> 14&times;14.<br/><b>Card H3:</b> Plus Jakarta Sans weight 700 18px (<code>text-lg</code>) <code>#121A21</code> leading-snug, group-hover <code>#DC183C</code>, 12px bottom margin.<br/><b>Card body:</b> 14px <code>#6A7581</code> relaxed leading, clamped to 3 lines, 24px bottom margin.<br/><b>Card footer:</b> top border 1px <code>#E7EBEF</code>, 20px top padding. Date 12px weight 600 <code>#6A7581</code>. Play button 40&times;40 (<code>w-10 h-10</code>) rounded-full 1px border <code>#E7EBEF</code>, group-hover bg <code>#DC183C</code> white border <code>#DC183C</code>, Lucide <code>play</code> 16&times;16.<br/><br/><b>Newsletter CTA:</b> bg <code>#0C1F31</code> rounded-3xl (24px) 1px border <code>#2A3441</code> padding 40px mobile / 64px desktop (<code>p-10 sm:p-16</code>), 80px bottom margin, centered, 10% diagonal stripe overlay, shadow-xl.<br/><b>Icon circle:</b> 56&times;56 (<code>w-14 h-14</code>) rounded-full bg <code>rgba(255,255,255,0.10)</code> 1px border <code>rgba(255,255,255,0.05)</code>, Lucide <code>mail</code> 24&times;24 white, 24px bottom margin.<br/><b>CTA H2:</b> Plus Jakarta Sans weight 800, 30px mobile / 36px desktop (<code>text-3xl sm:text-4xl</code>), white, 16px bottom margin.<br/><b>CTA sub:</b> 15px <code>rgba(255,255,255,0.70)</code>, max-width 576px, 32px bottom margin.<br/><b>Form:</b> max-width 448px (<code>max-w-md</code>). Input bg <code>#0A131A</code> 1px border <code>#2A3441</code> white, padding-x 20px padding-y 14px, rounded-xl (12px), focus border <code>#DC183C</code>. Button bg <code>#DC183C</code> hover <code>#B0142F</code> white Jakarta weight 700 padding 32px/14px rounded-xl (12px).<br/><b>Trust chips:</b> 10px weight 700 uppercase tracking widest <code>rgba(255,255,255,0.30)</code>, Lucide <code>shield-check</code> / <code>bell-off</code> 12&times;12.'};
     function toggleDevMode(){const on=document.body.classList.toggle('dev-on');const b=document.getElementById('devToggle');if(b)b.classList.toggle('on',on);lucide.createIcons();}
     function closeOverlay(id){const el=document.getElementById(id);if(!el)return;el.classList.remove('open');setTimeout(()=>{if(el&&el.parentNode)el.remove();},300);}
@@ -607,5 +517,6 @@
     if(e.key==='Escape'){ const o=document.getElementById('chromeSearchOverlay'); if(o && o.classList.contains('active')) toggleChromeSearch(); }
   });
 </script>
+<script src="member-chrome.js"></script>
 </body>
 </html>
