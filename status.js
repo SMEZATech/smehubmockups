@@ -62,6 +62,8 @@ window.MOCKUP_STATUS = {
   "event-single-online.html": "finalised",
   "event-speaker.html": "finalised",
   "event-speakers.html": "finalised",
+  "event-library.html": "under-review",
+  "event-presentation.html": "under-review",
   "public-glossary.html": "finalised",
   "public-glossary-categories.html": "finalised",
   "public-glossary-category.html": "finalised",
