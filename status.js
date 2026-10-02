@@ -4,13 +4,6 @@
  * Allowed: "finalised" | "under-review" | "under-work" | "not-started"
  */
 window.MOCKUP_STATUS = {
-  "member-finish-profile.html": "under-review",
-  "public-error.html": "under-review",
-  "member-messages.html": "under-review",
-  "member-notifications.html": "under-review",
-  "member-photo.html": "under-review",
-  "member-group-manage.html": "under-review",
-  "public-verify-email.html": "under-review",
   "public-home.html": "finalised",
   "public-articles.html": "finalised",
   "public-article-categories.html": "finalised",
@@ -41,10 +34,12 @@ window.MOCKUP_STATUS = {
   "public-checkout.html": "finalised",
   "public-auth.html": "finalised",
   "public-forgot-password.html": "finalised",
-  "public-community.html": "under-review",
-  "public-workspace.html": "under-review",
-  "public-health-check.html": "under-review",
-  "public-premium-checkout.html": "under-review",
+  "public-community.html": "finalised",
+  "public-workspace.html": "finalised",
+  "public-verify-email.html": "finalised",
+  "public-error.html": "finalised",
+  "public-health-check.html": "finalised",
+  "public-premium-checkout.html": "finalised",
   "public-about.html": "finalised",
   "public-contact.html": "finalised",
   "public-advertise.html": "finalised",
@@ -53,7 +48,7 @@ window.MOCKUP_STATUS = {
   "public-refunds.html": "finalised",
   "public-popia.html": "finalised",
   "public-advertising-disclosure.html": "finalised",
-  "member-workspace.html": "under-review",
+  "member-workspace.html": "finalised",
   "member-hub.html": "finalised",
   "members.html": "finalised",
   "single-member.html": "finalised",
@@ -63,6 +58,11 @@ window.MOCKUP_STATUS = {
   "forums.html": "finalised",
   "single-discussion.html": "finalised",
   "member-account.html": "finalised",
+  "member-messages.html": "finalised",
+  "member-notifications.html": "finalised",
+  "member-photo.html": "finalised",
+  "member-group-manage.html": "finalised",
+  "member-finish-profile.html": "finalised",
   "events.html": "finalised",
   "event-single-in-person.html": "finalised",
   "event-single-online.html": "finalised",
@@ -90,7 +90,7 @@ window.MOCKUP_STATUS = {
   "public-404.html": "finalised",
   "public-unauthorized.html": "finalised"
 };
-window.MOCKUP_STATUS_PUBLISHED = "2026-10-02T12:13:41.764Z";
+window.MOCKUP_STATUS_PUBLISHED = "2026-10-02T19:12:34.982Z";
 /* Developer builds (staging), { mockup file: { url, status } }; status: "pending-review" | "reviewed" | "approved" */
 window.MOCKUP_DEV = {
   "public-home.html": {"url":"https://smesastg.wpengine.com/","status":"reviewed"},
