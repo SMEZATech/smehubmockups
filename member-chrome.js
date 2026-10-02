@@ -27,6 +27,7 @@
     mode = sessionStorage.getItem(KEY) || 'visitor';
     if (sessionStorage.getItem('smeReviewAll') === '1') explicit = true;
   } catch (_) {}
+  if (window.SME_MEMBER_PAGE) { mode = 'member'; }
   var host = location.hostname;
   var reviewing = explicit || mode === 'member' || location.protocol === 'file:' || host === 'localhost' || host === '127.0.0.1';
 
@@ -79,116 +80,111 @@
   if (mode !== 'member') { mountSwitch(); return; }
 
   /* a signed-in member's home is the community, not the marketing homepage */
-  if (/public-home\.html$/.test(location.pathname)) { location.replace('member-hub.html'); return; }
+  if (!window.SME_MEMBER_PAGE && /public-home\.html$/.test(location.pathname)) { location.replace('member-hub.html'); return; }
 
-  /* ---------- member header ---------- */
-  var header = document.querySelector('header');
-  if (!header) { mountSwitch(); return; }
+  /* ---------- ONE member header, same on every signed-in page (2026-10-02) ----------
+   * Desktop: Home, Connect, Messaging, Notifications, My Business. Mobile tab bar: the same five plus My Account.
+   * Replaces whatever header the page shipped with, so community pages and public pages can never drift apart. */
+  var oldHeader = document.querySelector('header');
+  if (!oldHeader) { mountSwitch(); return; }
+
+  var unread = { messaging: 3, notifications: 4 };
+  var NAV = [
+    ['home', 'member-hub.html', 'home', 'Home'],
+    ['connect', 'members.html', 'users', 'Connect'],
+    ['messaging', 'member-messages.html', 'message-square', 'Messaging'],
+    ['notifications', 'member-notifications.html', 'bell', 'Notifications'],
+    ['business', 'member-workspace.html', 'sparkles', 'My Business']
+  ];
+  var ACCOUNT = ['account', 'member-account.html', 'circle-user', 'My Account'];
+  var PAGE_KEY = {
+    'member-hub.html': 'home', 'single-post.html': 'home',
+    'members.html': 'connect', 'groups.html': 'connect', 'single-group.html': 'connect', 'single-member.html': 'connect',
+    'forums.html': 'connect', 'single-discussion.html': 'connect', 'member-group-manage.html': 'connect',
+    'member-messages.html': 'messaging', 'member-notifications.html': 'notifications',
+    'member-workspace.html': 'business', 'member-account.html': 'account', 'member-photo.html': 'account'
+  };
+  var here = (location.pathname.split('/').pop() || '');
+  var activeKey = PAGE_KEY[here] || '';
 
   var avatar = function(size){
-    return '<span class="rounded-full bg-gradient-to-br from-[#DC183C] to-[#FF9900] grid place-items-center font-jakarta font-extrabold text-white shrink-0" style="width:' + size + 'px;height:' + size + 'px;font-size:' + Math.round(size * 0.38) + 'px">' + USER.initials + '</span>';
+    return '<span class="rounded-full bg-gradient-to-br from-[#DC183C] to-[#FF9900] grid place-items-center font-jakarta font-extrabold text-white shrink-0" style="width:' + size + 'px;height:' + size + 'px;font-size:' + Math.round(size * 0.36) + 'px">' + USER.initials + '</span>';
   };
-
-  var item = function(href, icon, label, hint){
-    return '<a href="' + href + '" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-[#DC183C] transition">' +
-      '<i data-lucide="' + icon + '" class="w-4 h-4 shrink-0 text-slate-400"></i><span class="flex-1">' + label + '</span>' + (hint ? '<span class="text-[11px] font-medium text-slate-400">' + hint + '</span>' : '') + '</a>';
+  var badge = function(n, cls){ return n ? '<span class="' + (cls || '') + ' min-w-[17px] h-[17px] px-1 rounded-full bg-[#DC183C] text-white text-[10px] font-bold leading-none grid place-items-center">' + n + '</span>' : ''; };
+  var mItem = function(href, icon, label, extra){
+    return '<a href="' + href + '" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-[#DC183C] transition"><i data-lucide="' + icon + '" class="w-4 h-4 shrink-0 text-slate-400"></i><span class="flex-1">' + label + '</span>' + (extra || '') + '</a>';
   };
+  var group = function(t){ return '<p class="px-3 pt-3 pb-1 text-[10px] font-bold uppercase tracking-widest text-slate-400">' + t + '</p>'; };
 
-  var cluster = el(
-    '<div id="smeMemberCluster" class="flex items-center gap-1 sm:gap-2">' +
-      '<a href="member-workspace.html" class="hidden md:inline-flex items-center gap-2 px-4 h-9 rounded-full text-sm font-bold text-white bg-[#0C1F31] hover:bg-[#16314a] transition"><i data-lucide="layout-dashboard" class="w-4 h-4"></i>My Business</a>' +
-      '<div class="relative">' +
-        '<button type="button" id="smeBellBtn" aria-label="Notifications" aria-expanded="false" class="relative w-9 h-9 grid place-items-center rounded-full hover:bg-slate-100 text-slate-600"><i data-lucide="bell" class="w-[18px] h-[18px]"></i><span class="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-[#DC183C] ring-2 ring-white"></span></button>' +
-        '<div id="smeBellMenu" class="hidden fixed left-3 right-3 top-[68px] sm:absolute sm:left-auto sm:right-0 sm:top-full sm:mt-2 sm:w-80 bg-white rounded-2xl border border-[#E7EBEF] shadow-xl z-40 overflow-hidden">' +
-          '<div class="flex items-center justify-between px-4 py-3 border-b border-[#E7EBEF]"><p class="font-jakarta font-extrabold text-sm">Notifications</p><a href="member-hub.html" class="text-[11px] font-bold text-[#DC183C] hover:underline">Open Community</a></div>' +
-          '<a href="member-hub.html" class="flex items-start gap-3 px-4 py-3 hover:bg-slate-50 transition"><span class="w-9 h-9 rounded-xl bg-[#FDECEF] text-[#DC183C] grid place-items-center shrink-0"><i data-lucide="message-circle" class="w-4 h-4"></i></span><span><span class="block text-[13px] font-bold leading-tight">Sipho replied to your post</span><span class="block text-xs text-slate-500 mt-0.5">Invoice finance worked for us</span></span></a>' +
-          '<a href="member-workspace.html" class="flex items-start gap-3 px-4 py-3 hover:bg-slate-50 transition"><span class="w-9 h-9 rounded-xl bg-[#E4F5EE] text-[#29A37A] grid place-items-center shrink-0"><i data-lucide="trending-up" class="w-4 h-4"></i></span><span><span class="block text-[13px] font-bold leading-tight">Your Success Plan has a new action</span><span class="block text-xs text-slate-500 mt-0.5">Open My Business to see it</span></span></a>' +
-          '<a href="events.html" class="flex items-start gap-3 px-4 py-3 hover:bg-slate-50 transition"><span class="w-9 h-9 rounded-xl bg-[#FFF1E0] text-[#AE6B0A] grid place-items-center shrink-0"><i data-lucide="calendar-days" class="w-4 h-4"></i></span><span><span class="block text-[13px] font-bold leading-tight">Webinar starting soon</span><span class="block text-xs text-slate-500 mt-0.5">Cash flow for small teams</span></span></a>' +
+  var desk = NAV.map(function(n){
+    var on = activeKey === n[0];
+    return '<a href="' + n[1] + '" class="relative px-3 h-full text-[14px] font-jakarta flex items-center gap-2 border-b-[3px] transition-colors ' + (on ? 'font-bold text-[#DC183C] border-[#DC183C]' : 'font-semibold text-[#6A7581] hover:text-[#DC183C] border-transparent') + '"' + (on ? ' aria-current="page"' : '') + '>' +
+      '<i data-lucide="' + n[2] + '" class="w-4 h-4"></i>' + n[3] + badge(unread[n[0]], 'ml-0.5') + '</a>';
+  }).join('');
+
+  var headerHTML =
+    '<header id="smeMemberHeader" class="bg-white border-b border-slate-200 sticky top-0 z-40 shadow-sm relative">' +
+      '<div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-3">' +
+        '<a href="member-hub.html" class="flex items-center shrink-0 py-2"><img src="https://smesouthafrica.co.za/wp-content/uploads/2025/10/Asset-1-1.webp" alt="SME South Africa" class="h-10 sm:h-11 w-auto object-contain"></a>' +
+        '<nav aria-label="Main" class="hidden md:flex items-center justify-center gap-1 flex-1 h-full">' + desk + '</nav>' +
+        '<div id="smeMemberCluster" class="flex items-center gap-1 sm:gap-2 shrink-0">' +
+          '<button type="button" id="smeSearchBtn" aria-label="Search" class="w-9 h-9 grid place-items-center rounded-full hover:bg-slate-100 text-slate-600"><i data-lucide="search" class="w-[18px] h-[18px]"></i></button>' +
+          '<div class="relative">' +
+            '<button type="button" id="smeAvatarBtn" aria-label="Account menu" aria-expanded="false" class="flex items-center gap-2 pl-0.5 pr-1.5 h-9 rounded-full hover:bg-slate-100 transition">' + avatar(32) + '<span class="hidden lg:block font-jakarta font-bold text-[14px]">' + USER.name.split(' ')[0] + '</span><i data-lucide="chevron-down" class="w-3.5 h-3.5 text-slate-400"></i></button>' +
+            '<div id="smeAvatarMenu" class="hidden fixed left-3 right-3 top-[68px] sm:absolute sm:left-auto sm:right-0 sm:top-full sm:mt-2 sm:w-72 bg-white rounded-2xl border border-[#E7EBEF] shadow-xl z-50 p-2 max-h-[80vh] overflow-y-auto">' +
+              '<div class="flex items-center gap-3 px-3 py-3 border-b border-[#E7EBEF] mb-1">' + avatar(40) + '<div class="min-w-0"><p class="font-jakarta font-extrabold text-sm leading-tight truncate">' + USER.name + '</p><p class="text-xs text-slate-500 truncate">' + USER.role + '</p></div></div>' +
+              mItem('member-account.html', 'circle-user', 'My Account') +
+              mItem('member-account.html', 'receipt', 'Orders') +
+              group('Explore') +
+              mItem('public-articles.html', 'newspaper', 'Insights') +
+              mItem('public-guides.html', 'book-open', 'Guides') +
+              mItem('public-resources.html', 'folder-open', 'Resources') +
+              mItem('public-solutions.html', 'layout-grid', 'Solutions') +
+              mItem('events.html', 'calendar-days', 'Events') +
+              mItem('podcast.html', 'mic', 'Podcast') +
+              mItem('public-help.html', 'life-buoy', 'Help Centre') +
+              '<div class="border-t border-[#E7EBEF] mt-2 pt-1">' +
+                (typeof window.toggleDevMode === 'function' ? '<div class="flex items-center justify-between px-3 py-2.5"><span class="text-[10px] font-bold uppercase tracking-widest text-slate-500">Dev Mode</span><button id="devToggle" type="button" onclick="toggleDevMode()" class="w-8 h-4 rounded-full bg-slate-200 relative transition-colors focus:outline-none" aria-pressed="false"><span class="absolute left-0.5 top-0.5 w-3 h-3 rounded-full bg-white shadow-sm transition-transform duration-200"></span></button></div>' : '') +
+                '<button type="button" onclick="smeSetViewAs(\'visitor\')" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-semibold text-[#DC183C] hover:bg-[#FDECEF] transition"><i data-lucide="log-out" class="w-4 h-4 shrink-0"></i> Sign out</button>' +
+              '</div>' +
+            '</div>' +
+          '</div>' +
         '</div>' +
       '</div>' +
-      '<div class="relative">' +
-        '<button type="button" id="smeAvatarBtn" aria-label="Account menu" aria-expanded="false" class="flex items-center gap-1.5 pl-0.5 pr-1.5 h-9 rounded-full hover:bg-slate-100 transition">' + avatar(32) + '<i data-lucide="chevron-down" class="w-3.5 h-3.5 text-slate-500 hidden sm:block"></i></button>' +
-        '<div id="smeAvatarMenu" class="hidden fixed left-3 right-3 top-[68px] sm:absolute sm:left-auto sm:right-0 sm:top-full sm:mt-2 sm:w-64 bg-white rounded-2xl border border-[#E7EBEF] shadow-xl z-40 p-2">' +
-          '<div class="flex items-center gap-3 px-3 py-3 border-b border-[#E7EBEF] mb-1">' + avatar(40) + '<div class="min-w-0"><p class="font-jakarta font-extrabold text-sm leading-tight truncate">' + USER.name + '</p><p class="text-xs text-slate-500 truncate">' + USER.role + '</p></div></div>' +
-          item('member-workspace.html', 'layout-dashboard', 'My Business') +
-          item('member-hub.html', 'users', 'Community') +
-          item('members.html', 'user-round-search', 'Connect') +
-          item('events.html', 'calendar-days', 'Events') +
-          item('member-account.html', 'circle-user', 'Account settings') +
-          item('public-help.html', 'life-buoy', 'Help Centre') +
-          '<div class="border-t border-[#E7EBEF] mt-1 pt-1"><button type="button" onclick="smeSetViewAs(\'visitor\')" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-[#DC183C] transition text-left"><i data-lucide="log-out" class="w-4 h-4 shrink-0 text-slate-400"></i>Sign out</button></div>' +
-        '</div>' +
-      '</div>' +
-    '</div>');
+      '<div id="smeSearchBar" class="hidden absolute inset-0 bg-white z-50 items-center px-4 sm:px-6"><form action="public-search.html" class="w-full max-w-3xl mx-auto flex items-center gap-3"><i data-lucide="search" class="w-5 h-5 text-slate-400 shrink-0"></i><input id="smeSearchInput" name="q" placeholder="Search members, groups, guides, solutions..." class="flex-1 h-12 bg-transparent text-base outline-none"><button type="button" id="smeSearchClose" aria-label="Close search" class="w-9 h-9 grid place-items-center rounded-full hover:bg-slate-100 text-slate-500"><i data-lucide="x" class="w-5 h-5"></i></button></form></div>' +
+    '</header>';
+  var newHeader = el(headerHTML);
+  oldHeader.parentNode.replaceChild(newHeader, oldHeader);
 
-  /* replace "Sign in" + "Join Now" in the header's right-hand cluster */
-  var signIn = header.querySelector('a[href="public-auth.html"].hidden');
-  var joinNow = header.querySelector('a[href="public-auth.html#join"]');
-  if (joinNow) {
-    joinNow.parentNode.insertBefore(cluster, joinNow);
-    joinNow.remove();
-    if (signIn) signIn.remove();
-  } else if (signIn) {
-    signIn.parentNode.insertBefore(cluster, signIn);
-    signIn.remove();
-  }
-
-  /* burger panel: label the content links, swap the trailing "Sign in" row for member links */
-  var panel = header.querySelector('#chromeBurgerPanel nav');
-  var panelSignIn = header.querySelector('#chromeBurgerPanel a[href="public-auth.html"]');
-  var lbl = function(t){ return '<p class="px-2 pt-4 pb-1 text-[10px] font-bold uppercase tracking-widest text-slate-400">' + t + '</p>'; };
-  var mk = function(href, icon, label){ return '<a href="' + href + '" class="flex items-center gap-3 px-2 py-3 text-sm font-semibold text-slate-700 hover:text-[#DC183C] border-b border-slate-100"><i data-lucide="' + icon + '" class="w-4 h-4 text-slate-400"></i>' + label + '</a>'; };
-  if (panel) {
-    panel.insertBefore(el(lbl('Explore').replace('pt-4', 'pt-2')), panel.firstChild);
-    var member = el('<div>' + lbl('Your space') + mk('member-hub.html', 'home', 'Home (Community)') + mk('members.html', 'user-round-search', 'Connect') + mk('events.html', 'calendar-days', 'Events') + mk('member-workspace.html', 'sparkles', 'My Business') + mk('member-account.html', 'circle-user', 'Account settings') + '<button type="button" onclick="smeSetViewAs(\'visitor\')" class="w-full flex items-center gap-3 px-2 py-3 text-sm font-semibold text-slate-700 hover:text-[#DC183C] text-left"><i data-lucide="log-out" class="w-4 h-4 text-slate-400"></i>Sign out</button></div>');
-    if (panelSignIn) { panelSignIn.remove(); }
-    while (member.firstChild) panel.appendChild(member.firstChild);
-  }
-
-  /* mobile bottom tab bar for members: Home (community), Connect, Events, My Business, Account */
+  /* mobile bottom tab bar: the same five, plus My Account last */
   var tabBar = document.querySelector('nav[aria-label="Quick nav"]');
-  if (tabBar) {
-    var here = (location.pathname.split('/').pop() || '');
-    var T = [
-      ['member-hub.html', 'home', 'Home'],
-      ['members.html', 'users', 'Connect'],
-      ['events.html', 'calendar-days', 'Events'],
-      ['member-workspace.html', 'sparkles', 'My Business'],
-      ['member-account.html', 'circle-user', 'Account']
-    ];
-    tabBar.innerHTML = '<div class="grid grid-cols-5">' + T.map(function(t){
-      var on = here === t[0];
-      return '<a href="' + t[0] + '" class="relative flex flex-col items-center justify-center gap-1 py-2.5 transition ' + (on ? 'text-[#DC183C]' : 'text-slate-500 hover:text-[#121A21]') + '">' +
-        (on ? '<span class="absolute top-0 left-1/2 -translate-x-1/2 w-8 h-0.5 rounded-full bg-[#DC183C]"></span>' : '') +
-        '<i data-lucide="' + t[1] + '" class="w-5 h-5"></i><span class="font-jakarta text-[11px] font-bold">' + t[2] + '</span></a>';
-    }).join('') + '</div>';
+  if (!tabBar) {
+    tabBar = el('<nav aria-label="Quick nav"></nav>');
+    document.body.appendChild(tabBar);
   }
+  var T = NAV.concat([ACCOUNT]);
+  tabBar.className = 'md:hidden fixed bottom-0 inset-x-0 z-40 bg-white border-t border-[#E7EBEF] shadow-[0_-4px_16px_-4px_rgba(12,31,49,0.08)]';
+  tabBar.style.paddingBottom = 'env(safe-area-inset-bottom)';
+  tabBar.innerHTML = '<div class="grid grid-cols-6">' + T.map(function(t){
+    var on = activeKey === t[0];
+    return '<a href="' + t[1] + '" class="relative flex flex-col items-center justify-center gap-1 py-2.5 min-w-0 transition ' + (on ? 'text-[#DC183C]' : 'text-slate-500 hover:text-[#121A21]') + '">' +
+      (on ? '<span class="absolute top-0 left-1/2 -translate-x-1/2 w-8 h-0.5 rounded-full bg-[#DC183C]"></span>' : '') +
+      '<span class="relative"><i data-lucide="' + t[2] + '" class="w-5 h-5"></i>' + badge(unread[t[0]], 'absolute -top-1.5 -right-2.5 !min-w-[15px] !h-[15px] !text-[9px] ring-2 ring-white') + '</span>' +
+      '<span class="font-jakarta text-[9.5px] font-bold tracking-tight leading-none whitespace-nowrap max-w-full truncate">' + t[3].replace('My Account', 'Account') + '</span></a>';
+  }).join('') + '</div>';
 
   /* for a member the home page is the community: every Home link goes to the hub */
   document.querySelectorAll('a[href="public-home.html"]').forEach(function(a){ a.setAttribute('href', 'member-hub.html'); });
 
-  /* menus */
-  var pairs = [['smeBellBtn', 'smeBellMenu'], ['smeAvatarBtn', 'smeAvatarMenu']];
-  function closeAll(except){
-    pairs.forEach(function(p){
-      if (p[1] === except) return;
-      var m = document.getElementById(p[1]), b = document.getElementById(p[0]);
-      if (m) m.classList.add('hidden');
-      if (b) b.setAttribute('aria-expanded', 'false');
-    });
-  }
-  pairs.forEach(function(p){
-    var b = document.getElementById(p[0]), m = document.getElementById(p[1]);
-    if (!b || !m) return;
-    b.addEventListener('click', function(e){
-      e.stopPropagation();
-      closeAll(p[1]);
-      var open = m.classList.toggle('hidden') === false;
-      b.setAttribute('aria-expanded', String(open));
-    });
-  });
-  document.addEventListener('click', function(e){ if (!e.target.closest('#smeMemberCluster')) closeAll(); });
-  document.addEventListener('keydown', function(e){ if (e.key === 'Escape') closeAll(); });
+  /* menus + search */
+  var menuBtn = document.getElementById('smeAvatarBtn'), menu = document.getElementById('smeAvatarMenu');
+  menuBtn.addEventListener('click', function(e){ e.stopPropagation(); var open = menu.classList.toggle('hidden') === false; menuBtn.setAttribute('aria-expanded', String(open)); });
+  document.addEventListener('click', function(e){ if (!e.target.closest('#smeAvatarMenu') && !e.target.closest('#smeAvatarBtn')) { menu.classList.add('hidden'); menuBtn.setAttribute('aria-expanded', 'false'); } });
+  var bar = document.getElementById('smeSearchBar');
+  function searchOpen(on){ bar.classList.toggle('hidden', !on); bar.classList.toggle('flex', on); if (on) setTimeout(function(){ document.getElementById('smeSearchInput').focus(); }, 60); }
+  document.getElementById('smeSearchBtn').addEventListener('click', function(){ searchOpen(true); });
+  document.getElementById('smeSearchClose').addEventListener('click', function(){ searchOpen(false); });
+  document.addEventListener('keydown', function(e){ if (e.key === 'Escape') { searchOpen(false); menu.classList.add('hidden'); } });
 
   icons();
   mountSwitch();

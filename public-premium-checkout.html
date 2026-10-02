@@ -253,7 +253,7 @@
   function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
   function showToast(m){const el=document.getElementById('toast');el.classList.remove('hidden');el.innerHTML=`<div class="bg-[#0C1F31] text-white rounded-full pl-3 pr-5 py-2.5 shadow-2xl flex items-center gap-2 text-sm font-semibold" style="border-left:4px solid #29A37A"><i data-lucide="check-circle" class="w-4 h-4" style="color:#29A37A"></i><span>${esc(m)}</span></div>`;lucide.createIcons();setTimeout(()=>{el.classList.add('hidden');el.innerHTML='';},2400);}
 
-  const PLAN_FEATURES = ['Everything in Standard, plus:', 'Compliance Autopilot: reminders before every SARS and CIPC date', 'Document Vault with expiry alerts', 'Unlimited open invoices in Get paid', 'Partner perks, listed once the partner confirms the terms'];
+  const PLAN_FEATURES = ['Everything in Standard, plus:', 'Compliance Autopilot: reminders before every SARS and CIPC date', 'Document Vault with expiry alerts', 'Unlimited open invoices in Get paid'];
   document.getElementById('planFeatures').innerHTML = PLAN_FEATURES.map(f=>`<div class="flex items-start gap-2"><i data-lucide="check" class="w-4 h-4 text-[#29A37A] shrink-0 mt-0.5"></i><span>${esc(f)}</span></div>`).join('');
 
   function submitUpgrade(){
