@@ -1,9 +1,9 @@
 /*
- * SME South Africa — Shared review notes.
- * These notes ship with the repo — everyone sees them on the mockup hub.
+ * SME South Africa, Shared review notes.
+ * These notes ship with the repo, everyone sees them on the mockup hub.
  * Notes flagged with "pending": true stay in Mission Control for operator review
  * and DO NOT surface on the public launcher until that flag is stripped.
- * Notes flagged with "actioned": true have been addressed by the dev — they're
+ * Notes flagged with "actioned": true have been addressed by the dev, they're
  * hidden from the public launcher's note panel, and once every live note on a
  * file is actioned, that file appears in the "Ready for live" section.
  *
@@ -477,6 +477,12 @@ window.SHARED_NOTES = {
       "author": "Tshepho",
       "ts": "2026-07-02",
       "text": "Remove the category tag overlay from the featured images. The card title and byline carry the category context — no need for the red pill on the image."
+    },
+    "redesign": {
+      "label": "Redesign",
+      "author": "Tshepho",
+      "ts": "2026-10-02",
+      "text": "Please action the redesign updates."
     }
   },
 
