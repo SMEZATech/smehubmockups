@@ -71,11 +71,20 @@
       <img src="https://smesouthafrica.co.za/wp-content/uploads/2025/10/Asset-1-1.webp" alt="SME South Africa" class="h-10 sm:h-11 w-auto object-contain group-hover:scale-105 transition-transform" />
     </a>
 
-    <nav class="hidden md:flex items-center justify-center gap-2 flex-1 px-4 h-full">
-      <a href="member-hub.html" class="px-3 h-full text-[14px] font-bold font-jakarta text-[#DC183C] border-b-[3px] border-[#DC183C] flex items-center gap-2 transition-colors"><i data-lucide="activity" class="w-4 h-4 text-[#DC183C]"></i> Home</a>
-      <a href="members.html" class="px-3 h-full text-[14px] font-semibold font-jakarta text-[#6A7581] hover:text-[#DC183C] border-b-[3px] border-transparent flex items-center gap-2 transition-colors"><i data-lucide="user" class="w-4 h-4"></i> Members</a>
-      <a href="groups.html" class="px-3 h-full text-[14px] font-semibold font-jakarta text-[#6A7581] hover:text-[#DC183C] border-b-[3px] border-transparent flex items-center gap-2 transition-colors"><i data-lucide="users" class="w-4 h-4"></i> Groups</a>
-      <a href="forums.html" class="px-3 h-full text-[14px] font-semibold font-jakarta text-[#6A7581] hover:text-[#DC183C] border-b-[3px] border-transparent flex items-center gap-2 transition-colors"><i data-lucide="message-square" class="w-4 h-4"></i> Forums <i data-lucide="chevron-down" class="w-3 h-3 ml-[-2px] opacity-50"></i></a>
+    <nav class="hidden md:flex items-center justify-center gap-1 flex-1 px-4 h-full">
+      <a href="member-hub.html" class="px-3 h-full text-[14px] font-semibold font-jakarta text-[#6A7581] hover:text-[#DC183C] border-b-[3px] border-transparent flex items-center gap-2 transition-colors"><i data-lucide="home" class="w-4 h-4"></i> Home</a>
+      <div class="relative h-full" onmouseleave="closeHeaderDrop('community')">
+        <button onclick="toggleHeaderDrop('community')" class="px-3 h-full text-[14px] font-bold font-jakarta text-[#DC183C] border-b-[3px] border-[#DC183C] flex items-center gap-2 transition-colors">
+          <i data-lucide="users" class="w-4 h-4"></i> Community <i data-lucide="chevron-down" class="w-3.5 h-3.5 opacity-50"></i>
+        </button>
+        <div id="dropCommunity" class="hidden absolute left-0 top-full w-52 bg-white rounded-xl border border-slate-100 shadow-xl py-2 z-30">
+          <a href="members.html" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-[#DC183C] transition">Members</a>
+          <a href="groups.html" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-[#DC183C] transition">Groups</a>
+          <a href="forums.html" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-[#DC183C] transition">Forums</a>
+        </div>
+      </div>
+      <a href="member-workspace.html" class="px-3 h-full text-[14px] font-semibold font-jakarta text-[#6A7581] hover:text-[#DC183C] border-b-[3px] border-transparent flex items-center gap-2 transition-colors"><i data-lucide="sparkles" class="w-4 h-4"></i> Workspace</a>
+      <a href="member-account.html" class="px-3 h-full text-[14px] font-semibold font-jakarta text-[#6A7581] hover:text-[#DC183C] border-b-[3px] border-transparent flex items-center gap-2 transition-colors"><i data-lucide="circle-user" class="w-4 h-4"></i> Account</a>
     </nav>
 
     <div class="flex items-center justify-end gap-4 shrink-0">
@@ -145,6 +154,29 @@
     </div>
   </div>
 </header>
+
+<!-- Mobile bottom tab bar — Home / Community / Workspace / Account -->
+<nav aria-label="Quick nav" class="lg:hidden fixed bottom-0 inset-x-0 z-40 bg-white border-t border-[#E7EBEF] shadow-[0_-4px_16px_-4px_rgba(12,31,49,0.08)]" style="padding-bottom:env(safe-area-inset-bottom)">
+  <div class="grid grid-cols-4">
+    <a href="member-hub.html" class="flex flex-col items-center justify-center gap-1 py-2.5 text-slate-500 hover:text-[#121A21] transition">
+      <i data-lucide="home" class="w-5 h-5"></i>
+      <span class="font-jakarta text-[11px] font-bold">Home</span>
+    </a>
+    <a href="members.html" class="relative flex flex-col items-center justify-center gap-1 py-2.5 text-[#DC183C]">
+      <span class="absolute top-0 left-1/2 -translate-x-1/2 w-8 h-0.5 rounded-full bg-[#DC183C]"></span>
+      <i data-lucide="users" class="w-5 h-5"></i>
+      <span class="font-jakarta text-[11px] font-bold">Community</span>
+    </a>
+    <a href="member-workspace.html" class="flex flex-col items-center justify-center gap-1 py-2.5 text-slate-500 hover:text-[#121A21] transition">
+      <i data-lucide="sparkles" class="w-5 h-5"></i>
+      <span class="font-jakarta text-[11px] font-bold">Workspace</span>
+    </a>
+    <a href="member-account.html" class="flex flex-col items-center justify-center gap-1 py-2.5 text-slate-500 hover:text-[#121A21] transition">
+      <i data-lucide="circle-user" class="w-5 h-5"></i>
+      <span class="font-jakarta text-[11px] font-bold">Account</span>
+    </a>
+  </div>
+</nav>
 
 <main class="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
   <h1 class="sr-only">Community Post</h1>
@@ -496,6 +528,7 @@
 </footer>
 
 
+<div class="lg:hidden" style="height:calc(64px + env(safe-area-inset-bottom))"></div>
 <div id="overlay-root"></div>
 <div id="toast" class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-[100]"></div>
 
@@ -778,7 +811,18 @@
     var i=document.getElementById('headerSearchInput');
     if(open){ if(i) setTimeout(function(){ i.focus(); },100); } else if(i){ i.value=''; }
   }
-  document.addEventListener('keydown', function(e){ if(e.key==='Escape'){ var o=document.getElementById('headerSearchOverlay'); if(o&&o.classList.contains('active')) toggleHeaderSearch(); } });
+    function toggleHeaderDrop(name){
+    var el = document.getElementById("drop" + name.charAt(0).toUpperCase() + name.slice(1));
+    if (el) el.classList.toggle("hidden");
+  }
+  function closeHeaderDrop(name){
+    var el = document.getElementById("drop" + name.charAt(0).toUpperCase() + name.slice(1));
+    if (el) el.classList.add("hidden");
+  }
+  document.addEventListener("click", function(e){
+    if(!e.target.closest("#dropCommunity") && !e.target.closest("[onclick*=toggleHeaderDrop]")) closeHeaderDrop("community");
+  });
+  document.addEventListener('keydown', function(e){ if(e.key==='Escape'){ var o=document.getElementById('headerSearchOverlay'); if(o&&o.classList.contains('active')) toggleHeaderSearch(); closeHeaderDrop('community'); } });
 </script>
 </body>
 </html>
