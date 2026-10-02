@@ -89,7 +89,7 @@ window.MOCKUP_STATUS = {
   "public-404.html": "finalised",
   "public-unauthorized.html": "finalised"
 };
-window.MOCKUP_STATUS_PUBLISHED = "2026-10-02T20:06:51.342Z";
+window.MOCKUP_STATUS_PUBLISHED = "2026-10-02T20:10:08.331Z";
 /* Developer builds (staging), { mockup file: { url, status } }; status: "pending-review" | "reviewed" | "approved" */
 window.MOCKUP_DEV = {
   "public-home.html": {"url":"https://smesastg.wpengine.com/","status":"reviewed"},
@@ -127,6 +127,7 @@ window.MOCKUP_DEV = {
   "public-refunds.html": {"url":"https://smesastg.wpengine.com/refund-and-cancellation/","status":"approved"},
   "public-popia.html": {"url":"https://smesastg.wpengine.com/popia/","status":"approved"},
   "public-advertising-disclosure.html": {"url":"https://smesastg.wpengine.com/advertising-disclosure/","status":"approved"},
+  "member-workspace.html": {"url":"","status":"pending-review"},
   "member-finish-profile.html": {"url":"https://smesouthafrica.co.za/finish-profile/?preview=1","status":"pending-review"},
   "events.html": {"url":"https://smesastg.wpengine.com/events/","status":"reviewed"},
   "event-single-in-person.html": {"url":"https://smesastg.wpengine.com/events/funding-summit-2026/","status":"reviewed"},
@@ -152,4 +153,4 @@ window.MOCKUP_GROUPS = {
   "podcast.html": "Site pages"
 };
 /* Built by Tshepho (Mission Control "Built" toggle): developer must not build these; they count as ready */
-window.MOCKUP_BUILT_LOCAL = ["member-workspace.html"];
+window.MOCKUP_BUILT_LOCAL = [];
