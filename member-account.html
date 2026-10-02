@@ -701,36 +701,14 @@ function setProfile(){
       ${field('Interest', sel('p-interest',INTERESTS,p.interest))}
       ${field('Province / Region', sel('p-prov',PROVINCES,p.province))}
       ${field('City', inp('p-city',p.city))}
+      ${field('Job title', inp('p-role',p.jobTitle))}
     </div>
     <div class="mt-4">${field('Bio', `<textarea id="p-bio" rows="3" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-sm outline-none focus:border-[#DC183C] focus:bg-white transition">${esc(p.bio)}</textarea>`, 'Max 280 characters.')}</div>
 
-    <h3 class="font-jakarta font-extrabold text-base text-[#121A21] mt-6 pt-5 mb-4 border-t border-slate-100">Business Details</h3>
-    <div class="grid sm:grid-cols-2 gap-4">
-      ${field('Job title', inp('p-role',p.jobTitle))}
-      ${field('Company name', inp('p-company',p.company))}
-      ${field('Sector', sel('p-sector',SECTORS,p.sector))}
-      ${field('Stage', sel('p-stage',STAGES,p.stage))}
-      ${field('Years in business', sel('p-years',YEARS_IN_BUSINESS,p.yearsInBusiness))}
-      ${field('Company size', sel('p-size',COMPANY_SIZES,p.companySize))}
-    </div>
-    <div class="mt-4">${field('Annual turnover', sel('p-turnover',TURNOVERS,p.turnover))}</div>
-    <div class="mt-4">${field('Biggest business challenge', sel('p-challenge',CHALLENGES,p.challenge))}</div>
-
-    <div class="mt-5">
-      <p class="text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1.5">Bank account</p>
-      <p class="text-xs text-slate-500 mb-2">Do you have a registered business bank account?</p>
-      <div class="flex items-center gap-5">
-        <label class="flex items-center gap-2 text-sm font-semibold text-[#121A21] cursor-pointer"><input type="radio" name="p-bank" value="yes" ${p.bankAccount==='yes'?'checked':''} class="w-4 h-4 accent-[#DC183C]"> Yes</label>
-        <label class="flex items-center gap-2 text-sm font-semibold text-[#121A21] cursor-pointer"><input type="radio" name="p-bank" value="no" ${p.bankAccount==='no'?'checked':''} class="w-4 h-4 accent-[#DC183C]"> No</label>
-      </div>
-    </div>
-
-    <div class="mt-5">
-      <p class="text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1.5">Business tools</p>
-      <p class="text-xs text-slate-500 mb-2">What tools or platforms are you currently using to manage your business?</p>
-      <div class="space-y-2">
-        ${[['excel','Excel / Google Sheets'],['accounting','Accounting software (e.g. Sage, Xero, QuickBooks)'],['hrPayroll','HR/Payroll software'],['pos','POS device/system'],['none',"I don't use any tools yet"],['other','Other']].map(([k,l])=>`<label class="flex items-center gap-2 text-sm text-[#121A21] cursor-pointer"><input type="checkbox" ${p.tools[k]?'checked':''} class="w-4 h-4 rounded accent-[#DC183C]"> ${esc(l)}</label>`).join('')}
-      </div>
+    <!-- Personal and business are separate (Joel, 2026-10-02): business details live in My Business > Business profile. -->
+    <div class="mt-6 pt-5 border-t border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+      <div><p class="font-jakarta font-extrabold text-base text-[#121A21]">Business details</p><p class="text-xs text-slate-500 mt-0.5">Your company, sector, turnover and the rest now live in My Business, under Business profile.</p></div>
+      <a href="member-workspace.html#profile" class="shrink-0 inline-flex items-center gap-1.5 border border-slate-200 hover:border-[#0C1F31] rounded-full px-4 py-2 text-sm font-bold text-[#121A21] transition">Open Business profile <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i></a>
     </div>
 
     <div class="mt-6"><button onclick="showToast('Profile saved.', 'win')" class="bg-[#DC183C] hover:bg-[#B0142F] text-white rounded-full px-6 py-2.5 font-jakarta font-bold text-sm transition">Save Changes</button></div>`;
@@ -760,12 +738,12 @@ const BRIEFS = {
     logic:'Email change re-verifies via a confirmation link before it takes effect (not shown in mockup). Password requires current + min-8 + match, same validation as the rest of the hub.',
     components:'Email field + update · change-password form.',
     specs:'<b>Settings shell:</b> see the Notifications brief.<br/><b>Sections:</b> divided by 1px slate-100, 20px bottom padding, each with a Plus Jakarta 700 uppercase 14px heading.<br/><b>Fields:</b> max-width 28rem (<code>max-w-md</code>); inputs bg slate-50 1px slate-200 rounded-xl (12px) padding 14px/10px. Update buttons bg <code>#DC183C</code> hover <code>#B0142F</code> rounded-full padding 20px/10px Plus Jakarta 700 14px white.<br/><b>Password validation message:</b> 12px (<code>#DC183C</code> error / <code>#29A37A</code> match).' },
-  set_profile:{ title:'Settings · Profile', sub:'Public profile & business details',
+  set_profile:{ title:'Settings · Profile', sub:'Public, personal profile only (business details live in My Business › Business profile)',
     purpose:'Canonical editor for everything shown on the public member profile (see single-member.html) plus the founder/business context used for matching and funding eligibility.',
     data:'<code>{ firstName, lastName, handle, interest, province, city, bio, jobTitle, company, sector, stage, yearsInBusiness, companySize, turnover, challenge, bankAccount, tools[], avatar, cover }</code>.',
     logic:'Save writes to the profile record read by the public profile page. Bio capped at 280 chars. Business-detail fields (sector, stage, turnover, tools) feed the members directory filters and funding-application pre-fill.',
-    components:'Cover-photo uploader · avatar uploader · Personal Details grid · Business Details grid · bank-account radio · business-tools checklist · Save.',
-    specs:'<b>Settings shell:</b> see the Notifications brief.<br/><b>Cover photo:</b> dashed 2px slate-200 rounded-2xl (16px) bg slate-50, 40px vertical padding, centred Lucide <code>image</code> 24&times;24 slate-400, hover border <code>#DC183C</code>.<br/><b>Profile photo row:</b> monogram avatar 64&times;64, Change-photo button bg <code>#0C1F31</code> rounded-full padding 16px/8px 12px weight 700 white + Lucide <code>upload</code> 14&times;14.<br/><b>Section headings:</b> Plus Jakarta 800 16px (<code>text-base</code>) <code>#121A21</code>; Business Details section has a 1px slate-100 top border + 20px top padding as a divider.<br/><b>Fields:</b> <code>sm:grid-cols-2</code> 16px gap; label 11px weight 700 uppercase tracking-wider slate-500; input/select bg slate-50 1px slate-200 rounded-xl padding 14px/10px, focus border <code>#DC183C</code> + white bg.<br/><b>Bank account:</b> radio pair, 16&times;16 accent <code>#DC183C</code>.<br/><b>Business tools:</b> checkbox list, 16&times;16 accent <code>#DC183C</code>, 8px vertical rhythm.<br/><b>Save:</b> bg <code>#DC183C</code> hover <code>#B0142F</code> rounded-full padding 24px/10px Plus Jakarta 700 14px white.' },
+    components:'Cover-photo uploader · avatar uploader · Personal Details grid (incl. job title) · Business details pointer to My Business › Business profile · Save. Business fields are NOT edited here (Joel, 2026-10-02).',
+    specs:'<b>Settings shell:</b> see the Notifications brief.<br/><b>Cover photo:</b> dashed 2px slate-200 rounded-2xl (16px) bg slate-50, 40px vertical padding, centred Lucide <code>image</code> 24&times;24 slate-400, hover border <code>#DC183C</code>.<br/><b>Profile photo row:</b> monogram avatar 64&times;64, Change-photo button bg <code>#0C1F31</code> rounded-full padding 16px/8px 12px weight 700 white + Lucide <code>upload</code> 14&times;14.<br/><b>Section headings:</b> Plus Jakarta 800 16px (<code>text-base</code>) <code>#121A21</code>. The Business details pointer has a 1px slate-100 top border + 20px top padding as a divider.<br/><b>Fields:</b> <code>sm:grid-cols-2</code> 16px gap; label 11px weight 700 uppercase tracking-wider slate-500; input/select bg slate-50 1px slate-200 rounded-xl padding 14px/10px, focus border <code>#DC183C</code> + white bg.<br/><b>Save:</b> bg <code>#DC183C</code> hover <code>#B0142F</code> rounded-full padding 24px/10px Plus Jakarta 700 14px white.' },
   set_blocked:{ title:'Settings · Blocked Members', sub:'Block list management',
     purpose:'Lets a member review and lift blocks. Blocked users can’t message, view posts, or send connection requests, and aren’t notified they were blocked (BuddyBoss moderation).',
     data:'<code>blocks[] { blocked_user_id, reason, created_at }</code>.',
