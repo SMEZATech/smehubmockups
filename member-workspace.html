@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Member Workspace, SME Success Core Mockup</title>
-<meta name="description" content="Internal concept mockup, Member Workspace (SME Success Core): business health score, personalised success plan, compliance tracking, funding, resources and matched programmes." />
+<title>My Business, SME Success Core Mockup</title>
+<meta name="description" content="Internal concept mockup, My Business (SME Success Core): business health score, personalised success plan, compliance tracking, funding, resources and matched programmes." />
 <meta name="robots" content="noindex, nofollow" />
 
 <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -66,11 +66,11 @@
   .no-scrollbar::-webkit-scrollbar { display:none; }
   .no-scrollbar { -ms-overflow-style:none; scrollbar-width:none; }
 
-  /* ===== Workspace left sidebar (desktop) ===== */
+  /* ===== My Business left sidebar (desktop) ===== */
   .app-sidebar .navlink.active { background:#DC183C; color:#fff; }
   @media (max-width: 1023px) { .app-sidebar { display:none; } }
 
-  /* ===== Workspace mobile nav (tab strip + More grid, below lg only) ===== */
+  /* ===== My Business mobile nav (tab strip + More grid, below lg only) ===== */
   .wtab { color:#6A7581; }
   .wtab.active { color:#DC183C; border-bottom-color:#DC183C !important; }
   .more-item.active { border-color:#DC183C !important; background:#FDECEF; }
@@ -81,7 +81,37 @@
   #moreMenu.open .wsmore-bg { opacity:1; }
   #moreMenu .more-panel { position:fixed; left:50%; top:50%; transform:translate(-50%,-50%) scale(.96); opacity:0; pointer-events:none; width:calc(100% - 2rem); max-width:640px; max-height:80vh; background:#fff; border-radius:1.25rem; box-shadow:0 30px 60px -20px rgba(12,31,49,.35); display:flex; flex-direction:column; transition:all .2s cubic-bezier(.2,.8,.2,1); z-index:61; }
   #moreMenu.open .more-panel { opacity:1; pointer-events:auto; transform:translate(-50%,-50%) scale(1); }
-</style>
+
+    /* ===== 2026-10-02 IA consolidation: sub-tabs, More disclosure, Standard/Premium gating ===== */
+    .ws-subtabs{display:flex;gap:4px;flex-wrap:nowrap;margin:0 0 20px;padding:5px;background:#fff;border:1px solid #E7EBEF;border-radius:14px;width:fit-content;max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}
+    .ws-subtab{font-family:'Plus Jakarta Sans',Inter,sans-serif;font-weight:700;font-size:13px;padding:8px 15px;border-radius:10px;color:#6A7581;white-space:nowrap;display:inline-flex;align-items:center;gap:6px;transition:background .15s,color .15s;cursor:pointer;border:0;background:transparent}
+    .ws-subtab:hover{background:#F0F5F9;color:#121A21}
+    .ws-subtab.active{background:#0C1F31;color:#fff}
+    .more-body{display:none;flex-direction:column;gap:2px;margin-top:2px}
+    .more-body.open{display:flex}
+    .more-chev{transition:transform .2s}
+    .more-open .more-chev{transform:rotate(180deg)}
+    .standard-only-flex{display:none}
+    body.plan-standard .standard-only-flex{display:flex}
+    .standard-only-inline{display:none}
+    body.plan-standard .standard-only-inline{display:inline-flex}
+    .premium-only-flex{display:none}
+    body.plan-premium .premium-only-flex{display:flex}
+    .lock-overlay{display:none}
+    body.plan-standard .premium-block{position:relative;min-height:420px}
+    body.plan-standard .premium-block > *:not(.lock-overlay){filter:blur(5px);opacity:.38;pointer-events:none;user-select:none}
+    body.plan-standard .premium-block > .lock-overlay{display:flex;position:absolute;left:0;right:0;top:0;z-index:20;justify-content:center;padding:2.5rem 1rem 0;filter:none;opacity:1;pointer-events:auto}
+    body.plan-standard .view.is-premium,body.plan-standard .premium-block{position:relative;min-height:460px}
+    body.plan-standard .view.is-premium > *:not(.lock-overlay):not(.keep-open){filter:blur(5px);opacity:.38;pointer-events:none;user-select:none}
+    body.plan-standard .view.is-premium > .lock-overlay{display:flex;position:absolute;left:0;right:0;top:0;z-index:20;justify-content:center;padding:2.5rem 1rem 0;filter:none;opacity:1;pointer-events:auto}
+    /* mobile: stat cells in grids must be allowed to shrink or they widen the whole page */
+    #downloads-host .grid > *{min-width:0;overflow-wrap:anywhere}
+    .fit-pill{font-size:10.5px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;padding:3px 9px;border-radius:99px}
+    .fit-strong{background:#E4F5EE;color:#1E7F5E}.fit-possible{background:#FFF1E0;color:#AE6B0A}.fit-later{background:#F0F5F9;color:#6A7581}
+    .wc-range{-webkit-appearance:none;appearance:none;width:100%;height:6px;border-radius:9999px;background:#E7EBEF;outline:none}
+    .wc-range::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:22px;height:22px;border-radius:9999px;background:#DC183C;cursor:pointer;border:3px solid #fff;box-shadow:0 2px 6px rgba(12,31,49,.25)}
+    .wc-range::-moz-range-thumb{width:22px;height:22px;border-radius:9999px;background:#DC183C;cursor:pointer;border:3px solid #fff}
+  </style>
 </head>
 <body class="bg-[#FCFCFC] text-[#121A21] antialiased">
 
@@ -94,7 +124,7 @@
       <img src="https://smesouthafrica.co.za/wp-content/uploads/2025/10/Asset-1-1.webp" alt="SME South Africa" class="h-10 sm:h-11 w-auto object-contain group-hover:scale-105 transition-transform" />
     </a>
 
-    <!-- Primary Navigation (Center - SaaS style: Home / Community / Workspace / Account) -->
+    <!-- Primary Navigation (Center - SaaS style: Home / Community / My Business / Account) -->
     <nav class="hidden md:flex items-center justify-center gap-1 flex-1 px-4 h-full">
       <a href="member-hub.html" class="px-3 h-full text-[14px] font-semibold font-jakarta text-[#6A7581] hover:text-[#DC183C] border-b-[3px] border-transparent flex items-center gap-2 transition-colors"><i data-lucide="home" class="w-4 h-4"></i> Home</a>
       <div class="relative h-full" onmouseleave="closeHeaderDrop('community')">
@@ -107,7 +137,7 @@
           <a href="forums.html" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-[#DC183C] transition">Forums</a>
         </div>
       </div>
-      <a href="member-workspace.html" class="px-3 h-full text-[14px] font-bold font-jakarta text-[#DC183C] border-b-[3px] border-[#DC183C] flex items-center gap-2 transition-colors"><i data-lucide="sparkles" class="w-4 h-4 text-[#DC183C]"></i> Workspace</a>
+      <a href="member-workspace.html" class="px-3 h-full text-[14px] font-bold font-jakarta text-[#DC183C] border-b-[3px] border-[#DC183C] flex items-center gap-2 transition-colors"><i data-lucide="sparkles" class="w-4 h-4 text-[#DC183C]"></i> My Business</a>
       <a href="member-account.html" class="px-3 h-full text-[14px] font-semibold font-jakarta text-[#6A7581] hover:text-[#DC183C] border-b-[3px] border-transparent flex items-center gap-2 transition-colors"><i data-lucide="circle-user" class="w-4 h-4"></i> Account</a>
     </nav>
 
@@ -123,11 +153,11 @@
 
       <!-- Action Icons -->
       <div class="hidden sm:flex items-center gap-2">
-        <button class="relative text-slate-500 hover:text-[#121A21] transition-colors p-1.5" aria-label="Messages">
+        <button onclick="location.href='member-messages.html'" class="relative text-slate-500 hover:text-[#121A21] transition-colors p-1.5" aria-label="Messages">
           <i data-lucide="inbox" class="w-5 h-5"></i>
           <span class="absolute top-0 right-0 w-4 h-4 bg-[#DC183C] text-white text-[9px] font-bold rounded-full flex items-center justify-center ring-2 ring-white shadow-sm">1</span>
         </button>
-        <button class="relative text-slate-500 hover:text-[#121A21] transition-colors p-1.5" aria-label="Notifications">
+        <button onclick="location.href='member-notifications.html'" class="relative text-slate-500 hover:text-[#121A21] transition-colors p-1.5" aria-label="Notifications">
           <i data-lucide="bell" class="w-5 h-5"></i>
           <span class="absolute top-0 right-0 w-4 h-4 bg-[#DC183C] text-white text-[9px] font-bold rounded-full flex items-center justify-center ring-2 ring-white shadow-sm">3</span>
         </button>
@@ -182,7 +212,7 @@
   </div>
 </header>
 
-<!-- Mobile bottom tab bar, Home / Connect / Events / Workspace / Account -->
+<!-- Mobile bottom tab bar, Home / Connect / Events / My Business / Account -->
 <nav aria-label="Quick nav" class="lg:hidden fixed bottom-0 inset-x-0 z-40 bg-white border-t border-[#E7EBEF] shadow-[0_-4px_16px_-4px_rgba(12,31,49,0.08)]" style="padding-bottom:env(safe-area-inset-bottom)">
   <div class="grid grid-cols-5">
     <a href="member-hub.html" class="flex flex-col items-center justify-center gap-1 py-2.5 text-slate-500 hover:text-[#121A21] transition">
@@ -200,7 +230,7 @@
     <a href="member-workspace.html" class="relative flex flex-col items-center justify-center gap-1 py-2.5 text-[#DC183C]">
       <span class="absolute top-0 left-1/2 -translate-x-1/2 w-8 h-0.5 rounded-full bg-[#DC183C]"></span>
       <i data-lucide="sparkles" class="w-5 h-5"></i>
-      <span class="font-jakarta text-[11px] font-bold">Workspace</span>
+      <span class="font-jakarta text-[11px] font-bold">My Business</span>
     </a>
     <a href="member-account.html" class="flex flex-col items-center justify-center gap-1 py-2.5 text-slate-500 hover:text-[#121A21] transition">
       <i data-lucide="circle-user" class="w-5 h-5"></i>
@@ -244,77 +274,27 @@
     </div>
 
     <nav>
-      <p class="text-[10px] font-bold uppercase tracking-widest text-white/40 px-2.5 mb-2">Member Workspace</p>
+      <p class="text-[10px] font-bold uppercase tracking-widest text-white/40 px-2.5 mb-2">Your business</p>
       <div class="flex flex-col gap-0.5">
-        <!-- Nav order and slugs match sme-success-core's nav() exactly -->
-        <button data-view="overview" onclick="showView('overview')" class="navlink flex items-center gap-2.5 px-2.5 py-2.5 rounded-lg text-[13.5px] font-semibold text-white/75 hover:bg-white/[0.06] hover:text-white transition text-left">
-          <i data-lucide="layout-dashboard" class="w-4 h-4 shrink-0 opacity-90"></i> Overview
-        </button>
-        <button data-view="profile" onclick="showView('profile')" class="navlink flex items-center gap-2.5 px-2.5 py-2.5 rounded-lg text-[13.5px] font-semibold text-white/75 hover:bg-white/[0.06] hover:text-white transition text-left">
-          <i data-lucide="building-2" class="w-4 h-4 shrink-0 opacity-90"></i> Business Profile
-        </button>
-        <button data-view="success-plan" onclick="showView('success-plan')" class="navlink flex items-center gap-2.5 px-2.5 py-2.5 rounded-lg text-[13.5px] font-semibold text-white/75 hover:bg-white/[0.06] hover:text-white transition text-left">
-          <i data-lucide="list-checks" class="w-4 h-4 shrink-0 opacity-90"></i> My Success Plan
-        </button>
-        <button data-view="progress" onclick="showView('progress')" class="navlink flex items-center gap-2.5 px-2.5 py-2.5 rounded-lg text-[13.5px] font-semibold text-white/75 hover:bg-white/[0.06] hover:text-white transition text-left">
-          <i data-lucide="trending-up" class="w-4 h-4 shrink-0 opacity-90"></i> Progress
-        </button>
-        <button data-view="growth" onclick="showView('growth')" class="navlink flex items-center gap-2.5 px-2.5 py-2.5 rounded-lg text-[13.5px] font-semibold text-white/75 hover:bg-white/[0.06] hover:text-white transition text-left">
-          <i data-lucide="rocket" class="w-4 h-4 shrink-0 opacity-90"></i> Growth Hub
-        </button>
-        <button data-view="match" onclick="showView('match')" class="navlink flex items-center gap-2.5 px-2.5 py-2.5 rounded-lg text-[13.5px] font-semibold text-white/75 hover:bg-white/[0.06] hover:text-white transition text-left">
-          <i data-lucide="search-check" class="w-4 h-4 shrink-0 opacity-90"></i> Find a Solution
-        </button>
-        <button data-view="compliance" onclick="showView('compliance')" class="navlink flex items-center gap-2.5 px-2.5 py-2.5 rounded-lg text-[13.5px] font-semibold text-white/75 hover:bg-white/[0.06] hover:text-white transition text-left">
-          <i data-lucide="shield-check" class="w-4 h-4 shrink-0 opacity-90"></i> Compliance
-        </button>
-        <button data-view="programmes" onclick="showView('programmes')" class="navlink flex items-center gap-2.5 px-2.5 py-2.5 rounded-lg text-[13.5px] font-semibold text-white/75 hover:bg-white/[0.06] hover:text-white transition text-left">
-          <i data-lucide="calendar-days" class="w-4 h-4 shrink-0 opacity-90"></i> Events
-        </button>
-        <button data-view="funding" onclick="showView('funding')" class="navlink flex items-center gap-2.5 px-2.5 py-2.5 rounded-lg text-[13.5px] font-semibold text-white/75 hover:bg-white/[0.06] hover:text-white transition text-left">
-          <i data-lucide="banknote" class="w-4 h-4 shrink-0 opacity-90"></i> Funding
-        </button>
-        <button data-view="cashflow" onclick="showView('cashflow')" class="navlink flex items-center gap-2.5 px-2.5 py-2.5 rounded-lg text-[13.5px] font-semibold text-white/75 hover:bg-white/[0.06] hover:text-white transition text-left">
-          <i data-lucide="wallet" class="w-4 h-4 shrink-0 opacity-90"></i> Cash Flow
-        </button>
-        <button data-view="invoices" onclick="showView('invoices')" class="navlink flex items-center gap-2.5 px-2.5 py-2.5 rounded-lg text-[13.5px] font-semibold text-white/75 hover:bg-white/[0.06] hover:text-white transition text-left">
-          <i data-lucide="receipt" class="w-4 h-4 shrink-0 opacity-90"></i> Get Paid
-        </button>
-        <button data-view="documents" onclick="showView('documents')" class="navlink flex items-center gap-2.5 px-2.5 py-2.5 rounded-lg text-[13.5px] font-semibold text-white/75 hover:bg-white/[0.06] hover:text-white transition text-left">
-          <i data-lucide="folder-check" class="w-4 h-4 shrink-0 opacity-90"></i> Documents
-        </button>
-        <button data-view="experts" onclick="showView('experts')" class="navlink flex items-center gap-2.5 px-2.5 py-2.5 rounded-lg text-[13.5px] font-semibold text-white/75 hover:bg-white/[0.06] hover:text-white transition text-left">
-          <i data-lucide="user-round-search" class="w-4 h-4 shrink-0 opacity-90"></i> Experts
-        </button>
-        <button data-view="resources" onclick="showView('resources')" class="navlink flex items-center gap-2.5 px-2.5 py-2.5 rounded-lg text-[13.5px] font-semibold text-white/75 hover:bg-white/[0.06] hover:text-white transition text-left">
-          <i data-lucide="book-open" class="w-4 h-4 shrink-0 opacity-90"></i> Resources
-        </button>
-        <button data-view="perks" onclick="showView('perks')" class="navlink flex items-center gap-2.5 px-2.5 py-2.5 rounded-lg text-[13.5px] font-semibold text-white/75 hover:bg-white/[0.06] hover:text-white transition text-left">
-          <i data-lucide="gift" class="w-4 h-4 shrink-0 opacity-90"></i> Member Perks
-        </button>
-        <button data-view="passport" onclick="showView('passport')" class="navlink flex items-center gap-2.5 px-2.5 py-2.5 rounded-lg text-[13.5px] font-semibold text-white/75 hover:bg-white/[0.06] hover:text-white transition text-left">
-          <i data-lucide="file-text" class="w-4 h-4 shrink-0 opacity-90"></i> Business Passport
-        </button>
-        <button data-view="settings" onclick="showView('settings')" class="navlink flex items-center gap-2.5 px-2.5 py-2.5 rounded-lg text-[13.5px] font-semibold text-white/75 hover:bg-white/[0.06] hover:text-white transition text-left">
-          <i data-lucide="settings" class="w-4 h-4 shrink-0 opacity-90"></i> Settings
-        </button>
+        <!-- 2026-10-02: Redesigned from the 2 Oct SWOT: 5 modules. Old slugs still resolve through WS_ALIAS so sme-success-core routes keep working. -->
+        <button data-view="overview" data-group="home" onclick="showView('overview')" class="navlink flex items-center gap-2.5 px-2.5 py-2.5 rounded-lg text-[13.5px] font-semibold text-white/75 hover:bg-white/[0.06] hover:text-white transition text-left"><i data-lucide="layout-dashboard" class="w-4 h-4 shrink-0 opacity-90"></i> <span class="flex-1">Home</span></button>
+        <button data-view="progress" data-group="progress" onclick="showView('progress')" class="navlink flex items-center gap-2.5 px-2.5 py-2.5 rounded-lg text-[13.5px] font-semibold text-white/75 hover:bg-white/[0.06] hover:text-white transition text-left"><i data-lucide="trending-up" class="w-4 h-4 shrink-0 opacity-90"></i> <span class="flex-1">Progress</span></button>
+        <button data-view="compliance" data-group="compliance" onclick="showView('compliance')" class="navlink flex items-center gap-2.5 px-2.5 py-2.5 rounded-lg text-[13.5px] font-semibold text-white/75 hover:bg-white/[0.06] hover:text-white transition text-left"><i data-lucide="shield-check" class="w-4 h-4 shrink-0 opacity-90"></i> <span class="flex-1">Compliance</span></button>
+        <button data-view="funding-options" data-group="funding" onclick="showView('funding-options')" class="navlink flex items-center gap-2.5 px-2.5 py-2.5 rounded-lg text-[13.5px] font-semibold text-white/75 hover:bg-white/[0.06] hover:text-white transition text-left"><i data-lucide="banknote" class="w-4 h-4 shrink-0 opacity-90"></i> <span class="flex-1">Funding</span></button>
+        <button data-view="invoices" data-group="money" onclick="showView('invoices')" class="navlink flex items-center gap-2.5 px-2.5 py-2.5 rounded-lg text-[13.5px] font-semibold text-white/75 hover:bg-white/[0.06] hover:text-white transition text-left"><i data-lucide="wallet" class="w-4 h-4 shrink-0 opacity-90"></i> <span class="flex-1">Get paid</span></button>
+        <button data-view="solutions" data-group="solutions" onclick="showView('solutions')" class="navlink flex items-center gap-2.5 px-2.5 py-2.5 rounded-lg text-[13.5px] font-semibold text-white/75 hover:bg-white/[0.06] hover:text-white transition text-left"><i data-lucide="layout-grid" class="w-4 h-4 shrink-0 opacity-90"></i> <span class="flex-1">Solutions</span></button>
+        <button data-view="resources" data-group="learn" onclick="showView('resources')" class="navlink flex items-center gap-2.5 px-2.5 py-2.5 rounded-lg text-[13.5px] font-semibold text-white/75 hover:bg-white/[0.06] hover:text-white transition text-left"><i data-lucide="book-open" class="w-4 h-4 shrink-0 opacity-90"></i> <span class="flex-1">Learn</span></button>
+        <button data-view="programmes" data-group="events" onclick="showView('programmes')" class="navlink flex items-center gap-2.5 px-2.5 py-2.5 rounded-lg text-[13.5px] font-semibold text-white/75 hover:bg-white/[0.06] hover:text-white transition text-left"><i data-lucide="calendar-days" class="w-4 h-4 shrink-0 opacity-90"></i> <span class="flex-1">Events</span></button>
+        <button data-view="profile" data-group="you" onclick="showView('profile')" class="navlink flex items-center gap-2.5 px-2.5 py-2.5 rounded-lg text-[13.5px] font-semibold text-white/75 hover:bg-white/[0.06] hover:text-white transition text-left"><i data-lucide="building-2" class="w-4 h-4 shrink-0 opacity-90"></i> <span class="flex-1">Business profile</span></button>
+        <button data-view="settings" data-group="you" onclick="showView('settings')" class="navlink flex items-center gap-2.5 px-2.5 py-2.5 rounded-lg text-[13.5px] font-semibold text-white/75 hover:bg-white/[0.06] hover:text-white transition text-left"><i data-lucide="settings" class="w-4 h-4 shrink-0 opacity-90"></i> <span class="flex-1">Settings</span></button>
+      </div>
+      <div class="standard-only-flex mt-5 mx-1 rounded-xl border border-white/10 bg-white/[0.05] p-3.5 flex-col gap-2">
+        <p class="font-jakarta font-extrabold text-[13px] text-white">Premium, R99 a month</p>
+        <p class="text-[11.5px] text-white/60 leading-relaxed">Autopilot reminders, Documents, unlimited invoices and member perks.</p>
+        <a href="public-premium-checkout.html" class="mt-1 inline-flex items-center justify-center gap-1.5 h-9 rounded-lg bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold text-[12.5px] transition"><i data-lucide="crown" class="w-3.5 h-3.5"></i> Upgrade</a>
       </div>
     </nav>
 
-    <nav>
-      <p class="text-[10px] font-bold uppercase tracking-widest text-white/40 px-2.5 mb-2">Community</p>
-      <div class="flex flex-col gap-0.5">
-        <a href="member-hub.html" class="flex items-center gap-2.5 px-2.5 py-2.5 rounded-lg text-[13.5px] font-semibold text-white/75 hover:bg-white/[0.06] hover:text-white transition text-left">
-          <i data-lucide="users" class="w-4 h-4 shrink-0 opacity-90"></i> Community
-        </a>
-        <a href="member-account.html" class="flex items-center gap-2.5 px-2.5 py-2.5 rounded-lg text-[13.5px] font-semibold text-white/75 hover:bg-white/[0.06] hover:text-white transition text-left">
-          <i data-lucide="circle-user" class="w-4 h-4 shrink-0 opacity-90"></i> Account
-        </a>
-        <a href="public-help.html" class="flex items-center gap-2.5 px-2.5 py-2.5 rounded-lg text-[13.5px] font-semibold text-white/75 hover:bg-white/[0.06] hover:text-white transition text-left">
-          <i data-lucide="life-buoy" class="w-4 h-4 shrink-0 opacity-90"></i> Get Help
-        </a>
-      </div>
-    </nav>
   </aside>
 
   <div class="flex-1 flex flex-col min-w-0">
@@ -322,111 +302,44 @@
   <!-- ===================== MOBILE WORKSPACE NAV (below lg only; desktop uses the sidebar above) (SaaS tab strip, replaces the old left sidebar) ===================== -->
   <div class="lg:hidden sticky top-16 z-30 bg-[#FCFCFC]/95 backdrop-blur-sm border-b border-[#E7EBEF] -mx-4 sm:-mx-6 px-4 sm:px-6">
     <div class="flex items-center gap-1 max-w-[1180px] mx-auto overflow-x-auto no-scrollbar">
-      <button data-view="overview" onclick="showView('overview')" class="navlink wtab shrink-0 flex items-center gap-2 px-3.5 h-12 text-[13.5px] font-bold font-jakarta border-b-[3px] border-transparent transition-colors whitespace-nowrap">
-        <i data-lucide="layout-dashboard" class="w-4 h-4"></i> Overview
+      <button data-view="overview" data-group="home" onclick="showView('overview')" class="navlink wtab shrink-0 flex items-center gap-2 px-3.5 h-12 text-[13.5px] font-bold font-jakarta border-b-[3px] border-transparent transition-colors whitespace-nowrap">
+        <i data-lucide="layout-dashboard" class="w-4 h-4"></i> Home
       </button>
-      <button data-view="success-plan" onclick="showView('success-plan')" class="navlink wtab shrink-0 flex items-center gap-2 px-3.5 h-12 text-[13.5px] font-bold font-jakarta border-b-[3px] border-transparent transition-colors whitespace-nowrap">
-        <i data-lucide="list-checks" class="w-4 h-4"></i> Success Plan
+      <button data-view="progress" data-group="progress" onclick="showView('progress')" class="navlink wtab shrink-0 flex items-center gap-2 px-3.5 h-12 text-[13.5px] font-bold font-jakarta border-b-[3px] border-transparent transition-colors whitespace-nowrap">
+        <i data-lucide="trending-up" class="w-4 h-4"></i> Progress
       </button>
-      <button data-view="compliance" onclick="showView('compliance')" class="navlink wtab shrink-0 flex items-center gap-2 px-3.5 h-12 text-[13.5px] font-bold font-jakarta border-b-[3px] border-transparent transition-colors whitespace-nowrap">
+      <button data-view="compliance" data-group="compliance" onclick="showView('compliance')" class="navlink wtab shrink-0 flex items-center gap-2 px-3.5 h-12 text-[13.5px] font-bold font-jakarta border-b-[3px] border-transparent transition-colors whitespace-nowrap">
         <i data-lucide="shield-check" class="w-4 h-4"></i> Compliance
       </button>
-      <button data-view="cashflow" onclick="showView('cashflow')" class="navlink wtab shrink-0 flex items-center gap-2 px-3.5 h-12 text-[13.5px] font-bold font-jakarta border-b-[3px] border-transparent transition-colors whitespace-nowrap">
-        <i data-lucide="wallet" class="w-4 h-4"></i> Cash Flow
+      <button data-view="funding-options" data-group="funding" onclick="showView('funding-options')" class="navlink wtab shrink-0 flex items-center gap-2 px-3.5 h-12 text-[13.5px] font-bold font-jakarta border-b-[3px] border-transparent transition-colors whitespace-nowrap">
+        <i data-lucide="banknote" class="w-4 h-4"></i> Funding
       </button>
-      <button onclick="toggleMoreMenu()" class="shrink-0 flex items-center gap-2 px-3.5 h-12 text-[13.5px] font-bold font-jakarta text-[#6A7581] hover:text-[#121A21] border-b-[3px] border-transparent transition-colors whitespace-nowrap ml-auto">
-        <i data-lucide="grid-2x2" class="w-4 h-4"></i> More
+      <button data-view="invoices" data-group="money" onclick="showView('invoices')" class="navlink wtab shrink-0 flex items-center gap-2 px-3.5 h-12 text-[13.5px] font-bold font-jakarta border-b-[3px] border-transparent transition-colors whitespace-nowrap">
+        <i data-lucide="wallet" class="w-4 h-4"></i> Get paid
       </button>
-    </div>
-  </div>
-
-  <!-- More menu, app-drawer style grid for the rest of the Workspace tools -->
-  <div class="wsmore" id="moreMenu">
-    <div class="wsmore-bg" onclick="closeMoreMenu()"></div>
-    <div class="more-panel">
-      <div class="flex items-center justify-between p-5 border-b border-slate-100 shrink-0">
-        <p class="font-jakarta font-extrabold text-lg">All Workspace tools</p>
-        <button onclick="closeMoreMenu()" class="text-slate-500 hover:text-[#121A21]" aria-label="Close"><i data-lucide="x" class="w-5 h-5"></i></button>
-      </div>
-      <div class="p-5 overflow-y-auto space-y-6">
-        <div>
-          <p class="text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-2.5 px-0.5">Business</p>
-          <div class="grid grid-cols-3 sm:grid-cols-4 gap-2.5">
-            <button data-view="profile" onclick="showView('profile')" class="navlink more-item flex flex-col items-center justify-center gap-2 p-4 rounded-xl border border-slate-100 hover:border-[#DC183C] hover:bg-[#FDECEF]/40 transition text-center">
-              <div class="w-10 h-10 rounded-xl bg-[#F0F5F9] grid place-items-center text-[#0C1F31]"><i data-lucide="building-2" class="w-5 h-5"></i></div>
-              <span class="text-[12px] font-bold leading-tight">Business Profile</span>
-            </button>
-            <button data-view="passport" onclick="showView('passport')" class="navlink more-item flex flex-col items-center justify-center gap-2 p-4 rounded-xl border border-slate-100 hover:border-[#DC183C] hover:bg-[#FDECEF]/40 transition text-center">
-              <div class="w-10 h-10 rounded-xl bg-[#F0F5F9] grid place-items-center text-[#0C1F31]"><i data-lucide="file-text" class="w-5 h-5"></i></div>
-              <span class="text-[12px] font-bold leading-tight">Business Passport</span>
-            </button>
-            <button data-view="settings" onclick="showView('settings')" class="navlink more-item flex flex-col items-center justify-center gap-2 p-4 rounded-xl border border-slate-100 hover:border-[#DC183C] hover:bg-[#FDECEF]/40 transition text-center">
-              <div class="w-10 h-10 rounded-xl bg-[#F0F5F9] grid place-items-center text-[#0C1F31]"><i data-lucide="settings" class="w-5 h-5"></i></div>
-              <span class="text-[12px] font-bold leading-tight">Settings</span>
-            </button>
-          </div>
-        </div>
-        <div>
-          <p class="text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-2.5 px-0.5">Growth</p>
-          <div class="grid grid-cols-3 sm:grid-cols-4 gap-2.5">
-            <button data-view="progress" onclick="showView('progress')" class="navlink more-item flex flex-col items-center justify-center gap-2 p-4 rounded-xl border border-slate-100 hover:border-[#DC183C] hover:bg-[#FDECEF]/40 transition text-center">
-              <div class="w-10 h-10 rounded-xl bg-[#E4F5EE] grid place-items-center text-[#29A37A]"><i data-lucide="trending-up" class="w-5 h-5"></i></div>
-              <span class="text-[12px] font-bold leading-tight">Progress</span>
-            </button>
-            <button data-view="growth" onclick="showView('growth')" class="navlink more-item flex flex-col items-center justify-center gap-2 p-4 rounded-xl border border-slate-100 hover:border-[#DC183C] hover:bg-[#FDECEF]/40 transition text-center">
-              <div class="w-10 h-10 rounded-xl bg-[#E4F5EE] grid place-items-center text-[#29A37A]"><i data-lucide="rocket" class="w-5 h-5"></i></div>
-              <span class="text-[12px] font-bold leading-tight">Growth Hub</span>
-            </button>
-            <button data-view="match" onclick="showView('match')" class="navlink more-item flex flex-col items-center justify-center gap-2 p-4 rounded-xl border border-slate-100 hover:border-[#DC183C] hover:bg-[#FDECEF]/40 transition text-center">
-              <div class="w-10 h-10 rounded-xl bg-[#E4F5EE] grid place-items-center text-[#29A37A]"><i data-lucide="search-check" class="w-5 h-5"></i></div>
-              <span class="text-[12px] font-bold leading-tight">Find a Solution</span>
-            </button>
-          </div>
-        </div>
-        <div>
-          <p class="text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-2.5 px-0.5">Money</p>
-          <div class="grid grid-cols-3 sm:grid-cols-4 gap-2.5">
-            <button data-view="funding" onclick="showView('funding')" class="navlink more-item flex flex-col items-center justify-center gap-2 p-4 rounded-xl border border-slate-100 hover:border-[#DC183C] hover:bg-[#FDECEF]/40 transition text-center">
-              <div class="w-10 h-10 rounded-xl bg-[#FFF1E0] grid place-items-center text-[#AE6B0A]"><i data-lucide="banknote" class="w-5 h-5"></i></div>
-              <span class="text-[12px] font-bold leading-tight">Funding</span>
-            </button>
-            <button data-view="invoices" onclick="showView('invoices')" class="navlink more-item flex flex-col items-center justify-center gap-2 p-4 rounded-xl border border-slate-100 hover:border-[#DC183C] hover:bg-[#FDECEF]/40 transition text-center">
-              <div class="w-10 h-10 rounded-xl bg-[#FFF1E0] grid place-items-center text-[#AE6B0A]"><i data-lucide="receipt" class="w-5 h-5"></i></div>
-              <span class="text-[12px] font-bold leading-tight">Get Paid</span>
-            </button>
-            <button data-view="documents" onclick="showView('documents')" class="navlink more-item flex flex-col items-center justify-center gap-2 p-4 rounded-xl border border-slate-100 hover:border-[#DC183C] hover:bg-[#FDECEF]/40 transition text-center">
-              <div class="w-10 h-10 rounded-xl bg-[#FFF1E0] grid place-items-center text-[#AE6B0A]"><i data-lucide="folder-check" class="w-5 h-5"></i></div>
-              <span class="text-[12px] font-bold leading-tight">Documents</span>
-            </button>
-          </div>
-        </div>
-        <div>
-          <p class="text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-2.5 px-0.5">Support</p>
-          <div class="grid grid-cols-3 sm:grid-cols-4 gap-2.5">
-            <button data-view="programmes" onclick="showView('programmes')" class="navlink more-item flex flex-col items-center justify-center gap-2 p-4 rounded-xl border border-slate-100 hover:border-[#DC183C] hover:bg-[#FDECEF]/40 transition text-center">
-              <div class="w-10 h-10 rounded-xl bg-[#FDECEF] grid place-items-center text-[#DC183C]"><i data-lucide="calendar-days" class="w-5 h-5"></i></div>
-              <span class="text-[12px] font-bold leading-tight">Events</span>
-            </button>
-            <button data-view="experts" onclick="showView('experts')" class="navlink more-item flex flex-col items-center justify-center gap-2 p-4 rounded-xl border border-slate-100 hover:border-[#DC183C] hover:bg-[#FDECEF]/40 transition text-center">
-              <div class="w-10 h-10 rounded-xl bg-[#FDECEF] grid place-items-center text-[#DC183C]"><i data-lucide="user-round-search" class="w-5 h-5"></i></div>
-              <span class="text-[12px] font-bold leading-tight">Experts</span>
-            </button>
-            <button data-view="resources" onclick="showView('resources')" class="navlink more-item flex flex-col items-center justify-center gap-2 p-4 rounded-xl border border-slate-100 hover:border-[#DC183C] hover:bg-[#FDECEF]/40 transition text-center">
-              <div class="w-10 h-10 rounded-xl bg-[#FDECEF] grid place-items-center text-[#DC183C]"><i data-lucide="book-open" class="w-5 h-5"></i></div>
-              <span class="text-[12px] font-bold leading-tight">Resources</span>
-            </button>
-            <button data-view="perks" onclick="showView('perks')" class="navlink more-item flex flex-col items-center justify-center gap-2 p-4 rounded-xl border border-slate-100 hover:border-[#DC183C] hover:bg-[#FDECEF]/40 transition text-center">
-              <div class="w-10 h-10 rounded-xl bg-[#FDECEF] grid place-items-center text-[#DC183C]"><i data-lucide="gift" class="w-5 h-5"></i></div>
-              <span class="text-[12px] font-bold leading-tight">Member Perks</span>
-            </button>
-          </div>
-        </div>
-      </div>
+      <button data-view="solutions" data-group="solutions" onclick="showView('solutions')" class="navlink wtab shrink-0 flex items-center gap-2 px-3.5 h-12 text-[13.5px] font-bold font-jakarta border-b-[3px] border-transparent transition-colors whitespace-nowrap">
+        <i data-lucide="layout-grid" class="w-4 h-4"></i> Solutions
+      </button>
+      <button data-view="resources" data-group="learn" onclick="showView('resources')" class="navlink wtab shrink-0 flex items-center gap-2 px-3.5 h-12 text-[13.5px] font-bold font-jakarta border-b-[3px] border-transparent transition-colors whitespace-nowrap">
+        <i data-lucide="book-open" class="w-4 h-4"></i> Learn
+      </button>
+      <button data-view="programmes" data-group="events" onclick="showView('programmes')" class="navlink wtab shrink-0 flex items-center gap-2 px-3.5 h-12 text-[13.5px] font-bold font-jakarta border-b-[3px] border-transparent transition-colors whitespace-nowrap">
+        <i data-lucide="calendar-days" class="w-4 h-4"></i> Events
+      </button>
+      <button data-view="profile" data-group="you" onclick="showView('profile')" class="navlink wtab shrink-0 flex items-center gap-2 px-3.5 h-12 text-[13.5px] font-bold font-jakarta border-b-[3px] border-transparent transition-colors whitespace-nowrap">
+        <i data-lucide="building-2" class="w-4 h-4"></i> Business profile
+      </button>
+      <button data-view="settings" data-group="you" onclick="showView('settings')" class="navlink wtab shrink-0 flex items-center gap-2 px-3.5 h-12 text-[13.5px] font-bold font-jakarta border-b-[3px] border-transparent transition-colors whitespace-nowrap">
+        <i data-lucide="settings" class="w-4 h-4"></i> Settings
+      </button>
     </div>
   </div>
 
   <!-- ===================== MAIN ===================== -->
   <main class="py-7 sm:py-8 max-w-[1180px] w-full">
+
+      <div id="ws-subtabs" class="ws-subtabs hidden" role="tablist" aria-label="Section"></div>
+
 
       <!-- ============ VIEW: OVERVIEW ============ -->
       <div class="view active" id="view-overview">
@@ -436,7 +349,7 @@
               <i data-lucide="sparkles" class="w-3 h-3"></i> Sample Member View
             </span>
             <h1 class="font-jakarta font-extrabold text-[26px] sm:text-[28px] tracking-tight">Your business, at a glance</h1>
-            <p class="text-[14.5px] text-[#6A7581] leading-relaxed max-w-[60ch] mt-2">A clear view of what's going well, what needs attention, and where SME South Africa can help next.</p>
+            <p class="text-[14.5px] text-[#6A7581] leading-relaxed max-w-[60ch] mt-2">What is going well, what needs attention, and the next thing worth doing.</p>
           </div>
           <button onclick="stubNav('Business Health Check')" class="shrink-0 inline-flex items-center gap-2 font-jakarta font-bold text-[13px] px-5 py-3 rounded-lg bg-[#0C1F31] text-white hover:bg-[#16324a] transition">
             <i data-lucide="plus" class="w-4 h-4"></i> Start a check-in
@@ -494,7 +407,7 @@
               <div class="bg-[#F0F5F9] rounded-xl p-3.5">
                 <div class="flex justify-between text-[11.5px] mb-2"><span>Focus progress</span><b id="focus-count" class="text-[#DC183C]">2 of 6 complete</b></div>
                 <div class="h-1.5 bg-[#E7EBEF] rounded-full overflow-hidden mb-2.5"><div id="focus-fill" class="h-full accent-grad rounded-full" style="width:33%"></div></div>
-                <button onclick="showView('success-plan')" class="text-xs font-bold text-[#DC183C] inline-flex items-center gap-1 hover:underline">Open my success plan <i data-lucide="arrow-right" class="w-3 h-3"></i></button>
+                <button onclick="openHomePlan()" class="text-xs font-bold text-[#DC183C] inline-flex items-center gap-1 hover:underline">Open my plan <i data-lucide="arrow-right" class="w-3 h-3"></i></button>
               </div>
               <div class="flex items-center gap-1.5 text-[11px] text-[#6A7581] mt-3.5">
                 <i data-lucide="history" class="w-3 h-3"></i> Suggested from your June check-in
@@ -504,18 +417,32 @@
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-[1.4fr_1fr] gap-5 mt-5">
-          <!-- Three things preview -->
-          <div class="rounded-2xl border border-[#E7EBEF] shadow-sm bg-white reveal" style="animation-delay:200ms">
+          <!-- Your funding -->
+          <div class="rounded-2xl border border-[#E7EBEF] shadow-sm bg-white reveal">
             <div class="flex items-center justify-between p-5 pb-0">
-              <div>
-                <p class="text-[11px] font-extrabold uppercase tracking-wide text-[#DC183C] mb-0.5">This Week</p>
-                <p class="font-jakarta font-extrabold text-lg">Three things worth doing</p>
-              </div>
-              <button onclick="showView('success-plan')" class="text-xs font-bold text-[#DC183C] hover:underline shrink-0">See my plan →</button>
+              <div><p class="text-[11px] font-extrabold uppercase tracking-wide text-[#DC183C] mb-0.5">Your funding</p>
+                <p class="font-jakarta font-extrabold text-lg flex items-center gap-1.5">Your funding<button onclick="openBrief('homefunding')" class="dev-badge w-4 h-4 rounded-full bg-[#DC183C] text-white items-center justify-center text-[9px] font-bold leading-none animate-pulse" title="Implementation notes">i</button></p></div>
+              <button onclick="showView('funding')" class="text-xs font-bold text-[#DC183C] hover:underline shrink-0">All applications &rarr;</button>
             </div>
-            <div id="overview-actions" class="mt-3"></div>
+            <div id="home-funding-toggle" class="px-5 pt-2"></div>
+            <div id="home-funding" class="p-5 pt-3"></div>
           </div>
+          <!-- Premium card (Standard only) -->
+          <div class="standard-only-flex flex-col rounded-2xl border border-[#0C1F31] bg-[#0C1F31] text-white p-5 reveal">
+            <p class="text-[11px] font-extrabold uppercase tracking-wide text-[#FF9AAA] mb-1">Premium, R99 a month</p>
+            <p class="font-jakarta font-extrabold text-lg leading-snug">Never miss a deadline, and keep your funding pack ready</p>
+            <ul class="mt-3 space-y-2 text-[13px] text-white/75">
+              <li class="flex gap-2"><i data-lucide="bell-ring" class="w-4 h-4 mt-0.5 text-[#FF9900] shrink-0"></i> Autopilot: a week-ahead email and a final reminder before SARS and CIPC dates</li>
+              <li class="flex gap-2"><i data-lucide="folder-check" class="w-4 h-4 mt-0.5 text-[#FF9900] shrink-0"></i> Document Vault with expiry tracking, attached to applications in one click</li>
+              <li class="flex gap-2"><i data-lucide="receipt" class="w-4 h-4 mt-0.5 text-[#FF9900] shrink-0"></i> Unlimited open invoices in Get paid</li>
+              <li class="flex gap-2"><i data-lucide="gift" class="w-4 h-4 mt-0.5 text-[#FF9900] shrink-0"></i> Partner perks, listed once the partner confirms the terms</li>
+            </ul>
+            <a href="public-premium-checkout.html" class="mt-4 inline-flex items-center justify-center gap-2 h-11 rounded-lg bg-[#DC183C] hover:bg-[#B0142F] text-white font-jakarta font-bold text-sm transition"><i data-lucide="crown" class="w-4 h-4"></i> Get Premium</a>
+            <p class="text-[11.5px] text-white/45 mt-2.5">Your score, calendar, funding and learning stay free.</p>
+          </div>
+        </div>
 
+        <div class="grid grid-cols-1 lg:grid-cols-[1fr_1fr] gap-5 mt-5">
           <!-- Compliance alerts -->
           <div class="rounded-2xl border border-[#E7EBEF] shadow-sm bg-white reveal" style="animation-delay:240ms">
             <div class="flex items-center justify-between p-5 pb-0">
@@ -538,9 +465,75 @@
               </div>
             </div>
           </div>
+        
+          <!-- Free this week: the reasons to come back without paying -->
+          <div class="rounded-2xl border border-[#E7EBEF] shadow-sm bg-white reveal" style="animation-delay:280ms">
+            <div class="p-5 pb-0"><p class="text-[11px] font-extrabold uppercase tracking-wide text-[#DC183C] mb-0.5">Free for members</p><p class="font-jakarta font-extrabold text-lg flex items-center gap-1.5">This week<button onclick="openBrief('freehooks')" class="dev-badge w-4 h-4 rounded-full bg-[#DC183C] text-white items-center justify-center text-[9px] font-bold leading-none animate-pulse" title="Implementation notes">i</button></p></div>
+            <div id="home-free" class="p-3 pt-2"></div>
+          </div>
         </div>
 
-        <div class="grid grid-cols-1 lg:grid-cols-[1.4fr_1fr] gap-5 mt-5">
+      </div>
+
+
+      <!-- ============ VIEW: PROGRESS (own tab again, 2026-10-02: momentum, achievements, history) ============ -->
+      <div class="view" id="view-progress">
+        <h1 class="font-jakarta font-extrabold text-[26px] sm:text-[28px] tracking-tight flex items-center gap-2 mb-1">Progress<button onclick="openBrief('progress')" class="dev-badge w-5 h-5 rounded-full bg-[#DC183C] text-white items-center justify-center text-[10px] font-bold leading-none animate-pulse" title="Implementation notes">i</button></h1>
+        <p class="text-[14.5px] text-[#6A7581] leading-relaxed max-w-[62ch] mb-6">What to do this week, how your business is moving, and what you have earned.</p>
+        <div class="mb-5">
+          <!-- Three things preview -->
+          <div class="rounded-2xl border border-[#E7EBEF] shadow-sm bg-white reveal" style="animation-delay:200ms">
+            <div class="flex items-center justify-between p-5 pb-0">
+              <div>
+                <p class="text-[11px] font-extrabold uppercase tracking-wide text-[#DC183C] mb-0.5">This Week</p>
+                <p class="font-jakarta font-extrabold text-lg">Three things worth doing</p>
+              </div>
+              <button onclick="openHomePlan()" class="text-xs font-bold text-[#DC183C] hover:underline shrink-0">See my plan →</button>
+            </div>
+            <div id="overview-actions" class="mt-3"></div>
+          </div>
+
+        </div>
+        <details id="home-plan" class="mb-5 rounded-2xl border border-[#E7EBEF] shadow-sm bg-white overflow-hidden group">
+          <summary class="flex items-center justify-between gap-3 px-5 py-4 cursor-pointer list-none">
+            <div><p class="text-[11px] font-extrabold uppercase tracking-wide text-[#DC183C] mb-0.5">Your plan</p><p class="font-jakarta font-extrabold text-lg">All actions, in order <button type="button" onclick="event.preventDefault();event.stopPropagation();openBrief('successplan')" class="dev-badge w-4 h-4 rounded-full bg-[#DC183C] text-white items-center justify-center text-[9px] font-bold leading-none animate-pulse align-middle" title="Implementation notes">i</button></p></div>
+            <span class="text-xs font-bold text-[#DC183C] shrink-0 inline-flex items-center gap-1">Show <i data-lucide="chevron-down" class="w-4 h-4"></i></span>
+          </summary>
+          <div class="px-5 pb-5 space-y-5 border-t border-[#E7EBEF] pt-5"><!-- Progress summary -->
+            <div class="rounded-2xl border border-[#E7EBEF] shadow-sm bg-white p-5 reveal">
+              <div class="flex items-center justify-between text-[12.5px] mb-2.5">
+                <span class="font-semibold text-[#6A7581]">Plan progress</span>
+                <b id="sp-progress-label" class="text-[#DC183C]">2 of 6 complete</b>
+              </div>
+              <div class="h-2 bg-[#F0F5F9] rounded-full overflow-hidden">
+                <div id="sp-progress-fill" class="h-full accent-grad rounded-full transition-all duration-300" style="width:33%"></div>
+              </div>
+            </div>
+
+            <!-- This month -->
+            <div class="rounded-2xl border border-[#E7EBEF] shadow-sm bg-white overflow-hidden reveal" style="animation-delay:80ms">
+              <div class="px-5 py-4 border-b border-[#E7EBEF]">
+                <p class="font-jakarta font-extrabold text-sm">This month</p>
+              </div>
+              <div id="sp-list-active"></div>
+            </div>
+
+            <!-- When you have time -->
+            <div class="rounded-2xl border border-[#E7EBEF] shadow-sm bg-white overflow-hidden reveal" style="animation-delay:120ms">
+              <div class="px-5 py-4 border-b border-[#E7EBEF]">
+                <p class="font-jakarta font-extrabold text-sm">When you have time</p>
+              </div>
+              <div id="sp-list-later"></div>
+            </div>
+          </div>
+        </details>
+        <div id="stale-check" class="rounded-2xl border border-[#F0C98A] bg-[#FFF8EC] p-4 mb-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 reveal">
+          <div class="flex items-center gap-2.5"><i data-lucide="alarm-clock" class="w-5 h-5 text-[#AE6B0A] shrink-0"></i><p class="text-sm font-semibold text-[#7A4A05]">It has been 31 days, so your score may be out of date.</p></div>
+          <button onclick="stubNav('Re-check now')" class="shrink-0 inline-flex items-center gap-2 font-jakarta font-bold text-[13px] px-4 py-2.5 rounded-lg bg-[#0C1F31] text-white hover:bg-[#16324a] transition">Re-check now</button>
+        </div>
+
+
+        <div class="grid grid-cols-1 lg:grid-cols-[1.4fr_1fr] gap-5">
           <!-- Weekly momentum -->
           <div class="rounded-2xl border border-[#E7EBEF] shadow-sm bg-white p-5 reveal" style="animation-delay:280ms">
             <div class="flex items-center justify-between mb-4">
@@ -576,119 +569,9 @@
             <div class="flex items-center gap-2.5" id="achievements-strip"></div>
           </div>
         </div>
-      </div>
+      
 
-      <!-- ============ VIEW: BUSINESS PROFILE ============ -->
-      <div class="view" id="view-profile">
-        <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-5 mb-6">
-          <div>
-            <h1 class="font-jakarta font-extrabold text-[26px] sm:text-[28px] tracking-tight flex items-center gap-2">Business Profile
-              <button onclick="openBrief('profile')" class="dev-badge w-5 h-5 rounded-full bg-[#DC183C] text-white items-center justify-center text-[10px] font-bold leading-none animate-pulse" title="Implementation notes">i</button>
-            </h1>
-            <p class="text-[14.5px] text-[#6A7581] leading-relaxed max-w-[62ch] mt-2">Facts about your business, the Health Check is what scores them. Tap the pencil beside any answer to change it.</p>
-          </div>
-          <button onclick="stubNav('Business Profile PDF')" class="shrink-0 inline-flex items-center gap-2 font-jakarta font-bold text-[13px] px-5 py-3 rounded-lg border-[1.5px] border-[#E7EBEF] hover:bg-[#F0F5F9] transition">
-            <i data-lucide="download" class="w-4 h-4"></i> Download PDF
-          </button>
-        </div>
-
-        <div class="rounded-2xl border border-[#E7EBEF] shadow-sm bg-white p-5 mb-5 reveal">
-          <div class="flex items-start justify-between gap-4">
-            <div>
-              <p class="text-[11px] font-extrabold uppercase tracking-wide text-[#DC183C] flex items-center gap-1.5">Profile completeness
-                <button onclick="openBrief('profile-completeness')" class="dev-badge w-4 h-4 rounded-full bg-[#DC183C] text-white items-center justify-center text-[9px] font-bold leading-none animate-pulse" title="Implementation notes">i</button>
-              </p>
-              <h2 class="font-jakarta font-extrabold text-lg mt-1">Everything essential is answered</h2>
-            </div>
-            <span class="shrink-0 px-2.5 py-1 rounded-full text-[11px] font-bold bg-[#FFF1E0] text-[#AE6B0A]">96% complete</span>
-          </div>
-          <div class="h-1.5 bg-[#F0F5F9] rounded-full overflow-hidden mt-3"><div class="h-full rounded-full accent-grad" style="width:96%"></div></div>
-        </div>
-
-        <div id="profile-sections" class="grid lg:grid-cols-2 gap-5"></div>
-      </div>
-
-      <!-- ============ VIEW: MY SUCCESS PLAN ============ -->
-      <div class="view" id="view-success-plan">
-        <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-5 mb-6">
-          <div>
-            <span class="inline-flex items-center gap-1.5 text-[11px] font-bold tracking-wide px-3 py-1.5 rounded-full bg-[#DC183C]/[0.09] text-[#DC183C] mb-3">
-              <i data-lucide="sparkles" class="w-3 h-3"></i> Built From Your Score
-            </span>
-            <h1 class="font-jakarta font-extrabold text-[26px] sm:text-[28px] tracking-tight flex items-center gap-2">My Success Plan
-              <button onclick="openBrief('successplan')" class="dev-badge w-5 h-5 rounded-full bg-[#DC183C] text-white items-center justify-center text-[10px] font-bold leading-none animate-pulse" title="Implementation notes">i</button>
-            </h1>
-            <p class="text-[14.5px] text-[#6A7581] leading-relaxed max-w-[62ch] mt-2">A short, ordered list built from your Business Health Score, the lowest-scoring dimensions surface first, so you always know what matters most right now.</p>
-          </div>
-          <button onclick="stubNav('New check-in')" class="shrink-0 inline-flex items-center gap-2 font-jakarta font-bold text-[13px] px-5 py-3 rounded-lg border-[1.5px] border-[#E7EBEF] hover:bg-[#F0F5F9] transition">
-            <i data-lucide="refresh-cw" class="w-4 h-4"></i> New check-in
-          </button>
-        </div>
-
-        <div class="grid grid-cols-1 lg:grid-cols-[1.4fr_1fr] gap-5 items-start">
-          <div class="space-y-5">
-            <!-- Progress summary -->
-            <div class="rounded-2xl border border-[#E7EBEF] shadow-sm bg-white p-5 reveal">
-              <div class="flex items-center justify-between text-[12.5px] mb-2.5">
-                <span class="font-semibold text-[#6A7581]">Plan progress</span>
-                <b id="sp-progress-label" class="text-[#DC183C]">2 of 6 complete</b>
-              </div>
-              <div class="h-2 bg-[#F0F5F9] rounded-full overflow-hidden">
-                <div id="sp-progress-fill" class="h-full accent-grad rounded-full transition-all duration-300" style="width:33%"></div>
-              </div>
-            </div>
-
-            <!-- This month -->
-            <div class="rounded-2xl border border-[#E7EBEF] shadow-sm bg-white overflow-hidden reveal" style="animation-delay:80ms">
-              <div class="px-5 py-4 border-b border-[#E7EBEF]">
-                <p class="font-jakarta font-extrabold text-sm">This month</p>
-              </div>
-              <div id="sp-list-active"></div>
-            </div>
-
-            <!-- When you have time -->
-            <div class="rounded-2xl border border-[#E7EBEF] shadow-sm bg-white overflow-hidden reveal" style="animation-delay:120ms">
-              <div class="px-5 py-4 border-b border-[#E7EBEF]">
-                <p class="font-jakarta font-extrabold text-sm">When you have time</p>
-              </div>
-              <div id="sp-list-later"></div>
-            </div>
-          </div>
-
-          <!-- Why this plan -->
-          <div class="rounded-2xl border border-[#E7EBEF] shadow-sm bg-white overflow-hidden reveal" style="animation-delay:100ms">
-            <div class="px-5 py-4 border-b border-[#E7EBEF]">
-              <p class="font-jakarta font-extrabold text-sm">Where this comes from</p>
-            </div>
-            <div class="p-5 space-y-4">
-              <p class="text-[13px] text-[#6A7581] leading-relaxed">Every action here traces back to one of your five dimension scores. The two lowest, <b class="text-[#121A21]">Growth readiness (49)</b> and <b class="text-[#121A21]">Compliance (54)</b>, drive most of this month's list.</p>
-              <div class="space-y-2.5">
-                <div class="flex items-center gap-2.5">
-                  <span class="w-2 h-2 rounded-full bg-[#DC183C] shrink-0"></span>
-                  <span class="text-[12.5px] font-semibold flex-1">Compliance</span>
-                  <span class="text-[11px] font-mono text-[#6A7581]">54</span>
-                </div>
-                <div class="flex items-center gap-2.5">
-                  <span class="w-2 h-2 rounded-full bg-[#FF9900] shrink-0"></span>
-                  <span class="text-[12.5px] font-semibold flex-1">Growth readiness</span>
-                  <span class="text-[11px] font-mono text-[#6A7581]">49</span>
-                </div>
-              </div>
-              <div class="border-t border-[#E7EBEF] pt-4">
-                <p class="text-[11px] text-[#6A7581] leading-relaxed flex items-start gap-1.5"><i data-lucide="info" class="w-3.5 h-3.5 shrink-0 mt-0.5"></i> Complete more of this plan and your next check-in score reflects it automatically, no separate form to fill in.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- ============ VIEW: PROGRESS ============ -->
-      <div class="view" id="view-progress">
-        <h1 class="font-jakarta font-extrabold text-[26px] sm:text-[28px] tracking-tight flex items-center gap-2 mb-6">Progress
-          <button onclick="openBrief('progress')" class="dev-badge w-5 h-5 rounded-full bg-[#DC183C] text-white items-center justify-center text-[10px] font-bold leading-none animate-pulse" title="Implementation notes">i</button>
-        </h1>
-
-        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="mt-5"><div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
           <div class="rounded-2xl border border-[#E7EBEF] shadow-sm bg-white p-4 text-center reveal"><p class="font-jakarta font-extrabold text-2xl">68</p><p class="text-[11px] text-[#6A7581] mt-1">Your score now</p></div>
           <div class="rounded-2xl border border-[#E7EBEF] shadow-sm bg-white p-4 text-center reveal" style="animation-delay:40ms"><p class="font-jakarta font-extrabold text-2xl text-[#29A37A]">+14</p><p class="text-[11px] text-[#6A7581] mt-1">Since your first check-in</p></div>
           <div class="rounded-2xl border border-[#E7EBEF] shadow-sm bg-white p-4 text-center reveal" style="animation-delay:80ms"><p class="font-jakarta font-extrabold text-2xl">71</p><p class="text-[11px] text-[#6A7581] mt-1">Best score so far</p></div>
@@ -722,7 +605,7 @@
               <div class="flex items-center justify-between text-[13.5px]"><span>Cash flow</span><span class="font-bold text-[#29A37A]">+3</span></div>
               <div class="flex items-center justify-between text-[13.5px]"><span>Growth readiness</span><span class="font-bold text-[#29A37A]">+2</span></div>
             </div>
-            <button onclick="showView('success-plan')" class="mt-3 text-xs font-bold text-[#DC183C] hover:underline">Lowest area: Compliance → see what to do</button>
+            <button onclick="openHomePlan()" class="mt-3 text-xs font-bold text-[#DC183C] hover:underline">Lowest area: Compliance → see what to do</button>
           </div>
           <div class="rounded-2xl border border-[#E7EBEF] shadow-sm bg-white p-5 reveal" style="animation-delay:140ms">
             <p class="font-jakarta font-extrabold text-sm flex items-center gap-1.5">Badges
@@ -737,137 +620,52 @@
           <div id="progress-activity" class="divide-y divide-[#F0F3F6]"></div>
         </div>
       </div>
-
-      <!-- ============ VIEW: GROWTH HUB ============ -->
-      <div class="view" id="view-growth">
-        <h1 class="font-jakarta font-extrabold text-[26px] sm:text-[28px] tracking-tight mb-1">Growth Hub</h1>
-        <p class="text-[11px] font-bold uppercase tracking-widest text-[#98A2AE] mb-6">Scaffolded in this mockup, not yet fully designed</p>
-        <div class="rounded-2xl border border-[#E7EBEF] shadow-sm bg-white p-8 max-w-xl reveal">
-          <div class="w-12 h-12 rounded-xl bg-[#F0F5F9] text-[#42505E] grid place-items-center"><i data-lucide="rocket" class="w-6 h-6"></i></div>
-          <p class="text-sm text-[#42505E] mt-4 leading-relaxed">Your next best moves, bucketed into tools and services tied to your ranked actions, grounded in what's actually live on this install, not SME IQ's invented/empty categories.</p>
-        </div>
       </div>
 
-      <!-- ============ VIEW: FIND A SOLUTION (slug: match) ============ -->
-      <div class="view" id="view-match">
+      <!-- ============ VIEW: BUSINESS PROFILE ============ -->
+      <div class="view" id="view-profile">
         <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-5 mb-6">
           <div>
-            <span class="inline-flex items-center gap-1.5 text-[11px] font-bold tracking-wide px-3 py-1.5 rounded-full bg-[#DC183C]/[0.09] text-[#DC183C] mb-3">
-              <i data-lucide="sparkles" class="w-3 h-3"></i> A Better Next Step
-            </span>
-            <h1 class="font-jakarta font-extrabold text-[26px] sm:text-[28px] tracking-tight flex items-center gap-2">Find a Solution
-              <button onclick="openBrief('match-overview')" class="dev-badge w-5 h-5 rounded-full bg-[#DC183C] text-white items-center justify-center text-[10px] font-bold leading-none animate-pulse" title="Implementation notes">i</button>
+            <h1 class="font-jakarta font-extrabold text-[26px] sm:text-[28px] tracking-tight flex items-center gap-2">Business Profile
+              <button onclick="openBrief('profile')" class="dev-badge w-5 h-5 rounded-full bg-[#DC183C] text-white items-center justify-center text-[10px] font-bold leading-none animate-pulse" title="Implementation notes">i</button>
             </h1>
-            <p class="text-[14.5px] text-[#6A7581] leading-relaxed max-w-[60ch] mt-2">Your business check-in points to a few places where the right people, tools and timing can make the next move lighter.</p>
+            <p class="text-[14.5px] text-[#6A7581] leading-relaxed max-w-[62ch] mt-2">The facts about your business. The Health Check scores them. Use Edit on any section to update it.</p>
           </div>
-          <button onclick="stubNav('Retake match')" class="shrink-0 inline-flex items-center gap-2 font-jakarta font-bold text-[13px] px-5 py-3 rounded-lg border-[1.5px] border-[#E7EBEF] hover:bg-[#F0F5F9] transition">
-            <i data-lucide="refresh-cw" class="w-4 h-4"></i> Retake my match
-          </button>
-        </div>
-
-        <div class="rounded-[18px] overflow-hidden shadow-sm grid grid-cols-1 lg:grid-cols-[1.3fr_1fr]">
-          <div class="hero-grad text-white p-7 sm:p-8">
-            <div class="relative z-[1]">
-              <span class="inline-flex items-center gap-1.5 text-[10.5px] font-bold uppercase tracking-widest bg-white/10 border border-white/[0.16] text-white/80 px-3 py-1.5 rounded-full mb-5">
-                <i data-lucide="target" class="w-3 h-3"></i> Your Match Profile
-              </span>
-              <h2 class="font-jakarta font-extrabold text-[26px] leading-snug mb-3.5">Growth is the goal.<br><span class="accent-text-grad">Capacity is the unlock.</span></h2>
-              <p class="text-[13.5px] text-white/70 leading-relaxed max-w-[52ch] mb-5">You're ready to serve more customers, but your systems need to catch up. We matched you with programmes that make that work practical.</p>
-              <div class="flex flex-wrap gap-2">
-                <span class="text-[11.5px] font-semibold bg-white/[0.08] border border-white/[0.14] px-3.5 py-1.5 rounded-full">Growing team</span>
-                <span class="text-[11.5px] font-semibold bg-white/[0.08] border border-white/[0.14] px-3.5 py-1.5 rounded-full">Planning ahead</span>
-                <span class="text-[11.5px] font-semibold bg-white/[0.08] border border-white/[0.14] px-3.5 py-1.5 rounded-full">Service business</span>
-              </div>
-            </div>
-          </div>
-          <div class="accent-grad p-7 sm:p-8 flex items-end">
-            <div class="bg-white/[0.14] backdrop-blur-md border border-white/25 rounded-2xl p-5 w-full">
-              <div class="flex justify-between text-[10.5px] font-bold uppercase tracking-widest text-white/85 mb-2.5">
-                <span class="flex items-center gap-1.5">Match Strength
-                  <button onclick="openBrief('match')" class="dev-badge w-4 h-4 rounded-full bg-[#0C1F31] text-white items-center justify-center text-[9px] font-bold leading-none animate-pulse normal-case tracking-normal" title="Implementation notes">i</button>
-                </span>
-                <span>Today</span>
-              </div>
-              <p class="font-jakarta font-extrabold text-[44px] leading-none text-white">94<span class="text-base font-semibold opacity-75">/100</span></p>
-              <div class="h-1.5 bg-white/25 rounded-full my-3 overflow-hidden"><div class="h-full bg-white rounded-full" style="width:94%"></div></div>
-              <p class="text-xs text-white/85 leading-relaxed">Business Growth Clinic is your strongest fit right now.</p>
-            </div>
+          <div class="flex gap-2 shrink-0 flex-wrap">
+            <button onclick="stubNav('Business Profile PDF')" class="inline-flex items-center gap-2 font-jakarta font-bold text-[13px] px-5 py-3 rounded-lg border-[1.5px] border-[#E7EBEF] hover:bg-[#F0F5F9] transition"><i data-lucide="download" class="w-4 h-4"></i> Download PDF</button>
+            <button onclick="emailProfile()" class="inline-flex items-center gap-2 font-jakarta font-bold text-[13px] px-5 py-3 rounded-lg bg-[#0C1F31] text-white hover:bg-[#16324a] transition"><i data-lucide="mail" class="w-4 h-4"></i> Email me a copy</button>
           </div>
         </div>
-        <div class="flex items-center justify-between px-7 sm:px-8 py-3.5 border border-t-0 border-[#E7EBEF] rounded-b-[18px] bg-white">
-          <div class="flex items-center gap-2 text-[12.5px] text-[#6A7581]">
-            <i data-lucide="check-circle" class="w-3.5 h-3.5 text-[#29A37A]"></i> Matched from your June check-in
-          </div>
-          <button onclick="stubNav('Match preferences')" class="text-xs font-bold text-[#AE6B0A] hover:underline">Change my preferences →</button>
-        </div>
 
-        <div class="grid grid-cols-1 lg:grid-cols-[1.4fr_1fr] gap-5 mt-6">
-          <div>
-            <div class="flex items-center justify-between mb-3.5">
-              <div>
-                <p class="text-[11px] font-extrabold uppercase tracking-wide text-[#DC183C] mb-0.5">Recommended For You</p>
-                <p class="font-jakarta font-extrabold text-lg">Start with this one</p>
-              </div>
-              <button onclick="stubNav('Full programme list')" class="text-xs font-bold text-[#DC183C] hover:underline shrink-0">See all programmes →</button>
-            </div>
-            <div class="rounded-2xl border border-[#E7EBEF] shadow-sm bg-white">
-              <div class="flex gap-4 p-5.5 p-5">
-                <div class="w-[52px] h-[52px] rounded-[13px] bg-[#DC183C]/[0.08] grid place-items-center shrink-0">
-                  <i data-lucide="clock-4" class="w-6 h-6 text-[#DC183C]"></i>
-                </div>
-                <div class="flex-1 min-w-0">
-                  <div class="flex items-center gap-2.5 flex-wrap mb-1">
-                    <p class="font-jakarta font-extrabold text-base">Business Growth Clinic</p>
-                    <span class="text-[10px] font-extrabold tracking-wide bg-[#29A37A]/[0.12] text-[#29A37A] px-2.5 py-0.5 rounded-full">BEST FIT</span>
-                  </div>
-                  <p class="text-xs text-[#6A7581] mb-2.5">SME South Africa · Featured</p>
-                  <p class="text-[13.5px] leading-relaxed">A practical 4-week sprint to turn your growth plans into a clear operating rhythm.</p>
-                </div>
-              </div>
-              <div class="px-5 pb-5">
-                <button id="save-programme-btn" onclick="toggleSaveProgramme()" class="inline-flex items-center gap-2 font-jakarta font-bold text-[13px] px-5 py-2.5 rounded-lg bg-[#0C1F31] text-white hover:bg-[#16324a] transition">
-                  <i data-lucide="bookmark" class="w-4 h-4"></i> <span>Save programme</span>
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <div>
-            <div class="mb-3.5">
-              <p class="text-[11px] font-extrabold uppercase tracking-wide text-[#DC183C] mb-0.5">Your Readiness</p>
-              <p class="font-jakarta font-extrabold text-lg flex items-center gap-1.5">Why this match?
-                <button onclick="openBrief('why')" class="dev-badge w-4 h-4 rounded-full bg-[#DC183C] text-white items-center justify-center text-[9px] font-bold leading-none animate-pulse" title="Implementation notes">i</button>
+        <div class="rounded-2xl border border-[#E7EBEF] shadow-sm bg-white p-5 mb-5 reveal">
+          <div class="flex items-start justify-between gap-4">
+            <div>
+              <p class="text-[11px] font-extrabold uppercase tracking-wide text-[#DC183C] flex items-center gap-1.5">Profile completeness
+                <button onclick="openBrief('profile-completeness')" class="dev-badge w-4 h-4 rounded-full bg-[#DC183C] text-white items-center justify-center text-[9px] font-bold leading-none animate-pulse" title="Implementation notes">i</button>
               </p>
+              <h2 class="font-jakarta font-extrabold text-lg mt-1">Everything essential is answered</h2>
             </div>
-            <div class="rounded-2xl border border-[#E7EBEF] shadow-sm bg-white">
-              <div class="flex gap-3 p-4 border-b border-[#E7EBEF]">
-                <div class="w-8 h-8 rounded-[9px] bg-[#FFF1E0] grid place-items-center shrink-0"><i data-lucide="list-checks" class="w-4 h-4 text-[#AE6B0A]"></i></div>
-                <div>
-                  <p class="text-[13px] font-bold mb-0.5">You have a clear direction</p>
-                  <p class="text-xs text-[#6A7581] leading-relaxed">The programme fills the gap between your ambition and your current capacity.</p>
-                </div>
-              </div>
-              <div class="flex gap-3 p-4">
-                <div class="w-8 h-8 rounded-[9px] bg-[#FFF1E0] grid place-items-center shrink-0"><i data-lucide="trending-up" class="w-4 h-4 text-[#AE6B0A]"></i></div>
-                <div>
-                  <p class="text-[13px] font-bold mb-0.5">Growth readiness: strong signal</p>
-                  <p class="text-xs text-[#6A7581] leading-relaxed">Your latest check-in shows demand ahead of your current operating capacity.</p>
-                </div>
-              </div>
-            </div>
+            <span class="shrink-0 px-2.5 py-1 rounded-full text-[11px] font-bold bg-[#FFF1E0] text-[#AE6B0A]">96% complete</span>
           </div>
+          <div class="h-1.5 bg-[#F0F5F9] rounded-full overflow-hidden mt-3"><div class="h-full rounded-full accent-grad" style="width:96%"></div></div>
         </div>
+
+        <div id="profile-sections" class="grid lg:grid-cols-2 gap-5"></div>
       </div>
 
+      
+      
+      
       <!-- ============ VIEW: EVENTS (slug: programmes) ============ -->
       <div class="view" id="view-programmes">
-        <h1 class="font-jakarta font-extrabold text-[26px] sm:text-[28px] tracking-tight mb-1">Events</h1>
-        <p class="text-[11px] font-bold uppercase tracking-widest text-[#98A2AE] mb-6">Scaffolded in this mockup, not yet fully designed</p>
-        <div class="rounded-2xl border border-[#E7EBEF] shadow-sm bg-white p-8 max-w-xl reveal">
-          <div class="w-12 h-12 rounded-xl bg-[#F0F5F9] text-[#42505E] grid place-items-center"><i data-lucide="calendar-days" class="w-6 h-6"></i></div>
-          <p class="text-sm text-[#42505E] mt-4 leading-relaxed">Matched programmes and sessions, split into upcoming (registrable) and past/on-demand (webinar recordings), expired events are never shown as live. (Internal slug stays "programmes", see Overview's "Find a Solution" tab for the member-matching feature, which is a separate module.)</p>
+        <div class="mb-6"><h1 class="font-jakarta font-extrabold text-[26px] sm:text-[28px] tracking-tight flex items-center gap-2">Events<button onclick="openBrief('events')" class="dev-badge w-5 h-5 rounded-full bg-[#DC183C] text-white items-center justify-center text-[10px] font-bold leading-none animate-pulse" title="Implementation notes">i</button></h1><p class="text-[14.5px] text-[#6A7581] leading-relaxed max-w-[62ch] mt-2">Webinars are free for every member. In-person events are 50% off for Premium members.</p></div>
+        <div class="rounded-2xl border border-[#E7EBEF] shadow-sm bg-white overflow-hidden max-w-3xl">
+          <a href="event-single-online.html" class="flex items-center gap-4 p-4 hover:bg-[#FCFCFC] transition border-t border-[#E7EBEF] first:border-t-0"><div class="shrink-0 w-14 text-center bg-[#FFF1E0] rounded-lg py-1.5 border border-[#FF9900]/20"><p class="text-[9px] font-bold uppercase text-[#AE6B0A] tracking-widest">Oct</p><p class="font-jakarta font-extrabold text-xl text-[#121A21] leading-none mt-0.5">29</p></div><div class="min-w-0 flex-1"><p class="font-jakarta font-bold text-[14.5px] leading-snug">Business Compliance Essentials</p><p class="text-[12.5px] text-[#6A7581] mt-0.5">Webinar on Zoom, 11:00 to 12:00 SAST, hosted by Karabo Kgophane</p></div><span class="shrink-0 text-[10.5px] font-extrabold uppercase tracking-wide px-2.5 py-1 rounded-full bg-[#E4F5EE] text-[#1E7F5E]">Free</span></a>
+          <a href="event-single-in-person.html" class="flex items-center gap-4 p-4 hover:bg-[#FCFCFC] transition border-t border-[#E7EBEF] first:border-t-0"><div class="shrink-0 w-14 text-center bg-[#FFF1E0] rounded-lg py-1.5 border border-[#FF9900]/20"><p class="text-[9px] font-bold uppercase text-[#AE6B0A] tracking-widest">2027</p><p class="font-jakarta font-extrabold text-xl text-[#121A21] leading-none mt-0.5">TBA</p></div><div class="min-w-0 flex-1"><p class="font-jakarta font-bold text-[14.5px] leading-snug">SME Funding Summit</p><p class="text-[12.5px] text-[#6A7581] mt-0.5">In person, Sandton. Date to be announced, join the list to hear first</p></div><span class="shrink-0 text-[10.5px] font-extrabold uppercase tracking-wide px-2.5 py-1 rounded-full bg-[#FDECEF] text-[#DC183C]">50% off with Premium</span></a>
         </div>
+        <p class="text-[12.5px] text-[#6A7581] mt-4">See every event, past recordings and speakers on the <a href="events.html" class="font-bold text-[#DC183C] hover:underline">events page</a>.</p>
       </div>
+
 
       <!-- ============ VIEW: COMPLIANCE ============ -->
       <div class="view" id="view-compliance">
@@ -916,25 +714,17 @@
           </div>
 
           <div class="space-y-5">
-            <!-- What the badges mean -->
+            <!-- How the list works -->
             <div class="rounded-2xl border border-[#E7EBEF] shadow-sm bg-white overflow-hidden reveal" style="animation-delay:100ms">
               <div class="px-5 py-4 border-b border-[#E7EBEF]">
-                <p class="font-jakarta font-extrabold text-sm flex items-center gap-1.5">Status, explained
+                <p class="font-jakarta font-extrabold text-sm flex items-center gap-1.5">How this list works
                   <button onclick="openBrief('verification')" class="dev-badge w-4 h-4 rounded-full bg-[#DC183C] text-white items-center justify-center text-[9px] font-bold leading-none animate-pulse" title="Implementation notes">i</button>
                 </p>
               </div>
-              <div class="p-5 space-y-4">
-                <div class="flex gap-3">
-                  <span class="text-[10px] font-bold px-2 py-1 rounded-full bg-[#F0F5F9] text-[#6A7581] shrink-0 h-fit">Member-declared</span>
-                  <p class="text-[12.5px] text-[#6A7581] leading-relaxed">You tick it off yourself. Good for keeping momentum, but not proof of filing.</p>
-                </div>
-                <div class="flex gap-3">
-                  <span class="inline-flex items-center gap-1 text-[10px] font-bold px-2 py-1 rounded-full bg-[#29A37A]/[0.12] text-[#29A37A] shrink-0 h-fit"><i data-lucide="badge-check" class="w-2.5 h-2.5"></i> Staff-verified</span>
-                  <p class="text-[12.5px] text-[#6A7581] leading-relaxed">An SME South Africa advisor confirmed this against your actual SARS/CIPC filing.</p>
-                </div>
-                <div class="border-t border-[#E7EBEF] pt-4">
-                  <p class="text-[11px] text-[#6A7581] leading-relaxed flex items-start gap-1.5"><i data-lucide="info" class="w-3.5 h-3.5 shrink-0 mt-0.5"></i> Only staff-verified items are excluded from your next compliance score if overdue, a member-declared tick alone doesn't change the score.</p>
-                </div>
+              <div class="p-5 space-y-3 text-[12.5px] text-[#6A7581] leading-relaxed">
+                <p>Dates follow SARS, CIPC and labour deadlines for a business like yours. Check them against your own registrations.</p>
+                <p>You tick items off yourself, and that is your record. We do not check it against SARS or CIPC.</p>
+                <p class="flex items-start gap-1.5 border-t border-[#E7EBEF] pt-3 text-[11px]"><i data-lucide="bell-ring" class="w-3.5 h-3.5 shrink-0 mt-0.5"></i> Premium adds Autopilot: a week-ahead email and a final reminder before each date.</p>
               </div>
             </div>
 
@@ -946,7 +736,7 @@
                 </p>
               </div>
               <div class="p-5">
-                <p class="text-[12.5px] text-[#6A7581] leading-relaxed mb-4">A single PDF bundling every filed, staff-verified item, grouped by authority (SARS, CIPC, Dept of Labour, Compensation Fund). Handy for funders and auditors who ask "prove it."</p>
+                <p class="text-[12.5px] text-[#6A7581] leading-relaxed mb-4">A single PDF of every item you marked as filed, grouped by authority (SARS, CIPC, Dept of Labour, Compensation Fund). It records what you told us, so funders will still ask for the originals.</p>
                 <div class="space-y-2 mb-4">
                   <div class="flex items-center justify-between text-[12px]"><span class="text-[#6A7581]">SARS</span><span class="font-bold">2 documents</span></div>
                   <div class="flex items-center justify-between text-[12px]"><span class="text-[#6A7581]">CIPC</span><span class="font-bold">1 document</span></div>
@@ -961,7 +751,56 @@
         </div>
       </div>
 
-      <!-- ============ VIEW: FUNDING ============ -->
+            <!-- ============ VIEW: FUNDING OPTIONS (new 2026-10-02: replaces the public /sme-funding hub for signed-in members) ============ -->
+      <div class="view" id="view-funding-options">
+        <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-5 mb-6">
+          <div>
+            <h1 class="font-jakarta font-extrabold text-[26px] sm:text-[28px] tracking-tight flex items-center gap-2">Funding options
+              <button onclick="openBrief('fundoptions')" class="dev-badge w-5 h-5 rounded-full bg-[#DC183C] text-white items-center justify-center text-[10px] font-bold leading-none animate-pulse" title="Implementation notes">i</button>
+            </h1>
+            <p class="text-[14.5px] text-[#6A7581] leading-relaxed max-w-[62ch] mt-2">The eight kinds of funding South African SMEs use, ranked for your business. Indicative only: your real offer depends on the lender and your application.</p>
+          </div>
+          <button onclick="startFundingApplication()" class="shrink-0 inline-flex items-center gap-2 font-jakarta font-bold text-[13px] px-5 py-3 rounded-lg bg-[#DC183C] text-white hover:bg-[#B0142F] transition"><i data-lucide="plus" class="w-4 h-4"></i> Start an application</button>
+        </div>
+        <div class="rounded-2xl border border-[#E7EBEF] bg-white p-4 mb-5 flex items-start gap-3">
+          <i data-lucide="sparkles" class="w-4 h-4 text-[#29A37A] mt-0.5 shrink-0"></i>
+          <p class="text-[13px] text-[#42505E]">Ranked from your <a href="member-account.html" class="font-bold text-[#DC183C] hover:underline">Business Profile</a>: <b>Fintech</b>, <b>Growing</b>, <b>2 to 4 years</b>, monthly turnover <b>R100k to R250k</b>. Update the profile and the order updates with it.</p>
+        </div>
+        <div id="fund-options-grid" class="grid sm:grid-cols-2 xl:grid-cols-3 gap-4"></div>
+        <p class="text-[12px] text-[#6A7581] mt-5">Want to compare repayments first? <button onclick="showView('funding-calc')" class="font-bold text-[#DC183C] hover:underline">Open the calculator</button>.</p>
+      </div>
+
+      <!-- ============ VIEW: LOAN CALCULATOR (new 2026-10-02: the public estimator, now inside My Business) ============ -->
+      <div class="view" id="view-funding-calc">
+        <div class="mb-6">
+          <h1 class="font-jakarta font-extrabold text-[26px] sm:text-[28px] tracking-tight flex items-center gap-2">Loan calculator
+            <button onclick="openBrief('fundcalc')" class="dev-badge w-5 h-5 rounded-full bg-[#DC183C] text-white items-center justify-center text-[10px] font-bold leading-none animate-pulse" title="Implementation notes">i</button>
+          </h1>
+          <p class="text-[14.5px] text-[#6A7581] leading-relaxed max-w-[62ch] mt-2">An indicative estimate. Move the sliders to see what a loan could cost each month before you apply.</p>
+        </div>
+        <div class="bg-white rounded-3xl border border-[#E7EBEF] p-6 sm:p-8 shadow-sm max-w-3xl">
+          <div class="space-y-7">
+            <div><div class="flex justify-between text-sm font-semibold mb-3"><span>Amount needed</span><span id="wcAmtV" class="font-jakarta font-extrabold text-[#DC183C] text-lg"></span></div>
+              <input id="wcAmt" class="wc-range" type="range" min="10000" max="5000000" step="10000" value="250000" oninput="wcCalc()" aria-label="Amount needed">
+              <div class="flex justify-between text-[11px] text-slate-500 mt-1.5"><span>R 10 000</span><span>R 5 000 000</span></div></div>
+            <div><div class="flex justify-between text-sm font-semibold mb-3"><span>Repayment term</span><span id="wcTermV" class="font-jakarta font-extrabold text-[#DC183C] text-lg"></span></div>
+              <input id="wcTerm" class="wc-range" type="range" min="3" max="12" step="1" value="12" oninput="wcCalc()" aria-label="Repayment term in months">
+              <div class="flex justify-between text-[11px] text-slate-500 mt-1.5"><span>3 months</span><span>12 months</span></div></div>
+            <div><div class="flex justify-between text-sm font-semibold mb-3"><span>Annual interest rate</span><span id="wcRateV" class="font-jakarta font-extrabold text-[#DC183C] text-lg"></span></div>
+              <input id="wcRate" class="wc-range" type="range" min="5" max="50" step="1" value="25" oninput="wcCalc()" aria-label="Annual interest rate">
+              <div class="flex justify-between text-[11px] text-slate-500 mt-1.5"><span>5%</span><span>50%</span></div></div>
+          </div>
+          <div class="grid sm:grid-cols-3 gap-3 mt-8">
+            <div class="rounded-2xl bg-[#0C1F31] text-white p-5 text-center"><p class="text-[10px] uppercase tracking-widest text-white/50">Monthly payment</p><p id="wcMonthly" class="font-jakarta font-extrabold text-2xl mt-1.5 text-[#FF9900]"></p></div>
+            <div class="rounded-2xl bg-[#FCFCFC] border border-[#E7EBEF] p-5 text-center"><p class="text-[10px] uppercase tracking-widest text-slate-500">Total interest</p><p id="wcInterest" class="font-jakarta font-extrabold text-2xl mt-1.5"></p></div>
+            <div class="rounded-2xl bg-[#FCFCFC] border border-[#E7EBEF] p-5 text-center"><p class="text-[10px] uppercase tracking-widest text-slate-500">Total repayment</p><p id="wcTotal" class="font-jakarta font-extrabold text-2xl mt-1.5"></p></div>
+          </div>
+          <button type="button" onclick="startFundingApplication(null, wcAmount())" class="mt-7 w-full inline-flex items-center justify-center gap-2 h-12 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold transition">Apply for this amount <i data-lucide="arrow-right" class="w-4 h-4"></i></button>
+          <p class="text-[11.5px] text-[#6A7581] mt-3 text-center">Estimate only. It is not an offer, a quote or a credit decision.</p>
+        </div>
+      </div>
+
+<!-- ============ VIEW: FUNDING ============ -->
       <div class="view" id="view-funding">
         <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-5 mb-6">
           <div>
@@ -970,13 +809,15 @@
             </h1>
             <p class="text-[14.5px] text-[#6A7581] leading-relaxed max-w-[62ch] mt-2">From getting funding-ready to tracking a decision, every application you've made through the SME Hub, in one place.</p>
           </div>
-          <button onclick="showNewFundingApp()" class="shrink-0 inline-flex items-center gap-2 font-jakarta font-bold text-[13px] px-5 py-3 rounded-lg bg-[#0C1F31] text-white hover:bg-[#16324a] transition">
+          <button onclick="showNewFundingApp()" class="shrink-0 inline-flex items-center gap-2 font-jakarta font-bold text-[13px] px-5 py-3 rounded-lg bg-[#0C1F31] text-white hover:bg-[#16324a] transition" id="btn-new-application">
             <i data-lucide="plus" class="w-4 h-4"></i> New application
           </button>
         </div>
 
+        <div id="funding-app-host"></div>
+
         <!-- Funding readiness checklist -->
-        <div class="rounded-2xl border border-[#E7EBEF] shadow-sm bg-white overflow-hidden reveal mb-5">
+        <div class="rounded-2xl border border-[#E7EBEF] shadow-sm bg-white overflow-hidden reveal mt-5">
           <div class="flex items-center justify-between gap-3 px-5 py-4 border-b border-[#E7EBEF]">
             <div class="min-w-0">
               <p class="font-jakarta font-extrabold text-sm flex items-center gap-1.5">Funding readiness checklist
@@ -991,98 +832,27 @@
             <div id="readiness-next-steps"></div>
           </div>
         </div>
-
-        <div id="funding-app-host"></div>
       </div>
 
-      <!-- ============ VIEW: CASH FLOW ============ -->
-      <div class="view" id="view-cashflow">
-        <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-5 mb-6">
-          <div>
-            <span class="inline-flex items-center gap-1.5 text-[11px] font-bold tracking-wide px-3 py-1.5 rounded-full bg-[#DC183C]/[0.09] text-[#DC183C] mb-3">
-              <i data-lucide="sparkles" class="w-3 h-3"></i> New
-            </span>
-            <h1 class="font-jakarta font-extrabold text-[26px] sm:text-[28px] tracking-tight flex items-center gap-2">Cash Flow
-              <button onclick="openBrief('cashflow')" class="dev-badge w-5 h-5 rounded-full bg-[#DC183C] text-white items-center justify-center text-[10px] font-bold leading-none animate-pulse" title="Implementation notes">i</button>
-            </h1>
-            <p class="text-[14.5px] text-[#6A7581] leading-relaxed max-w-[62ch] mt-2">A simple money-in / money-out log, the missing piece behind your Cash Flow dimension score. No bank connection needed, just log it as it happens.</p>
-          </div>
-          <button onclick="stubNav('Log an entry')" class="shrink-0 inline-flex items-center gap-2 font-jakarta font-bold text-[13px] px-5 py-3 rounded-lg bg-[#0C1F31] text-white hover:bg-[#16324a] transition">
-            <i data-lucide="plus" class="w-4 h-4"></i> Log an entry
-          </button>
-        </div>
-
-        <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-5">
-          <div class="rounded-2xl border border-[#E7EBEF] bg-white p-4 reveal">
-            <p class="text-[10px] font-bold uppercase tracking-widest text-[#6A7581]">Money in (30d)</p>
-            <p class="font-jakarta font-extrabold text-2xl mt-1 text-[#29A37A]">R84 500</p>
-          </div>
-          <div class="rounded-2xl border border-[#E7EBEF] bg-white p-4 reveal" style="animation-delay:40ms">
-            <p class="text-[10px] font-bold uppercase tracking-widest text-[#6A7581]">Money out (30d)</p>
-            <p class="font-jakarta font-extrabold text-2xl mt-1 text-[#DC183C]">R61 200</p>
-          </div>
-          <div class="rounded-2xl border border-[#E7EBEF] bg-white p-4 reveal col-span-2 sm:col-span-1" style="animation-delay:80ms">
-            <p class="text-[10px] font-bold uppercase tracking-widest text-[#6A7581]">Net position</p>
-            <p class="font-jakarta font-extrabold text-2xl mt-1">R23 300</p>
-          </div>
-        </div>
-
-        <div class="rounded-2xl border border-[#E7EBEF] shadow-sm bg-white overflow-hidden reveal" style="animation-delay:80ms">
-          <div class="px-5 py-4 border-b border-[#E7EBEF] flex items-center justify-between">
-            <p class="font-jakarta font-extrabold text-sm">Recent entries</p>
-            <span class="text-[11px] text-[#6A7581]">Most recent first</span>
-          </div>
-          <div id="cashflow-list"></div>
-        </div>
-      </div>
-
+      
       <!-- ============ VIEW: GET PAID (slug: invoices) ============ -->
       <div class="view" id="view-invoices">
-        <h1 class="font-jakarta font-extrabold text-[26px] sm:text-[28px] tracking-tight mb-1">Get Paid</h1>
-        <p class="text-[11px] font-bold uppercase tracking-widest text-[#98A2AE] mb-6">Scaffolded in this mockup, not yet fully designed</p>
-        <div class="rounded-2xl border border-[#E7EBEF] shadow-sm bg-white p-8 max-w-xl reveal">
-          <div class="w-12 h-12 rounded-xl bg-[#F0F5F9] text-[#42505E] grid place-items-center"><i data-lucide="receipt" class="w-6 h-6"></i></div>
-          <p class="text-sm text-[#42505E] mt-4 leading-relaxed">Tracks what customers owe you and generates ready-written WhatsApp/email chase messages you send yourself, zero server cost, not a tax-invoice generator. Free tier caps open invoices.</p>
-        </div>
-      </div>
-
-      <!-- ============ VIEW: DOCUMENTS ============ -->
-      <div class="view" id="view-documents">
         <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-5 mb-6">
-          <div>
-            <span class="inline-flex items-center gap-1.5 text-[11px] font-bold tracking-wide px-3 py-1.5 rounded-full bg-[#DC183C]/[0.09] text-[#DC183C] mb-3">
-              <i data-lucide="sparkles" class="w-3 h-3"></i> New
-            </span>
-            <h1 class="font-jakarta font-extrabold text-[26px] sm:text-[28px] tracking-tight flex items-center gap-2">Documents
-              <button onclick="openBrief('documents')" class="dev-badge w-5 h-5 rounded-full bg-[#DC183C] text-white items-center justify-center text-[10px] font-bold leading-none animate-pulse" title="Implementation notes">i</button>
-            </h1>
-            <p class="text-[14.5px] text-[#6A7581] leading-relaxed max-w-[62ch] mt-2">Your compliance documents in one vault, with expiry tracked automatically, so an expired Tax Clearance Certificate never catches you off guard at a funding application.</p>
-          </div>
-          <button onclick="stubNav('Upload document')" class="shrink-0 inline-flex items-center gap-2 font-jakarta font-bold text-[13px] px-5 py-3 rounded-lg bg-[#0C1F31] text-white hover:bg-[#16324a] transition">
-            <i data-lucide="upload" class="w-4 h-4"></i> Upload document
-          </button>
+          <div><h1 class="font-jakarta font-extrabold text-[26px] sm:text-[28px] tracking-tight flex items-center gap-2">Get paid<button onclick="openBrief('getpaid')" class="dev-badge w-5 h-5 rounded-full bg-[#DC183C] text-white items-center justify-center text-[10px] font-bold leading-none animate-pulse" title="Implementation notes">i</button></h1><p class="text-[14.5px] text-[#6A7581] leading-relaxed max-w-[62ch] mt-2">Keep track of what customers owe you, and chase late payers with a message that is ready to send. It is a chasing tool, not an accounting system.</p></div>
+          <button onclick="newInvoice()" class="shrink-0 inline-flex items-center gap-2 font-jakarta font-bold text-[13px] px-5 py-3 rounded-lg bg-[#0C1F31] text-white hover:bg-[#16324a] transition"><i data-lucide="plus" class="w-4 h-4"></i> New invoice</button>
         </div>
-
-        <div class="rounded-2xl border border-[#E7EBEF] shadow-sm bg-white overflow-hidden reveal">
-          <div class="px-5 py-4 border-b border-[#E7EBEF] flex items-center justify-between">
-            <p class="font-jakarta font-extrabold text-sm">Your documents</p>
-            <span class="text-[11px] text-[#6A7581]">Expiry status</span>
-          </div>
-          <div id="documents-list"></div>
+        <div class="standard-only-flex items-center justify-between gap-4 rounded-2xl border border-[#E7EBEF] shadow-sm bg-white p-4 mb-5 flex-col sm:flex-row">
+          <p class="text-[13px] text-[#42505E]"><b>Standard plan:</b> up to 3 open invoices. You are using <b id="inv-cap-used">3</b> of 3. Premium has no limit.</p>
+          <a href="public-premium-checkout.html" class="shrink-0 inline-flex items-center gap-2 font-jakarta font-bold text-[12.5px] px-4 py-2 rounded-lg bg-[#DC183C] hover:bg-[#B0142F] text-white transition">Upgrade, R99/month</a>
         </div>
+        <div id="inv-stats" class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-5"></div>
+        <div class="rounded-2xl border border-[#E7EBEF] shadow-sm bg-white overflow-hidden"><div id="inv-table"></div></div>
+        <p class="text-[12px] text-[#6A7581] mt-4 max-w-[70ch]">Use this alongside your accounting software. It does not create tax invoices or keep your books, and chase messages are sent by you, never by us.</p>
       </div>
 
-      <!-- ============ VIEW: EXPERTS ============ -->
-      <div class="view" id="view-experts">
-        <h1 class="font-jakarta font-extrabold text-[26px] sm:text-[28px] tracking-tight mb-1">Experts</h1>
-        <p class="text-[11px] font-bold uppercase tracking-widest text-[#98A2AE] mb-6">Scaffolded in this mockup, not yet fully designed</p>
-        <div class="rounded-2xl border border-[#E7EBEF] shadow-sm bg-white p-8 max-w-xl reveal">
-          <div class="w-12 h-12 rounded-xl bg-[#F0F5F9] text-[#42505E] grid place-items-center"><i data-lucide="user-round-search" class="w-6 h-6"></i></div>
-          <p class="text-sm text-[#42505E] mt-4 leading-relaxed">Vetted specialists matched to your weakest scored dimension, each with a plain-English reason why, no fabricated star ratings, since there are no real reviews yet.</p>
-        </div>
-      </div>
 
-      <!-- ============ VIEW: RESOURCES ============ -->
+      
+            <!-- ============ VIEW: RESOURCES ============ -->
       <div class="view" id="view-resources">
         <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-5 mb-6">
           <div>
@@ -1099,35 +869,164 @@
         <div id="downloads-host"></div>
       </div>
 
-      <!-- ============ VIEW: MEMBER PERKS ============ -->
-      <div class="view" id="view-perks">
-        <h1 class="font-jakarta font-extrabold text-[26px] sm:text-[28px] tracking-tight mb-1">Member Perks</h1>
-        <p class="text-[11px] font-bold uppercase tracking-widest text-[#98A2AE] mb-6">Scaffolded in this mockup, not yet fully designed</p>
-        <div class="rounded-2xl border border-[#E7EBEF] shadow-sm bg-white p-8 max-w-xl reveal">
-          <div class="w-12 h-12 rounded-xl bg-[#F0F5F9] text-[#42505E] grid place-items-center"><i data-lucide="gift" class="w-6 h-6"></i></div>
-          <p class="text-sm text-[#42505E] mt-4 leading-relaxed">Paid-tier deals from live affiliate partners, never discounts anyone could already get for free. Free members see a locked teaser.</p>
+      
+      
+
+      <!-- ============ VIEW: FUNDING PACK (Business Passport + Document Vault, merged 2026-10-02) ============ -->
+      <div class="view" id="view-funding-pack">
+        <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-5 mb-6">
+          <div>
+            <h1 class="font-jakarta font-extrabold text-[26px] sm:text-[28px] tracking-tight flex items-center gap-2">Funding pack<button onclick="openBrief('fundingpack')" class="dev-badge w-5 h-5 rounded-full bg-[#DC183C] text-white items-center justify-center text-[10px] font-bold leading-none animate-pulse" title="Implementation notes">i</button></h1>
+            <p class="text-[14.5px] text-[#6A7581] leading-relaxed max-w-[62ch] mt-2">What a lender asks for, in one place: a one-page summary of your business, and the documents behind it.</p>
+          </div>
+          <button onclick="showToast('Opens your browser print dialog, choose Save as PDF.', null)" class="shrink-0 inline-flex items-center gap-2 font-jakarta font-bold text-[13px] px-5 py-3 rounded-lg bg-[#0C1F31] text-white hover:bg-[#16324a] transition"><i data-lucide="printer" class="w-4 h-4"></i> Print or save PDF</button>
+        </div>
+        <p class="text-[11px] font-bold uppercase tracking-widest text-[#6A7581] mb-2.5">Business summary (free)</p>
+        <div class="bg-white border border-[#D8DEE5] rounded-lg shadow-md p-6 sm:p-9 max-w-3xl">
+          <div class="flex items-start justify-between gap-4 border-b border-[#E7EBEF] pb-5">
+            <div><button onclick="stubNav('Upload your business logo')" class="mb-3 w-14 h-14 rounded-xl border border-dashed border-[#C9D1DA] bg-[#F6F8FA] grid place-items-center text-[11px] font-bold text-[#6A7581] hover:border-[#DC183C] hover:text-[#DC183C] transition" title="Add your own logo">Add logo</button><p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C]">Business summary</p><h2 class="font-jakarta font-extrabold text-2xl mt-1">Langa Holdings</h2><p class="text-[13px] text-[#6A7581] mt-0.5">Prepared 2 October 2026 by the business owner</p></div>
+            <div class="text-right shrink-0"><p class="text-[10px] font-bold uppercase tracking-widest text-[#6A7581]">Health score</p><p class="font-jakarta font-extrabold text-3xl text-[#0C1F31]">71<span class="text-sm text-[#6A7581]">/100</span></p></div>
+          </div>
+          <div class="grid sm:grid-cols-2 gap-x-8 gap-y-3 mt-5 text-[13.5px]">
+            <div><p class="text-[11px] font-bold uppercase tracking-wider text-[#6A7581]">Industry</p><p class="font-semibold">Fintech</p></div>
+            <div><p class="text-[11px] font-bold uppercase tracking-wider text-[#6A7581]">Stage</p><p class="font-semibold">Growing</p></div>
+            <div><p class="text-[11px] font-bold uppercase tracking-wider text-[#6A7581]">Years in business</p><p class="font-semibold">2 to 4 years</p></div>
+            <div><p class="text-[11px] font-bold uppercase tracking-wider text-[#6A7581]">Monthly turnover</p><p class="font-semibold">R100k to R250k</p></div>
+            <div><p class="text-[11px] font-bold uppercase tracking-wider text-[#6A7581]">Province</p><p class="font-semibold">Gauteng</p></div>
+            <div><p class="text-[11px] font-bold uppercase tracking-wider text-[#6A7581]">Latest check-in</p><p class="font-semibold">June 2026</p></div>
+          </div>
+          <p class="text-[11px] font-bold uppercase tracking-widest text-[#6A7581] mt-7 mb-2.5">Funding pack</p>
+          <div class="grid sm:grid-cols-2 gap-2 text-[13px]">
+            <div class="flex items-center gap-2 rounded-lg border border-[#E7EBEF] px-3 py-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-[#29A37A]"></i> Company registration (CIPC)</div>
+            <div class="flex items-center gap-2 rounded-lg border border-[#E7EBEF] px-3 py-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-[#29A37A]"></i> 12 months bank statements</div>
+            <div class="flex items-center gap-2 rounded-lg border border-[#E7EBEF] px-3 py-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-[#29A37A]"></i> ID of directors</div>
+            <div class="flex items-center gap-2 rounded-lg border border-dashed border-[#D8DEE5] px-3 py-2 text-[#6A7581]"><i data-lucide="circle-dashed" class="w-4 h-4"></i> Tax clearance (not yet added)</div>
+          </div>
+          <p class="text-[11.5px] text-[#6A7581] leading-relaxed mt-7 border-t border-[#E7EBEF] pt-4">Every figure on this page is self-reported by the business owner. It has not been verified, certified or approved by SME South Africa or any third party, and it is not a credit assessment or a prediction of any funding outcome.</p>
+          <p class="text-[10px] text-[#98A2AE] mt-3">Prepared with SME South Africa</p>
+        </div>
+      
+        <div class="mt-10 rounded-2xl border border-[#E7EBEF] bg-white p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div><p class="font-jakarta font-extrabold text-sm">Documents behind this summary</p><p class="text-[12.5px] text-[#6A7581] mt-0.5 max-w-[60ch]">Tax clearance, accounts, bank statements and IDs live in Compliance, Documents, with expiry tracked.</p></div>
+          <button onclick="showView('documents')" class="shrink-0 inline-flex items-center gap-2 h-10 px-5 rounded-full border border-[#D8DEE5] font-jakarta font-bold text-[13px] hover:border-[#0C1F31] transition"><i data-lucide="folder-check" class="w-4 h-4"></i> Open documents</button>
         </div>
       </div>
 
-      <!-- ============ VIEW: BUSINESS PASSPORT ============ -->
-      <div class="view" id="view-passport">
-        <h1 class="font-jakarta font-extrabold text-[26px] sm:text-[28px] tracking-tight mb-1">Business Passport</h1>
-        <p class="text-[11px] font-bold uppercase tracking-widest text-[#98A2AE] mb-6">Scaffolded in this mockup, not yet fully designed</p>
-        <div class="rounded-2xl border border-[#E7EBEF] shadow-sm bg-white p-8 max-w-xl reveal">
-          <div class="w-12 h-12 rounded-xl bg-[#F0F5F9] text-[#42505E] grid place-items-center"><i data-lucide="file-text" class="w-6 h-6"></i></div>
-          <p class="text-sm text-[#42505E] mt-4 leading-relaxed">A single printable page combining your Business Profile, latest score and document status, built to hand to a lender. Strictly self-reported, no "verified/approved" language.</p>
+
+      <!-- ============ VIEW: DOCUMENTS (tab inside Compliance, Premium) ============ -->
+      <div class="view" id="view-documents">
+        <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-5 mb-6">
+          <div>
+            <h1 class="font-jakarta font-extrabold text-[26px] sm:text-[28px] tracking-tight flex items-center gap-2">Documents<button onclick="openBrief('documents')" class="dev-badge w-5 h-5 rounded-full bg-[#DC183C] text-white items-center justify-center text-[10px] font-bold leading-none animate-pulse" title="Implementation notes">i</button></h1>
+            <p class="text-[14.5px] text-[#6A7581] leading-relaxed max-w-[62ch] mt-2">Your compliance and funding documents in one vault, with expiry tracked, so a lapsed tax clearance never catches you out.</p>
+          </div>
+          <button onclick="stubNav('Upload document')" class="shrink-0 inline-flex items-center gap-2 font-jakarta font-bold text-[13px] px-5 py-3 rounded-lg bg-[#0C1F31] text-white hover:bg-[#16324a] transition"><i data-lucide="upload" class="w-4 h-4"></i> Upload document</button>
+        </div>
+        <div id="pack-vault" class="premium-block">
+          <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-3 mb-3">
+            <div><p class="text-[11px] font-bold uppercase tracking-widest text-[#6A7581]">Document vault</p><p class="text-[13.5px] text-[#6A7581] mt-1 max-w-[60ch]">Tax clearance, accounts, bank statements and IDs in one vault, with expiry tracked so nothing lapses before an application.</p></div>
+            <button onclick="stubNav('Upload document')" class="shrink-0 inline-flex items-center gap-2 font-jakarta font-bold text-[13px] px-5 py-3 rounded-lg border-[1.5px] border-[#E7EBEF] hover:bg-[#F0F5F9] transition"><i data-lucide="upload" class="w-4 h-4"></i> Upload document</button>
+          </div>
+          <div class="rounded-2xl border border-[#E7EBEF] shadow-sm bg-white overflow-hidden reveal">
+          <div class="px-5 py-4 border-b border-[#E7EBEF] flex items-center justify-between">
+            <p class="font-jakarta font-extrabold text-sm">Your documents</p>
+            <span class="text-[11px] text-[#6A7581]">Expiry status</span>
+          </div>
+          <div id="documents-list"></div>
+        </div>
+      
+        </div>
+      </div>
+
+
+      <!-- ============ VIEW: SOLUTIONS (back, 2026-10-02, free) ============ -->
+      <div class="view" id="view-solutions">
+        <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-5 mb-6">
+          <div>
+            <h1 class="font-jakarta font-extrabold text-[26px] sm:text-[28px] tracking-tight flex items-center gap-2">Solutions<button onclick="openBrief('solutions')" class="dev-badge w-5 h-5 rounded-full bg-[#DC183C] text-white items-center justify-center text-[10px] font-bold leading-none animate-pulse" title="Implementation notes">i</button></h1>
+            <p class="text-[14.5px] text-[#6A7581] leading-relaxed max-w-[62ch] mt-2">The tools and services a business like yours uses, researched and compared by our team. Free for every member.</p>
+          </div>
+          <a href="public-solutions.html" class="shrink-0 inline-flex items-center gap-2 font-jakarta font-bold text-[13px] px-5 py-3 rounded-lg border-[1.5px] border-[#E7EBEF] hover:bg-[#F0F5F9] transition"><i data-lucide="compass" class="w-4 h-4"></i> Browse everything</a>
+        </div>
+        <p class="text-[11px] font-bold uppercase tracking-widest text-[#6A7581] mb-2.5">Picked for your business</p>
+        <div id="sol-picks" class="grid sm:grid-cols-3 gap-4"></div>
+        <p class="text-[11px] font-bold uppercase tracking-widest text-[#6A7581] mt-8 mb-2.5">Browse by what you need</p>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4"><div class="rounded-2xl border border-[#E7EBEF] shadow-sm bg-white p-5"><div class="flex items-center gap-2.5 mb-3"><div class="w-9 h-9 rounded-xl grid place-items-center" style="background:#FDECEF;color:#DC183C"><i data-lucide="banknote" class="w-[18px] h-[18px]"></i></div><p class="font-jakarta font-extrabold text-sm">Funding</p></div><div class="flex flex-wrap gap-2"><a href="public-solution-category.html?cat=Business%20Loans" class="inline-flex items-center h-8 px-3 rounded-full border border-[#E7EBEF] bg-white text-[12.5px] font-semibold hover:border-[#0C1F31] transition">Business Loans</a><a href="public-solution-category.html?cat=Working%20Capital%20Loans" class="inline-flex items-center h-8 px-3 rounded-full border border-[#E7EBEF] bg-white text-[12.5px] font-semibold hover:border-[#0C1F31] transition">Working Capital Loans</a><a href="public-solution-category.html?cat=Invoicing%20Finance" class="inline-flex items-center h-8 px-3 rounded-full border border-[#E7EBEF] bg-white text-[12.5px] font-semibold hover:border-[#0C1F31] transition">Invoicing Finance</a><a href="public-solution-category.html?cat=Crowdfunding%20Platforms" class="inline-flex items-center h-8 px-3 rounded-full border border-[#E7EBEF] bg-white text-[12.5px] font-semibold hover:border-[#0C1F31] transition">Crowdfunding Platforms</a></div></div><div class="rounded-2xl border border-[#E7EBEF] shadow-sm bg-white p-5"><div class="flex items-center gap-2.5 mb-3"><div class="w-9 h-9 rounded-xl grid place-items-center" style="background:#E4F5EE;color:#29A37A"><i data-lucide="wallet" class="w-[18px] h-[18px]"></i></div><p class="font-jakarta font-extrabold text-sm">Money and payments</p></div><div class="flex flex-wrap gap-2"><a href="public-solution-category.html?cat=Accounting%20Software" class="inline-flex items-center h-8 px-3 rounded-full border border-[#E7EBEF] bg-white text-[12.5px] font-semibold hover:border-[#0C1F31] transition">Accounting Software</a><a href="public-solution-category.html?cat=Payment%20Gateways" class="inline-flex items-center h-8 px-3 rounded-full border border-[#E7EBEF] bg-white text-[12.5px] font-semibold hover:border-[#0C1F31] transition">Payment Gateways</a><a href="public-solution-category.html?cat=Business%20Banking" class="inline-flex items-center h-8 px-3 rounded-full border border-[#E7EBEF] bg-white text-[12.5px] font-semibold hover:border-[#0C1F31] transition">Business Banking</a><a href="public-solution-category.html?cat=POS%20Systems" class="inline-flex items-center h-8 px-3 rounded-full border border-[#E7EBEF] bg-white text-[12.5px] font-semibold hover:border-[#0C1F31] transition">POS Systems</a></div></div><div class="rounded-2xl border border-[#E7EBEF] shadow-sm bg-white p-5"><div class="flex items-center gap-2.5 mb-3"><div class="w-9 h-9 rounded-xl grid place-items-center" style="background:#FFF1E0;color:#AE6B0A"><i data-lucide="megaphone" class="w-[18px] h-[18px]"></i></div><p class="font-jakarta font-extrabold text-sm">Sales and marketing</p></div><div class="flex flex-wrap gap-2"><a href="public-solution-category.html?cat=CRM%20Platforms" class="inline-flex items-center h-8 px-3 rounded-full border border-[#E7EBEF] bg-white text-[12.5px] font-semibold hover:border-[#0C1F31] transition">CRM Platforms</a><a href="public-solution-category.html?cat=E-mail%20Marketing%20Software" class="inline-flex items-center h-8 px-3 rounded-full border border-[#E7EBEF] bg-white text-[12.5px] font-semibold hover:border-[#0C1F31] transition">E-mail Marketing Software</a><a href="public-solution-category.html?cat=Social%20Media%20Management" class="inline-flex items-center h-8 px-3 rounded-full border border-[#E7EBEF] bg-white text-[12.5px] font-semibold hover:border-[#0C1F31] transition">Social Media Management</a></div></div><div class="rounded-2xl border border-[#E7EBEF] shadow-sm bg-white p-5"><div class="flex items-center gap-2.5 mb-3"><div class="w-9 h-9 rounded-xl grid place-items-center" style="background:#E5EFFB;color:#3B82F6"><i data-lucide="globe" class="w-[18px] h-[18px]"></i></div><p class="font-jakarta font-extrabold text-sm">Online and tech</p></div><div class="flex flex-wrap gap-2"><a href="public-solution-category.html?cat=Web%20Hosting" class="inline-flex items-center h-8 px-3 rounded-full border border-[#E7EBEF] bg-white text-[12.5px] font-semibold hover:border-[#0C1F31] transition">Web Hosting</a><a href="public-solution-category.html?cat=E-commerce%20Website%20Builders" class="inline-flex items-center h-8 px-3 rounded-full border border-[#E7EBEF] bg-white text-[12.5px] font-semibold hover:border-[#0C1F31] transition">E-commerce Website Builders</a><a href="public-solution-category.html?cat=Business%20Fibre" class="inline-flex items-center h-8 px-3 rounded-full border border-[#E7EBEF] bg-white text-[12.5px] font-semibold hover:border-[#0C1F31] transition">Business Fibre</a></div></div><div class="rounded-2xl border border-[#E7EBEF] shadow-sm bg-white p-5"><div class="flex items-center gap-2.5 mb-3"><div class="w-9 h-9 rounded-xl grid place-items-center" style="background:#F0F5F9;color:#42505E"><i data-lucide="users" class="w-[18px] h-[18px]"></i></div><p class="font-jakarta font-extrabold text-sm">People</p></div><div class="flex flex-wrap gap-2"><a href="public-solution-category.html?cat=Payroll%20%26%20HR%20Software" class="inline-flex items-center h-8 px-3 rounded-full border border-[#E7EBEF] bg-white text-[12.5px] font-semibold hover:border-[#0C1F31] transition">Payroll &amp; HR Software</a><a href="public-solution-category.html?cat=Time%20%26%20Attendance%20Software" class="inline-flex items-center h-8 px-3 rounded-full border border-[#E7EBEF] bg-white text-[12.5px] font-semibold hover:border-[#0C1F31] transition">Time &amp; Attendance Software</a></div></div><div class="rounded-2xl border border-[#E7EBEF] shadow-sm bg-white p-5"><div class="flex items-center gap-2.5 mb-3"><div class="w-9 h-9 rounded-xl grid place-items-center" style="background:#FDECEF;color:#DC183C"><i data-lucide="shield" class="w-[18px] h-[18px]"></i></div><p class="font-jakarta font-extrabold text-sm">Legal and cover</p></div><div class="flex flex-wrap gap-2"><a href="public-solution-category.html?cat=Company%20Registration" class="inline-flex items-center h-8 px-3 rounded-full border border-[#E7EBEF] bg-white text-[12.5px] font-semibold hover:border-[#0C1F31] transition">Company Registration</a><a href="public-solution-category.html?cat=Business%20Insurance" class="inline-flex items-center h-8 px-3 rounded-full border border-[#E7EBEF] bg-white text-[12.5px] font-semibold hover:border-[#0C1F31] transition">Business Insurance</a><a href="public-solution-category.html?cat=Commercial%20Law%20Services" class="inline-flex items-center h-8 px-3 rounded-full border border-[#E7EBEF] bg-white text-[12.5px] font-semibold hover:border-[#0C1F31] transition">Commercial Law Services</a></div></div></div>
+        <div class="mt-6 rounded-2xl border border-[#E7EBEF] bg-[#F6F8FA] p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div class="flex items-start gap-3"><div class="w-9 h-9 rounded-xl bg-[#FDECEF] text-[#DC183C] grid place-items-center shrink-0"><i data-lucide="gift" class="w-[18px] h-[18px]"></i></div><div><p class="font-jakarta font-bold text-sm">Member perks</p><p class="text-[12.5px] text-[#6A7581] mt-0.5 max-w-[56ch]">Where a partner gives members something you cannot get directly, it is listed under Member perks (Premium).</p></div></div>
+          <button onclick="showView('perks')" class="shrink-0 inline-flex items-center gap-2 h-10 px-5 rounded-full border border-[#D8DEE5] bg-white font-jakarta font-bold text-[13px] hover:border-[#0C1F31] transition">See member perks <i data-lucide="lock" class="w-3.5 h-3.5 standard-only-inline"></i></button>
+        </div>
+      </div>
+
+      <!-- ============ VIEW: MEMBER PERKS (back, 2026-10-02, Premium tab inside Solutions) ============ -->
+      <div class="view" id="view-perks">
+        <div class="mb-6"><h1 class="font-jakarta font-extrabold text-[26px] sm:text-[28px] tracking-tight flex items-center gap-2">Member Perks<button onclick="openBrief('perks')" class="dev-badge w-5 h-5 rounded-full bg-[#DC183C] text-white items-center justify-center text-[10px] font-bold leading-none animate-pulse" title="Implementation notes">i</button></h1><p class="text-[14.5px] text-[#6A7581] leading-relaxed max-w-[62ch] mt-2">Offers from partners that you cannot get directly. We list a perk only when it is real and exclusive.</p></div>
+        <div class="grid lg:grid-cols-[1.3fr_1fr] gap-5 items-start">
+          <div class="rounded-2xl border border-[#E7EBEF] shadow-sm bg-white p-6">
+            <div class="flex items-start justify-between gap-3">
+              <div class="flex items-center gap-3"><div class="w-12 h-12 rounded-xl bg-[#E4F5EE] text-[#29A37A] grid place-items-center"><i data-lucide="calculator" class="w-6 h-6"></i></div>
+                <div><p class="font-jakarta font-extrabold text-lg leading-tight">Sage Accounting: 90 days free</p><p class="text-[12.5px] text-[#6A7581]">Instead of the usual 30-day trial</p></div></div>
+              <span class="text-[10.5px] font-extrabold uppercase tracking-wide px-2.5 py-1 rounded-full bg-[#FDECEF] text-[#DC183C] shrink-0">Premium</span>
+            </div>
+            <ol class="mt-5 space-y-3 text-[13.5px] text-[#42505E]">
+              <li class="flex gap-3"><span class="w-6 h-6 rounded-full bg-[#0C1F31] text-white grid place-items-center text-[11px] font-bold shrink-0">1</span><span>Start your 30-day Sage trial from the button below.</span></li>
+              <li class="flex gap-3"><span class="w-6 h-6 rounded-full bg-[#0C1F31] text-white grid place-items-center text-[11px] font-bold shrink-0">2</span><span>Come back here and reveal your member code. It is unique to you.</span></li>
+              <li class="flex gap-3"><span class="w-6 h-6 rounded-full bg-[#0C1F31] text-white grid place-items-center text-[11px] font-bold shrink-0">3</span><span>Redeem the code in Sage to extend the trial from 30 to 90 days.</span></li>
+            </ol>
+            <div class="mt-6 flex flex-col sm:flex-row gap-3">
+              <a href="#" class="inline-flex items-center justify-center gap-2 h-11 px-5 rounded-lg bg-[#0C1F31] hover:bg-[#16324a] text-white font-jakarta font-bold text-[13px] transition">Start your 30-day trial <i data-lucide="arrow-up-right" class="w-4 h-4"></i></a>
+              <button id="perk-reveal" onclick="revealPerkCode()" class="inline-flex items-center justify-center gap-2 h-11 px-5 rounded-lg border border-[#D8DEE5] hover:border-[#DC183C] hover:text-[#DC183C] font-jakarta font-bold text-[13px] transition"><i data-lucide="eye" class="w-4 h-4"></i> Reveal my code</button>
+            </div>
+            <div id="perk-code" class="hidden mt-4 rounded-xl bg-[#F0F5F9] border border-[#E7EBEF] px-4 py-3 flex items-center justify-between gap-3">
+              <code class="font-bold text-[15px] tracking-wider text-[#0C1F31]">SAGE90-4K7Q-2MXR</code>
+              <button onclick="copyText('SAGE90-4K7Q-2MXR','Code copied')" class="text-[12px] font-bold text-[#DC183C] hover:underline">Copy</button>
+            </div>
+            <p class="text-[11.5px] text-[#6A7581] mt-4">Sage's own terms apply. Redemption details are confirmed with the partner and may change.</p>
+          </div>
+          <div class="rounded-2xl border border-[#E7EBEF] shadow-sm bg-white p-6 text-center">
+            <div class="w-12 h-12 rounded-xl bg-[#F0F5F9] text-[#42505E] grid place-items-center mx-auto"><i data-lucide="gift" class="w-6 h-6"></i></div>
+            <p class="font-jakarta font-extrabold text-[15px] mt-3">More perks, only when real</p>
+            <p class="text-[13px] text-[#6A7581] mt-1.5 leading-relaxed">A deal anyone can get directly from the partner is not a perk, so it is not listed here. New perks appear after the partner confirms terms in writing.</p>
+          </div>
         </div>
       </div>
 
       <!-- ============ VIEW: SETTINGS ============ -->
       <div class="view" id="view-settings">
-        <h1 class="font-jakarta font-extrabold text-[26px] sm:text-[28px] tracking-tight mb-1">Settings</h1>
-        <p class="text-[11px] font-bold uppercase tracking-widest text-[#98A2AE] mb-6">Scaffolded in this mockup, not yet fully designed</p>
-        <div class="rounded-2xl border border-[#E7EBEF] shadow-sm bg-white p-8 max-w-xl reveal">
-          <div class="w-12 h-12 rounded-xl bg-[#F0F5F9] text-[#42505E] grid place-items-center"><i data-lucide="settings" class="w-6 h-6"></i></div>
-          <p class="text-sm text-[#42505E] mt-4 leading-relaxed">Reminders, plan management, and POPIA data controls, view, export or permanently delete your own workspace data, with a typed-"DELETE" erasure flow that's honest about what it does and doesn't remove.</p>
+        <div class="mb-6"><h1 class="font-jakarta font-extrabold text-[26px] sm:text-[28px] tracking-tight flex items-center gap-2">Settings<button onclick="openBrief('wssettings')" class="dev-badge w-5 h-5 rounded-full bg-[#DC183C] text-white items-center justify-center text-[10px] font-bold leading-none animate-pulse" title="Implementation notes">i</button></h1>
+          <p class="text-[14.5px] text-[#6A7581] leading-relaxed max-w-[62ch] mt-2">Reminders, your plan, and control over your business data. Your login and community profile live in <a href="member-account.html" class="font-bold text-[#DC183C] hover:underline">Account Settings</a>.</p></div>
+        <div class="space-y-5 max-w-3xl">
+
+          <div class="rounded-2xl border border-[#E7EBEF] shadow-sm bg-white p-5 sm:p-6">
+            <h2 class="font-jakarta font-extrabold text-lg mb-1">Reminders</h2>
+            <p class="text-[12.5px] text-[#6A7581] mb-2">We keep these light. At most two reminder emails a week, and we stop if you stop opening them.</p>
+            <div class="flex items-center justify-between gap-4 py-3.5 border-t border-[#E7EBEF] first:border-t-0"><div class="min-w-0"><p class="text-[14px] font-semibold">Weekly check-in nudge</p><p class="text-[12.5px] text-[#6A7581] mt-0.5">A short note when your next check-in is due.</p></div><div id="sw-checkin" role="switch" aria-checked="true" tabindex="0" onclick="this.classList.toggle('on');this.setAttribute('aria-checked',this.classList.contains('on'))" class="switch on shrink-0"></div></div>
+            <div class="flex items-center justify-between gap-4 py-3.5 border-t border-[#E7EBEF] first:border-t-0"><div class="min-w-0"><p class="text-[14px] font-semibold">Compliance Autopilot <span class="text-[10px] font-extrabold uppercase tracking-wide px-2 py-0.5 rounded-full bg-[#FDECEF] text-[#DC183C] ml-1 align-middle">Premium</span></p><p class="text-[12.5px] text-[#6A7581] mt-0.5">A weekly "week ahead" email and a final reminder two days before a SARS or CIPC deadline.</p></div><div id="sw-autopilot" role="switch" aria-checked="false" tabindex="0" onclick="this.classList.toggle('on');this.setAttribute('aria-checked',this.classList.contains('on'))" class="switch  shrink-0"></div></div>
+          </div>
+
+          <div class="rounded-2xl border border-[#E7EBEF] shadow-sm bg-white p-5 sm:p-6">
+            <h2 class="font-jakarta font-extrabold text-lg mb-3">Plan and billing</h2>
+            <div class="standard-only-flex items-center justify-between gap-4 flex-col sm:flex-row">
+              <div><p class="font-jakarta font-bold text-[15px]">Standard, free</p><p class="text-[12.5px] text-[#6A7581] mt-0.5">Health Score, Compliance Calendar, Funding (with your one-page business summary), Learn and up to 3 open invoices.</p></div>
+              <a href="public-premium-checkout.html" class="shrink-0 inline-flex items-center gap-2 font-jakarta font-bold text-[13px] px-5 py-2.5 rounded-lg bg-[#DC183C] hover:bg-[#B0142F] text-white transition">Upgrade to Premium, R99/month</a>
+            </div>
+            <div class="premium-only-flex items-center justify-between gap-4 flex-col sm:flex-row">
+              <div><p class="font-jakarta font-bold text-[15px]">Premium, R99/month</p><p class="text-[12.5px] text-[#6A7581] mt-0.5">Next payment 2 November 2026. Includes Autopilot reminders, the Document Vault and unlimited invoices. Card and receipts are on the secure billing page.</p></div>
+              <div class="flex gap-2 shrink-0"><a href="member-account.html" class="font-jakarta font-bold text-[13px] px-4 py-2.5 rounded-lg border border-[#D8DEE5] hover:border-[#0C1F31] transition">Manage billing</a><button onclick="cancelPremium()" class="font-jakarta font-bold text-[13px] px-4 py-2.5 rounded-lg text-[#6A7581] hover:text-[#DC183C] transition">Cancel Premium</button></div>
+            </div>
+          </div>
+
+          <div class="rounded-2xl border border-[#E7EBEF] shadow-sm bg-white p-5 sm:p-6">
+            <h2 class="font-jakarta font-extrabold text-lg mb-1">Your business data</h2>
+            <p class="text-[12.5px] text-[#6A7581] mb-3">Under POPIA you can see, take, and remove the data you gave My Business.</p>
+            <div class="grid sm:grid-cols-2 gap-3">
+              <button onclick="showToast('Your export is being prepared. We email you a download link.', null)" class="text-left rounded-xl border border-[#E7EBEF] hover:border-[#0C1F31] p-4 transition"><i data-lucide="download" class="w-5 h-5 text-[#0C1F31]"></i><p class="font-jakarta font-bold text-[14px] mt-2">Export my data</p><p class="text-[12.5px] text-[#6A7581] mt-0.5">Profile, check-ins, plan progress, invoices and document list, as a file.</p></button>
+              <button onclick="deleteWorkspaceData()" class="text-left rounded-xl border border-[#F4C5CF] hover:border-[#DC183C] p-4 transition"><i data-lucide="trash-2" class="w-5 h-5 text-[#DC183C]"></i><p class="font-jakarta font-bold text-[14px] mt-2 text-[#DC183C]">Delete my business data</p><p class="text-[12.5px] text-[#6A7581] mt-0.5">Permanent. You will be asked to type DELETE to confirm.</p></button>
+            </div>
+          </div>
         </div>
       </div>
+
 
     </main>
   </div>
@@ -1164,17 +1063,326 @@
     showToast(`${label}, not part of this concept round yet.`, null);
   }
 
-  // ===== VIEW SWITCHING =========================================================
+  // ===== PLAN + VIEW SWITCHING (rewritten 2026-10-02) ===========================
+  // Demo plan: Standard by default (a free member who finished the Health Check). Add ?plan=premium to see the paid state.
+  const MEMBER_PLAN = (new URLSearchParams(location.search).get('plan') === 'premium') ? 'premium' : 'standard';
+  document.body.classList.add(MEMBER_PLAN === 'premium' ? 'plan-premium' : 'plan-standard');
+
+  // Sidebar group -> ordered sub-tabs. One entry per merged module; a single tab means no strip is shown.
+  const WS_GROUPS = {
+    home:       { tabs:[['overview','Overview']] },
+    progress:   { tabs:[['progress','Progress']] },
+    compliance: { tabs:[['compliance','Calendar'],['documents','Documents']] },
+    funding:    { tabs:[['funding-options','Options'],['funding-calc','Calculator'],['funding','My applications'],['funding-pack','Funding pack']] },
+    money:      { tabs:[['invoices','Get paid']] },
+    solutions:  { tabs:[['solutions','Solutions'],['perks','Member perks']] },
+    learn:      { tabs:[['resources','Library']] },
+    events:     { tabs:[['programmes','Events']] },
+    you:        { tabs:[['profile','Business profile'],['settings','Settings']] }
+  };
+  // Old slugs (sme-success-core routes, saved links) land on their new home.
+  const WS_ALIAS = { 'success-plan':'progress', 'passport':'funding-pack', 'cashflow':'invoices', 'match':'solutions' };
+  const WS_TAB_LOCK = { 'documents':true, 'perks':true };  // Premium tabs show a lock in the strip
+  const WS_VIEW_GROUP = {};
+  Object.keys(WS_GROUPS).forEach(g => WS_GROUPS[g].tabs.forEach(t => { WS_VIEW_GROUP[t[0]] = g; }));
+
+  // Views that are Premium. Copy is honest to what is built: see SMESC_Autopilot / Perks / Passport doc comments.
+  const WS_PREMIUM = {
+    'pack-vault': ['folder-check','Documents are part of Premium','Keep tax clearance, accounts, bank statements and IDs in one funder-ready vault, with expiry tracked, and attach them to an application in one click. Your one-page business summary stays free.'],
+    'view-perks': ['gift','Member perks are part of Premium','Offers from partners that you cannot get directly, listed only once the partner confirms the terms. Solutions stay free for every member.']
+  };
+  Object.keys(WS_PREMIUM).forEach(v => {
+    const el = document.getElementById(v); if(!el) return;
+    el.classList.add('is-premium');
+    const c = WS_PREMIUM[v];
+    el.insertAdjacentHTML('afterbegin',
+      `<div class="lock-overlay"><div class="bg-white rounded-2xl border border-[#E7EBEF] shadow-xl p-6 max-w-sm w-full text-center">
+        <div class="w-12 h-12 rounded-full bg-[#FDECEF] text-[#DC183C] grid place-items-center mx-auto mb-3"><i data-lucide="lock" class="w-6 h-6"></i></div>
+        <p class="font-jakarta font-extrabold text-lg">${c[1]}</p>
+        <p class="text-sm text-[#6A7581] mt-1.5 leading-relaxed">${c[2]}</p>
+        <a href="public-premium-checkout.html" class="mt-4 inline-flex items-center gap-2 px-5 h-11 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold text-sm transition">Unlock with Premium, R99/month</a>
+        <p class="text-[11.5px] text-[#6A7581] mt-2.5">Your score, calendar, funding, solutions and learning stay free.</p>
+      </div></div>`);
+  });
+
+  function toggleMoreNav(force){
+    const body = document.getElementById('moreBody'), t = document.getElementById('moreToggle');
+    if(!body) return;
+    const open = (typeof force === 'boolean') ? force : !body.classList.contains('open');
+    body.classList.toggle('open', open);
+    if(t) t.classList.toggle('more-open', open);
+  }
+  function renderSubtabs(name){
+    const host = document.getElementById('ws-subtabs'); if(!host) return;
+    const g = WS_VIEW_GROUP[name]; const tabs = g ? WS_GROUPS[g].tabs : [];
+    if(tabs.length < 2 || g === 'you'){ host.classList.add('hidden'); host.innerHTML = ''; return; }
+    host.classList.remove('hidden');
+    host.innerHTML = tabs.map(t => {
+      const locked = MEMBER_PLAN !== 'premium' && WS_TAB_LOCK[t[0]];
+      return `<button type="button" role="tab" aria-selected="${t[0]===name}" onclick="showView('${t[0]}')" class="ws-subtab ${t[0]===name?'active':''}">${t[1]}${locked?'<i data-lucide="lock" class="w-3 h-3 opacity-60"></i>':''}</button>`;
+    }).join('');
+  }
+
   function showView(name){
+    if(WS_ALIAS[name]){ const to = WS_ALIAS[name]; name = to; }
     document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
     document.querySelectorAll('.navlink').forEach(n => n.classList.remove('active'));
     const el = document.getElementById('view-' + name);
     if (el) el.classList.add('active');
     document.querySelectorAll('.navlink[data-view="' + name + '"]').forEach(link => link.classList.add('active'));
-    closeMoreMenu();
+    const g = WS_VIEW_GROUP[name];
+    // Group highlight only where one sidebar item stands for the whole group (More and You list their views individually)
+    if (g && g !== 'you') document.querySelectorAll('.navlink[data-group="' + g + '"]').forEach(link => link.classList.add('active'));
+    renderSubtabs(name);
     window.scrollTo({ top: 0, behavior: 'instant' });
     lucide.createIcons();
   }
+
+
+  // ===== HOME: plan lives here now; funding status card (2026-10-02) ===================
+  function openHomePlan(){ showView('overview'); const d = document.getElementById('home-plan'); if(d){ d.open = true; setTimeout(() => d.scrollIntoView({ behavior:'smooth', block:'start' }), 50); } }
+
+
+  // ===== HASH ROUTING (#funding-new etc.) so apply links from anywhere land in the right place =====
+  function wsRouteFromHash(){
+    const h = (location.hash || '').replace('#', '');
+    if(!h) return;
+    if(h === 'funding-new'){ showView('funding'); showNewFundingApp(); return; }
+    if(document.getElementById('view-' + h) || WS_ALIAS[h]) showView(h);
+  }
+  window.addEventListener('hashchange', wsRouteFromHash);
+
+  // ===== HOME: funding slot, two states (2026-10-02). Most members never apply, so 'none' is the default. =====
+  let homeApps = (new URLSearchParams(location.search).get('apps') === 'yes') ? 'yes' : 'none';
+  function setHomeApps(v){ homeApps = v; renderHomeFunding(); }
+  function readinessDone(){ return readinessItems.filter(r => r.complete).length; }
+  function homeToggle(){
+    return `<div class="flex items-center gap-1 text-[10px] font-bold"><span class="uppercase tracking-widest text-[#98A2AE] mr-1">Preview</span>` + [['none','No applications'],['yes','Has applications']].map(o => `<button onclick="setHomeApps('${o[0]}')" class="h-6 px-2.5 rounded-full ${homeApps === o[0] ? 'bg-[#0C1F31] text-white' : 'bg-[#F0F5F9] text-[#6A7581] hover:bg-[#E7EBEF]'}">${o[1]}</button>`).join('') + `</div>`;
+  }
+  function renderHomeFree(){
+    const host = document.getElementById('home-free'); if(!host) return;
+    const row = (icon, tint, t, sub, tag, go) => `<button onclick="${go}" class="w-full text-left flex items-center gap-3 p-2.5 rounded-xl hover:bg-[#FCFCFC] transition"><div class="w-9 h-9 rounded-[10px] grid place-items-center shrink-0 ${tint}"><i data-lucide="${icon}" class="w-4 h-4"></i></div><div class="min-w-0 flex-1"><p class="text-[13.5px] font-bold leading-snug">${esc(t)}</p><p class="text-[12px] text-[#6A7581] truncate">${esc(sub)}</p></div><span class="text-[10px] font-extrabold uppercase tracking-wide px-2 py-0.5 rounded-full bg-[#E4F5EE] text-[#1E7F5E] shrink-0">${tag}</span></button>`;
+    host.innerHTML =
+      row('video', 'bg-[#FFF1E0] text-[#AE6B0A]', 'Business Compliance Essentials', 'Webinar, 29 Oct, 11:00 SAST', 'Free', "showView('programmes')") +
+      row('book-open', 'bg-[#E5EFFB] text-[#3B82F6]', DOWNLOADS[0].title, 'New in the library, ' + DOWNLOADS[0].type, 'Free', "showView('resources')") +
+      row('layout-grid', 'bg-[#E4F5EE] text-[#29A37A]', 'Accounting software, compared', 'Researched for a business your size', 'Free', "location.href='public-solution-category.html?cat=Accounting%20Software'");
+    lucide.createIcons();
+  }
+  function renderHomeFunding(){
+    const host = document.getElementById('home-funding'); if(!host) return;
+    const tg = document.getElementById('home-funding-toggle'); if(tg) tg.innerHTML = homeToggle();
+    const none = homeApps === 'none' || !APPLICATIONS.length;
+    if(none){
+      const done = readinessDone(), total = readinessItems.length, pct = Math.round(done / total * 100);
+      const best = FUND_OPTIONS.find(o => o.fit === 'strong');
+      const link = (icon, tint, t, sub, go) => `<button onclick="${go}" class="w-full text-left flex items-center gap-3 py-3 border-t border-[#F0F3F6] first:border-t-0 hover:bg-[#FCFCFC] rounded-lg px-1 transition"><div class="w-9 h-9 rounded-[10px] grid place-items-center shrink-0 ${tint}"><i data-lucide="${icon}" class="w-4 h-4"></i></div><div class="min-w-0 flex-1"><p class="text-[13.5px] font-bold leading-snug">${t}</p><p class="text-[12px] text-[#6A7581]">${sub}</p></div><i data-lucide="arrow-right" class="w-4 h-4 text-[#98A2AE] shrink-0"></i></button>`;
+      host.innerHTML = `<p class="text-[13.5px] text-[#42505E] leading-relaxed mb-1">You have not applied for funding, and you do not have to. Knowing what you would qualify for costs nothing, and being ready means you can move fast when you need to.</p>` +
+        link('sparkles', 'bg-[#FDECEF] text-[#DC183C]', best ? esc(best.name) + ': a strong fit for you' : 'See what fits your business', 'Matched to your turnover and years in business', "showView('funding-options')") +
+        link('calculator', 'bg-[#FFF1E0] text-[#AE6B0A]', 'See what a loan would cost you', 'Move the sliders, nothing is submitted', "showView('funding-calc')") +
+        `<button onclick="showView('funding')" class="w-full text-left py-3 border-t border-[#F0F3F6] px-1 hover:bg-[#FCFCFC] rounded-lg transition"><div class="flex items-center justify-between text-[13px] mb-1.5"><span class="font-bold">Funding readiness</span><span class="text-[12px] text-[#6A7581]">${done} of ${total} ready</span></div><div class="h-1.5 bg-[#F0F5F9] rounded-full overflow-hidden"><div class="h-full rounded-full accent-grad" style="width:${Math.max(pct, 4)}%"></div></div><p class="text-[12px] text-[#6A7581] mt-1.5">The documents lenders ask for first. Start with tax clearance.</p></button>`;
+      lucide.createIcons(); return;
+    }
+    const dec = APPLICATIONS.find(a => a.status === 'declined' && !(a.timeline||[]).some(t => /Withdrawn/.test(t.text)));
+    const live = APPLICATIONS.filter(a => a.status !== 'declined' && a.status !== 'funded').slice(0, 3);
+    const row = a => { const st = FUNDING_STATUS[a.status] || FUNDING_STATUS.draft; return `<button onclick="showView('funding');viewFundingApp('${a.id}')" class="w-full text-left flex items-center gap-3 py-3 border-t border-[#F0F3F6] first:border-t-0 hover:bg-[#FCFCFC] rounded-lg px-1 transition"><div class="w-9 h-9 rounded-[10px] bg-[#F0F5F9] grid place-items-center shrink-0"><i data-lucide="${a.icon || 'banknote'}" class="w-4 h-4 text-[#42505E]"></i></div><div class="min-w-0 flex-1"><p class="text-[13.5px] font-bold truncate">${esc(a.product)}</p><p class="text-[12px] text-[#6A7581]">${wsFmtR(a.amount)} &middot; updated ${esc(a.updated)}</p></div><span class="text-[10.5px] font-bold px-2.5 py-1 rounded-full shrink-0" style="color:${st.color};background:${st.bg}">${st.label}</span></button>`; };
+    host.innerHTML = live.map(row).join('') + (dec ? `<div class="mt-3 rounded-xl bg-[#F0F5F9] p-4"><p class="font-jakarta font-bold text-[13.5px]">${esc(dec.product)} was not approved this time</p><p class="text-[12.5px] text-[#6A7581] mt-0.5">Most lenders ask for the same few things. Close the gaps, then reapply with a stronger file.</p><button onclick="showView('funding');viewFundingApp('${dec.id}')" class="mt-2 text-xs font-bold text-[#DC183C] hover:underline">See what to fix &rarr;</button></div>` : '');
+    lucide.createIcons();
+  }
+
+  // ===== SOLUTIONS picks (personalised from the profile) =====
+  const SOL_PICKS = [
+    { icon:'wallet', tint:'bg-[#E4F5EE] text-[#29A37A]', name:'Accounting Software', why:'You invoice other businesses and wait to be paid. The right ledger keeps tax time calm.', cat:'Accounting Software' },
+    { icon:'credit-card', tint:'bg-[#FFF1E0] text-[#AE6B0A]', name:'Payment Gateways', why:'Customers can pay you by card or online. Compare fees before you pick one.', cat:'Payment Gateways' },
+    { icon:'users', tint:'bg-[#F0F5F9] text-[#42505E]', name:'Payroll & HR Software', why:'You run payroll for a growing team. Stay compliant with SARS and UIF.', cat:'Payroll & HR Software' }
+  ];
+  function renderSolutionPicks(){
+    const host = document.getElementById('sol-picks'); if(!host) return;
+    host.innerHTML = SOL_PICKS.map(p => `<a href="public-solution-category.html?cat=${encodeURIComponent(p.cat)}" class="rounded-2xl border border-[#E7EBEF] shadow-sm bg-white p-5 hover:border-[#0C1F31] transition block"><div class="w-10 h-10 rounded-xl grid place-items-center ${p.tint}"><i data-lucide="${p.icon}" class="w-5 h-5"></i></div><p class="font-jakarta font-extrabold text-[15px] mt-3">${esc(p.name)}</p><p class="text-[12.5px] text-[#6A7581] mt-1 leading-relaxed">${esc(p.why)}</p><span class="inline-flex items-center gap-1 text-xs font-bold text-[#DC183C] mt-3">Compare options <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i></span></a>`).join('');
+    lucide.createIcons();
+  }
+
+  // ===== BUSINESS PROFILE: read-only by default, Edit per section, email a copy =====
+  let profileEdit = -1;
+  function editProfile(i){ profileEdit = i; renderProfile(); }
+  function cancelProfile(){ profileEdit = -1; renderProfile(); }
+  function saveProfile(i){
+    PROFILE_SECTIONS[i].fields.forEach((f, k) => { const el = document.getElementById('pf-' + i + '-' + k); if(el) f[1] = el.value.trim() || f[1]; });
+    profileEdit = -1; renderProfile(); showToast('Saved. Your next check-in uses the updated answers.');
+  }
+  function emailProfile(){
+    wsModal('ov-emailprof', `<div class="p-6"><p class="font-jakarta font-extrabold text-lg">Email my business profile</p><p class="text-sm text-[#6A7581] mt-1">We send the PDF to your own email. Add someone else if you want to share it, for example your accountant.</p>
+      <label class="block text-[11px] font-bold uppercase tracking-wider text-[#6A7581] mt-4 mb-1.5">Send to</label><input id="ep-to" value="tshepho@example.com" class="w-full h-11 rounded-lg border border-[#D8DEE5] px-3 text-sm outline-none focus:border-[#DC183C]">
+      <label class="block text-[11px] font-bold uppercase tracking-wider text-[#6A7581] mt-3 mb-1.5">Also send to (optional)</label><input id="ep-cc" placeholder="name@company.co.za" class="w-full h-11 rounded-lg border border-[#D8DEE5] px-3 text-sm outline-none focus:border-[#DC183C]">
+      <p id="ep-err" class="hidden text-[12.5px] font-semibold text-[#DC183C] mt-2"></p>
+      <p class="text-[11.5px] text-[#6A7581] mt-3">The PDF holds the answers on this page, self-reported. We do not keep the other address.</p>
+      <div class="mt-5 flex flex-col sm:flex-row gap-3"><button onclick="sendProfile()" class="h-11 px-5 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold text-sm transition">Send PDF</button><button onclick="closeOverlay('ov-emailprof')" class="h-11 px-5 rounded-full border border-[#D8DEE5] text-sm font-bold hover:border-[#0C1F31] transition">Cancel</button></div></div>`);
+  }
+  function sendProfile(){
+    const ok = v => /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v);
+    const to = document.getElementById('ep-to').value.trim(), cc = document.getElementById('ep-cc').value.trim(), err = document.getElementById('ep-err');
+    if(!ok(to) || (cc && !ok(cc))){ err.textContent = 'Check the email address' + (cc && !ok(cc) ? ' in "Also send to".' : '.'); err.classList.remove('hidden'); return; }
+    closeOverlay('ov-emailprof'); showToast('Sent to ' + to + (cc ? ' and ' + cc : '') + '.');
+  }
+
+  // ===== FUNDING OPTIONS + CALCULATOR (2026-10-02) ================================
+  const FUND_OPTIONS = [
+    { icon:'wallet',          tint:'bg-[#FFF1E0] text-[#AE6B0A]', name:'Working Capital Loan',    product:'Working Capital Loan',    desc:'Fund day-to-day operations.',                 fit:'strong',   why:'Matches your turnover band and years trading.', range:'R10k to R5M', term:'3 to 12 months' },
+    { icon:'hand-coins',      tint:'bg-[#FFF1E0] text-[#AE6B0A]', name:'Unsecured Business Loan', product:'Unsecured Business Loan', desc:'Funding without collateral.',                  fit:'strong',   why:'No assets needed, suits a services or fintech business.', range:'R10k to R1M', term:'3 to 12 months' },
+    { icon:'file-text',       tint:'bg-[#FFF1E0] text-[#AE6B0A]', name:'Invoice Finance',         product:'Invoice Finance',         desc:'Unlock cash tied up in unpaid invoices.',     fit:'possible', why:'Works if you invoice other businesses on 30 to 60 day terms.', range:'R50k to R5M', term:'Per invoice' },
+    { icon:'truck',           tint:'bg-[#E4F5EE] text-[#29A37A]', name:'Asset Finance',           product:'Asset Finance',           desc:'Fund equipment, vehicles and technology.',    fit:'possible', why:'Useful when the purchase is a specific piece of equipment.', range:'R50k to R5M', term:'12 to 60 months' },
+    { icon:'package',         tint:'bg-[#FDECEF] text-[#DC183C]', name:'Inventory Finance',       product:'Inventory Finance',       desc:'Fund stock and supplies.',                    fit:'possible', why:'Only relevant if you hold physical stock.', range:'R50k to R2M', term:'Revolving' },
+    { icon:'clipboard-check', tint:'bg-[#E4F5EE] text-[#29A37A]', name:'Purchase Order Funding',  product:'Purchase Order Funding',  desc:'Finance confirmed customer orders.',          fit:'possible', why:'Needs a confirmed order from a creditworthy customer.', range:'R50k to R5M', term:'Per order' },
+    { icon:'milestone',       tint:'bg-[#FDECEF] text-[#DC183C]', name:'Bridging Finance',        product:'Bridging Finance',        desc:'Short-term interim funding.',                 fit:'later',    why:'For a known payment that is late, not for ongoing needs.', range:'R50k to R5M', term:'1 to 6 months' },
+    { icon:'layers',          tint:'bg-[#FDECEF] text-[#DC183C]', name:'Mezzanine Funding',       product:'Mezzanine Funding',       desc:'Hybrid debt and equity for larger growth.',   fit:'later',    why:'Usually needs revenue well above your current band.', range:'R1M and up', term:'3 to 7 years' }
+  ];
+  const FIT_LABEL = { strong:['Strong fit','fit-strong'], possible:['Possible fit','fit-possible'], later:['Not yet','fit-later'] };
+  function renderFundingOptions(){
+    const host = document.getElementById('fund-options-grid'); if(!host) return;
+    const order = { strong:0, possible:1, later:2 };
+    host.innerHTML = FUND_OPTIONS.slice().sort((a,b)=>order[a.fit]-order[b.fit]).map(o => `
+      <div class="bg-white rounded-2xl border border-[#E7EBEF] p-5 flex flex-col">
+        <div class="flex items-start justify-between gap-3 mb-3.5">
+          <div class="w-11 h-11 rounded-xl grid place-items-center ${o.tint}"><i data-lucide="${o.icon}" class="w-5 h-5"></i></div>
+          <span class="fit-pill ${FIT_LABEL[o.fit][1]}">${FIT_LABEL[o.fit][0]}</span>
+        </div>
+        <h3 class="font-jakarta font-bold text-base leading-snug">${esc(o.name)}</h3>
+        <p class="text-[13px] text-[#6A7581] mt-1.5 leading-relaxed">${esc(o.desc)}</p>
+        <p class="text-[12px] text-[#42505E] mt-3 leading-relaxed flex gap-1.5"><i data-lucide="info" class="w-3.5 h-3.5 mt-0.5 shrink-0 text-[#6A7581]"></i><span>${esc(o.why)}</span></p>
+        <div class="mt-3 grid grid-cols-2 gap-2 text-[11.5px]"><div class="rounded-lg bg-[#F0F5F9] px-2.5 py-2"><span class="text-[#6A7581]">Typical amount</span><br><b>${esc(o.range)}</b></div><div class="rounded-lg bg-[#F0F5F9] px-2.5 py-2"><span class="text-[#6A7581]">Typical term</span><br><b>${esc(o.term)}</b></div></div>
+        <div class="mt-4 flex items-center gap-2 pt-1 mt-auto">
+          <button onclick="startFundingApplication('${o.product}')" class="flex-1 font-jakarta font-bold text-[12.5px] h-10 rounded-lg bg-[#0C1F31] hover:bg-[#16324a] text-white transition">Apply</button>
+          <a href="public-loan-option.html" class="font-jakarta font-bold text-[12.5px] h-10 px-4 rounded-lg border border-[#E7EBEF] hover:border-[#DC183C] hover:text-[#DC183C] grid place-items-center transition">Details</a>
+        </div>
+      </div>`).join('');
+    lucide.createIcons();
+  }
+  function startFundingApplication(product, amount){
+    fundingAppState.product = product || null;
+    fundingAppState.amount = amount || null;
+    fundingAppState.view = 'new';
+    showView('funding');
+    renderFunding();
+  }
+  const wsFmtR = n => 'R ' + Math.round(n).toLocaleString('en-ZA').replace(/,/g,' ');
+  function wcAmount(){ return +document.getElementById('wcAmt').value; }
+  function wcCalc(){
+    const P = +document.getElementById('wcAmt').value, n = +document.getElementById('wcTerm').value, annual = +document.getElementById('wcRate').value, r = annual/12/100;
+    document.getElementById('wcAmtV').textContent = wsFmtR(P);
+    document.getElementById('wcTermV').textContent = n + ' months';
+    document.getElementById('wcRateV').textContent = annual + '%';
+    const monthly = r === 0 ? P/n : P*r/(1-Math.pow(1+r,-n));
+    document.getElementById('wcMonthly').textContent = wsFmtR(monthly);
+    document.getElementById('wcInterest').textContent = wsFmtR(monthly*n - P);
+    document.getElementById('wcTotal').textContent = wsFmtR(monthly*n);
+  }
+
+
+  // ===== GET PAID (demo data; "today" is fixed so the mockup always reads the same) ============
+  const INV_TODAY = new Date('2026-10-02');
+  const INV_FREE_CAP = 3;
+  let INVOICES = [
+    { id:'INV-0042', client:'Thandi Retail (Pty) Ltd', amount:18500, due:'2026-10-09', status:'open' },
+    { id:'INV-0041', client:'Mokoena Logistics',       amount:12500, due:'2026-09-20', status:'open' },
+    { id:'INV-0040', client:'Sizwe Catering',          amount:17200, due:'2026-10-21', status:'open' },
+    { id:'INV-0039', client:'Langa Studio',            amount:36000, due:'2026-09-18', status:'paid' }
+  ];
+  const invDays = i => Math.round((new Date(i.due) - INV_TODAY) / 86400000);
+  function invState(i){ if(i.status==='paid') return ['Paid','bg-[#E4F5EE] text-[#1E7F5E]']; const d = invDays(i); return d < 0 ? ['Overdue '+(-d)+' days','bg-[#FDECEF] text-[#DC183C]'] : ['Due in '+d+' days','bg-[#FFF1E0] text-[#AE6B0A]']; }
+  function renderInvoices(){
+    const host = document.getElementById('inv-table'); if(!host) return;
+    const open = INVOICES.filter(i=>i.status==='open'), overdue = open.filter(i=>invDays(i)<0), paid = INVOICES.filter(i=>i.status==='paid');
+    const sum = a => a.reduce((t,i)=>t+i.amount,0);
+    const stat = (label,val,sub,color) => `<div class="rounded-2xl border border-[#E7EBEF] bg-white p-4"><p class="text-[10px] font-bold uppercase tracking-widest text-[#6A7581]">${label}</p><p class="font-jakarta font-extrabold text-2xl mt-1" style="color:${color}">${wsFmtR(val)}</p><p class="text-[12px] text-[#6A7581] mt-0.5">${sub}</p></div>`;
+    document.getElementById('inv-stats').innerHTML = stat('Outstanding', sum(open), open.length+' open invoices', '#0C1F31') + stat('Overdue', sum(overdue), overdue.length+' to chase', '#DC183C') + stat('Paid, last 30 days', sum(paid), paid.length+' invoice', '#29A37A');
+    const cap = document.getElementById('inv-cap-used'); if(cap) cap.textContent = Math.min(open.length, INV_FREE_CAP);
+    host.innerHTML = INVOICES.map(i => { const st = invState(i); return `
+      <div class="flex flex-col sm:flex-row sm:items-center gap-3 px-4 py-3.5 border-t border-[#E7EBEF] first:border-t-0">
+        <div class="min-w-0 flex-1"><p class="font-jakarta font-bold text-[14px] truncate">${esc(i.client)}</p><p class="text-[12px] text-[#6A7581]">${i.id} · due ${new Date(i.due).toLocaleDateString('en-ZA',{day:'numeric',month:'short',year:'numeric'})}</p></div>
+        <p class="font-jakarta font-extrabold text-[15px] sm:w-28 sm:text-right">${wsFmtR(i.amount)}</p>
+        <span class="text-[11px] font-extrabold uppercase tracking-wide px-2.5 py-1 rounded-full w-fit ${st[1]}">${st[0]}</span>
+        <div class="flex gap-2 sm:w-44 sm:justify-end">${i.status==='paid' ? '' : `<button onclick="chaseInvoice('${i.id}')" class="text-[12px] font-bold px-3 py-1.5 rounded-lg border border-[#E7EBEF] hover:border-[#DC183C] hover:text-[#DC183C] transition">Chase</button><button onclick="markInvoicePaid('${i.id}')" class="text-[12px] font-bold px-3 py-1.5 rounded-lg bg-[#0C1F31] text-white hover:bg-[#16324a] transition">Mark paid</button>`}</div>
+      </div>`; }).join('');
+    lucide.createIcons();
+  }
+  function wsModal(id, inner){
+    document.getElementById('overlay-root').innerHTML = `<div class="ov" id="${id}"><div class="ov-bg" onclick="closeOverlay('${id}')"></div><div class="fixed inset-0 grid place-items-center p-4 pointer-events-none"><div class="bg-white rounded-2xl shadow-2xl w-full max-w-lg pointer-events-auto max-h-[90vh] overflow-y-auto">${inner}</div></div></div>`;
+    requestAnimationFrame(()=>{ const o = document.getElementById(id); if(o) o.classList.add('open'); });
+    lucide.createIcons();
+  }
+  function copyText(t, msg){ try{ navigator.clipboard.writeText(t); }catch(e){} showToast(msg || 'Copied', null); }
+  function markInvoicePaid(id){ const i = INVOICES.find(x=>x.id===id); if(i){ i.status='paid'; renderInvoices(); showToast(id+' marked as paid.', null); } }
+  function chaseInvoice(id){
+    const i = INVOICES.find(x=>x.id===id); if(!i) return;
+    const d = invDays(i), first = i.client.split(' ')[0];
+    const when = d < 0 ? `was due on ${new Date(i.due).toLocaleDateString('en-ZA',{day:'numeric',month:'long'})}` : `is due on ${new Date(i.due).toLocaleDateString('en-ZA',{day:'numeric',month:'long'})}`;
+    const wa = `Hi ${first}, a friendly reminder that invoice ${i.id} for ${wsFmtR(i.amount)} ${when}. Could you let me know when I can expect payment? Banking details are on the invoice. Thank you, Tshepho`;
+    wsModal('ov-chase', `<div class="px-6 py-5 border-b border-[#E7EBEF] flex items-center justify-between"><p class="font-jakarta font-extrabold text-lg">Chase ${esc(i.id)}</p><button onclick="closeOverlay('ov-chase')" aria-label="Close" class="text-[#6A7581] hover:text-[#121A21]"><i data-lucide="x" class="w-5 h-5"></i></button></div>
+      <div class="p-6 space-y-4"><p class="text-[13px] text-[#6A7581]">Ready to send. You send it yourself, from your own WhatsApp or email.</p>
+        <div><p class="text-[11px] font-bold uppercase tracking-wider text-[#6A7581] mb-1.5">WhatsApp</p><div class="rounded-xl bg-[#F0F5F9] p-3.5 text-[13.5px] leading-relaxed">${esc(wa)}</div><div class="mt-2.5 flex items-center gap-4 flex-wrap"><a href="https://wa.me/?text=${encodeURIComponent(wa)}" target="_blank" rel="noopener" class="inline-flex items-center gap-2 h-10 px-4 rounded-full bg-[#25D366] hover:bg-[#1DB955] text-white text-[13px] font-bold transition"><i data-lucide="message-circle" class="w-4 h-4"></i> Open in WhatsApp</a><button onclick='copyText(${JSON.stringify(wa)}, "WhatsApp message copied")' class="text-[12.5px] font-bold text-[#DC183C] hover:underline">Copy message</button></div></div>
+        <div><p class="text-[11px] font-bold uppercase tracking-wider text-[#6A7581] mb-1.5">Email subject</p><div class="rounded-xl bg-[#F0F5F9] p-3.5 text-[13.5px]">Reminder: invoice ${esc(i.id)} for ${wsFmtR(i.amount)}</div></div></div>`);
+  }
+  function newInvoice(){
+    const open = INVOICES.filter(i=>i.status==='open').length;
+    if(MEMBER_PLAN !== 'premium' && open >= INV_FREE_CAP){
+      wsModal('ov-cap', `<div class="p-7 text-center"><div class="w-12 h-12 rounded-full bg-[#FDECEF] text-[#DC183C] grid place-items-center mx-auto mb-3"><i data-lucide="lock" class="w-6 h-6"></i></div><p class="font-jakarta font-extrabold text-lg">You have used your 3 free open invoices</p><p class="text-sm text-[#6A7581] mt-1.5 leading-relaxed">Mark one as paid to free a slot, or move to Premium for unlimited invoices.</p><div class="mt-5 flex flex-col sm:flex-row gap-3 justify-center"><a href="public-premium-checkout.html" class="inline-flex items-center justify-center h-11 px-5 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold text-sm transition">Unlock with Premium, R99/month</a><button onclick="closeOverlay('ov-cap')" class="h-11 px-5 rounded-full border border-[#D8DEE5] text-sm font-bold hover:border-[#0C1F31] transition">Not now</button></div></div>`);
+      return;
+    }
+    wsModal('ov-newinv', `<div class="px-6 py-5 border-b border-[#E7EBEF] flex items-center justify-between"><p class="font-jakarta font-extrabold text-lg">New invoice</p><button onclick="closeOverlay('ov-newinv')" aria-label="Close" class="text-[#6A7581] hover:text-[#121A21]"><i data-lucide="x" class="w-5 h-5"></i></button></div>
+      <div class="p-6 space-y-4"><div><label class="block text-[11px] font-bold uppercase tracking-wider text-[#6A7581] mb-1.5">Customer</label><input id="ni-client" class="w-full rounded-lg border border-[#D8DEE5] px-3 py-2.5 text-[13.5px] outline-none focus:border-[#DC183C]" placeholder="Customer or company name"></div>
+        <div class="grid grid-cols-2 gap-4"><div><label class="block text-[11px] font-bold uppercase tracking-wider text-[#6A7581] mb-1.5">Amount (ZAR)</label><input id="ni-amount" class="w-full rounded-lg border border-[#D8DEE5] px-3 py-2.5 text-[13.5px] outline-none focus:border-[#DC183C]" placeholder="e.g. 15000"></div><div><label class="block text-[11px] font-bold uppercase tracking-wider text-[#6A7581] mb-1.5">Due date</label><input id="ni-due" type="date" value="2026-10-30" class="w-full rounded-lg border border-[#D8DEE5] px-3 py-2.5 text-[13.5px] outline-none focus:border-[#DC183C]"></div></div>
+        <button onclick="saveInvoice()" class="w-full h-11 rounded-lg bg-[#DC183C] hover:bg-[#B0142F] text-white font-jakarta font-bold text-sm transition">Add invoice</button></div>`);
+  }
+  function saveInvoice(){
+    const c = document.getElementById('ni-client').value.trim(), a = parseInt((document.getElementById('ni-amount').value||'').replace(/[^\d]/g,''),10), d = document.getElementById('ni-due').value;
+    if(!c || !a || !d){ showToast('Add a customer, an amount and a due date.', 'error'); return; }
+    INVOICES.unshift({ id:'INV-00'+(43+INVOICES.length-4), client:c, amount:a, due:d, status:'open' });
+    closeOverlay('ov-newinv'); renderInvoices(); showToast('Invoice added.', null);
+  }
+  function revealPerkCode(){
+    document.getElementById('perk-code').classList.remove('hidden');
+    const b = document.getElementById('perk-reveal'); if(b) b.classList.add('hidden');
+  }
+
+
+  // ===== SETTINGS: cancel Premium + POPIA erasure (2026-10-02) ====================================
+  function cancelPremium(){
+    wsModal('ov-cancel', `<div class="p-7"><div class="w-12 h-12 rounded-full bg-[#FFF1E0] text-[#AE6B0A] grid place-items-center mb-3"><i data-lucide="alert-triangle" class="w-6 h-6"></i></div>
+      <p class="font-jakarta font-extrabold text-lg">Cancel Premium?</p>
+      <p class="text-sm text-[#6A7581] mt-1.5 leading-relaxed">Premium stays active until the end of the period you have paid for, 2 November 2026. After that you move to Standard and keep your data. These lock again:</p>
+      <ul class="mt-3 space-y-1.5 text-[13.5px] text-[#42505E]"><li class="flex gap-2"><i data-lucide="lock" class="w-4 h-4 mt-0.5 text-[#DC183C] shrink-0"></i> Document Vault</li><li class="flex gap-2"><i data-lucide="lock" class="w-4 h-4 mt-0.5 text-[#DC183C] shrink-0"></i> Compliance Autopilot reminders</li><li class="flex gap-2"><i data-lucide="lock" class="w-4 h-4 mt-0.5 text-[#DC183C] shrink-0"></i> More than 3 open invoices</li></ul>
+      <div class="mt-6 flex flex-col sm:flex-row gap-3"><button onclick="closeOverlay('ov-cancel')" class="h-11 px-5 rounded-full bg-[#0C1F31] hover:bg-[#16324a] text-white font-bold text-sm transition">Keep Premium</button><button onclick="closeOverlay('ov-cancel'); showToast('Cancellation confirmed. Premium ends on 2 November 2026.', null)" class="h-11 px-5 rounded-full border border-[#D8DEE5] text-sm font-bold hover:border-[#DC183C] hover:text-[#DC183C] transition">Cancel at period end</button></div></div>`);
+  }
+  function deleteWorkspaceData(){
+    wsModal('ov-erase', `<div class="p-7"><div class="w-12 h-12 rounded-full bg-[#FDECEF] text-[#DC183C] grid place-items-center mb-3"><i data-lucide="trash-2" class="w-6 h-6"></i></div>
+      <p class="font-jakarta font-extrabold text-lg">Delete your business data?</p>
+      <p class="text-sm text-[#6A7581] mt-1.5 leading-relaxed"><b class="text-[#121A21]">This removes:</b> your check-ins and score history, Success Plan progress, compliance entries, cash flow log, invoices and Document Vault list.</p>
+      <p class="text-sm text-[#6A7581] mt-2 leading-relaxed"><b class="text-[#121A21]">This does not remove:</b> your login and community profile (see Account Settings), posts you shared, or applications you already sent to a lender, because the lender holds its own copy.</p>
+      <label class="block text-[11px] font-bold uppercase tracking-wider text-[#6A7581] mt-5 mb-1.5">Type DELETE to confirm</label>
+      <input id="erase-confirm" oninput="document.getElementById('erase-go').disabled = this.value.trim() !== 'DELETE'" class="w-full rounded-lg border border-[#D8DEE5] px-3 py-2.5 text-[14px] outline-none focus:border-[#DC183C]" autocomplete="off">
+      <div class="mt-5 flex flex-col sm:flex-row gap-3"><button id="erase-go" disabled onclick="closeOverlay('ov-erase'); showToast('Your business data is being deleted.', null)" class="h-11 px-5 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold text-sm transition disabled:opacity-40 disabled:cursor-not-allowed">Delete permanently</button><button onclick="closeOverlay('ov-erase')" class="h-11 px-5 rounded-full border border-[#D8DEE5] text-sm font-bold hover:border-[#0C1F31] transition">Keep my data</button></div></div>`);
+  }
+
+  // ===== STANDARD STRIP (Home) + COMPLIANCE AUTOPILOT CARD ========================
+  (function(){
+    const home = document.getElementById('view-overview');
+    if(home) home.insertAdjacentHTML('afterbegin', `
+      <div class="standard-only-flex items-center justify-between gap-4 bg-white rounded-2xl border border-[#E7EBEF] shadow-sm p-4 sm:p-5 mb-5 flex-col sm:flex-row">
+        <div class="flex items-center gap-3"><div class="w-10 h-10 rounded-xl bg-[#F0F5F9] text-[#0C1F31] grid place-items-center shrink-0"><i data-lucide="sparkles" class="w-5 h-5"></i></div>
+          <div><p class="font-jakarta font-extrabold text-[14px]">You are on the Standard plan</p>
+          <p class="text-[12.5px] text-[#6A7581]">Your Health Score, Compliance Calendar, Funding and Learn are free. Plan, Money, Documents, Autopilot reminders and Perks unlock with Premium.</p></div></div>
+        <a href="public-premium-checkout.html" class="shrink-0 inline-flex items-center gap-2 font-jakarta font-bold text-[13px] px-4 py-2.5 rounded-lg bg-[#DC183C] hover:bg-[#B0142F] text-white transition">Upgrade, R99/month</a>
+      </div>`);
+    const comp = document.getElementById('view-compliance');
+    if(comp) comp.insertAdjacentHTML('beforeend', `
+      <div class="mt-6 rounded-2xl border border-[#E7EBEF] bg-white p-5 sm:p-6 flex flex-col sm:flex-row sm:items-center gap-4 justify-between">
+        <div class="flex items-start gap-3.5"><div class="w-11 h-11 rounded-xl bg-[#FFF1E0] text-[#AE6B0A] grid place-items-center shrink-0"><i data-lucide="bell-ring" class="w-5 h-5"></i></div>
+          <div><p class="font-jakarta font-extrabold text-[15px] flex items-center gap-2">Compliance Autopilot <span class="text-[10px] font-extrabold uppercase tracking-wide px-2 py-0.5 rounded-full bg-[#FDECEF] text-[#DC183C]">Premium</span>
+              <button onclick="openBrief('autopilot')" class="dev-badge w-5 h-5 rounded-full bg-[#DC183C] text-white items-center justify-center text-[10px] font-bold leading-none animate-pulse" title="Implementation notes">i</button></p>
+            <p class="text-[13px] text-[#6A7581] mt-1 leading-relaxed max-w-[60ch]">The calendar above waits for you to open it. Autopilot reaches out first: a weekly "week ahead" email, and a final reminder two days before any SARS or CIPC deadline. Most penalties are a diary problem.</p></div></div>
+        <div class="standard-only-flex shrink-0"><a href="public-premium-checkout.html" class="inline-flex items-center gap-2 font-jakarta font-bold text-[13px] px-4 py-2.5 rounded-lg bg-[#0C1F31] hover:bg-[#16324a] text-white transition"><i data-lucide="lock" class="w-3.5 h-3.5"></i> Unlock Autopilot</a></div>
+        <div class="premium-only-flex shrink-0 items-center gap-3"><span class="text-[12px] font-bold text-[#29A37A] flex items-center gap-1.5"><i data-lucide="check-circle-2" class="w-4 h-4"></i> On. Next reminder: Mon 08:00</span></div>
+      </div>`);
+  })();
 
   // ===== Header "Community" dropdown (shared pattern, see public chrome) ========
   function toggleHeaderDrop(name){
@@ -1186,7 +1394,7 @@
     if (el) el.classList.add('hidden');
   }
 
-  // ===== Workspace "More" menu (app-drawer style grid for the long tail of tools) =
+  // ===== My Business "More" menu (app-drawer style grid for the long tail of tools) =
   function toggleMoreMenu(){
     const o = document.getElementById('moreMenu');
     o.classList.toggle('open');
@@ -1326,9 +1534,7 @@
         <div class="flex-1 min-w-0">
           <div class="flex items-center gap-2 flex-wrap mb-0.5">
             <p class="text-[13.5px] font-bold ${c.filed ? 'line-through text-[#6A7581]' : ''}">${esc(c.title)}</p>
-            ${c.verified
-              ? `<span class="inline-flex items-center gap-1 text-[9.5px] font-bold px-2 py-0.5 rounded-full bg-[#29A37A]/[0.12] text-[#29A37A] shrink-0"><i data-lucide="badge-check" class="w-2.5 h-2.5"></i> Staff-verified</span>`
-              : `<span class="text-[9.5px] font-bold px-2 py-0.5 rounded-full bg-[#F0F5F9] text-[#6A7581] shrink-0">Member-declared</span>`}
+            ${c.filed ? `<span class="text-[9.5px] font-bold px-2 py-0.5 rounded-full bg-[#F0F5F9] text-[#6A7581] shrink-0">Marked as filed by you</span>` : ''}
           </div>
           <p class="text-[12.5px] text-[#6A7581] mt-0.5">${esc(c.desc)}</p>
         </div>
@@ -1362,15 +1568,17 @@
       ['Do you use a CRM or keep a customer list?','Yes'],['Have you applied for business funding before?','Yes, approved'],['Currently repaying a business loan?','No']]}
   ];
   function renderProfile(){
-    document.getElementById('profile-sections').innerHTML = PROFILE_SECTIONS.map((s,i)=>`
-      <div class="rounded-2xl border border-[#E7EBEF] shadow-sm bg-white p-5 reveal" style="animation-delay:${i*40}ms">
-        <div class="flex items-center gap-2.5 mb-1"><div class="w-8 h-8 rounded-lg bg-[#FDECEF] text-[#DC183C] grid place-items-center"><i data-lucide="${s.icon}" class="w-4 h-4"></i></div><p class="font-jakarta font-extrabold text-sm">${esc(s.title)}</p></div>
-        ${s.fields.map(([l,v])=>`
-        <div class="profile-row flex items-center justify-between gap-3 py-2.5 border-t border-[#F0F3F6] text-[13px]">
-          <span class="text-[#6A7581]">${esc(l)}</span>
-          <span class="font-bold text-right flex items-center gap-2"><span>${esc(v)}</span><button onclick="stubNav('Edit ${esc(l)}')" class="text-[#98A2AE] hover:text-[#DC183C] transition" aria-label="Edit"><i data-lucide="pencil" class="w-3 h-3"></i></button></span>
-        </div>`).join('')}
-      </div>`).join('');
+    document.getElementById('profile-sections').innerHTML = PROFILE_SECTIONS.map((sec, i) => {
+      const editing = profileEdit === i;
+      const rows = sec.fields.map(([l, v], k) => editing
+        ? `<label class="block py-2.5 border-t border-[#F0F3F6]"><span class="block text-[12px] font-semibold text-[#6A7581] mb-1">${esc(l)}</span><input id="pf-${i}-${k}" value="${esc(v)}" class="w-full h-10 rounded-lg border border-[#D8DEE5] px-3 text-[13.5px] outline-none focus:border-[#DC183C]"></label>`
+        : `<div class="flex items-start justify-between gap-4 py-2.5 border-t border-[#F0F3F6] text-[13px]"><span class="text-[#6A7581]">${esc(l)}</span><span class="font-bold text-right">${esc(v)}</span></div>`).join('');
+      return `<div class="rounded-2xl border ${editing ? 'border-[#DC183C]/40' : 'border-[#E7EBEF]'} shadow-sm bg-white p-5 reveal" style="animation-delay:${i * 40}ms">
+        <div class="flex items-center justify-between gap-2.5 mb-1"><div class="flex items-center gap-2.5"><div class="w-8 h-8 rounded-lg bg-[#FDECEF] text-[#DC183C] grid place-items-center"><i data-lucide="${sec.icon}" class="w-4 h-4"></i></div><p class="font-jakarta font-extrabold text-sm">${esc(sec.title)}</p></div>
+          ${editing ? `<span class="flex gap-2"><button onclick="cancelProfile()" class="text-xs font-bold text-[#6A7581] hover:text-[#121A21]">Cancel</button><button onclick="saveProfile(${i})" class="text-xs font-bold px-3 h-8 rounded-full bg-[#DC183C] text-white hover:bg-[#B0142F]">Save</button></span>` : `<button onclick="editProfile(${i})" class="text-xs font-bold text-[#DC183C] hover:underline">Edit</button>`}</div>
+        ${rows}</div>`;
+    }).join('');
+    lucide.createIcons();
   }
 
   // ===== PROGRESS =================================================================
@@ -1503,7 +1711,7 @@
             ${missing.slice(0,3).map(r => `<span class="text-[11px] font-semibold px-2.5 py-1 rounded-full bg-white border border-[#E7EBEF]">${esc(r.label)}</span>`).join('')}
           </div>
           <div class="flex flex-wrap gap-2.5">
-            <button onclick="showView('success-plan')" class="inline-flex items-center gap-1.5 font-jakarta font-bold text-[12.5px] px-4 py-2.5 rounded-lg bg-[#DC183C] text-white hover:bg-[#B0142F] transition">Open action plan <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i></button>
+            <button onclick="openHomePlan()" class="inline-flex items-center gap-1.5 font-jakarta font-bold text-[12.5px] px-4 py-2.5 rounded-lg bg-[#DC183C] text-white hover:bg-[#B0142F] transition">Open action plan <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i></button>
             <a href="public-help.html" class="inline-flex items-center gap-1.5 font-jakarta font-bold text-[12.5px] px-4 py-2.5 rounded-lg border-[1.5px] border-[#E7EBEF] hover:bg-[#F0F5F9] transition">Talk to an accountant</a>
           </div>
         </div>`;
@@ -1512,9 +1720,9 @@
 
   // ===== FUNDING =================================================================
   // Moved here from member-account.html's Settings → Funding (2026-10-01), Joel's
-  // call: everything business-related consolidates into Workspace, Account Settings
+  // call: everything business-related consolidates into My Business, Account Settings
   // stays for account/profile/notification admin only. Ported verbatim (data, logic,
-  // markup) and re-skinned onto Workspace's card system instead of settingsCard().
+  // markup) and re-skinned onto My Business's card system instead of settingsCard().
   const FUNDING_STATUS = {
     draft:     { label:'Draft',                color:'#6A7581', bg:'#F0F5F9' },
     submitted: { label:'Submitted',            color:'#3B82F6', bg:'#E5EFFB' },
@@ -1526,7 +1734,7 @@
   };
   const FUNDING_FILTERS = [['all','All'],['draft','Draft'],['submitted','Submitted'],['review','In review'],['docs','Documents requested'],['approved','Approved'],['declined','Declined'],['funded','Funded']];
   const FUNDING_STEPS = ['Submitted','Documents','In review','Decision','Funded'];
-  const FUNDING_PRODUCTS = ['Asset Finance','Working Capital Loan','Invoice Finance','Bridging Finance'];
+  const FUNDING_PRODUCTS = ['Working Capital Loan','Unsecured Business Loan','Invoice Finance','Asset Finance','Inventory Finance','Purchase Order Funding','Bridging Finance','Mezzanine Funding'];
   const FUNDING_ICON_MAP = { 'Asset Finance':'truck', 'Working Capital Loan':'wallet', 'Invoice Finance':'file-text', 'Bridging Finance':'arrow-right-left' };
   const FUNDING_PREFILL = { company:'Langa Holdings', sector:'Fintech', stage:'Growing', yearsInBusiness:'2 - 4 Years' };
   const SECTORS = ['Fintech','SaaS','Retail','Agritech','Cleantech','AI','Construction','Food','Other'];
@@ -1534,6 +1742,20 @@
   const YEARS_IN_BUSINESS = ['Less than 1 year','1 - 2 Years','2 - 4 Years','5 - 10 Years','10+ Years'];
 
   let APPLICATIONS = [
+    { id:'APP-2026-0301', product:'Unsecured Business Loan', icon:'hand-coins',
+      amount:150000, term:'12 months', purpose:'Working capital for a new contract.',
+      submitted:'20 Apr 2026', updated:'3 weeks ago', status:'declined', step:3,
+      lender:'Partner lender', contact:null,
+      documents:[
+        { name:'Company registration (CIPC)', state:'provided' },
+        { name:'3 months bank statements', state:'provided' }
+      ],
+      timeline:[
+        { date:'20 Apr 2026', text:'Application submitted.', icon:'send' },
+        { date:'22 Apr 2026', text:'Matched with a partner lender.', icon:'link' },
+        { date:'9 May 2026', text:'Not approved by the lender.', icon:'x-circle' }
+      ]
+    },
     { id:'APP-2026-0481', product:'Asset Finance', icon:'truck',
       amount:1200000, term:'48 months', purpose:'Two delivery vehicles for Gauteng route expansion.',
       submitted:'12 Jun 2026', updated:'2 days ago', status:'docs', step:1,
@@ -1612,7 +1834,7 @@
       ]
     }
   ];
-  let fundingAppState = { q:'', status:'all', sort:'newest', view:'list', activeId:null };
+  let fundingAppState = { q:'', status:'all', sort:'newest', view:'list', activeId:null, product:null, amount:null };
 
   function setFundingFilter(s){ fundingAppState.status=s; renderFunding(); }
   function setFundingSort(v){ fundingAppState.sort=v; renderFunding(); }
@@ -1737,11 +1959,19 @@
         </div>
         <h3 class="font-jakarta font-extrabold text-lg mt-6 pt-5 mb-4 border-t border-[#E7EBEF]">Funding request</h3>
         <div class="grid sm:grid-cols-2 gap-4">
-          <div><label class="block text-[11px] font-bold uppercase tracking-wider text-[#6A7581] mb-1.5">Product</label><select id="nf-product" class="w-full rounded-lg border border-[#D8DEE5] px-3 py-2.5 text-[13.5px] outline-none focus:border-[#DC183C]">${FUNDING_PRODUCTS.map(o=>`<option>${esc(o)}</option>`).join('')}</select></div>
-          <div><label class="block text-[11px] font-bold uppercase tracking-wider text-[#6A7581] mb-1.5">Amount requested (ZAR)</label><input id="nf-amount" placeholder="e.g. 250000" class="w-full rounded-lg border border-[#D8DEE5] px-3 py-2.5 text-[13.5px] outline-none focus:border-[#DC183C]"></div>
+          <div><label class="block text-[11px] font-bold uppercase tracking-wider text-[#6A7581] mb-1.5">Product</label><select id="nf-product" class="w-full rounded-lg border border-[#D8DEE5] px-3 py-2.5 text-[13.5px] outline-none focus:border-[#DC183C]">${FUNDING_PRODUCTS.map(o=>`<option ${o===fundingAppState.product?'selected':''}>${esc(o)}</option>`).join('')}</select></div>
+          <div><label class="block text-[11px] font-bold uppercase tracking-wider text-[#6A7581] mb-1.5">Amount requested (ZAR)</label><input id="nf-amount" value="${fundingAppState.amount?esc(String(fundingAppState.amount)):''}" placeholder="e.g. 250000" class="w-full rounded-lg border border-[#D8DEE5] px-3 py-2.5 text-[13.5px] outline-none focus:border-[#DC183C]"></div>
           <div><label class="block text-[11px] font-bold uppercase tracking-wider text-[#6A7581] mb-1.5">Preferred term</label><input id="nf-term" placeholder="e.g. 12 months" class="w-full rounded-lg border border-[#D8DEE5] px-3 py-2.5 text-[13.5px] outline-none focus:border-[#DC183C]"></div>
         </div>
         <div class="mt-4"><label class="block text-[11px] font-bold uppercase tracking-wider text-[#6A7581] mb-1.5">Purpose</label><textarea id="nf-purpose" rows="3" placeholder="What will this funding be used for?" class="w-full rounded-lg border border-[#D8DEE5] px-3 py-2.5 text-[13.5px] outline-none focus:border-[#DC183C]"></textarea></div>
+        <h3 class="font-jakarta font-extrabold text-lg mt-6 pt-5 mb-1 border-t border-[#E7EBEF]">Documents</h3>
+        <p class="text-xs text-[#6A7581] mb-3">Lenders verify turnover from bank statements. Attach what is already in your <button type="button" onclick="showView('documents')" class="font-bold text-[#DC183C] hover:underline">Document Vault</button>, or add it after you submit.</p>
+        <div class="grid sm:grid-cols-2 gap-2.5">
+          <label class="flex items-center gap-2.5 rounded-lg border border-[#E7EBEF] px-3 py-2.5 text-[13px]"><input type="checkbox" checked class="accent-[#DC183C]"> 12 months bank statements <span class="ml-auto text-[10.5px] font-bold text-[#29A37A] uppercase">In vault</span></label>
+          <label class="flex items-center gap-2.5 rounded-lg border border-[#E7EBEF] px-3 py-2.5 text-[13px]"><input type="checkbox" checked class="accent-[#DC183C]"> Company registration (CIPC) <span class="ml-auto text-[10.5px] font-bold text-[#29A37A] uppercase">In vault</span></label>
+          <label class="flex items-center gap-2.5 rounded-lg border border-dashed border-[#D8DEE5] px-3 py-2.5 text-[13px] text-[#6A7581]"><input type="checkbox" class="accent-[#DC183C]"> Latest management accounts <span class="ml-auto text-[10.5px] font-bold uppercase">Add later</span></label>
+        </div>
+        <label class="mt-5 flex items-start gap-2.5 text-[12px] text-[#42505E] leading-relaxed"><input id="nf-consent" type="checkbox" class="accent-[#DC183C] mt-0.5"> <span>I agree to a lender doing a credit check on me and my business, and I consent in writing to SME South Africa sharing my application with its funding partners. <a href="public-terms.html" class="font-bold text-[#DC183C] hover:underline">Terms</a> and <a href="public-privacy.html" class="font-bold text-[#DC183C] hover:underline">Privacy Policy</a>.</span></label>
         <div class="mt-6 flex items-center gap-3">
           <button onclick="submitNewFundingApp()" class="font-jakarta font-bold text-[13px] px-6 py-3 rounded-lg bg-[#DC183C] hover:bg-[#B0142F] text-white transition">Submit application</button>
           <button onclick="backToFundingList()" class="text-[#6A7581] hover:text-[#121A21] text-sm font-semibold px-3">Cancel</button>
@@ -1751,6 +1981,7 @@
 
   function submitNewFundingApp(){
     const g = id => document.getElementById(id);
+    if(g('nf-consent') && !g('nf-consent').checked){ showToast('Please tick the consent box to submit.', 'error'); return; }
     const product = g('nf-product').value;
     const amount = parseInt((g('nf-amount').value||'0').replace(/[^\d]/g,''),10) || 0;
     const term = g('nf-term').value.trim() || '—';
@@ -1790,6 +2021,25 @@
     }
   }
 
+  // Decline path + outcome capture (2026-10-02): turns a decline into a plan, and records what lenders actually did.
+  const FIX_LIST = [
+    ['Tax clearance certificate', 'Lenders almost always ask for it. Request it on SARS eFiling, then add it to your Funding pack.'],
+    ['Six months of bank statements', 'Showing steady money in and out is the strongest signal for a working capital loan.'],
+    ['A smaller or better-matched amount', 'A request far above your turnover is declined fast. Try the calculator for a range that fits.'],
+    ['Up-to-date management accounts', 'Even a simple profit and loss shows you track your numbers.']
+  ];
+  function fundingExtra(a){
+    if(a.status === 'declined' && !(a.timeline||[]).some(t => /Withdrawn/.test(t.text))){
+      return `<div class="rounded-2xl border border-[#E7EBEF] bg-white mt-6 overflow-hidden"><div class="px-5 py-4 border-b border-[#E7EBEF]"><p class="font-jakarta font-extrabold text-sm">What to fix before you reapply</p><p class="text-[12px] text-[#6A7581] mt-0.5">The common reasons first-time applications are not approved. This is a guide, not the lender's reason.</p></div>
+        ${FIX_LIST.map((f, i) => `<label class="flex gap-3 px-5 py-3.5 border-b border-[#F0F3F6] last:border-0 cursor-pointer hover:bg-[#FCFCFC]"><input type="checkbox" class="mt-1 accent-[#DC183C]"><span><b class="text-[13.5px] block">${f[0]}</b><span class="text-[12.5px] text-[#6A7581]">${f[1]}</span></span></label>`).join('')}
+        <div class="px-5 py-4 bg-[#F0F5F9] flex items-center justify-between gap-3 flex-wrap"><p class="text-[12.5px] text-[#42505E]">Ready? Your details carry over, so a new application takes about two minutes.</p><div class="flex gap-2"><button onclick="showView('funding-pack')" class="h-9 px-4 rounded-full border border-[#D8DEE5] bg-white text-[13px] font-bold hover:border-[#0C1F31]">Open funding pack</button><button onclick="showNewFundingApp()" class="h-9 px-4 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white text-[13px] font-bold">Reapply</button></div></div></div>`;
+    }
+    if(['submitted','review','docs'].includes(a.status)){
+      return `<div class="rounded-2xl border border-[#E7EBEF] bg-white mt-6 p-5"><p class="font-jakarta font-extrabold text-sm">Has the lender been in touch?</p><p class="text-[12.5px] text-[#6A7581] mt-0.5">One tap helps us match you and others better. We never share this with the lender.</p><div class="mt-3 flex gap-2 flex-wrap">${[['Yes, they responded','message-circle-reply'],['Still waiting','clock'],['They declined','x-circle']].map(o => `<button onclick="showToast('Thanks, noted. This improves your future matches.')" class="h-9 px-4 rounded-full border border-[#E7EBEF] text-[13px] font-bold hover:border-[#0C1F31] inline-flex items-center gap-1.5"><i data-lucide="${o[1]}" class="w-4 h-4"></i>${o[0]}</button>`).join('')}</div></div>`;
+    }
+    return '';
+  }
+
   function fundingContextCTA(a){
     let title='', body='', cta='Continue', icon='arrow-right', tone='#0C1F31';
     switch(a.status){
@@ -1800,9 +2050,9 @@
         title=`You have ${pending} document${pending===1?'':'s'} outstanding, upload now.`; body='The lender cannot continue until every requested document is provided.'; cta='Upload documents'; icon='upload'; tone='#DC183C'; break; }
       case 'approved': title='Congratulations, review your funding offer.'; body='An approval term sheet is ready. Sign to release funds.'; cta='Review offer'; icon='badge-check'; tone='#29A37A'; break;
       case 'funded': title='Funds disbursed.'; body='This application is closed. A statement will be available in your account portal.'; cta='Download statement'; icon='download'; tone='#29A37A'; break;
-      case 'declined': title='Application closed.'; body='If circumstances change, you can submit a new application at any time.'; cta='Start a new application'; icon='refresh-cw'; break;
+      case 'declined': title='Not approved this time. Here is what to fix before you reapply.'; body='Close the gaps below, then reapply with a stronger file.'; cta='Reapply when ready'; icon='refresh-cw'; break;
     }
-    return `<div class="rounded-2xl overflow-hidden border border-[#E7EBEF] mt-6">
+    return fundingExtra(a) + `<div class="rounded-2xl overflow-hidden border border-[#E7EBEF] mt-6">
       <div class="px-5 py-5 relative flex items-center justify-between gap-3 flex-wrap" style="background:${tone}">
         <div class="absolute inset-0 opacity-30" style="background:radial-gradient(circle at 90% 50%, #FF9900 0%, transparent 60%);"></div>
         <div class="relative min-w-0 flex items-start gap-3">
@@ -2207,6 +2457,106 @@
 
   // ===== DEV MODE + IMPLEMENTATION BRIEFS ========================================
   const BRIEFS = {
+    ia: {
+      title:'My Business navigation, consolidated (2026-10-02)', sub:'17 sidebar modules became 7 primary + More + You',
+      purpose:'The sidebar had 17 items and ran off the screen. A member paying R99 a month should see a short list that reads as a product, not a menu. Modules that do one job together were merged into one destination with sub-tabs. Growth Hub overlaps the Success Plan, so it is folded in; Experts stays hidden until advisors exist.',
+      data:'No new data. Primary: <b>Home</b> (Overview, Progress) · <b>Plan</b> (Success Plan) · <b>Compliance</b> · <b>Funding</b> (Options, Calculator, My applications, Passport) · <b>Money</b> (Get paid, Cash flow) · <b>Documents</b> · <b>Learn</b> (Library, Events). <b>More</b>: Member Perks, Find a Solution. <b>You</b>: Business Profile, Settings. Experts is hidden until advisors exist (the view is kept, not linked).',
+      logic:'The sidebar link opens the first sub-tab; the sub-tab strip (WS_GROUPS) switches between children and keeps the sidebar item highlighted. Premium views carry a blur + overlay when MEMBER_PLAN is standard. Production: sme-success-core nav() must adopt the same grouping; the slugs are unchanged so deep links keep working.',
+      components:'<code>WS_GROUPS</code>, <code>WS_PREMIUM</code>, <code>renderSubtabs()</code>, <code>showView()</code>, the "More" disclosure (<code>toggleMoreNav()</code>), mobile "All My Business tools" grid grouped the same way.'
+    },
+    wssettings: {
+      title:'Settings', sub:'Reminders, plan and billing, your data (POPIA)',
+      purpose:'One place for the three things a member needs control over: how often we nudge them, what plan they are on, and what data we hold. Login and community profile stay in Account Settings.',
+      data:'Reminder switches (check-in nudge, Autopilot), plan from MemberPress, and a data request log (export, erasure) with a timestamp for audit.',
+      logic:'Reminders obey the cross-sender email ceiling. Billing, card changes and receipts hand off to the hosted MemberPress page, never built in-house. Cancelling keeps Premium until the paid period ends and shows exactly what locks. Erasure requires typing DELETE and says plainly what it does and does not remove (lender-held copies of submitted applications are not ours to delete).',
+      components:'Three cards, two switches, cancel modal, erase modal with typed confirmation, export request.'
+    },
+    wsredesign: {
+      title:'My Business redesign (2 Oct SWOT)', sub:'5 modules, funding first, nothing the platform cannot back',
+      purpose:'The first My Business had 17 modules and no usage. The SWOT found one proven behaviour (funding), repeated data (profile, passport, checklist, vault, plan, progress) and claims we cannot staff. This version keeps what a member would open weekly and folds or holds the rest.',
+      data:'Unchanged slugs. Old slugs resolve through WS_ALIAS: success-plan and progress to Home, passport and documents to Funding pack, cashflow to Get paid, perks to Home, match to Funding options. Held views are saved in held-views-20261002.html.',
+      logic:'Home = score, funding status, this week, plan (collapsed), progress (collapsed). Funding = Options, Calculator, My applications, Funding pack. Get paid adds a WhatsApp chase. Compliance no longer claims staff verification: ticks are the member\u2019s own record. Premium = Autopilot, Document Vault, unlimited invoices, partner perks as confirmed. Instrument every module (opened, completed, returned in 7 and 30 days) before building any paid feature further.',
+      components:'Sidebar of 5, funding sub-tabs, Home sections, Funding pack, premium-block lock on the vault.' },
+    homefunding: {
+      title:'Home: your funding', sub:'Where applications stand, and the decline path',
+      purpose:'Funding is the proven behaviour, so Home leads with it. A declined applicant sees what to fix and a Reapply path instead of a dead end.',
+      data:'Reads funding_applications for the member (status, amount, updated_at). Decline guidance is generic until lender reasons are captured.',
+      logic:'Up to three live applications, then a card for a decline (not a withdrawal). The detail page shows a fix list and Reapply, and for applications in flight asks "Has the lender been in touch?" so outcomes are recorded for the matching loop. The answer is never shown to the lender. Needs the referral outcome table to be actually written to.',
+      components:'Status rows, decline card, outcome prompt, fix list.' },
+    fundingpack: {
+      title:'Funding pack', sub:'Business summary (free) and Document Vault (Premium)',
+      purpose:'The Passport, the readiness list and the vault held the same facts in three places. One pack, one job: be ready when a lender asks.',
+      data:'Business summary is generated from profile and latest check-in, self-reported. Vault is documents with expiry dates.',
+      logic:'Summary is free and printable because it helps funding conversion. Vault storage and expiry tracking is Premium. Every figure on the summary is labelled self-reported. Attaching a vault document to an application is one click.',
+      components:'Printable summary page, locked vault list, upload.' },
+    solutions: {
+      title:'Solutions (free) and Member perks (Premium)', sub:'Researched tools for the business, perks only where a partner gives members more',
+      purpose:'Solutions are the most business-relevant content on the platform and keep members returning for free. Perks are a different thing: a deal a partner offers members only, so it sits on its own Premium tab.',
+      data:'Solution categories and brands come from the existing public solutions and brands content. Picks are chosen from the profile (what the business does, team size, how customers pay). Perks are partner offers with confirmed written terms.',
+      logic:'Solutions are free and link to the public category pages, which stay indexable. Member perks stay locked on Standard. A perk is listed only when the partner has confirmed the terms in writing. Never describe how we earn on any member-facing page.',
+      components:'Personalised picks, grouped category chips, perks callout, locked perks tab.' },
+    documents: {
+      title:'Documents (inside Compliance)', sub:'The vault, with expiry tracking',
+      purpose:'Compliance and funding paperwork is the same pile of documents. It lives with the calendar because the dates that matter (tax clearance expiry, annual returns) belong together.',
+      data:'documents(member_id, type, file_id, issued_at, expires_at). Premium feature.',
+      logic:'Locked on Standard with the one-page business summary staying free in Funding pack. Expiry feeds Autopilot reminders. Attaching a document to a funding application is one click.',
+      components:'Document list with expiry status, upload, locked state.' },
+    freehooks: {
+      title:'Free for members this week', sub:'Reasons to come back without paying',
+      purpose:'Most members will not apply for funding or pay, so Home needs free value that changes: the next webinar, the newest download and a researched solution.',
+      data:'Next free event, newest library item the member has not opened, a solution matched to the profile.',
+      logic:'Three rows, refreshed weekly. Measure opens per row to learn which free hook actually brings members back.',
+      components:'Three link rows with a Free tag.' },
+    getpaid: {
+      title:'Get Paid', sub:'Free with a cap, unlimited on Premium',
+      purpose:'Members chase late payers by WhatsApp and memory. This tracks what customers owe and prepares the chase message; the member sends it from their own phone. It is deliberately not an accounting or tax-invoice tool.',
+      data:'<code>invoices</code>: <code>{ id, member_id, client, amount, due_date, status: open|paid }</code>. Overdue is derived from due date, never stored.',
+      logic:'Free plan: up to 3 open invoices, then an upgrade prompt (mark one paid to free a slot). Premium: no cap. We never send anything to the customer.',
+      components:'Three stat tiles, invoice list with status pills, New invoice modal, Chase modal with copyable WhatsApp text and email subject.'
+    },
+    perks: {
+      title:'Member Perks', sub:'Premium, only real exclusive offers',
+      purpose:'A perk is listed only when it is real and exclusive. A deal anyone can get directly from the partner is not a reason to pay us, so it is not listed.',
+      data:'Partner, offer, redemption steps, unique member code from a pre-loaded code list (one per member, assigned once).',
+      logic:'Sage: member starts the 30-day trial through the tracked link, then reveals a unique code that extends it to 90 days. Terms shown are the partner\'s; wording stays "being confirmed" until a partner confirms in writing.',
+      components:'Perk card with 3 steps, tracked-link button, reveal-and-copy code, empty "more perks" card.'
+    },
+    passport: {
+      title:'Business Passport', sub:'Premium, one printable page for a lender',
+      purpose:'Assembles what the member already told us (profile, latest score, funding pack status) into one page to hand to a lender, funder or supplier.',
+      data:'Nothing new is collected or stored. Built on request from profile bands, latest check-in and document presence.',
+      logic:'Honest by construction: every figure is self-reported and the page says so. It never uses verified, certified or approved, shows no credit grade and predicts no outcome. Printed or saved as PDF by the member\'s browser.',
+      components:'Paper-style preview, funding pack ticks, disclaimer footer, Print / Save PDF.'
+    },
+    events: {
+      title:'Events', sub:'Free webinars, discounted in-person events',
+      purpose:'Members see upcoming events without leaving My Business. Webinars are free for everyone; Premium members get 50% off in-person events.',
+      data:'Reads the same events as the public events page. Discount is applied at checkout from the member plan.',
+      logic:'Listing is open to all plans; only the discount depends on Premium.',
+      components:'Event rows with date badge and price tag, link to the event page.'
+    },
+    fundoptions: {
+      title:'Funding options', sub:'Replaces /sme-funding for signed-in members',
+      purpose:'Signed-in members who open the public funding hub are sent here instead, so they never leave the product. Eight funding types ranked by fit for their profile, each with an Apply button that opens the application with the product preselected.',
+      data:'Reads the member Business Profile (industry, stage, years, monthly turnover band). The eight types and their copy come from the existing loan-option pages. Fit is Strong / Possible / Not yet, with a one-line reason; it is guidance, never a promise.',
+      logic:'Routing: a signed-in member requesting /sme-funding/ gets a 302 to /workspace/funding/. Logged-out visitors and search engines still get the public, indexable page (it is the second-biggest search landing page, so it must stay public). Individual loan-option pages stay public too and their Apply button opens this application when signed in.',
+      components:'Card grid, fit pill, typical amount and term chips, Apply + Details buttons.'
+    },
+    fundcalc: {
+      title:'Loan calculator', sub:'The public estimator, now inside My Business',
+      purpose:'Same estimator as the public funding page so the numbers match, with an "Apply for this amount" button that carries the amount into the application.',
+      data:'No stored data. Amount R10k to R5M, term 3 to 12 months, rate 5 to 50 percent. Monthly = P·r / (1 - (1+r)^-n).',
+      logic:'Indicative only and labelled so. Never shown as an offer or quote.',
+      components:'Three sliders, three result tiles, one CTA.'
+    },
+    autopilot: {
+      title:'Compliance Autopilot', sub:'The first paid feature, built on the live product, missing from the mockup until now',
+      purpose:'The calendar only helps members who open it, and the members most likely to miss a SARS or CIPC date are the ones not logging in. Autopilot reaches out: a weekly week-ahead email and a final reminder two days before a deadline. Free members keep the on-screen calendar unchanged.',
+      data:'Reads the member compliance dates already in the calendar. Opt-in per member; Premium only.',
+      logic:'Subject to the cross-sender email ceiling (Comms Governor): at most two nurture emails a week, and it stops if the member goes unresponsive.',
+      components:'Card with Premium badge; locked button for Standard, "On" state with next reminder for Premium.'
+    },
+
     score: {
       title:'Business Health Score', sub:'Deterministic 5-dimension composite',
       purpose:'<b style="color:#DC183C">BUILD STATUS: ALREADY BUILT.</b> Joel has personally built this module, so the developer must not build or rebuild it. This mockup is a visual and behaviour reference only.<br/><br/>The member-facing headline of SME Success Core, a single number members can watch move over time. It exists to make the value of a check-in legible in 3 seconds, and to anchor everything else in this module (Success Plan, compliance alerts, programme matches) as things that came <i>from</i> this score rather than generic content.',
@@ -2268,29 +2618,29 @@
       components:'Two-row legend (chip + explanation) reused verbatim as the small badge shown inline on every compliance list row.'
     },
     funding: {
-      title:'Funding', sub:'Moved from Account Settings (2026-10-01), Workspace is now the single home',
-      purpose:'This used to be a duplicated preview while the placement question was open. Joel settled it: everything business-related consolidates into Workspace, Account Settings stays for account/profile/notification admin only. The full 3-screen system (list / new-application / detail, with the status pipeline tracker) moved here wholesale, not a trimmed-down copy, nothing was lost in the move.',
+      title:'Funding', sub:'Moved from Account Settings (2026-10-01), My Business is now the single home',
+      purpose:'This used to be a duplicated preview while the placement question was open. Joel settled it: everything business-related consolidates into My Business, Account Settings stays for account/profile/notification admin only. The full 3-screen system (list / new-application / detail, with the status pipeline tracker) moved here wholesale, not a trimmed-down copy, nothing was lost in the move.',
       data:'<code>funding_applications</code>: <code>{ id, member_id, product, amount, term, purpose, status: draft|submitted|review|docs|approved|declined|funded, step, lender, contact, documents[], timeline[] }</code>. This is now the only surface reading/writing it, no second copy to keep in sync.',
       logic:'List view supports status filter chips, search and sort. Detail view shows the 5-step pipeline (Submitted → Documents → In review → Decision → Funded), per-document upload/re-upload state, activity timeline, and a status-specific context CTA. "New application" pre-fills from the member\'s profile. All actions (withdraw, upload, submit) are optimistic client-side state in this mockup.',
       components:'Readiness checklist (unchanged, sits above) · 4-stat strip · search/sort/status-filter bar · list (table on desktop, cards on mobile) · detail view (glance card, actions card, pipeline stepper, documents, timeline, context CTA) · new-application form.'
     },
     readiness: {
       title:'Funding Readiness Checklist', sub:'Adapted from SME IQ\'s FundingHub',
-      purpose:'Sits deliberately before "Your applications" rather than replacing it, readiness is a pre-application gate ("what do I need before I speak to a funder"), applications is post-submission tracking. SME IQ frames this as the actual painkiller: most funding rejections are process failures (missing docs), not creditworthiness ones.',
+      purpose:'Sits deliberately before "Your applications" rather than replacing it, readiness is a pre-application gate ("what do I need before I speak to a funder"), applications is post-submission tracking. Most funding rejections are process failures (missing docs), not creditworthiness ones.',
       data:'<code>funding_readiness_items</code>: <code>{ member_id, item_key (tax_clearance|bbbee_affidavit|financials|bank_statements|owner_id|business_plan|proof_of_address), complete, source_document_id? }</code>. <code>source_document_id</code> would link to the Documents vault so completing an item there could auto-check it here, not wired in this mockup.',
       logic:'Score = (complete count / 7) × 100, coloured red&lt;30 / amber 30-69 / green ≥70. Checking an item is optimistic client-side state in this mockup only. "Open action plan" deep-links to My Success Plan; "Talk to an accountant" is a placeholder for a real advisor-routing destination once that\'s scoped.',
       components:'Header with live readiness score · checklist rows (reused toggle-row pattern from Compliance/Cash Flow) · conditional callout: red "Recommended next steps" (top 3 missing items + 2 CTAs) when incomplete, green all-clear state when 7/7.'
     },
     resources: {
       title:'Resources', sub:'Moved from Account Settings → Downloads (2026-10-01)',
-      purpose:'Same consolidation call as Funding: a member\'s downloaded-resources history now lives only in Workspace. "Browse full library" still routes to the public catalogue (<code>public-resources.html</code>) rather than a duplicate browser, this view is the member\'s own history, not a second copy of the library.',
+      purpose:'Same consolidation call as Funding: a member\'s downloaded-resources history now lives only in My Business. "Browse full library" still routes to the public catalogue (<code>public-resources.html</code>) rather than a duplicate browser, this view is the member\'s own history, not a second copy of the library.',
       data:'<code>member_downloads</code>: <code>{ member_id, resource_id, title, type: ebook|template|guide|report, downloaded_at, format, size, accessed_count }</code>.',
       logic:'Full search, type-filter chips and sort (newest/oldest/most accessed), the complete feature, not a trimmed preview. "Download again" and the overflow menu are stubs in this round.',
       components:'3-stat strip (Total downloads / This month / Storage saved) · search + sort + type-filter bar · row list (icon chip · title · type badge · date/format · re-download action) · empty state.'
     },
     momentum: {
       title:'Weekly Momentum', sub:'Adapted from SME IQ\'s WeeklyMomentum widget',
-      purpose:'Makes the score feel alive between check-ins instead of a static number that only moves once a month. Ported concept from SME IQ, cheap to build, high perceived value: a member sees their own activity translating into progress in near-real-time.',
+      purpose:'Makes the score feel alive between check-ins instead of a static number that only moves once a month. Cheap to build, high perceived value: a member sees their own activity translating into progress in near-real-time.',
       data:'Rolling 7-day window over the same event log that drives the score: <code>{ actions_completed, compliance_items_resolved, points_delta }</code>, plus a static <code>points_to_next_tier</code> lookup off the current composite score.',
       logic:'Purely a read/aggregate view, no new write path. "+3 pts" recomputes from the same delta already shown on the Business Health Score card; this widget just re-frames it as a weekly summary rather than a since-last-check-in one.',
       components:'Header with trend badge · 3-stat row (Actions done / Risk resolved / Points to next tier).'
@@ -2440,10 +2790,16 @@
   renderCompliance();
   renderReadiness();
   renderFunding();
+  renderHomeFunding();
+  renderHomeFree();
+  renderSolutionPicks();
+  renderFundingOptions();
+  wcCalc();
+  renderInvoices();
   renderResources();
-  renderCashflow();
   renderDocuments();
   renderAchievements();
+  wsRouteFromHash();
   lucide.createIcons();
 </script>
 

@@ -121,7 +121,7 @@
           <a href="forums.html" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-[#DC183C] transition">Forums</a>
         </div>
       </div>
-      <a href="member-workspace.html" class="px-3 h-full text-[14px] font-semibold font-jakarta text-[#6A7581] hover:text-[#DC183C] border-b-[3px] border-transparent flex items-center gap-2 transition-colors"><i data-lucide="sparkles" class="w-4 h-4"></i> Workspace</a>
+      <a href="member-workspace.html" class="px-3 h-full text-[14px] font-semibold font-jakarta text-[#6A7581] hover:text-[#DC183C] border-b-[3px] border-transparent flex items-center gap-2 transition-colors"><i data-lucide="sparkles" class="w-4 h-4"></i> My Business</a>
       <a href="member-account.html" class="px-3 h-full text-[14px] font-bold font-jakarta text-[#DC183C] border-b-[3px] border-[#DC183C] flex items-center gap-2 transition-colors"><i data-lucide="circle-user" class="w-4 h-4"></i> Account</a>
     </nav>
 
@@ -137,11 +137,11 @@
 
       <!-- Action Icons -->
       <div class="hidden sm:flex items-center gap-2">
-        <button class="relative text-slate-500 hover:text-[#121A21] transition-colors p-1.5" aria-label="Messages">
+        <button onclick="location.href='member-messages.html'" class="relative text-slate-500 hover:text-[#121A21] transition-colors p-1.5" aria-label="Messages">
           <i data-lucide="inbox" class="w-5 h-5"></i>
           <span class="absolute top-0 right-0 w-4 h-4 bg-[#DC183C] text-white text-[9px] font-bold rounded-full flex items-center justify-center ring-2 ring-white shadow-sm">1</span>
         </button>
-        <button class="relative text-slate-500 hover:text-[#121A21] transition-colors p-1.5" aria-label="Notifications">
+        <button onclick="location.href='member-notifications.html'" class="relative text-slate-500 hover:text-[#121A21] transition-colors p-1.5" aria-label="Notifications">
           <i data-lucide="bell" class="w-5 h-5"></i>
           <span class="absolute top-0 right-0 w-4 h-4 bg-[#DC183C] text-white text-[9px] font-bold rounded-full flex items-center justify-center ring-2 ring-white shadow-sm">8</span>
         </button>
@@ -201,7 +201,7 @@
   </div>
 </header>
 
-<!-- Mobile bottom tab bar, Home / Connect / Events / Workspace / Account -->
+<!-- Mobile bottom tab bar, Home / Connect / Events / My Business / Account -->
 <nav aria-label="Quick nav" class="lg:hidden fixed bottom-0 inset-x-0 z-40 bg-white border-t border-[#E7EBEF] shadow-[0_-4px_16px_-4px_rgba(12,31,49,0.08)]" style="padding-bottom:env(safe-area-inset-bottom)">
   <div class="grid grid-cols-5">
     <a href="member-hub.html" class="flex flex-col items-center justify-center gap-1 py-2.5 text-slate-500 hover:text-[#121A21] transition">
@@ -218,7 +218,7 @@
     </a>
     <a href="member-workspace.html" class="flex flex-col items-center justify-center gap-1 py-2.5 text-slate-500 hover:text-[#121A21] transition">
       <i data-lucide="sparkles" class="w-5 h-5"></i>
-      <span class="font-jakarta text-[11px] font-bold">Workspace</span>
+      <span class="font-jakarta text-[11px] font-bold">My Business</span>
     </a>
     <a href="member-account.html" class="relative flex flex-col items-center justify-center gap-1 py-2.5 text-[#DC183C]">
       <span class="absolute top-0 left-1/2 -translate-x-1/2 w-8 h-0.5 rounded-full bg-[#DC183C]"></span>
@@ -627,7 +627,7 @@ function setOrders(){
         <i data-lucide="chevron-right" class="w-4 h-4 text-slate-500 ml-auto"></i>
       </button>
     </div>
-    <p class="text-xs text-slate-500 mt-5 flex items-center gap-1.5"><i data-lucide="info" class="w-3.5 h-3.5"></i> The SME SA store sells branded merchandise. Orders are managed securely by <span class="font-jakarta">WooCommerce</span>, payment and address management hands off to the WooCommerce secure account page. Resource downloads and funding applications now live in your <a href="member-workspace.html" class="font-bold text-[#DC183C] hover:underline">Workspace</a>.</p>`;
+    <p class="text-xs text-slate-500 mt-5 flex items-center gap-1.5"><i data-lucide="info" class="w-3.5 h-3.5"></i> The SME SA store sells branded merchandise. Orders are managed securely by <span class="font-jakarta">WooCommerce</span>, payment and address management hands off to the WooCommerce secure account page. Resource downloads and funding applications now live in your <a href="member-workspace.html" class="font-bold text-[#DC183C] hover:underline">My Business</a>.</p>`;
   return settingsCard('My Orders', 'Your SME South Africa merchandise orders.', body);
 }
 
@@ -681,7 +681,7 @@ function setProfile(){
       <p class="text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-2">Profile Photo</p>
       <div class="flex items-center gap-4">
         ${monogram(p.initials,64)}
-        <div><button onclick="showToast('Avatar upload.',null)" class="bg-[#0C1F31] text-white rounded-full px-4 py-2 text-xs font-bold flex items-center gap-1.5"><i data-lucide="upload" class="w-3.5 h-3.5"></i> Change photo</button><p class="text-xs text-slate-500 mt-1.5">JPG or PNG, max 2MB.</p></div>
+        <div><button onclick="location.href='member-photo.html'" class="bg-[#0C1F31] text-white rounded-full px-4 py-2 text-xs font-bold flex items-center gap-1.5"><i data-lucide="upload" class="w-3.5 h-3.5"></i> Change photo</button><p class="text-xs text-slate-500 mt-1.5">JPG or PNG, max 2MB.</p></div>
       </div>
     </div>
 

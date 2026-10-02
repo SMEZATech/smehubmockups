@@ -58,7 +58,7 @@
           <a href="forums.html" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-[#DC183C] transition">Forums</a>
         </div>
       </div>
-      <a href="member-workspace.html" class="px-3 h-full text-[14px] font-semibold font-jakarta text-[#6A7581] hover:text-[#DC183C] border-b-[3px] border-transparent flex items-center gap-2 transition-colors"><i data-lucide="sparkles" class="w-4 h-4"></i> Workspace</a>
+      <a href="member-workspace.html" class="px-3 h-full text-[14px] font-semibold font-jakarta text-[#6A7581] hover:text-[#DC183C] border-b-[3px] border-transparent flex items-center gap-2 transition-colors"><i data-lucide="sparkles" class="w-4 h-4"></i> My Business</a>
       <a href="member-account.html" class="px-3 h-full text-[14px] font-semibold font-jakarta text-[#6A7581] hover:text-[#DC183C] border-b-[3px] border-transparent flex items-center gap-2 transition-colors"><i data-lucide="circle-user" class="w-4 h-4"></i> Account</a>
     </nav>
 
@@ -74,11 +74,11 @@
 
       <!-- Action Icons -->
       <div class="hidden sm:flex items-center gap-2">
-        <button class="relative text-slate-500 hover:text-[#121A21] transition-colors p-1.5" aria-label="Messages">
+        <button onclick="location.href='member-messages.html'" class="relative text-slate-500 hover:text-[#121A21] transition-colors p-1.5" aria-label="Messages">
           <i data-lucide="inbox" class="w-5 h-5"></i>
           <span class="absolute top-0 right-0 w-4 h-4 bg-[#DC183C] text-white text-[9px] font-bold rounded-full flex items-center justify-center ring-2 ring-white shadow-sm">1</span>
         </button>
-        <button class="relative text-slate-500 hover:text-[#121A21] transition-colors p-1.5" aria-label="Notifications">
+        <button onclick="location.href='member-notifications.html'" class="relative text-slate-500 hover:text-[#121A21] transition-colors p-1.5" aria-label="Notifications">
           <i data-lucide="bell" class="w-5 h-5"></i>
           <span class="absolute top-0 right-0 w-4 h-4 bg-[#DC183C] text-white text-[9px] font-bold rounded-full flex items-center justify-center ring-2 ring-white shadow-sm">8</span>
         </button>
@@ -138,7 +138,7 @@
   </div>
 </header>
 
-<!-- Mobile bottom tab bar, Home / Connect / Events / Workspace / Account -->
+<!-- Mobile bottom tab bar, Home / Connect / Events / My Business / Account -->
 <nav aria-label="Quick nav" class="lg:hidden fixed bottom-0 inset-x-0 z-40 bg-white border-t border-[#E7EBEF] shadow-[0_-4px_16px_-4px_rgba(12,31,49,0.08)]" style="padding-bottom:env(safe-area-inset-bottom)">
   <div class="grid grid-cols-5">
     <a href="member-hub.html" class="relative flex flex-col items-center justify-center gap-1 py-2.5 text-[#DC183C]">
@@ -156,7 +156,7 @@
     </a>
     <a href="member-workspace.html" class="flex flex-col items-center justify-center gap-1 py-2.5 text-slate-500 hover:text-[#121A21] transition">
       <i data-lucide="sparkles" class="w-5 h-5"></i>
-      <span class="font-jakarta text-[11px] font-bold">Workspace</span>
+      <span class="font-jakarta text-[11px] font-bold">My Business</span>
     </a>
     <a href="member-account.html" class="flex flex-col items-center justify-center gap-1 py-2.5 text-slate-500 hover:text-[#121A21] transition">
       <i data-lucide="circle-user" class="w-5 h-5"></i>
@@ -288,7 +288,7 @@ const state = { tab:'feed', filter:'all' };
 function renderHero(){
   const g = GROUP;
   const memberBtn = g.joined
-    ? `<button onclick="toggleJoin()" class="border border-[#29A37A] text-[#29A37A] rounded-full px-5 py-2.5 font-jakarta font-bold text-sm flex items-center gap-2 hover:bg-[#E4F5EE] transition"><i data-lucide="check" class="w-4 h-4"></i> Member</button>`
+    ? `<button onclick="toggleJoin()" class="border border-[#29A37A] text-[#29A37A] rounded-full px-5 py-2.5 font-jakarta font-bold text-sm flex items-center gap-2 hover:bg-[#E4F5EE] transition"><i data-lucide="check" class="w-4 h-4"></i> Member</button><a href="member-group-manage.html" class="border border-slate-200 hover:border-[#0C1F31] text-slate-700 rounded-full px-5 py-2.5 font-jakarta font-bold text-sm flex items-center gap-2 transition"><i data-lucide="settings-2" class="w-4 h-4"></i> Manage</a>`
     : `<button onclick="toggleJoin()" class="bg-[#DC183C] hover:bg-[#B0142F] text-white rounded-full px-5 py-2.5 font-jakarta font-bold text-sm transition flex items-center gap-2"><i data-lucide="plus" class="w-4 h-4"></i> Join group</button>`;
   document.getElementById('group-hero').innerHTML = `
     <div class="bg-white rounded-2xl border border-slate-100 overflow-hidden reveal shadow-sm">

@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Manage group | SME HUB</title>
+  <meta name="description" content="SME South Africa, Group organiser: members, requests, invitations and settings." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            jakarta: ['Plus Jakarta Sans', 'sans-serif'],
+            inter: ['Inter', 'system-ui', 'sans-serif']
+          }
+        }
+      }
+    };
+  </script>
+
+  <style>
+    html, body { font-family: 'Inter', system-ui, sans-serif; }
+    .font-jakarta { font-family: 'Plus Jakarta Sans', sans-serif; letter-spacing: 0.005em; }
+
+    /* Scrollbars */
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+    /* Reveal */
+    @keyframes fadeUp { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+    .reveal { animation: fadeUp .45s cubic-bezier(.2,.7,.2,1) backwards; }
+
+    /* Composer expand */
+    @keyframes expandDown { from { opacity:0; transform:translateY(-6px); } to { opacity:1; transform:translateY(0); } }
+    .expand-down { animation: expandDown .3s cubic-bezier(.2,.7,.2,1); }
+
+    /* Toast */
+    @keyframes toastIn { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
+    @keyframes toastOut { to { opacity:0; transform:translateY(20px); } }
+    .toast-in { animation: toastIn .25s ease forwards; }
+    .toast-out { animation: toastOut .25s ease forwards; }
+
+    /* Type stripes, the visual signal that makes the feed scannable */
+    .stripe-ask   { box-shadow: inset 4px 0 0 0 #DC183C; }
+    .stripe-win   { box-shadow: inset 4px 0 0 0 #29A37A; }
+    .stripe-share { box-shadow: inset 4px 0 0 0 #FF9900; }
+
+    /* Card hover lift */
+    .card-lift { transition: box-shadow .2s, transform .2s; }
+    .card-lift:hover { box-shadow: 0 8px 20px -8px rgba(10,44,61,0.12); transform: translateY(-1px); }
+
+    /* Print-portal hiding (parity with events module) */
+    #overlay-root:empty { display:none; }
+
+    /* ===== Dev Mode (implementation notes) ===== */
+    .dev-badge { display:none; }
+    body.dev-on .dev-badge { display:inline-flex; }
+    #devToggle.on { background:#DC183C; color:#fff; border-color:#DC183C; }
+    /* Overlays: right drawer (briefs) + centre modal (contribution) */
+    .ov { position:fixed; inset:0; z-index:60; }
+    .ov-bg { position:absolute; inset:0; background:rgba(12,31,49,.45); backdrop-filter:blur(2px); opacity:0; transition:opacity .3s; }
+    .ov.open .ov-bg { opacity:1; }
+    .drawer { position:absolute; right:0; top:0; height:100%; width:100%; max-width:440px; background:#fff; box-shadow:-12px 0 40px rgba(12,31,49,.25); overflow-y:auto; transform:translateX(100%); transition:transform .3s cubic-bezier(.2,.7,.2,1); }
+    .ov.open .drawer { transform:translateX(0); }
+    .modalbox { position:absolute; left:50%; top:50%; transform:translate(-50%,-46%); width:calc(100% - 2rem); max-width:420px; background:#fff; border-radius:1rem; box-shadow:0 24px 60px rgba(12,31,49,.3); opacity:0; transition:transform .25s, opacity .25s; }
+    .ov.open .modalbox { transform:translate(-50%,-50%); opacity:1; }
+    
+    /* Full Header Search Overlay */
+    .search-overlay {
+      position: absolute;
+      inset: 0;
+      background: white;
+      z-index: 50;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 1rem;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(-10px);
+      transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+    .search-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+    @media (min-width: 640px) {
+      .search-overlay { padding: 0 1.5rem; }
+    }
+  </style>
+</head>
+<body class="bg-[#FCFCFC] text-[#121A21] antialiased relative">
+
+<!-- ===================== HEADER ===================== -->
+<header class="bg-white border-b border-slate-200 sticky top-0 z-40 shadow-sm relative">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+    
+    <!-- Logo (Left) -->
+    <a href="public-home.html" class="flex items-center shrink-0 group mr-6 py-2">
+      <img src="https://smesouthafrica.co.za/wp-content/uploads/2025/10/Asset-1-1.webp" alt="SME South Africa" class="h-10 sm:h-11 w-auto object-contain group-hover:scale-105 transition-transform" />
+    </a>
+
+    <!-- Primary Navigation (Center - BuddyBoss Style) -->
+    <nav class="hidden md:flex items-center justify-center gap-1 flex-1 px-4 h-full">
+      <a href="member-hub.html" class="px-3 h-full text-[14px] font-bold font-jakarta text-[#DC183C] border-b-[3px] border-[#DC183C] flex items-center gap-2 transition-colors"><i data-lucide="home" class="w-4 h-4"></i> Home</a>
+      <div class="relative h-full" onmouseleave="closeHeaderDrop('community')">
+        <button onclick="toggleHeaderDrop('community')" class="px-3 h-full text-[14px] font-semibold font-jakarta text-[#6A7581] hover:text-[#DC183C] border-b-[3px] border-transparent flex items-center gap-2 transition-colors">
+          <i data-lucide="users" class="w-4 h-4"></i> Community <i data-lucide="chevron-down" class="w-3.5 h-3.5 opacity-50"></i>
+        </button>
+        <div id="dropCommunity" class="hidden absolute left-0 top-full w-52 bg-white rounded-xl border border-slate-100 shadow-xl py-2 z-30">
+          <a href="members.html" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-[#DC183C] transition">Members</a>
+          <a href="groups.html" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-[#DC183C] transition">Groups</a>
+          <a href="forums.html" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-[#DC183C] transition">Forums</a>
+        </div>
+      </div>
+      <a href="member-workspace.html" class="px-3 h-full text-[14px] font-semibold font-jakarta text-[#6A7581] hover:text-[#DC183C] border-b-[3px] border-transparent flex items-center gap-2 transition-colors"><i data-lucide="sparkles" class="w-4 h-4"></i> My Business</a>
+      <a href="member-account.html" class="px-3 h-full text-[14px] font-semibold font-jakarta text-[#6A7581] hover:text-[#DC183C] border-b-[3px] border-transparent flex items-center gap-2 transition-colors"><i data-lucide="circle-user" class="w-4 h-4"></i> Account</a>
+    </nav>
+
+    <!-- Utility & Profile (Right) -->
+    <div class="flex items-center justify-end gap-4 shrink-0">
+      
+      <!-- Search Trigger -->
+
+      <button onclick="toggleHeaderSearch()" class="text-slate-500 hover:text-[#121A21] transition-colors p-1.5" aria-label="Open search">
+        <i data-lucide="search" class="w-5 h-5"></i>
+      </button>
+      
+      <div class="w-px h-6 bg-slate-200 hidden sm:block mx-1"></div>
+      
+      <!-- Action Icons -->
+      <div class="hidden sm:flex items-center gap-2">
+        <button onclick="location.href='member-messages.html'" class="relative text-slate-500 hover:text-[#121A21] transition-colors p-1.5" aria-label="Messages">
+          <i data-lucide="inbox" class="w-5 h-5"></i>
+          <span class="absolute top-0 right-0 w-4 h-4 bg-[#DC183C] text-white text-[9px] font-bold rounded-full flex items-center justify-center ring-2 ring-white shadow-sm">1</span>
+        </button>
+        <button onclick="location.href='member-notifications.html'" class="relative text-slate-500 hover:text-[#121A21] transition-colors p-1.5" aria-label="Notifications">
+          <i data-lucide="bell" class="w-5 h-5"></i>
+          <span class="absolute top-0 right-0 w-4 h-4 bg-[#DC183C] text-white text-[9px] font-bold rounded-full flex items-center justify-center ring-2 ring-white shadow-sm">8</span>
+        </button>
+        <button class="relative text-slate-500 hover:text-[#121A21] transition-colors p-1.5" aria-label="Cart">
+          <i data-lucide="shopping-cart" class="w-5 h-5"></i>
+          <span class="absolute top-0 right-0 w-4 h-4 bg-[#DC183C] text-white text-[9px] font-bold rounded-full flex items-center justify-center ring-2 ring-white shadow-sm">4</span>
+        </button>
+      </div>
+
+      <!-- User Profile Dropdown -->
+      <div class="relative ml-1 sm:ml-2 cursor-pointer group">
+        <div class="flex items-center gap-3">
+          <span class="font-jakarta font-bold text-[15px] text-[#121A21] hidden md:block">Tshepho</span>
+          <div class="w-9 h-9 rounded-full bg-gradient-to-br from-[#DC183C] to-[#FF9900] grid place-items-center font-jakarta font-bold text-white text-xs ring-2 ring-white shadow-sm group-hover:scale-105 transition-transform">TJ</div>
+        </div>
+        
+        <!-- Dropdown Menu -->
+        <div class="absolute right-0 top-full mt-3 w-64 bg-white rounded-xl shadow-xl border border-slate-100 overflow-hidden z-50 transform origin-top-right scale-95 opacity-0 pointer-events-none transition-all duration-200 group-hover:scale-100 group-hover:opacity-100 group-hover:pointer-events-auto">
+          <div class="p-4 border-b border-slate-100 flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-gradient-to-br from-[#DC183C] to-[#FF9900] grid place-items-center font-jakarta font-bold text-white text-sm shrink-0">TJ</div>
+            <div class="min-w-0">
+              <p class="font-jakarta font-bold text-sm text-[#121A21] truncate">Tshepho Joel</p>
+              <p class="text-xs text-slate-500 truncate">@tshephojoel</p>
+            </div>
+          </div>
+          <div class="p-2 text-sm text-slate-700 font-medium">
+            <a href="member-account.html" class="block px-3 py-2 rounded-lg hover:bg-slate-50 hover:text-[#DC183C] transition-colors">Profile</a>
+            <a href="member-account.html" class="block px-3 py-2 rounded-lg hover:bg-slate-50 hover:text-[#DC183C] transition-colors">Account Settings</a>
+            <a href="member-account.html" class="block px-3 py-2 rounded-lg hover:bg-slate-50 hover:text-[#DC183C] transition-colors flex items-center justify-between">Orders <span class="bg-slate-100 text-slate-500 text-[10px] font-bold px-2 py-0.5 rounded-full">4</span></a>
+          </div>
+          <div class="p-2 border-t border-slate-100">
+            <a href="public-home.html?as=visitor" class="block px-3 py-2 text-sm font-semibold text-[#DC183C] hover:bg-[#FDECEF] rounded-lg transition-colors">Sign Out</a>
+          </div>
+          <div class="px-5 py-3 border-t border-slate-100 bg-slate-50 flex items-center justify-between">
+            <span class="text-[10px] font-bold uppercase tracking-widest text-slate-500">Dev Mode</span>
+            <button id="devToggle" onclick="toggleDevMode()" class="w-8 h-4 rounded-full bg-slate-200 relative transition-colors focus:outline-none" aria-pressed="false">
+              <span class="absolute left-0.5 top-0.5 w-3 h-3 rounded-full bg-white shadow-sm transition-transform duration-200"></span>
+            </button>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+
+  <!-- Full Header Search Overlay -->
+  <div id="headerSearchOverlay" class="search-overlay">
+    <div class="w-full max-w-4xl flex items-center gap-4">
+      <div class="relative flex-1">
+        <i data-lucide="search" class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500"></i>
+        <input type="text" id="headerSearchInput" placeholder="Search members, groups, forums..." class="w-full h-12 pl-12 pr-4 text-base bg-slate-50 border border-[#DC183C] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#DC183C]/20 transition-all shadow-sm">
+      </div>
+      <button onclick="toggleHeaderSearch()" class="text-slate-500 hover:text-[#121A21] p-2 transition-colors shrink-0" aria-label="Close search">
+        <i data-lucide="x" class="w-6 h-6"></i>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- Mobile bottom tab bar, Home / Connect / Events / My Business / Account -->
+<nav aria-label="Quick nav" class="lg:hidden fixed bottom-0 inset-x-0 z-40 bg-white border-t border-[#E7EBEF] shadow-[0_-4px_16px_-4px_rgba(12,31,49,0.08)]" style="padding-bottom:env(safe-area-inset-bottom)">
+  <div class="grid grid-cols-5">
+    <a href="member-hub.html" class="relative flex flex-col items-center justify-center gap-1 py-2.5 text-[#DC183C]">
+      <span class="absolute top-0 left-1/2 -translate-x-1/2 w-8 h-0.5 rounded-full bg-[#DC183C]"></span>
+      <i data-lucide="home" class="w-5 h-5"></i>
+      <span class="font-jakarta text-[11px] font-bold">Home</span>
+    </a>
+    <a href="members.html" class="flex flex-col items-center justify-center gap-1 py-2.5 text-slate-500 hover:text-[#121A21] transition">
+      <i data-lucide="users" class="w-5 h-5"></i>
+      <span class="font-jakarta text-[11px] font-bold">Connect</span>
+    </a>
+    <a href="events.html" class="flex flex-col items-center justify-center gap-1 py-2.5 text-slate-500 hover:text-[#121A21] transition">
+      <i data-lucide="calendar-days" class="w-5 h-5"></i>
+      <span class="font-jakarta text-[11px] font-bold">Events</span>
+    </a>
+    <a href="member-workspace.html" class="flex flex-col items-center justify-center gap-1 py-2.5 text-slate-500 hover:text-[#121A21] transition">
+      <i data-lucide="sparkles" class="w-5 h-5"></i>
+      <span class="font-jakarta text-[11px] font-bold">My Business</span>
+    </a>
+    <a href="member-account.html" class="flex flex-col items-center justify-center gap-1 py-2.5 text-slate-500 hover:text-[#121A21] transition">
+      <i data-lucide="circle-user" class="w-5 h-5"></i>
+      <span class="font-jakarta text-[11px] font-bold">Account</span>
+    </a>
+  </div>
+</nav>
+
+
+<main class="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
+
+<div class="max-w-4xl mx-auto">
+  <div id="g-invite" class="hidden"></div>
+  <div id="g-manage">
+    <a href="single-group.html" class="inline-flex items-center gap-1.5 text-sm font-bold text-slate-500 hover:text-[#DC183C] mb-4"><i data-lucide="arrow-left" class="w-4 h-4"></i> Back to group</a>
+    <div class="flex items-start justify-between gap-3 flex-wrap mb-5"><div><p class="text-[11px] font-extrabold uppercase tracking-widest text-[#DC183C]">Manage group</p><h1 class="font-jakarta font-extrabold text-[26px] tracking-tight flex items-center gap-2">Funding Readiness Circle <button onclick="openBrief('groupmanage')" class="dev-badge w-5 h-5 rounded-full bg-[#DC183C] text-white items-center justify-center text-[10px] font-bold leading-none animate-pulse" title="Implementation notes">i</button></h1><p class="text-[13.5px] text-slate-500 mt-1">Private group &middot; <span id="g-count">5</span> members</p></div>
+      <a href="member-group-manage.html?view=invite" class="text-[12.5px] font-bold text-slate-500 hover:text-[#DC183C] mt-2">Preview the invitation your invitee sees</a></div>
+    <div id="g-tabs" class="flex gap-1 border-b border-slate-200 mb-5 overflow-x-auto no-scrollbar"></div>
+    <div id="g-body"></div>
+  </div>
+</div>
+
+</main>
+<footer class="bg-white border-t border-slate-200 mt-auto">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-5 flex flex-col sm:flex-row items-center justify-between gap-3">
+    <div class="flex items-center gap-2 text-xs text-slate-500">
+      <span>&copy; 2026 SME South Africa</span>
+      <span class="text-slate-500">&middot;</span>
+      <span class="font-bold text-slate-500 uppercase tracking-widest text-[10px]">Community</span>
+      <button onclick="openBrief('footer')" class="dev-badge w-4 h-4 rounded-full bg-[#DC183C] text-white items-center justify-center text-[9px] font-bold leading-none animate-pulse" title="Implementation notes">i</button>
+    </div>
+    <nav class="flex items-center gap-5 text-xs font-semibold text-slate-500">
+      <a href="public-about.html" class="hover:text-[#DC183C] transition-colors">About</a>
+      <a href="public-help.html" class="hover:text-[#DC183C] transition-colors">Help Centre</a>
+      <a href="public-terms.html" class="hover:text-[#DC183C] transition-colors">Terms</a>
+      <a href="public-privacy.html" class="hover:text-[#DC183C] transition-colors">Privacy</a>
+    </nav>
+  </div>
+</footer>
+
+
+<!-- Overlay root (toasts, modals) -->
+<div class="lg:hidden" style="height:calc(64px + env(safe-area-inset-bottom))"></div>
+<div id="overlay-root"></div>
+
+<!-- Toast container -->
+<div id="toast" class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-[100]"></div>
+
+<div class="lg:hidden" style="height:calc(64px + env(safe-area-inset-bottom))"></div>
+<div id="overlay-root"></div>
+<script>
+  const BRIEFS = {
+    groupmanage: { title:'Group organiser and invitations', sub:'Members, requests, invitations, settings, and what the invitee sees',
+      purpose:'Organisers had no tools to run a group, and an invitation led nowhere. This covers both sides: the organiser console and the invitee\u2019s accept or decline screen.',
+      data:'group_members(group_id, user_id, role organiser|mod|member, status), group_requests(answer), group_invites(group_id, invitee user or email, token, sent_at, resent_count, revoked_at), group_bans, group_settings(privacy, approve_posts, members_can_invite, join_question, rules).',
+      logic:'Roles: organisers change settings, roles and delete; moderators approve posts and requests and remove content; members post. Remove lets someone ask again, Ban does not and is silent. Requests show the member\u2019s answer to the join question; decline is silent. Invitations by name or email, 20 a day, revocable and resendable, plus a resettable invite link that still routes through approval. The invitee sees the rules before accepting, and accepting shows their name and business to members. Delete needs the group name typed. Invitation emails are transactional and obey the comms ceiling rules for that class. The last organiser cannot be demoted or leave without naming a successor.',
+      components:'Tabs, member list with role chips and menu, request cards, invite form, link control, pending list, settings form with switches, danger zone, invitee card.' }
+  };
+
+  function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c])); }
+  function showToast(msg){
+    const el = document.getElementById('toast'); el.classList.remove('hidden');
+    el.innerHTML = `<div class="toast-in bg-[#0C1F31] text-white rounded-full pl-3 pr-5 py-2.5 shadow-2xl flex items-center gap-2 text-sm font-semibold" style="border-left:4px solid #29A37A"><i data-lucide="check-circle" class="w-4 h-4" style="color:#29A37A"></i><span>${esc(msg)}</span></div>`;
+    lucide.createIcons(); clearTimeout(window.__t); window.__t = setTimeout(() => { el.classList.add('hidden'); el.innerHTML=''; }, 2600);
+  }
+  function toggleDevMode(){ const on = document.body.classList.toggle('dev-on'); const b = document.getElementById('devToggle'); if(b) b.classList.toggle('on', on); if(on) showToast('Dev Mode on, tap any (i) for implementation notes.'); lucide.createIcons(); }
+  function closeOverlay(id){ const el = document.getElementById(id); if(!el) return; el.classList.remove('open'); setTimeout(() => { if(el && el.parentNode) el.remove(); }, 300); }
+  function dialog(id, html){ document.getElementById('overlay-root').innerHTML = `<div class="ov" id="${id}"><div class="ov-bg" onclick="closeOverlay('${id}')"></div><div class="modalbox" role="dialog" aria-modal="true">${html}</div></div>`; requestAnimationFrame(() => { const o = document.getElementById(id); if(o) o.classList.add('open'); }); lucide.createIcons(); }
+  function confirmDialog(title, body, cta, fn, danger){
+    window.__cf = fn;
+    dialog('ov-confirm', `<div class="p-6"><p class="font-jakarta font-extrabold text-lg">${esc(title)}</p><p class="text-sm text-slate-500 mt-2 leading-relaxed">${esc(body)}</p><div class="mt-5 flex gap-3 justify-end"><button onclick="closeOverlay('ov-confirm')" class="h-10 px-5 rounded-full border border-slate-200 text-sm font-bold hover:border-[#0C1F31] transition">Cancel</button><button onclick="closeOverlay('ov-confirm'); window.__cf()" class="h-10 px-5 rounded-full ${danger === false ? 'bg-[#0C1F31] hover:bg-[#16324a]' : 'bg-[#DC183C] hover:bg-[#B0142F]'} text-white text-sm font-bold transition">${esc(cta)}</button></div></div>`);
+  }
+  function openBrief(id){
+    const b = BRIEFS[id]; if(!b) return;
+    const sec = (icon, label, html) => `<div class="px-6 py-4 border-t border-slate-100"><p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] flex items-center gap-1.5 mb-2"><i data-lucide="${icon}" class="w-3.5 h-3.5"></i>${label}</p><div class="text-sm text-slate-600 leading-relaxed">${html}</div></div>`;
+    document.getElementById('overlay-root').innerHTML = `<div class="ov" id="ov-brief"><div class="ov-bg" onclick="closeOverlay('ov-brief')"></div><div class="drawer"><div class="sticky top-0 z-10 bg-[#0C1F31] text-white px-6 py-5 flex items-start justify-between"><div class="min-w-0"><p class="text-[10px] font-bold uppercase tracking-widest text-[#FF9900] mb-1">Dev Brief</p><h3 class="font-jakarta font-extrabold text-lg leading-tight">${b.title}</h3><p class="text-xs text-white/60 mt-1">${b.sub}</p></div><button onclick="closeOverlay('ov-brief')" aria-label="Close" class="text-white/60 hover:text-white shrink-0 ml-3"><i data-lucide="x" class="w-5 h-5"></i></button></div>${sec('target','Purpose',b.purpose)}${sec('database','Data model',b.data)}${sec('git-branch','Logic',b.logic)}${sec('boxes','Components',b.components)}</div></div>`;
+    requestAnimationFrame(() => { const o = document.getElementById('ov-brief'); if(o) o.classList.add('open'); }); lucide.createIcons();
+  }
+  function toggleHeaderSearch(){ var o = document.getElementById('headerSearchOverlay'); if(!o) return; var open = o.classList.toggle('active'); var i = document.getElementById('headerSearchInput'); if(open){ if(i) setTimeout(function(){ i.focus(); }, 100); } else if(i){ i.value = ''; } }
+  function toggleHeaderDrop(name){ var el = document.getElementById('drop' + name.charAt(0).toUpperCase() + name.slice(1)); if(el) el.classList.toggle('hidden'); }
+  function closeHeaderDrop(name){ var el = document.getElementById('drop' + name.charAt(0).toUpperCase() + name.slice(1)); if(el) el.classList.add('hidden'); }
+  document.addEventListener('click', function(e){ if(!e.target.closest('#dropCommunity') && !e.target.closest('[onclick*=toggleHeaderDrop]')) closeHeaderDrop('community'); });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape'){ document.querySelectorAll('.ov.open').forEach(o => closeOverlay(o.id)); } });
+
+  const ROLES = { organiser:['Organiser','bg-[#0C1F31] text-white'], mod:['Moderator','bg-[#FFF1E0] text-[#AE6B0A]'], member:['Member','bg-slate-100 text-slate-600'] };
+  let M = [
+    { id:1, n:'Tshepho Joel', ini:'TJ', co:'Langa Holdings', role:'organiser', me:true },
+    { id:2, n:'Thandi Mabasa', ini:'TM', co:'Bookkeeper', role:'mod' },
+    { id:3, n:'Naledi Mokoena', ini:'NM', co:'Mokoena Catering', role:'member' },
+    { id:4, n:'Sipho Dlamini', ini:'SD', co:'Dlamini Freight', role:'member' },
+    { id:5, n:'Zanele Ndlovu', ini:'ZN', co:'Retail', role:'member' }
+  ];
+  let REQ = [
+    { id:11, n:'Lerato Khumalo', ini:'LK', a:'Stage: early. Looking for invoice financing options.', ago:'2 h' },
+    { id:12, n:'Kabelo Sithole', ini:'KS', a:'Stage: growing. I have been declined once and want to understand why.', ago:'1 day' },
+    { id:13, n:'Ayanda Zulu', ini:'AZ', a:'Stage: established. Happy to share what worked for us.', ago:'2 days' }
+  ];
+  let INV = [ { id:21, to:'palesa@example.co.za', ago:'3 days', n:0 }, { id:22, to:'Mpho Radebe (member)', ago:'Yesterday', n:0 } ];
+  let tab = 'members', mfilter = 'all', mqv = '', link = 'sme.sa/g/frc-7k2m';
+  const TABS = () => [['members','Members (' + M.length + ')'],['requests','Requests' + (REQ.length ? ' (' + REQ.length + ')' : '')],['invites','Invitations'],['settings','Settings']];
+  function tabs(){ document.getElementById('g-tabs').innerHTML = TABS().map(t => `<button onclick="tab='${t[0]}';render()" class="shrink-0 px-4 py-3 text-[14px] font-jakarta font-bold border-b-[3px] -mb-px transition ${tab === t[0] ? 'text-[#DC183C] border-[#DC183C]' : 'text-slate-500 border-transparent hover:text-[#121A21]'}">${t[1]}</button>`).join(''); document.getElementById('g-count').textContent = M.length; }
+  const av = (ini, sz) => `<div class="${sz || 'w-10 h-10'} rounded-full bg-gradient-to-br from-[#0C1F31] to-[#42505E] grid place-items-center text-white text-xs font-bold shrink-0">${ini}</div>`;
+  function render(){
+    tabs(); const b = document.getElementById('g-body');
+    if(tab === 'members'){
+      const list = M.filter(m => mfilter === 'all' || m.role === mfilter);
+      b.innerHTML = `<div class="flex gap-2 flex-wrap mb-3"><input oninput="mqv=this.value;render();var i=document.getElementById('m-q');i.focus();i.setSelectionRange(i.value.length,i.value.length)" id="m-q" value="${esc(mqv)}" placeholder="Search members" class="flex-1 min-w-[180px] h-10 rounded-full border border-slate-200 px-4 text-sm outline-none focus:border-[#DC183C] bg-white"><select onchange="mfilter=this.value;render()" class="h-10 rounded-full border border-slate-200 px-3 text-sm bg-white font-semibold"><option value="all">All roles</option><option value="organiser" ${mfilter === 'organiser' ? 'selected' : ''}>Organisers</option><option value="mod" ${mfilter === 'mod' ? 'selected' : ''}>Moderators</option><option value="member" ${mfilter === 'member' ? 'selected' : ''}>Members</option></select></div>
+        <div class="bg-white rounded-2xl border border-slate-200 divide-y divide-slate-100">${list.filter(m => !mqv || m.n.toLowerCase().includes(mqv.toLowerCase())).map(m => `<div class="flex items-center gap-3 p-4">${av(m.ini)}<div class="min-w-0 flex-1"><p class="font-jakarta font-bold text-[14px] truncate">${esc(m.n)}${m.me ? ' <span class="text-slate-400 font-medium">(you)</span>' : ''}</p><p class="text-[12.5px] text-slate-500 truncate">${esc(m.co)}</p></div><span class="text-[11px] font-extrabold uppercase tracking-wide px-2.5 py-1 rounded-full ${ROLES[m.role][1]}">${ROLES[m.role][0]}</span>${m.me ? '<span class="w-9"></span>' : `<div class="relative"><button onclick="event.stopPropagation();mm(${m.id})" aria-label="Member options" class="p-2 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-50"><i data-lucide="more-horizontal" class="w-4 h-4"></i></button><div id="mm-${m.id}" class="hidden absolute right-0 top-full mt-1 w-56 bg-white rounded-xl border border-slate-200 shadow-xl py-1.5 z-20 text-[13.5px] font-semibold text-slate-700"><a href="member-messages.html" class="px-4 py-2 flex hover:bg-slate-50">Message</a>${m.role === 'member' ? `<button onclick="setRole(${m.id},'mod')" class="w-full text-left px-4 py-2 hover:bg-slate-50">Make moderator</button>` : ''}${m.role === 'mod' ? `<button onclick="setRole(${m.id},'member')" class="w-full text-left px-4 py-2 hover:bg-slate-50">Remove as moderator</button><button onclick="setRole(${m.id},'organiser')" class="w-full text-left px-4 py-2 hover:bg-slate-50">Make organiser</button>` : ''}<div class="my-1 border-t border-slate-100"></div><button onclick="removeM(${m.id})" class="w-full text-left px-4 py-2 hover:bg-slate-50 text-[#DC183C]">Remove from group</button><button onclick="banM(${m.id})" class="w-full text-left px-4 py-2 hover:bg-slate-50 text-[#DC183C]">Ban from group</button></div></div>`}</div>`).join('') || '<p class="p-8 text-center text-sm text-slate-500">No members match.</p>'}</div>
+        <p class="text-[12px] text-slate-400 mt-3">Moderators can approve posts and requests and remove content. Only organisers change settings, roles and delete the group.</p>`;
+    }
+    if(tab === 'requests'){
+      b.innerHTML = REQ.length ? `<div class="flex items-center justify-between mb-3"><p class="text-sm text-slate-500">${REQ.length} waiting. They see \u201cPending\u201d until you decide.</p><button onclick="approveAll()" class="h-9 px-4 rounded-full border border-slate-200 text-[13px] font-bold hover:border-[#0C1F31]">Approve all</button></div><div class="bg-white rounded-2xl border border-slate-200 divide-y divide-slate-100">${REQ.map(r => `<div class="p-4"><div class="flex items-start gap-3">${av(r.ini)}<div class="min-w-0 flex-1"><p class="font-jakarta font-bold text-[14px]">${esc(r.n)} <span class="text-slate-400 font-medium text-[12px]">&middot; ${r.ago} ago</span></p><p class="text-[13px] text-slate-600 mt-1 bg-slate-50 rounded-lg px-3 py-2"><b class="text-[11px] uppercase tracking-wider text-slate-400 block">Answer to your join question</b>${esc(r.a)}</p></div></div><div class="mt-3 flex gap-2 justify-end"><button onclick="decideR(${r.id},false)" class="h-9 px-4 rounded-full border border-slate-200 text-[13px] font-bold hover:border-[#0C1F31]">Decline</button><button onclick="decideR(${r.id},true)" class="h-9 px-5 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white text-[13px] font-bold">Approve</button></div></div>`).join('')}</div>`
+        : `<div class="bg-white rounded-2xl border border-slate-200 p-10 text-center"><div class="w-14 h-14 rounded-full bg-[#E4F5EE] grid place-items-center mx-auto"><i data-lucide="check" class="w-7 h-7 text-[#29A37A]"></i></div><p class="font-jakarta font-bold mt-3">No requests waiting</p><p class="text-sm text-slate-500 mt-1">New requests appear here and in your notifications.</p></div>`;
+    }
+    if(tab === 'invites'){
+      b.innerHTML = `<div class="bg-white rounded-2xl border border-slate-200 p-5"><p class="font-jakarta font-bold">Invite people</p><p class="text-[13px] text-slate-500 mt-0.5">Members by name, or anyone by email. Invitees get a message with the group rules.</p>
+        <div class="flex gap-2 mt-3"><input id="inv-in" placeholder="Name or email, separate several with commas" onkeydown="if(event.key==='Enter')invite()" class="flex-1 h-11 rounded-lg border border-slate-200 px-3 text-sm outline-none focus:border-[#DC183C]"><button onclick="invite()" class="h-11 px-5 rounded-full bg-[#0C1F31] hover:bg-[#16324a] text-white text-sm font-bold">Send</button></div><p id="inv-err" class="hidden text-[12.5px] font-semibold text-[#DC183C] mt-2"></p>
+        <p class="text-[11.5px] text-slate-400 mt-2">Up to 20 invitations a day, to keep the group out of spam folders.</p></div>
+        <div class="bg-white rounded-2xl border border-slate-200 p-5 mt-4"><p class="font-jakarta font-bold">Invite link</p><p class="text-[13px] text-slate-500 mt-0.5">Anyone with the link can ask to join. You still approve each request.</p>
+        <div class="flex gap-2 mt-3"><input readonly value="${link}" class="flex-1 h-11 rounded-lg border border-slate-200 bg-slate-50 px-3 text-sm font-mono"><button onclick="showToast('Link copied.')" class="h-11 px-4 rounded-full border border-slate-200 text-sm font-bold hover:border-[#0C1F31]">Copy</button><button onclick="resetLink()" class="h-11 px-4 rounded-full text-sm font-bold text-[#DC183C] hover:bg-[#FDECEF]">Reset</button></div></div>
+        <p class="font-jakarta font-bold mt-6 mb-2">Pending invitations (${INV.length})</p><div class="bg-white rounded-2xl border border-slate-200 divide-y divide-slate-100">${INV.map(i => `<div class="flex items-center gap-3 p-4"><div class="min-w-0 flex-1"><p class="text-[14px] font-semibold truncate">${esc(i.to)}</p><p class="text-[12px] text-slate-400">Sent ${i.ago}${i.n ? ' &middot; resent ' + i.n + 'x' : ''}</p></div><button onclick="resend(${i.id})" class="h-8 px-3 rounded-full border border-slate-200 text-[12.5px] font-bold hover:border-[#0C1F31]">Resend</button><button onclick="revoke(${i.id})" class="h-8 px-3 rounded-full text-[12.5px] font-bold text-[#DC183C] hover:bg-[#FDECEF]">Revoke</button></div>`).join('') || '<p class="p-6 text-center text-sm text-slate-500">No pending invitations.</p>'}</div>`;
+    }
+    if(tab === 'settings'){
+      const opt = (n, v, t, d, on) => `<label class="flex gap-3 rounded-xl border ${on ? 'border-[#DC183C] bg-[#FDECEF]/40' : 'border-slate-200'} p-3.5 cursor-pointer hover:border-[#0C1F31]"><input type="radio" name="${n}" ${on ? 'checked' : ''} class="mt-1 accent-[#DC183C]"><span><b class="text-[14px] block">${t}</b><span class="text-[12.5px] text-slate-500">${d}</span></span></label>`;
+      const sw = (id, t, d, on) => `<div class="flex items-center justify-between gap-4 py-3.5 border-t border-slate-100 first:border-t-0"><div><p class="text-[14px] font-semibold">${t}</p><p class="text-[12.5px] text-slate-500 mt-0.5">${d}</p></div><div role="switch" tabindex="0" aria-checked="${on}" id="${id}" onclick="this.classList.toggle('on');this.setAttribute('aria-checked',this.classList.contains('on'))" class="switch ${on ? 'on' : ''} shrink-0"></div></div>`;
+      b.innerHTML = `<style>.switch{width:44px;height:26px;border-radius:99px;background:#D8DEE5;position:relative;cursor:pointer;transition:.2s}.switch:after{content:'';position:absolute;left:3px;top:3px;width:20px;height:20px;border-radius:50%;background:#fff;transition:.2s;box-shadow:0 1px 3px rgba(0,0,0,.2)}.switch.on{background:#DC183C}.switch.on:after{left:21px}</style>
+        <div class="space-y-5"><div class="bg-white rounded-2xl border border-slate-200 p-5"><p class="font-jakarta font-bold mb-3">About</p><label class="text-[12px] font-bold uppercase tracking-wider text-slate-400">Group name</label><input value="Funding Readiness Circle" class="w-full h-11 rounded-lg border border-slate-200 px-3 text-sm mt-1 outline-none focus:border-[#DC183C]"><label class="text-[12px] font-bold uppercase tracking-wider text-slate-400 mt-4 block">Description</label><textarea rows="3" class="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm mt-1 outline-none focus:border-[#DC183C]">A small circle for founders preparing a first funding application. Share what lenders asked for and what worked.</textarea></div>
+        <div class="bg-white rounded-2xl border border-slate-200 p-5"><p class="font-jakarta font-bold mb-3">Privacy</p><div class="grid sm:grid-cols-3 gap-2.5">${opt('pv', 'pub', 'Public', 'Anyone can see the group and its posts.', false)}${opt('pv', 'priv', 'Private', 'Anyone can find it. Only members see posts.', true)}${opt('pv', 'hid', 'Hidden', 'Invitation only. Not listed or searchable.', false)}</div></div>
+        <div class="bg-white rounded-2xl border border-slate-200 p-5"><p class="font-jakarta font-bold mb-1">Posting and joining</p>${sw('s1', 'Approve posts before they appear', 'Moderators review each post first. Useful for new groups.', false)}${sw('s2', 'Ask a question when people request to join', 'Their answer shows on the request.', true)}${sw('s3', 'Members can invite others', 'Off means only organisers and moderators can invite.', true)}${sw('s4', 'Allow members to start polls and schedule posts', '', true)}<label class="text-[12px] font-bold uppercase tracking-wider text-slate-400 mt-3 block">Join question</label><input value="What stage is your business at, and what do you hope to get from this group?" class="w-full h-11 rounded-lg border border-slate-200 px-3 text-sm mt-1 outline-none focus:border-[#DC183C]"></div>
+        <div class="bg-white rounded-2xl border border-slate-200 p-5"><p class="font-jakarta font-bold mb-1">Group rules</p><p class="text-[12.5px] text-slate-500 mb-2">Shown to people before they join and pinned in the group.</p><textarea rows="4" class="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm outline-none focus:border-[#DC183C]">1. Be kind and specific.\n2. No selling, and no asking for money.\n3. Never share ID numbers, bank details or OTPs.</textarea></div>
+        <div class="flex justify-end"><button onclick="showToast('Group settings saved.')" class="h-11 px-6 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold text-sm">Save changes</button></div>
+        <div class="rounded-2xl border border-[#F4C5CF] p-5"><p class="font-jakarta font-bold text-[#B0142F]">Danger zone</p><div class="flex items-center justify-between gap-4 mt-3 flex-wrap"><div><p class="text-[14px] font-semibold">Delete this group</p><p class="text-[12.5px] text-slate-500">Removes the group, its posts and member list. This cannot be undone.</p></div><button onclick="delGroup()" class="h-10 px-5 rounded-full border border-[#DC183C] text-[#DC183C] text-sm font-bold hover:bg-[#FDECEF]">Delete group</button></div></div></div>`;
+    }
+    lucide.createIcons();
+  }
+  const mmClose = () => document.querySelectorAll('[id^="mm-"]').forEach(m => m.classList.add('hidden'));
+  function mm(id){ mmClose(); document.getElementById('mm-' + id).classList.remove('hidden'); }
+  document.addEventListener('click', mmClose);
+  const mem = id => M.find(m => m.id === id);
+  function setRole(id, r){ mmClose(); const m = mem(id); m.role = r; render(); showToast(m.n + ' is now ' + ROLES[r][0].toLowerCase() + '.'); }
+  function removeM(id){ mmClose(); const m = mem(id); confirmDialog('Remove ' + m.n + '?', 'They leave the group and can ask to join again.', 'Remove', () => { M = M.filter(x => x.id !== id); render(); showToast(m.n + ' removed.'); }); }
+  function banM(id){ mmClose(); const m = mem(id); confirmDialog('Ban ' + m.n + '?', 'They are removed and cannot rejoin or see the group. They are not told why. You can lift the ban in Settings.', 'Ban', () => { M = M.filter(x => x.id !== id); render(); showToast(m.n + ' banned.'); }); }
+  function decideR(id, ok){ const r = REQ.find(x => x.id === id); REQ = REQ.filter(x => x.id !== id); if(ok) M.push({ id:r.id, n:r.n, ini:r.ini, co:'New member', role:'member' }); render(); showToast(ok ? r.n + ' approved and notified.' : 'Request declined. ' + r.n + ' is not told why.'); }
+  function approveAll(){ confirmDialog('Approve all ' + REQ.length + ' requests?', 'They all join as members and are notified.', 'Approve all', () => { REQ.forEach(r => M.push({ id:r.id, n:r.n, ini:r.ini, co:'New member', role:'member' })); REQ = []; render(); showToast('Everyone approved.'); }, false); }
+  function invite(){
+    const v = document.getElementById('inv-in').value.trim(), err = document.getElementById('inv-err'); err.classList.add('hidden'); if(!v) return;
+    const parts = v.split(',').map(s => s.trim()).filter(Boolean); const bad = parts.find(p => p.includes('@') && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(p));
+    if(bad){ err.textContent = '\u201c' + bad + '\u201d is not a valid email.'; err.classList.remove('hidden'); return; }
+    if(INV.length + parts.length > 20){ err.textContent = 'That would pass the 20 invitations a day limit. Try again tomorrow.'; err.classList.remove('hidden'); return; }
+    parts.forEach((p, i) => INV.unshift({ id: Date.now() + i, to:p, ago:'just now', n:0 })); render(); showToast(parts.length + (parts.length > 1 ? ' invitations sent.' : ' invitation sent.'));
+  }
+  function resend(id){ const i = INV.find(x => x.id === id); i.n++; i.ago = 'just now'; render(); showToast('Invitation resent.'); }
+  function revoke(id){ INV = INV.filter(x => x.id !== id); render(); showToast('Invitation revoked. The link in it stops working.'); }
+  function resetLink(){ confirmDialog('Reset the invite link?', 'The current link stops working. Anyone who still has it will need the new one.', 'Reset link', () => { link = 'sme.sa/g/frc-' + Math.random().toString(36).slice(2, 6); render(); showToast('New link created.'); }, false); }
+  function delGroup(){
+    dialog('ov-del', `<div class="p-6"><p class="font-jakarta font-extrabold text-lg text-[#B0142F]">Delete Funding Readiness Circle?</p><p class="text-sm text-slate-500 mt-2 leading-relaxed">All posts, files and the member list are removed for good. Members are told the group has closed.</p><label class="text-[11px] font-bold uppercase tracking-wider text-slate-400 mt-4 block">Type the group name to confirm</label><input id="dg" oninput="document.getElementById('dgo').disabled = this.value.trim() !== 'Funding Readiness Circle'" class="mt-1.5 w-full h-11 rounded-lg border border-slate-200 px-3 text-sm outline-none focus:border-[#DC183C]"><div class="mt-5 flex gap-3 justify-end"><button onclick="closeOverlay('ov-del')" class="h-10 px-5 rounded-full border border-slate-200 text-sm font-bold">Keep group</button><button id="dgo" disabled onclick="closeOverlay('ov-del');showToast('Group deleted.')" class="h-10 px-5 rounded-full bg-[#DC183C] text-white text-sm font-bold disabled:opacity-40 disabled:cursor-not-allowed">Delete permanently</button></div></div>`);
+  }
+  // ---- invitee view
+  function renderInvite(){
+    document.getElementById('g-manage').classList.add('hidden'); const el = document.getElementById('g-invite'); el.classList.remove('hidden');
+    el.innerHTML = `<div class="max-w-xl mx-auto"><a href="member-notifications.html" class="inline-flex items-center gap-1.5 text-sm font-bold text-slate-500 hover:text-[#DC183C] mb-4"><i data-lucide="arrow-left" class="w-4 h-4"></i> Notifications</a>
+      <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden"><div class="h-28 bg-gradient-to-br from-[#0C1F31] to-[#DC183C]"></div><div class="px-6 pb-6 -mt-9"><div class="w-[72px] h-[72px] rounded-2xl bg-white ring-4 ring-white shadow grid place-items-center"><div class="w-full h-full rounded-2xl bg-gradient-to-br from-[#FF9900] to-[#DC183C] grid place-items-center text-white font-jakarta font-extrabold text-xl">FR</div></div>
+      <p class="text-[12.5px] text-slate-500 mt-3"><b class="text-[#121A21]">Thandi Mabasa</b> invited you to join</p><h1 class="font-jakarta font-extrabold text-2xl tracking-tight flex items-center gap-2">Funding Readiness Circle <button onclick="openBrief('groupmanage')" class="dev-badge w-5 h-5 rounded-full bg-[#DC183C] text-white items-center justify-center text-[10px] font-bold leading-none animate-pulse" title="Implementation notes">i</button></h1>
+      <p class="text-[13px] text-slate-500 mt-1">Private group &middot; 5 members &middot; Founders preparing a first funding application</p>
+      <div class="mt-5 rounded-xl bg-slate-50 border border-slate-200 p-4 text-[13.5px]"><p class="font-jakarta font-bold text-sm mb-1.5">Group rules</p><ol class="list-decimal pl-5 space-y-1 text-slate-600"><li>Be kind and specific.</li><li>No selling, and no asking for money.</li><li>Never share ID numbers, bank details or OTPs.</li></ol></div>
+      <div id="inv-actions" class="mt-5 flex flex-col sm:flex-row gap-3"><button onclick="accept()" class="h-11 px-6 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-jakarta font-bold text-sm transition">Accept and join</button><button onclick="decline()" class="h-11 px-6 rounded-full border border-slate-200 font-jakarta font-bold text-sm hover:border-[#0C1F31] transition">Decline</button><a href="single-group.html" class="h-11 leading-[44px] px-4 text-sm font-bold text-slate-500 hover:text-[#DC183C] text-center">Look around first</a></div>
+      <p class="text-[11.5px] text-slate-400 mt-3">Joining shows your name and business to group members. You can leave any time.</p></div></div></div>`;
+    lucide.createIcons();
+  }
+  function accept(){ document.getElementById('inv-actions').innerHTML = '<div class="w-full rounded-xl bg-[#E4F5EE] text-[#1E8E6A] font-semibold text-sm px-4 py-3 flex items-center justify-between gap-3"><span>You joined Funding Readiness Circle.</span><a href="single-group.html" class="font-bold underline">Open group</a></div>'; showToast('Welcome to the group.'); }
+  function decline(){ confirmDialog('Decline this invitation?', 'Thandi is not told you declined. You can still find the group later.', 'Decline', () => { document.getElementById('inv-actions').innerHTML = '<div class="w-full rounded-xl bg-slate-100 text-slate-600 font-semibold text-sm px-4 py-3">Invitation declined.</div>'; }, false); }
+  if(new URLSearchParams(location.search).get('view') === 'invite') renderInvite(); else render();
+
+  lucide.createIcons();
+</script>
+<script src="status.js"></script>
+<script src="gate-links.js"></script>
+</body>
+</html>

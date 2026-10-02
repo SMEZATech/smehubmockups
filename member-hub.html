@@ -121,7 +121,7 @@
           <a href="forums.html" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-[#DC183C] transition">Forums</a>
         </div>
       </div>
-      <a href="member-workspace.html" class="px-3 h-full text-[14px] font-semibold font-jakarta text-[#6A7581] hover:text-[#DC183C] border-b-[3px] border-transparent flex items-center gap-2 transition-colors"><i data-lucide="sparkles" class="w-4 h-4"></i> Workspace</a>
+      <a href="member-workspace.html" class="px-3 h-full text-[14px] font-semibold font-jakarta text-[#6A7581] hover:text-[#DC183C] border-b-[3px] border-transparent flex items-center gap-2 transition-colors"><i data-lucide="sparkles" class="w-4 h-4"></i> My Business</a>
       <a href="member-account.html" class="px-3 h-full text-[14px] font-semibold font-jakarta text-[#6A7581] hover:text-[#DC183C] border-b-[3px] border-transparent flex items-center gap-2 transition-colors"><i data-lucide="circle-user" class="w-4 h-4"></i> Account</a>
     </nav>
 
@@ -138,11 +138,11 @@
       
       <!-- Action Icons -->
       <div class="hidden sm:flex items-center gap-2">
-        <button class="relative text-slate-500 hover:text-[#121A21] transition-colors p-1.5" aria-label="Messages">
+        <button onclick="location.href='member-messages.html'" class="relative text-slate-500 hover:text-[#121A21] transition-colors p-1.5" aria-label="Messages">
           <i data-lucide="inbox" class="w-5 h-5"></i>
           <span class="absolute top-0 right-0 w-4 h-4 bg-[#DC183C] text-white text-[9px] font-bold rounded-full flex items-center justify-center ring-2 ring-white shadow-sm">1</span>
         </button>
-        <button class="relative text-slate-500 hover:text-[#121A21] transition-colors p-1.5" aria-label="Notifications">
+        <button onclick="location.href='member-notifications.html'" class="relative text-slate-500 hover:text-[#121A21] transition-colors p-1.5" aria-label="Notifications">
           <i data-lucide="bell" class="w-5 h-5"></i>
           <span class="absolute top-0 right-0 w-4 h-4 bg-[#DC183C] text-white text-[9px] font-bold rounded-full flex items-center justify-center ring-2 ring-white shadow-sm">8</span>
         </button>
@@ -202,7 +202,7 @@
   </div>
 </header>
 
-<!-- Mobile bottom tab bar, Home / Connect / Events / Workspace / Account -->
+<!-- Mobile bottom tab bar, Home / Connect / Events / My Business / Account -->
 <nav aria-label="Quick nav" class="lg:hidden fixed bottom-0 inset-x-0 z-40 bg-white border-t border-[#E7EBEF] shadow-[0_-4px_16px_-4px_rgba(12,31,49,0.08)]" style="padding-bottom:env(safe-area-inset-bottom)">
   <div class="grid grid-cols-5">
     <a href="member-hub.html" class="relative flex flex-col items-center justify-center gap-1 py-2.5 text-[#DC183C]">
@@ -220,7 +220,7 @@
     </a>
     <a href="member-workspace.html" class="flex flex-col items-center justify-center gap-1 py-2.5 text-slate-500 hover:text-[#121A21] transition">
       <i data-lucide="sparkles" class="w-5 h-5"></i>
-      <span class="font-jakarta text-[11px] font-bold">Workspace</span>
+      <span class="font-jakarta text-[11px] font-bold">My Business</span>
     </a>
     <a href="member-account.html" class="flex flex-col items-center justify-center gap-1 py-2.5 text-slate-500 hover:text-[#121A21] transition">
       <i data-lucide="circle-user" class="w-5 h-5"></i>
@@ -326,6 +326,7 @@
           </div>
         </div>
         <div id="composer-expanded" class="hidden"></div>
+        <div id="scheduled-chip" class="hidden px-5 pb-4 -mt-1"></div>
       </div>
 
       <!-- Sort tabs -->
@@ -351,44 +352,16 @@
     <!-- RIGHT RAIL -->
     <aside class="hidden lg:flex flex-col gap-5 lg:col-span-3">
 
-      <!-- AD BANNER -->
-      <div class="w-full bg-slate-50 rounded-2xl border border-slate-200 flex flex-col items-center justify-center text-slate-500 aspect-[6/5] shadow-inner overflow-hidden">
-        <img src="https://placehold.co/300x250/F8FAFC/94A3B8?text=Advertisement" alt="Ad Placeholder" class="w-full h-full object-cover">
-      </div>
-
-      <!-- Upcoming events -->
-      <div class="bg-white rounded-2xl border border-slate-100 overflow-hidden reveal" style="animation-delay:120ms">
-        <div class="px-5 py-3 border-b border-slate-100 flex items-center justify-between">
-          <h4 class="font-jakarta font-bold uppercase text-sm text-[#121A21] tracking-wide">Upcoming Events</h4>
-          <a href="events.html" class="text-[10px] font-bold uppercase text-[#DC183C] tracking-widest hover:underline">View all</a>
+      <!-- UPGRADE WIDGET (takes the ad slot; paying members see nothing here, same as the live smec_rail_ad) -->
+      <a href="public-premium-checkout.html" class="standard-only block w-full rounded-2xl overflow-hidden border border-slate-100 bg-[#0C1F31] relative aspect-[6/5] p-6 text-white group">
+        <div class="absolute inset-0 opacity-50" style="background:radial-gradient(circle at 85% 15%, #DC183C 0%, transparent 55%);"></div>
+        <div class="relative h-full flex flex-col">
+          <p class="text-[10px] font-bold uppercase tracking-widest text-[#FF9900]">SME South Africa Premium</p>
+          <p class="font-jakarta font-extrabold text-xl leading-tight mt-2">Never miss a SARS or CIPC deadline again.</p>
+          <p class="text-xs text-white/70 mt-2 leading-relaxed">Autopilot reminders, the Document Vault and unlimited invoices in My Business.</p>
+          <span class="mt-auto inline-flex items-center gap-1.5 self-start bg-[#DC183C] group-hover:bg-[#B0142F] transition text-white rounded-full px-4 py-2 text-xs font-bold"><i data-lucide="crown" class="w-3.5 h-3.5"></i> See Premium</span>
         </div>
-        <a href="event-single-in-person.html" class="block px-5 py-4 hover:bg-slate-50 transition group">
-          <div class="flex gap-4">
-            <div class="shrink-0 w-12 text-center bg-[#FFF1E0] rounded-lg py-1.5 border border-[#FF9900]/20 group-hover:bg-[#DC183C] transition-colors">
-              <p class="text-[9px] font-bold uppercase text-[#AE6B0A] tracking-widest group-hover:text-white">Jun</p>
-              <p class="font-jakarta font-extrabold text-xl text-[#121A21] leading-none mt-0.5 group-hover:text-white">23</p>
-            </div>
-            <div class="min-w-0">
-              <h5 class="font-bold text-sm text-[#121A21] leading-tight group-hover:text-[#DC183C] transition">Annual SME Funding Gala 2026</h5>
-              <p class="text-[11px] text-slate-500 mt-1 flex items-center gap-1"><i data-lucide="map-pin" class="w-3 h-3"></i> Focus Rooms, Sandton</p>
-              <p class="text-[11px] text-slate-500 mt-0.5 flex items-center gap-1"><i data-lucide="clock" class="w-3 h-3"></i> 08:30 AM SAST</p>
-            </div>
-          </div>
-        </a>
-        <a href="event-single-online.html" class="block px-5 py-4 hover:bg-slate-50 transition group border-t border-slate-100">
-          <div class="flex gap-4">
-            <div class="shrink-0 w-12 text-center bg-[#FFF1E0] rounded-lg py-1.5 border border-[#FF9900]/20 group-hover:bg-[#DC183C] transition-colors">
-              <p class="text-[9px] font-bold uppercase text-[#AE6B0A] tracking-widest group-hover:text-white">Jul</p>
-              <p class="font-jakarta font-extrabold text-xl text-[#121A21] leading-none mt-0.5 group-hover:text-white">09</p>
-            </div>
-            <div class="min-w-0">
-              <h5 class="font-bold text-sm text-[#121A21] leading-tight group-hover:text-[#DC183C] transition">Funding Without Tears Webinar</h5>
-              <p class="text-[11px] text-slate-500 mt-1 flex items-center gap-1"><i data-lucide="video" class="w-3 h-3"></i> Online · Zoom</p>
-              <p class="text-[11px] text-slate-500 mt-0.5 flex items-center gap-1"><i data-lucide="clock" class="w-3 h-3"></i> 11:00 AM SAST</p>
-            </div>
-          </div>
-        </a>
-      </div>
+      </a>
 
       <!-- Suggested members -->
       <div class="bg-white rounded-2xl border border-slate-100 overflow-hidden reveal" style="animation-delay:240ms">
@@ -575,7 +548,9 @@
       }
     ],
     sortBy: 'all',
-    composer: { open:false, content:'', topicOpen:false, type:null }
+    composer: { open:false, content:'', topicOpen:false, type:null, panel:null, photos:[], poll:null, link:null, gif:null, sched:null },
+    scheduled: [],
+    saved: {}, hidden: {}
   };
 
   // ===== HELPERS ===============================================================
@@ -637,7 +612,7 @@
       empty.classList.remove('hidden');
     } else {
       empty.classList.add('hidden');
-      feed.innerHTML = posts.map((p, i) => renderPost(p, i)).join('');
+      feed.innerHTML = posts.filter(p => !state.hidden[p.id]).map((p, i) => renderPost(p, i)).join('');
     }
     lucide.createIcons();
   }
@@ -666,6 +641,8 @@
       </a>`;
     }
 
+    if(p.poll) media += pollHTML(p);
+    if(state.saved[p.id]) media += '';
     return `
       <article class="bg-white rounded-2xl border border-slate-100 stripe-${p.type} card-lift reveal" style="animation-delay:${delay}ms">
         <div class="p-5">
@@ -674,7 +651,7 @@
             ${monogram(p.author.initials, 44)}
             <div class="min-w-0 flex-1">
               <p class="text-[14px] text-[#121A21] leading-snug">
-                <span class="font-bold">${esc(p.author.name)}</span> <span class="text-slate-500">${esc(p.action)}</span>
+                <span class="font-bold">${esc(p.author.name)}</span> <span class="text-slate-500">${esc(p.action)}</span>${p.pinned ? ' <span class="text-[10px] font-extrabold uppercase tracking-wider text-[#AE6B0A] bg-[#FFF1E0] px-1.5 py-0.5 rounded ml-1">Pinned</span>' : ''}${p.edited ? ' <span class="text-[11px] text-slate-400 font-medium">Edited</span>' : ''}${p.noComments ? ' <span class="text-[11px] text-slate-400 font-medium">Comments off</span>' : ''}
               </p>
               <div class="flex items-center gap-1.5 mt-0.5 text-[11px] text-slate-500 font-medium">
                 <a href="single-post.html" class="hover:text-[#DC183C] hover:underline">${esc(p.timeAgo)}</a>
@@ -683,7 +660,10 @@
                 <span class="ml-1 uppercase tracking-wider text-[9px] font-extrabold ${t.text} bg-slate-50 px-1.5 py-0.5 rounded border border-slate-100">${t.label}</span>
               </div>
             </div>
-            <button class="text-slate-500 hover:text-slate-600 p-1 rounded-md hover:bg-slate-50 transition"><i data-lucide="more-horizontal" class="w-4 h-4"></i></button>
+            <div class="relative">
+              <button onclick="togglePostMenu(event,${p.id})" aria-label="Post options" aria-haspopup="menu" class="text-slate-500 hover:text-slate-600 p-1.5 rounded-md hover:bg-slate-50 transition"><i data-lucide="more-horizontal" class="w-4 h-4"></i></button>
+              <div id="pm-${p.id}" role="menu" class="hidden absolute right-0 top-full mt-1 w-60 bg-white rounded-xl border border-slate-200 shadow-xl py-1.5 z-30 text-[13.5px] font-semibold text-slate-700">${postMenuItems(p)}</div>
+            </div>
           </div>
           
           <p class="text-[15px] text-[#121A21] leading-relaxed whitespace-pre-line">${esc(p.content)}</p>
@@ -704,15 +684,16 @@
             <i data-lucide="thumbs-up" class="w-4 h-4 ${p.liked ? 'fill-current' : ''}"></i>
             <span>Like</span>
           </button>
-          <button class="flex-1 flex items-center justify-center gap-2 py-3 rounded-lg hover:bg-slate-50 text-slate-500 text-[13.5px] font-bold transition">
+          <button onclick="toggleComments(${p.id})" class="flex-1 flex items-center justify-center gap-2 py-3 rounded-lg hover:bg-slate-50 text-slate-500 text-[13.5px] font-bold transition">
             <i data-lucide="message-circle" class="w-4 h-4"></i>
-            <span>Comment</span>
+            <span>Comment${p.comments ? ' (' + p.comments + ')' : ''}</span>
           </button>
           <button class="flex-1 flex items-center justify-center gap-2 py-3 rounded-lg hover:bg-slate-50 text-slate-500 text-[13.5px] font-bold transition">
             <i data-lucide="forward" class="w-4 h-4"></i>
             <span class="hidden sm:inline">Share</span>
           </button>
         </div>
+        <div id="cm-${p.id}" class="hidden border-t border-slate-100 px-5 py-4 bg-slate-50/60 rounded-b-2xl"></div>
       </article>
     `;
   }
@@ -727,12 +708,12 @@
 
   // ===== COMPOSER ==============================================================
   function openComposer(){
-    state.composer = { open:true, content:'', topicOpen:false, type:null };
+    state.composer = newComposer(true);
     renderComposer();
   }
 
   function closeComposer(){
-    state.composer = { open:false, content:'', topicOpen:false, type:null };
+    state.composer = newComposer(false);
     renderComposer();
   }
 
@@ -776,11 +757,11 @@
     // Updated to match exactly the "Create a post" screenshot layout
     expandedEl.innerHTML = `
       <div class="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-[#0C1F31]/60 backdrop-blur-sm" onclick="closeComposer()">
-        <div class="bg-white rounded-[12px] w-full max-w-2xl shadow-2xl overflow-hidden flex flex-col" onclick="event.stopPropagation()">
+        <div class="bg-white rounded-[12px] w-full max-w-2xl shadow-2xl overflow-y-auto max-h-[92vh] flex flex-col" onclick="event.stopPropagation()">
           
           <!-- Header -->
           <div class="px-5 py-4 border-b border-slate-100 flex items-center justify-between bg-white">
-            <h3 class="font-jakarta font-bold text-lg text-[#121A21]">Create a post</h3>
+            <h3 class="font-jakarta font-bold text-lg text-[#121A21] flex items-center gap-2">Create a post <button onclick="event.stopPropagation();openBrief('composer')" class="dev-badge w-5 h-5 rounded-full bg-[#DC183C] text-white items-center justify-center text-[10px] font-bold leading-none animate-pulse" title="Implementation notes">i</button></h3>
             <div class="flex items-center gap-2">
                <button onclick="closeComposer()" aria-label="Close" class="w-8 h-8 rounded-full hover:bg-slate-100 grid place-items-center text-slate-500 transition-colors"><i data-lucide="x" class="w-5 h-5"></i></button>
             </div>
@@ -807,19 +788,23 @@
               <!-- Formatting Icons -->
               <div class="absolute bottom-2 right-2 flex items-center gap-3 text-slate-500">
                  <button class="hover:text-slate-500 transition-colors font-bold text-lg leading-none" title="Text formatting">Aa</button>
-                 <button class="hover:text-slate-500 transition-colors font-bold text-lg leading-none" title="Mention">@</button>
-                 <button class="hover:text-slate-500 transition-colors" title="Emoji"><i data-lucide="smile" class="w-5 h-5"></i></button>
+                 <button onclick="composerInsert('@')" class="hover:text-slate-700 transition-colors font-bold text-lg leading-none" title="Mention a member">@</button>
+                 <button onclick="setPanel('emoji')" class="hover:text-slate-700 transition-colors" title="Emoji"><i data-lucide="smile" class="w-5 h-5"></i></button>
               </div>
             </div>
           </div>
           
+          <div class="px-6 pb-4 -mt-2">${composerExtras()}</div>
           <!-- Footer Actions -->
           <div class="px-6 py-4 border-t border-slate-100 bg-slate-50 flex items-center justify-between">
              <!-- Left Tools -->
              <div class="flex items-center gap-4 text-slate-500">
-                <button class="hover:text-slate-500 transition-colors" title="Add video"><i data-lucide="video" class="w-5 h-5"></i></button>
-                <button class="font-extrabold text-[11px] border-2 border-current rounded px-1.5 hover:text-slate-500 transition-colors" title="Add GIF">GIF</button>
-                <button class="hover:text-slate-500 transition-colors" title="Add poll"><i data-lucide="bar-chart-2" class="w-5 h-5"></i></button>
+                <input id="composer-photo" type="file" accept="image/jpeg,image/png,image/webp" multiple class="hidden" onchange="addPhotos(this.files)">
+                <button onclick="document.getElementById('composer-photo').click()" class="hover:text-[#DC183C] transition-colors" title="Add photos" aria-label="Add photos"><i data-lucide="image" class="w-5 h-5"></i></button>
+                <button onclick="showToast('Video: MP4 up to 100 MB, 5 minutes. Uploads in the background.', null)" class="hover:text-[#DC183C] transition-colors" title="Add video" aria-label="Add video"><i data-lucide="video" class="w-5 h-5"></i></button>
+                <button onclick="setPanel('gif')" class="font-extrabold text-[11px] border-2 border-current rounded px-1.5 hover:text-[#DC183C] transition-colors" title="Add GIF">GIF</button>
+                <button onclick="setPanel('poll')" class="hover:text-[#DC183C] transition-colors" title="Add poll" aria-label="Add poll"><i data-lucide="bar-chart-2" class="w-5 h-5"></i></button>
+                <button onclick="setPanel('link')" class="hover:text-[#DC183C] transition-colors" title="Add link" aria-label="Add link"><i data-lucide="link" class="w-5 h-5"></i></button>
              </div>
              
              <!-- Right Actions -->
@@ -838,13 +823,13 @@
                </div>
                
                <!-- Schedule -->
-               <button class="h-9 px-2 rounded-md border border-slate-200 text-slate-500 hover:bg-slate-50 transition-colors flex items-center gap-1" title="Schedule post">
+               <button onclick="setPanel('schedule')" class="h-9 px-2 rounded-md border ${state.composer.sched ? 'border-[#DC183C] text-[#DC183C] bg-[#FDECEF]' : 'border-slate-200 text-slate-500 hover:bg-slate-50'} transition-colors flex items-center gap-1" title="Schedule post" aria-label="Schedule post">
                  <i data-lucide="clock" class="w-4 h-4"></i> <i data-lucide="chevron-down" class="w-3 h-3 text-slate-500"></i>
                </button>
                
                <!-- Post Button -->
                <button onclick="submitPost()" class="h-9 px-6 rounded-md bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold text-sm transition-colors shadow-sm">
-                 Post
+                 ${state.composer.sched ? 'Schedule' : 'Post'}
                </button>
              </div>
           </div>
@@ -862,6 +847,14 @@
       showToast('Add some content first.', 'error');
       return;
     }
+    const c = state.composer;
+    if(c.sched){
+      state.scheduled.push({ id: ++nextId, content, type: c.type || 'share', at: c.sched.at, photos: c.photos.slice(), poll: c.poll, link: c.link, gif: c.gif });
+      state.scheduled.sort((a,b) => a.at - b.at);
+      closeComposer(); renderScheduledChip();
+      showToast('Scheduled for ' + fmtWhen(state.scheduled.find(x => x.content === content).at), null);
+      return;
+    }
     const newPost = {
       id: ++nextId,
       type: state.composer.type || 'share', // Default to share if none selected
@@ -874,6 +867,10 @@
       comments: 0,
       liked: false
     };
+    if(state.composer.photos[0]) newPost.image = state.composer.photos[0];
+    if(state.composer.gif) newPost.gif = state.composer.gif.src;
+    if(state.composer.poll) newPost.poll = { q: state.composer.poll.q, opts: state.composer.poll.opts.map(o => ({ t:o, v:0 })), voted:-1, days: state.composer.poll.days };
+    if(state.composer.link) newPost.link = state.composer.link;
     state.posts.unshift(newPost);
     closeComposer();
     state.sortBy = 'all';
@@ -881,6 +878,211 @@
     renderFeed();
     showToast(`Your post is live.`, 'share');
   }
+
+
+  // ===== P0 (2026-10-02): post menus, comments, report/delete/edit, composer extras, scheduled posts =====
+  function newComposer(open){ return { open:open, content:'', topicOpen:false, type:null, panel:null, photos:[], poll:null, link:null, gif:null, sched:null }; }
+  function fmtWhen(ts){ return new Date(ts).toLocaleString('en-ZA', { weekday:'short', day:'numeric', month:'short', hour:'2-digit', minute:'2-digit' }) + ' SAST'; }
+  function isMine(p){ return p.author && p.author.initials === ME.initials; }
+
+  // ---- post menu
+  function postMenuItems(p){
+    const it = (icon, label, act, cls) => `<button role="menuitem" onclick="postAction(${p.id},'${act}')" class="w-full text-left px-4 py-2 flex items-center gap-3 hover:bg-slate-50 ${cls || ''}"><i data-lucide="${icon}" class="w-4 h-4 shrink-0"></i>${label}</button>`;
+    const sep = '<div class="my-1.5 border-t border-slate-100"></div>';
+    if(isMine(p)) return it('pencil','Edit post','edit') + it(p.pinned ? 'pin-off' : 'pin', p.pinned ? 'Unpin from my profile' : 'Pin to my profile','pin') + it(p.noComments ? 'message-circle' : 'message-circle-off', p.noComments ? 'Turn comments on' : 'Turn comments off','comments') + it('link','Copy link','copy') + sep + it('trash-2','Delete post','delete','text-[#DC183C]') + dev;
+    const dev = `<div class="dev-badge px-4 py-1.5 border-t border-slate-100"><button onclick="openBrief('postmenu')" class="text-[11px] font-bold text-[#DC183C]">Implementation notes</button></div>`;
+    return it(state.saved[p.id] ? 'bookmark-check' : 'bookmark', state.saved[p.id] ? 'Remove from saved' : 'Save post','save') + it('bell','Turn on notifications for this post','notify') + it('link','Copy link','copy') + sep + it('eye-off','Hide this post','hide') + it('volume-x','Mute ' + esc(p.author.name.split(' ')[0]),'mute') + sep + it('flag','Report post','report','text-[#DC183C]') + dev;
+  }
+  function closeMenus(){ document.querySelectorAll('[id^="pm-"],[id^="cmenu-"]').forEach(m => m.classList.add('hidden')); }
+  function togglePostMenu(e, id){ e.stopPropagation(); const m = document.getElementById('pm-' + id); const was = m.classList.contains('hidden'); closeMenus(); if(was) m.classList.remove('hidden'); lucide.createIcons(); }
+  document.addEventListener('click', closeMenus);
+  function postAction(id, act){
+    closeMenus();
+    const p = state.posts.find(x => x.id === id); if(!p) return;
+    if(act === 'edit') return editDialog('post', id);
+    if(act === 'delete') return confirmDialog('Delete this post?', 'This removes the post, its comments and reactions. It cannot be undone.', 'Delete post', () => { state.posts = state.posts.filter(x => x.id !== id); renderFeed(); showToast('Post deleted.', null); });
+    if(act === 'report') return reportDialog('post', id);
+    if(act === 'pin'){ p.pinned = !p.pinned; renderFeed(); return showToast(p.pinned ? 'Pinned to your profile.' : 'Unpinned.', null); }
+    if(act === 'comments'){ p.noComments = !p.noComments; renderFeed(); return showToast(p.noComments ? 'Comments are off for this post.' : 'Comments are on.', null); }
+    if(act === 'save'){ state.saved[id] = !state.saved[id]; return showToast(state.saved[id] ? 'Saved. Find it under Your saved posts.' : 'Removed from saved.', null); }
+    if(act === 'notify') return showToast('You will be told about new comments on this post.', null);
+    if(act === 'copy') return showToast('Link copied.', null);
+    if(act === 'hide'){ state.hidden[id] = true; renderFeed(); return undoToast('Post hidden. We will show fewer like it.', () => { delete state.hidden[id]; renderFeed(); }); }
+    if(act === 'mute') return confirmDialog('Mute ' + p.author.name + '?', 'You stop seeing their posts in your feed. They are not told, and you stay connected.', 'Mute', () => showToast(p.author.name + ' muted. Undo in Account Settings, Privacy.', null));
+  }
+  function undoToast(msg, undo){
+    const el = document.getElementById('toast'); el.classList.remove('hidden');
+    el.innerHTML = `<div class="toast-in bg-[#0C1F31] text-white rounded-full pl-4 pr-3 py-2.5 shadow-2xl flex items-center gap-3 text-sm font-semibold"><span>${esc(msg)}</span><button id="undo-btn" class="text-[#FF9900] font-bold px-2">Undo</button></div>`;
+    document.getElementById('undo-btn').onclick = () => { undo(); el.classList.add('hidden'); el.innerHTML = ''; };
+    setTimeout(() => { el.classList.add('hidden'); el.innerHTML = ''; }, 5000);
+  }
+
+  // ---- generic dialogs (use the page's overlay root)
+  function dialog(id, html){
+    document.getElementById('overlay-root').innerHTML = `<div class="ov" id="${id}"><div class="ov-bg" onclick="closeOverlay('${id}')"></div><div class="modalbox" role="dialog" aria-modal="true">${html}</div></div>`;
+    requestAnimationFrame(() => { const o = document.getElementById(id); if(o) o.classList.add('open'); }); lucide.createIcons();
+  }
+  function confirmDialog(title, body, cta, fn){
+    window.__confirmFn = fn;
+    dialog('ov-confirm', `<div class="p-6"><p class="font-jakarta font-extrabold text-lg">${esc(title)}</p><p class="text-sm text-slate-500 mt-2 leading-relaxed">${esc(body)}</p>
+      <div class="mt-5 flex gap-3 justify-end"><button onclick="closeOverlay('ov-confirm')" class="h-10 px-5 rounded-full border border-slate-200 text-sm font-bold hover:border-[#0C1F31] transition">Cancel</button><button onclick="closeOverlay('ov-confirm'); window.__confirmFn()" class="h-10 px-5 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white text-sm font-bold transition">${esc(cta)}</button></div></div>`);
+  }
+  const REPORT_REASONS = [
+    ['spam','Spam or self-promotion'],['scam','Scam, or asks for money up front'],['funding','Misleading funding offer'],
+    ['harass','Harassment or abuse'],['hate','Hate speech'],['private','Shares someone\u2019s private details'],['off','Off topic'],['other','Something else']
+  ];
+  function reportDialog(kind, id){
+    dialog('ov-report', `<div class="p-6"><p class="font-jakarta font-extrabold text-lg">Report this ${kind}</p><p class="text-sm text-slate-500 mt-1">Reports are private. The author is not told who reported.</p>
+      <div class="mt-4 space-y-1.5" id="rep-reasons">${REPORT_REASONS.map(r => `<label class="flex items-center gap-3 rounded-lg border border-slate-200 px-3 py-2.5 text-sm font-semibold cursor-pointer hover:border-[#0C1F31]"><input type="radio" name="rep" value="${r[0]}" onchange="document.getElementById('rep-go').disabled=false"> ${r[1]}</label>`).join('')}</div>
+      <textarea id="rep-note" rows="2" placeholder="Anything we should know? (optional)" class="mt-3 w-full rounded-lg border border-slate-200 px-3 py-2 text-sm outline-none focus:border-[#DC183C]"></textarea>
+      <div class="mt-4 flex gap-3 justify-end"><button onclick="closeOverlay('ov-report')" class="h-10 px-5 rounded-full border border-slate-200 text-sm font-bold">Cancel</button><button id="rep-go" disabled onclick="closeOverlay('ov-report'); showToast('Thanks. A moderator will review it, usually within a day.', null)" class="h-10 px-5 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white text-sm font-bold disabled:opacity-40 disabled:cursor-not-allowed">Send report</button></div></div>`);
+  }
+  function editDialog(kind, id, cid){
+    const p = state.posts.find(x => x.id === id);
+    const cur = kind === 'post' ? p.content : (COMMENTS[id].find(c => c.id === cid) || {}).t;
+    dialog('ov-edit', `<div class="p-6"><p class="font-jakarta font-extrabold text-lg">Edit ${kind}</p>
+      <textarea id="edit-text" rows="5" class="mt-3 w-full rounded-lg border border-slate-200 px-3 py-2 text-[15px] outline-none focus:border-[#DC183C]">${esc(cur)}</textarea>
+      <p class="text-[12px] text-slate-400 mt-1.5">An \u201cEdited\u201d label is shown after you save.</p>
+      <div class="mt-4 flex gap-3 justify-end"><button onclick="closeOverlay('ov-edit')" class="h-10 px-5 rounded-full border border-slate-200 text-sm font-bold">Cancel</button><button onclick="saveEdit('${kind}',${id},${cid || 0})" class="h-10 px-5 rounded-full bg-[#0C1F31] hover:bg-[#16324a] text-white text-sm font-bold">Save</button></div></div>`);
+  }
+  function saveEdit(kind, id, cid){
+    const v = document.getElementById('edit-text').value.trim(); if(!v) return showToast('It cannot be empty.', 'error');
+    if(kind === 'post'){ const p = state.posts.find(x => x.id === id); p.content = v; p.edited = true; renderFeed(); }
+    else { const c = COMMENTS[id].find(x => x.id === cid); c.t = v; c.edited = true; renderComments(id); }
+    closeOverlay('ov-edit'); showToast('Saved.', null);
+  }
+
+  // ---- comments
+  const COMMENTS = {};
+  function seedComments(id){
+    if(COMMENTS[id]) return;
+    COMMENTS[id] = [
+      { id: id * 10 + 1, who:'Naledi M.', ini:'NM', t:'Congratulations, this is encouraging to read. Did you use a bank or an alternative lender?', ago:'2h', mine:false },
+      { id: id * 10 + 2, who:'Tshepho Joel', ini:'TJ', t:'Thank you. Happy to share what worked, message me.', ago:'1h', mine:true }
+    ];
+  }
+  function toggleComments(id){
+    const box = document.getElementById('cm-' + id); const p = state.posts.find(x => x.id === id);
+    if(!box.classList.contains('hidden')){ box.classList.add('hidden'); return; }
+    seedComments(id); box.classList.remove('hidden');
+    if(p.noComments){ box.innerHTML = '<p class="text-sm text-slate-500 flex items-center gap-2"><i data-lucide="message-circle-off" class="w-4 h-4"></i> The author has turned comments off for this post.</p>'; lucide.createIcons(); return; }
+    renderComments(id);
+  }
+  function renderComments(id){
+    const box = document.getElementById('cm-' + id);
+    box.innerHTML = COMMENTS[id].map(c => `<div class="flex gap-3 mb-3"><div class="w-8 h-8 rounded-full bg-gradient-to-br from-[#DC183C] to-[#FF9900] grid place-items-center text-white text-[10px] font-bold shrink-0">${c.ini}</div>
+      <div class="min-w-0 flex-1"><div class="bg-white border border-slate-200 rounded-2xl px-3.5 py-2.5 relative"><p class="text-[13px] font-bold">${esc(c.who)} <span class="text-slate-400 font-medium">${c.ago}${c.edited ? ' · Edited' : ''}</span></p><p class="text-[14px] text-slate-700 mt-0.5 break-words">${esc(c.t)}</p>
+        <div class="absolute top-1.5 right-1.5"><button onclick="toggleCommentMenu(event,${id},${c.id})" aria-label="Comment options" class="p-1 rounded text-slate-400 hover:text-slate-700 hover:bg-slate-50"><i data-lucide="more-horizontal" class="w-4 h-4"></i></button>
+          <div id="cmenu-${c.id}" role="menu" class="hidden absolute right-0 top-full mt-1 w-48 bg-white rounded-xl border border-slate-200 shadow-xl py-1.5 z-30 text-[13px] font-semibold text-slate-700">
+            ${c.mine ? `<button onclick="commentAction(${id},${c.id},'edit')" class="w-full text-left px-4 py-2 flex items-center gap-3 hover:bg-slate-50"><i data-lucide="pencil" class="w-4 h-4"></i>Edit</button><button onclick="commentAction(${id},${c.id},'delete')" class="w-full text-left px-4 py-2 flex items-center gap-3 hover:bg-slate-50 text-[#DC183C]"><i data-lucide="trash-2" class="w-4 h-4"></i>Delete</button>`
+              : `<button onclick="commentAction(${id},${c.id},'copy')" class="w-full text-left px-4 py-2 flex items-center gap-3 hover:bg-slate-50"><i data-lucide="link" class="w-4 h-4"></i>Copy link</button><button onclick="commentAction(${id},${c.id},'hide')" class="w-full text-left px-4 py-2 flex items-center gap-3 hover:bg-slate-50"><i data-lucide="eye-off" class="w-4 h-4"></i>Hide comment</button><button onclick="commentAction(${id},${c.id},'report')" class="w-full text-left px-4 py-2 flex items-center gap-3 hover:bg-slate-50 text-[#DC183C]"><i data-lucide="flag" class="w-4 h-4"></i>Report comment</button>`}
+          </div></div></div></div></div>`).join('') +
+      `<div class="flex gap-3 items-center"><div class="w-8 h-8 rounded-full bg-gradient-to-br from-[#DC183C] to-[#FF9900] grid place-items-center text-white text-[10px] font-bold shrink-0">TJ</div><input id="cin-${id}" placeholder="Write a comment..." onkeydown="if(event.key==='Enter')addComment(${id})" class="flex-1 h-10 rounded-full border border-slate-200 bg-white px-4 text-sm outline-none focus:border-[#DC183C]"><button onclick="addComment(${id})" class="h-10 px-4 rounded-full bg-[#0C1F31] text-white text-sm font-bold">Send</button></div>`;
+    lucide.createIcons();
+  }
+  function toggleCommentMenu(e, pid, cid){ e.stopPropagation(); const m = document.getElementById('cmenu-' + cid); const was = m.classList.contains('hidden'); closeMenus(); if(was) m.classList.remove('hidden'); }
+  function addComment(id){ const i = document.getElementById('cin-' + id); const v = i.value.trim(); if(!v) return; COMMENTS[id].push({ id: Date.now() % 1e6, who:'Tshepho Joel', ini:'TJ', t:v, ago:'now', mine:true }); const p = state.posts.find(x => x.id === id); p.comments = (p.comments || 0) + 1; renderComments(id); }
+  function commentAction(pid, cid, act){
+    closeMenus();
+    if(act === 'edit') return editDialog('comment', pid, cid);
+    if(act === 'copy') return showToast('Link copied.', null);
+    if(act === 'report') return reportDialog('comment', cid);
+    if(act === 'hide'){ const was = COMMENTS[pid].slice(); COMMENTS[pid] = COMMENTS[pid].filter(c => c.id !== cid); renderComments(pid); return undoToast('Comment hidden.', () => { COMMENTS[pid] = was; renderComments(pid); }); }
+    if(act === 'delete') return confirmDialog('Delete this comment?', 'It is removed for everyone.', 'Delete', () => { COMMENTS[pid] = COMMENTS[pid].filter(c => c.id !== cid); const p = state.posts.find(x => x.id === pid); p.comments = Math.max(0, (p.comments || 1) - 1); renderComments(pid); showToast('Comment deleted.', null); });
+  }
+
+  // ---- polls on posts
+  function pollHTML(p){
+    const total = p.poll.opts.reduce((a, o) => a + o.v, 0); const voted = p.poll.voted >= 0;
+    return `<div class="mt-4 rounded-xl border border-slate-200 p-4"><p class="font-jakarta font-bold text-[14px] mb-3">${esc(p.poll.q)}</p>` + p.poll.opts.map((o, i) => {
+      const pct = total ? Math.round(o.v * 100 / total) : 0;
+      return voted ? `<div class="mb-2 relative rounded-lg border ${p.poll.voted === i ? 'border-[#DC183C]' : 'border-slate-200'} overflow-hidden"><div class="absolute inset-y-0 left-0 ${p.poll.voted === i ? 'bg-[#FDECEF]' : 'bg-slate-100'}" style="width:${pct}%"></div><div class="relative px-3 py-2 text-[13.5px] font-semibold flex justify-between"><span>${esc(o.t)}</span><span>${pct}%</span></div></div>`
+        : `<button onclick="votePoll(${p.id},${i})" class="w-full text-left mb-2 rounded-lg border border-slate-200 hover:border-[#DC183C] px-3 py-2 text-[13.5px] font-semibold transition">${esc(o.t)}</button>`;
+    }).join('') + `<p class="text-[11.5px] text-slate-400 mt-1">${total} vote${total === 1 ? '' : 's'} · ${p.poll.days} day${p.poll.days > 1 ? 's' : ''} left${voted ? '' : ' · results show after you vote'}</p></div>`;
+  }
+  function votePoll(id, i){ const p = state.posts.find(x => x.id === id); p.poll.opts[i].v++; p.poll.voted = i; renderFeed(); }
+
+  // ---- composer extras
+  function setPanel(name){ state.composer.panel = state.composer.panel === name ? null : name; renderComposer(); }
+  function composerInsert(txt){ state.composer.content += txt; renderComposer(); setTimeout(() => { const t = document.getElementById('composer-textarea'); if(t){ t.focus(); t.setSelectionRange(t.value.length, t.value.length); } }, 30); }
+  function addPhotos(files){
+    const room = 4 - state.composer.photos.length; const list = Array.from(files).slice(0, room);
+    list.forEach(f => {
+      if(f.size > 5 * 1024 * 1024){ showToast(f.name + ' is over 5 MB. Choose a smaller photo.', 'error'); return; }
+      const r = new FileReader(); r.onload = () => { state.composer.photos.push(r.result); renderComposer(); }; r.readAsDataURL(f);
+    });
+    if(Array.from(files).length > room) showToast('You can add up to 4 photos.', null);
+  }
+  const EMOJI = ['\ud83d\udc4d','\ud83d\ude4f','\ud83c\udf89','\ud83d\udcaa','\ud83d\udd25','\ud83d\ude0a','\ud83d\ude4c','\ud83d\udca1','\ud83d\udcc8','\ud83d\udcb0','\ud83e\udd1d','\u2705','\u2764\ufe0f','\ud83d\ude80','\ud83c\uddff\ud83c\udde6','\ud83d\ude0e'];
+  const GIFS = [['Celebrate','#DC183C','#FF9900'],['Thank you','#29A37A','#0C1F31'],['Nice one','#FF9900','#DC183C'],['Hustle','#0C1F31','#DC183C'],['Cheers','#6A7581','#29A37A'],['Boom','#DC183C','#0C1F31']];
+  function gifSrc(g){ return 'data:image/svg+xml;utf8,' + encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" width="480" height="270"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${g[1]}"/><stop offset="1" stop-color="${g[2]}"/></linearGradient></defs><rect width="480" height="270" fill="url(#g)"/><text x="240" y="150" font-family="sans-serif" font-size="44" font-weight="800" fill="#fff" text-anchor="middle">${g[0]}</text></svg>`); }
+  function composerExtras(){
+    const c = state.composer; let out = '';
+    // attachments strip
+    if(c.photos.length) out += `<div class="mt-3 flex gap-2 flex-wrap">${c.photos.map((u, i) => `<div class="relative w-20 h-20 rounded-lg overflow-hidden border border-slate-200"><img src="${u}" class="w-full h-full object-cover" alt="Attached photo ${i + 1}"><button onclick="state.composer.photos.splice(${i},1);renderComposer()" aria-label="Remove photo" class="absolute top-1 right-1 w-5 h-5 rounded-full bg-black/60 text-white grid place-items-center"><i data-lucide="x" class="w-3 h-3"></i></button></div>`).join('')}</div>`;
+    const chip = (icon, label, clear) => `<span class="inline-flex items-center gap-2 text-[12.5px] font-semibold bg-slate-100 border border-slate-200 rounded-full pl-3 pr-1.5 py-1"><i data-lucide="${icon}" class="w-3.5 h-3.5"></i>${label}<button onclick="${clear}" aria-label="Remove" class="w-5 h-5 rounded-full hover:bg-slate-200 grid place-items-center"><i data-lucide="x" class="w-3 h-3"></i></button></span>`;
+    let chips = '';
+    if(c.gif) chips += chip('image', 'GIF: ' + esc(c.gif.name), 'state.composer.gif=null;renderComposer()');
+    if(c.poll) chips += chip('bar-chart-2', 'Poll: ' + esc(c.poll.q.slice(0, 28)), 'state.composer.poll=null;renderComposer()');
+    if(c.link) chips += chip('link', esc(c.link.domain), 'state.composer.link=null;renderComposer()');
+    if(c.sched) chips += chip('clock', 'Posts ' + fmtWhen(c.sched.at), 'state.composer.sched=null;renderComposer()');
+    if(chips) out += `<div class="mt-3 flex gap-2 flex-wrap">${chips}</div>`;
+    // panels
+    const box = inner => `<div class="mt-3 rounded-xl border border-slate-200 bg-slate-50 p-4" onclick="event.stopPropagation()">${inner}</div>`;
+    if(c.panel === 'emoji') out += box(`<div class="flex flex-wrap gap-1">${EMOJI.map(e => `<button onclick="composerInsert('${e}')" class="w-9 h-9 text-xl rounded-lg hover:bg-white">${e}</button>`).join('')}</div>`);
+    if(c.panel === 'gif') out += box(`<input placeholder="Search GIFs" class="w-full h-10 rounded-lg border border-slate-200 bg-white px-3 text-sm outline-none focus:border-[#DC183C] mb-3"><div class="grid grid-cols-3 gap-2">${GIFS.map((g, i) => `<button onclick="state.composer.gif={name:'${g[0]}',src:gifSrc(GIFS[${i}])};state.composer.panel=null;renderComposer()" class="h-20 rounded-lg text-white font-extrabold text-[13px]" style="background:linear-gradient(135deg,${g[1]},${g[2]})">${g[0]}</button>`).join('')}</div><p class="text-[11px] text-slate-400 mt-2">Powered by a GIF provider (to be chosen). Mockup tiles shown.</p>`);
+    if(c.panel === 'poll') out += box(`<input id="poll-q" maxlength="120" placeholder="Ask a question" class="w-full h-10 rounded-lg border border-slate-200 bg-white px-3 text-sm outline-none focus:border-[#DC183C] mb-2">
+      ${[1, 2, 3, 4].map(n => `<input class="poll-o w-full h-10 rounded-lg border border-slate-200 bg-white px-3 text-sm outline-none focus:border-[#DC183C] mb-2 ${n > 2 ? 'hidden' : ''}" id="poll-o${n}" maxlength="60" placeholder="Option ${n}${n > 2 ? ' (optional)' : ''}">`).join('')}
+      <div class="flex items-center justify-between gap-3 flex-wrap"><button onclick="['poll-o3','poll-o4'].forEach(i=>document.getElementById(i).classList.remove('hidden'))" class="text-[12.5px] font-bold text-[#DC183C]">+ Add options</button>
+      <div class="flex items-center gap-2"><select id="poll-d" class="h-9 rounded-lg border border-slate-200 bg-white text-sm px-2"><option value="1">1 day</option><option value="3" selected>3 days</option><option value="7">7 days</option></select><button onclick="donePoll()" class="h-9 px-4 rounded-full bg-[#0C1F31] text-white text-sm font-bold">Add poll</button></div></div>`);
+    if(c.panel === 'link') out += box(`<div class="flex gap-2"><input id="link-u" placeholder="Paste a link" class="flex-1 h-10 rounded-lg border border-slate-200 bg-white px-3 text-sm outline-none focus:border-[#DC183C]"><button onclick="doneLink()" class="h-10 px-4 rounded-full bg-[#0C1F31] text-white text-sm font-bold">Add</button></div><p class="text-[11.5px] text-slate-400 mt-2">We fetch the title and preview when you post.</p>`);
+    if(c.panel === 'schedule'){
+      const d = new Date(Date.now() + 24 * 3600e3); const iso = d.toISOString().slice(0, 10);
+      out += box(`<p class="font-jakarta font-bold text-[14px] mb-2">Schedule this post</p><div class="flex gap-2 flex-wrap items-center"><input id="sch-d" type="date" value="${c.sched ? new Date(c.sched.at).toISOString().slice(0, 10) : iso}" class="h-10 rounded-lg border border-slate-200 bg-white px-3 text-sm"><input id="sch-t" type="time" value="08:00" class="h-10 rounded-lg border border-slate-200 bg-white px-3 text-sm"><span class="text-[12px] text-slate-500 font-semibold">South African time (SAST)</span></div>
+        <p class="text-[11.5px] text-slate-400 mt-2">Between 15 minutes and 30 days from now. Members in the feed see it at that time. You can edit or cancel it under Scheduled posts.</p><p id="sch-err" class="text-[12.5px] text-[#DC183C] font-semibold mt-2 hidden"></p>
+        <div class="mt-3 flex gap-2"><button onclick="doneSchedule()" class="h-9 px-4 rounded-full bg-[#0C1F31] text-white text-sm font-bold">Set time</button>${c.sched ? `<button onclick="state.composer.sched=null;state.composer.panel=null;renderComposer()" class="h-9 px-4 rounded-full border border-slate-200 text-sm font-bold">Post now instead</button>` : ''}</div>`);
+    }
+    return out;
+  }
+  function donePoll(){
+    const q = document.getElementById('poll-q').value.trim(); const opts = [1, 2, 3, 4].map(n => document.getElementById('poll-o' + n).value.trim()).filter(Boolean);
+    if(!q || opts.length < 2) return showToast('A poll needs a question and at least 2 options.', 'error');
+    state.composer.poll = { q, opts, days: +document.getElementById('poll-d').value }; state.composer.panel = null; renderComposer();
+  }
+  function doneLink(){
+    let u = document.getElementById('link-u').value.trim(); if(!u) return;
+    if(!/^https?:\/\//i.test(u)) u = 'https://' + u;
+    let host; try { host = new URL(u).hostname.replace(/^www\./, ''); } catch(e){ return showToast('That does not look like a link.', 'error'); }
+    state.composer.link = { url:u, title:'Link from ' + host, domain:host }; state.composer.panel = null; renderComposer();
+  }
+  function doneSchedule(){
+    const d = document.getElementById('sch-d').value, t = document.getElementById('sch-t').value; const err = document.getElementById('sch-err');
+    const at = new Date(d + 'T' + t + ':00+02:00').getTime(); const now = Date.now();
+    let m = ''; if(!d || !t || isNaN(at)) m = 'Choose a date and time.'; else if(at < now + 15 * 60e3) m = 'Pick a time at least 15 minutes from now.'; else if(at > now + 30 * 24 * 3600e3) m = 'Posts can be scheduled up to 30 days ahead.';
+    if(m){ err.textContent = m; err.classList.remove('hidden'); return; }
+    state.composer.sched = { at }; state.composer.panel = null; renderComposer();
+  }
+
+  // ---- scheduled posts list
+  function renderScheduledChip(){
+    const el = document.getElementById('scheduled-chip'); if(!el) return;
+    if(!state.scheduled.length){ el.classList.add('hidden'); el.innerHTML = ''; return; }
+    el.classList.remove('hidden');
+    el.innerHTML = `<button onclick="openScheduled()" class="inline-flex items-center gap-2 text-[12.5px] font-bold text-[#AE6B0A] bg-[#FFF1E0] hover:bg-[#FFE6C7] rounded-full px-3.5 py-1.5 transition"><i data-lucide="clock" class="w-3.5 h-3.5"></i>${state.scheduled.length} scheduled post${state.scheduled.length > 1 ? 's' : ''}</button>`;
+    lucide.createIcons();
+  }
+  function openScheduled(){
+    const rows = state.scheduled.length ? state.scheduled.map(x => `<div class="py-3 border-t border-slate-100 first:border-t-0"><p class="text-[13.5px] text-slate-700 line-clamp-2">${esc(x.content)}</p><p class="text-[12px] font-bold text-[#AE6B0A] mt-1 flex items-center gap-1.5"><i data-lucide="clock" class="w-3.5 h-3.5"></i>${fmtWhen(x.at)}</p>
+      <div class="mt-2 flex gap-2"><button onclick="schedPostNow(${x.id})" class="h-8 px-3 rounded-full bg-[#0C1F31] text-white text-[12px] font-bold">Post now</button><button onclick="schedEdit(${x.id})" class="h-8 px-3 rounded-full border border-slate-200 text-[12px] font-bold hover:border-[#0C1F31]">Edit</button><button onclick="schedCancel(${x.id})" class="h-8 px-3 rounded-full text-[12px] font-bold text-[#DC183C] hover:bg-[#FDECEF]">Cancel</button></div></div>`).join('')
+      : '<p class="text-sm text-slate-500 py-6 text-center">Nothing scheduled. Use the clock in the post box to schedule one.</p>';
+    dialog('ov-sched', `<div class="p-6"><div class="flex items-start justify-between"><p class="font-jakarta font-extrabold text-lg">Scheduled posts</p><button onclick="closeOverlay('ov-sched')" aria-label="Close" class="text-slate-400 hover:text-slate-700"><i data-lucide="x" class="w-5 h-5"></i></button></div><div class="mt-2 max-h-[60vh] overflow-y-auto">${rows}</div></div>`);
+  }
+  function schedPostNow(id){ const x = state.scheduled.find(s => s.id === id); state.scheduled = state.scheduled.filter(s => s.id !== id); const p = { id: ++nextId, type:x.type, timeAgo:'Just now', tsMin:0, action:'posted an update', author:{ name:ME.name, initials:ME.initials, role:ME.role, company:ME.company, interest:ME.interest, sector:ME.sector, province:ME.province }, content:x.content, likes:0, comments:0, liked:false }; if(x.photos && x.photos[0]) p.image = x.photos[0]; if(x.link) p.link = x.link; state.posts.unshift(p); closeOverlay('ov-sched'); renderScheduledChip(); renderFeed(); showToast('Posted.', null); }
+  function schedCancel(id){ state.scheduled = state.scheduled.filter(s => s.id !== id); renderScheduledChip(); closeOverlay('ov-sched'); if(state.scheduled.length) setTimeout(openScheduled, 320); showToast('Scheduled post cancelled.', null); }
+  function schedEdit(id){ const x = state.scheduled.find(s => s.id === id); state.scheduled = state.scheduled.filter(s => s.id !== id); closeOverlay('ov-sched'); state.composer = newComposer(true); state.composer.content = x.content; state.composer.type = x.type; state.composer.sched = { at: x.at }; state.composer.photos = x.photos || []; state.composer.link = x.link || null; renderScheduledChip(); setTimeout(renderComposer, 320); }
+  (function seed(){ const base = Date.now(); state.scheduled = [
+    { id: 9001, content:'Reminder: the compliance webinar is on 29 October. Bring your CIPC questions.', type:'share', at: base + 20 * 3600e3, photos:[] },
+    { id: 9002, content:'What is one thing you wish you knew before your first funding application?', type:'ask', at: base + 4 * 24 * 3600e3, photos:[] } ]; renderScheduledChip(); })();
 
   // ===== TOAST =================================================================
   function showToast(msg, kind){
@@ -903,6 +1105,16 @@
   const BRIEFS = {
     footer:{ title:'Community Footer', sub:'Shared app-shell component', purpose:'The closing utility bar for every logged-in community screen (Feed, Members, Groups, Forums, Profile, Account). Deliberately minimal &mdash; a single thin row, not a marketing footer &mdash; so it closes the app experience the same way the BuddyBoss header opens it, bookending all 9 community templates consistently.', data:'Static link list: <code>{ label, href }[]</code> &mdash; About, Help Centre, Terms, Privacy. No dynamic data.', logic:'Rendered identically on every community template (member-hub, members, single-member, single-post, groups, single-group, forums, single-discussion, member-account). All four links resolve to existing public pages.', components:'Copyright + Community tag (left) &middot; utility link row (right).', specs:'<b>Container:</b> <code>bg-white border-t border-slate-200</code> &mdash; light, matches the header, NOT the navy marketing surface used for hero bands elsewhere on the site. <code>max-w-7xl</code>, 20px vertical padding (<code>py-5</code>), stacks to a column below <code>sm</code>.<br/><b>Left group:</b> 12px (<code>text-xs</code>) slate-500, <code>&middot;</code> separator slate-300, "Community" tag 10px weight 800 uppercase tracking-widest slate-400 &mdash; a quiet reminder you\'re inside the app, not the marketing site.<br/><b>Right nav:</b> 12px weight 600 slate-500, 20px gap, hover <code>#DC183C</code>.<br/><br/><b>Why this differs from the (not-yet-built) public-site footer:</b> Articles/Resources/marketing pages are editorial and SEO-facing &mdash; that footer should be the tall, dark <code>navy</code> sitemap block with category columns, socials and a newsletter CTA, matching the hero-band treatment used across the public site. This community footer is the opposite on purpose: thin, light, utility-only &mdash; a logged-in member is inside a tool, not reading an article, so the chrome should get out of the way rather than sell anything.' },
     
+    postmenu: { title:'Post and comment menus', sub:'Own post vs someone else\u2019s, report, hide, mute',
+      purpose:'Every post and comment needs controls. Members manage their own content and protect themselves from others\u2019. Reporting is private and routes to moderators.',
+      data:'post.pinned, post.comments_closed, post.edited_at, saved_posts(user_id, post_id), hidden_posts(user_id, post_id), muted_users(user_id, muted_id), reports(id, kind, object_id, reporter_id, reason, note, status, created_at).',
+      logic:'Own post: Edit, Pin to profile, Turn comments off, Copy link, Delete (confirm). Others: Save, Notify, Copy link, Hide (undo for 5s), Mute (confirm), Report. Own comment: Edit, Delete. Others\u2019 comment: Copy link, Hide, Report. Report reasons include Scam or up-front money and Misleading funding offer because that is the abuse this audience sees. Edited posts show an Edited label. Deleting a post cascades comments and reactions. Moderators and group organisers get extra items (remove, ban) on the live build.',
+      components:'Menu popover, confirm dialog, report dialog with 8 reasons, edit dialog, undo toast.' },
+    composer: { title:'Composer extras and scheduled posts', sub:'Photos, GIF, poll, link, emoji, mention, schedule',
+      purpose:'Bring the composer to parity with what members already use on social platforms, and let organisers and members plan posts.',
+      data:'posts.status = published|scheduled, posts.publish_at (UTC), post_media (up to 4 images, 5 MB each), post_poll(question, options, ends_at), post_link(url, title, image).',
+      logic:'Schedule window is 15 minutes to 30 days, entered in SAST and stored in UTC. A scheduled post is private to the author until publish time; it can be edited, posted now or cancelled from Scheduled posts. The cron publisher runs every minute and must obey the duplicate-post guard. Poll results show after you vote. One poll, one link or one GIF per post. Open questions: GIF provider and its licence, video size limit, and whether scheduled posts count toward the comms ceiling (they should not, they are member content).',
+      components:'Toolbar, emoji panel, GIF panel, poll builder, link panel, schedule panel, attachment chips, scheduled-posts dialog.' },
     suggested: {
       title:'Suggested Members', sub:'Smart discovery, replaces &ldquo;New This Week&rdquo;',
       purpose:'Connects founders who can actually help each other. Shows <b>only</b> members who (1) share interests / sector / stage and (2) have a <b>completed profile</b> (green check). Chronological &ldquo;new members&rdquo; was noise, this is signal.',

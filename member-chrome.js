@@ -4,8 +4,8 @@
  * Shows what a signed-in member sees on pages outside the community area
  * (insights, resources, funding, shop, glossary and so on): the same content
  * navigation, but "Sign in / Join Now" are replaced by a way back into the member
- * area (Workspace button, notifications, avatar menu), and the mobile tab bar's
- * "Sign Up" tab becomes "Workspace".
+ * area (My Business button, notifications, avatar menu), and the mobile tab bar's
+ * "Sign Up" tab becomes "My Business".
  *
  * Preview only. State lives in sessionStorage:
  *   ?as=member   switch this tab to the logged-in view (remembered while browsing)
@@ -29,6 +29,28 @@
   } catch (_) {}
   var host = location.hostname;
   var reviewing = explicit || mode === 'member' || location.protocol === 'file:' || host === 'localhost' || host === '127.0.0.1';
+
+  /*
+   * Signed-in members never use the public funding hub: its Apply buttons and the hub itself send them to the
+   * same screens inside My Business (the live site does this with a 302 for logged-in visitors only).
+   * Logged-out visitors and search engines keep the public page.
+   */
+  if (mode === 'member') {
+    var _page = (location.pathname.split('/').pop() || '');
+    if (_page === 'public-funding.html') {
+      var _apply = /[?&]apply=1/.test(location.search) || location.hash === '#apply';
+      location.replace('member-workspace.html#' + (_apply ? 'funding-new' : 'funding-options'));
+      return;
+    }
+    document.addEventListener('click', function(e){
+      var a = e.target.closest && e.target.closest('a[href]');
+      if (!a) return;
+      var h = a.getAttribute('href') || '';
+      if (!/^public-funding\.html/.test(h)) return;
+      e.preventDefault();
+      location.href = 'member-workspace.html#' + (/[?&]apply=1|#apply/.test(h) ? 'funding-new' : 'funding-options');
+    }, true);
+  }
 
   function el(html){ var t = document.createElement('template'); t.innerHTML = html.trim(); return t.content.firstChild; }
   function icons(){ if (window.lucide && lucide.createIcons) lucide.createIcons(); }
@@ -74,13 +96,13 @@
 
   var cluster = el(
     '<div id="smeMemberCluster" class="flex items-center gap-1 sm:gap-2">' +
-      '<a href="member-workspace.html" class="hidden md:inline-flex items-center gap-2 px-4 h-9 rounded-full text-sm font-bold text-white bg-[#0C1F31] hover:bg-[#16314a] transition"><i data-lucide="layout-dashboard" class="w-4 h-4"></i>Workspace</a>' +
+      '<a href="member-workspace.html" class="hidden md:inline-flex items-center gap-2 px-4 h-9 rounded-full text-sm font-bold text-white bg-[#0C1F31] hover:bg-[#16314a] transition"><i data-lucide="layout-dashboard" class="w-4 h-4"></i>My Business</a>' +
       '<div class="relative">' +
         '<button type="button" id="smeBellBtn" aria-label="Notifications" aria-expanded="false" class="relative w-9 h-9 grid place-items-center rounded-full hover:bg-slate-100 text-slate-600"><i data-lucide="bell" class="w-[18px] h-[18px]"></i><span class="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-[#DC183C] ring-2 ring-white"></span></button>' +
         '<div id="smeBellMenu" class="hidden fixed left-3 right-3 top-[68px] sm:absolute sm:left-auto sm:right-0 sm:top-full sm:mt-2 sm:w-80 bg-white rounded-2xl border border-[#E7EBEF] shadow-xl z-40 overflow-hidden">' +
           '<div class="flex items-center justify-between px-4 py-3 border-b border-[#E7EBEF]"><p class="font-jakarta font-extrabold text-sm">Notifications</p><a href="member-hub.html" class="text-[11px] font-bold text-[#DC183C] hover:underline">Open Community</a></div>' +
           '<a href="member-hub.html" class="flex items-start gap-3 px-4 py-3 hover:bg-slate-50 transition"><span class="w-9 h-9 rounded-xl bg-[#FDECEF] text-[#DC183C] grid place-items-center shrink-0"><i data-lucide="message-circle" class="w-4 h-4"></i></span><span><span class="block text-[13px] font-bold leading-tight">Sipho replied to your post</span><span class="block text-xs text-slate-500 mt-0.5">Invoice finance worked for us</span></span></a>' +
-          '<a href="member-workspace.html" class="flex items-start gap-3 px-4 py-3 hover:bg-slate-50 transition"><span class="w-9 h-9 rounded-xl bg-[#E4F5EE] text-[#29A37A] grid place-items-center shrink-0"><i data-lucide="trending-up" class="w-4 h-4"></i></span><span><span class="block text-[13px] font-bold leading-tight">Your Success Plan has a new action</span><span class="block text-xs text-slate-500 mt-0.5">Open your Workspace to see it</span></span></a>' +
+          '<a href="member-workspace.html" class="flex items-start gap-3 px-4 py-3 hover:bg-slate-50 transition"><span class="w-9 h-9 rounded-xl bg-[#E4F5EE] text-[#29A37A] grid place-items-center shrink-0"><i data-lucide="trending-up" class="w-4 h-4"></i></span><span><span class="block text-[13px] font-bold leading-tight">Your Success Plan has a new action</span><span class="block text-xs text-slate-500 mt-0.5">Open My Business to see it</span></span></a>' +
           '<a href="events.html" class="flex items-start gap-3 px-4 py-3 hover:bg-slate-50 transition"><span class="w-9 h-9 rounded-xl bg-[#FFF1E0] text-[#AE6B0A] grid place-items-center shrink-0"><i data-lucide="calendar-days" class="w-4 h-4"></i></span><span><span class="block text-[13px] font-bold leading-tight">Webinar starting soon</span><span class="block text-xs text-slate-500 mt-0.5">Cash flow for small teams</span></span></a>' +
         '</div>' +
       '</div>' +
@@ -88,7 +110,7 @@
         '<button type="button" id="smeAvatarBtn" aria-label="Account menu" aria-expanded="false" class="flex items-center gap-1.5 pl-0.5 pr-1.5 h-9 rounded-full hover:bg-slate-100 transition">' + avatar(32) + '<i data-lucide="chevron-down" class="w-3.5 h-3.5 text-slate-500 hidden sm:block"></i></button>' +
         '<div id="smeAvatarMenu" class="hidden fixed left-3 right-3 top-[68px] sm:absolute sm:left-auto sm:right-0 sm:top-full sm:mt-2 sm:w-64 bg-white rounded-2xl border border-[#E7EBEF] shadow-xl z-40 p-2">' +
           '<div class="flex items-center gap-3 px-3 py-3 border-b border-[#E7EBEF] mb-1">' + avatar(40) + '<div class="min-w-0"><p class="font-jakarta font-extrabold text-sm leading-tight truncate">' + USER.name + '</p><p class="text-xs text-slate-500 truncate">' + USER.role + '</p></div></div>' +
-          item('member-workspace.html', 'layout-dashboard', 'My Workspace') +
+          item('member-workspace.html', 'layout-dashboard', 'My Business') +
           item('member-hub.html', 'users', 'Community') +
           item('members.html', 'user-round-search', 'Connect') +
           item('events.html', 'calendar-days', 'Events') +
@@ -118,12 +140,12 @@
   var mk = function(href, icon, label){ return '<a href="' + href + '" class="flex items-center gap-3 px-2 py-3 text-sm font-semibold text-slate-700 hover:text-[#DC183C] border-b border-slate-100"><i data-lucide="' + icon + '" class="w-4 h-4 text-slate-400"></i>' + label + '</a>'; };
   if (panel) {
     panel.insertBefore(el(lbl('Explore').replace('pt-4', 'pt-2')), panel.firstChild);
-    var member = el('<div>' + lbl('Your space') + mk('member-hub.html', 'home', 'Home (Community)') + mk('members.html', 'user-round-search', 'Connect') + mk('events.html', 'calendar-days', 'Events') + mk('member-workspace.html', 'sparkles', 'My Workspace') + mk('member-account.html', 'circle-user', 'Account settings') + '<button type="button" onclick="smeSetViewAs(\'visitor\')" class="w-full flex items-center gap-3 px-2 py-3 text-sm font-semibold text-slate-700 hover:text-[#DC183C] text-left"><i data-lucide="log-out" class="w-4 h-4 text-slate-400"></i>Sign out</button></div>');
+    var member = el('<div>' + lbl('Your space') + mk('member-hub.html', 'home', 'Home (Community)') + mk('members.html', 'user-round-search', 'Connect') + mk('events.html', 'calendar-days', 'Events') + mk('member-workspace.html', 'sparkles', 'My Business') + mk('member-account.html', 'circle-user', 'Account settings') + '<button type="button" onclick="smeSetViewAs(\'visitor\')" class="w-full flex items-center gap-3 px-2 py-3 text-sm font-semibold text-slate-700 hover:text-[#DC183C] text-left"><i data-lucide="log-out" class="w-4 h-4 text-slate-400"></i>Sign out</button></div>');
     if (panelSignIn) { panelSignIn.remove(); }
     while (member.firstChild) panel.appendChild(member.firstChild);
   }
 
-  /* mobile bottom tab bar for members: Home (community), Connect, Events, Workspace, Account */
+  /* mobile bottom tab bar for members: Home (community), Connect, Events, My Business, Account */
   var tabBar = document.querySelector('nav[aria-label="Quick nav"]');
   if (tabBar) {
     var here = (location.pathname.split('/').pop() || '');
@@ -131,7 +153,7 @@
       ['member-hub.html', 'home', 'Home'],
       ['members.html', 'users', 'Connect'],
       ['events.html', 'calendar-days', 'Events'],
-      ['member-workspace.html', 'sparkles', 'Workspace'],
+      ['member-workspace.html', 'sparkles', 'My Business'],
       ['member-account.html', 'circle-user', 'Account']
     ];
     tabBar.innerHTML = '<div class="grid grid-cols-5">' + T.map(function(t){

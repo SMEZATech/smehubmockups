@@ -4,6 +4,11 @@
  * Allowed: "finalised" | "under-review" | "under-work" | "not-started"
  */
 window.MOCKUP_STATUS = {
+  "member-messages.html": "under-review",
+  "member-notifications.html": "under-review",
+  "member-photo.html": "under-review",
+  "member-group-manage.html": "under-review",
+  "public-verify-email.html": "under-review",
   "public-home.html": "finalised",
   "public-articles.html": "finalised",
   "public-article-categories.html": "finalised",
@@ -25,8 +30,6 @@ window.MOCKUP_STATUS = {
   "archive/public-pricing.html": "not-started",
   "public-brands.html": "finalised",
   "public-brand.html": "finalised",
-  "public-deals.html": "not-started",
-  "public-deal.html": "not-started",
   "public-guides.html": "finalised",
   "public-guide.html": "finalised",
   "public-founder-focus-category.html": "finalised",
@@ -63,8 +66,6 @@ window.MOCKUP_STATUS = {
   "event-single-online.html": "finalised",
   "event-speaker.html": "finalised",
   "event-speakers.html": "finalised",
-  "event-library.html": "under-review",
-  "event-presentation.html": "under-review",
   "public-glossary.html": "finalised",
   "public-glossary-categories.html": "finalised",
   "public-glossary-category.html": "finalised",

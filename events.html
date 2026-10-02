@@ -74,7 +74,6 @@
       </div>
       <a href="public-solutions.html" class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition">Solutions</a>
       <a href="podcast.html"          class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition">Podcast</a>
-      <a href="public-shop.html"      class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition">Shop</a>
     </nav>
     <div class="flex items-center gap-1 sm:gap-2 ml-2 sm:ml-3">
       <button onclick="toggleChromeSearch()" aria-label="Search" class="w-9 h-9 grid place-items-center rounded-full hover:bg-slate-100 text-slate-600"><i data-lucide="search" class="w-4 h-4"></i></button>
@@ -92,7 +91,6 @@
       <a href="public-funding.html"   class="px-2 py-3 text-sm font-semibold text-slate-700 hover:text-[#DC183C] border-b border-slate-100">Funding</a>
       <a href="public-solutions.html" class="px-2 py-3 text-sm font-semibold text-slate-700 hover:text-[#DC183C] border-b border-slate-100">Solutions</a>
       <a href="podcast.html"          class="px-2 py-3 text-sm font-semibold text-slate-700 hover:text-[#DC183C] border-b border-slate-100">Podcast</a>
-      <a href="public-shop.html"      class="px-2 py-3 text-sm font-semibold text-slate-700 hover:text-[#DC183C] border-b border-slate-100">Shop</a>
       <a href="public-auth.html" class="px-2 py-3 text-sm font-semibold text-slate-700 hover:text-[#DC183C]">Sign in</a>
     </nav>
   </div>
@@ -144,7 +142,7 @@
     <div class="grid grid-cols-2 md:grid-cols-6 gap-8">
       <div class="col-span-2">
         <a href="public-home.html" class="flex items-center gap-2.5"><img src="assets/logo-v1-lockup-reversed.svg" alt="SME South Africa" class="h-9 w-auto" /></a>
-        <p class="text-sm text-white/55 mt-4 max-w-xs leading-relaxed">South Africa's leading SME community, connecting founders with funding, mentorship, events, and the tools to scale.</p>
+        <p class="text-sm text-white/55 mt-4 max-w-xs leading-relaxed">A community for South African SME owners, connecting founders with funding, events, and the tools to scale.</p>
         <div class="flex items-center gap-2 mt-5">
           <a href="#" aria-label="X" class="w-9 h-9 rounded-lg bg-white/8 hover:bg-white/15 grid place-items-center transition"><svg viewBox="0 0 24 24" class="w-4 h-4" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24h-6.66l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
           <a href="#" aria-label="LinkedIn" class="w-9 h-9 rounded-lg bg-white/8 hover:bg-white/15 grid place-items-center transition"><svg viewBox="0 0 24 24" class="w-4 h-4" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0z"/></svg></a>
@@ -157,6 +155,7 @@
       <div>
         <p class="text-[11px] font-bold uppercase tracking-widest text-[#FF9900]">Platform</p>
         <ul class="mt-4 space-y-2.5 text-sm text-white/70">
+          <li><a href="public-workspace.html" class="hover:text-white">My Business</a></li>
           <li><a href="public-resources.html" class="hover:text-white">Resources Library</a></li>
           <li><a href="public-funding.html" class="hover:text-white">Funding Portal</a></li>
           <li><a href="public-solutions.html" class="hover:text-white">Solutions Directory</a></li>
@@ -359,7 +358,7 @@
               <p class="text-slate-500 text-sm leading-relaxed line-clamp-3 mb-6 flex-1">${ev.description}</p>
               <div class="mt-auto">
                 <p class="font-extrabold text-[#121A21] text-sm mb-4">${ev.logistics.display_date} • ${ev.logistics.display_time}</p>
-                <a href="${eventDetailUrl(ev)}" class="w-full inline-flex items-center justify-center bg-[#0C1F31] hover:bg-[#091621] text-white font-bold text-sm py-3 rounded-xl transition-colors shadow-sm">Learn more</a>
+                <a href="${eventDetailUrl(ev)}" class="w-full inline-flex items-center justify-center bg-[#0C1F31] hover:bg-[#16324A] text-white font-bold text-sm py-3 rounded-xl transition-colors shadow-sm">Learn more</a>
               </div>
             </div>
           </article>`).join('')}
@@ -432,7 +431,7 @@
       data:'Event (CPT <code>event</code>): <code>{ post_title, post_name, post_excerpt, meta_type ("IN-PERSON"|"ONLINE"), meta_start (datetime), meta_end (datetime), meta_venue (name/address for IN-PERSON) or meta_platform ("Zoom"/"Teams"…), taxonomy_category, meta_hero_image, meta_featured (bool) }</code>. Status computed at render, Upcoming / LIVE NOW / Past.',
       logic:'Archive template = <code>archive-event.php</code>. Query all published events, sort featured→date-asc. Filter chips (type, category), search string. "Learn more" routes to <code>event-single-in-person.html</code> or <code>event-single-online.html</code> based on <code>meta_type</code>. Past-event replays and photo galleries are separate templates, see BRIEFs in those files.',
       components:'hero + breadcrumb · filter/search bar (type chips + topic dropdown + search + reset, single row) · event card grid (image + category chip + status chip + type + title + date/time + Learn more) · pagination · empty state.',
-      specs:'<b>Hero:</b> hero-bg gradient, max-w-[1200px], py-14. H1 Plus Jakarta 800, 30/48px, leading-tight. Sub 18px white/70.<br/><b>Filter bar:</b> rounded-2xl border #E7EBEF p-5, overflow visible (for dropdown). Type chips h-9 px-4 rounded-full, active #DC183C white, inactive white/slate-500 border #E7EBEF. Topic dropdown: h-9 pill button (tag icon + label + chevron), active state #FDECEF/#DC183C border #F6C7D3; opens an absolute panel (w-64, rounded-xl, shadow-xl, z-30) listing All + 8 categories with a check mark on the active row; closes on selection or outside click. Search input h-11 pl-9 pr-3 rounded-lg bg slate-50 border #E7EBEF, focus border #DC183C.<br/><b>Event card:</b> rounded-2xl border #E7EBEF shadow-sm; hover shadow-xl + translateY(-4px). Image 224px cover, category chip absolute top-3 left-3 (#FDECEF/#DC183C). Type row 12px uppercase slate-500 with map-pin/video icon. Title Plus Jakarta 800 18px #0C1F31 hover #DC183C. Description slate-500 line-clamp-3. Date/time weight 800 14px #121A21. CTA h-12 rounded-xl #0C1F31 hover #091621.<br/><b>Past-events band:</b> 2-col md, rounded-2xl border #E7EBEF p-6. 48&times;48 rounded-xl icon tile. Eyebrow 10px uppercase (#DC183C or #AE6B0A) + title 18px 800 + description slate-500.'
+      specs:'<b>Hero:</b> hero-bg gradient, max-w-[1200px], py-14. H1 Plus Jakarta 800, 30/48px, leading-tight. Sub 18px white/70.<br/><b>Filter bar:</b> rounded-2xl border #E7EBEF p-5, overflow visible (for dropdown). Type chips h-9 px-4 rounded-full, active #DC183C white, inactive white/slate-500 border #E7EBEF. Topic dropdown: h-9 pill button (tag icon + label + chevron), active state #FDECEF/#DC183C border #F6C7D3; opens an absolute panel (w-64, rounded-xl, shadow-xl, z-30) listing All + 8 categories with a check mark on the active row; closes on selection or outside click. Search input h-11 pl-9 pr-3 rounded-lg bg slate-50 border #E7EBEF, focus border #DC183C.<br/><b>Event card:</b> rounded-2xl border #E7EBEF shadow-sm; hover shadow-xl + translateY(-4px). Image 224px cover, category chip absolute top-3 left-3 (#FDECEF/#DC183C). Type row 12px uppercase slate-500 with map-pin/video icon. Title Plus Jakarta 800 18px #0C1F31 hover #DC183C. Description slate-500 line-clamp-3. Date/time weight 800 14px #121A21. CTA h-12 rounded-xl #0C1F31 hover #16324A.<br/><b>Past-events band:</b> 2-col md, rounded-2xl border #E7EBEF p-6. 48&times;48 rounded-xl icon tile. Eyebrow 10px uppercase (#DC183C or #AE6B0A) + title 18px 800 + description slate-500.'
     };
 
     function toggleDevMode(){const on=document.body.classList.toggle('dev-on');const b=document.getElementById('devToggle');if(b)b.classList.toggle('on',on);if(on)showToast('Dev Mode on, tap ⓘ for the BRIEF.');if(window.lucide)lucide.createIcons();}
