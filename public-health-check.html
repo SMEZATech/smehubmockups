@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Business Health Check — SME South Africa</title>
+  <meta name="description" content="A few quick questions, about three minutes. See your Business Health Score out of 100, the five areas it breaks into, and what's worth doing next." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  <script>
+    tailwind.config = { theme: { extend: { fontFamily: {
+      jakarta: ['Plus Jakarta Sans', 'sans-serif'],
+      inter: ['Inter', 'system-ui', 'sans-serif']
+    } } } };
+  </script>
+
+  <style>
+    html, body { font-family: 'Inter', system-ui, sans-serif; }
+    .font-jakarta { font-family: 'Plus Jakarta Sans', sans-serif; letter-spacing: 0.005em; }
+    @keyframes fadeUp { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
+    .reveal { animation: fadeUp .4s cubic-bezier(.2,.7,.2,1) backwards; }
+    .hero-bg { background: linear-gradient(115deg,#0C1F31 0%,#0C1F31 46%,#2b1626 76%,#5e1a2c 105%); }
+    .dot-pattern { background-image: radial-gradient(rgba(255,255,255,.07) 1px, transparent 1.5px); background-size: 22px 22px; }
+    .dev-badge { display:none; }
+    body.dev-on .dev-badge { display:inline-flex; }
+    #devToggle.on { background:#DC183C; color:#fff; border-color:#DC183C; }
+    .ov { position:fixed; inset:0; z-index:60; }
+    .ov-bg { position:absolute; inset:0; background:rgba(12,31,49,.45); backdrop-filter:blur(2px); opacity:0; transition:opacity .3s; }
+    .ov.open .ov-bg { opacity:1; }
+    .drawer { position:absolute; right:0; top:0; height:100%; width:100%; max-width:440px; background:#fff; box-shadow:-12px 0 40px rgba(12,31,49,.25); overflow-y:auto; transform:translateX(100%); transition:transform .3s cubic-bezier(.2,.7,.2,1); }
+    .ov.open .drawer { transform:translateX(0); }
+    .search-overlay{position:absolute;inset:0;background:#fff;z-index:20;display:flex;align-items:center;justify-content:center;padding:0 1rem;opacity:0;pointer-events:none;transform:translateY(-8px);transition:all .25s cubic-bezier(.2,.8,.2,1);}
+    .search-overlay.active{opacity:1;pointer-events:auto;transform:translateY(0);}
+    @media (min-width:640px){ .search-overlay{padding:0 1.5rem;} }
+
+    .field{width:100%;background:#fff;border:1px solid #E7EBEF;border-radius:.75rem;height:3rem;padding:0 1rem;font-size:.9rem;outline:none;transition:border-color .15s,box-shadow .15s;}
+    .field:focus{border-color:#DC183C;box-shadow:0 0 0 3px rgba(220,24,60,.12);}
+    select.field{appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%236A7581' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 1rem center;padding-right:2.5rem;}
+
+    .hc-stage{background:radial-gradient(120% 100% at 50% -10%, rgba(220,24,60,.07), transparent 55%), linear-gradient(180deg,#F6F3F0,#FCFCFC 320px);position:relative;overflow:hidden;}
+    .hc-stage::before{content:'';position:absolute;inset:0;background-image:radial-gradient(rgba(12,31,49,.05) 1px,transparent 1.5px);background-size:20px 20px;pointer-events:none;}
+    .hc-card{position:relative;background:#fff;border-radius:1.75rem;border:1px solid #EEF1F4;box-shadow:0 20px 45px -24px rgba(12,31,49,.22);padding:2rem 1.5rem;}
+    @media (min-width:640px){ .hc-card{padding:2.75rem;} }
+    .hc-card.hc-card--dark{background:linear-gradient(115deg,#0C1F31 0%,#0C1F31 46%,#2b1626 76%,#5e1a2c 105%);border-color:transparent;}
+
+    .hc-step{display:none;}
+    .hc-step.active{display:block;}
+    .hc-option{text-align:left;width:100%;padding:1.05rem 1.2rem;border:1.5px solid #E7EBEF;border-radius:1rem;background:#fff;transition:border-color .15s,background .15s,box-shadow .15s,transform .1s;}
+    .hc-option:hover{border-color:var(--hc-accent,#DC183C);box-shadow:0 8px 20px -12px rgba(12,31,49,.18);transform:translateY(-1px);}
+    .hc-option.selected{border-color:var(--hc-accent,#DC183C);background:var(--hc-accent-tint,#FDECEF);box-shadow:0 8px 20px -12px rgba(12,31,49,.18);}
+    .hc-option .hc-radio{width:22px;height:22px;border-radius:999px;border:2px solid #CBD5E1;flex-shrink:0;display:grid;place-items:center;transition:border-color .15s,background .15s;}
+    .hc-option.selected .hc-radio{border-color:var(--hc-accent,#DC183C);background:var(--hc-accent,#DC183C);}
+    .hc-option.selected .hc-radio::after{content:'';width:9px;height:9px;border-radius:999px;background:#fff;}
+    .hc-dim-tile{width:56px;height:56px;border-radius:1.1rem;display:grid;place-items:center;background:var(--hc-accent-tint,#FDECEF);color:var(--hc-accent,#DC183C);}
+    .hc-dot{width:7px;height:7px;border-radius:999px;}
+  </style>
+</head>
+<body class="bg-[#FCFCFC] text-[#121A21] antialiased">
+
+<!-- ===================== HEADER (shared public chrome — identical to public-home.html) ===================== -->
+<header class="bg-white border-b border-[#E7EBEF] sticky top-0 z-30 relative">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center gap-3">
+    <a href="public-home.html" class="flex items-center gap-2.5 shrink-0">
+      <img src="assets/logo-v1-lockup.svg" alt="SME South Africa" class="h-9 w-auto" />
+    </a>
+    <nav class="hidden lg:flex items-center gap-1 ml-auto">
+      <div class="relative" onmouseleave="closeChromeDrop('articles')">
+        <button onclick="toggleChromeDrop('articles')" class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition inline-flex items-center gap-1">Articles <i data-lucide="chevron-down" class="w-3.5 h-3.5"></i></button>
+        <div id="dropArticles" class="hidden absolute left-0 top-full mt-1 w-64 bg-white rounded-xl border border-[#E7EBEF] shadow-xl py-2 z-30">
+          <a href="public-category.html" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-[#DC183C] transition">Starting a Business</a>
+          <a href="public-category.html" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-[#DC183C] transition">Managing a Business</a>
+          <a href="public-category.html" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-[#DC183C] transition">Growing a Business</a>
+          <div class="my-1.5 border-t border-slate-100"></div>
+          <a href="public-founder-focus-category.html" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-[#DC183C] transition">Founder Focus</a>
+          <a href="public-category.html" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-[#DC183C] transition">Business Opportunities</a>
+        </div>
+      </div>
+      <div class="relative" onmouseleave="closeChromeDrop('resources')">
+        <button onclick="toggleChromeDrop('resources')" class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition inline-flex items-center gap-1">Resources <i data-lucide="chevron-down" class="w-3.5 h-3.5"></i></button>
+        <div id="dropResources" class="hidden absolute left-0 top-full mt-1 w-56 bg-white rounded-xl border border-[#E7EBEF] shadow-xl py-2 z-30">
+          <a href="public-resource-category.html?type=ebooks" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-[#DC183C] transition">Ebooks</a>
+          <a href="public-resource-category.html?type=templates" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-[#DC183C] transition">Templates</a>
+          <a href="public-resource-category.html?type=guides" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-[#DC183C] transition">Guides</a>
+          <a href="public-resource-category.html?type=reports" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-[#DC183C] transition">Reports</a>
+        </div>
+      </div>
+      <div class="relative" onmouseleave="closeChromeDrop('funding')">
+        <button onclick="toggleChromeDrop('funding')" class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition inline-flex items-center gap-1">Funding <i data-lucide="chevron-down" class="w-3.5 h-3.5"></i></button>
+        <div id="dropFunding" class="hidden absolute left-0 top-full mt-1 w-60 bg-white rounded-xl border border-[#E7EBEF] shadow-xl py-2 z-30">
+          <a href="public-loan-option.html" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-[#DC183C] transition">Invoice Finance</a>
+          <a href="public-loan-option.html" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-[#DC183C] transition">Inventory Finance</a>
+          <a href="public-loan-option.html" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-[#DC183C] transition">Unsecured Business Loan</a>
+          <a href="public-loan-option.html" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-[#DC183C] transition">Purchase Order Funding</a>
+          <a href="public-loan-option.html" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-[#DC183C] transition">Bridging Finance</a>
+          <a href="public-loan-option.html" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-[#DC183C] transition">Working Capital Loans</a>
+        </div>
+      </div>
+      <a href="public-workspace.html" class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition inline-flex items-center gap-1.5">Workspace <span class="text-[9px] font-extrabold uppercase tracking-wide bg-[#FDECEF] text-[#DC183C] px-1.5 py-0.5 rounded-full">Premium</span></a>
+      <a href="public-solutions.html" class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition">Solutions</a>
+      <a href="podcast.html"          class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition">Podcast</a>
+      <a href="public-shop.html"      class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition">Shop</a>
+    </nav>
+    <div class="flex items-center gap-1 sm:gap-2 ml-2 sm:ml-3">
+      <button onclick="toggleChromeSearch()" aria-label="Search" class="w-9 h-9 grid place-items-center rounded-full hover:bg-slate-100 text-slate-600"><i data-lucide="search" class="w-4 h-4"></i></button>
+      <a href="public-auth.html" class="hidden sm:inline-flex items-center px-3 h-9 rounded-full text-sm font-bold text-[#121A21] hover:bg-slate-100 transition">Sign in</a>
+      <a href="public-pricing.html" class="inline-flex items-center px-4 h-9 rounded-full text-sm font-bold text-white bg-[#DC183C] hover:bg-[#B0142F] transition">Join Now</a>
+      <button onclick="toggleChromeBurger()" aria-label="Menu" class="lg:hidden w-9 h-9 grid place-items-center rounded-full hover:bg-slate-100 text-slate-600 ml-1">
+        <i id="chromeBurgerIcon" data-lucide="menu" class="w-5 h-5"></i>
+      </button>
+    </div>
+  </div>
+  <div id="chromeBurgerPanel" class="hidden lg:hidden border-t border-[#E7EBEF] bg-white">
+    <nav class="max-w-7xl mx-auto px-4 sm:px-6 py-2 flex flex-col">
+      <a href="public-articles.html"  class="px-2 py-3 text-sm font-semibold text-slate-700 hover:text-[#DC183C] border-b border-slate-100">Articles</a>
+      <a href="public-resources.html" class="px-2 py-3 text-sm font-semibold text-slate-700 hover:text-[#DC183C] border-b border-slate-100">Resources</a>
+      <a href="public-funding.html"   class="px-2 py-3 text-sm font-semibold text-slate-700 hover:text-[#DC183C] border-b border-slate-100">Funding</a>
+      <a href="public-workspace.html" class="px-2 py-3 text-sm font-semibold text-slate-700 hover:text-[#DC183C] border-b border-slate-100 flex items-center gap-2">Workspace <span class="text-[9px] font-extrabold uppercase tracking-wide bg-[#FDECEF] text-[#DC183C] px-1.5 py-0.5 rounded-full">Premium</span></a>
+      <a href="public-solutions.html" class="px-2 py-3 text-sm font-semibold text-slate-700 hover:text-[#DC183C] border-b border-slate-100">Solutions</a>
+      <a href="podcast.html"          class="px-2 py-3 text-sm font-semibold text-slate-700 hover:text-[#DC183C] border-b border-slate-100">Podcast</a>
+      <a href="public-shop.html"      class="px-2 py-3 text-sm font-semibold text-slate-700 hover:text-[#DC183C] border-b border-slate-100">Shop</a>
+      <a href="public-auth.html" class="px-2 py-3 text-sm font-semibold text-slate-700 hover:text-[#DC183C]">Sign in</a>
+    </nav>
+  </div>
+  <div id="chromeSearchOverlay" class="search-overlay">
+    <div class="w-full max-w-2xl flex items-center gap-3">
+      <div class="relative flex-1">
+        <i data-lucide="search" class="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500"></i>
+        <input id="chromeSearchInput" type="text" placeholder="Search articles, resources, funding…" class="w-full h-11 pl-11 pr-4 text-sm bg-slate-50 border border-[#DC183C] rounded-full focus:outline-none focus:ring-2 focus:ring-[#DC183C]/20" onkeydown="if(event.key==='Enter') location.href='public-search.html';" />
+      </div>
+      <button onclick="toggleChromeSearch()" class="text-slate-500 hover:text-[#121A21] p-2 transition-colors shrink-0" aria-label="Close search"><i data-lucide="x" class="w-5 h-5"></i></button>
+    </div>
+  </div>
+</header>
+
+<!-- Mobile bottom tab bar -->
+<nav aria-label="Quick nav" class="lg:hidden fixed bottom-0 inset-x-0 z-40 bg-white border-t border-[#E7EBEF] shadow-[0_-4px_16px_-4px_rgba(12,31,49,0.08)]" style="padding-bottom:env(safe-area-inset-bottom)">
+  <div class="grid grid-cols-5">
+    <a href="public-home.html" class="flex flex-col items-center justify-center gap-1 py-2.5 text-slate-500 hover:text-[#121A21] transition">
+      <i data-lucide="house" class="w-5 h-5"></i>
+      <span class="font-jakarta text-[11px] font-bold">Home</span>
+    </a>
+    <a href="public-articles.html" class="flex flex-col items-center justify-center gap-1 py-2.5 text-slate-500 hover:text-[#121A21] transition">
+      <i data-lucide="lightbulb" class="w-5 h-5"></i>
+      <span class="font-jakarta text-[11px] font-bold">Insights</span>
+    </a>
+    <a href="public-funding.html" class="flex flex-col items-center justify-center gap-1 py-2.5 text-slate-500 hover:text-[#121A21] transition">
+      <i data-lucide="banknote" class="w-5 h-5"></i>
+      <span class="font-jakarta text-[11px] font-bold">Funding</span>
+    </a>
+    <a href="public-resources.html" class="flex flex-col items-center justify-center gap-1 py-2.5 text-slate-500 hover:text-[#121A21] transition">
+      <i data-lucide="book-open" class="w-5 h-5"></i>
+      <span class="font-jakarta text-[11px] font-bold">Resources</span>
+    </a>
+    <a href="public-health-check.html" class="relative flex flex-col items-center justify-center gap-1 py-2.5 text-[#DC183C]">
+      <span class="absolute top-0 left-1/2 -translate-x-1/2 w-8 h-0.5 rounded-full bg-[#DC183C]"></span>
+      <i data-lucide="activity" class="w-5 h-5"></i>
+      <span class="font-jakarta text-[11px] font-bold">Health Check</span>
+    </a>
+  </div>
+</nav>
+
+<div class="hc-stage">
+<main class="max-w-2xl mx-auto px-4 sm:px-6 py-10 sm:py-16 relative">
+
+  <!-- Progress bar — questions + account + business steps only -->
+  <div id="hcProgressWrap" class="hidden mb-6">
+    <div class="flex items-center justify-between text-xs font-bold text-[#6A7581] mb-2">
+      <span id="hcProgressLabel">Question 1 of 5</span>
+      <button onclick="hcBack()" class="text-[#DC183C] hover:underline">Back</button>
+    </div>
+    <div class="h-2 bg-white rounded-full overflow-hidden shadow-inner"><div id="hcProgressFill" class="h-full transition-all duration-300" style="width:14%;background:#DC183C"></div></div>
+  </div>
+
+  <!-- ============ INTRO ============ -->
+  <div id="hc-intro" class="hc-step active hc-card text-center reveal">
+    <div class="w-16 h-16 rounded-2xl mx-auto grid place-items-center bg-gradient-to-br from-[#DC183C] to-[#FF9900] shadow-lg shadow-[#DC183C]/20">
+      <i data-lucide="activity" class="w-8 h-8 text-white"></i>
+    </div>
+    <span class="inline-flex items-center gap-1.5 bg-[#FDECEF] text-[#DC183C] text-[11px] font-extrabold uppercase tracking-widest px-3.5 py-1.5 rounded-full mt-5">
+      3-Minute Health Check · No Cost
+    </span>
+    <h1 class="font-jakarta font-extrabold text-3xl sm:text-4xl tracking-tight mt-4">Business Health Check
+      <button onclick="openBrief()" class="dev-badge align-middle ml-1 w-6 h-6 rounded-full bg-[#FF9900] text-[#0C1F31] items-center justify-center text-[11px] font-bold" title="Implementation notes">i</button>
+    </h1>
+    <p class="mt-4 text-lg text-[#6A7581] max-w-lg mx-auto leading-relaxed">A few quick questions. See your score out of 100, the five areas it breaks into, and what's worth doing next.</p>
+
+    <div class="mt-7 grid grid-cols-5 gap-2 max-w-sm mx-auto">
+      <div class="flex flex-col items-center gap-1.5"><div class="w-10 h-10 rounded-xl grid place-items-center bg-[#FDECEF] text-[#DC183C]"><i data-lucide="wallet" class="w-4.5 h-4.5"></i></div><span class="text-[10px] font-semibold text-[#6A7581]">Cash flow</span></div>
+      <div class="flex flex-col items-center gap-1.5"><div class="w-10 h-10 rounded-xl grid place-items-center bg-[#FFF1E0] text-[#AE6B0A]"><i data-lucide="shield-check" class="w-4.5 h-4.5"></i></div><span class="text-[10px] font-semibold text-[#6A7581]">Compliance</span></div>
+      <div class="flex flex-col items-center gap-1.5"><div class="w-10 h-10 rounded-xl grid place-items-center bg-[#E4F5EE] text-[#29A37A]"><i data-lucide="users" class="w-4.5 h-4.5"></i></div><span class="text-[10px] font-semibold text-[#6A7581]">Customers</span></div>
+      <div class="flex flex-col items-center gap-1.5"><div class="w-10 h-10 rounded-xl grid place-items-center bg-[#F0F5F9] text-[#0C1F31]"><i data-lucide="settings-2" class="w-4.5 h-4.5"></i></div><span class="text-[10px] font-semibold text-[#6A7581]">Operations</span></div>
+      <div class="flex flex-col items-center gap-1.5"><div class="w-10 h-10 rounded-xl grid place-items-center bg-[#FFF1E0] text-[#AE6B0A]"><i data-lucide="trending-up" class="w-4.5 h-4.5"></i></div><span class="text-[10px] font-semibold text-[#6A7581]">Growth</span></div>
+    </div>
+
+    <button onclick="hcStart()" class="mt-8 inline-flex items-center gap-2 px-7 h-12 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold transition shadow-lg shadow-[#DC183C]/20">
+      Start the check <i data-lucide="arrow-right" class="w-4 h-4"></i>
+    </button>
+    <p class="mt-4 text-xs text-[#6A7581] flex items-center justify-center gap-1.5"><i data-lucide="shield-check" class="w-3.5 h-3.5 text-[#29A37A]"></i> No documents needed. No credit card.</p>
+    <p class="mt-6 text-sm text-[#6A7581]">Already have an account? <a href="public-auth.html" class="text-[#DC183C] font-semibold hover:underline">Sign in</a></p>
+  </div>
+
+  <!-- ============ QUESTIONS (rendered by JS) ============ -->
+  <div id="hc-question" class="hc-step hc-card">
+    <div class="flex items-center gap-4">
+      <div id="hcQTile" class="hc-dim-tile shrink-0"><i data-lucide="wallet" class="w-6 h-6"></i></div>
+      <div>
+        <p id="hcQDim" class="text-[11px] font-extrabold uppercase tracking-widest" style="color:var(--hc-accent,#DC183C)"></p>
+        <h2 id="hcQText" class="font-jakarta font-extrabold text-xl sm:text-2xl tracking-tight mt-0.5"></h2>
+      </div>
+    </div>
+    <p id="hcQSub" class="mt-4 text-[#6A7581]"></p>
+    <div id="hcQOptions" class="mt-5 space-y-3"></div>
+  </div>
+
+  <!-- ============ ACCOUNT ============ -->
+  <div id="hc-account" class="hc-step hc-card">
+    <div class="w-12 h-12 rounded-xl grid place-items-center bg-[#FDECEF] text-[#DC183C] mb-4"><i data-lucide="user-round-plus" class="w-6 h-6"></i></div>
+    <h2 class="font-jakarta font-extrabold text-2xl sm:text-[28px] tracking-tight">Create your account to see your score</h2>
+    <p class="mt-2 text-[#6A7581]">Takes about 10 seconds. We'll use this to save your results and build your Workspace.</p>
+    <div class="mt-6 space-y-4">
+      <button type="button" onclick="showToast('Google sign-up — not wired in this mockup.')" class="w-full h-12 rounded-xl border border-[#E7EBEF] hover:bg-slate-50 transition flex items-center justify-center gap-2.5 font-semibold text-sm">
+        <svg width="18" height="18" viewBox="0 0 48 48"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3c-1.6 4.7-6.1 8-11.3 8-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.1 8 3l5.7-5.7C34.6 6.1 29.6 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.7-.4-3.5z"/><path fill="#FF3D00" d="m6.3 14.7 6.6 4.8C14.5 15.9 18.9 13 24 13c3.1 0 5.8 1.1 8 3l5.7-5.7C34.6 6.1 29.6 4 24 4c-7.4 0-13.8 4.1-17.1 10.1z"/><path fill="#4CAF50" d="M24 44c5.5 0 10.4-1.9 14.3-5.1l-6.6-5.6c-2 1.5-4.6 2.5-7.7 2.5-5.2 0-9.6-3.3-11.3-8l-6.6 5c3.3 6.5 9.9 11 17.9 11z"/><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.3-2.2 4.2-4.1 5.6l6.6 5.6c-.5.4 7.2-5.3 7.2-15.2 0-1.3-.1-2.7-.4-3.5z"/></svg>
+        Continue with Google
+      </button>
+      <div class="flex items-center gap-3"><div class="flex-1 h-px bg-[#E7EBEF]"></div><span class="text-[11px] font-bold uppercase tracking-wide text-[#6A7581]">Or use email</span><div class="flex-1 h-px bg-[#E7EBEF]"></div></div>
+      <div><label class="block text-sm font-semibold mb-1.5">Full name</label><input id="hcName" required class="field" placeholder="Thabo Nkosi" /></div>
+      <div><label class="block text-sm font-semibold mb-1.5">Business email</label><input id="hcEmail" type="email" required class="field" placeholder="you@business.co.za" /></div>
+      <div><label class="block text-sm font-semibold mb-1.5">Password</label><input id="hcPassword" type="password" required class="field" placeholder="Create a password" /></div>
+      <button onclick="hcSubmitAccount()" class="w-full h-12 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold transition shadow-lg shadow-[#DC183C]/20">Continue</button>
+      <p class="text-[11px] text-[#6A7581] text-center">By continuing you agree to our <a href="public-terms.html" class="text-[#DC183C] font-semibold hover:underline">Terms</a> and <a href="public-privacy.html" class="text-[#DC183C] font-semibold hover:underline">Privacy Policy</a>.</p>
+    </div>
+  </div>
+
+  <!-- ============ BUSINESS DETAILS ============ -->
+  <div id="hc-business" class="hc-step hc-card">
+    <div class="w-12 h-12 rounded-xl grid place-items-center bg-[#E4F5EE] text-[#29A37A] mb-4"><i data-lucide="building-2" class="w-6 h-6"></i></div>
+    <h2 class="font-jakarta font-extrabold text-2xl sm:text-[28px] tracking-tight">A couple more details</h2>
+    <p class="mt-2 text-[#6A7581]">So your Workspace is set up and your score means something specific to your business.</p>
+    <div class="mt-6 space-y-4">
+      <div><label class="block text-sm font-semibold mb-1.5">Company name</label><input id="hcCompany" required class="field" placeholder="Your company name" /></div>
+      <div><label class="block text-sm font-semibold mb-1.5">Industry</label>
+        <select id="hcIndustry" class="field">
+          <option value="" disabled selected>Select industry</option>
+          <option>Retail</option><option>Fintech</option><option>Agriculture</option><option>Manufacturing</option><option>Services</option><option>Other</option>
+        </select>
+      </div>
+      <div><label class="block text-sm font-semibold mb-1.5">Phone</label>
+        <div class="flex">
+          <span class="inline-flex items-center gap-1 px-3 h-12 rounded-l-xl border border-r-0 border-[#E7EBEF] bg-[#FCFCFC] text-sm font-semibold whitespace-nowrap">🇿🇦 +27</span>
+          <input id="hcPhone" required class="field rounded-l-none" placeholder="82 123 4567" />
+        </div>
+      </div>
+      <button onclick="hcSubmitBusiness()" class="w-full h-12 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold transition shadow-lg shadow-[#DC183C]/20 flex items-center justify-center gap-2">See my score <i data-lucide="arrow-right" class="w-4 h-4"></i></button>
+    </div>
+  </div>
+
+  <!-- ============ REVEAL ============ -->
+  <div id="hc-reveal" class="hc-step text-center">
+    <div class="hc-card hc-card--dark text-white relative overflow-hidden">
+      <div class="absolute inset-0 dot-pattern opacity-60 pointer-events-none"></div>
+      <div class="relative">
+        <span class="inline-flex items-center gap-1.5 bg-white/10 border border-white/15 text-white/90 text-[11px] font-extrabold uppercase tracking-widest px-3.5 py-1.5 rounded-full">
+          <i data-lucide="check-circle-2" class="w-3.5 h-3.5 text-[#29A37A]"></i> Your Workspace is ready
+        </span>
+        <h1 class="font-jakarta font-extrabold text-2xl sm:text-3xl tracking-tight mt-4">Here's where you stand, <span id="hcRevealName">there</span></h1>
+        <div class="flex justify-center my-7">
+          <svg width="170" height="170" viewBox="0 0 170 170">
+            <circle cx="85" cy="85" r="70" fill="none" stroke="rgba(255,255,255,.14)" stroke-width="16"/>
+            <circle id="hcRing" cx="85" cy="85" r="70" fill="none" stroke="#FF9900" stroke-width="16" stroke-linecap="round" transform="rotate(-90 85 85)" stroke-dasharray="439.8" stroke-dashoffset="439.8" style="transition:stroke-dashoffset 1.1s cubic-bezier(.2,.8,.2,1)"/>
+            <text id="hcScoreText" x="85" y="92" text-anchor="middle" class="font-jakarta font-extrabold" style="font-size:44px;fill:#fff">0</text>
+            <text x="85" y="112" text-anchor="middle" style="font-size:12px;fill:rgba(255,255,255,.55)">out of 100</text>
+          </svg>
+        </div>
+        <p id="hcCoachNote" class="text-white/70 max-w-md mx-auto leading-relaxed"></p>
+      </div>
+    </div>
+
+    <div class="hc-card text-left mt-5">
+      <p class="text-[11px] font-extrabold uppercase tracking-widest text-[#6A7581] mb-4">Your five dimensions</p>
+      <div id="hcDimsList" class="space-y-4"></div>
+    </div>
+
+    <div class="mt-7">
+      <a href="member-workspace.html" class="inline-flex items-center gap-2 px-7 h-12 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold transition shadow-lg shadow-[#DC183C]/20">
+        Go to your Workspace <i data-lucide="arrow-right" class="w-4 h-4"></i>
+      </a>
+    </div>
+  </div>
+
+</main>
+</div>
+
+<!-- ===================== FOOTER (shared public chrome — identical to public-home.html) ===================== -->
+<div class="lg:hidden" style="height:calc(64px + env(safe-area-inset-bottom))"></div>
+<footer class="bg-[#0C1F31] text-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-12">
+    <div class="grid grid-cols-2 md:grid-cols-6 gap-8">
+      <div class="col-span-2">
+        <a href="public-home.html" class="flex items-center gap-2.5"><img src="assets/logo-v1-lockup-reversed.svg" alt="SME South Africa" class="h-9 w-auto" /></a>
+        <p class="text-sm text-white/55 mt-4 max-w-xs leading-relaxed">South Africa's leading SME community — connecting founders with funding, mentorship, events, and the tools to scale.</p>
+        <div class="flex items-center gap-2 mt-5">
+          <a href="#" aria-label="X" class="w-9 h-9 rounded-lg bg-white/8 hover:bg-white/15 grid place-items-center transition"><svg viewBox="0 0 24 24" class="w-4 h-4" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24h-6.66l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+          <a href="#" aria-label="LinkedIn" class="w-9 h-9 rounded-lg bg-white/8 hover:bg-white/15 grid place-items-center transition"><svg viewBox="0 0 24 24" class="w-4 h-4" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0z"/></svg></a>
+          <a href="#" aria-label="Instagram" class="w-9 h-9 rounded-lg bg-white/8 hover:bg-white/15 grid place-items-center transition"><svg viewBox="0 0 24 24" class="w-4 h-4" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></a>
+          <a href="#" aria-label="Facebook" class="w-9 h-9 rounded-lg bg-white/8 hover:bg-white/15 grid place-items-center transition"><svg viewBox="0 0 24 24" class="w-4 h-4" fill="currentColor"><path d="M22.675 0H1.325C.593 0 0 .593 0 1.325v21.351C0 23.407.593 24 1.325 24h11.495v-9.294H9.692v-3.622h3.128V8.413c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.716-1.795 1.763v2.313h3.587l-.467 3.622h-3.12V24h6.116C23.407 24 24 23.407 24 22.675V1.325C24 .593 23.407 0 22.675 0z"/></svg></a>
+          <a href="#" aria-label="YouTube" class="w-9 h-9 rounded-lg bg-white/8 hover:bg-white/15 grid place-items-center transition"><svg viewBox="0 0 24 24" class="w-4 h-4" fill="currentColor"><path d="M21.582 6.186a2.684 2.684 0 0 0-1.884-1.9C17.962 3.84 12 3.84 12 3.84s-5.962 0-7.698.446a2.684 2.684 0 0 0-1.884 1.9C2 7.934 2 12 2 12s0 4.066.418 5.814a2.684 2.684 0 0 0 1.884 1.9C6.038 20.16 12 20.16 12 20.16s5.962 0 7.698-.446a2.684 2.684 0 0 0 1.884-1.9C22 16.066 22 12 22 12s0-4.066-.418-5.814zM9.996 15.005V8.994L15.26 12l-5.264 3.005z"/></svg></a>
+          <a href="#" aria-label="TikTok" class="w-9 h-9 rounded-lg bg-white/8 hover:bg-white/15 grid place-items-center transition"><svg viewBox="0 0 24 24" class="w-4 h-4" fill="currentColor"><path d="M16.6 5.82c-1.01-.88-1.62-2.14-1.63-3.55h-3.13v13.39c0 1.6-1.3 2.9-2.9 2.9a2.9 2.9 0 0 1 0-5.8c.29 0 .57.04.83.13V9.75a6.03 6.03 0 0 0-.83-.06c-3.34 0-6.05 2.71-6.05 6.05S5.6 21.79 8.94 21.79s6.05-2.71 6.05-6.05V9.01a9.14 9.14 0 0 0 5.34 1.71V7.6a5.94 5.94 0 0 1-3.73-1.78z"/></svg></a>
+        </div>
+      </div>
+      <div>
+        <p class="text-[11px] font-bold uppercase tracking-widest text-[#FF9900]">Platform</p>
+        <ul class="mt-4 space-y-2.5 text-sm text-white/70 list-none">
+          <li><a href="public-workspace.html" class="hover:text-white">SME Workspace</a></li>
+          <li><a href="public-pricing.html" class="hover:text-white">Pricing</a></li>
+          <li><a href="public-resources.html" class="hover:text-white">Resources Library</a></li>
+          <li><a href="public-funding.html" class="hover:text-white">Funding Portal</a></li>
+          <li><a href="public-solutions.html" class="hover:text-white">Solutions Directory</a></li>
+          <li><a href="public-shop.html" class="hover:text-white">Shop</a></li>
+          <li><a href="public-brands.html" class="hover:text-white">Brands Directory</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="text-[11px] font-bold uppercase tracking-widest text-[#FF9900]">Insights</p>
+        <ul class="mt-4 space-y-2.5 text-sm text-white/70 list-none">
+          <li><a href="public-articles.html" class="hover:text-white">All Articles</a></li>
+          <li><a href="public-founder-focus-category.html" class="hover:text-white">Founder Focus</a></li>
+          <li><a href="public-funding-summit-category.html" class="hover:text-white">Funding Summit</a></li>
+          <li><a href="public-category.html" class="hover:text-white">Business Opportunities</a></li>
+          <li><a href="public-category.html" class="hover:text-white">Brand Voice</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="text-[11px] font-bold uppercase tracking-widest text-[#FF9900]">Community</p>
+        <ul class="mt-4 space-y-2.5 text-sm text-white/70 list-none">
+          <li><a href="member-hub.html" class="hover:text-white">Community Forum</a></li>
+          <li><a href="events.html" class="hover:text-white">Events &amp; Webinars</a></li>
+          <li><a href="newsletter.html" class="hover:text-white">Newsletter</a></li>
+          <li><a href="podcast.html" class="hover:text-white">Podcast</a></li>
+          <li><a href="public-glossary.html" class="hover:text-white">Glossary</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="text-[11px] font-bold uppercase tracking-widest text-[#FF9900]">Legal</p>
+        <ul class="mt-4 space-y-2.5 text-sm text-white/70 list-none">
+          <li><a href="public-terms.html" class="hover:text-white">Terms &amp; Conditions</a></li>
+          <li><a href="public-privacy.html" class="hover:text-white">Privacy Policy</a></li>
+          <li><a href="public-refunds.html" class="hover:text-white">Refunds Policy</a></li>
+          <li><a href="public-popia.html" class="hover:text-white">POPIA</a></li>
+          <li><a href="public-advertising-disclosure.html" class="hover:text-white">Advertising Disclosure</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-3 pt-8 mt-10 border-t border-white/10 text-[12.5px] text-white/50">
+      <div class="flex flex-wrap items-center gap-x-3 gap-y-1.5">
+        <a href="public-about.html" class="hover:text-white transition">About</a><span class="text-white/20">·</span>
+            <a href="public-contact.html" class="hover:text-white transition">Contact</a><span class="text-white/20">·</span>
+            <a href="public-advertise.html" class="hover:text-white transition">Advertise</a><span class="text-white/20">·</span>
+            <a href="public-help.html" class="hover:text-white transition">Help Centre</a>
+      </div>
+      <p>© 2026 SME South Africa. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+
+<div id="overlay-root"></div><div id="toast" class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-50"></div>
+<script>
+  function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+  function showToast(m){const el=document.getElementById('toast');el.classList.remove('hidden');el.innerHTML=`<div class="bg-[#0C1F31] text-white rounded-full pl-3 pr-5 py-2.5 shadow-2xl flex items-center gap-2 text-sm font-semibold" style="border-left:4px solid #29A37A"><i data-lucide="check-circle" class="w-4 h-4" style="color:#29A37A"></i><span>${esc(m)}</span></div>`;lucide.createIcons();setTimeout(()=>{el.classList.add('hidden');el.innerHTML='';},2400);}
+
+  // ===================== HEALTH CHECK QUIZ LOGIC =====================
+  const HC_QUESTIONS = [
+    { dim:'cash_flow', name:'Cash flow', icon:'wallet', color:'#DC183C', tint:'#FDECEF', q:"How predictable is your cash flow from month to month?", sub:'Question 1 of 5',
+      options:[
+        {label:"We often don't know what's coming in", score:25},
+        {label:"It's tight, but we get by", score:50},
+        {label:'Mostly predictable, with the odd surprise', score:75},
+        {label:'Very predictable — we plan months ahead', score:100}
+      ]},
+    { dim:'compliance', name:'Compliance', icon:'shield-check', color:'#AE6B0A', tint:'#FFF1E0', q:'Are your CIPC, SARS and labour filings up to date?', sub:'Question 2 of 5',
+      options:[
+        {label:"Not sure — haven't checked recently", score:25},
+        {label:'A few things are overdue', score:50},
+        {label:'Mostly up to date, chasing one or two', score:75},
+        {label:'Everything is filed and current', score:100}
+      ]},
+    { dim:'customers', name:'Customers', icon:'users', color:'#29A37A', tint:'#E4F5EE', q:'How much of your revenue comes from repeat customers?', sub:'Question 3 of 5',
+      options:[
+        {label:'Mostly first-time customers', score:25},
+        {label:'A mix of new and repeat', score:50},
+        {label:'Mostly repeat, some new', score:75},
+        {label:'Almost all repeat business', score:100}
+      ]},
+    { dim:'operations', name:'Operations', icon:'settings-2', color:'#0C1F31', tint:'#F0F5F9', q:'Do you have written processes for how your business runs day to day?', sub:'Question 4 of 5',
+      options:[
+        {label:"Nothing written down — it's all in my head", score:25},
+        {label:'A few notes, nothing formal', score:50},
+        {label:'Most of it is documented', score:75},
+        {label:'Fully documented — someone else could run it', score:100}
+      ]},
+    { dim:'growth_readiness', name:'Growth readiness', icon:'trending-up', color:'#AE6B0A', tint:'#FFF1E0', q:'If orders doubled tomorrow, could your business keep up?', sub:'Question 5 of 5',
+      options:[
+        {label:"No, we'd struggle badly", score:25},
+        {label:'We would manage, but it would be stressful', score:50},
+        {label:'Mostly, with some adjustments', score:75},
+        {label:"Yes, we're ready for it", score:100}
+      ]}
+  ];
+  const HC_TOTAL_STEPS = HC_QUESTIONS.length + 2; // 5 questions + account + business
+  let hcQIndex = 0;
+  const hcAnswers = {};
+
+  function hcShow(id){
+    document.querySelectorAll('.hc-step').forEach(s=>s.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    window.scrollTo({top:0, behavior:'instant'});
+  }
+  function hcUpdateProgress(stepNum, label){
+    document.getElementById('hcProgressWrap').classList.remove('hidden');
+    document.getElementById('hcProgressLabel').textContent = label;
+    document.getElementById('hcProgressFill').style.width = Math.round((stepNum / HC_TOTAL_STEPS) * 100) + '%';
+  }
+  function hcStart(){
+    hcQIndex = 0;
+    hcRenderQuestion();
+    hcShow('hc-question');
+  }
+  function hcRenderQuestion(){
+    const q = HC_QUESTIONS[hcQIndex];
+    const card = document.getElementById('hc-question');
+    card.style.setProperty('--hc-accent', q.color);
+    card.style.setProperty('--hc-accent-tint', q.tint);
+    const tile = document.getElementById('hcQTile');
+    tile.innerHTML = `<i data-lucide="${q.icon}" class="w-6 h-6"></i>`;
+    document.getElementById('hcQDim').textContent = q.name;
+    document.getElementById('hcQText').textContent = q.q;
+    document.getElementById('hcQSub').textContent = 'Pick the option closest to your business right now.';
+    hcUpdateProgress(hcQIndex + 1, q.sub);
+    document.getElementById('hcQOptions').innerHTML = q.options.map((o,i) => `
+      <button type="button" class="hc-option flex items-center gap-3" onclick="hcSelect(${i})">
+        <span class="hc-radio"></span><span class="font-semibold text-[15px]">${esc(o.label)}</span>
+      </button>`).join('');
+    lucide.createIcons();
+  }
+  function hcSelect(optionIndex){
+    const q = HC_QUESTIONS[hcQIndex];
+    hcAnswers[q.dim] = q.options[optionIndex].score;
+    const buttons = document.querySelectorAll('#hcQOptions .hc-option');
+    buttons.forEach(b=>b.classList.remove('selected'));
+    buttons[optionIndex].classList.add('selected');
+    setTimeout(()=>{
+      if(hcQIndex < HC_QUESTIONS.length - 1){
+        hcQIndex++;
+        hcRenderQuestion();
+      } else {
+        hcUpdateProgress(HC_QUESTIONS.length + 1, 'Almost there · Your account');
+        hcShow('hc-account');
+      }
+    }, 280);
+  }
+  function hcBack(){
+    const active = document.querySelector('.hc-step.active').id;
+    if(active === 'hc-question' && hcQIndex > 0){
+      hcQIndex--;
+      hcRenderQuestion();
+    } else if(active === 'hc-question' && hcQIndex === 0){
+      document.getElementById('hcProgressWrap').classList.add('hidden');
+      hcShow('hc-intro');
+    } else if(active === 'hc-account'){
+      hcQIndex = HC_QUESTIONS.length - 1;
+      hcRenderQuestion();
+      hcShow('hc-question');
+    } else if(active === 'hc-business'){
+      hcUpdateProgress(HC_QUESTIONS.length + 1, 'Almost there · Your account');
+      hcShow('hc-account');
+    }
+  }
+  function hcSubmitAccount(){
+    const name = document.getElementById('hcName').value.trim();
+    const email = document.getElementById('hcEmail').value.trim();
+    const pw = document.getElementById('hcPassword').value;
+    if(!name || !email || !pw){ showToast('Fill in all fields to continue.'); return; }
+    hcAnswers._name = name;
+    hcAnswers._email = email;
+    hcUpdateProgress(HC_QUESTIONS.length + 2, 'Last step · Your business');
+    hcShow('hc-business');
+  }
+  function hcSubmitBusiness(){
+    const company = document.getElementById('hcCompany').value.trim();
+    const phone = document.getElementById('hcPhone').value.trim();
+    if(!company || !phone){ showToast('Fill in all fields to see your score.'); return; }
+    hcAnswers._company = company;
+    hcRenderReveal();
+    document.getElementById('hcProgressWrap').classList.add('hidden');
+    hcShow('hc-reveal');
+  }
+  function hcRenderReveal(){
+    const dims = HC_QUESTIONS.map(q => ({ name:q.name, score:hcAnswers[q.dim] || 50, color:q.color }));
+    const composite = Math.round(dims.reduce((sum,d)=>sum+d.score,0) / dims.length);
+    const firstName = (hcAnswers._name || '').split(' ')[0] || 'there';
+    document.getElementById('hcRevealName').textContent = firstName;
+
+    const circumference = 439.8;
+    const ring = document.getElementById('hcRing');
+    const scoreEl = document.getElementById('hcScoreText');
+    ring.setAttribute('stroke-dashoffset', circumference);
+    requestAnimationFrame(()=>{
+      setTimeout(()=>{ ring.setAttribute('stroke-dashoffset', String(circumference - (circumference * composite / 100))); }, 50);
+    });
+    let n = 0;
+    const step = Math.max(1, Math.round(composite / 30));
+    const counter = setInterval(()=>{
+      n = Math.min(composite, n + step);
+      scoreEl.textContent = n;
+      if(n >= composite) clearInterval(counter);
+    }, 25);
+
+    document.getElementById('hcDimsList').innerHTML = dims.map(d => `
+      <div>
+        <div class="flex justify-between items-baseline mb-1.5">
+          <span class="text-[13.5px] font-bold">${esc(d.name)}</span>
+          <span class="font-mono text-[13px] font-semibold text-[#6A7581]">${d.score}</span>
+        </div>
+        <div class="h-[7px] bg-[#F0F5F9] rounded-full overflow-hidden">
+          <div class="h-full rounded-full" style="width:${d.score}%;background:${d.color}"></div>
+        </div>
+      </div>`).join('');
+
+    const lowest = dims.reduce((a,b)=> b.score < a.score ? b : a);
+    document.getElementById('hcCoachNote').textContent = `${lowest.name} is your lowest score right now — your Success Plan in the Workspace starts there.`;
+  }
+
+  const BRIEF={title:'Business Health Check',sub:'Quiz → account → business details → score reveal, ends in the Workspace · public, indexable entry point',
+    purpose:'Closes the single biggest gap the 1 Oct 2026 mockup review found: the homepage\'s "Start the Health Check" CTA (and the new closing Workspace section) had nowhere to send a visitor — there was no health-check screen at all. Modelled on the real SME IQ health check (iq.smesouthafrica.co.za/health-check) and the newer smesouthafrdev.wpengine.com/workspace build, both of which use the same pattern this page follows: a short quiz, account creation folded into the flow rather than a separate signup wall, then the results live behind login.',
+    data:'5 questions, one per Business Health Score dimension (cash_flow, compliance, customers, operations, growth_readiness — same keys as member-workspace.html), each a single-select worth 25/50/75/100. Composite score is a simple average of the five, matching the "deterministic weighted average" rule documented on member-workspace.html\'s own Business Health Score brief. Account step collects name/email/password (or Google) — deliberately lighter than the full public-auth.html signup (first/last name, job position, location, industry, turnover, phone, password+confirm) because a heavy form here would tank completion right after the investment of finishing 5 questions. The remaining fields (company name, industry, phone) are collected in one short follow-up step instead, so by the end the member has given nearly everything public-auth.html would have asked for — just split across two lighter moments instead of one long form. This is progressive profiling, the standard pattern for quiz-to-signup funnels, and is the reasoning behind not reusing the heavier 3-step wizard wholesale.',
+    logic:'Client-side only: answers are held in memory (<code>hcAnswers</code>), nothing persists on reload — a real build would create the member record at the account step (so a drop-off after that point is still a recoverable lead) and attach the quiz answers and business details to it as they come in, rather than waiting for the final submit. "Go to your Workspace" hands off to member-workspace.html, standing in for the member now being logged in.',
+    components:'intro · 1-question-per-screen quiz with auto-advance on select · account capture (Google or email+password) · business detail capture (company/industry/phone) · score reveal (SVG ring count-up, matches member-workspace.html\'s Business Health Score card exactly) · dimension bar list · coaching note templated off the lowest dimension.',
+    specs:'<b>Progress bar:</b> only shown during questions/account/business (7 trackable steps total), hidden on intro and reveal. <b>Option cards:</b> 1.5px border <code>#E7EBEF</code>, selected state <code>#DC183C</code> border + <code>#FDECEF</code> fill, 20px radio circle. <b>Ring:</b> 170×170 viewBox, 70px radius, 16px stroke, animates <code>stroke-dashoffset</code> over 1.1s; score number counts up client-side alongside it. <b>Dimension bars:</b> identical 7px rounded-full pattern to member-workspace.html\'s Five Dimensions card, reused byte-for-byte for visual continuity between this page and the Workspace it leads into.'};
+  function toggleDevMode(){const on=document.body.classList.toggle('dev-on');const b=document.getElementById('devToggle');if(b)b.classList.toggle('on',on);if(on)showToast('Dev Mode on. Tap any ⓘ for implementation notes.');lucide.createIcons();}
+  function closeOverlay(id){const el=document.getElementById(id);if(!el)return;el.classList.remove('open');setTimeout(()=>{if(el&&el.parentNode)el.remove();},300);}
+  function openBrief(){const b=BRIEF;const sec=(i,l,h)=>`<div class="px-6 py-4 border-t border-slate-100"><p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] flex items-center gap-1.5 mb-2"><i data-lucide="${i}" class="w-3.5 h-3.5"></i>${l}</p><div class="text-sm text-slate-600 leading-relaxed">${h}</div></div>`;document.getElementById('overlay-root').innerHTML=`<div class="ov" id="ov"><div class="ov-bg" onclick="closeOverlay('ov')"></div><div class="drawer"><div class="sticky top-0 z-10 bg-[#0C1F31] text-white px-6 py-5 flex items-start justify-between"><div><p class="text-[10px] font-bold uppercase tracking-widest text-[#FF9900] mb-1">Dev Brief</p><h3 class="font-jakarta font-extrabold text-lg leading-tight">${b.title}</h3><p class="text-xs text-white/60 mt-1">${b.sub}</p></div><button onclick="closeOverlay('ov')" class="text-white/60 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button></div>${sec('target','Purpose',b.purpose)}${sec('database','Data model',b.data)}${sec('git-branch','Logic',b.logic)}${sec('boxes','Components',b.components)}${sec('ruler','Spec values',b.specs)}</div></div>`;requestAnimationFrame(()=>{const o=document.getElementById('ov');if(o)o.classList.add('open');});lucide.createIcons();}
+
+  lucide.createIcons();
+</script>
+<script>
+  function toggleChromeSearch(){
+    const o = document.getElementById('chromeSearchOverlay');
+    const opening = o.classList.toggle('active');
+    if(opening) setTimeout(()=>document.getElementById('chromeSearchInput').focus(), 100);
+  }
+  function toggleChromeBurger(){
+    const p = document.getElementById('chromeBurgerPanel');
+    const open = p.classList.toggle('hidden') === false;
+    document.getElementById('chromeBurgerIcon').setAttribute('data-lucide', open ? 'x' : 'menu');
+    lucide.createIcons();
+  }
+  const CHROME_DROPS = { articles: 'dropArticles', resources: 'dropResources', funding: 'dropFunding' };
+  function toggleChromeDrop(name){
+    Object.keys(CHROME_DROPS).forEach(k=>{ if(k!==name) document.getElementById(CHROME_DROPS[k]).classList.add('hidden'); });
+    document.getElementById(CHROME_DROPS[name]).classList.toggle('hidden');
+  }
+  function closeChromeDrop(name){
+    document.getElementById(CHROME_DROPS[name]).classList.add('hidden');
+  }
+  document.addEventListener('click', e=>{
+    if(!e.target.closest('nav .relative')) Object.values(CHROME_DROPS).forEach(id=>document.getElementById(id).classList.add('hidden'));
+  });
+  document.addEventListener('keydown', e=>{
+    if(e.key==='Escape'){ const o=document.getElementById('chromeSearchOverlay'); if(o && o.classList.contains('active')) toggleChromeSearch(); }
+  });
+</script>
+</body>
+</html>
