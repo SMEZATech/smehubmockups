@@ -2222,31 +2222,40 @@
   // ONE application form, the same fields and order as the public wizard (public-funding.html).
   // Fields map to smesa_funding_apps (business_name, reg_no, amount_requested, claimed_turnover, business_years)
   // plus what partner lender APIs need (mobile, province, bank, consent to share). We do not collect ID numbers. Prefilled from the profile.
-  // Mirrors the live FluentForm 132 (funding_application) option for option.
-  const FF = {"amounts": ["R150,000 - R250,000", "R250,000 - R1 Million", "R1 Million - R2 Million", "More than R2 Million"], "industries": ["Accommodation", "Advertising and Marketing", "IT and Communications", "Manufacturing", "Agriculture and Farming", "Construction/Mining", "Education and Training", "Retail, Restaurants, Bar, Pub", "Maintenance Services", "Professional Services", "Transportation/Logistics", "Wholesale/Distribution", "Security", "Beauty Salons/Spas", "Food Service (Catering)", "Automotive", "Health", "Media and Production", "Property", "Finance/Insurance", "Funeral Homes", "Cleaning/Landscaping/Gardening", "Event Planning/Coordination", "Other"], "years": ["1 - 2 Years", "2 - 4 Years", "4 -5 Years", "5 - 10 Years", "10 + Years"], "turnover": ["R100K - R200K", "R300K - R500K", "R500K+"]};
+  // Mirrors the live FluentForm 74 "Funding" (the main funding form, Joel 2026-10-02) field for field. R200K - R300K is the approved gap fix.
+  const FF = {"amounts": ["Less than R150,000", "R150,000 - R250,000", "R250,000 - R1 Million", "R1 Million - R2 Million", "More than R2 Million"], "industries": ["Accommodation", "Advertising and Marketing", "IT and Communications", "Manufacturing", "Agriculture and Farming", "Construction/Mining", "Education and Training", "Retail, Restaurants, Bar, Pub", "Maintenance Services", "Professional Services", "Transportation/Logistics", "Wholesale/Distribution", "Security", "Beauty Salons/Spas", "Food Service (Catering)", "Automotive", "Health", "Media and Production", "Property", "Finance/Insurance", "Funeral Homes", "Cleaning/Landscaping/Gardening", "Event Planning/Coordination", "Other"], "years": ["Less than a Year", "1 - 2 Years", "2 - 4 Years", "4 -5 Years", "5 - 10 Years", "10 + Years"], "turnover": ["Less than R50K", "R50K - R100K", "R100K - R200K", "R200K - R300K", "R300K - R500K", "R500K+"], "types": ["Working Capital", "Unsecured Business Loan", "Purchase Order Funding"], "poNeed": ["I have a purchase order to deliver", "I have an invoice not yet paid"], "lenders": ["My Bank", "Lula", "Genfin", "GoTyme", "Other"]};
   function ffSel(id, list, val){ return `<select id="${id}" class="w-full rounded-lg border border-[#D8DEE5] px-3 py-2.5 text-[13.5px] outline-none focus:border-[#DC183C] bg-white"><option value="">Select</option>${list.map(o => `<option value="${o}" ${o === val ? 'selected' : ''}>${o.replace(' - ', ' to ').replace('4 -5', '4 to 5')}</option>`).join('')}</select>`; }
   function ffIn(id, val, ph, type){ return `<input id="${id}" type="${type || 'text'}" value="${esc(val || '')}" placeholder="${esc(ph || '')}" class="w-full rounded-lg border border-[#D8DEE5] px-3 py-2.5 text-[13.5px] outline-none focus:border-[#DC183C]">`; }
   function ffL(t, req, hint){ return `<label class="block text-[11px] font-bold uppercase tracking-wider text-[#6A7581] mb-1.5">${t}${req ? ' <span class="text-[#DC183C]">*</span>' : ''}${hint ? ` <span class="normal-case tracking-normal font-medium text-[#98A2AE]">${hint}</span>` : ''}</label>`; }
   function renderFundingNew(){
     const H = t => `<h3 class="font-jakarta font-extrabold text-lg mt-6 pt-5 mb-4 border-t border-[#E7EBEF] first:mt-0 first:pt-0 first:border-0">${t}</h3>`;
-    const amt = fundingAppState.amount ? (fundingAppState.amount <= 250000 ? FF.amounts[0] : fundingAppState.amount <= 1000000 ? FF.amounts[1] : fundingAppState.amount <= 2000000 ? FF.amounts[2] : FF.amounts[3]) : '';
+    const amt = fundingAppState.amount ? (fundingAppState.amount < 150000 ? FF.amounts[0] : fundingAppState.amount <= 250000 ? FF.amounts[1] : fundingAppState.amount <= 1000000 ? FF.amounts[2] : fundingAppState.amount <= 2000000 ? FF.amounts[3] : FF.amounts[4]) : '';
     return `
       <button onclick="backToFundingList()" class="text-xs font-bold text-[#121A21] hover:text-[#DC183C] transition inline-flex items-center gap-1.5 mb-4"><i data-lucide="arrow-left" class="w-4 h-4"></i> Back to applications</button>
       <div class="rounded-2xl border border-[#E7EBEF] bg-[#FCFCFC] p-4 mb-5 flex items-start gap-3"><i data-lucide="sparkles" class="w-4 h-4 text-[#29A37A] mt-0.5 shrink-0"></i><p class="text-xs text-[#42505E]">We pre-filled this from your <button onclick="showView('profile')" class="font-bold text-[#DC183C] hover:underline">Business profile</button>. Check it before you submit. It is the same form as on the funding page, so nothing is asked twice.<button onclick="openBrief('fundingform')" class="dev-badge ml-1 w-4 h-4 rounded-full bg-[#DC183C] text-white items-center justify-center text-[9px] font-bold leading-none animate-pulse align-middle" title="Implementation notes">i</button></p></div>
       <div class="rounded-2xl border border-[#E7EBEF] shadow-sm bg-white p-5 sm:p-6">
-        ${H('1. Your business')}
-        <div class="grid sm:grid-cols-2 gap-4">
+        ${H('1. Funding')}
+        <div>${ffL('Funding type', 1)}<div class="grid sm:grid-cols-3 gap-2">${FF.types.map((t, i) => `<label class="flex items-center gap-2 rounded-lg border border-[#D8DEE5] px-3 py-2.5 text-[13px] font-semibold cursor-pointer has-[:checked]:border-[#DC183C] has-[:checked]:bg-[#FDECEF]/40"><input type="radio" name="nf-type" value="${t}" ${i === 0 ? 'checked' : ''} onchange="document.querySelectorAll('.nf-po').forEach(e => e.classList.toggle('hidden', this.value !== 'Purchase Order Funding'))" class="accent-[#DC183C]"> ${t}</label>`).join('')}</div></div>
+        <div class="nf-po hidden mt-4">${ffL('What do you need it for?', 1)}${ffSel('nf-poneed', FF.poNeed, '')}</div>
+        <div class="grid sm:grid-cols-2 gap-4 mt-4">
           <div>${ffL('Funding amount', 1)}${ffSel('nf-amount', FF.amounts, amt)}</div>
+          <div>${ffL('Applied for a business loan in the last 3 months?', 1)}<select id="nf-prior" onchange="document.getElementById('nf-lenders').classList.toggle('hidden', this.value !== 'Yes')" class="w-full rounded-lg border border-[#D8DEE5] px-3 py-2.5 text-[13.5px] outline-none focus:border-[#DC183C] bg-white"><option value="">Select</option><option>Yes</option><option>No</option></select></div>
+        </div>
+        <div id="nf-lenders" class="hidden mt-4">${ffL('Which lender(s) did you apply with?', 1)}<div class="flex flex-wrap gap-2">${FF.lenders.map(l => `<label class="inline-flex items-center gap-2 rounded-full border border-[#D8DEE5] px-3 py-1.5 text-[12.5px] font-semibold cursor-pointer"><input type="checkbox" value="${l}" class="accent-[#DC183C]"> ${l}</label>`).join('')}</div></div>
+        ${H('2. Your business')}
+        <div class="grid sm:grid-cols-2 gap-4">
           <div>${ffL('Company name', 1)}${ffIn('nf-company', FUNDING_PREFILL.company)}</div>
           <div>${ffL('Industry', 1)}${ffSel('nf-sector', FF.industries, 'Professional Services')}</div>
           <div>${ffL('How long have you been in business?', 1)}${ffSel('nf-years', FF.years, '5 - 10 Years')}</div>
+          <div>${ffL('Do you have a business bank account?', 1)}${ffSel('nf-bank', ['Yes', 'No'], 'Yes')}</div>
           <div>${ffL('Company registration number', 1)}${ffIn('nf-reg', '2015/45471/07', 'YYYY/NNNNNN/NN')}</div>
           <div>${ffL('Monthly turnover', 1)}${ffSel('nf-turnover', FF.turnover, 'R300K - R500K')}</div>
+          <div class="nf-po hidden sm:col-span-2">${ffL('Who issued the purchase order?', 1)}${ffIn('nf-pobuyer', '', 'Company that issued the PO')}</div>
         </div>
-        ${H('2. Bank statements')}
+        ${H('3. Bank statements')}
         <p class="text-xs text-[#6A7581] -mt-2 mb-3">Lenders check turnover from your statements. ${MEMBER_PLAN === 'premium' ? 'Attach them from your Documents, or upload new ones.' : 'Upload them here.'}</p>
         <label class="flex items-center gap-3 rounded-xl border-2 border-dashed border-[#D8DEE5] hover:border-[#DC183C] p-4 cursor-pointer"><i data-lucide="upload-cloud" class="w-5 h-5 text-[#DC183C]"></i><span class="text-[13px]"><b id="nf-fn">${MEMBER_PLAN === 'premium' ? 'Bank statements attached from Documents' : 'Upload bank statements'}</b><span class="block text-[#6A7581] text-[12px]">PDF from your bank, not photos</span></span><input type="file" accept="application/pdf" multiple class="hidden" onchange="document.getElementById('nf-fn').textContent=this.files.length+' file(s) selected'"></label>
-        ${H('3. Personal information')}
+        ${H('4. Personal information')}
         <div class="grid sm:grid-cols-2 gap-4">
           <div>${ffL('First name', 1)}${ffIn('nf-first', 'Tshepho')}</div>
           <div>${ffL('Last name', 1)}${ffIn('nf-last', 'Joel')}</div>
@@ -2861,7 +2870,7 @@
     fundingform: {
       title:'One funding application form', sub:'Same fields and order inside My Business and on the public funding page',
       purpose:'There were two different forms asking different questions. Now there is one, so lenders always get the same data and members are never asked twice.',
-      data:'Exactly the live FluentForm 132: funding amount (amount_requested), company name (business_name), industry, years in business (business_years), CIPC number (reg_no), monthly turnover (claimed_turnover), bank statements upload, first name, last name, work email, work number. No ID number: SME South Africa does not collect it (a partner asks for it on their own platform if they need it). Consent to share with partners and to a credit check, with timestamp.',
+      data:'Exactly the live FluentForm 74 "Funding" (the main form, Joel 2026-10-02): funding type (Working Capital / Unsecured / Purchase Order; PO adds what it is for and who issued it), applied in the last 3 months + which lenders, bank account yes/no, and funding amount (amount_requested), company name (business_name), industry, years in business (business_years), CIPC number (reg_no), monthly turnover (claimed_turnover), bank statements upload, first name, last name, work email, work number. No ID number: SME South Africa does not collect it (a partner asks for it on their own platform if they need it). Consent to share with partners and to a credit check, with timestamp.',
       logic:'Signed-in members get it prefilled from the Business profile. Logged-out visitors get the same fields as a 4-step wizard on the funding page. Premium members can attach statements from Documents. Partner API payloads (Lula, Retail Capital, others) map from these fields only. Funding approvals stay manual.',
       components:'Four sections, inline validation, consent, submit to My applications.' },
     getpaid: {
