@@ -4,8 +4,7 @@
  * Shows what a signed-in member sees on pages outside the community area
  * (insights, resources, funding, shop, glossary and so on): the same content
  * navigation, but "Sign in / Join Now" are replaced by a way back into the member
- * area (My Business button, notifications, avatar menu), and the mobile tab bar's
- * "Sign Up" tab becomes "My Business".
+ * area (notifications, avatar menu), and the mobile tab bar shows the member tabs.
  *
  * Preview only. State lives in sessionStorage:
  *   ?as=member   switch this tab to the logged-in view (remembered while browsing)
@@ -30,39 +29,6 @@
   if (window.SME_MEMBER_PAGE) { mode = 'member'; }
   var host = location.hostname;
   var reviewing = explicit || mode === 'member' || location.protocol === 'file:' || host === 'localhost' || host === '127.0.0.1';
-
-  /*
-   * Signed-in members never use the public funding hub: its Apply buttons and the hub itself send them to the
-   * same screens inside My Business (the live site does this with a 302 for logged-in visitors only).
-   * Logged-out visitors and search engines keep the public page.
-   */
-  /* Pages that live inside My Business for a signed-in member: the hub page and every link to it go there instead
-   * (single guides, stories and episodes stay on their own pages, with the member header). */
-  var MB = { 'podcast.html': 'podcast', 'public-guides.html': 'guides', 'public-founder-focus-category.html': 'stories',
-             'public-resources.html': 'resources', 'events.html': 'programmes', 'public-solutions.html': 'solutions',
-             'public-solution-categories.html': 'solutions', 'public-workspace.html': 'overview' };
-  if (mode === 'member') {
-    var _p0 = (location.pathname.split('/').pop() || '');
-    if (MB[_p0] && !window.SME_MEMBER_PAGE) { location.replace('member-workspace.html#' + MB[_p0]); return; }
-  }
-  if (mode === 'member') {
-    var _page = (location.pathname.split('/').pop() || '');
-    if (_page === 'public-funding.html') {
-      var _apply = /[?&]apply=1/.test(location.search) || location.hash === '#apply';
-      location.replace('member-workspace.html#' + (_apply ? 'funding-new' : 'funding-options'));
-      return;
-    }
-    document.addEventListener('click', function(e){
-      var a = e.target.closest && e.target.closest('a[href]');
-      if (!a) return;
-      var h = a.getAttribute('href') || '';
-      var hf = h.split(/[?#]/)[0];
-      if (MB[hf]) { e.preventDefault(); location.href = 'member-workspace.html#' + MB[hf]; return; }
-      if (!/^public-funding\.html/.test(h)) return;
-      e.preventDefault();
-      location.href = 'member-workspace.html#' + (/[?&]apply=1|#apply/.test(h) ? 'funding-new' : 'funding-options');
-    }, true);
-  }
 
   function el(html){ var t = document.createElement('template'); t.innerHTML = html.trim(); return t.content.firstChild; }
   function icons(){ if (window.lucide && lucide.createIcons) lucide.createIcons(); }
@@ -94,7 +60,7 @@
   if (!window.SME_MEMBER_PAGE && /public-home\.html$/.test(location.pathname)) { location.replace('member-hub.html'); return; }
 
   /* ---------- ONE member header, same on every signed-in page (2026-10-02) ----------
-   * Desktop and the mobile tab bar: Home, Connect, Messaging, Notifications, My Business. My Account is in the avatar menu.
+   * Desktop and the mobile tab bar: Home, Connect, Messaging, Notifications. My Account is in the avatar menu.
    * Replaces whatever header the page shipped with, so community pages and public pages can never drift apart. */
   var oldHeader = document.querySelector('header');
   if (!oldHeader) { mountSwitch(); return; }
@@ -105,8 +71,7 @@
     ['home', 'member-hub.html', 'home', 'Home'],
     ['connect', 'members.html', 'users', 'Connect'],
     ['messaging', 'member-messages.html', 'message-square', 'Messaging'],
-    ['notifications', 'member-notifications.html', 'bell', 'Notifications'],
-    ['business', 'member-workspace.html', 'sparkles', 'My Business']
+    ['notifications', 'member-notifications.html', 'bell', 'Notifications']
   ];
   var ACCOUNT = ['account', 'member-account.html', 'circle-user', 'My Account'];
   var PAGE_KEY = {
@@ -114,7 +79,7 @@
     'members.html': 'connect', 'groups.html': 'connect', 'single-group.html': 'connect', 'single-member.html': 'connect',
     'forums.html': 'connect', 'single-discussion.html': 'connect', 'member-group-manage.html': 'connect',
     'member-messages.html': 'messaging', 'member-notifications.html': 'notifications',
-    'member-workspace.html': 'business', 'member-account.html': 'account', 'member-finish-profile.html': 'account'
+    'member-account.html': 'account', 'member-finish-profile.html': 'account'
   };
   var here = (location.pathname.split('/').pop() || '');
   var activeKey = PAGE_KEY[here] || '';
@@ -149,11 +114,11 @@
               mItem('member-account.html', 'receipt', 'Orders') +
               group('Explore') +
               mItem('public-articles.html', 'newspaper', 'Insights') +
-              mItem('member-workspace.html#guides', 'book-open', 'Guides') +
-              mItem('member-workspace.html#resources', 'folder-open', 'Library') +
-              mItem('member-workspace.html#solutions', 'layout-grid', 'Solutions') +
-              mItem('member-workspace.html#programmes', 'calendar-days', 'Events') +
-              mItem('member-workspace.html#podcast', 'mic', 'Podcast') +
+              mItem('public-guides.html', 'book-open', 'Guides') +
+              mItem('public-resources.html', 'folder-open', 'Library') +
+              mItem('public-solutions.html', 'layout-grid', 'Solutions') +
+              mItem('events.html', 'calendar-days', 'Events') +
+              mItem('podcast.html', 'mic', 'Podcast') +
               mItem('public-help.html', 'life-buoy', 'Help Centre') +
               '<div class="border-t border-[#E7EBEF] mt-2 pt-1">' +
                 (typeof window.toggleDevMode === 'function' ? '<div class="flex items-center justify-between px-3 py-2.5"><span class="text-[10px] font-bold uppercase tracking-widest text-slate-500">Dev Mode</span><button id="devToggle" type="button" onclick="toggleDevMode()" class="w-8 h-4 rounded-full bg-slate-200 relative transition-colors focus:outline-none" aria-pressed="false"><span class="absolute left-0.5 top-0.5 w-3 h-3 rounded-full bg-white shadow-sm transition-transform duration-200"></span></button></div>' : '') +
@@ -168,16 +133,16 @@
   var newHeader = el(headerHTML);
   oldHeader.parentNode.replaceChild(newHeader, oldHeader);
 
-  /* mobile bottom tab bar: the same five as the desktop nav */
+  /* mobile bottom tab bar: the same four as the desktop nav */
   var tabBar = document.querySelector('nav[aria-label="Quick nav"]');
   if (!tabBar) {
     tabBar = el('<nav aria-label="Quick nav"></nav>');
     document.body.appendChild(tabBar);
   }
-  var T = NAV;  /* five only: My Account lives in the avatar menu (Joel, 2026-10-02: six was too many) */
+  var T = NAV;  /* four only: My Account lives in the avatar menu */
   tabBar.className = 'md:hidden fixed bottom-0 inset-x-0 z-40 bg-white border-t border-[#E7EBEF] shadow-[0_-4px_16px_-4px_rgba(12,31,49,0.08)]';
   tabBar.style.paddingBottom = 'env(safe-area-inset-bottom)';
-  tabBar.innerHTML = '<div class="grid grid-cols-5">' + T.map(function(t){
+  tabBar.innerHTML = '<div class="grid grid-cols-4">' + T.map(function(t){
     var on = activeKey === t[0];
     return '<a href="' + t[1] + '" class="relative flex flex-col items-center justify-center gap-1 py-2.5 min-w-0 transition ' + (on ? 'text-[#DC183C]' : 'text-slate-500 hover:text-[#121A21]') + '">' +
       (on ? '<span class="absolute top-0 left-1/2 -translate-x-1/2 w-8 h-0.5 rounded-full bg-[#DC183C]"></span>' : '') +

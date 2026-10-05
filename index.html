@@ -403,7 +403,7 @@
   const GROUP_OVERRIDES = window.MOCKUP_GROUPS || {};
   // Modules Joel has already built herself: shown as "Built" so the developer does not pick them up.
   // Built on Tshepho's Local (built-local.js): developer must not build or change these.
-  const BUILT = window.MOCKUP_BUILT_LOCAL || ['public-workspace.html','public-health-check.html','member-workspace.html'];
+  const BUILT = window.MOCKUP_BUILT_LOCAL || ['public-health-check.html'];
   const DEVMETA = { 'pending-review':{label:'Pending review',c:'#FF9900'}, 'reviewed':{label:'Reviewed',c:'#3B82F6'}, 'approved':{label:'Approved',c:'#29A37A'} };
   const isLive = f => STATUS[f] === 'finalised';
   const DEFAULT_NAV = [
@@ -419,7 +419,6 @@
       { label:'Advertising Disclosure', file:'public-advertising-disclosure.html', icon:'info' },
       { label:'Sustainability',         file:'public-sustainability.html',         icon:'leaf' },
       { label:'Community',              file:'public-community.html',              icon:'users-round' },
-      { label:'My Business',          file:'public-workspace.html',              icon:'gauge' },
       { label:'Premium Checkout',       file:'public-premium-checkout.html',       icon:'crown' },
       { label:'Author page',            file:'public-author.html',                 icon:'feather' },
       { label:'Login / Sign up',        file:'public-auth.html',                   icon:'log-in' }
@@ -460,7 +459,6 @@
       { label:'Brand Review',      file:'public-brand.html',             icon:'badge-check' }
     ]},
     { group:'Community', tag:'Logged-in', accent:'#DC183C', icon:'users', items:[
-      { label:'My Business',        file:'member-workspace.html', icon:'layout-dashboard' },
       { label:'Feed',             file:'member-hub.html',     icon:'rss' },
       { label:'Single Feed',      file:'single-post.html',    icon:'message-square' },
       { label:'Members',          file:'members.html',        icon:'users' },
