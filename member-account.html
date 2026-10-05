@@ -532,7 +532,7 @@ function setMembership(){
     ? `<div class="relative flex items-center justify-between flex-wrap gap-3"><div><p class="text-[10px] font-bold uppercase tracking-widest text-[#FF9900]">Current plan</p>
         <h3 class="font-jakarta font-extrabold text-2xl text-white mt-0.5 flex items-center gap-2"><i data-lucide="crown" class="w-5 h-5 text-[#FF9900]"></i>Premium <span class="text-[10px] bg-[#29A37A] text-white px-2 py-0.5 rounded-full uppercase tracking-wide">Active</span></h3>
         <p class="text-xs text-white/60 mt-1">R99 a month &nbsp;·&nbsp; Next payment ${nextTxt} &nbsp;·&nbsp; Visa ending 4242</p></div>
-        <a href="member-account.html" class="bg-white/10 hover:bg-white/20 text-white rounded-full px-5 py-2.5 font-jakarta font-bold text-sm transition">Change or cancel</a></div>`
+        <a href="#" class="bg-white/10 hover:bg-white/20 text-white rounded-full px-5 py-2.5 font-jakarta font-bold text-sm transition">Change or cancel</a></div>`
     : `<div class="relative flex items-center justify-between flex-wrap gap-3"><div><p class="text-[10px] font-bold uppercase tracking-widest text-[#FF9900]">Current plan</p>
         <h3 class="font-jakarta font-extrabold text-2xl text-white mt-0.5 flex items-center gap-2">Standard <span class="text-[10px] bg-white/15 text-white px-2 py-0.5 rounded-full uppercase tracking-wide">Free</span></h3>
         <p class="text-xs text-white/60 mt-1">No card on file. Everything below stays free.</p></div>
@@ -625,7 +625,7 @@ function setOrders(){
         <i data-lucide="chevron-right" class="w-4 h-4 text-slate-500 ml-auto"></i>
       </button>
     </div>
-    <p class="text-xs text-slate-500 mt-5 flex items-center gap-1.5"><i data-lucide="info" class="w-3.5 h-3.5"></i> The SME SA store sells branded merchandise. Orders are managed securely by <span class="font-jakarta">WooCommerce</span>, payment and address management hands off to the WooCommerce secure account page. Resource downloads and funding applications are available from your account.</p>`;
+    <p class="text-xs text-slate-500 mt-5 flex items-center gap-1.5"><i data-lucide="info" class="w-3.5 h-3.5"></i> The SME SA store sells branded merchandise. Orders are managed securely by <span class="font-jakarta">WooCommerce</span>, payment and address management hands off to the WooCommerce secure account page. Resource downloads and funding applications now live in your <a href="#" class="font-bold text-[#DC183C] hover:underline">My Business</a>.</p>`;
   return settingsCard('My Orders', 'Your SME South Africa merchandise orders.', body);
 }
 
@@ -663,7 +663,7 @@ function setExportData(){
     </div>`;
   const del = `
     <div class="mt-6 pt-6 border-t border-slate-100 flex items-center justify-between gap-4 flex-wrap">
-      <div><h3 class="font-jakarta font-bold uppercase text-sm text-[#DC183C] tracking-wide">Delete my account</h3><p class="text-xs text-slate-500 mt-0.5 max-w-md">Closes your account and erases your profile, connections, messages, business data and downloads. Posts you made in groups are removed. You will be asked to type DELETE.</p></div>
+      <div><h3 class="font-jakarta font-bold uppercase text-sm text-[#DC183C] tracking-wide">Delete my account</h3><p class="text-xs text-slate-500 mt-0.5 max-w-md">Closes your account and erases your profile, connections, messages, My Business data and downloads. Posts you made in groups are removed. You will be asked to type DELETE.</p></div>
       <button onclick="deleteAccount()" class="border border-[#F4C5CF] hover:border-[#DC183C] text-[#DC183C] rounded-full px-5 py-2.5 font-jakarta font-bold text-sm transition">Delete account</button>
     </div>`;
   return settingsCard('Export Data', 'Download a copy of everything we hold about you, or close your account.', body + del);
@@ -700,6 +700,11 @@ function setProfile(){
     </div>
     <div class="mt-4">${field('Bio', `<textarea id="p-bio" rows="3" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-sm outline-none focus:border-[#DC183C] focus:bg-white transition">${esc(p.bio)}</textarea>`, 'Max 280 characters.')}</div>
 
+    <!-- Personal and business are separate (Joel, 2026-10-02): business details live in My Business > Business profile. -->
+    <div class="mt-6 pt-5 border-t border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+      <div><p class="font-jakarta font-extrabold text-base text-[#121A21]">Business details</p><p class="text-xs text-slate-500 mt-0.5">Your company, sector, turnover and the rest now live in My Business, under Business profile.</p></div>
+      <a href="#" class="shrink-0 inline-flex items-center gap-1.5 border border-slate-200 hover:border-[#0C1F31] rounded-full px-4 py-2 text-sm font-bold text-[#121A21] transition">Open Business profile <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i></a>
+    </div>
 
     <div class="mt-6"><button onclick="showToast('Profile saved.', 'win')" class="bg-[#DC183C] hover:bg-[#B0142F] text-white rounded-full px-6 py-2.5 font-jakarta font-bold text-sm transition">Save Changes</button></div>`;
   return settingsCard('Profile', 'This information appears on your public member profile.', body);
@@ -728,11 +733,11 @@ const BRIEFS = {
     logic:'Email change re-verifies via a confirmation link before it takes effect (not shown in mockup). Password requires current + min-8 + match, same validation as the rest of the hub.',
     components:'Email field + update · change-password form.',
     specs:'<b>Settings shell:</b> see the Notifications brief.<br/><b>Sections:</b> divided by 1px slate-100, 20px bottom padding, each with a Plus Jakarta 700 uppercase 14px heading.<br/><b>Fields:</b> max-width 28rem (<code>max-w-md</code>); inputs bg slate-50 1px slate-200 rounded-xl (12px) padding 14px/10px. Update buttons bg <code>#DC183C</code> hover <code>#B0142F</code> rounded-full padding 20px/10px Plus Jakarta 700 14px white.<br/><b>Password validation message:</b> 12px (<code>#DC183C</code> error / <code>#29A37A</code> match).' },
-  set_profile:{ title:'Settings · Profile', sub:'Public, personal profile only (personal details only)',
+  set_profile:{ title:'Settings · Profile', sub:'Public, personal profile only (business details live in My Business › Business profile)',
     purpose:'Canonical editor for everything shown on the public member profile (see single-member.html) plus the founder/business context used for matching and funding eligibility.',
     data:'<code>{ firstName, lastName, handle, interest, province, city, bio, jobTitle, company, sector, stage, yearsInBusiness, companySize, turnover, challenge, bankAccount, tools[], avatar, cover }</code>.',
     logic:'Save writes to the profile record read by the public profile page. Bio capped at 280 chars. Business-detail fields (sector, stage, turnover, tools) feed the members directory filters and funding-application pre-fill.',
-    components:'Cover-photo uploader · avatar uploader · Personal Details grid (incl. job title) · Save. Business fields are NOT edited here (Joel, 2026-10-02).',
+    components:'Cover-photo uploader · avatar uploader · Personal Details grid (incl. job title) · Business details pointer to My Business › Business profile · Save. Business fields are NOT edited here (Joel, 2026-10-02).',
     specs:'<b>Settings shell:</b> see the Notifications brief.<br/><b>Cover photo:</b> dashed 2px slate-200 rounded-2xl (16px) bg slate-50, 40px vertical padding, centred Lucide <code>image</code> 24&times;24 slate-400, hover border <code>#DC183C</code>.<br/><b>Profile photo row:</b> monogram avatar 64&times;64, Change-photo button bg <code>#0C1F31</code> rounded-full padding 16px/8px 12px weight 700 white + Lucide <code>upload</code> 14&times;14.<br/><b>Section headings:</b> Plus Jakarta 800 16px (<code>text-base</code>) <code>#121A21</code>. The Business details pointer has a 1px slate-100 top border + 20px top padding as a divider.<br/><b>Fields:</b> <code>sm:grid-cols-2</code> 16px gap; label 11px weight 700 uppercase tracking-wider slate-500; input/select bg slate-50 1px slate-200 rounded-xl padding 14px/10px, focus border <code>#DC183C</code> + white bg.<br/><b>Save:</b> bg <code>#DC183C</code> hover <code>#B0142F</code> rounded-full padding 24px/10px Plus Jakarta 700 14px white.' },
   set_blocked:{ title:'Settings · Blocked Members', sub:'Block list management',
     purpose:'Lets a member review and lift blocks. Blocked users can’t message, view posts, or send connection requests, and aren’t notified they were blocked (BuddyBoss moderation).',
@@ -791,13 +796,13 @@ function toggleDevMode(){
   if(on) showToast('Dev Mode on, tap any ⓘ for implementation notes.', null);
   lucide.createIcons();
 }
-// POPIA erasure for the whole account.
+// POPIA erasure for the whole account (My Business has its own business-data erase under Settings).
 function deleteAccount(){
   const premium = window.SME_PLAN === 'premium';
   const old = document.getElementById('ov-del'); if(old) old.remove();
   document.body.insertAdjacentHTML('beforeend', `<div id="ov-del" class="fixed inset-0 z-[90] flex items-center justify-center p-4"><div class="absolute inset-0 bg-[#0C1F31]/50 backdrop-blur-sm" onclick="document.getElementById('ov-del').remove()"></div><div class="relative bg-white rounded-2xl shadow-2xl w-full max-w-md" role="dialog" aria-modal="true"><div class="p-6">
     <p class="font-jakarta font-extrabold text-lg">Delete your account?</p>
-    <p class="text-sm text-slate-500 mt-2 leading-relaxed"><b class="text-[#121A21]">This removes:</b> your login, profile, connections, messages, notifications, business data and download history.</p>
+    <p class="text-sm text-slate-500 mt-2 leading-relaxed"><b class="text-[#121A21]">This removes:</b> your login, profile, connections, messages, notifications, My Business data and download history.</p>
     <p class="text-sm text-slate-500 mt-2 leading-relaxed"><b class="text-[#121A21]">This keeps:</b> order and payment records we must hold for tax law (5 years), and funding applications a partner already received, because the partner holds its own copy.</p>
     ${premium ? '<p class="text-sm text-[#AE6B0A] mt-2 leading-relaxed font-semibold">Your Premium plan is cancelled straight away, with no further payments.</p>' : ''}
     <p class="text-sm text-slate-500 mt-2">We email you when it is done, within 30 days as POPIA requires. You can download your data first.</p>
