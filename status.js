@@ -89,7 +89,7 @@ window.MOCKUP_STATUS = {
   "public-404.html": "finalised",
   "public-unauthorized.html": "finalised"
 };
-window.MOCKUP_STATUS_PUBLISHED = "2026-10-02T20:10:08.331Z";
+window.MOCKUP_STATUS_PUBLISHED = "2026-10-05T06:42:51.585Z";
 /* Developer builds (staging), { mockup file: { url, status } }; status: "pending-review" | "reviewed" | "approved" */
 window.MOCKUP_DEV = {
   "public-home.html": {"url":"https://smesastg.wpengine.com/","status":"reviewed"},
@@ -119,6 +119,9 @@ window.MOCKUP_DEV = {
   "public-product.html": {"url":"https://smesastg.wpengine.com/product/founders-edition-white-t-shirt/","status":"reviewed"},
   "public-checkout.html": {"url":"https://smesastg.wpengine.com/checkout/","status":"approved"},
   "public-auth.html": {"url":"https://smesastg.wpengine.com/sign-up/","status":"reviewed"},
+  "public-verify-email.html": {"url":"","status":"approved"},
+  "public-error.html": {"url":"","status":"approved"},
+  "public-health-check.html": {"url":"","status":"approved"},
   "public-about.html": {"url":"https://smesastg.wpengine.com/about/","status":"approved"},
   "public-contact.html": {"url":"https://smesastg.wpengine.com/contact-us/","status":"approved"},
   "public-advertise.html": {"url":"https://smesastg.wpengine.com/advertise-with-us/","status":"approved"},
