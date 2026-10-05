@@ -156,9 +156,6 @@
         <a href="public-community.html" class="inline-flex items-center gap-2 px-6 h-12 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold transition">
           Join the Community <i data-lucide="arrow-right" class="w-4 h-4"></i>
         </a>
-        <a href="public-health-check.html" class="inline-flex items-center gap-2 px-6 h-12 rounded-full border border-white/25 text-white hover:bg-white/10 font-bold transition">
-          Start the Health Check
-        </a>
       </div>
     </div>
     <!-- Right: live community preview. Explains the platform by showing it: feed, groups, events. -->
@@ -195,7 +192,6 @@
     <!-- Mobile CTAs: sit below the community preview (desktop keeps them under the headline) -->
     <div class="lg:hidden flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
       <a href="public-community.html" class="inline-flex items-center justify-center gap-2 px-6 h-12 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold transition">Join the Community <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
-      <a href="public-health-check.html" class="inline-flex items-center justify-center gap-2 px-6 h-12 rounded-full border border-white/25 text-white hover:bg-white/10 font-bold transition">Start the Health Check</a>
     </div>
   </div>
 </section>
@@ -442,9 +438,9 @@
   const BRIEFS = {
     hero: {
       title:'Public Hero', sub:'Top-of-funnel conversion surface',
-      purpose:'The logged-out front door. Two jobs now: convert a visitor into a member (<b>Join the Community</b> → MemberPress) or send them straight into the free Business Health Check (<b>Start the Health Check</b> → signup). Pure community positioning, deliberately no funding mention in the hero (funding still gets its own Platform Pillar and full section elsewhere on the page). The "Award-Winning Platform" trophy badge that used to sit here was removed in the 1 Oct 2026 mockup review: no award or year was ever named (leftover from the site\'s prior online-magazine positioning), so it was an unsubstantiated claim rather than a trust signal.',
+      purpose:'The logged-out front door. One job: convert a visitor into a member (<b>Join the Community</b>). Pure community positioning, deliberately no funding mention in the hero (funding still gets its own Platform Pillar and full section elsewhere on the page). The "Award-Winning Platform" trophy badge that used to sit here was removed in the 1 Oct 2026 mockup review: no award or year was ever named (leftover from the site\'s prior online-magazine positioning), so it was an unsubstantiated claim rather than a trust signal.',
       data:'Static copy only, no live counters. The right-hand visual is a built-in, illustrative community preview (no photo asset): a feed with a live reply, a Groups tab and an Events tab, plus a rotating notification card. All names, posts and groups are placeholder copy and deliberately contain no counters or member numbers.',
-      logic:'Primary CTA routes to MemberPress register/login. Secondary CTA routes to the same signup flow anchored to the Health Check step. Public, indexable page. The Funding Summit pill is a dismissible promo slot.',
+      logic:'The single hero CTA routes to the Community page. Public, indexable page. The Funding Summit pill is a dismissible promo slot.',
       components:'promo pill · 2-col hero (copy + interactive community preview) · two CTAs · floating tagline pill · rotating notification card.',
       specs:'<b>Container:</b> <code>max-w-7xl</code> = 1280px, padding 56px top+bottom mobile / 80px desktop (<code>py-14 sm:py-20</code>). 2-col grid on lg with 40–56px gap, items-center.<br/><b>Background:</b> navy hero-bg gradient + right-side radial <code>rgba(220,24,60,0.28)</code> glow (55%×55% at 80%/25%), 50% opacity.<br/><br/><b>H1:</b> Plus Jakarta Sans weight 800, 48px mobile / 60px desktop (<code>text-5xl sm:text-6xl</code>), leading 1.02, tight tracking, colour <code>#FFFFFF</code>. Highlight "Alone." with <code>#DC183C→#FF9900</code> gradient text.<br/><b>Hero sub:</b> 18px mobile / 20px desktop (<code>text-lg sm:text-xl</code>), <code>rgba(255,255,255,0.70)</code>, relaxed leading, max-width 576px. 20px top margin.<br/><b>CTA row:</b> 28px top margin, wraps on narrow screens. Primary: height 48px (<code>h-12</code>) padding-x 24px (<code>px-6</code>) rounded-full bg <code>#DC183C</code> hover <code>#B0142F</code>, white weight 700 with Lucide `arrow-right` 16×16. Secondary: same height/padding, outline border white/25, white text, hover bg white/10, no icon, so it reads as the lighter-weight action next to the primary CTA.<br/><br/><b>Hero image:</b> aspect 4:3, rounded-3xl (24px), shadow-2xl. Hidden below <code>lg</code>.<br/><b>Top-right pill:</b> white bg, rounded-full, padding-x 16px padding-y 10px, offset -16px top / -8px right. Lucide `users` 16×16 <code>#DC183C</code>, Plus Jakarta Sans weight 700 14px <code>#121A21</code>.<br/><b>Bottom-left card:</b> white rounded-2xl 1px border <code>#E7EBEF</code>, shadow-xl, padding 16px/12px. Icon tile 40×40 rounded-xl bg <code>#E4F5EE</code> text <code>#29A37A</code> with `trending-up` 20×20. Title Plus Jakarta Sans weight 800 16px <code>#121A21</code>. Sub 12px <code>#6A7581</code>.'
     },
