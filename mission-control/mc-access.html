@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Access &amp; security · Mission Control</title>
+<meta name="robots" content="noindex,nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<link rel="stylesheet" href="mc-ui.css">
+</head>
+<body>
+<script src="mc-ui.js"></script>
+<script>
+(function () {
+  var B = MC.briefs;
+  B.a_who = { title: 'Who can open Mission Control', purpose: 'Mission Control exposes funding applicants, bank statements and the Meta token, so it is locked tighter than "administrator".', data: ['Owner is always allowed: user #2174 or email joel@smesouthafrica.co.za. Cannot be locked out.', 'Extra people: option <code>smesa_ops_extra_users</code> (user IDs) and email grants through the <code>smesa_ops_owner_override</code> filter.'], logic: 'Empty the option to revoke everyone except the owner. The design switchboard additionally requires manage_options.', rules: 'Nobody else sees the menu item; the URL answers "not allowed".' };
+  B.a_log = { title: 'Access log', purpose: 'Every Mission Control sign-in and sensitive action, who and when.', data: 'Append-only log: time, user, action, IP (hashed).', logic: 'Sensitive actions: statement view or download, Live design switch, engine armed, grant or revoke.' };
+  B.a_sec = { title: 'Security checklist', purpose: 'A one-glance list of the guards that protect the platform and whether each is on.', data: 'Checks run by <code>smesa-health-watchdog.php</code> and the individual guard plugins.' };
+
+  var who =
+    '<div class="card flush"><div class="card-h"><div><h3>Who can open Mission Control</h3><small>Tied to email, not just the administrator role</small></div><div class="r">' + MC.dev('a_who') + '<button class="btn sm pri" data-act="Grant needs a second confirmation" data-ico="user-plus">' + MC.icon('user-plus') + 'Grant access</button></div></div><ul class="list" style="margin-top:12px">' +
+    '<li class="li">' + MC.av('Tshepho Joel') + '<div class="tx"><b>Joel <span class="chip navy" style="margin-left:6px">Owner</span></b><small>joel@smesouthafrica.co.za &middot; user #2174 &middot; always allowed</small></div><span style="color:var(--green);display:flex;gap:6px;align-items:center;font-weight:700;font-size:12.5px">' + MC.icon('lock-keyhole') + 'Cannot be removed</span></li>' +
+    '<li class="li">' + MC.av('CEO Account') + '<div class="tx"><b>CEO <span class="chip blue" style="margin-left:6px">Granted</span></b><small>Added 21 July 2026 &middot; read access to Mission Control</small></div><button class="toggle on" data-msg="CEO access updated" aria-label="CEO access"></button></li>' +
+    '<li class="li"><div class="ic navy">' + MC.icon('users') + '</div><div class="tx"><b>All other administrators</b><small>14 accounts &middot; cannot open Mission Control</small></div><span class="chip" style="">No access</span></li></ul></div>';
+
+  var sec = '<div class="grid g2">' + MC.card({ title: 'Security checklist', sub: 'Checked by the health watchdog', dev: 'a_sec', cls: 'flush' }, '<ul class="list">' + [['Two-factor sign-in for the owner', 'On', 'green'], ['Non-production email guard', 'On', 'green'], ['Upload guard (blocks risky files)', 'On', 'green'], ['Scanner shield (blocks probe traffic)', 'On', 'green'], ['Statement vault encryption', 'AES-256', 'green'], ['Admin discretion (hides tools from admins)', 'On', 'green'], ['Session timeout', '12 hours', 'amber']].map(function (c) { return MC.li(c[2], c[2] === 'green' ? 'shield-check' : 'timer', c[0], '', MC.chip(c[1], c[2], true)); }).join('') + '</ul>') +
+    MC.card({ title: 'Sensitive tools', sub: 'What each exposes and who can see it' }, '<table class="t"><thead><tr><th>Tool</th><th>Exposes</th><th>Who</th></tr></thead><tbody>' + [['Funding Desk', 'Applicants, amounts', 'Owner, CEO'], ['Statement Vault', 'Bank statements', 'Owner only'], ['Meta CAPI', 'Ad token (never shown)', 'Owner only'], ['Member Report', 'Member details', 'Owner, CEO'], ['Design switchboard', 'Public site design', 'Owner only']].map(function (r) { return '<tr><td><b>' + r[0] + '</b></td><td>' + r[1] + '</td><td>' + MC.chip(r[2], r[2] === 'Owner only' ? 'navy' : 'blue') + '</td></tr>'; }).join('') + '</tbody></table>') + '</div>';
+
+  var logp = '<div class="card flush"><div class="card-h"><div><h3>Access log</h3><small>Append-only</small></div><div class="r">' + MC.dev('a_log') + '<button class="btn sm" data-act="Log exported" data-ico="download">' + MC.icon('download') + 'Export</button></div></div>' + MC.table({ perPage: 7, placeholder: 'Search the log', rows: [
+    { t: 'Today 07:31', u: 'Joel', a: 'Signed in', d: 'Desktop, Johannesburg', k: 'Sign-in' }, { t: 'Today 07:34', u: 'Joel', a: 'Viewed statements for Mokoena Logistics', d: 'Statement Vault', k: 'Sensitive' }, { t: 'Yesterday 16:12', u: 'Joel', a: 'Set Funding to Preview', d: 'Design switchboard', k: 'Design' }, { t: 'Yesterday 09:03', u: 'CEO', a: 'Signed in', d: 'Desktop, Johannesburg', k: 'Sign-in' }, { t: 'Yesterday 09:08', u: 'CEO', a: 'Viewed Platform spine', d: 'Spine', k: 'View' }, { t: '2 days ago', u: 'Joel', a: 'Armed lifecycle engine (LIVE)', d: 'Community', k: 'Sensitive' }, { t: '3 days ago', u: 'Joel', a: 'Exported outcome-request CSV', d: 'Funding', k: 'Sensitive' }],
+    filters: [{ k: 'u', label: 'Everyone', opts: ['Joel', 'CEO'] }, { k: 'k', label: 'All actions', opts: ['Sign-in', 'Sensitive', 'Design', 'View'] }],
+    cols: [{ k: 't', label: 'When' }, { k: 'u', label: 'Who', render: function (r) { return MC.person(r.u); } }, { k: 'a', label: 'Action' }, { k: 'd', label: 'Where', render: function (r) { return '<small style="color:var(--muted)">' + r.d + '</small>'; } }, { k: 'k', label: 'Type', render: function (r) { return MC.chip(r.k, r.k === 'Sensitive' ? 'red' : r.k === 'Design' ? 'amber' : ''); } }] }) + '</div>';
+
+  var tabs = [{ k: 'who', label: 'Who has access', icon: 'users-round', html: who }, { k: 'security', label: 'Security', icon: 'shield-check', html: sec }, { k: 'log', label: 'Access log', icon: 'scroll-text', html: logp }];
+  var html =
+    '<section class="hero"><div class="hero-in"><div><span class="eyebrow"><i></i> Access &amp; security &middot; owner only</span><h1>Locked to you, on purpose</h1><p>Mission Control shows funding applicants, bank statements and tracking tokens, so it is tied to your email, not just the administrator role.</p></div>' +
+    '<div class="hero-stats"><div class="hs g"><b>2</b><small>With access</small></div><div class="hs"><b>2FA</b><small>On</small></div><div class="hs"><b>0</b><small>Failed sign-ins</small></div></div></div><div class="hero-act"><a class="btn ghost" href="mc-login.html">' + MC.icon('log-in') + 'Preview the sign-in screen</a></div></section>' +
+    MC.tabs('ws', tabs) + tabs.map(function (t) { return '<div class="panel" data-k="' + t.k + '">' + t.html + '</div>'; }).join('');
+  MC.page({ active: 'access', crumbs: ['Platform', 'Access & security'], html: html, workspace: tabs });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sign in · Mission Control</title>
+<meta name="robots" content="noindex,nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<link rel="stylesheet" href="mc-ui.css">
+<style>
+  body{background:#fff}
+  .lg{display:grid;grid-template-columns:1.1fr 1fr;min-height:100vh}
+  .lg-l{position:relative;overflow:hidden;color:#fff;padding:44px 52px;display:flex;flex-direction:column;justify-content:space-between;
+    background:radial-gradient(900px 500px at 90% -10%,rgba(220,24,60,.65),transparent 60%),radial-gradient(700px 400px at -10% 110%,rgba(255,153,0,.25),transparent 60%),linear-gradient(150deg,#0C1F31 0%,#12263b 55%,#2a1427 100%)}
+  .lg-l::after{content:'';position:absolute;inset:0;pointer-events:none;opacity:.45;background-image:radial-gradient(rgba(255,255,255,.09) 1px,transparent 1px);background-size:20px 20px}
+  .lg-l>*{position:relative;z-index:1}
+  .lg-l img{height:40px;width:auto;align-self:flex-start}
+  .lg-l h1{color:#fff;font-size:44px;line-height:1.08;letter-spacing:-.03em;font-weight:800;max-width:520px}
+  .lg-l p{color:rgba(255,255,255,.72);font-size:16px;line-height:1.65;max-width:480px;margin:16px 0 0}
+  .peek{margin-top:34px;max-width:520px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);border-radius:22px;padding:18px;backdrop-filter:blur(8px);box-shadow:0 30px 60px -30px rgba(0,0,0,.6);transform:rotate(-1.5deg)}
+  .peek-g{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+  .peek-g div{background:rgba(255,255,255,.08);border-radius:14px;padding:12px 14px}
+  .peek-g b{display:block;font:800 22px 'Plus Jakarta Sans'}.peek-g small{font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.6);font-weight:700}
+  .lg-r{display:grid;place-items:center;padding:40px 28px;background:#FCFCFC}
+  .box{width:100%;max-width:410px}
+  .box h2{font-size:28px;letter-spacing:-.02em;font-weight:800}.box>p{color:var(--muted);margin:8px 0 26px}
+  .field+.field{margin-top:16px}
+  .field input{height:48px;font-size:15px}
+  .step{display:none}.step.on{display:block;animation:fade .3s}
+  .otp{display:flex;gap:10px}.otp input{width:100%;height:58px;text-align:center;font:800 24px 'Plus Jakarta Sans';border-radius:14px}
+  .lock{display:flex;gap:10px;align-items:center;margin-top:22px;padding:12px 14px;border-radius:14px;background:var(--green-t);color:var(--green-d);font-weight:600;font-size:13px}
+  .welcome{position:fixed;inset:0;z-index:50;display:none;place-items:center;background:linear-gradient(150deg,#0C1F31,#12263b 55%,#2a1427);color:#fff;text-align:center}.welcome.on{display:grid;animation:fade .4s}
+  .welcome h1{color:#fff;font-size:42px;letter-spacing:-.02em}.welcome p{color:rgba(255,255,255,.7);margin-top:10px}
+  .spin{width:34px;height:34px;border-radius:50%;border:3px solid rgba(255,255,255,.2);border-top-color:#fff;margin:26px auto 0;animation:sp .8s linear infinite}@keyframes sp{to{transform:rotate(360deg)}}
+  @media (max-width:900px){.lg{grid-template-columns:1fr}.lg-l{display:none}}
+</style>
+</head>
+<body>
+<div class="lg">
+  <section class="lg-l">
+    <img src="../assets/logo-v1-lockup-reversed.svg" alt="SME South Africa">
+    <div><span class="eyebrow"><i></i> Owner console</span><h1 style="margin-top:18px">Run the best platform for South African SMEs.</h1><p>Funding, community, solutions and every design on the site, in one calm, fast console that only you can open.</p>
+      <div class="peek"><div class="peek-g"><div><b style="color:#ff8da1">73</b><small>Pending</small></div><div><b style="color:#5fe0b4">5</b><small>Designs live</small></div><div><b style="color:#ffbe5c">R48k</b><small>Unbilled</small></div></div></div></div>
+    <small style="color:rgba(255,255,255,.55)">&copy; 2026 SME South Africa &middot; Mockup, no real sign-in happens here</small>
+  </section>
+  <section class="lg-r"><div class="box">
+    <div class="step on" id="s1"><span class="chip navy" style="margin-bottom:16px">Owner access only</span><h2>Welcome back</h2><p>Sign in to Mission Control.</p>
+      <div class="field"><label for="em">Email</label><input id="em" type="email" value="joel@smesouthafrica.co.za" autocomplete="username"></div>
+      <div class="field"><label for="pw">Password</label><input id="pw" type="password" placeholder="Your password" autocomplete="current-password"></div>
+      <button class="btn pri" id="go1" style="width:100%;height:50px;margin-top:22px;font-size:15px">Continue</button>
+      <div class="lock"><span id="lk"></span>Only the owner account can open this console. Anyone else is shown "not allowed".</div></div>
+    <div class="step" id="s2"><span class="chip green" style="margin-bottom:16px">Step 2 of 2</span><h2>Enter your code</h2><p>Open your authenticator app and type the 6-digit code.</p>
+      <div class="otp" id="otp"><input maxlength="1" inputmode="numeric" aria-label="digit 1"><input maxlength="1" inputmode="numeric" aria-label="digit 2"><input maxlength="1" inputmode="numeric" aria-label="digit 3"><input maxlength="1" inputmode="numeric" aria-label="digit 4"><input maxlength="1" inputmode="numeric" aria-label="digit 5"><input maxlength="1" inputmode="numeric" aria-label="digit 6"></div>
+      <button class="btn pri" id="go2" style="width:100%;height:50px;margin-top:22px;font-size:15px">Open Mission Control</button>
+      <p style="margin-top:14px;text-align:center"><a href="#" id="back" style="color:var(--muted);font-weight:600">Back</a></p></div>
+  </div></section>
+</div>
+<div class="welcome" id="wl"><div><h1 id="wl-h">Good morning, Joel.</h1><p>3 things need you today. Loading your command centre.</p><div class="spin"></div></div></div>
+<script>
+  var $ = function (s) { return document.querySelector(s); };
+  var h = new Date().getHours(); $('#wl-h').textContent = (h < 12 ? 'Good morning' : h < 18 ? 'Good afternoon' : 'Good evening') + ', Joel.';
+  $('#lk').innerHTML = '<i data-lucide="shield-check"></i>';
+  $('#go1').onclick = function () { $('#s1').classList.remove('on'); $('#s2').classList.add('on'); $('#otp input').focus(); };
+  $('#back').onclick = function (e) { e.preventDefault(); $('#s2').classList.remove('on'); $('#s1').classList.add('on'); };
+  var ins = Array.prototype.slice.call(document.querySelectorAll('#otp input'));
+  ins.forEach(function (i, n) { i.addEventListener('input', function () { if (i.value && ins[n + 1]) { ins[n + 1].focus(); } }); i.addEventListener('keydown', function (e) { if (e.key === 'Backspace' && !i.value && ins[n - 1]) { ins[n - 1].focus(); } }); });
+  $('#go2').onclick = function () { $('#wl').classList.add('on'); setTimeout(function () { location.href = 'mc-home.html'; }, 1600); };
+  window.addEventListener('load', function () { if (window.lucide) { lucide.createIcons(); } });
+</script>
+</body>
+</html>

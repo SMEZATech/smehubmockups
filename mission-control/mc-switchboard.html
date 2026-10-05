@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design switchboard · Mission Control</title>
+<meta name="robots" content="noindex,nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<link rel="stylesheet" href="mc-ui.css">
+<style>
+  .sw-row{position:relative;display:flex;align-items:center;gap:16px;padding:14px 22px 14px 26px;border-top:1px solid var(--line-2);transition:background .15s}
+  .sw-row:first-child{border-top:0}.sw-row:hover{background:#FBFCFD}.sw-row[hidden]{display:none}
+  .sw-flag{position:absolute;left:0;top:10px;bottom:10px;width:4px;border-radius:0 4px 4px 0;background:#D7DEE5;transition:.2s}
+  .sw-row[data-s=preview] .sw-flag{background:var(--amber)}.sw-row[data-s=live] .sw-flag{background:var(--green)}
+  .sw-main{flex:1;min-width:0}.sw-main b{display:block;font:700 15px 'Plus Jakarta Sans'}
+  .sw-main small{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:5px;color:var(--muted)}
+  .mk{font-size:11px;font-weight:600;color:#42505E;background:#F2F5F8;border-radius:6px;padding:3px 8px;max-width:420px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .sw-seg{position:relative;display:inline-grid;grid-template-columns:repeat(3,1fr);padding:4px;border-radius:12px;background:#EEF2F6;border:1px solid #E3E8EE;min-width:246px}
+  .sw-seg button{border:0;background:transparent;height:32px;padding:0 12px;border-radius:9px;font-size:12.5px;font-weight:800;color:var(--muted);transition:.15s}
+  .sw-seg button:hover{color:var(--ink)}
+  .sw-seg button.on{background:#fff;box-shadow:0 1px 2px rgba(12,31,49,.12),0 4px 10px -4px rgba(12,31,49,.18);color:var(--ink)}
+  .sw-seg button.on.preview{color:var(--amber-d);background:#FFF7EC}
+  .sw-seg button.on.live{color:#fff;background:var(--green);box-shadow:0 6px 14px -6px rgba(41,163,122,.8)}
+  .sw-link{font-size:12px;font-weight:700;color:var(--red);padding:6px 8px;border-radius:8px}.sw-link:hover{background:var(--red-t)}
+  .sw-group.chrome{border-color:#f3c3cd;box-shadow:0 10px 30px -18px rgba(220,24,60,.45)}
+  .sw-gh{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;padding:18px 22px;border-bottom:1px solid var(--line)}
+  .sw-gh h3{display:flex;align-items:center;gap:8px;font-size:17px}.sw-gh p{font-size:13px;color:var(--muted);margin-top:3px}
+  .n-pill{display:inline-grid;place-items:center;min-width:24px;height:22px;padding:0 7px;border-radius:999px;background:#F0F3F6;color:var(--muted);font-size:11px;font-weight:800}
+  .bulk{display:inline-flex;gap:6px;align-items:center;font-size:12px;color:var(--muted);font-weight:600}.bulk button{border:1px solid var(--line);background:#fff;border-radius:8px;padding:6px 10px;font-size:12px;font-weight:700}.bulk button:hover{border-color:var(--navy)}
+  .confirm{position:fixed;inset:0;z-index:100;display:none;place-items:center;background:rgba(12,31,49,.55);backdrop-filter:blur(3px);padding:20px}.confirm.open{display:grid}
+  .confirm-card{width:100%;max-width:460px;background:#fff;border-radius:22px;padding:28px;box-shadow:var(--shadow-lg)}
+  .confirm-card h3{font-size:21px}.confirm-card p{margin-top:8px;color:var(--muted);line-height:1.6}
+  #hero-prog{background:rgba(255,255,255,.14);height:8px}
+  .legend3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+  @media (max-width:960px){.sw-row{flex-direction:column;align-items:stretch}.legend3{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<script src="mc-ui.js"></script>
+<script>
+(function () {
+  MC.briefs.sw = { title: 'Design switchboard', purpose: 'Overlay our mockup-based designs on top of San\'s Elementor templates, page by page, without removing his work. The owner flips any page Off, Preview or Live.',
+    data: ['Option <code>sme_ui_state</code>: map of switch id to off | preview | live. Fresh install = everything Off.', 'Change log in option <code>sme_ui_log</code> (last 300: time, user, id, from, to).'],
+    logic: ['Off = today\'s Elementor or BuddyBoss page, untouched.', 'Preview = our design, but only to the owner while signed in. Visitors still see today\'s page.', 'Live = our design for everyone. Confirms first, then purges Varnish and Memcached.', 'Header and footer are one switch ("chrome"). Static, legal and sign-in pages get one switch each.'],
+    rules: 'Owner only: joel@smesouthafrica.co.za and manage_options. Nobody else even sees the menu item. Never touches San\'s templates.', components: 'Segmented control, group bulk actions, confirm-before-Live dialog, search and filter, change log.', api: '<code>admin-ajax.php?action=sme_ui_mc_set</code> with nonce, owner check, ids[] and target state.' };
+
+  var G = [
+    ['chrome', 'Header, footer and mobile tab bar', 'One switch for the whole site chrome. Turn it on first so every other design sits inside our header.', [['chrome', 'Header, footer and mobile tab bar', 'public-home.html (shared chrome)']]],
+    ['insights', 'Insights and articles', 'Homepage, articles, categories, authors, newsletter, search.', [['home', 'Homepage', 'public-home.html'], ['article', 'Article (every post)', 'public-article.html'], ['category', 'Category and sub-category pages', 'public-category.html'], ['articles', 'Articles hub page', 'public-articles.html'], ['article-cats', 'All article categories', 'public-article-categories.html'], ['tag', 'Tag pages', 'public-tag.html'], ['author', 'Author pages', 'public-author.html'], ['newsletter', 'Newsletter archive', 'newsletter.html'], ['issue', 'Newsletter issue', 'newsletter-issue.html'], ['search', 'Search results', 'public-search.html']]],
+    ['funding', 'Funding', 'Funding hub, loan guides and funding insights.', [['funding', 'Funding hub', 'public-funding.html'], ['loan', 'Loan guide (every loan option)', 'public-loan-option.html'], ['funding-insights', 'Funding insights', 'public-funding-category.html']]],
+    ['solutions', 'Solutions and reviews', 'Solutions hub, buyer\'s guides, brands and reviews.', [['reviews-hub', 'Solutions hub', 'public-solutions.html'], ['review-cat', 'Solution category (buyer\'s guide)', 'public-solution-category.html'], ['solution-cats', 'All solution categories', 'public-solution-categories.html'], ['review', 'Single review', 'public-brand.html (review layout)'], ['brands', 'Brand directory', 'public-brands.html'], ['brand', 'Brand profile', 'public-brand.html']]],
+    ['resources', 'Resources and guides', 'Downloads, categories and SME Guides.', [['resources-hub', 'Resources hub', 'public-resources.html'], ['resource', 'Single resource', 'public-resource.html'], ['resource-cat', 'Resource category', 'public-resource-category.html'], ['guides', 'Guides directory', 'public-guides.html'], ['guide', 'Single guide', 'public-guide.html']]],
+    ['events', 'Events and podcast', 'Directory, single events, speakers and the podcast.', [['events', 'Events directory', 'events.html'], ['event', 'Single event (in-person and online)', 'event-single-in-person.html'], ['speakers', 'Speakers', 'event-speakers.html'], ['speaker', 'Speaker profile', 'event-speaker.html'], ['podcast', 'Podcast and episodes', 'podcast.html']]],
+    ['glossary', 'Glossary', 'A to Z, terms and categories.', [['glossary', 'Glossary A-Z', 'public-glossary.html'], ['term', 'Glossary term', 'public-glossary-term.html'], ['term-cat', 'Glossary category', 'public-glossary-category.html']]],
+    ['help', 'Help Centre and support', 'Help articles and support tickets.', [['help', 'Help Centre', 'public-help.html'], ['help-cat', 'Help category', 'public-help-category.html'], ['help-article', 'Help article', 'public-help-article.html'], ['tickets', 'Support tickets', 'public-support-ticket.html']]],
+    ['company', 'Company, legal and sign-in pages', 'One switch per page.', [['static:about', 'About', 'public-about.html'], ['static:contact', 'Contact', 'public-contact.html'], ['static:advertise', 'Advertise with us', 'public-advertise.html'], ['legal:privacy', 'Privacy policy', 'public-legal.html'], ['legal:terms', 'Terms of use', 'public-legal.html'], ['auth:sign-in', 'Sign in', 'public-auth.html'], ['auth:sign-up', 'Sign up', 'public-auth.html']]],
+    ['community', 'Community (members only)', 'Feed, directory, groups, messages and My Business. Off = not served, Preview = owner, Live = members.', [['community:feed', 'Feed', 'member-hub.html'], ['community:members', 'Members directory', 'members.html'], ['community:profile', 'Member profile', 'single-member.html'], ['community:groups', 'Groups', 'groups.html'], ['community:forums', 'Forums', 'forums.html'], ['community:messages', 'Messages', 'member-messages.html'], ['community:notifications', 'Notifications', 'member-notifications.html'], ['community:mybusiness', 'My Business', 'member-workspace.html'], ['community:account', 'Account settings', 'member-account.html'], ['community:redirects', 'BuddyBoss redirects to the new community', '-']]]
+  ];
+  var state = {}, log = [], seed = { chrome: 'preview', home: 'live', funding: 'preview', article: 'preview', guides: 'live', guide: 'live', glossary: 'live', 'static:about': 'live', 'community:feed': 'preview', 'community:mybusiness': 'preview' };
+  G.forEach(function (g) { g[3].forEach(function (i) { state[i[0]] = seed[i[0]] || 'off'; }); });
+  var label = {}; G.forEach(function (g) { g[3].forEach(function (i) { label[i[0]] = i[1]; }); });
+  var total = Object.keys(state).length;
+
+  var seg = function (id) { return '<div class="sw-seg" role="radiogroup" data-id="' + id + '">' + ['off', 'preview', 'live'].map(function (k) { return '<button type="button" role="radio" class="' + k + (state[id] === k ? ' on' : '') + '" data-to="' + k + '" aria-checked="' + (state[id] === k) + '">' + k[0].toUpperCase() + k.slice(1) + '</button>'; }).join('') + '</div>'; };
+  var rows = function (g) { return g[3].map(function (i) { return '<li class="sw-row" data-id="' + i[0] + '" data-s="' + state[i[0]] + '" data-text="' + (i[1] + ' ' + i[2] + ' ' + i[0]).toLowerCase() + '"><span class="sw-flag"></span><div class="sw-main"><b>' + MC.esc(i[1]) + '</b><small><span class="mk">' + MC.esc(i[2]) + '</span><span>' + i[0] + '</span></small></div><a class="sw-link" href="#" data-act="Opens today\'s page in a new tab" data-ico="external-link">Today\'s page</a><a class="sw-link" href="#" data-act="Opens the design as the owner" data-ico="eye">View</a>' + seg(i[0]) + '</li>'; }).join(''); };
+
+  var html =
+    '<section class="hero"><div class="hero-in"><div><span class="eyebrow"><i></i> Mission Control &middot; owner only</span><h1>Design switchboard ' + '</h1><p>Choose, page by page, whether visitors see today\'s page or our new design. Today\'s pages are never changed or deleted: switching a design Off brings them straight back.</p></div>' +
+    '<div class="hero-stats"><div class="hs g"><b data-c="live">0</b><small>Live</small></div><div class="hs a"><b data-c="preview">0</b><small>Preview</small></div><div class="hs"><b data-c="off">0</b><small>Off</small></div><div class="hs"><b>' + total + '</b><small>Switches</small></div></div></div>' +
+    '<div style="position:relative;z-index:1;margin-top:22px" class="prog" id="hero-prog"></div></section>' +
+    '<div class="legend3" style="margin-bottom:18px"><div class="card" style="padding:14px 16px;display:flex;gap:12px;align-items:center"><span class="chip">Off</span><small style="color:var(--muted)">Today\'s Elementor or BuddyBoss page, untouched.</small></div><div class="card" style="padding:14px 16px;display:flex;gap:12px;align-items:center"><span class="chip amber">Preview</span><small style="color:var(--muted)">Our design, to you only while signed in. Visitors see nothing new.</small></div><div class="card" style="padding:14px 16px;display:flex;gap:12px;align-items:center"><span class="chip green">Live</span><small style="color:var(--muted)">Our design for everyone. Confirms first, then clears the caches.</small></div></div>' +
+    '<div class="card" style="margin-bottom:18px"><div class="tbar" style="padding-bottom:14px"><label class="search" style="max-width:520px">' + MC.icon('search') + '<input id="sw-q" placeholder="Search a page, a mockup file or a switch id" aria-label="Search"></label><div class="seg" id="sw-f" data-own><button class="on" data-f="all">All</button><button data-f="live">Live</button><button data-f="preview">Preview</button><button data-f="off">Off</button></div><div style="margin-left:auto">' + MC.dev('sw') + '</div></div></div>' +
+    '<div style="display:grid;gap:18px">' + G.map(function (g) { return '<section class="card sw-group ' + (g[0] === 'chrome' ? 'chrome' : '') + '" data-g="' + g[0] + '" style="overflow:hidden"><div class="sw-gh"><div><h3>' + g[1] + ' <span class="n-pill">' + g[3].length + '</span></h3><p>' + g[2] + '</p></div>' + (g[3].length > 1 ? '<div class="bulk">Set all <button data-bulk="off">Off</button><button data-bulk="preview">Preview</button><button data-bulk="live">Live</button></div>' : '') + '</div><ul class="list">' + rows(g) + '</ul></section>'; }).join('') + '</div>' +
+    '<div class="sec-h" style="margin-top:34px">Recent changes</div><div class="card flush"><ul class="list" id="sw-log"><li class="li"><div class="tx"><small>No changes yet in this session. Every change is recorded with who, when, and from and to.</small></div></li></ul></div>' +
+    '<div class="confirm" id="cf"><div class="confirm-card"><h3 id="cf-t">Go live?</h3><p id="cf-p"></p><div style="display:flex;justify-content:flex-end;gap:10px;margin-top:22px"><button class="btn" id="cf-no">Cancel</button><button class="btn ok" id="cf-yes">Go Live</button></div></div></div>';
+
+  var paint = function () {
+    var c = { off: 0, preview: 0, live: 0 }; for (var k in state) { c[state[k]]++; }
+    MC.$$('[data-c]').forEach(function (e) { e.textContent = c[e.getAttribute('data-c')]; });
+    MC.$('#hero-prog').innerHTML = '<i style="width:' + (c.live / total * 100) + '%;background:#29A37A"></i><i style="width:' + (c.preview / total * 100) + '%;background:#FF9900"></i>';
+  };
+  var apply = function (ids, to) {
+    var ch = []; ids.forEach(function (id) { if (state[id] !== to) { ch.push([id, state[id], to]); state[id] = to; } });
+    ch.forEach(function (c) { var r = MC.$('.sw-row[data-id="' + c[0] + '"]'); r.setAttribute('data-s', c[2]); MC.$$('.sw-seg button', r).forEach(function (b) { var on = b.dataset.to === c[2]; b.classList.toggle('on', on); b.setAttribute('aria-checked', on); }); });
+    if (!ch.length) { return; }
+    var now = new Date().toLocaleTimeString('en-ZA', { hour: '2-digit', minute: '2-digit' });
+    var li = ch.slice(0, 6).map(function (c) { return '<li class="li"><time style="min-width:60px">' + now + '</time><div class="tx"><b>' + MC.esc(label[c[0]]) + '</b><small>Joel &middot; ' + c[1] + ' &rarr; ' + c[2] + (c[2] === 'live' ? ' &middot; caches purged' : '') + '</small></div>' + MC.chip(c[2], c[2] === 'live' ? 'green' : c[2] === 'preview' ? 'amber' : '', true) + '</li>'; }).join('');
+    var L = MC.$('#sw-log'); if (L.querySelector('.tx small') && !L.querySelector('b')) { L.innerHTML = ''; } L.insertAdjacentHTML('afterbegin', li); paint(); MC.refreshIcons();
+    MC.toast(ch.length === 1 ? label[ch[0][0]] + ' set to ' + ch[0][2] : ch.length + ' designs set to ' + to, to === 'live' ? 'rocket' : 'toggle-right');
+  };
+  var ask = function (ids, to) {
+    if (to !== 'live') { apply(ids, to); return; }
+    var n = ids.filter(function (i) { return state[i] !== 'live'; }).length; if (!n) { return; }
+    MC.$('#cf-t').textContent = n === 1 ? 'Go live with ' + label[ids[0]] + '?' : 'Take ' + n + ' designs live?';
+    MC.$('#cf-p').textContent = 'Everyone will see the new design immediately. Varnish and Memcached are purged for you. You can switch back to Off at any time and today\'s page returns.';
+    MC.$('#cf').classList.add('open'); MC._pend = [ids, to];
+  };
+
+  MC.page({ active: 'switchboard', crumbs: ['Platform', 'Design switchboard'], html: html, after: function () {
+    paint();
+    document.addEventListener('click', function (e) {
+      var b = e.target.closest('.sw-seg button'); if (b) { ask([b.closest('.sw-seg').dataset.id], b.dataset.to); return; }
+      var bk = e.target.closest('[data-bulk]'); if (bk) { var ids = MC.$$('.sw-row', bk.closest('.sw-group')).map(function (r) { return r.dataset.id; }); ask(ids, bk.dataset.bulk); return; }
+      var f = e.target.closest('#sw-f button'); if (f) { MC.$$('#sw-f button').forEach(function (x) { x.classList.remove('on'); }); f.classList.add('on'); filt(); return; }
+      if (e.target.id === 'cf-no' || e.target.id === 'cf') { MC.$('#cf').classList.remove('open'); }
+      if (e.target.id === 'cf-yes') { MC.$('#cf').classList.remove('open'); apply(MC._pend[0], MC._pend[1]); }
+    });
+    var filt = function () { var q = MC.$('#sw-q').value.toLowerCase(), f = MC.$('#sw-f .on').dataset.f; MC.$$('.sw-group').forEach(function (g) { var any = 0; MC.$$('.sw-row', g).forEach(function (r) { var show = (!q || r.dataset.text.indexOf(q) >= 0) && (f === 'all' || r.dataset.s === f); r.hidden = !show; if (show) { any++; } }); g.style.display = any ? '' : 'none'; }); };
+    MC.$('#sw-q').addEventListener('input', filt);
+  } });
+})();
+</script>
+</body>
+</html>

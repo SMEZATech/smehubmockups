@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Command centre · Mission Control</title>
+<meta name="robots" content="noindex,nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<link rel="stylesheet" href="mc-ui.css">
+</head>
+<body>
+<script src="mc-ui.js"></script>
+<script>
+(function () {
+  var h = new Date().getHours(), hi = h < 12 ? 'Good morning' : h < 18 ? 'Good afternoon' : 'Good evening';
+  var today = new Date().toLocaleDateString('en-ZA', { weekday: 'long', day: 'numeric', month: 'long' });
+
+  MC.briefs.home_counters = { title: 'Attention counters', purpose: 'Eight numbers that answer "what needs me today?" in one glance. Each card is a link into the tool that fixes it.',
+    data: ['Applications pending: count of <code>funding-applications</code> posts with meta <code>fa_application_status = Pending</code>.', 'Outcomes owed: <code>smesa_oc_stale_counts()</code> summed (sent to a partner more than 7 days ago, no outcome).', 'Commission unbilled: <code>smesa_ce_unbilled()</code>.', 'Detractors: rows in <code>wp_smesa_feedback</code> with nps_bucket = detractor or sat_score 1-2 and status new.', 'Cooling: <code>smesa_eng_buckets()[cooling]</code>.', 'Lula-qualified: rows in <code>wp_smesa_lula_pq</code> with matched = 1.', 'CAPI: first row of option <code>smesa_capi_log</code>.', 'Lifecycle: options <code>smesa_lc_enabled</code> and <code>smesa_lc_dryrun</code>.'],
+    logic: 'Tone is computed server side: red when something is owed, amber when worth a look, green when clear, navy when informational. Each counter is guarded so a missing tool never breaks the page.', components: 'KPI card with sparkline and week-over-week delta (sparkline data is new: one cheap daily snapshot row per metric).', api: 'Server rendered. Optional <code>GET /wp-json/sme-mc/v1/counters</code> if the page later refreshes itself.' };
+  MC.briefs.home_priorities = { title: 'Today\'s priorities', purpose: 'The ranked to-do list for the owner. Replaces having to open six tools to find out what is on fire.', logic: ['Ranking = money first (pending applications, unbilled commission), then reputation (detractors), then plumbing (tracking, engine state).', 'Each row has one primary action that deep-links to the exact tab.', 'Rows disappear when their counter reaches zero, so an empty list means a clear day.'], data: 'Derived from the eight counters plus the system health checks. Nothing new is stored.' };
+  MC.briefs.home_workspaces = { title: 'Workspaces', purpose: 'One door per area of the business. Replaces the old flat list of 30+ tool links.', logic: 'Each card lists its tabs as chips that deep-link (<code>?tab=</code>). Order and copy come from <code>smesa_ops_tools()</code>.', components: 'Workspace card: icon, kicker, title, summary, two live stats, tab chips.' };
+  MC.briefs.home_activity = { title: 'Activity stream', purpose: 'A live feed of what the platform and the team just did, so the owner can see movement without opening anything.', data: 'Union of: funding status changes, partner outcomes recorded, design switchboard changes (<code>sme_ui_log</code>), engine sends, health-watchdog alerts.', logic: 'Newest first, capped at 50, grouped by hour.', api: 'Server rendered; a light poll every 60 s later.' };
+  MC.briefs.home_health = { title: 'System health', purpose: 'Is the platform itself healthy? One row per dependency with a status dot and the number that matters.', data: 'WP Engine cache purge status, Memcached, mail route (Gmail), Kit sync, GSC, New Relic Apdex, CPU headroom against the plan.', logic: 'Green/amber/red thresholds live in <code>smesa-health-watchdog.php</code>; the header pill shows the worst state.' };
+
+  var spark = function (up) { return up ? [3, 4, 3, 5, 6, 5, 7, 8, 7, 9] : [9, 8, 9, 7, 6, 7, 5, 4, 5, 3]; };
+
+  var html =
+    '<section class="hero"><div class="hero-in"><div><span class="eyebrow"><i></i> ' + today + ' &middot; Owner only</span><h1>' + hi + ', Joel.</h1><p>Three things need you today, everything else is running. The funding queue is the one that moves money.</p>' +
+    '<div class="hero-act"><a class="btn pri" href="mc-funding.html?tab=desk">' + MC.icon('zap') + 'Work the funding queue</a><a class="btn ghost" href="mc-switchboard.html">' + MC.icon('toggle-right') + 'Design switchboard</a><button class="btn ghost" data-pal>' + MC.icon('search') + 'Jump to...</button></div></div>' +
+    '<div class="hero-stats"><div class="hs r"><b>3</b><small>Need you</small></div><div class="hs g"><b>5</b><small>Designs live</small></div><div class="hs"><b>99.9%</b><small>Uptime 30d</small></div><div class="hs a"><b>R48k</b><small>Unbilled</small></div></div></div></section>' +
+
+    '<div class="sec-h">Needs your attention ' + MC.dev('home_counters') + '</div>' +
+    '<div class="grid g4">' +
+      MC.kpi({ label: 'Applications pending', icon: 'inbox', value: '73', tone: 'red', dir: 'up', delta: '+9', sub: 'vs last week', spark: spark(1), href: 'mc-funding.html?tab=desk' }) +
+      MC.kpi({ label: 'Partner outcomes owed', icon: 'hourglass', value: '4', tone: 'amber', dir: 'down', delta: '-3', sub: 'vs last week', spark: spark(0), href: 'mc-funding.html?tab=chase' }) +
+      MC.kpi({ label: 'Commission unbilled', icon: 'receipt', value: 'R48 200', tone: 'red', dir: 'up', delta: '+R12k', sub: 'this month', spark: spark(1), href: 'mc-funding.html?tab=money' }) +
+      MC.kpi({ label: 'Detractors to reply to', icon: 'message-circle-warning', value: '2', tone: 'amber', dir: 'flat', delta: 'No change', href: 'mc-community.html?tab=feedback' }) +
+      MC.kpi({ label: 'Members cooling off', icon: 'snowflake', value: '38', tone: 'amber', dir: 'down', delta: '-6', sub: 'vs last week', spark: spark(0), href: 'mc-community.html?tab=engagement' }) +
+      MC.kpi({ label: 'Lula-qualified leads', icon: 'badge-check', value: '11', tone: 'navy', dir: 'up', delta: '+4', sub: 'this week', spark: spark(1), href: 'mc-funding.html?tab=lula' }) +
+      MC.kpi({ label: 'Meta CAPI', icon: 'send', value: 'Sending', tone: 'green', dir: 'flat', delta: 'Last event 4 min ago', href: 'mc-tracking.html?tab=capi' }) +
+      MC.kpi({ label: 'Lifecycle engine', icon: 'workflow', value: 'LIVE', tone: 'green', dir: 'flat', delta: '3 sends today', href: 'mc-community.html?tab=lifecycle' }) +
+    '</div>' +
+
+    '<div class="grid g-21" style="margin-top:22px">' +
+      MC.card({ title: 'Today\'s priorities', sub: 'Ranked by money first, then reputation, then plumbing', dev: 'home_priorities', right: '<span class="chip red">3 open</span>', cls: 'flush' },
+        '<ul class="list">' +
+          MC.li('red', 'inbox', '73 funding applications waiting', 'Oldest has been pending 6 days. 19 are Lula pre-qualified.', '<a class="btn sm pri" href="mc-funding.html?tab=desk">Open desk</a>') +
+          MC.li('red', 'receipt', 'R48 200 commission earned, not yet invoiced', 'Retail Capital R15 800, Mzansi Capital R12 300, Genfin R11 350, Lula R8 750.', '<a class="btn sm" href="mc-funding.html?tab=money">Ledger</a>') +
+          MC.li('amber', 'message-circle-warning', '2 detractor replies waiting', 'One mentions a slow lender response. Reply within 48 hours.', '<a class="btn sm" href="mc-community.html?tab=feedback">Reply</a>') +
+          MC.li('green', 'check-circle-2', 'Everything else is clear', 'Mail route, caches, Kit sync and tracking are all healthy.', '') +
+        '</ul>') +
+      MC.card({ title: 'Funding applications', sub: 'Last 12 weeks', dev: 'home_counters' },
+        MC.bars([22, 31, 28, 40, 36, 52, 47, 58, 61, 55, 66, 73], ['W1', '', '', 'W4', '', '', 'W7', '', '', 'W10', '', 'W12'], 11) +
+        '<div class="legend"><span><i style="background:#DC183C"></i>This week</span><span><i style="background:#0C1F31"></i>Previous weeks</span></div>') +
+    '</div>' +
+
+    '<div class="sec-h">Workspaces ' + MC.dev('home_workspaces') + '</div>' +
+    '<div class="grid g3">' + [
+      ['funding', 'Funding &amp; revenue', 'Funding workspace', 'Desk, routing, outcomes, declines, statements, affiliates and commission in one page.', 'banknote', 'red', [['73', 'pending'], ['R48k', 'unbilled']], ['Desk', 'Ledger', 'Outcomes', 'Declines', 'Lula', 'Commission'], 'mc-funding.html'],
+      ['community', 'Members &amp; retention', 'Community workspace', 'Who is active, who is cooling, the lifecycle engine, feedback, funnel and moderation.', 'users', 'blue', [['2 605', 'members'], ['38', 'cooling']], ['Members', 'Lifecycle', 'Engagement', 'Feedback', 'Promo Guard'], 'mc-community.html'],
+      ['solutions', 'Solutions &amp; resources', 'Solutions workspace', 'The affiliate and review pillar: brand pages, roundups and what is actually earning.', 'star', 'amber', [['110', 'brand pages'], ['63', 'thin']], ['Health', 'Brands', 'Roundups', 'Earnings'], 'mc-solutions.html'],
+      ['resources', 'Solutions &amp; resources', 'Resources workspace', 'Every downloadable resource, the leads it captured and the dormant-lead revival engine.', 'folder-open', 'violet', [['34', 'forms'], ['~12k', 'dormant']], ['Library', 'Leads', 'Revival'], 'mc-resources.html'],
+      ['tracking', 'Traffic &amp; tracking', 'Solutions tracking', 'Ad Manager, money links, conversion tracking, Meta CAPI and the Lula, GoTyme and Dripcel pipes.', 'radar', 'navy', [['7', 'integrations'], ['OK', 'CAPI']], ['Ads', 'Money Links', 'CAPI', 'GoTyme'], 'mc-tracking.html'],
+      ['switchboard', 'Platform', 'Design switchboard', 'Choose page by page whether visitors see today\'s page or the new design. Off, Preview or Live.', 'toggle-right', 'green', [['5', 'live'], ['5', 'preview']], ['Off', 'Preview', 'Live'], 'mc-switchboard.html']
+    ].map(function (w) {
+      return '<a class="card ws" href="' + w[8] + '"><div class="ws-top"><div class="ic ' + w[5] + '">' + MC.icon(w[4]) + '</div><div><span class="kick">' + w[1] + '</span><h3>' + w[2] + '</h3><p>' + w[3] + '</p></div></div>' +
+        '<div class="stats">' + w[6].map(function (s) { return '<div><b>' + s[0] + '</b><small>' + s[1] + '</small></div>'; }).join('') + '</div><div class="tabs-l">' + w[7].map(function (t) { return '<span>' + t + '</span>'; }).join('') + '</div></a>';
+    }).join('') + '</div>' +
+
+    '<div class="grid g-21" style="margin-top:22px">' +
+      MC.card({ title: 'Activity stream', sub: 'What the platform and the team just did', dev: 'home_activity', cls: 'flush', right: '<button class="btn sm" data-act="Filters coming with the build" data-ico="sliders-horizontal">' + MC.icon('sliders-horizontal') + 'Filter</button>' },
+        '<ul class="list">' +
+          MC.li('green', 'check-circle-2', 'Lula approved <b>Langa Holdings</b>', 'Working capital, R350 000. Outcome recorded by Tshepho.', '8 min ago') +
+          MC.li('blue', 'send', 'Lifecycle engine sent 3 "what you missed" digests', 'All three passed the Comms Governor ceiling.', '24 min ago') +
+          MC.li('amber', 'toggle-right', 'Design switchboard: <b>Funding</b> set to Preview', 'Owner-only preview, nothing public changed.', '1 hour ago') +
+          MC.li('red', 'x-circle', 'Retail Capital declined <b>Kopano Catering</b>', 'Reason: under 6 months trading. Added to Declines.', '2 hours ago') +
+          MC.li('violet', 'file-down', 'Bank statement shared securely with Mzansi Capital', 'Link expires in 7 days, one-time download.', 'Yesterday') +
+          MC.li('navy', 'shield-check', 'Health watchdog: all checks passed', '14 of 14 checks green.', 'Yesterday') +
+        '</ul>') +
+      MC.card({ title: 'System health', sub: 'Production, live', dev: 'home_health', right: '<span class="chip green"><i></i>Healthy</span>' },
+        '<div style="display:grid;gap:14px">' + [
+          ['Edge cache (Varnish)', 'Purged 12 min ago', 'green'], ['Object cache (Memcached)', 'Hit rate 94%', 'green'], ['Mail route', 'Sending, 0 failures', 'green'], ['Kit sync', 'Last run 06:10', 'green'], ['New Relic Apdex', '0.97', 'green'], ['CPU against plan', '61% of allowance', 'amber']
+        ].map(function (r) { return '<div style="display:flex;align-items:center;gap:12px"><span class="chip ' + r[2] + '" style="padding:0 8px"><i></i></span><div style="flex:1"><b style="font-size:13px">' + r[0] + '</b></div><small style="color:var(--muted)">' + r[1] + '</small></div>'; }).join('') + '</div>') +
+    '</div>';
+
+  MC.page({ active: 'home', crumbs: ['Command centre'], html: html });
+})();
+</script>
+</body>
+</html>

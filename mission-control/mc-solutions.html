@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Solutions workspace · Mission Control</title>
+<meta name="robots" content="noindex,nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<link rel="stylesheet" href="mc-ui.css">
+</head>
+<body>
+<script src="mc-ui.js"></script>
+<script>
+(function () {
+  var B = MC.briefs, R = MC.R;
+  B.s_health = { title: 'Solutions health', purpose: 'Where the affiliate and review pillar leaks money: thin pages, untracked links, roundups that dead-end, unfinished drafts.', data: ['Brand pages = CPT <code>brands</code> (110 live).', 'Roundups = posts titled "Top X in South Africa" (27).', 'Untracked = brand pages whose outbound link is a raw URL instead of <code>/go/{partner}/</code>.', 'Thin = under 150 words.'], logic: 'Each issue shows why it costs money and the exact fix, so the list is a work queue and not just a report.' };
+  B.s_brands = { title: 'Brand catalogue', purpose: 'Every brand page with its word count, link tracking and partner status, so the next page to improve is obvious.', data: 'CPT <code>brands</code> + taxonomy <code>sme_review_categories</code>; buyer\'s-guide ACF fields.', logic: 'Sort by value: pages with traffic and a thin body come first.' };
+  B.s_round = { title: 'Roundups', purpose: 'The "Top X in South Africa" pages are what rank. They must link to brand pages or traffic goes in and nothing comes out.', logic: 'Dead-end = a roundup that links to no brand page.' };
+  B.s_earn = { title: 'Earnings', purpose: 'What the pillar actually earns, per partner, from tracked clicks and confirmed conversions.', data: 'Click log from <code>/go/</code>, conversions imported per partner, rate card per partner (CPL or CPA).', rules: 'Bot clicks are excluded. Per-partner rates must be confirmed before a click turns into rands.' };
+  B.s_deals = { title: 'Tracked partners', purpose: 'Which partners are wired up for tracking and which are not.', data: 'Partner records with tracking method, rate card and status.' };
+
+  var cats = [['Finance & Accounting', 16], ['Funding', 16], ['HR & Operations', 15], ['Marketing & Sales', 14], ['Legal & Insurance', 8], ['IT & Connectivity', 4], ['Payments & POS', 11], ['Logistics & Delivery', 9], ['Other', 17]];
+  var brands = [
+    { n: 'Sage Accounting', c: 'Finance & Accounting', w: 1240, tr: 'Tracked', p: 'Live', t: 'Strong' }, { n: 'Xero', c: 'Finance & Accounting', w: 980, tr: 'Untracked', p: 'Live', t: 'Strong' }, { n: 'Yoco', c: 'Payments & POS', w: 620, tr: 'Untracked', p: 'Live', t: 'Strong' }, { n: 'SnapScan', c: 'Payments & POS', w: 90, tr: 'Untracked', p: 'Live', t: 'Thin' }, { n: 'Lula', c: 'Funding', w: 780, tr: 'Tracked', p: 'Live', t: 'Strong' }, { n: 'Retail Capital', c: 'Funding', w: 710, tr: 'Tracked', p: 'Live', t: 'Strong' }, { n: 'Bob Go', c: 'Logistics & Delivery', w: 130, tr: 'Untracked', p: 'Live', t: 'Thin' }, { n: 'PayFast', c: 'Payments & POS', w: 540, tr: 'Untracked', p: 'Live', t: 'OK' }, { n: 'Fluent CRM', c: 'Marketing & Sales', w: 60, tr: 'Untracked', p: 'Draft', t: 'Thin' }, { n: 'Business insurer (example)', c: 'Legal & Insurance', w: 110, tr: 'Untracked', p: 'Live', t: 'Thin' }
+  ];
+  var TT = { Strong: 'green', OK: 'blue', Thin: 'red' };
+  var brandRow = function (b) { return { title: b.n, sub: b.c, html: '<div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px">' + MC.chip(b.t, TT[b.t], true) + MC.chip(b.tr, b.tr === 'Tracked' ? 'green' : 'amber') + MC.chip(b.w + ' words', '') + '</div><div class="callout amber"><div class="ic">' + MC.icon('lightbulb') + '</div><div><b>Next best action</b><p>' + (b.t === 'Thin' ? 'Expand using the review template: who it is for, pricing, pros and cons, buyer\'s guide.' : b.tr === 'Untracked' ? 'Swap the raw affiliate URL for /go/' + b.n.toLowerCase().replace(/[^a-z]+/g, '-') + '/ so every click is attributed.' : 'Healthy. Review quarterly.') + '</p></div></div>' }; };
+
+  var health =
+    '<div class="grid g3" style="margin-bottom:16px">' +
+      MC.kpi({ label: 'Live brand pages', icon: 'store', value: '110', tone: 'navy', dir: 'up', delta: '+3' }) + MC.kpi({ label: 'Roundup pages', icon: 'list-ordered', value: '27', tone: 'blue' }) + MC.kpi({ label: 'Thin brand pages (&lt;150 words)', icon: 'file-minus', value: '63', tone: 'red', dir: 'down', delta: '-4' }) +
+      MC.kpi({ label: 'Brands with untracked links', icon: 'unlink', value: '110', tone: 'red' }) + MC.kpi({ label: 'Roundups linking to no brand', icon: 'milestone', value: '22', tone: 'red' }) + MC.kpi({ label: 'Unfinished brand drafts', icon: 'file-pen', value: '27', tone: 'amber' }) + '</div>' +
+    '<div class="grid g-21">' + MC.card({ title: 'What these numbers mean', sub: 'Why each costs money, and the fix', dev: 's_health', cls: 'flush' }, '<ul class="list">' +
+      MC.li('red', 'unlink', '110 untracked outbound links', 'Visitors reach partners through raw links, so no click or commission can be attributed.', MC.chip('Swap to /go/{partner}/', 'red')) +
+      MC.li('red', 'milestone', '22 dead-end roundups', 'The "Top X" pages rank, but they do not link to a brand page, so traffic goes in and nothing comes out.', MC.chip('Add brand links', 'red')) +
+      MC.li('red', 'file-minus', '63 thin brand pages', 'Under 150 words. Google will not rank them and buyers do not trust them.', MC.chip('Use review template', 'amber')) +
+      MC.li('amber', 'file-pen', '27 unfinished drafts', 'Brand pages started and never published: inventory earning nothing.', MC.chip('Finish or bin', 'amber')) +
+      MC.li('amber', 'archive', '37 legacy orphan posts', 'Old reviews/resources post types are unreachable. 18 of their URLs now hard-404.', MC.chip('Redirect the 404s', 'amber')) + '</ul>') +
+      MC.card({ title: 'Catalogue by category' }, '<div style="display:grid;gap:12px">' + cats.map(function (c) { return '<div><div style="display:flex;justify-content:space-between;font-weight:600;margin-bottom:4px"><span>' + c[0] + '</span><b>' + c[1] + '</b></div>' + MC.prog([{ v: c[1] * 5, c: '#DC183C' }]) + '</div>'; }).join('') + '</div>') + '</div>';
+
+  var brandsPanel = '<div class="card flush">' + MC.table({ placeholder: 'Search brands', perPage: 8, rows: brands, onRow: brandRow,
+    filters: [{ k: 'c', label: 'All categories', opts: cats.map(function (c) { return c[0]; }) }, { k: 'tr', label: 'Tracking', opts: ['Tracked', 'Untracked'] }, { k: 't', label: 'Quality', opts: ['Strong', 'OK', 'Thin'] }],
+    right: '<button class="btn sm pri" data-act="New brand page started from the review template" data-ico="plus">' + MC.icon('plus') + 'New brand</button>',
+    cols: [{ k: 'n', label: 'Brand', render: function (r) { return MC.person(r.n, r.c); } }, { k: 'w', label: 'Words', cls: 'num' }, { k: 't', label: 'Quality', render: function (r) { return MC.chip(r.t, TT[r.t], true); } }, { k: 'tr', label: 'Links', render: function (r) { return MC.chip(r.tr, r.tr === 'Tracked' ? 'green' : 'amber'); } }, { k: 'p', label: 'Status', render: function (r) { return MC.chip(r.p, r.p === 'Live' ? 'green' : ''); } }] }) + '</div>';
+
+  var roundups = '<div class="card flush">' + MC.table({ perPage: 7, placeholder: 'Search roundups', rows: [
+    { t: 'Top 10 accounting software in South Africa', links: 8, vis: 2140, s: 'Linked' }, { t: 'Best POS systems for small businesses in South Africa', links: 6, vis: 1710, s: 'Linked' }, { t: 'Top 7 business insurance providers in South Africa', links: 0, vis: 1320, s: 'Dead end' }, { t: 'Best business loans in South Africa', links: 5, vis: 2980, s: 'Linked' }, { t: 'Top 5 courier services for e-commerce', links: 0, vis: 860, s: 'Dead end' }, { t: 'Best payroll software in South Africa', links: 0, vis: 940, s: 'Dead end' }, { t: 'Top business bank accounts for startups', links: 4, vis: 1520, s: 'Linked' }],
+    filters: [{ k: 's', label: 'All', opts: ['Linked', 'Dead end'] }],
+    cols: [{ k: 't', label: 'Roundup', render: function (r) { return '<b>' + MC.esc(r.t) + '</b>'; } }, { k: 'vis', label: 'Visits (30d)', cls: 'num', render: function (r) { return r.vis.toLocaleString('en-ZA'); } }, { k: 'links', label: 'Brand links', cls: 'num' }, { k: 's', label: 'State', render: function (r) { return MC.chip(r.s, r.s === 'Dead end' ? 'red' : 'green', true); } }, { k: 'x', label: '', sort: false, cls: 'r', render: function (r) { return r.s === 'Dead end' ? '<button class="btn sm" data-act="Brand links suggested for this roundup" data-ico="link">' + MC.icon('link') + 'Fix</button>' : ''; } }] }) + '</div>';
+
+  var earnings =
+    '<div class="grid g4" style="margin-bottom:16px">' + MC.kpi({ label: 'Affiliate clicks (7d)', icon: 'mouse-pointer-click', value: '2', tone: 'amber', dir: 'up', delta: '+2' }) + MC.kpi({ label: 'Confirmed conversions', icon: 'badge-check', value: '0', tone: 'navy' }) + MC.kpi({ label: 'Earned this month', icon: 'wallet', value: 'R0', tone: 'muted', sub: 'rates unconfirmed' }) + MC.kpi({ label: 'Partners with a rate card', icon: 'file-badge', value: '1 of 9', tone: 'red' }) + '</div>' +
+    MC.callout('amber', 'info', 'Clicks only become rands once per-partner rates are set', 'Add each partner\'s CPL or CPA in Tracked partners. Until then, click volume is shown but earnings stay at R0.') +
+    '<div style="margin-top:16px">' + MC.card({ title: 'Clicks per partner', sub: 'Last 30 days, bots excluded', dev: 's_earn' }, MC.bars([2, 0, 5, 1, 0, 3, 0, 1, 0], ['Sage', 'Xero', 'Yoco', 'Lula', 'RC', 'PayFast', 'Bob Go', 'Fluent', 'Other'], 2)) + '</div>';
+
+  var deals = '<div class="card flush">' + MC.table({ perPage: 9, search: false, rows: [
+    { p: 'Sage', m: '/go/sage', rate: 'CPA R350', s: 'Tracked' }, { p: 'Lula', m: 'Partner API', rate: 'Per approval', s: 'Tracked' }, { p: 'Retail Capital', m: 'Partner API', rate: 'Per approval', s: 'Tracked' }, { p: 'Yoco', m: 'Raw link', rate: 'Not set', s: 'Not tracked' }, { p: 'Xero', m: 'Raw link', rate: 'Not set', s: 'Not tracked' }, { p: 'PayFast', m: 'Raw link', rate: 'Not set', s: 'Not tracked' }, { p: 'Bob Go', m: 'Raw link', rate: 'Not set', s: 'Not tracked' }],
+    cols: [{ k: 'p', label: 'Partner', render: function (r) { return MC.person(r.p); } }, { k: 'm', label: 'Tracking method' }, { k: 'rate', label: 'Rate card' }, { k: 's', label: 'State', render: function (r) { return MC.chip(r.s, r.s === 'Tracked' ? 'green' : 'amber', true); } }, { k: 'x', label: '', sort: false, cls: 'r', render: function (r) { return r.s === 'Tracked' ? '' : '<button class="btn sm" data-act="Tracking setup opened" data-ico="wrench">' + MC.icon('wrench') + 'Set up</button>'; } }] }) + '</div>';
+
+  var tabs = [{ k: 'health', label: 'Health', icon: 'heart-pulse', html: health, dev: 's_health' }, { k: 'brands', label: 'Brand catalogue', icon: 'store', html: brandsPanel, dev: 's_brands' }, { k: 'roundups', label: 'Roundups', icon: 'list-ordered', n: 22, html: roundups, dev: 's_round' }, { k: 'earnings', label: 'Earnings', icon: 'wallet', html: earnings, dev: 's_earn' }, { k: 'deals', label: 'Tracked partners', icon: 'handshake', html: deals, dev: 's_deals' }];
+  var html =
+    '<section class="hero"><div class="hero-in"><div><span class="eyebrow"><i></i> Solutions workspace &middot; mockup</span><h1>The affiliate and review pillar</h1><p>Brand pages, the "Top X in South Africa" roundups that feed them, and whether any of it is actually tracked and earning.</p></div>' +
+    '<div class="hero-stats"><div class="hs"><b>110</b><small>Brand pages</small></div><div class="hs r"><b>63</b><small>Thin</small></div><div class="hs a"><b>22</b><small>Dead ends</small></div><div class="hs g"><b>1/9</b><small>Rate cards</small></div></div></div></section>' +
+    MC.tabs('ws', tabs) + tabs.map(function (t) { return '<div class="panel" data-k="' + t.k + '"><div style="display:flex;justify-content:flex-end;margin:-6px 0 8px">' + MC.dev(t.dev) + '</div>' + t.html + '</div>'; }).join('');
+  MC.page({ active: 'solutions', crumbs: ['Workspaces', 'Solutions'], html: html, workspace: tabs });
+})();
+</script>
+</body>
+</html>

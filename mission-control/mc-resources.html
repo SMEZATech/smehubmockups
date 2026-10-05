@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Resources workspace · Mission Control</title>
+<meta name="robots" content="noindex,nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<link rel="stylesheet" href="mc-ui.css">
+</head>
+<body>
+<script src="mc-ui.js"></script>
+<script>
+(function () {
+  var B = MC.briefs;
+  B.r_lib = { title: 'Resource library', purpose: 'Every downloadable resource with what it pulls in, so winners get promoted and shelf-ware gets fixed or retired.', data: 'CPT <code>sme_resources</code> (MemberPress-gated downloads) joined to form submissions (lead capture) and download counts.', logic: 'Rank by leads per 1 000 visits, not total downloads, so a small great asset is not hidden by a big mediocre one.' };
+  B.r_leads = { title: 'Resource leads', purpose: 'Every email captured through a resource gate: who, from which asset, and whether they went on to join or apply.', data: 'Form entries (34 tracked forms) deduplicated by email, the identity key across the platform.', rules: 'Identity = email. A lead who later registers merges into the member record.' };
+  B.r_rev = { title: 'Revival engine', purpose: 'About 12 000 past downloaders are dormant. The engine re-engages them gently, in audited batches.', logic: ['Audit first, then dry-run, then arm. It ships OFF.', 'Every send goes through the Comms Governor and a staggered queue.'], rules: 'Never a simultaneous bulk blast.' };
+
+  var res = [
+    { n: 'Business Plan Template', t: 'Template', dl: 3240, leads: 2180, cv: 67, trend: 'up' }, { n: 'Cash Flow Forecast Workbook', t: 'Spreadsheet', dl: 2710, leads: 1830, cv: 64, trend: 'up' }, { n: 'Funding Readiness Checklist', t: 'Checklist', dl: 1960, leads: 1710, cv: 87, trend: 'up' }, { n: 'Employment Contract Pack', t: 'Legal pack', dl: 1480, leads: 920, cv: 62, trend: 'flat' }, { n: 'Social Media Calendar 2026', t: 'Template', dl: 640, leads: 210, cv: 33, trend: 'down' }, { n: 'Pitch Deck Starter', t: 'Slides', dl: 410, leads: 120, cv: 29, trend: 'down' }, { n: 'VAT Quick Guide', t: 'Guide', dl: 1210, leads: 610, cv: 50, trend: 'flat' }
+  ];
+  var lib = '<div class="grid g4" style="margin-bottom:16px">' + MC.kpi({ label: 'Resources', icon: 'folder-open', value: '43', tone: 'navy' }) + MC.kpi({ label: 'Downloads (30d)', icon: 'download', value: '11 650', tone: 'blue', dir: 'up', delta: '+9%', spark: [5, 6, 6, 7, 8, 9, 10] }) + MC.kpi({ label: 'Leads captured (30d)', icon: 'user-plus', value: '7 580', tone: 'green', dir: 'up', delta: '+12%', spark: [4, 5, 5, 7, 7, 9, 10] }) + MC.kpi({ label: 'Shelf-ware', icon: 'package-x', value: '9', tone: 'amber', sub: 'under 50 leads' }) + '</div>' +
+    '<div class="card flush">' + MC.table({ perPage: 7, placeholder: 'Search resources', rows: res, filters: [{ k: 't', label: 'All types', opts: ['Template', 'Spreadsheet', 'Checklist', 'Legal pack', 'Slides', 'Guide'] }],
+      cols: [{ k: 'n', label: 'Resource', render: function (r) { return MC.person(r.n, r.t); } }, { k: 'dl', label: 'Downloads', cls: 'num', render: function (r) { return r.dl.toLocaleString('en-ZA'); } }, { k: 'leads', label: 'Leads', cls: 'num', render: function (r) { return r.leads.toLocaleString('en-ZA'); } }, { k: 'cv', label: 'Lead rate', render: function (r) { return '<div style="min-width:120px">' + r.cv + '%' + MC.prog([{ v: r.cv, c: r.cv > 60 ? '#29A37A' : r.cv > 40 ? '#FF9900' : '#DC183C' }]) + '</div>'; } }, { k: 'trend', label: 'Trend', render: function (r) { return MC.chip(r.trend === 'up' ? 'Rising' : r.trend === 'down' ? 'Falling' : 'Steady', r.trend === 'up' ? 'green' : r.trend === 'down' ? 'red' : '', true); } }] }) + '</div>';
+
+  var leads = '<div class="grid g-21" style="margin-bottom:16px">' + MC.card({ title: 'Leads per week', sub: 'Last 12 weeks, deduplicated by email', dev: 'r_leads' }, MC.bars([480, 520, 610, 590, 700, 660, 720, 780, 810, 760, 840, 880], ['W1', '', '', 'W4', '', '', 'W7', '', '', 'W10', '', 'W12'], 11)) + MC.card({ title: 'Where they came from' }, '<div style="display:flex;justify-content:center">' + MC.donut([{ v: 46, c: '#DC183C' }, { v: 24, c: '#0C1F31' }, { v: 18, c: '#FF9900' }, { v: 12, c: '#2F6FED' }], 170, '7 580', 'LEADS') + '</div><div class="legend" style="justify-content:center;margin-top:10px"><span><i style="background:#DC183C"></i>Search</span><span><i style="background:#0C1F31"></i>Newsletter</span><span><i style="background:#FF9900"></i>Social</span><span><i style="background:#2F6FED"></i>Direct</span></div>') + '</div>' +
+    '<div class="card flush"><div class="card-h"><div><h3>Latest leads</h3><small>Newest first</small></div></div>' + MC.table({ perPage: 5, search: false, rows: [
+      { n: 'Nandi Khoza', e: 'n***@gmail.com', a: 'Business Plan Template', w: '12 min ago', m: 'New' }, { n: 'Sibusiso Mahlangu', e: 's***@outlook.com', a: 'Funding Readiness Checklist', w: '41 min ago', m: 'Member' }, { n: 'Chantelle Smit', e: 'c***@yahoo.com', a: 'Cash Flow Forecast Workbook', w: '2 hours ago', m: 'New' }, { n: 'Mandla Zwane', e: 'm***@gmail.com', a: 'VAT Quick Guide', w: '3 hours ago', m: 'Applied for funding' }, { n: 'Roxanne Jacobs', e: 'r***@icloud.com', a: 'Employment Contract Pack', w: '5 hours ago', m: 'New' }],
+      cols: [{ k: 'n', label: 'Lead', render: function (r) { return MC.person(r.n, r.e); } }, { k: 'a', label: 'Resource' }, { k: 'm', label: 'Stage', render: function (r) { return MC.chip(r.m, r.m === 'New' ? '' : r.m === 'Member' ? 'blue' : 'green', true); } }, { k: 'w', label: 'When' }] }) + '</div>';
+
+  var rev =
+    '<div class="grid g-21"><div style="display:grid;gap:16px">' + MC.card({ title: 'Revival engine', sub: 'About 12 000 dormant downloaders', dev: 'r_rev', right: MC.chip('OFF', 'amber', true) }, MC.callout('amber', 'power', 'The engine is switched off', 'Audit the list, run a dry-run to see exactly what would send, then arm it. Nothing sends until both steps are done.') + '<div style="margin-top:16px">' + MC.funnel([{ l: 'Dormant downloaders', v: 12040, c: '#0C1F31' }, { l: 'Passed suppression', v: 9310, c: '#1a3350' }, { l: 'Eligible this month', v: 4800, c: '#2F6FED' }, { l: 'First batch (dry-run)', v: 300, c: '#FF9900' }]) + '</div><div style="display:flex;gap:10px;margin-top:18px;flex-wrap:wrap"><button class="btn" data-act="Audit started, read-only" data-ico="scan-search">' + MC.icon('scan-search') + 'Run audit</button><button class="btn dark" data-act="Dry-run started, nothing will send" data-ico="flask-conical">' + MC.icon('flask-conical') + 'Dry-run first batch</button><button class="btn pri" data-act="Needs your explicit go-ahead" data-ico="power" style="opacity:.55">' + MC.icon('power') + 'Arm engine</button></div>') + '</div>' +
+      MC.card({ title: 'Guard rails' }, '<div style="display:grid;gap:14px">' + [['Batches of 300, staggered', 'on'], ['Comms Governor ceiling applies', 'on'], ['Suppress unresponsive and unsubscribed', 'on'], ['Stop automatically if complaints rise', 'on']].map(function (x) { return '<div style="display:flex;align-items:center;gap:12px"><b style="flex:1;font-size:13.5px">' + x[0] + '</b><button class="toggle on" aria-label="' + x[0] + '"></button></div>'; }).join('') + '</div>') + '</div>';
+
+  var tabs = [{ k: 'library', label: 'Library', icon: 'folder-open', html: lib, dev: 'r_lib' }, { k: 'leads', label: 'Leads', icon: 'user-plus', html: leads, dev: 'r_leads' }, { k: 'revival', label: 'Revival engine', icon: 'refresh-cw', html: rev, dev: 'r_rev' }];
+  var html =
+    '<section class="hero"><div class="hero-in"><div><span class="eyebrow"><i></i> Resources workspace &middot; mockup, illustrative data</span><h1>Our biggest lead-gen engine</h1><p>Every downloadable resource, the leads it has captured, and the dormant-lead revival engine. See which assets pull and which are shelf-ware.</p></div>' +
+    '<div class="hero-stats"><div class="hs"><b>43</b><small>Resources</small></div><div class="hs g"><b>7.6k</b><small>Leads 30d</small></div><div class="hs a"><b>12k</b><small>Dormant</small></div><div class="hs r"><b>OFF</b><small>Revival</small></div></div></div></section>' +
+    MC.tabs('ws', tabs) + tabs.map(function (t) { return '<div class="panel" data-k="' + t.k + '"><div style="display:flex;justify-content:flex-end;margin:-6px 0 8px">' + MC.dev(t.dev) + '</div>' + t.html + '</div>'; }).join('');
+  MC.page({ active: 'resources', crumbs: ['Workspaces', 'Resources'], html: html, workspace: tabs });
+})();
+</script>
+</body>
+</html>

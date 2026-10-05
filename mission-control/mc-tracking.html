@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Solutions tracking · Mission Control</title>
+<meta name="robots" content="noindex,nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<link rel="stylesheet" href="mc-ui.css">
+</head>
+<body>
+<script src="mc-ui.js"></script>
+<script>
+(function () {
+  var B = MC.briefs;
+  B.t_ads = { title: 'Ad Manager', purpose: 'Place and measure solution promotions (banners, sponsored boxes) without touching page templates.', data: 'Ad records with placement, schedule, partner, impressions, clicks.', logic: 'An ad only renders if scheduled, the placement exists on the page and the partner is active.' };
+  B.t_money = { title: 'Money Links', purpose: 'Internal tracked links (<code>/go/{partner}/</code>) that every outbound partner link should use.', data: 'Link records: slug, destination, partner, click count, bot-filtered count.', logic: 'Each click is logged once with source page; bots are excluded from earnings.' };
+  B.t_conv = { title: 'Conversion Tracking', purpose: 'Which events count as a conversion, and are they firing.', data: 'GTM events (<code>funding_submit</code>, <code>resource_download</code>, <code>sage_click</code>) mirrored server-side.', logic: 'A conversion with no matching click or form entry is flagged as a tracking gap.' };
+  B.t_capi = { title: 'Meta CAPI', purpose: 'Server-side events sent to Meta so ad optimisation keeps working despite browser blocking.', data: 'Option <code>smesa_capi_log</code> keeps the last events with ok/failed status.', rules: 'The token is never shown or logged. Production only: never fires from a local clone.' };
+  B.t_lula = { title: 'Lula API', purpose: 'The lender API for pre-qualification and application hand-off.', rules: 'Production only. Keys live in wp-config, never in the page.' };
+  B.t_gt = { title: 'GoTyme Web-to-Lead', purpose: 'Pushes funding leads that match GoTyme criteria into their lead system.', logic: 'Payload viewer shows exactly what was sent for each lead; resend is manual.', rules: 'Production only. Retries are manual to avoid duplicate leads.' };
+  B.t_drip = { title: 'Dripcel SMS', purpose: 'Transactional SMS for funding updates and verification.', rules: 'Opt-in required. Sends go through the Comms Governor.' };
+
+  var ok = function (s) { return MC.chip(s, s === 'Healthy' || s === 'Sending' || s === 'Connected' ? 'green' : s === 'Warning' ? 'amber' : 'red', true); };
+  var health = function (items) { return '<div class="grid g' + items.length + '" style="margin-bottom:16px">' + items.map(function (i) { return MC.kpi(i); }).join('') + '</div>'; };
+
+  var ads = health([{ label: 'Active ads', icon: 'megaphone', value: '6', tone: 'navy' }, { label: 'Impressions (7d)', icon: 'eye', value: '48 200', tone: 'blue', dir: 'up', delta: '+7%', spark: [4, 5, 5, 6, 7, 8, 9] }, { label: 'Clicks (7d)', icon: 'mouse-pointer-click', value: '312', tone: 'green', dir: 'up', delta: '+11%' }, { label: 'CTR', icon: 'percent', value: '0.65%', tone: 'amber', dir: 'flat', delta: 'Steady' }]) +
+    '<div class="card flush">' + MC.table({ perPage: 6, search: false, rows: [
+      { n: 'Sage Accounting sponsored box', p: 'Article sidebar', imp: 14200, clk: 118, s: 'Live' }, { n: 'Retail Capital funding banner', p: 'Funding hub top', imp: 9800, clk: 74, s: 'Live' }, { n: 'Yoco POS card', p: 'Solutions roundup', imp: 7400, clk: 52, s: 'Live' }, { n: 'Lula pre-qual strip', p: 'Funding calculator', imp: 6100, clk: 41, s: 'Live' }, { n: 'Insurance partner box', p: 'Guides footer', imp: 4300, clk: 20, s: 'Paused' }, { n: 'Bob Go courier tile', p: 'Article sidebar', imp: 6400, clk: 7, s: 'Scheduled' }],
+      right: '<button class="btn sm pri" data-act="New ad form opened" data-ico="plus">' + MC.icon('plus') + 'New ad</button>',
+      cols: [{ k: 'n', label: 'Ad', render: function (r) { return MC.person(r.n, r.p); } }, { k: 'imp', label: 'Impressions', cls: 'num', render: function (r) { return r.imp.toLocaleString('en-ZA'); } }, { k: 'clk', label: 'Clicks', cls: 'num' }, { k: 'ctr', label: 'CTR', cls: 'num', render: function (r) { return (r.clk / r.imp * 100).toFixed(2) + '%'; } }, { k: 's', label: 'State', render: function (r) { return MC.chip(r.s, r.s === 'Live' ? 'green' : r.s === 'Paused' ? 'amber' : 'blue', true); } }] }) + '</div>';
+
+  var money = health([{ label: 'Tracked links', icon: 'link-2', value: '38', tone: 'navy' }, { label: 'Clicks (30d)', icon: 'mouse-pointer-click', value: '1 204', tone: 'blue', dir: 'up', delta: '+22%' }, { label: 'Bot clicks excluded', icon: 'bot', value: '311', tone: 'muted' }, { label: 'Raw links still live', icon: 'unlink', value: '110', tone: 'red', sub: 'to convert' }]) +
+    '<div class="card flush">' + MC.table({ perPage: 6, placeholder: 'Search links', rows: [
+      { s: '/go/sage', d: 'sage.com/za/…', c: 482, p: 'Sage' }, { s: '/go/lula', d: 'lula.co.za/apply', c: 311, p: 'Lula' }, { s: '/go/retail-capital', d: 'retailcapital.co.za/…', c: 204, p: 'Retail Capital' }, { s: '/go/yoco', d: 'yoco.com/za/…', c: 118, p: 'Yoco' }, { s: '/go/xero', d: 'xero.com/za/…', c: 63, p: 'Xero' }, { s: '/go/bob-go', d: 'bobgo.co.za/…', c: 26, p: 'Bob Go' }],
+      right: '<button class="btn sm pri" data-act="New money link created" data-ico="plus">' + MC.icon('plus') + 'New link</button>',
+      cols: [{ k: 's', label: 'Link', render: function (r) { return '<span style="font-family:ui-monospace,Menlo,monospace;font-weight:700">' + r.s + '</span>'; } }, { k: 'p', label: 'Partner' }, { k: 'd', label: 'Destination', render: function (r) { return '<small style="color:var(--muted)">' + r.d + '</small>'; } }, { k: 'c', label: 'Clicks (30d)', cls: 'num' }] }) + '</div>';
+
+  var conv = health([{ label: 'Events firing', icon: 'zap', value: '9 of 10', tone: 'amber' }, { label: 'Funding submits (7d)', icon: 'inbox', value: '73', tone: 'green', dir: 'up', delta: '+9' }, { label: 'Resource downloads (7d)', icon: 'download', value: '2 640', tone: 'blue' }, { label: 'Tracking gaps', icon: 'triangle-alert', value: '1', tone: 'red' }]) +
+    '<div class="card flush"><ul class="list">' + [['funding_submit', 'Funding application submitted', 'Healthy', 'green'], ['resource_download', 'Resource gate completed', 'Healthy', 'green'], ['sign_up', 'Member registered', 'Healthy', 'green'], ['sage_click', 'Sage tracked click', 'Healthy', 'green'], ['budget_planner_start', 'Budget planner started', 'Healthy', 'green'], ['lula_prequal', 'Lula pre-qualification returned', 'Warning', 'amber']].map(function (e) { return MC.li(e[3], 'zap', '<span style="font-family:ui-monospace,Menlo,monospace">' + e[0] + '</span>', e[1], ok(e[2])); }).join('') + '</ul></div>';
+
+  var capi = health([{ label: 'Status', icon: 'send', value: 'Sending', tone: 'green' }, { label: 'Events (24h)', icon: 'activity', value: '412', tone: 'blue', spark: [3, 4, 4, 6, 7, 8, 9] }, { label: 'Match quality', icon: 'target', value: '7.8', tone: 'green', sub: 'out of 10' }, { label: 'Failures (24h)', icon: 'octagon-x', value: '0', tone: 'green' }]) +
+    '<div class="card flush"><div class="card-h"><div><h3>Recent events</h3><small>Last 6 sent to Meta</small></div><div class="r">' + MC.dev('t_capi') + '</div></div><ul class="list">' + [['Lead', 'funding_submit', '4 min ago'], ['CompleteRegistration', 'sign_up', '19 min ago'], ['Lead', 'resource_download', '24 min ago'], ['Lead', 'funding_submit', '1 hour ago'], ['CompleteRegistration', 'sign_up', '1 hour ago'], ['Lead', 'resource_download', '2 hours ago']].map(function (e) { return MC.li('green', 'send', e[0], e[1], '<span class="chip green"><i></i>OK</span> <small style="color:var(--muted);margin-left:8px">' + e[2] + '</small>'); }).join('') + '</ul></div>';
+
+  var lula = health([{ label: 'API', icon: 'plug-zap', value: 'Connected', tone: 'green' }, { label: 'Calls (24h)', icon: 'activity', value: '27', tone: 'blue' }, { label: 'Avg response', icon: 'timer', value: '640 ms', tone: 'green' }, { label: 'Errors (24h)', icon: 'octagon-x', value: '0', tone: 'green' }]) +
+    MC.callout('blue', 'lock-keyhole', 'Keys are held in wp-config, never on this page', 'This screen shows health and recent calls only. Rotating a key is a deploy-time change.');
+
+  var gotyme = health([{ label: 'Leads sent (7d)', icon: 'send', value: '14', tone: 'blue' }, { label: 'Accepted', icon: 'badge-check', value: '13', tone: 'green' }, { label: 'Rejected', icon: 'badge-x', value: '1', tone: 'amber' }, { label: 'Awaiting resend', icon: 'rotate-ccw', value: '0', tone: 'muted' }]) +
+    '<div class="card flush"><div class="card-h"><div><h3>Payload viewer</h3><small>Exactly what was sent for each lead</small></div><div class="r">' + MC.dev('t_gt') + '</div></div>' + MC.table({ perPage: 4, search: false, rows: [
+      { n: 'Langa Holdings', t: 'Today 09:12', s: 'Accepted' }, { n: 'Dlamini Civils', t: 'Today 08:40', s: 'Accepted' }, { n: 'Kopano Catering', t: 'Yesterday', s: 'Rejected' }, { n: 'Soweto Solar Installs', t: 'Yesterday', s: 'Accepted' }],
+      onRow: function (r) { return { title: r.n, sub: 'Web-to-Lead payload', html: '<pre style="background:#0C1F31;color:#cfe4ff;border-radius:14px;padding:16px;font-size:12px;overflow:auto">{\n  "first_name": "***",\n  "company": "' + r.n + '",\n  "lead_source": "SME South Africa",\n  "amount": "R350 000",\n  "consent": true\n}</pre><div style="margin-top:14px"><button class="btn sm" data-act="Resend is manual and needs confirmation" data-ico="rotate-ccw">' + MC.icon('rotate-ccw') + 'Resend</button></div>' }; },
+      cols: [{ k: 'n', label: 'Lead', render: function (r) { return MC.person(r.n); } }, { k: 't', label: 'Sent' }, { k: 's', label: 'Result', render: function (r) { return MC.chip(r.s, r.s === 'Accepted' ? 'green' : 'amber', true); } }] }) + '</div>';
+
+  var drip = health([{ label: 'SMS sent (7d)', icon: 'message-square', value: '96', tone: 'blue' }, { label: 'Delivered', icon: 'check-check', value: '94', tone: 'green' }, { label: 'Opted out', icon: 'user-x', value: '1', tone: 'amber' }, { label: 'Credit balance', icon: 'wallet', value: 'R1 240', tone: 'navy' }]) +
+    MC.card({ title: 'Settings', dev: 't_drip' }, '<div style="display:grid;gap:14px;max-width:560px">' + [['Funding status updates', 1], ['Email verification codes', 1], ['Marketing SMS', 0]].map(function (x) { return '<div style="display:flex;align-items:center;gap:12px"><b style="flex:1">' + x[0] + '</b><button class="toggle ' + (x[1] ? 'on' : '') + '" aria-label="' + x[0] + '"></button></div>'; }).join('') + '</div>');
+
+  var tabs = [{ k: 'ads', label: 'Ad Manager', icon: 'megaphone', html: ads, dev: 't_ads' }, { k: 'money', label: 'Money Links', icon: 'link-2', html: money, dev: 't_money' }, { k: 'conversion', label: 'Conversion Tracking', icon: 'zap', n: 1, html: conv, dev: 't_conv' }, { k: 'capi', label: 'Meta CAPI', icon: 'send', html: capi, dev: 't_capi' }, { k: 'lula', label: 'Lula API', icon: 'plug-zap', html: lula, dev: 't_lula' }, { k: 'gotyme', label: 'GoTyme Web-to-Lead', icon: 'send-to-back', html: gotyme, dev: 't_gt' }, { k: 'dripcel', label: 'Dripcel SMS', icon: 'message-square', html: drip, dev: 't_drip' }];
+  var html =
+    '<section class="hero"><div class="hero-in"><div><span class="eyebrow"><i></i> Solutions tracking &middot; mockup, illustrative data</span><h1>Every integration, one health view</h1><p>The Ad Manager, internal money links, conversion and Meta tracking, and the Lula, GoTyme and Dripcel lead pipes.</p></div>' +
+    '<div class="hero-stats"><div class="hs g"><b>6/7</b><small>Healthy</small></div><div class="hs a"><b>1</b><small>Warning</small></div><div class="hs"><b>412</b><small>CAPI 24h</small></div><div class="hs"><b>0</b><small>Failures</small></div></div></div></section>' +
+    MC.tabs('ws', tabs) + tabs.map(function (t) { return '<div class="panel" data-k="' + t.k + '"><div style="display:flex;justify-content:flex-end;margin:-6px 0 8px">' + MC.dev(t.dev) + '</div>' + t.html + '</div>'; }).join('');
+  MC.page({ active: 'tracking', crumbs: ['Workspaces', 'Solutions tracking'], html: html, workspace: tabs });
+})();
+</script>
+</body>
+</html>

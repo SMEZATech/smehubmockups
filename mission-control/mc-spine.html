@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Platform spine · Mission Control</title>
+<meta name="robots" content="noindex,nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<link rel="stylesheet" href="mc-ui.css">
+<style>
+  .sp-row{display:grid;grid-template-columns:260px 1fr auto;gap:26px;align-items:center;padding:22px 26px}
+  .sp-k{display:flex;align-items:center;gap:8px;font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+  .sp-k .ic{width:30px;height:30px;border-radius:10px;display:grid;place-items:center}.sp-k .ic svg{width:16px;height:16px}
+  .sp-big{font:800 46px/1.05 'Plus Jakarta Sans';letter-spacing:-.03em;color:var(--navy);margin:10px 0 4px}
+  .sp-chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:11px}
+  .sp-chips span{font-size:12px;font-weight:600;color:#334155;background:#F1F5F9;border:1px solid #E2E8F0;border-radius:999px;padding:4px 11px}
+  .sp-chips span.bad{background:var(--red-t);border-color:#f5c6cf;color:var(--red-d)}
+  .sp-so{font-size:13.5px;line-height:1.6;color:#475569;margin:0}.sp-so b{color:var(--navy)}
+  @media (max-width:1100px){.sp-row{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<script src="mc-ui.js"></script>
+<script>
+(function () {
+  MC.briefs.sp = { title: 'Platform Spine', purpose: 'How is the business this week, in 30 seconds. Five rows (funding, audience, community, solutions, leads), each with a week-over-week delta and the one thing to do about it.', data: ['Funding: new applications this week, pending, partner referral, pre-qualified, in flight with partners, commission ledger.', 'Audience: Kit subscribers and new subscribers this month, members total and new this week, 30-day actives.', 'Community: posts in 7 days, reply rate, median first reply, promo posts quarantined.', 'Solutions: affiliate clicks in 7 days, partners clicked, bots excluded.', 'Leads: resource downloads in 7 days, forms tracked, revival engine state.'], logic: ['Rolling 7-day windows against the prior 7 days; subscribers compare calendar months.', 'Every block is computed from the same tables its workspace uses, cached 15 minutes. Refresh forces a live read.', 'A block that fails shows a red "unavailable" row instead of breaking the page.'], components: 'Spine row: label, big number, delta, chips, "so what" sentence, link into the workspace.' };
+  var rows = [
+    ['banknote', 'red', 'Funding', 'New applications this week', '73', ['up', '+9 vs prior week'], ['Pending 73', 'Partner referral 33', 'Pre-qualified 11', 'In flight with partners 41'], ['Commission ledger: R48 200 unbilled'], 'Lead flow is growing and 41 are in flight, but 4 sit with partners with no recorded outcome. Commission stays unbilled until outcomes come back: the Monday outcome review is the lever.', 'mc-funding.html?tab=chase', 'Funding workspace'],
+    ['users', 'blue', 'Audience', 'New subscribers this month', '+312', ['up', '+8% vs last month'], ['Subscribers total 57 031', 'Members total 2 605', 'New members this week 6', 'Members active (30d) 0.4%'], [], 'List growth is steady. The soft spot is depth, not reach: only 0.4% of members were active in the last 30 days, so the lifecycle and engagement levers matter more than acquisition right now.', 'mc-community.html?tab=engagement', 'Member Engagement'],
+    ['messages-square', 'green', 'Community', 'Posts, last 7 days', '12', ['up', '+12 vs prior week'], ['Replies 27', 'Posts getting a reply 17%', 'Median first reply 3h 10m', 'Promo posts quarantined 5'], [], '17% of this week\'s posts got a reply (baseline 18%). Posting volume is up, so the community is compounding. Promo Guard pulled 5 sales pitches out of the feed, which is exactly the noise reply-rate was drowning in.', 'mc-community.html?tab=reply', 'Reply-Rate'],
+    ['star', 'amber', 'Solutions', 'Affiliate clicks, last 7 days', '2', ['up', '+2 vs prior week'], ['Partners clicked 1', 'Top: sage 2', 'Bot clicks excluded 311'], [], 'Click volume is climbing, so the money-links boxes and /go/ tracking are feeding the affiliate pillar. Clicks only turn into rands once per-partner CPL/CPA rates are confirmed and set in Solutions Earnings.', 'mc-solutions.html?tab=earnings', 'Solutions Earnings'],
+    ['download', 'violet', 'Leads', 'Resource downloads, last 7 days', '2 640', ['up', '+9% vs prior week'], ['Forms tracked 34', 'All form submissions (7d) 2 910'], ['Revival engine OFF'], 'Fresh resource leads keep arriving, but the Revival engine is OFF: the roughly 12 000 past downloaders stay dormant until you arm it (audit and dry-run first from the Revival page).', 'mc-resources.html?tab=revival', 'Resource Revival']
+  ];
+  var html =
+    '<section class="hero"><div class="hero-in"><div><span class="eyebrow"><i></i> Platform spine &middot; mockup, illustrative data</span><h1>Is the business healthy this week?</h1><p>Five pillars, week over week, in 30 seconds. Each row ends with the one thing to do about it.</p></div>' +
+    '<div style="display:flex;flex-direction:column;gap:8px;align-items:flex-end"><button class="btn ghost" data-act="Numbers refreshed from live tables" data-ico="refresh-cw">' + MC.icon('refresh-cw') + 'Refresh numbers</button><small style="color:rgba(255,255,255,.6)">Cached 15 min &middot; as of 2026-10-05 07:38</small></div></div></section>' +
+    '<div style="display:flex;justify-content:flex-end;margin:-6px 0 10px">' + MC.dev('sp') + '</div>' +
+    '<div style="display:grid;gap:14px">' + rows.map(function (r) {
+      return '<section class="card sp-row"><div><div class="sp-k"><span class="ic ' + r[1] + '">' + MC.icon(r[0]) + '</span>' + r[2] + ' &middot; ' + r[3] + '</div><div class="sp-big">' + r[4] + '</div><span class="delta ' + r[5][0] + '">' + MC.icon('trending-up') + r[5][1] + '</span></div>' +
+        '<div><div class="sp-chips">' + r[6].map(function (c) { return '<span>' + c + '</span>'; }).join('') + r[7].map(function (c) { return '<span class="bad">' + c + '</span>'; }).join('') + '</div><p class="sp-so"><b>So what:</b> ' + r[8] + '</p></div>' +
+        '<a class="btn" href="' + r[9] + '">' + r[10] + MC.icon('arrow-right') + '</a></section>';
+    }).join('') + '</div>' +
+    '<p style="color:var(--muted);font-size:12.5px;margin-top:18px">Weeks are rolling 7-day windows against the prior 7 days (subscribers compare calendar months). Every block is computed from the same tables its pillar workspace uses and cached for 15 minutes. Refresh forces a live read.</p>';
+  MC.page({ active: 'spine', crumbs: ['Overview', 'Platform spine'], html: html });
+})();
+</script>
+</body>
+</html>
