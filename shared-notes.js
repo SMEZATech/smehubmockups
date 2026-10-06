@@ -56,6 +56,15 @@ window.SHARED_NOTES = {
     }
   },
 
+  "event-speakers.html": {
+    "speakers-listing-grid-mobile-design": {
+      "label": "Speakers Listing Grid - Mobile Design",
+      "author": "Tshepho",
+      "ts": "2026-10-06",
+      "text": "- Please show two speakers per row. Currently is showing one."
+    }
+  },
+
   "events.html": {
     "events-listing-grid": {
       "label": "Events Listing Grid",
@@ -668,6 +677,15 @@ window.SHARED_NOTES = {
       "ts": "2026-07-01",
       "actioned": true,
       "text": "Same fix as public-refunds — the first section is too tall.\n\nSpacing: ~48px top / ~64px bottom. Container maxed at 1280px.\n\nTypography: H1 in Plus Jakarta Sans 800, 36px mobile / 48px desktop. Breadcrumb 12px in white 55%. 'Last updated' line 14px in white 55%.\n\nBackground: the same navy → maroon gradient with the dot pattern at 70% opacity.\n\nNo CTAs in the hero.\n\n**Please build one shared template for all the legal pages (refunds, terms, privacy, popia, advertising disclosure). Right now each one looks slightly different — they should be identical.**"
+    }
+  },
+
+  "public-unauthorized.html": {
+    "first-section": {
+      "label": "First Section",
+      "author": "Tshepho",
+      "ts": "2026-10-06",
+      "text": "- Please keep the heading size to 30px"
     }
   }
 };
