@@ -35,10 +35,8 @@ window.MOCKUP_STATUS = {
   "public-auth.html": "finalised",
   "public-forgot-password.html": "finalised",
   "public-community.html": "finalised",
-  "public-workspace.html": "finalised",
   "public-verify-email.html": "finalised",
   "public-error.html": "finalised",
-  "public-health-check.html": "finalised",
   "public-premium-checkout.html": "finalised",
   "public-about.html": "finalised",
   "public-contact.html": "finalised",
@@ -48,7 +46,6 @@ window.MOCKUP_STATUS = {
   "public-refunds.html": "finalised",
   "public-popia.html": "finalised",
   "public-advertising-disclosure.html": "finalised",
-  "member-workspace.html": "finalised",
   "member-hub.html": "finalised",
   "members.html": "finalised",
   "single-member.html": "finalised",
@@ -89,7 +86,7 @@ window.MOCKUP_STATUS = {
   "public-404.html": "finalised",
   "public-unauthorized.html": "finalised"
 };
-window.MOCKUP_STATUS_PUBLISHED = "2026-10-05T06:42:51.585Z";
+window.MOCKUP_STATUS_PUBLISHED = "2026-10-06T07:54:08.941Z";
 /* Developer builds (staging), { mockup file: { url, status } }; status: "pending-review" | "reviewed" | "approved" */
 window.MOCKUP_DEV = {
   "public-home.html": {"url":"https://smesastg.wpengine.com/","status":"reviewed"},
@@ -119,9 +116,9 @@ window.MOCKUP_DEV = {
   "public-product.html": {"url":"https://smesastg.wpengine.com/product/founders-edition-white-t-shirt/","status":"reviewed"},
   "public-checkout.html": {"url":"https://smesastg.wpengine.com/checkout/","status":"approved"},
   "public-auth.html": {"url":"https://smesastg.wpengine.com/sign-up/","status":"reviewed"},
+  "public-community.html": {"url":"https://smesastg.wpengine.com/community/","status":"reviewed"},
   "public-verify-email.html": {"url":"","status":"approved"},
   "public-error.html": {"url":"","status":"approved"},
-  "public-health-check.html": {"url":"","status":"approved"},
   "public-about.html": {"url":"https://smesastg.wpengine.com/about/","status":"approved"},
   "public-contact.html": {"url":"https://smesastg.wpengine.com/contact-us/","status":"approved"},
   "public-advertise.html": {"url":"https://smesastg.wpengine.com/advertise-with-us/","status":"approved"},
@@ -130,12 +127,12 @@ window.MOCKUP_DEV = {
   "public-refunds.html": {"url":"https://smesastg.wpengine.com/refund-and-cancellation/","status":"approved"},
   "public-popia.html": {"url":"https://smesastg.wpengine.com/popia/","status":"approved"},
   "public-advertising-disclosure.html": {"url":"https://smesastg.wpengine.com/advertising-disclosure/","status":"approved"},
-  "member-workspace.html": {"url":"","status":"pending-review"},
   "member-finish-profile.html": {"url":"https://smesouthafrica.co.za/finish-profile/?preview=1","status":"pending-review"},
   "events.html": {"url":"https://smesastg.wpengine.com/events/","status":"reviewed"},
   "event-single-in-person.html": {"url":"https://smesastg.wpengine.com/events/funding-summit-2026/","status":"reviewed"},
   "event-single-online.html": {"url":"https://smesastg.wpengine.com/events/how-to-scale-a-business-with-minimal-capital-investment/","status":"reviewed"},
-  "event-speaker.html": {"url":"https://smesastg.wpengine.com/organizers/zibusiso-mkhwanazi/","status":"reviewed"},
+  "event-speaker.html": {"url":"https://smesastg.wpengine.com/speakers/jameel-khan/","status":"reviewed"},
+  "event-speakers.html": {"url":"https://smesastg.wpengine.com/speakers/","status":"reviewed"},
   "public-glossary.html": {"url":"https://smesastg.wpengine.com/glossary/","status":"approved"},
   "public-glossary-categories.html": {"url":"https://smesastg.wpengine.com/glossary-categories/","status":"approved"},
   "public-glossary-category.html": {"url":"https://smesastg.wpengine.com/glossary-categories/glossary-category-one/","status":"approved"},
@@ -149,7 +146,8 @@ window.MOCKUP_DEV = {
   "public-support-ticket.html": {"url":"https://smesastg.wpengine.com/tickets/","status":"approved"},
   "public-support-detailed-ticket.html": {"url":"https://smesastg.wpengine.com/tickets/#/ticket/create","status":"approved"},
   "public-search.html": {"url":"https://smesastg.wpengine.com/search/","status":"approved"},
-  "public-404.html": {"url":"https://smesastg.wpengine.com/404","status":"reviewed"}
+  "public-404.html": {"url":"https://smesastg.wpengine.com/404","status":"reviewed"},
+  "public-unauthorized.html": {"url":"https://smesastg.wpengine.com/unauthorized/","status":"reviewed"}
 };
 /* Group overrides, { mockup file: "Group name" }; overrides default NAV grouping in index.html */
 window.MOCKUP_GROUPS = {
