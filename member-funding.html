@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en-ZA">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Funding | SME HUB</title>
+  <meta name="description" content="SME South Africa, Funding on a phone: apply in short steps that are kept if the signal drops, get a receipt, and track your applications." />
+  <meta name="theme-color" content="#0C1F31" />
+  <meta name="robots" content="noindex" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  <script>tailwind.config = { theme: { extend: { fontFamily: { jakarta: ['Plus Jakarta Sans', 'sans-serif'], inter: ['Inter', 'system-ui', 'sans-serif'] } } } };</script>
+  <style>
+    html, body { font-family: 'Inter', system-ui, sans-serif; }
+    .font-jakarta { font-family: 'Plus Jakarta Sans', sans-serif; letter-spacing: 0.005em; }
+    .no-scrollbar::-webkit-scrollbar { display: none; } .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    @keyframes fadeUp { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:none; } }
+    .reveal { animation: fadeUp .35s cubic-bezier(.2,.7,.2,1) backwards; }
+    .dev-badge { display:none; } body.dev-on .dev-badge { display:inline-flex; }
+    .fld label.lb { display:block; font-size:13px; font-weight:700; color:#121A21; margin-bottom:6px; }
+    .fld .hint { font-size:12.5px; color:#6A7581; margin-top:5px; }
+    .inp { width:100%; height:48px; border:1px solid #D8DEE5; border-radius:12px; background:#fff; padding:0 14px; font-size:16px; color:#121A21; outline:none; }
+    .inp:focus { border-color:#DC183C; box-shadow:0 0 0 3px rgba(220,24,60,.12); }
+    select.inp { appearance:none; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='none' stroke='%236A7581' stroke-width='2' viewBox='0 0 24 24'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 14px center; padding-right:40px; }
+    .opt { display:flex; align-items:center; gap:12px; min-height:56px; padding:10px 14px; border:1px solid #D8DEE5; border-radius:14px; background:#fff; cursor:pointer; }
+    .opt:has(input:checked) { border-color:#DC183C; background:#FFF6F7; box-shadow:0 0 0 1px #DC183C inset; }
+    .opt input { width:20px; height:20px; accent-color:#DC183C; flex:none; }
+    .ov { position:fixed; inset:0; z-index:60; }
+    .ov-bg { position:absolute; inset:0; background:rgba(12,31,49,.45); opacity:0; transition:opacity .3s; } .ov.open .ov-bg { opacity:1; }
+    .sheet { position:absolute; left:0; right:0; bottom:0; max-height:88vh; overflow-y:auto; background:#fff; border-radius:22px 22px 0 0; transform:translateY(100%); transition:transform .3s cubic-bezier(.2,.7,.2,1); padding-bottom:env(safe-area-inset-bottom); }
+    .ov.open .sheet { transform:none; }
+    @media (min-width:768px){ .sheet { left:50%; right:auto; bottom:auto; top:50%; width:520px; border-radius:20px; transform:translate(-50%,-46%); opacity:0; transition:all .25s; } .ov.open .sheet { transform:translate(-50%,-50%); opacity:1; } }
+    .drawer { position:absolute; right:0; top:0; height:100%; width:100%; max-width:440px; background:#fff; overflow-y:auto; transform:translateX(100%); transition:transform .3s; } .ov.open .drawer { transform:none; }
+  </style>
+</head>
+<body class="bg-[#FCFCFC] text-[#121A21] antialiased">
+
+<header></header>
+
+<main class="max-w-2xl mx-auto px-4 sm:px-6 py-5 sm:py-8">
+  <!-- Preview states (review only) -->
+  <div class="preview-switch flex flex-wrap items-center gap-1 text-[10px] font-bold mb-3"><span class="uppercase tracking-widest text-slate-400 mr-1">Preview</span>
+    <button type="button" data-pv="home" onclick="go('home')" class="h-6 px-2.5 rounded-full bg-slate-100 text-slate-600">Funding home</button>
+    <button type="button" data-pv="apply" onclick="go('apply')" class="h-6 px-2.5 rounded-full bg-slate-100 text-slate-600">Application</button>
+    <button type="button" data-pv="receipt" onclick="go('receipt')" class="h-6 px-2.5 rounded-full bg-slate-100 text-slate-600">Receipt</button>
+    <button type="button" data-pv="offline" onclick="simOffline(!SIM_OFF)" class="h-6 px-2.5 rounded-full bg-slate-100 text-slate-600">No signal</button>
+  </div>
+
+  <div id="net" class="hidden mb-3 rounded-xl bg-[#FFF8EC] border border-[#F5DDB0] text-[#7A4B05] px-4 py-3 text-[13.5px] flex gap-2.5" role="status">
+    <i data-lucide="wifi-off" class="w-5 h-5 shrink-0 mt-0.5"></i>
+    <p><b>No signal right now.</b> Your answers are saved on this phone. Carry on; we send your application as soon as you are back online.</p>
+  </div>
+
+  <div id="view"></div>
+</main>
+
+<div class="md:hidden" style="height:calc(64px + env(safe-area-inset-bottom))"></div>
+<div id="overlay-root"></div>
+<div id="toast" class="hidden fixed bottom-24 md:bottom-6 left-1/2 -translate-x-1/2 z-[100] w-max max-w-[calc(100%-2rem)]"></div>
+
+<script>
+  function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c])); }
+  function showToast(msg){ const el = document.getElementById('toast'); el.classList.remove('hidden'); el.innerHTML = `<div class="bg-[#0C1F31] text-white rounded-full pl-3 pr-5 py-2.5 shadow-2xl flex items-center gap-2 text-sm font-semibold" style="border-left:4px solid #29A37A"><i data-lucide="check-circle" class="w-4 h-4 shrink-0" style="color:#29A37A"></i><span>${esc(msg)}</span></div>`; lucide.createIcons(); clearTimeout(window.__t); window.__t = setTimeout(() => { el.classList.add('hidden'); el.innerHTML=''; }, 2800); }
+  function closeOverlay(id){ const el = document.getElementById(id); if(!el) return; el.classList.remove('open'); setTimeout(() => { if(el.parentNode) el.remove(); }, 300); }
+  function toggleDevMode(){ document.body.classList.toggle('dev-on'); lucide.createIcons(); }
+
+  /* ------------------------------------------------------------------ data ------------------------------------------------------------------ */
+  const TYPES = [
+    ['Working Capital', 'Stock, salaries and running costs while you wait to be paid.', 'wallet'],
+    ['Unsecured Business Loan', 'A lump sum for growth, with no property as security.', 'banknote'],
+    ['Purchase Order Funding', 'Pay your suppliers to deliver a confirmed order.', 'clipboard-check'],
+    ['Invoice Finance', 'Get paid now on invoices your clients will pay later.', 'receipt-text']
+  ];
+  const STEPS = ['About your business', 'What you need', 'Documents', 'Review and send'];
+  const APPS = [
+    { ref:'SME-24817', type:'Working Capital', amount:'R250 000', date:'12 Oct 2026', status:'Bank statements needed', tone:'amber', steps:[['Received','12 Oct, 09:41',1],['Checked by our team','12 Oct, 14:05',1],['Bank statements needed','13 Oct, 10:20',2],['With a funding partner','',0],['Partner decision','',0]] },
+    { ref:'SME-23950', type:'Purchase Order Funding', amount:'R480 000', date:'28 Aug 2026', status:'Pre-qualified with a partner', tone:'green', steps:[['Received','28 Aug, 16:12',1],['Checked by our team','29 Aug, 08:30',1],['With a funding partner','29 Aug, 11:00',1],['Pre-qualified with a partner','2 Sep, 15:45',2],['Partner decision','',0]] },
+    { ref:'SME-22104', type:'Unsecured Business Loan', amount:'R80 000', date:'3 May 2026', status:'Closed', tone:'grey', steps:[['Received','3 May, 11:02',1],['Checked by our team','3 May, 15:40',1],['Closed','20 May, 09:00',1]] }
+  ];
+  const TONE = { amber:'bg-[#FFF1E0] text-[#AE6B0A]', green:'bg-[#E4F5EE] text-[#1F7F5E]', grey:'bg-slate-100 text-slate-600', blue:'bg-[#EAF1FE] text-[#2F5FD0]' };
+
+  /* draft kept on this phone: survives a dropped signal, a closed tab or a flat battery */
+  const DKEY = 'smeFundingDraft';
+  let draft = { step:1, data:{}, savedAt:null };
+  try { const d = JSON.parse(localStorage.getItem(DKEY) || 'null'); if (d && d.data) draft = d; } catch (e) {}
+  function saveDraft(){ draft.savedAt = new Date().toISOString(); try { localStorage.setItem(DKEY, JSON.stringify(draft)); } catch (e) {} paintSaved(); }
+  function clearDraft(){ draft = { step:1, data:{}, savedAt:null }; try { localStorage.removeItem(DKEY); } catch (e) {} }
+  const hhmm = iso => { const d = new Date(iso); return String(d.getHours()).padStart(2,'0') + ':' + String(d.getMinutes()).padStart(2,'0'); };
+  function paintSaved(){ const el = document.getElementById('saved-note'); if (el) el.innerHTML = draft.savedAt ? `<i data-lucide="${SIM_OFF ? 'smartphone' : 'cloud-check'}" class="w-4 h-4 shrink-0"></i> Saved on this phone at ${hhmm(draft.savedAt)}` : `<i data-lucide="smartphone" class="w-4 h-4 shrink-0"></i> Kept on this phone as you go`; lucide.createIcons(); }
+
+  let SIM_OFF = false, queued = false;
+  const offline = () => SIM_OFF || !navigator.onLine;
+  function simOffline(on){ SIM_OFF = on; paintNet(); if (!offline() && queued) sendNow(); else if (view === 'apply') render(); }
+  function paintNet(){ document.getElementById('net').classList.toggle('hidden', !offline()); document.querySelectorAll('[data-pv="offline"]').forEach(b => b.className = b.className.replace(/bg-\S+ text-\S+$/, SIM_OFF ? 'bg-[#0C1F31] text-white' : 'bg-slate-100 text-slate-600')); paintSaved(); }
+  window.addEventListener('offline', () => { paintNet(); if (view === 'apply') render(); }); window.addEventListener('online', () => { paintNet(); if (queued) sendNow(); });
+
+  /* ------------------------------------------------------------------ views ------------------------------------------------------------------ */
+  let view = 'home';
+  function go(v, quiet){
+    view = v; render();
+    document.querySelectorAll('[data-pv]').forEach(b => { if (b.dataset.pv !== 'offline') b.className = b.className.replace(/bg-\S+ text-\S+$/, b.dataset.pv === v ? 'bg-[#0C1F31] text-white' : 'bg-slate-100 text-slate-600'); });
+    if (!quiet) { history.replaceState(null, '', location.pathname + location.search + (v === 'home' ? '' : '#' + v)); window.scrollTo(0, 0); }
+  }
+  function render(){
+    const el = document.getElementById('view');
+    el.innerHTML = view === 'apply' ? applyView() : view === 'receipt' ? receiptView() : homeView();
+    lucide.createIcons(); paintSaved();
+  }
+
+  function homeView(){
+    const resume = draft.savedAt && Object.keys(draft.data).length ? `<a href="#apply" onclick="event.preventDefault();go('apply')" class="reveal mt-4 flex items-center gap-3 rounded-2xl border border-[#F5DDB0] bg-[#FFF8EC] px-4 py-3.5 hover:border-[#AE6B0A]">
+        <span class="w-10 h-10 rounded-full bg-white text-[#AE6B0A] grid place-items-center shrink-0"><i data-lucide="history" class="w-5 h-5"></i></span>
+        <span class="flex-1 min-w-0"><span class="block font-jakarta font-bold text-[14.5px]">Carry on with your application</span><span class="block text-[12.5px] text-[#7A4B05]">Step ${draft.step} of 4 · saved on this phone at ${hhmm(draft.savedAt)}</span></span>
+        <i data-lucide="chevron-right" class="w-5 h-5 text-[#AE6B0A] shrink-0"></i></a>` : '';
+    return `
+    <div class="flex items-start justify-between gap-3">
+      <div><h1 class="font-jakarta font-extrabold text-[26px] sm:text-[30px] tracking-tight flex items-center gap-2">Funding <button onclick="openBrief()" class="dev-badge w-5 h-5 rounded-full bg-[#DC183C] text-white items-center justify-center text-[10px] font-bold" title="Implementation notes">i</button></h1>
+      <p class="text-[14.5px] text-slate-600 mt-1 leading-relaxed">Business finance for South African SMEs. Tell us what you need once and we match you with the right funding partner.</p></div>
+    </div>
+    ${resume}
+    <section class="reveal mt-4 rounded-2xl bg-[#0C1F31] text-white p-5 relative overflow-hidden">
+      <div class="absolute -right-10 -top-10 w-40 h-40 rounded-full bg-[#DC183C]/25"></div>
+      <p class="relative font-jakarta font-extrabold text-[19px] leading-snug">Apply in four short steps</p>
+      <p class="relative text-[13.5px] text-white/75 mt-1">About five minutes. Stop any time: your answers stay on this phone.</p>
+      <button type="button" onclick="startApply()" class="relative mt-4 w-full sm:w-auto h-12 px-6 rounded-full bg-[#DC183C] hover:bg-[#B0142F] font-jakarta font-bold text-[15px] inline-flex items-center justify-center gap-2">Start an application <i data-lucide="arrow-right" class="w-4 h-4"></i></button>
+    </section>
+
+    <h2 class="font-jakarta font-extrabold text-[17px] mt-7">Your options</h2>
+    <div class="mt-2.5 grid sm:grid-cols-2 gap-2.5">
+      ${TYPES.map(t => `<div class="rounded-2xl border border-[#E7EBEF] bg-white p-4 flex flex-col">
+        <div class="flex items-center gap-3"><span class="w-10 h-10 rounded-xl bg-[#FDECEF] text-[#DC183C] grid place-items-center shrink-0"><i data-lucide="${t[2]}" class="w-5 h-5"></i></span><p class="font-jakarta font-bold text-[15px] leading-tight">${t[0]}</p></div>
+        <p class="text-[13.5px] text-slate-600 mt-2 flex-1">${t[1]}</p>
+        <div class="mt-3 flex items-center gap-2"><button type="button" onclick="startApply('${t[0]}')" class="h-11 px-4 rounded-full bg-[#0C1F31] hover:bg-[#16324a] text-white text-[13.5px] font-bold">Apply</button><a href="public-loan-option.html" class="h-11 px-3 inline-flex items-center text-[13.5px] font-bold text-[#DC183C]">How it works</a></div></div>`).join('')}
+    </div>
+
+    <section class="mt-6 rounded-2xl border border-[#E7EBEF] bg-white p-4">
+      <h2 class="font-jakarta font-extrabold text-[15.5px]">Have these ready</h2>
+      <ul class="mt-2 space-y-2 text-[14px] text-slate-700">
+        <li class="flex gap-2.5"><i data-lucide="check" class="w-4 h-4 text-[#29A37A] mt-0.5 shrink-0"></i>Your CIPC registration number</li>
+        <li class="flex gap-2.5"><i data-lucide="check" class="w-4 h-4 text-[#29A37A] mt-0.5 shrink-0"></i>Your latest bank statements (PDF from your bank)</li>
+        <li class="flex gap-2.5"><i data-lucide="check" class="w-4 h-4 text-[#29A37A] mt-0.5 shrink-0"></i>Your average monthly turnover</li>
+      </ul>
+      <a href="public-funding.html" class="mt-3 h-11 inline-flex items-center gap-1.5 text-[13.5px] font-bold text-[#DC183C]"><i data-lucide="calculator" class="w-4 h-4"></i> Estimate a repayment first</a>
+    </section>
+
+    <section id="applications" class="mt-8 scroll-mt-20">
+      <div class="flex items-end justify-between"><h2 class="font-jakarta font-extrabold text-[19px]">Your applications</h2></div>
+      <p class="text-[13px] text-slate-500 mt-0.5">Every application you sent, newest first. You also get an alert when one moves.</p>
+      <div class="mt-3 space-y-2.5">
+        ${APPS.map((a, i) => `<article class="rounded-2xl border ${a.tone === 'amber' ? 'border-[#F5DDB0]' : 'border-[#E7EBEF]'} bg-white p-4">
+          <span class="inline-block px-2.5 py-1 rounded-full text-[11.5px] font-bold ${TONE[a.tone]}">${a.status}</span>
+          <p class="font-jakarta font-bold text-[15.5px] mt-2">${a.type}</p><p class="text-[12.5px] text-slate-500 mt-0.5">${a.ref} · ${a.date.replace(/ /g, ' ')} · ${a.amount.replace(/ /g, ' ')}</p>
+          <div class="mt-3 flex flex-wrap gap-2">${a.tone === 'amber' ? `<button type="button" onclick="upload('${a.ref}')" class="h-11 px-4 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white text-[13.5px] font-bold inline-flex items-center gap-1.5"><i data-lucide="upload" class="w-4 h-4"></i> Add bank statements</button>` : ''}<button type="button" onclick="track(${i})" class="h-11 px-4 rounded-full border border-slate-300 hover:border-[#0C1F31] text-[13.5px] font-bold inline-flex items-center gap-1.5"><i data-lucide="route" class="w-4 h-4"></i> Track</button></div></article>`).join('')}
+      </div>
+    </section>`;
+  }
+
+  function progress(){
+    const s = draft.step;
+    return `<div class="flex items-center justify-between gap-3"><p class="text-[12.5px] font-bold text-slate-500 whitespace-nowrap shrink-0">Step ${s} of 4</p><p id="saved-note" class="text-[12px] font-semibold text-[#1F7F5E] flex items-center gap-1.5 text-right min-w-0"></p></div>
+      <div class="mt-2 grid grid-cols-4 gap-1.5" role="progressbar" aria-label="Application progress" aria-valuemin="1" aria-valuemax="4" aria-valuenow="${s}">${STEPS.map((x, i) => `<span class="h-1.5 rounded-full ${i < s ? 'bg-[#DC183C]' : 'bg-slate-200'}"></span>`).join('')}</div>
+      <h1 class="font-jakarta font-extrabold text-[22px] sm:text-[26px] tracking-tight mt-4">${STEPS[s - 1]}</h1>`;
+  }
+  const v = k => esc(draft.data[k] || '');
+  const sel = (k, opts) => `<select class="inp" name="${k}" onchange="setv(this)"><option value="">Choose</option>${opts.map(o => `<option${draft.data[k] === o ? ' selected' : ''}>${o}</option>`).join('')}</select>`;
+  function stepBody(){
+    const s = draft.step;
+    if (s === 1) return `
+      <div class="fld"><label class="lb" for="f-name">Registered business name</label><input id="f-name" class="inp" name="business" value="${v('business')}" oninput="setv(this)" autocomplete="organization" placeholder="e.g. Langa Holdings (Pty) Ltd"></div>
+      <div class="fld"><label class="lb" for="f-cipc">CIPC registration number</label><input id="f-cipc" class="inp" name="cipc" value="${v('cipc')}" oninput="setv(this)" inputmode="numeric" placeholder="2019/123456/07"></div>
+      <div class="fld"><label class="lb">How long have you been trading?</label>${sel('trading', ['Less than 6 months','6 to 12 months','1 to 3 years','More than 3 years'])}</div>
+      <div class="fld"><label class="lb">Average monthly turnover</label>${sel('turnover', ['Less than R50K','R50K to R100K','R100K to R500K','R500K to R1m','More than R1m'])}<p class="hint">Money that comes into the business account in a normal month.</p></div>
+      <div class="fld"><label class="lb">Province</label>${sel('province', ['Eastern Cape','Free State','Gauteng','KwaZulu-Natal','Limpopo','Mpumalanga','North West','Northern Cape','Western Cape'])}</div>`;
+    if (s === 2) return `
+      <fieldset class="fld"><legend class="lb text-[13px] font-bold mb-1.5">Funding type</legend><div class="space-y-2">${TYPES.map(t => `<label class="opt"><input type="radio" name="type" value="${t[0]}" ${draft.data.type === t[0] ? 'checked' : ''} onchange="setv(this)"><span><span class="block font-jakarta font-bold text-[14.5px]">${t[0]}</span><span class="block text-[12.5px] text-slate-500">${t[1]}</span></span></label>`).join('')}</div></fieldset>
+      <div class="fld"><label class="lb" for="f-amt">How much do you need?</label><div class="relative"><span class="absolute left-4 top-1/2 -translate-y-1/2 font-bold text-slate-500">R</span><input id="f-amt" class="inp pl-9" name="amount" value="${v('amount')}" oninput="setv(this)" inputmode="numeric" placeholder="250 000"></div></div>
+      <div class="fld"><label class="lb">What is it for?</label>${sel('purpose', ['Stock or materials','Equipment','Salaries and running costs','A confirmed order or contract','Expansion','Something else'])}</div>`;
+    if (s === 3) {
+      const skip = draft.data.turnover === 'Less than R50K' || draft.data.type === 'Purchase Order Funding';
+      return `
+      <p class="text-[14px] text-slate-600 leading-relaxed">Partners use your bank statements to confirm turnover. Sending them now makes the answer faster.</p>
+      ${skip ? `<div class="rounded-xl bg-[#E4F5EE] text-[#1F5E48] px-4 py-3 text-[13.5px] flex gap-2.5"><i data-lucide="info" class="w-5 h-5 shrink-0"></i><p>Bank statements are not needed for ${draft.data.type === 'Purchase Order Funding' ? 'Purchase Order Funding' : 'a monthly turnover under R50K'}. You can go straight to the review.</p></div>` : ''}
+      <label class="block rounded-2xl border-2 border-dashed ${draft.data.files ? 'border-[#29A37A] bg-[#F3FBF7]' : 'border-[#D8DEE5] bg-white'} p-5 text-center cursor-pointer">
+        <input type="file" accept="application/pdf" multiple class="sr-only" onchange="addFiles(this)">
+        <span class="w-12 h-12 rounded-full ${draft.data.files ? 'bg-[#29A37A] text-white' : 'bg-[#FDECEF] text-[#DC183C]'} grid place-items-center mx-auto"><i data-lucide="${draft.data.files ? 'file-check-2' : 'upload'}" class="w-6 h-6"></i></span>
+        <span class="block font-jakarta font-bold text-[15px] mt-2.5">${draft.data.files ? esc(draft.data.files) : 'Add your bank statements'}</span>
+        <span class="block text-[12.5px] text-slate-500 mt-1">${draft.data.files ? 'Tap to add more' : 'PDF from your bank, up to 10 MB each'}</span>
+        <span class="mt-3 inline-flex items-center justify-center h-11 px-5 rounded-full bg-[#0C1F31] text-white text-[13.5px] font-bold">${draft.data.files ? 'Add more' : 'Choose files'}</span>
+      </label>
+      <p class="text-[12.5px] text-slate-500 flex gap-2"><i data-lucide="shield-check" class="w-4 h-4 shrink-0 text-[#29A37A]"></i> Only our funding team and the partner you are matched with can see your documents.</p>
+      ${skip ? '' : `<label class="opt"><input type="checkbox" name="later" ${draft.data.later ? 'checked' : ''} onchange="setv(this)"><span class="text-[14px]">I will add them later. <span class="text-slate-500">We remind you, and it waits as "Bank statements needed".</span></span></label>`}`;
+    }
+    const row = (l, x, st) => `<div class="flex items-start justify-between gap-3 py-2.5 border-b border-[#EEF1F4] last:border-0"><span class="text-[13px] text-slate-500 shrink-0">${l}</span><span class="text-[14px] font-semibold text-right min-w-0 break-words">${x ? esc(x) : '<span class="text-[#DC183C]">Missing</span>'}</span></div>`;
+    const box = (t, st, rows) => `<section class="rounded-2xl border border-[#E7EBEF] bg-white px-4 pt-3 pb-1"><div class="flex items-center justify-between"><h2 class="font-jakarta font-bold text-[14.5px]">${t}</h2><button type="button" onclick="toStep(${st})" class="h-11 px-2 -mr-2 text-[13px] font-bold text-[#DC183C]">Change</button></div>${rows}</section>`;
+    return `
+      ${box('Your business', 1, row('Business', draft.data.business) + row('CIPC number', draft.data.cipc) + row('Trading', draft.data.trading) + row('Monthly turnover', draft.data.turnover) + row('Province', draft.data.province))}
+      ${box('What you need', 2, row('Funding type', draft.data.type) + row('Amount', draft.data.amount ? 'R' + draft.data.amount : '') + row('For', draft.data.purpose))}
+      ${box('Documents', 3, row('Bank statements', draft.data.files || (draft.data.later ? 'Adding them later' : (draft.data.turnover === 'Less than R50K' || draft.data.type === 'Purchase Order Funding') ? 'Not needed' : '')))}
+      ${box('Contact details', 1, row('Name', 'Tshepho Joel') + row('Email', 'tshepho@langaholdings.co.za') + row('Mobile', '082 555 0142'))}
+      <label class="opt items-start"><input type="checkbox" name="consent" ${draft.data.consent ? 'checked' : ''} onchange="setv(this)" class="mt-0.5"><span class="text-[13px] text-slate-600 leading-relaxed">I agree that SME South Africa may share this application with its funding partners, and that a partner may do a credit check on me and my business. I accept the <a href="public-terms.html" class="text-[#DC183C] font-semibold underline">Terms</a> and <a href="public-privacy.html" class="text-[#DC183C] font-semibold underline">Privacy Policy</a>.</span></label>`;
+  }
+  function applyView(){
+    const s = draft.step;
+    return `<a href="#" onclick="event.preventDefault();${s > 1 ? 'toStep(' + (s - 1) + ')' : "go('home')"}" class="-ml-2 mb-2 h-11 inline-flex items-center gap-1.5 px-2 text-[13.5px] font-bold text-slate-600 hover:text-[#121A21]"><i data-lucide="arrow-left" class="w-4 h-4"></i> ${s > 1 ? STEPS[s - 2] : 'Funding'}</a>
+      ${progress()}
+      ${queued ? `<div class="mt-4 rounded-xl bg-[#EAF1FE] text-[#1E3F8A] px-4 py-3 text-[13.5px] flex gap-2.5" role="status"><i data-lucide="clock" class="w-5 h-5 shrink-0"></i><p><b>Waiting for signal.</b> Your application is ready on this phone and goes the moment you are back online. You can close the app.</p></div>` : ''}
+      <form class="mt-4 space-y-4" onsubmit="event.preventDefault();next()" novalidate>
+        ${stepBody()}
+        <p id="err" class="hidden text-[13px] font-semibold text-[#DC183C]" role="alert"></p>
+        <div class="pt-2 flex flex-col-reverse sm:flex-row gap-2 sm:justify-between">
+          <button type="button" onclick="leave()" class="h-12 px-5 rounded-full text-[14px] font-bold text-slate-600 hover:bg-slate-100">Save and finish later</button>
+          <button type="submit" class="h-12 px-7 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-jakarta font-bold text-[15px] inline-flex items-center justify-center gap-2">${s < 4 ? 'Next' : (offline() ? 'Send when I have signal' : 'Send application')} <i data-lucide="${s < 4 ? 'arrow-right' : 'send'}" class="w-4 h-4"></i></button>
+        </div>
+      </form>`;
+  }
+
+  let RECEIPT = { ref:'SME-24903', when:'' };
+  function receiptView(){
+    const d = RECEIPT.data || draft.data;
+    return `<div class="reveal text-center pt-2">
+        <span class="w-16 h-16 rounded-full bg-[#E4F5EE] text-[#29A37A] grid place-items-center mx-auto"><i data-lucide="check-circle-2" class="w-9 h-9"></i></span>
+        <h1 class="font-jakarta font-extrabold text-[24px] tracking-tight mt-3">Application received</h1>
+        <p class="text-[14.5px] text-slate-600 mt-1">Thank you. Keep this reference; we use it in every message about this application.</p>
+      </div>
+      <section class="mt-5 rounded-2xl border border-[#E7EBEF] bg-white px-4 py-1">
+        ${[['Reference', RECEIPT.ref], ['Sent', RECEIPT.when || '14 Oct 2026, 08:21'], ['Funding type', d.type || 'Working Capital'], ['Amount', d.amount ? 'R' + d.amount : 'R250 000'], ['Bank statements', d.files ? 'Added' : (d.later ? 'Still needed' : 'Not needed')]].map(r => `<div class="flex justify-between gap-3 py-3 border-b border-[#EEF1F4] last:border-0"><span class="text-[13.5px] text-slate-500">${r[0]}</span><span class="text-[14px] font-bold text-right">${esc(r[1])}</span></div>`).join('')}
+      </section>
+      <section class="mt-4 rounded-2xl bg-[#F4F6F8] p-4">
+        <h2 class="font-jakarta font-extrabold text-[15.5px]">What happens next</h2>
+        <ol class="mt-2.5 space-y-3">${[['Our funding team checks your details','Usually within one working day.'],['We send it to the partner that fits','Only that partner sees your documents.'],['You hear from us','By email and in your Alerts. Track it any time under Your applications.']].map((x, i) => `<li class="flex gap-3"><span class="w-7 h-7 rounded-full bg-[#0C1F31] text-white text-[13px] font-bold grid place-items-center shrink-0">${i + 1}</span><span><span class="block text-[14px] font-bold">${x[0]}</span><span class="block text-[13px] text-slate-500">${x[1]}</span></span></li>`).join('')}</ol>
+      </section>
+      <section id="push-card" class="mt-4 rounded-2xl border border-[#E7EBEF] bg-white p-4">
+        <p class="font-jakarta font-extrabold text-[15.5px]">Get told when your application moves?</p>
+        <p class="text-[13.5px] text-slate-600 mt-1">Turn on phone alerts: a short message when it happens, never more than a few a day, and none at night.</p>
+        <div class="mt-3 flex gap-2"><a href="app-push-ask.html#system" class="h-11 px-5 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white text-[14px] font-bold inline-flex items-center">Turn on alerts</a><button type="button" onclick="document.getElementById('push-card').remove()" class="h-11 px-5 rounded-full bg-slate-100 text-[14px] font-bold">Not now</button></div>
+      </section>
+      <div class="mt-5 grid sm:grid-cols-2 gap-2">
+        <a href="#applications" onclick="event.preventDefault();go('home');setTimeout(()=>document.getElementById('applications').scrollIntoView({behavior:'smooth'}),60)" class="h-12 rounded-full bg-[#0C1F31] hover:bg-[#16324a] text-white font-jakarta font-bold text-[14.5px] grid place-items-center">See your applications</a>
+        <a href="member-hub.html" class="h-12 rounded-full border border-slate-300 hover:border-[#0C1F31] font-jakarta font-bold text-[14.5px] grid place-items-center">Back to Hub</a>
+      </div>`;
+  }
+
+  /* ------------------------------------------------------------------ actions ------------------------------------------------------------------ */
+  function setv(el){ draft.data[el.name] = el.type === 'checkbox' ? el.checked : el.value; saveDraft(); if (el.type === 'radio' || el.type === 'checkbox') { /* keep focus, no re-render */ } }
+  function addFiles(inp){ const n = inp.files.length; if (!n) return; draft.data.files = n === 1 ? inp.files[0].name : n + ' statements added'; draft.data.later = false; saveDraft(); render(); }
+  function startApply(type){ if (type) { draft.data.type = type; saveDraft(); } if (!draft.savedAt) saveDraft(); go('apply'); }
+  function toStep(n){ draft.step = n; saveDraft(); if (view !== 'apply') go('apply'); else { render(); window.scrollTo(0, 0); } }
+  function err(msg){ const e = document.getElementById('err'); e.textContent = msg; e.classList.remove('hidden'); }
+  function next(){
+    const d = draft.data, s = draft.step;
+    if (s === 1 && (!d.business || !d.turnover)) return err('Add your business name and monthly turnover to carry on.');
+    if (s === 2 && (!d.type || !d.amount)) return err('Choose a funding type and the amount you need.');
+    if (s === 3 && !d.files && !d.later && !(d.turnover === 'Less than R50K' || d.type === 'Purchase Order Funding')) return err('Add your bank statements, or tick "I will add them later".');
+    if (s < 4) return toStep(s + 1);
+    if (!d.consent) return err('Tick the box to agree before you send.');
+    if (offline()) { queued = true; showToast('Saved. We send it as soon as you have signal.'); render(); return; }
+    sendNow();
+  }
+  function sendNow(){
+    queued = false; const now = new Date();
+    RECEIPT = { ref:'SME-24903', when: now.getDate() + ' Oct 2026, ' + hhmm(now.toISOString()), data: Object.assign({}, draft.data) };
+    clearDraft(); go('receipt');
+  }
+  function leave(){ saveDraft(); showToast('Saved on this phone. Carry on any time from Funding.'); go('home'); }
+  function upload(ref){ showToast('Choose your statements for ' + ref + '. (Mockup)'); }
+  function track(i){
+    const a = APPS[i];
+    document.getElementById('overlay-root').innerHTML = `<div class="ov" id="ov-track"><div class="ov-bg" onclick="closeOverlay('ov-track')"></div>
+      <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="tr-h"><div class="md:hidden w-10 h-1.5 rounded-full bg-slate-200 mx-auto mt-2.5"></div>
+        <div class="flex items-start justify-between px-5 pt-3"><div><h2 id="tr-h" class="font-jakarta font-extrabold text-[19px]">${a.type}</h2><p class="text-[12.5px] text-slate-500">${a.ref} · ${a.amount}</p></div><button onclick="closeOverlay('ov-track')" aria-label="Close" class="w-11 h-11 -mr-2 grid place-items-center rounded-full text-slate-500 hover:bg-slate-100"><i data-lucide="x" class="w-5 h-5"></i></button></div>
+        <ol class="px-5 py-4">${a.steps.map((s, k) => `<li class="flex gap-3 ${k < a.steps.length - 1 ? 'pb-4' : ''} relative">${k < a.steps.length - 1 ? `<span class="absolute left-[11px] top-6 bottom-0 w-0.5 ${s[2] ? 'bg-[#29A37A]' : 'bg-slate-200'}"></span>` : ''}<span class="w-6 h-6 rounded-full grid place-items-center shrink-0 z-10 ${s[2] === 2 ? 'bg-[#DC183C] text-white' : s[2] ? 'bg-[#29A37A] text-white' : 'bg-white border-2 border-slate-200'}">${s[2] ? `<i data-lucide="${s[2] === 2 ? 'dot' : 'check'}" class="w-3.5 h-3.5"></i>` : ''}</span><span><span class="block text-[14px] font-bold ${s[2] ? '' : 'text-slate-400'}">${s[0]}</span>${s[1] ? `<span class="block text-[12.5px] text-slate-500">${s[1]}</span>` : ''}</span></li>`).join('')}</ol>
+        <div class="px-5 pb-5">${a.tone === 'amber' ? `<button type="button" onclick="closeOverlay('ov-track');upload('${a.ref}')" class="w-full h-12 rounded-full bg-[#DC183C] text-white font-jakarta font-bold text-[14.5px]">Add bank statements</button>` : `<a href="public-help.html" class="w-full h-12 rounded-full border border-slate-300 font-jakarta font-bold text-[14.5px] grid place-items-center">Ask us about this application</a>`}</div>
+      </div></div>`;
+    requestAnimationFrame(() => document.getElementById('ov-track').classList.add('open')); lucide.createIcons();
+  }
+  function openBrief(){
+    const sec = (l, h) => `<div class="px-6 py-4 border-t border-slate-100"><p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] mb-2">${l}</p><div class="text-sm text-slate-600 leading-relaxed">${h}</div></div>`;
+    document.getElementById('overlay-root').innerHTML = `<div class="ov" id="ov-brief"><div class="ov-bg" onclick="closeOverlay('ov-brief')"></div><div class="drawer"><div class="sticky top-0 bg-[#0C1F31] text-white px-6 py-5 flex justify-between"><div><p class="text-[10px] font-bold uppercase tracking-widest text-[#FF9900] mb-1">Dev Brief</p><h3 class="font-jakarta font-extrabold text-lg">Funding on a phone</h3></div><button onclick="closeOverlay('ov-brief')" aria-label="Close" class="w-11 h-11 grid place-items-center"><i data-lucide="x" class="w-5 h-5"></i></button></div>
+      ${sec('Purpose', 'Mobile + PWA audit P4 and section 4: Funding is the revenue line and was 2 to 3 taps deep ("Funding" opened Account settings, Funding). Here it is one page: the funding home, the application as four short steps, the receipt, and Your applications at the bottom (applications live inside Funding, no separate tab; matches live M7).')}
+      ${sec('Progress kept', 'Every answer is written to the phone (localStorage on live, key per member) as it is typed, so a dropped signal, a closed tab or a flat battery loses nothing. With no signal the member can finish; "Send when I have signal" queues it and the service worker sends it when the phone is online again (Background Sync, with a retry on next open as fallback).')}
+      ${sec('Data', 'Same fields as the live funding form (business, CIPC number, trading time, monthly turnover, province, funding type, amount, purpose, bank statements, consent). Bank statements are skipped when turnover is under R50K or the type is Purchase Order Funding (the live rule). Statuses map to fa_application_status: Received, Checked, Bank statements needed, With a funding partner, Pre-qualified with a partner, Closed.')}
+      ${sec('Entry points', 'Hub (one tap), the Me page, the Inbox alert when an application moves, and the app icon long-press shortcut "Funding".')}</div></div>`;
+    requestAnimationFrame(() => document.getElementById('ov-brief').classList.add('open')); lucide.createIcons();
+  }
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') document.querySelectorAll('.ov.open').forEach(o => closeOverlay(o.id)); });
+
+  const start = (location.hash || '').replace('#', '');
+  go(start === 'apply' || start === 'receipt' ? start : 'home', true);
+  if (start === 'applications') setTimeout(() => document.getElementById('applications').scrollIntoView(), 200);
+  paintNet();
+</script>
+<script>window.SME_MEMBER_PAGE=true;</script>
+<script src="member-chrome.js"></script>
+</body>
+</html>

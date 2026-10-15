@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en-ZA">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>iPhone guide | SME HUB app</title>
+  <meta name="description" content="SME South Africa app: the three-step Add to Home Screen guide for iPhone, as a sheet above the bottom bar." />
+  <meta name="theme-color" content="#0C1F31" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  <script>tailwind.config = { theme: { extend: { fontFamily: { jakarta: ['Plus Jakarta Sans', 'sans-serif'], inter: ['Inter', 'system-ui', 'sans-serif'] } } } };</script>
+  <style>
+    html, body { font-family: 'Inter', system-ui, sans-serif; }
+    .font-jakarta { font-family: 'Plus Jakarta Sans', sans-serif; letter-spacing: 0.005em; }
+    @keyframes slideUp { from { opacity:0; transform:translateY(24px); } to { opacity:1; transform:none; } }
+    .slot { position:fixed; left:12px; right:12px; bottom:calc(72px + env(safe-area-inset-bottom)); z-index:45; animation:slideUp .35s cubic-bezier(.2,.7,.2,1) both; }
+    .scrim { position:fixed; inset:0; background:rgba(12,31,49,.35); z-index:44; }
+  </style>
+</head>
+<body class="bg-[#FCFCFC] text-[#121A21] antialiased">
+<header></header>
+<div id="app-root"></div>
+<script src="app-mockup-kit.js"></script>
+<script>
+  const step = (n, icon, html) => `<li class="flex items-center gap-3 min-h-[48px]"><span class="w-8 h-8 rounded-full bg-[#0C1F31] text-white text-[13px] font-bold grid place-items-center shrink-0">${n}</span><span class="flex-1 text-[14.5px] leading-snug">${html}</span><span class="w-10 h-10 rounded-xl bg-[#F0F5F9] text-[#2F5FD0] grid place-items-center shrink-0"><i data-lucide="${icon}" class="w-5 h-5"></i></span></li>`;
+  AppKit.init({
+    title: 'Add to Home Screen (iPhone)',
+    lead: 'iPhones cannot show an install button, so a member on Safari gets a short three-step guide instead, in the same banner slot above the bottom bar. Once the app is on the Home Screen, iPhone members can also get phone alerts (iOS 16.4 and later).',
+    states: [
+      { id:'guide', label:'Guide', icon:'smartphone', desc:'Repeat visit in Safari: the three steps, with the icons the member will see.' },
+      { id:'share', label:'Safari Share sheet', icon:'share', desc:'Step 2 in Safari’s own sheet: "Add to Home Screen".' },
+      { id:'done', label:'Got it', icon:'check-circle-2', desc:'"Got it" or the cross closes it, quietly, and it is remembered.' }
+    ],
+    rules: [
+      'Safari on iPhone only, on a repeat visit, never on the first screen.',
+      'Same slot and the same "once in 14 days" rule as the Android card.',
+      '"Got it" and the cross both close it and are remembered.',
+      'The Me page row "Install the app" opens this guide again on an iPhone.'
+    ],
+    source: 'Matches lane B on the Tshepho copy (pwa.js showIosGuide; shot lane-b/shots/member-iphone-guide.png): title "Add SME South Africa to your Home Screen", steps Share, Add to Home Screen, Add, button "Got it".',
+    render(state){
+      let html = AppKit.backdrop('articles');
+      if (state === 'guide') html += `<div class="slot"><div role="dialog" aria-labelledby="ios-h" class="relative bg-white rounded-3xl border border-[#E7EBEF] shadow-[0_16px_40px_-10px_rgba(12,31,49,.45)] p-5">
+          <div class="flex items-start gap-3 pr-10"><span class="w-11 h-11 rounded-xl bg-white border border-[#E7EBEF] grid place-items-center shrink-0"><img src="assets/logo-v1-icon.svg" alt="" class="w-7 h-7"></span><p id="ios-h" class="font-jakarta font-extrabold text-[17px] leading-snug">Add SME South Africa to your Home Screen</p></div>
+          <ol class="mt-3 space-y-1">${step(1, 'share', 'Tap the <b>Share</b> button in Safari.')}${step(2, 'square-plus', 'Choose <b>Add to Home Screen</b>.')}${step(3, 'check', 'Tap <b>Add</b>.')}</ol>
+          <a href="?state=done" class="mt-4 h-11 px-6 rounded-full bg-slate-100 hover:bg-slate-200 text-[14.5px] font-bold inline-flex items-center">Got it</a>
+          <a href="?state=done" aria-label="Close" class="absolute top-2 right-2 w-11 h-11 grid place-items-center rounded-full text-slate-400 hover:bg-slate-100"><i data-lucide="x" class="w-5 h-5"></i></a></div></div>`;
+      if (state === 'share') html += `<div class="scrim"></div><div class="fixed inset-x-0 bottom-0 z-[60] bg-[#F2F2F7] rounded-t-2xl shadow-2xl pb-[env(safe-area-inset-bottom)]" role="dialog" aria-label="Safari share sheet">
+          <div class="w-10 h-1.5 rounded-full bg-slate-300 mx-auto mt-2"></div>
+          <div class="flex items-center gap-3 px-4 py-3"><span class="w-11 h-11 rounded-xl bg-white grid place-items-center"><img src="assets/logo-v1-icon.svg" alt="" class="w-7 h-7"></span><div><p class="font-semibold text-[14.5px]">SME South Africa</p><p class="text-[12.5px] text-slate-500">smesouthafrica.co.za</p></div></div>
+          <div class="mx-4 bg-white rounded-xl divide-y divide-slate-100 text-[15px]">
+            <p class="flex items-center justify-between px-4 min-h-[48px]">Copy <i data-lucide="copy" class="w-5 h-5 text-slate-500"></i></p>
+            <p class="flex items-center justify-between px-4 min-h-[48px]">Add to Reading List <i data-lucide="glasses" class="w-5 h-5 text-slate-500"></i></p>
+            <p class="flex items-center justify-between px-4 min-h-[48px] bg-[#FFF6F7] font-semibold ring-2 ring-[#DC183C] rounded-lg">Add to Home Screen <i data-lucide="square-plus" class="w-5 h-5"></i></p>
+            <p class="flex items-center justify-between px-4 min-h-[48px]">Find on Page <i data-lucide="search" class="w-5 h-5 text-slate-500"></i></p>
+          </div>
+          <p class="text-center text-[12px] text-slate-500 py-4">This sheet is Safari’s own. Our guide only points to it.</p></div>`;
+      /* 'done': the guide is closed and remembered; nothing else appears (as live) */
+      return html;
+    }
+  });
+</script>
+<script>window.SME_MEMBER_PAGE=true;</script>
+<script src="member-chrome.js"></script>
+</body>
+</html>

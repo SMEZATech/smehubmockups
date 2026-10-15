@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en-ZA">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Install invitation | SME HUB app</title>
+  <meta name="description" content="SME South Africa app: the Android install invitation, shown above the bottom bar on a repeat visit, never on the first." />
+  <meta name="theme-color" content="#0C1F31" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  <script>tailwind.config = { theme: { extend: { fontFamily: { jakarta: ['Plus Jakarta Sans', 'sans-serif'], inter: ['Inter', 'system-ui', 'sans-serif'] } } } };</script>
+  <style>
+    html, body { font-family: 'Inter', system-ui, sans-serif; }
+    .font-jakarta { font-family: 'Plus Jakarta Sans', sans-serif; letter-spacing: 0.005em; }
+    @keyframes slideUp { from { opacity:0; transform:translateY(16px); } to { opacity:1; transform:none; } }
+    .slot { position:fixed; left:12px; right:12px; bottom:calc(72px + env(safe-area-inset-bottom)); z-index:45; animation:slideUp .35s cubic-bezier(.2,.7,.2,1) both; }
+    .scrim { position:fixed; inset:0; background:rgba(0,0,0,.42); z-index:65; }
+  </style>
+</head>
+<body class="bg-[#FCFCFC] text-[#121A21] antialiased">
+<header></header>
+<div id="app-root"></div>
+<script src="app-mockup-kit.js"></script>
+<script>
+  const ICON = '<span class="w-11 h-11 rounded-xl bg-white border border-[#E7EBEF] grid place-items-center shrink-0"><img src="assets/logo-v1-icon.svg" alt="" class="w-7 h-7"></span>';
+  const CARD = `<div class="slot" id="installCard"><div role="dialog" aria-label="Install the SME South Africa app" class="relative bg-white rounded-2xl border border-[#E7EBEF] shadow-[0_12px_32px_-8px_rgba(12,31,49,.35)] p-4 pr-12 flex gap-3">
+      ${ICON}
+      <div><p class="font-jakarta font-extrabold text-[16px] leading-snug">Get the SME South Africa app</p>
+        <p class="text-[13.5px] text-slate-600 mt-0.5 leading-snug">One tap from your home screen. Opens fast, even on a weak signal.</p>
+        <div class="mt-3 flex gap-2"><a href="?state=system" class="h-11 px-5 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white text-[14px] font-bold inline-flex items-center">Install</a><a href="?state=first" class="h-11 px-5 rounded-full bg-slate-100 hover:bg-slate-200 text-[14px] font-bold inline-flex items-center">Not now</a></div></div>
+      <a href="?state=first" aria-label="Close" class="absolute top-1.5 right-1.5 w-11 h-11 grid place-items-center rounded-full text-slate-400 hover:bg-slate-100"><i data-lucide="x" class="w-5 h-5"></i></a></div></div>`;
+  AppKit.init({
+    title: 'Install invitation (Android)',
+    lead: 'Our own invitation to put SME South Africa on the home screen, in the one banner slot above the bottom bar. It appears on a member’s repeat visit, never on the first screen they ever see, and Chrome’s own install dialog does the rest.',
+    states: [
+      { id:'card', label:'Invitation', icon:'smartphone', desc:'Repeat visit: the card sits above the bottom bar, the page stays usable.' },
+      { id:'first', label:'First visit', icon:'eye-off', desc:'No card on a first visit, after "Not now" (30 days) or when the app is installed.' },
+      { id:'system', label:'Chrome install', icon:'download', desc:'"Install" opens Chrome’s own dialog with the app name and icon.' },
+      { id:'installed', label:'Installed', icon:'check-circle-2', desc:'The icon on the home screen; long-press gives Post, Inbox and Funding.' }
+    ],
+    rules: [
+      'Shown only on a repeat visit or after a first post, never on the first screen.',
+      'At most once in 14 days; 30 days after "Not now"; never when already installed.',
+      'One banner at a time: the connections nudge steps aside while the card is open.',
+      '"Install the app" also sits on the Me page, only when the phone can install it.',
+      'Opens on Hub full screen in brand navy; works on a weak signal (lane B service worker).'
+    ],
+    source: 'Matches lane B on the Tshepho copy (smesa-pwa.php, pwa.js; shots in Mohlanka/mobile-audit/lane-b/shots). GA4 events: pwa_prompt_shown, pwa_prompt_accepted, pwa_prompt_dismissed, pwa_installed.',
+    render(state){
+      if (state === 'installed') return `<div class="min-h-[640px] bg-gradient-to-b from-[#1d3b52] to-[#0C1F31] text-white px-6 pt-10 pb-24">
+          <h1 class="sr-only">SME South Africa on the home screen</h1>
+          <p class="text-center text-[44px] font-light tracking-tight">08:21</p><p class="text-center text-[13px] text-white/70">Tuesday, 14 October</p>
+          <div class="mt-10 grid grid-cols-4 gap-y-6 text-center text-[11px]">
+            ${[['Phone','phone'],['Messages','message-circle'],['Camera','camera'],['Maps','map']].map(a => `<div><span class="w-14 h-14 mx-auto rounded-2xl bg-white/15 grid place-items-center"><i data-lucide="${a[1]}" class="w-6 h-6"></i></span><span class="block mt-1.5 text-white/80">${a[0]}</span></div>`).join('')}
+            <div class="relative"><span class="w-14 h-14 mx-auto rounded-2xl bg-white grid place-items-center ring-4 ring-[#DC183C]/60"><img src="assets/logo-v1-icon.svg" alt="" class="w-9 h-9"></span><span class="block mt-1.5 font-semibold">SME SA</span></div>
+          </div>
+          <div class="mt-8 mx-auto max-w-[260px] bg-white text-[#121A21] rounded-2xl shadow-xl overflow-hidden text-[14px]">
+            <p class="px-4 pt-3 pb-1 text-[11px] font-bold uppercase tracking-widest text-slate-400">Long-press shortcuts</p>
+            ${[['Post','square-pen'],['Inbox','message-square'],['Funding','hand-coins']].map(s => `<p class="flex items-center gap-3 px-4 min-h-[44px] border-t border-slate-100"><i data-lucide="${s[1]}" class="w-4 h-4 text-[#DC183C]"></i>${s[0]}</p>`).join('')}
+          </div>
+          <p class="mt-8 text-center text-[13px] text-white/75">Tapping the icon opens Hub full screen, without the browser bar.</p>
+        </div>`;
+      let html = AppKit.backdrop('articles');
+      if (state === 'card') html += CARD;
+      if (state === 'system') html += `<div class="scrim"></div><div class="fixed inset-x-4 top-1/2 -translate-y-1/2 z-[66] bg-white rounded-3xl shadow-2xl p-6" role="dialog" aria-label="Install app">
+          <p class="font-jakarta font-bold text-[19px]">Install app?</p>
+          <div class="mt-4 flex items-center gap-3">${ICON}<div><p class="font-bold text-[15px]">SME South Africa</p><p class="text-[13px] text-slate-500">smesouthafrica.co.za</p></div></div>
+          <div class="mt-6 flex justify-end gap-2"><a href="?state=first" class="h-11 px-4 rounded-full text-[14px] font-bold text-[#2F5FD0] inline-flex items-center">Cancel</a><a href="?state=installed" class="h-11 px-5 rounded-full bg-[#2F5FD0] text-white text-[14px] font-bold inline-flex items-center">Install</a></div>
+          <p class="mt-3 text-[11.5px] text-slate-400">This dialog is Chrome’s own; we only open it.</p></div>`;
+      return html;
+    },
+    noChrome: s => s === 'installed'
+  });
+</script>
+<script>window.SME_MEMBER_PAGE=true;</script>
+<script src="member-chrome.js"></script>
+</body>
+</html>

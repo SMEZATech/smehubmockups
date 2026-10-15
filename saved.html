@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Saved | SME HUB</title>
+  <meta name="description" content="SME South Africa, Saved: the articles, guides, resources, events, podcast episodes, discussions and posts a member kept for later." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            jakarta: ['Plus Jakarta Sans', 'sans-serif'],
+            inter: ['Inter', 'system-ui', 'sans-serif'],
+            mono: [ 'ui-monospace', 'monospace']
+          },
+          colors: { primary:'#DC183C', accent:'#FF9900', navy:'#0C1F31', success:'#29A37A', ink:'#121A21' }
+        }
+      }
+    };
+  </script>
+
+  <style>
+    :root{
+      --primary:349 80% 48%; --accent:36 100% 50%; --navy:210 60% 12%; --success:160 60% 40%;
+      --foreground:210 30% 10%; --muted-foreground:210 10% 45%; --border:210 20% 92%;
+      --background:0 0% 99%; --card:0 0% 100%; --radius:0.75rem;
+      --shadow-card:0 2px 8px rgba(12,31,49,.08); --shadow-card-hover:0 8px 24px rgba(12,31,49,.12);
+    }
+    html, body { font-family:'Inter', system-ui, sans-serif; }
+    .font-jakarta { font-family:'Plus Jakarta Sans', sans-serif; letter-spacing:.005em; }
+
+    .no-scrollbar::-webkit-scrollbar { display:none; }
+    .no-scrollbar { -ms-overflow-style:none; scrollbar-width:none; }
+
+    /* Reveal */
+    @keyframes fadeUp { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+    .reveal { animation: fadeUp .45s cubic-bezier(.2,.7,.2,1) backwards; }
+
+    /* Toast */
+    @keyframes toastIn { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
+    @keyframes toastOut { to { opacity:0; transform:translateY(20px); } }
+    .toast-in { animation: toastIn .25s ease forwards; }
+    .toast-out { animation: toastOut .25s ease forwards; }
+
+    /* Type stripes */
+    .stripe-ask   { box-shadow: inset 4px 0 0 0 #DC183C; }
+    .stripe-win   { box-shadow: inset 4px 0 0 0 #29A37A; }
+    .stripe-share { box-shadow: inset 4px 0 0 0 #FF9900; }
+
+    /* Card lift */
+    .card-lift { transition: box-shadow .2s, transform .2s; }
+    .card-lift:hover { box-shadow:0 8px 20px -8px rgba(10,44,61,.12); transform:translateY(-1px); }
+
+
+    /* Settings sidebar item */
+    .snav.active { background:#FDECEF; color:#DC183C; }
+    .snav.active i { color:#DC183C; }
+
+    /* Segmented control */
+    .seg.active { background:#0C1F31; color:#fff; }
+
+    /* Toggle switch */
+    .switch { width:42px; height:24px; border-radius:9999px; background:#CBD5E1; position:relative; transition:background .2s; flex:none; cursor:pointer; }
+    .switch::after { content:""; position:absolute; top:2px; left:2px; width:20px; height:20px; border-radius:9999px; background:#fff; box-shadow:0 1px 3px rgba(0,0,0,.25); transition:transform .2s; }
+    .switch.on { background:#29A37A; }
+    .switch.on::after { transform:translateX(18px); }
+    .switch.disabled { opacity:.45; cursor:not-allowed; }
+
+    /* Chip select (radio cards) */
+    .rcard { transition:border-color .15s, background-color .15s; cursor:pointer; }
+    .rcard.sel { border-color:#DC183C; background:#FDECEF; }
+
+    /* Overlays */
+    #overlay-root:empty { display:none; }
+    .ov { position:fixed; inset:0; z-index:60; }
+    .ov-bg { position:absolute; inset:0; background:rgba(12,31,49,.45); backdrop-filter:blur(2px); opacity:0; transition:opacity .3s; }
+    .ov.open .ov-bg { opacity:1; }
+    .drawer { position:absolute; right:0; top:0; height:100%; width:100%; max-width:440px; background:#fff; box-shadow:-12px 0 40px rgba(12,31,49,.25); overflow-y:auto; transform:translateX(100%); transition:transform .3s cubic-bezier(.2,.7,.2,1); }
+    .ov.open .drawer { transform:translateX(0); }
+
+    /* Dev Mode */
+    .dev-badge { display:none; }
+    body.dev-on .dev-badge { display:inline-flex; }
+    #devToggle.on { background:#DC183C; color:#fff; border-color:#DC183C; }
+
+      /* HEADER-SEARCH-CSS */
+    .search-overlay { position:absolute; inset:0; background:white; z-index:50; display:flex; align-items:center; justify-content:center; padding:0 1rem; opacity:0; pointer-events:none; transform:translateY(-10px); transition:all .3s cubic-bezier(.2,.8,.2,1); }
+    .search-overlay.active { opacity:1; pointer-events:auto; transform:translateY(0); }
+    @media (min-width:640px){ .search-overlay{ padding:0 1.5rem; } }
+</style>
+<script src="plan.js"></script>
+</head>
+<body class="bg-[#FCFCFC] text-[#121A21] font-inter">
+
+<!-- ============================ HEADER ============================ -->
+<header class="bg-white border-b border-slate-200 sticky top-0 z-40 shadow-sm relative">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+
+    <!-- Logo (Left) -->
+    <a href="public-home.html" class="flex items-center shrink-0 group mr-6 py-2">
+      <img src="assets/logo-v1-lockup.svg" alt="SME South Africa" class="h-[42px] lg:h-[50px] w-auto" />
+    </a>
+
+    <!-- Primary Navigation (Center - BuddyBoss Style) -->
+    <nav class="hidden md:flex items-center justify-center gap-1 flex-1 px-4 h-full">
+      <a href="member-hub.html" class="px-3 h-full text-[14px] font-semibold font-jakarta text-[#6A7581] hover:text-[#DC183C] border-b-[3px] border-transparent flex items-center gap-2 transition-colors"><i data-lucide="home" class="w-4 h-4"></i> Home</a>
+      <div class="relative h-full" onmouseleave="closeHeaderDrop('community')">
+        <button onclick="toggleHeaderDrop('community')" class="px-3 h-full text-[14px] font-semibold font-jakarta text-[#6A7581] hover:text-[#DC183C] border-b-[3px] border-transparent flex items-center gap-2 transition-colors">
+          <i data-lucide="users" class="w-4 h-4"></i> Community <i data-lucide="chevron-down" class="w-3.5 h-3.5 opacity-50"></i>
+        </button>
+        <div id="dropCommunity" class="hidden absolute left-0 top-full w-52 bg-white rounded-xl border border-slate-100 shadow-xl py-2 z-30">
+          <a href="members.html" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-[#DC183C] transition">Members</a>
+          <a href="groups.html" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-[#DC183C] transition">Groups</a>
+          <a href="forums.html" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-[#DC183C] transition">Forums</a>
+        </div>
+      </div>
+      <a href="member-account.html" class="px-3 h-full text-[14px] font-bold font-jakarta text-[#DC183C] border-b-[3px] border-[#DC183C] flex items-center gap-2 transition-colors"><i data-lucide="circle-user" class="w-4 h-4"></i> Account</a>
+    </nav>
+
+    <!-- Utility & Profile (Right) -->
+    <div class="flex items-center justify-end gap-4 shrink-0">
+
+      <!-- Search Trigger -->
+      <button onclick="toggleHeaderSearch()" class="text-slate-500 hover:text-[#121A21] transition-colors p-1.5" aria-label="Open search">
+        <i data-lucide="search" class="w-5 h-5"></i>
+      </button>
+
+      <div class="w-px h-6 bg-slate-200 hidden sm:block mx-1"></div>
+
+      <!-- Action Icons -->
+      <div class="hidden sm:flex items-center gap-2">
+        <button onclick="location.href='member-messages.html'" class="relative text-slate-500 hover:text-[#121A21] transition-colors p-1.5" aria-label="Messages">
+          <i data-lucide="inbox" class="w-5 h-5"></i>
+          <span class="absolute top-0 right-0 w-4 h-4 bg-[#DC183C] text-white text-[9px] font-bold rounded-full flex items-center justify-center ring-2 ring-white shadow-sm">1</span>
+        </button>
+        <button onclick="location.href='member-notifications.html'" class="relative text-slate-500 hover:text-[#121A21] transition-colors p-1.5" aria-label="Notifications">
+          <i data-lucide="bell" class="w-5 h-5"></i>
+          <span class="absolute top-0 right-0 w-4 h-4 bg-[#DC183C] text-white text-[9px] font-bold rounded-full flex items-center justify-center ring-2 ring-white shadow-sm">8</span>
+        </button>
+        <button class="relative text-slate-500 hover:text-[#121A21] transition-colors p-1.5" aria-label="Cart">
+          <i data-lucide="shopping-cart" class="w-5 h-5"></i>
+          <span class="absolute top-0 right-0 w-4 h-4 bg-[#DC183C] text-white text-[9px] font-bold rounded-full flex items-center justify-center ring-2 ring-white shadow-sm">4</span>
+        </button>
+      </div>
+
+      <!-- User Profile Dropdown -->
+      <div class="relative ml-1 sm:ml-2 cursor-pointer group">
+        <div class="flex items-center gap-3">
+          <span class="font-jakarta font-bold text-[15px] text-[#121A21] hidden md:block">Tshepho</span>
+          <div class="w-9 h-9 rounded-full bg-gradient-to-br from-[#DC183C] to-[#FF9900] grid place-items-center font-jakarta font-bold text-white text-xs ring-2 ring-white shadow-sm group-hover:scale-105 transition-transform">TJ</div>
+        </div>
+
+        <!-- Dropdown Menu -->
+        <div class="absolute right-0 top-full mt-3 w-64 bg-white rounded-xl shadow-xl border border-slate-100 overflow-hidden z-50 transform origin-top-right scale-95 opacity-0 pointer-events-none transition-all duration-200 group-hover:scale-100 group-hover:opacity-100 group-hover:pointer-events-auto">
+          <div class="p-4 border-b border-slate-100 flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-gradient-to-br from-[#DC183C] to-[#FF9900] grid place-items-center font-jakarta font-bold text-white text-sm shrink-0">TJ</div>
+            <div class="min-w-0">
+              <p class="font-jakarta font-bold text-sm text-[#121A21] truncate">Tshepho Joel</p>
+              <p class="text-xs text-slate-500 truncate">@tshephojoel</p>
+            </div>
+          </div>
+          <div class="p-2 text-sm text-slate-700 font-medium">
+            <a href="single-member.html" class="block px-3 py-2 rounded-lg hover:bg-slate-50 hover:text-[#DC183C] transition-colors">Profile</a>
+            <a href="member-account.html" class="block px-3 py-2 rounded-lg hover:bg-slate-50 hover:text-[#DC183C] transition-colors">Account Settings</a>
+            <a href="saved.html" class="block px-3 py-2 rounded-lg hover:bg-slate-50 hover:text-[#DC183C] transition-colors">Saved</a>
+            <a href="member-account.html" class="block px-3 py-2 rounded-lg hover:bg-slate-50 hover:text-[#DC183C] transition-colors flex items-center justify-between">Orders <span class="bg-slate-100 text-slate-500 text-[10px] font-bold px-2 py-0.5 rounded-full">4</span></a>
+          </div>
+          <div class="p-2 border-t border-slate-100">
+            <a href="public-home.html?as=visitor" class="block px-3 py-2 text-sm font-semibold text-[#DC183C] hover:bg-[#FDECEF] rounded-lg transition-colors">Sign Out</a>
+          </div>
+          <div class="px-5 py-3 border-t border-slate-100 bg-slate-50 flex items-center justify-between">
+            <span class="text-[10px] font-bold uppercase tracking-widest text-slate-500">Dev Mode</span>
+            <button id="devToggle" onclick="toggleDevMode()" class="w-8 h-4 rounded-full bg-slate-200 relative transition-colors focus:outline-none" aria-pressed="false">
+              <span class="absolute left-0.5 top-0.5 w-3 h-3 rounded-full bg-white shadow-sm transition-transform duration-200"></span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Full Header Search Overlay -->
+  <div id="headerSearchOverlay" class="search-overlay">
+    <div class="w-full max-w-4xl flex items-center gap-4">
+      <div class="relative flex-1">
+        <i data-lucide="search" class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500"></i>
+        <input type="text" id="headerSearchInput" placeholder="Search members, groups, forums..." class="w-full h-12 pl-12 pr-4 text-base bg-slate-50 border border-[#DC183C] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#DC183C]/20 transition-all shadow-sm">
+      </div>
+      <button onclick="toggleHeaderSearch()" class="text-slate-500 hover:text-[#121A21] p-2 transition-colors shrink-0" aria-label="Close search">
+        <i data-lucide="x" class="w-6 h-6"></i>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- Mobile bottom tab bar, Home / Connect / Events / Account -->
+<nav aria-label="Quick nav" class="lg:hidden fixed bottom-0 inset-x-0 z-40 bg-white border-t border-[#E7EBEF] shadow-[0_-4px_16px_-4px_rgba(12,31,49,0.08)]" style="padding-bottom:env(safe-area-inset-bottom)">
+  <div class="grid grid-cols-4">
+    <a href="member-hub.html" class="flex flex-col items-center justify-center gap-1 py-2.5 text-slate-500 hover:text-[#121A21] transition">
+      <i data-lucide="home" class="w-5 h-5"></i>
+      <span class="font-jakarta text-[11px] font-bold">Home</span>
+    </a>
+    <a href="members.html" class="flex flex-col items-center justify-center gap-1 py-2.5 text-slate-500 hover:text-[#121A21] transition">
+      <i data-lucide="users" class="w-5 h-5"></i>
+      <span class="font-jakarta text-[11px] font-bold">Connect</span>
+    </a>
+    <a href="events.html" class="flex flex-col items-center justify-center gap-1 py-2.5 text-slate-500 hover:text-[#121A21] transition">
+      <i data-lucide="calendar-days" class="w-5 h-5"></i>
+      <span class="font-jakarta text-[11px] font-bold">Events</span>
+    </a>
+    <a href="member-account.html" class="relative flex flex-col items-center justify-center gap-1 py-2.5 text-[#DC183C]">
+      <span class="absolute top-0 left-1/2 -translate-x-1/2 w-8 h-0.5 rounded-full bg-[#DC183C]"></span>
+      <i data-lucide="circle-user" class="w-5 h-5"></i>
+      <span class="font-jakarta text-[11px] font-bold">Account</span>
+    </a>
+  </div>
+</nav>
+
+<!-- ============================ SCREEN B: ACCOUNT SETTINGS ============================ -->
+<main>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 pt-4 sm:pt-6 pb-6">
+    <!-- LinkedIn style (Joel, 14 Oct, live CL-436): the member's round photo next to a big title, the module close under the header -->
+    <div class="mb-3 flex flex-wrap items-center gap-2 text-xs" role="group" aria-label="Viewing as">
+      <span class="font-bold uppercase tracking-widest text-slate-500 mr-1">Viewing as</span>
+      <button data-st="filled" onclick="setState('filled')" class="min-h-[44px] px-4 rounded-full border border-slate-200 bg-white text-sm font-bold">Filled</button>
+      <button data-st="empty" onclick="setState('empty')" class="min-h-[44px] px-4 rounded-full border border-slate-200 bg-white text-sm font-bold">Empty</button>
+      <button data-st="removed" onclick="setState('removed')" class="min-h-[44px] px-4 rounded-full border border-slate-200 bg-white text-sm font-bold">Just removed</button>
+      <button data-st="visitor" onclick="setState('visitor')" class="min-h-[44px] px-4 rounded-full border border-slate-200 bg-white text-sm font-bold">Visitor sign in sheet</button>
+    </div>
+    <div class="mb-4 sm:mb-5 flex items-center gap-3">
+      <div id="settings-photo" class="shrink-0"></div>
+      <h1 class="font-jakarta font-extrabold text-[26px] sm:text-[30px] leading-none text-[#121A21] tracking-tight">Account Settings</h1>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-6">
+      <!-- Settings sidebar -->
+      <aside class="lg:col-span-3">
+        <div class="lg:sticky lg:top-24">
+          <nav id="settings-nav" aria-label="Account Settings" class="bg-white rounded-2xl border border-slate-100 p-2 flex lg:flex-col gap-1 overflow-x-auto no-scrollbar lg:max-h-[calc(100vh-7rem)] lg:overflow-y-auto"></nav>
+        </div>
+      </aside>
+
+      <!-- Settings content -->
+      <section class="lg:col-span-9 min-w-0">
+        <div id="settings-content"></div>
+      </section>
+    </div>
+  </div>
+</main>
+
+<!-- ===================== COMMUNITY FOOTER ===================== -->
+<footer class="bg-white border-t border-slate-200 mt-auto">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-5 flex flex-col sm:flex-row items-center justify-between gap-3">
+    <div class="flex items-center gap-2 text-xs text-slate-500">
+      <span>&copy; 2026 SME South Africa</span>
+      <span class="text-slate-500">&middot;</span>
+      <span class="font-bold text-slate-500 uppercase tracking-widest text-[10px]">Community</span>
+      <button onclick="openBrief('footer')" class="dev-badge w-4 h-4 rounded-full bg-[#DC183C] text-white items-center justify-center text-[9px] font-bold leading-none animate-pulse" title="Implementation notes">i</button>
+    </div>
+    <nav class="flex items-center gap-5 text-xs font-semibold text-slate-500">
+      <a href="public-about.html" class="hover:text-[#DC183C] transition-colors">About</a>
+      <a href="public-help.html" class="hover:text-[#DC183C] transition-colors">Help Centre</a>
+      <a href="public-terms.html" class="hover:text-[#DC183C] transition-colors">Terms</a>
+      <a href="public-privacy.html" class="hover:text-[#DC183C] transition-colors">Privacy</a>
+    </nav>
+  </div>
+</footer>
+
+
+<div class="lg:hidden" style="height:calc(64px + env(safe-area-inset-bottom))"></div>
+
+<div id="visitor-sheet" class="hidden fixed inset-0 z-[70]" role="dialog" aria-modal="true" aria-labelledby="vs-title">
+  <div class="absolute inset-0 bg-[#0C1F31]/50 backdrop-blur-[2px]"></div>
+  <div class="absolute inset-x-0 bottom-0 sm:inset-0 sm:grid sm:place-items-center pointer-events-none">
+    <div class="pointer-events-auto bg-white rounded-t-3xl sm:rounded-3xl shadow-2xl w-full sm:max-w-md p-6 pb-8 sm:pb-6">
+      <div class="w-10 h-1 rounded-full bg-slate-200 mx-auto mb-4 sm:hidden"></div>
+      <div class="w-12 h-12 rounded-full bg-[#FDECEF] text-[#DC183C] grid place-items-center"><i data-lucide="bookmark" class="w-5 h-5"></i></div>
+      <h2 id="vs-title" class="font-jakarta font-extrabold text-xl mt-3">Sign in to see what you saved</h2>
+      <p class="text-sm text-slate-600 mt-1.5">Your saved articles, guides, events and more are kept on your account, so they follow you to every device.</p>
+      <a href="public-auth.html" class="mt-5 flex items-center justify-center h-12 rounded-xl bg-[#DC183C] text-white font-jakarta font-extrabold text-sm hover:bg-[#B8112F]">Sign in</a>
+      <a href="public-auth.html" class="mt-2 flex items-center justify-center h-12 rounded-xl border border-slate-200 font-jakarta font-bold text-sm text-[#121A21] hover:border-[#0C1F31]">Join SME South Africa</a>
+      <button onclick="setState('filled')" class="mt-2 w-full min-h-[44px] text-sm font-semibold text-slate-500">Not now</button>
+    </div>
+  </div>
+</div>
+<div id="overlay-root"></div>
+<div id="toast" class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-50"></div>
+
+<script>
+function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+function monogram(initials, size=44){
+  const fs = Math.max(10, Math.floor(size*0.38));
+  return `<div class="rounded-full bg-gradient-to-br from-[#DC183C] to-[#FF9900] grid place-items-center font-jakarta font-bold text-white shrink-0" style="width:${size}px;height:${size}px;font-size:${fs}px">${esc(initials)}</div>`;
+}
+const SETTINGS_NAV = [
+  /* Live order (14 Oct 2026): account items, then FUNDING, EVENTS and LEARN. No Membership tab (no Premium upsell) and no
+     "My applications" tab: the applications log is the "Your applications" section inside Funding (Joel, 13 Oct). */
+  { id:'login',         label:'Login Information', icon:'key-round' },
+  { id:'profile',       label:'Profile',        icon:'user-round' },
+  { id:'newsletter',    label:'Newsletter',     icon:'mail-open' },
+  { id:'orders',        label:'My Orders',      icon:'shopping-bag' },
+  { id:'invites',       label:'Group Invites',  icon:'mail-plus' },
+  { id:'notifications', label:'Notification Preferences', icon:'bell' },
+  { id:'privacy',       label:'Privacy',        icon:'eye' },
+  { id:'export',        label:'Export Data',    icon:'file-down' },
+  { id:'blocked',       label:'Blocked Members',icon:'user-x' },
+  { id:'scheduled',     label:'Scheduled Posts',icon:'calendar-clock' },
+  { id:'saved',         label:'Saved',          icon:'bookmark' },
+  { id:'funding',       label:'Funding',        icon:'hand-coins', group:'Funding' },
+  { id:'calculator',    label:'Loan calculator',icon:'calculator' },
+  { id:'events',        label:'Events',         icon:'calendar-days', group:'Events' },
+  { id:'guides',        label:'Guides',         icon:'book-open', group:'Learn' },
+  { id:'podcast',       label:'Podcast',        icon:'mic' },
+  { id:'stories',       label:'Founder stories',icon:'sparkles' },
+  { id:'library',       label:'Library',        icon:'folder-open' }
+];
+const HAS_ORDERS = /[?&]orders=1\b/.test(location.search);
+function settingsNav(){ return SETTINGS_NAV.filter(s => s.id !== 'orders' || HAS_ORDERS); }
+function renderSettingsNav(){
+  document.getElementById('settings-nav').innerHTML = settingsNav().map(s=>`${s.group?`<p class="hidden lg:block px-3.5 pt-4 pb-1 text-[10px] font-bold uppercase tracking-widest text-slate-400">${s.group}</p><span class="lg:hidden w-px self-stretch my-2 bg-slate-200 shrink-0" aria-hidden="true"></span>`:''}
+    <button data-sid="${s.id}" ${s.id==='saved'?'aria-current="page"':''} onclick="${s.id==='saved'?'':`location.href='member-account.html#${s.id}'`}" class="snav ${s.id==='saved'?'active':'text-slate-600 hover:bg-slate-50'} shrink-0 lg:w-full flex items-center gap-3 px-3.5 min-h-[44px] rounded-xl text-sm font-semibold text-left whitespace-nowrap transition"><i data-lucide="${s.icon}" class="w-[18px] h-[18px] shrink-0"></i>${s.label}</button>`).join('');
+  const el=document.querySelector('#settings-nav [data-sid="saved"]');
+  if(el && window.innerWidth < 1024){ const nav=document.getElementById('settings-nav'); const nr=nav.getBoundingClientRect(), r=el.getBoundingClientRect(); nav.scrollLeft += (r.left-nr.left)-(nr.width-r.width)/2; }
+}
+
+/* ===================== SAVED DATA (sample, newest first) ===================== */
+const PAGE_SIZE = 12;
+const TY = {
+  article:    { chip:'Articles',    label:'Article',         icon:'newspaper',          tint:'#DC183C', href:'public-article.html',         empty:'Insights',  emptyHref:'public-articles.html' },
+  guide:      { chip:'Guides',      label:'Guide',           icon:'book-open',          tint:'#29A37A', href:'public-guide.html',           empty:'Guides',    emptyHref:'public-guides.html' },
+  resource:   { chip:'Resources',   label:'Resource',        icon:'folder-open',        tint:'#AE6B0A', href:'public-resource.html',        empty:'Resources', emptyHref:'public-resources.html' },
+  event:      { chip:'Events',      label:'Event',           icon:'calendar-days',      tint:'#0C1F31', href:'event-single-online.html',    empty:'Events',    emptyHref:'events.html' },
+  podcast:    { chip:'Podcast',     label:'Podcast episode', icon:'mic',                tint:'#7C3AED', href:'public-podcast-episode.html', empty:'Podcast',   emptyHref:'podcast.html' },
+  discussion: { chip:'Discussions', label:'Discussion',      icon:'messages-square',    tint:'#0369A1', href:'single-discussion.html',      empty:'Forums',    emptyHref:'forums.html' },
+  post:       { chip:'Posts',       label:'Post',            icon:'rss',                tint:'#C2410C', href:'single-post.html',            empty:'Feed',      emptyHref:'member-hub.html' }
+};
+const ORDER = ['article','guide','resource','event','podcast','discussion','post'];
+const SAMPLE = [
+  {id:'e1', t:'event',      title:'Funding Fridays: Getting Loan Ready in 30 Minutes', meta:'Online, 24 Oct 2026', saved:'15 Oct 2026', img:'assets/article-3.jpg'},
+  {id:'a1', t:'article',    title:'Marketplaces Help Scale, But Only When Done Right', meta:'', saved:'15 Oct 2026', img:'assets/article-1.jpg'},
+  {id:'d1', t:'discussion', title:'How do you price a quote when load shedding eats your hours?', meta:'In Operations forum', saved:'14 Oct 2026', av:'LM'},
+  {id:'g1', t:'guide',      title:'The Small Business VAT Registration Guide', meta:'', saved:'14 Oct 2026', img:'assets/article-5.jpg'},
+  {id:'p1', t:'podcast',    title:'Demystifying Government Funding with Sedfa', meta:'', saved:'13 Oct 2026'},
+  {id:'r1', t:'resource',   title:'Proof of Income Template for Self-Employed Applicants', meta:'', saved:'13 Oct 2026', img:'assets/article-2.jpg'},
+  {id:'o1', t:'post',       title:'Just landed our first municipal tender. Here is what I wish I knew', meta:'By Naledi M.', saved:'12 Oct 2026', av:'NM'},
+  {id:'a2', t:'article',    title:'Five Cash Flow Habits That Keep Spaza Shops Open', meta:'', saved:'11 Oct 2026', img:'assets/article-4.jpg'},
+  {id:'e2', t:'event',      title:'Meet the Funders: Cape Town Breakfast', meta:'Cape Town, 7 Nov 2026', saved:'10 Oct 2026', img:'assets/article-6.jpg'},
+  {id:'g2', t:'guide',      title:'How to Write a Business Plan a Bank Will Read', meta:'', saved:'9 Oct 2026', img:'assets/article-7.jpg'},
+  {id:'a3', t:'article',    title:'What Lenders Look At Before They Say Yes', meta:'', saved:'8 Oct 2026', img:'assets/article-8.jpg'},
+  {id:'p2', t:'podcast',    title:'From Side Hustle to Supplier: A Founder Story', meta:'', saved:'7 Oct 2026'},
+  {id:'r2', t:'resource',   title:'12 Month Cash Flow Forecast Sheet', meta:'', saved:'5 Oct 2026', img:'assets/article-1.jpg'},
+  {id:'d2', t:'discussion', title:'Which accounting package are you using after 1 March?', meta:'In Finance forum', saved:'3 Oct 2026', av:'TK'}
+];
+const qs = new URLSearchParams(location.search);
+let STATE = ['filled','empty','removed','visitor'].includes(qs.get('state')) ? qs.get('state') : 'filled';
+let ITEMS = [], GROUP = 'all', PAGE = 1, UNDO = null, TOAST_T = null;
+function load(){
+  ITEMS = STATE==='empty' ? [] : SAMPLE.map(x=>({...x}));
+  GROUP='all'; PAGE=1; UNDO=null;
+  if(STATE==='removed'){ const i=ITEMS.findIndex(x=>x.id==='a1'); UNDO={item:ITEMS[i], index:i}; ITEMS.splice(i,1); }
+}
+function counts(){ const c={all:ITEMS.length}; ORDER.forEach(k=>c[k]=ITEMS.filter(x=>x.t===k).length); return c; }
+
+function thumb(x){
+  const T=TY[x.t];
+  if(x.img) return `<img src="${x.img}" alt="" class="w-full h-full object-cover" loading="lazy">`;
+  if(x.av) return `<div class="w-full h-full grid place-items-center bg-slate-100">${monogram(x.av,44)}</div>`;
+  return `<div class="w-full h-full grid place-items-center bg-slate-100"><i data-lucide="${T.icon}" class="w-8 h-8 text-slate-400"></i></div>`;
+}
+function card(x){
+  const T=TY[x.t];
+  return `<article data-id="${x.id}" class="relative bg-white rounded-2xl border border-slate-100 hover:border-slate-200 hover:shadow-[0_8px_24px_rgba(12,31,49,.08)] transition flex gap-3 sm:gap-4 p-3 sm:p-4 reveal">
+    <a href="${T.href}" class="relative shrink-0 w-24 h-24 sm:w-28 sm:h-28 rounded-xl overflow-hidden block bg-slate-100" aria-hidden="true" tabindex="-1">${thumb(x)}</a>
+    <div class="min-w-0 flex-1 pr-11">
+      <p class="text-[11px] font-bold uppercase tracking-widest flex items-center gap-1.5" style="color:${T.tint}"><i data-lucide="${T.icon}" class="w-3.5 h-3.5"></i>${T.label}</p>
+      <h3 class="font-jakarta font-bold text-[15px] sm:text-base leading-snug text-[#121A21] mt-1 line-clamp-3 sm:line-clamp-2"><a href="${T.href}" class="hover:text-[#DC183C]">${esc(x.title)}</a></h3>
+      <p class="text-xs text-slate-500 mt-1.5">${x.meta?esc(x.meta)+' &middot; ':''}Saved ${x.saved}</p>
+    </div>
+    <button onclick="removeItem('${x.id}')" aria-label="Remove from Saved: ${esc(x.title)}" title="Remove from Saved" class="absolute top-1 right-1 w-11 h-11 grid place-items-center rounded-full text-[#DC183C] hover:bg-[#FDECEF] transition"><i data-lucide="bookmark" class="w-5 h-5 fill-[#DC183C]"></i></button>
+  </article>`;
+}
+function chip(key,label,n){
+  const on=GROUP===key;
+  return `<button onclick="setGroup('${key}')" aria-pressed="${on}" class="shrink-0 inline-flex items-center gap-2 min-h-[44px] px-4 rounded-full border text-sm font-jakarta font-bold whitespace-nowrap transition ${on?'bg-[#0C1F31] text-white border-[#0C1F31]':'bg-white text-[#121A21] border-slate-200 hover:border-[#0C1F31]'}">${label}<span class="min-w-[22px] h-[22px] px-1.5 rounded-full text-[11px] grid place-items-center ${on?'bg-white/20 text-white':'bg-slate-100 text-slate-600'}">${n}</span></button>`;
+}
+function pager(page,pages,total){
+  if(pages<=1) return total?`<p class="text-sm text-slate-500 text-center mt-5">Showing 1 to ${total} of ${total}</p>`:'';
+  const start=(page-1)*PAGE_SIZE+1, end=Math.min(total,page*PAGE_SIZE);
+  let nums=[]; for(let n=1;n<=pages;n++){ if(n===1||n===pages||Math.abs(n-page)<=2) nums.push(n); else if(nums[nums.length-1]!=='…') nums.push('…'); }
+  const num=n=>n==='…'?`<span class="w-11 h-11 grid place-items-center text-slate-400">…</span>`:`<button onclick="setPage(${n})" class="w-11 h-11 rounded-xl text-sm font-bold ${n===page?'bg-[#DC183C] text-white':'bg-white border border-slate-200 text-[#121A21] hover:border-[#0C1F31]'}" ${n===page?'aria-current="page"':''}>${n}</button>`;
+  const nav=(lbl,p,dis,icon,after)=>`<button ${dis?'disabled':''} onclick="setPage(${p})" class="flex-1 sm:flex-none inline-flex items-center justify-center gap-1 h-11 px-5 rounded-xl border border-slate-200 bg-white text-sm font-bold ${dis?'text-slate-300 cursor-not-allowed':'text-[#121A21] hover:border-[#0C1F31]'}">${after?'':`<i data-lucide="${icon}" class="w-4 h-4"></i>`}${lbl}${after?`<i data-lucide="${icon}" class="w-4 h-4"></i>`:''}</button>`;
+  return `<div class="mt-6 pt-5 border-t border-slate-100"><p class="text-sm text-slate-500 text-center">Showing <b class="text-[#121A21]">${start} to ${end}</b> of ${total}</p>
+    <div class="mt-3 flex flex-wrap items-center justify-center gap-2">
+      <span class="order-2 sm:order-1 w-[calc(50%-4px)] sm:w-auto flex">${nav('Previous',page-1,page===1,'chevron-left',false)}</span>
+      <span class="order-1 sm:order-2 w-full sm:w-auto flex flex-wrap justify-center gap-1.5">${nums.map(num).join('')}</span>
+      <span class="order-3 w-[calc(50%-4px)] sm:w-auto flex">${nav('Next',page+1,page===pages,'chevron-right',true)}</span></div></div>`;
+}
+function emptyBlock(){
+  const all = GROUP==='all', T=TY[GROUP];
+  const links = all ? ORDER.map(k=>TY[k]).filter(t=>['Insights','Guides','Resources','Events','Podcast','Forums'].includes(t.empty)) : [T];
+  return `<div class="bg-white rounded-2xl border border-slate-100 px-5 py-12 text-center">
+    <div class="w-14 h-14 rounded-full bg-[#FDECEF] text-[#DC183C] grid place-items-center mx-auto"><i data-lucide="bookmark" class="w-6 h-6"></i></div>
+    <h3 class="font-jakarta font-extrabold text-lg mt-4">${all?'Nothing saved yet':'No saved '+T.chip.toLowerCase()+' yet'}</h3>
+    <p class="text-sm text-slate-600 mt-1.5 max-w-md mx-auto">${all?'Tap the Save button on an article, guide, resource, event, podcast episode, discussion or post and it will wait for you here.':'Tap Save on a '+T.label.toLowerCase()+' and it will show up here.'}</p>
+    <div class="mt-5 flex flex-wrap justify-center gap-2">${links.map(t=>`<a href="${t.emptyHref}" class="inline-flex items-center gap-2 min-h-[44px] px-4 rounded-xl border border-slate-200 hover:border-[#0C1F31] font-jakarta font-bold text-sm text-[#121A21]"><i data-lucide="${t.icon}" class="w-4 h-4"></i>Browse ${t.empty}</a>`).join('')}</div>
+  </div>`;
+}
+function renderToast(){
+  const host=document.getElementById('toast'); clearTimeout(TOAST_T);
+  if(!UNDO){ host.className='hidden'; host.innerHTML=''; return; }
+  host.className='fixed left-1/2 -translate-x-1/2 z-[55] toast-in w-[calc(100%-32px)] sm:w-auto max-w-md bottom-[84px] lg:bottom-6';
+  host.setAttribute('role','status');
+  host.innerHTML=`<div class="flex items-center gap-3 bg-[#0C1F31] text-white rounded-xl shadow-xl pl-4 pr-1.5 py-1.5"><i data-lucide="bookmark-minus" class="w-4 h-4 shrink-0"></i><span class="text-sm font-semibold flex-1">Removed.</span><button onclick="undo()" class="min-h-[44px] px-4 rounded-lg text-sm font-jakarta font-extrabold text-[#FF9900] hover:bg-white/10">Undo</button></div>`;
+  if(STATE!=='removed') TOAST_T=setTimeout(()=>{ UNDO=null; renderToast(); },6000);
+}
+function render(){
+  document.querySelectorAll('[data-st]').forEach(b=>{ const on=b.dataset.st===STATE; b.classList.toggle('seg',true); b.classList.toggle('active',on); b.setAttribute('aria-pressed',on); });
+  const host=document.getElementById('settings-content');
+  const c=counts(), list=GROUP==='all'?ITEMS:ITEMS.filter(x=>x.t===GROUP);
+  const pages=Math.max(1,Math.ceil(list.length/PAGE_SIZE)); PAGE=Math.min(PAGE,pages);
+  const slice=list.slice((PAGE-1)*PAGE_SIZE,PAGE*PAGE_SIZE);
+  host.innerHTML=`
+    <div class="mb-4 flex items-center gap-2"><h2 class="font-jakarta font-extrabold text-[22px] sm:text-2xl tracking-tight">Saved</h2>
+      <button onclick="openBrief('saved')" class="dev-badge w-4 h-4 rounded-full bg-[#DC183C] text-white items-center justify-center text-[9px] font-bold leading-none animate-pulse" title="Implementation notes">i</button></div>
+    <p class="text-sm text-slate-600 -mt-2 mb-4">Articles, guides, resources, events, podcast episodes, discussions and posts you kept for later. Only you can see this list.</p>
+    <div class="-mx-4 px-4 sm:mx-0 sm:px-0 overflow-x-auto no-scrollbar flex gap-2 pb-1" role="group" aria-label="Filter saved items">
+      ${chip('all','All',c.all)}${ORDER.map(k=>chip(k,TY[k].chip,c[k])).join('')}
+    </div>
+    <div class="mt-4">${list.length?`<div class="grid xl:grid-cols-2 gap-3 sm:gap-4">${slice.map(card).join('')}</div>${pager(PAGE,pages,list.length)}`:emptyBlock()}</div>`;
+  renderToast(); lucide.createIcons();
+  document.getElementById('visitor-sheet').classList.toggle('hidden', STATE!=='visitor');
+}
+function setGroup(g){ GROUP=g; PAGE=1; render(); }
+function setPage(p){ PAGE=p; render(); window.scrollTo({top:0,behavior:'smooth'}); }
+function removeItem(id){ const i=ITEMS.findIndex(x=>x.id===id); if(i<0) return; UNDO={item:ITEMS[i],index:i}; ITEMS.splice(i,1); render(); }
+function undo(){ if(!UNDO) return; ITEMS.splice(UNDO.index,0,UNDO.item); UNDO=null; if(STATE==='removed') STATE='filled'; render(); }
+function setState(s){ STATE=s; try{ history.replaceState(null,'','?state='+s); }catch(_){} load(); render(); window.scrollTo({top:0}); }
+
+/* ===================== DEV MODE + NOTES ===================== */
+const BRIEFS = {
+  saved:{ title:'Saved screen', sub:'Account Settings > Saved (Local: /community/account/#saved)',
+    purpose:'One private list of everything a member kept for later: articles, guides, resources, events, podcast episodes, forum discussions and feed posts. Reached from Account Settings > Saved and the Saved entry in the Me menu. Nobody else can see it.',
+    data:'Table <code>smesa_saved</code>: id, user_id, <b>object_type</b> (post, sme-guides, sme_resources, events, event-library, podcast, discussion, activity), <b>object_id</b>, created_at (UTC), removed_at. Unique on (user_id, object_type, object_id). Remove is soft, so Undo within 15 minutes keeps the place. Maximum 1000 active saves per member.',
+    logic:'REST <code>smesa/v1/saved</code> (signed in only, own rows only, no-store). <code>GET ?group=&amp;page=</code> returns 12 per page, newest first, with the member\'s own count per type for the chips. <code>POST {id|url, saved?}</code> sets or toggles. <code>GET /saved/keys</code> returns own saved ids so cards and buttons show the filled bookmark. Writes are rate limited to 60 per 10 minutes. Visitors get 401 and see the Sign in to save sheet. Counts are only ever the member\'s own and are never shown publicly.',
+    specs:'Chips: All, Articles, Guides, Resources, Events, Podcast, Discussions, Posts (own counts). Card thumbnail 96 px phone, 112 px laptop; type label, title (3 lines phone, 2 laptop), saved date. Remove button 44 x 44. Pager: 12 per page, same pager as the other Account Settings lists.',
+    components:'Type chips, saved card, remove with Undo toast (6 seconds), empty state with links, pager, visitor sheet.' },
+  footer:{ title:'Community Footer', sub:'Shared app-shell component', purpose:'The closing utility bar for every logged-in community screen.', data:'Static link list.', logic:'None.', components:'Footer row.' }
+};
+function closeOverlay(id){ const o=document.getElementById(id); if(o) o.remove(); }
+function toggleDevMode(){ const on=document.body.classList.toggle('dev-on'); const b=document.getElementById('devToggle'); if(b) b.classList.toggle('on',on); }
+function openBrief(id){
+  const b=BRIEFS[id]; if(!b) return;
+  const sec=(icon,label,html)=>`<div class="px-6 py-4 border-t border-slate-100"><p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] flex items-center gap-1.5 mb-2"><i data-lucide="${icon}" class="w-3.5 h-3.5"></i>${label}</p><div class="text-sm text-slate-600 leading-relaxed">${html}</div></div>`;
+  document.getElementById('overlay-root').innerHTML=`<div class="ov open" id="ov-brief"><div class="ov-bg" onclick="closeOverlay('ov-brief')"></div><div class="drawer">
+    <div class="sticky top-0 z-10 bg-[#0C1F31] text-white px-6 py-5 flex items-start justify-between"><div class="min-w-0"><p class="text-[10px] font-bold uppercase tracking-widest text-[#FF9900] mb-1">Dev Brief</p><h3 class="font-jakarta font-extrabold text-lg leading-tight">${b.title}</h3><p class="text-xs text-white/60 mt-1">${b.sub}</p></div><button onclick="closeOverlay('ov-brief')" aria-label="Close" class="text-white/60 hover:text-white shrink-0 ml-3 w-11 h-11 grid place-items-center"><i data-lucide="x" class="w-5 h-5"></i></button></div>
+    ${sec('target','Purpose',b.purpose)}${sec('database','Data model',b.data)}${sec('git-branch','Logic',b.logic)}${b.specs?sec('ruler','Spec values',b.specs):''}${sec('boxes','Components',b.components)}</div></div>`;
+  lucide.createIcons();
+}
+document.addEventListener('keydown',e=>{ if(e.key==='Escape') document.querySelectorAll('.ov.open').forEach(o=>o.remove()); });
+
+document.getElementById('settings-photo').innerHTML = monogram('NM', window.innerWidth<640?48:56);
+renderSettingsNav(); load(); render();
+  /* HEADER-SEARCH-JS */
+  function toggleHeaderSearch(){
+    var o=document.getElementById('headerSearchOverlay'); if(!o) return;
+    var open=o.classList.toggle('active');
+    var i=document.getElementById('headerSearchInput');
+    if(open){ if(i) setTimeout(function(){ i.focus(); },100); } else if(i){ i.value=''; }
+  }
+    function toggleHeaderDrop(name){
+    var el = document.getElementById("drop" + name.charAt(0).toUpperCase() + name.slice(1));
+    if (el) el.classList.toggle("hidden");
+  }
+  function closeHeaderDrop(name){
+    var el = document.getElementById("drop" + name.charAt(0).toUpperCase() + name.slice(1));
+    if (el) el.classList.add("hidden");
+  }
+  document.addEventListener("click", function(e){
+    if(!e.target.closest("#dropCommunity") && !e.target.closest("[onclick*=toggleHeaderDrop]")) closeHeaderDrop("community");
+  });
+  document.addEventListener('keydown', function(e){ if(e.key==='Escape'){ var o=document.getElementById('headerSearchOverlay'); if(o&&o.classList.contains('active')) toggleHeaderSearch(); closeHeaderDrop('community'); } });
+
+</script>
+<script>window.SME_MEMBER_PAGE=true;</script>
+<script src="member-chrome.js"></script>
+</body>
+</html>

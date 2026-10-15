@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en-ZA">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Mini player | SME HUB app</title>
+  <meta name="description" content="SME South Africa app: the podcast and guide-audio mini player docked above the bottom bar, expanding to a full player." />
+  <meta name="theme-color" content="#0C1F31" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  <script>tailwind.config = { theme: { extend: { fontFamily: { jakarta: ['Plus Jakarta Sans', 'sans-serif'], inter: ['Inter', 'system-ui', 'sans-serif'] } } } };</script>
+  <style>
+    html, body { font-family: 'Inter', system-ui, sans-serif; }
+    .font-jakarta { font-family: 'Plus Jakarta Sans', sans-serif; letter-spacing: 0.005em; }
+    #mini { position:fixed; left:0; right:0; bottom:calc(64px + env(safe-area-inset-bottom)); z-index:39; }
+    .ov { position:fixed; inset:0; z-index:70; }
+    .ov-bg { position:absolute; inset:0; background:rgba(12,31,49,.5); opacity:0; transition:opacity .3s; } .ov.open .ov-bg { opacity:1; }
+    .sheet { position:absolute; left:0; right:0; bottom:0; top:24px; overflow-y:auto; background:linear-gradient(180deg,#16324A 0%,#0C1F31 60%); color:#fff; border-radius:24px 24px 0 0; transform:translateY(100%); transition:transform .32s cubic-bezier(.2,.7,.2,1); padding-bottom:env(safe-area-inset-bottom); }
+    .ov.open .sheet { transform:none; }
+    input[type=range].scrub { -webkit-appearance:none; appearance:none; width:100%; height:44px; background:transparent; }
+    input[type=range].scrub::-webkit-slider-runnable-track { height:4px; border-radius:4px; background:linear-gradient(90deg,#fff var(--p,38%),rgba(255,255,255,.25) var(--p,38%)); }
+    input[type=range].scrub::-webkit-slider-thumb { -webkit-appearance:none; width:16px; height:16px; border-radius:999px; background:#fff; margin-top:-6px; }
+  </style>
+</head>
+<body class="bg-[#FCFCFC] text-[#121A21] antialiased">
+<header></header>
+<div id="app-root"></div>
+<script src="app-mockup-kit.js"></script>
+<script>
+  const EP = { kind:'SME Podcast', n:12, title:'Demystifying Government Funding with Sedfa’s Don Mashele', who:'Don Mashele', clock:'46:58', at:'17:52', p:38, link:'public-podcast-episode.html' };
+  const GUIDE = { kind:'Guide audio', title:'How to register your business for VAT', who:'Listen to this guide', clock:'12:40', at:'03:05', p:24, link:'public-guide.html' };
+  let playing = true;
+  function cover(size, item){ return `<span class="rounded-xl bg-gradient-to-br from-[#DC183C] to-[#592D3A] grid place-items-center shrink-0 text-white" style="width:${size}px;height:${size}px"><i data-lucide="${item.kind === 'Guide audio' ? 'book-open' : 'mic'}" style="width:${Math.round(size * .45)}px;height:${Math.round(size * .45)}px"></i></span>`; }
+  function mini(item){
+    return `<div id="mini"><div class="relative mx-2 mb-1.5 bg-[#0C1F31] text-white rounded-2xl shadow-[0_10px_28px_-8px_rgba(12,31,49,.6)] overflow-hidden" role="region" aria-label="Now playing">
+      <span class="absolute top-0 left-0 h-[3px] bg-[#DC183C]" style="width:${item.p}%"></span>
+      <div class="flex items-center gap-2 pl-2 pr-1 py-2">
+        <button type="button" onclick="openFull()" class="flex items-center gap-3 flex-1 min-w-0 text-left min-h-[44px]" aria-label="Open the player">${cover(44, item)}<span class="min-w-0"><span class="block text-[13.5px] font-bold truncate">${item.title}</span><span class="block text-[12px] text-white/65 truncate">${item.kind}${item.n ? ' · Episode ' + item.n : ''}</span></span></button>
+        <button type="button" onclick="togglePlay()" class="play w-11 h-11 rounded-full grid place-items-center hover:bg-white/10" aria-label="${playing ? 'Pause' : 'Play'}"><i data-lucide="${playing ? 'pause' : 'play'}" class="w-6 h-6 fill-current"></i></button>
+        <button type="button" onclick="closeMini()" class="w-11 h-11 rounded-full grid place-items-center text-white/70 hover:bg-white/10" aria-label="Stop and close the player"><i data-lucide="x" class="w-5 h-5"></i></button>
+      </div></div></div>`;
+  }
+  function full(item){
+    return `<div class="ov" id="ov-full"><div class="ov-bg" onclick="closeFull()"></div><div class="sheet" role="dialog" aria-modal="true" aria-label="Player">
+      <div class="flex items-center justify-between px-3 pt-2"><button type="button" onclick="closeFull()" aria-label="Make the player small" class="w-11 h-11 grid place-items-center rounded-full hover:bg-white/10"><i data-lucide="chevron-down" class="w-6 h-6"></i></button><p class="text-[12px] font-bold uppercase tracking-widest text-white/60">${item.kind}</p><button type="button" aria-label="Share" class="w-11 h-11 grid place-items-center rounded-full hover:bg-white/10"><i data-lucide="share-2" class="w-5 h-5"></i></button></div>
+      <div class="px-6 pt-4 pb-8 max-w-md mx-auto">
+        <div class="mx-auto w-full max-w-[280px] aspect-square">${cover(280, item).replace('rounded-xl', 'rounded-3xl w-full h-full shadow-2xl').replace(/width:280px;height:280px/, '')}</div>
+        <p class="font-jakarta font-extrabold text-[20px] leading-snug mt-6">${item.title}</p>
+        <p class="text-[14px] text-white/70 mt-1">${item.who}</p>
+        <input type="range" class="scrub mt-3" min="0" max="100" value="${item.p}" style="--p:${item.p}%" oninput="this.style.setProperty('--p', this.value + '%')" aria-label="Position">
+        <div class="flex justify-between text-[12px] text-white/60 -mt-1"><span>${item.at}</span><span>${item.clock}</span></div>
+        <div class="mt-4 flex items-center justify-center gap-6">
+          <button type="button" aria-label="Back 15 seconds" class="w-12 h-12 grid place-items-center rounded-full hover:bg-white/10"><i data-lucide="rotate-ccw" class="w-7 h-7"></i></button>
+          <button type="button" onclick="togglePlay()" class="play w-[72px] h-[72px] rounded-full bg-white text-[#0C1F31] grid place-items-center" aria-label="${playing ? 'Pause' : 'Play'}"><i data-lucide="${playing ? 'pause' : 'play'}" class="w-8 h-8 fill-current"></i></button>
+          <button type="button" aria-label="Forward 30 seconds" class="w-12 h-12 grid place-items-center rounded-full hover:bg-white/10"><i data-lucide="rotate-cw" class="w-7 h-7"></i></button>
+        </div>
+        <div class="mt-6 flex items-center justify-between gap-2">
+          <button type="button" onclick="this.textContent = this.textContent === '1x' ? '1.5x' : this.textContent === '1.5x' ? '2x' : '1x'" class="h-11 min-w-[56px] px-3 rounded-full border border-white/25 text-[14px] font-bold" aria-label="Playback speed">1x</button>
+          <a href="${item.link}" class="h-11 px-4 rounded-full bg-white/10 hover:bg-white/15 text-[14px] font-bold inline-flex items-center gap-2"><i data-lucide="file-text" class="w-4 h-4"></i>${item.kind === 'Guide audio' ? 'Read the guide' : 'Episode notes'}</a>
+        </div>
+        <p class="mt-6 text-[12.5px] text-white/55 text-center">Keeps playing while you browse, and on the lock screen.</p>
+      </div></div></div>`;
+  }
+  let ITEM = EP;
+  function togglePlay(){ playing = !playing; document.querySelectorAll('.play').forEach(b => { b.setAttribute('aria-label', playing ? 'Pause' : 'Play'); b.innerHTML = `<i data-lucide="${playing ? 'pause' : 'play'}" class="${b.classList.contains('bg-white') ? 'w-8 h-8' : 'w-6 h-6'} fill-current"></i>`; }); lucide.createIcons(); }
+  function openFull(){ document.getElementById('full-root').innerHTML = full(ITEM); lucide.createIcons(); requestAnimationFrame(() => document.getElementById('ov-full').classList.add('open')); }
+  function closeFull(){ const o = document.getElementById('ov-full'); if (!o) return; o.classList.remove('open'); setTimeout(() => { document.getElementById('full-root').innerHTML = ''; }, 320); }
+  function closeMini(){ const m = document.getElementById('mini'); if (m) m.remove(); document.getElementById('mini-space').style.height = '0px'; }
+  function dock(){ /* sit exactly on top of the bottom bar, whatever its height: the mini player never covers it */
+    const bar = document.querySelector('nav[aria-label="Quick nav"]'), m = document.getElementById('mini');
+    if (!bar || !m || getComputedStyle(bar).display === 'none') return;
+    let top = bar.getBoundingClientRect().top; /* the raised + Post button pokes above the bar: clear it too */
+    bar.querySelectorAll('a, span').forEach(e => { const t = e.getBoundingClientRect().top; if (t > 0 && t < top) top = t; });
+    m.style.bottom = (window.innerHeight - top + 2) + 'px';
+  }
+  AppKit.init({
+    title: 'Mini player (podcast and guide audio)',
+    lead: 'Start an episode or a guide’s audio and keep browsing: a slim player docks just above the bottom bar on every screen, and opens into a full player. It never covers the bottom bar or the + Post button.',
+    states: [
+      { id:'mini', label:'Mini player', icon:'mic', desc:'Docked above the bottom bar while browsing Hub: cover, title, play or pause, close, progress line.' },
+      { id:'full', label:'Full player', icon:'maximize-2', desc:'Tap the mini player: cover, scrubber, back 15 s, forward 30 s, speed, episode notes.' },
+      { id:'guide', label:'Guide audio', icon:'book-open', desc:'The same player for a guide read aloud, while reading the guide.' }
+    ],
+    rules: [
+      'One player for podcast episodes and guide audio; starting another replaces it.',
+      'Docked above the bottom bar, full width, 60 px; the page gets the same space at the bottom so nothing hides behind it.',
+      'Lock-screen and headphone controls through the phone’s media controls (Media Session).',
+      'The cross stops playback and removes the player; the position is remembered for next time.'
+    ],
+    source: 'Audit Phase 4 ("a podcast and guide-audio mini player that keeps playing across screens and on the lock screen"), fits the audio programme. Episode shown: SME Podcast episode 12 from the feed snapshot (podcast-episodes.js).',
+    render(state){
+      ITEM = state === 'guide' ? GUIDE : EP;
+      return AppKit.backdrop(state === 'guide' ? 'article' : 'hub') + mini(ITEM) + '<div id="mini-space" style="height:96px"></div><div id="full-root"></div>';
+    },
+    after(state){ dock(); setTimeout(dock, 400); window.addEventListener('resize', dock); if (state === 'full') openFull(); }
+  });
+</script>
+<script>window.SME_MEMBER_PAGE=true;</script>
+<script src="member-chrome.js"></script>
+<script>if (window.AppKit && AppKit.phone) { dock(); }</script>
+</body>
+</html>

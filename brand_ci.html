@@ -258,7 +258,39 @@
   .sublogo .wm .d i{ font-style:normal; font-weight:700; font-size:.26em; letter-spacing:.13em;
     text-transform:uppercase; color:hsl(var(--navy)); line-height:1.05; white-space:nowrap; }
   .sublogo.one .wm .d i{ font-size:.34em; letter-spacing:.11em; }
+
+  /* Save / Saved component (section 12). Shared code: assets/save-module.css */
+  .svx-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:26px; }
+  .svx-cap{ font-size:12px; font-weight:700; color:hsl(var(--muted-foreground)); margin-bottom:10px; }
+  .svx-note{ font-size:12.5px; color:hsl(var(--muted-foreground)); margin-top:10px; line-height:1.55; }
+  .svx-row{ display:flex; flex-wrap:wrap; gap:10px; align-items:center; }
+  .svx-states{ display:grid; grid-template-columns:repeat(auto-fit,minmax(170px,1fr)); gap:22px; }
+  .svx-tbl{ display:grid; grid-template-columns:1fr 1.3fr .7fr 1.6fr; font-size:13px; }
+  .svx-tbl > div{ padding:11px 14px; border-bottom:1px solid hsl(var(--border)); }
+  .svx-tbl > .h{ background:hsl(var(--muted)); font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.08em; color:hsl(var(--muted-foreground)); }
+  .svx-stage{ position:relative; overflow:hidden; background:#E2E8F0; border-radius:16px; border:1px solid hsl(var(--border)); }
+  .svx-dim{ position:absolute; inset:0; background:rgba(12,31,49,.4); }
+  .svx-chips{ display:flex; gap:8px; overflow-x:auto; padding-bottom:4px; }
+  .svx-chips span{ flex:none; display:inline-flex; align-items:center; min-height:44px; padding:0 16px; border-radius:999px; border:1px solid #E2E8F0; background:#fff; font-family:'Plus Jakarta Sans'; font-weight:700; font-size:14px; }
+  .svx-chips span.on{ background:#0C1F31; border-color:#0C1F31; color:#fff; }
+  .svx-card{ position:relative; display:flex; gap:14px; padding:14px; border:1px solid #F1F5F9; border-radius:16px; background:#fff; max-width:520px; box-shadow:var(--shadow-card); }
+  .svx-thumb{ flex:none; width:96px; height:96px; border-radius:12px; background:#F1F5F9; display:grid; place-items:center; }
+  .svx-kind{ font-size:11px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; }
+  .svx-title{ font-family:'Plus Jakarta Sans'; font-weight:700; font-size:16px; line-height:1.3; margin-top:4px; }
+  .svx-meta{ font-size:12px; color:hsl(var(--muted-foreground)); margin-top:6px; }
+  .svx-rm{ position:absolute; top:4px; right:4px; width:44px; height:44px; border:0; border-radius:50%; background:transparent; color:#DC183C; display:grid; place-items:center; cursor:pointer; }
+  .svx-rm:hover{ background:#FDECEF; }
+  .svx-rm svg{ width:20px; height:20px; fill:currentColor; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+  .svx-rules{ display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:14px 28px; font-size:13.5px; }
+  .svx-rules b{ display:block; font-family:'Plus Jakarta Sans'; font-size:13px; margin-bottom:2px; }
+  .svx-rules span{ color:hsl(var(--muted-foreground)); }
+  .sv.is-hover{ border-color:#0C1F31; }
+  .sv.is-focus{ outline:2px solid #0C1F31; outline-offset:2px; }
+  @keyframes svxspin{ to{ transform:rotate(360deg); } }
+  .svx-spin{ animation:svxspin .9s linear infinite; }
+  @media (max-width:720px){ .svx-tbl{ grid-template-columns:1fr 1fr; } }
 </style>
+<link rel="stylesheet" href="assets/save-module.css" />
 </head>
 <body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><linearGradient id="ciCubeG" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#DC183C"/><stop offset="1" stop-color="#592D3A"/></linearGradient><linearGradient id="ciCubeA" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FF9900"/><stop offset="1" stop-color="#F3712B"/></linearGradient><g id="ciCube"><polygon points="164.51,0 0,94.98 0,171.4 164.43,266.34 279.5,200.24 296.62,190.44 296.62,228.43 164.82,304.53 143.5,292.49 66.38,247.75 66.38,324.14 162.52,379.65 165.24,380.74 329.75,285.76 329.75,95.31 165.08,190.38 66.64,133.55 165.44,76.51 186.25,88.24 230.74,114.16 296.76,76.04 166.26,0.7"/></g><g id="ciCubeAcc"><polygon points="0.25,210.01 0.25,285.85 31.88,304.11 31.88,228.27"/><polygon points="132.34,133.24 165.1,152.15 179.25,144.24 197.88,133.26 165.1,114.33"/></g></defs></svg>
@@ -279,6 +311,7 @@
       <a href="#helpcenter">Help Centre</a>
       <a href="#footer">Footer</a>
       <a href="#ads">Ads</a>
+      <a href="#save">Save</a>
     </div>
   </div>
 </nav>
@@ -1122,6 +1155,123 @@
   </div>
 </section>
 
+<!-- SAVE / SAVED -->
+<section id="save">
+  <div class="wrap">
+    <p class="sec-label">12 · Save &amp; Saved</p>
+    <h2 class="sec-title">One Save button, one Saved list</h2>
+    <p class="sec-desc">A single control lets a member keep an article, guide, resource, event, podcast episode, discussion or post for later. It looks and behaves the same everywhere. Shared code: <code>assets/save-module.css</code> and <code>assets/save-module.js</code>. Live reference pages: <a href="saved-buttons.html" style="color:hsl(var(--primary)); font-weight:600;">Save button states</a> and <a href="saved.html" style="color:hsl(var(--primary)); font-weight:600;">the Saved tab</a>.</p>
+
+    <div class="subhead">The button: pill, round and quiet</div>
+    <div class="panel">
+      <div class="svx-grid">
+        <div><p class="svx-cap">Pill, under a page title</p>
+          <div class="svx-row"><button type="button" class="sv" aria-pressed="false" data-svx><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z"/></svg><span class="lbl">Save</span></button>
+          <button type="button" class="sv" aria-pressed="true" data-svx><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z"/></svg><span class="lbl">Saved</span></button></div>
+          <p class="svx-note">Default on articles, guides, resources, podcast episodes, events and discussions. 44 px high, 16 px side padding, Plus Jakarta Sans 700 at 14 px.</p></div>
+        <div><p class="svx-cap">Round, at a card corner</p>
+          <div class="svx-row" style="background:#1e293b; padding:12px; border-radius:12px; width:max-content;"><button type="button" class="sv sv-round" aria-pressed="false" aria-label="Save" data-svx data-round><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z"/></svg></button>
+          <button type="button" class="sv sv-round" aria-pressed="true" aria-label="Remove from Saved" data-svx data-round><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z"/></svg></button></div>
+          <p class="svx-note">For list cards, 8 px in from the top right corner. 44 by 44 px with a soft shadow so it reads on any photo. Quiet in the card footer where the corner is taken (podcast).</p></div>
+        <div><p class="svx-cap">Quiet, in an action row</p>
+          <div class="svx-row"><button type="button" class="sv sv-ghost" aria-pressed="false" data-svx><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z"/></svg><span class="lbl">Save</span></button>
+          <button type="button" class="sv sv-ghost" aria-pressed="true" data-svx><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z"/></svg><span class="lbl">Saved</span></button></div>
+          <p class="svx-note">Sits beside Like, Comment and Share on community posts. On phones the label drops away and the icon keeps its 44 px target.</p></div>
+      </div>
+    </div>
+
+    <div class="subhead">Sizes</div>
+    <div class="panel" style="padding:0; overflow:hidden;">
+      <div class="svx-tbl">
+        <div class="h">Variant</div><div class="h">Size</div><div class="h">Icon</div><div class="h">Use</div>
+        <div><b>Pill</b></div><div>44 px high, auto width</div><div>18 px</div><div>Under the title on a single page</div>
+        <div><b>Round</b></div><div>44 × 44 px</div><div>20 px</div><div>Card corner on image cards, forum rows, search results</div>
+        <div><b>Quiet</b></div><div>44 px high (48 px in a post row)</div><div>18 px</div><div>Post action row, card footers</div>
+        <div><b>Menu item</b></div><div>44 px high, full width</div><div>16 px</div><div>"Save post" inside the post "..." menu</div>
+      </div>
+    </div>
+
+    <div class="subhead">States</div>
+    <div class="panel">
+      <div class="svx-states">
+        <div><button type="button" class="sv" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z"/></svg><span>Save</span></button><p class="svx-note">Default. Outline bookmark, white, 1.5 px slate border.</p></div>
+        <div><button type="button" class="sv is-hover" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z"/></svg><span>Save</span></button><p class="svx-note">Hover. Border turns navy.</p></div>
+        <div><button type="button" class="sv" aria-pressed="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z"/></svg><span>Saved</span></button><p class="svx-note">Saved. Filled bookmark, #DC183C on a #FDECEF tint.</p></div>
+        <div><button type="button" class="sv is-focus" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z"/></svg><span>Save</span></button><p class="svx-note">Focus. 2 px navy ring, 2 px offset. White ring on dark heroes.</p></div>
+        <div><button type="button" class="sv" aria-pressed="false" disabled><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z"/></svg><span>Save</span></button><p class="svx-note">Disabled. 45% opacity, not tappable.</p></div>
+        <div><button type="button" class="sv is-busy" aria-pressed="false" disabled><svg viewBox="0 0 24 24" aria-hidden="true" class="svx-spin"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg><span>Saving</span></button><p class="svx-note">Busy. Shown for a moment. A failure puts the button back and says so.</p></div>
+      </div>
+    </div>
+
+    <div class="subhead">Toasts</div>
+    <div class="panel" style="background:hsl(var(--muted));">
+      <div class="svx-grid" style="grid-template-columns:repeat(auto-fit,minmax(260px,1fr));">
+        <div><p class="svx-cap">After saving</p><div class="sv-toast-box"><span style="color:#FF9900; display:inline-flex"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z"/><path d="m9 10 2 2 4-4"/></svg></span><span class="t">Saved.</span><a class="sv-toast-act" href="saved.html">View your saved items</a></div></div>
+        <div><p class="svx-cap">After removing</p><div class="sv-toast-box"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z"/><line x1="15" x2="9" y1="10" y2="10"/></svg><span class="t">Removed.</span><button type="button" class="sv-toast-act">Undo</button></div></div>
+        <div><p class="svx-cap">If it fails</p><div class="sv-toast-box"><span style="color:#FF9900; display:inline-flex"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg></span><span class="t">Could not save. Please try again.</span><button type="button" class="sv-toast-act">Retry</button></div></div>
+      </div>
+      <p class="svx-note" style="margin-top:14px;">Navy #0C1F31, white text, 12 px radius, action in #FF9900. Bottom centre for 6 seconds: 84 px above the bottom edge on phones (clear of the tab bar), 24 px on laptops. The action is a 44 px target. Announced politely (<code>role="status"</code>).</p>
+    </div>
+
+    <div class="subhead">A visitor taps Save</div>
+    <div class="panel">
+      <p style="font-size:14px; color:hsl(var(--muted-foreground)); margin-bottom:18px; max-width:640px;">Nothing is saved. A prompt asks them to sign in and sends them back to the same page afterwards. Phones get a bottom sheet, laptops a small popover under the button. The copy is the same everywhere.</p>
+      <div class="svx-grid" style="grid-template-columns:repeat(auto-fit,minmax(300px,1fr));">
+        <div><p class="svx-cap">Phone: bottom sheet</p>
+          <div class="svx-stage" style="height:360px;"><div class="svx-dim"></div>
+            <div class="sv-panel" style="position:absolute;"><div class="sv-grab"></div><div class="sv-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z"/></svg></div><h3 class="sv-h">Sign in to save</h3><p class="sv-p">Keep this for later. Your saved items follow you to every device.</p><span class="sv-cta">Sign in</span><span class="sv-cta2">Join SME South Africa</span><span class="sv-later" style="text-align:center; line-height:44px;">Not now</span></div></div></div>
+        <div><p class="svx-cap">Laptop: popover under the button</p>
+          <div class="svx-stage" style="height:360px; background:#fff; padding:20px;"><p style="font-family:'Plus Jakarta Sans'; font-weight:800; font-size:20px; line-height:1.2;">Kasi Money Starts With How You Earn</p>
+            <div style="margin-top:14px;"><button type="button" class="sv is-hover" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z"/></svg><span>Save</span></button></div>
+            <div class="sv-pop" style="left:20px; top:118px;"><p class="sv-h">Sign in to save</p><p class="sv-p">Keep this for later, on any device.</p><span class="sv-cta">Sign in</span><span class="sv-cta2">Join SME South Africa</span></div></div></div>
+      </div>
+    </div>
+
+    <div class="subhead">Saved card and type chips</div>
+    <div class="panel">
+      <p class="svx-cap">Type chips (Saved tab filter, 44 px, horizontal scroll on phones)</p>
+      <div class="svx-chips"><span class="on">All</span><span>Articles</span><span>Guides</span><span>Resources</span><span>Events</span><span>Podcast</span><span>Discussions</span><span>Posts</span></div>
+      <p class="svx-note">Active chip: navy #0C1F31 with white text. Inactive: white with a slate border. The Saved page is private to the member, so a count may show beside a chip there. No count of how many people saved an item is ever shown anywhere else.</p>
+      <p class="svx-cap" style="margin-top:22px;">Saved card</p>
+      <div class="svx-card">
+        <div class="svx-thumb"><svg viewBox="0 0 24 24" aria-hidden="true" style="width:32px;height:32px;fill:none;stroke:#94a3b8;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"><path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg></div>
+        <div style="min-width:0; flex:1; padding-right:44px;">
+          <p class="svx-kind" style="color:#29A37A;">Guide</p>
+          <p class="svx-title">Guide to Asset Finance in South Africa</p>
+          <p class="svx-meta">SME South Africa · Saved 12 Oct 2026</p>
+        </div>
+        <button type="button" class="svx-rm" aria-label="Remove from Saved" data-svx-rm><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z"/></svg></button>
+      </div>
+      <p class="svx-note">Thumbnail or type icon, a type label in the type colour (Article #DC183C, Guide #29A37A, Resource #AE6B0A, Event #0C1F31, Podcast #7C3AED, Discussion #0369A1, Post #C2410C), the title, then meta. Newest first. The filled bookmark in the corner removes it, with an Undo toast.</p>
+    </div>
+
+    <div class="subhead">Bookmark icon rules and tokens</div>
+    <div class="panel">
+      <div class="svx-rules">
+        <div><b>Icon</b><span>Lucide <code>bookmark</code>, 2 px stroke, round caps. Never a heart, star or flag.</span></div>
+        <div><b>Not saved</b><span>Outline only, <code>currentColor</code>.</span></div>
+        <div><b>Saved</b><span>Filled #DC183C (<code>fill: currentColor</code> on a #DC183C button). Label changes to "Saved". On a dark hero the Saved pill keeps the light tint.</span></div>
+        <div><b>Tap target</b><span>44 px minimum in both directions, on every variant.</span></div>
+        <div><b>Accessibility</b><span>A real <code>&lt;button&gt;</code> with <code>aria-pressed</code>. Icon only buttons carry <code>aria-label</code> ("Save" or "Remove from Saved"). Focus ring is visible.</span></div>
+        <div><b>Placement</b><span>Pill under the title on single pages. Round on the card corner on list cards. Quiet in action rows. Never beside a price or a Register button as the main action.</span></div>
+        <div><b>Visitors</b><span>Same button, same look. Tapping it opens "Sign in to save". Page HTML is identical for everyone so pages stay cacheable.</span></div>
+        <div><b>Copy</b><span>"Save", "Saved", "Saved. View your saved items", "Removed. Undo", "Sign in to save", "Not now".</span></div>
+      </div>
+      <div class="svx-tbl" style="margin-top:22px; border:1px solid hsl(var(--border)); border-radius:12px; overflow:hidden;">
+        <div class="h">Token</div><div class="h">Value</div><div class="h">Used for</div><div class="h">Source</div>
+        <div><code>--sv-brand</code></div><div>#DC183C</div><div>Saved colour, filled bookmark, Sign in button</div><div>Primary Red</div>
+        <div><code>--sv-tint</code></div><div>#FDECEF</div><div>Saved fill, sheet icon tile</div><div>Primary tint</div>
+        <div><code>--sv-navy</code></div><div>#0C1F31</div><div>Hover border, focus ring, toast, active chip</div><div>Navy</div>
+        <div><code>--sv-accent</code></div><div>#FF9900</div><div>Toast action and check</div><div>Accent Orange</div>
+        <div><code>--sv-line</code></div><div>#E2E8F0</div><div>Default border</div><div>Border</div>
+        <div><code>--sv-muted</code></div><div>#6A7581</div><div>Quiet variant text</div><div>Muted Text</div>
+        <div>Radius</div><div>999 px pill and round, 12 px toast and sheet buttons, 24 px sheet top corners, 16 px popover</div><div>Shape</div><div>Radius 12 px system</div>
+        <div>Type</div><div>Plus Jakarta Sans 700 at 14 px (buttons), Inter 600 at 14 px (toast text)</div><div>Labels</div><div>Typography</div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- DOC FOOTER -->
 <footer class="docfoot">
   <div class="wrap">
@@ -1151,6 +1301,14 @@
       }
     });
   });
+</script>
+<script>
+  document.querySelectorAll('[data-svx]').forEach(b=>b.addEventListener('click',()=>{
+    const on=b.getAttribute('aria-pressed')!=='true'; b.setAttribute('aria-pressed',on);
+    const l=b.querySelector('.lbl'); if(l) l.textContent=on?'Saved':'Save';
+    if(b.hasAttribute('data-round')) b.setAttribute('aria-label',on?'Remove from Saved':'Save');
+  }));
+  document.querySelectorAll('[data-svx-rm]').forEach(b=>b.addEventListener('click',()=>{ b.closest('.svx-card').style.opacity='.35'; }));
 </script>
 </body>
 </html>

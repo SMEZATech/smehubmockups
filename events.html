@@ -33,6 +33,7 @@
     .search-overlay.active{opacity:1;pointer-events:auto;transform:translateY(0);}
     @media (min-width:640px){ .search-overlay{padding:0 1.5rem;} }
 </style>
+<link rel="stylesheet" href="assets/save-module.css" />
 </head>
 <body class="bg-[#FCFCFC] text-[#121A21] antialiased">
 <header class="bg-white border-b border-[#E7EBEF] sticky top-0 z-30 relative">
@@ -122,12 +123,12 @@
         <a href="public-home.html" class="flex items-center gap-2.5"><img src="assets/logo-v1-lockup-reversed.svg" alt="SME South Africa" class="h-[46px] lg:h-[68px] w-auto" /></a>
         <p class="text-sm text-white/55 mt-4 max-w-xs leading-relaxed">A community for South African SME owners, connecting founders with funding, events, and the tools to scale.</p>
         <div class="flex items-center gap-2 mt-5">
-          <a href="#" aria-label="X" class="w-9 h-9 rounded-lg bg-white/8 hover:bg-white/15 grid place-items-center transition"><svg viewBox="0 0 24 24" class="w-4 h-4" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24h-6.66l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
-          <a href="#" aria-label="LinkedIn" class="w-9 h-9 rounded-lg bg-white/8 hover:bg-white/15 grid place-items-center transition"><svg viewBox="0 0 24 24" class="w-4 h-4" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0z"/></svg></a>
-          <a href="#" aria-label="Instagram" class="w-9 h-9 rounded-lg bg-white/8 hover:bg-white/15 grid place-items-center transition"><svg viewBox="0 0 24 24" class="w-4 h-4" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></a>
-          <a href="#" aria-label="Facebook" class="w-9 h-9 rounded-lg bg-white/8 hover:bg-white/15 grid place-items-center transition"><svg viewBox="0 0 24 24" class="w-4 h-4" fill="currentColor"><path d="M22.675 0H1.325C.593 0 0 .593 0 1.325v21.351C0 23.407.593 24 1.325 24h11.495v-9.294H9.692v-3.622h3.128V8.413c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.716-1.795 1.763v2.313h3.587l-.467 3.622h-3.12V24h6.116C23.407 24 24 23.407 24 22.675V1.325C24 .593 23.407 0 22.675 0z"/></svg></a>
-          <a href="#" aria-label="YouTube" class="w-9 h-9 rounded-lg bg-white/8 hover:bg-white/15 grid place-items-center transition"><svg viewBox="0 0 24 24" class="w-4 h-4" fill="currentColor"><path d="M21.582 6.186a2.684 2.684 0 0 0-1.884-1.9C17.962 3.84 12 3.84 12 3.84s-5.962 0-7.698.446a2.684 2.684 0 0 0-1.884 1.9C2 7.934 2 12 2 12s0 4.066.418 5.814a2.684 2.684 0 0 0 1.884 1.9C6.038 20.16 12 20.16 12 20.16s5.962 0 7.698-.446a2.684 2.684 0 0 0 1.884-1.9C22 16.066 22 12 22 12s0-4.066-.418-5.814zM9.996 15.005V8.994L15.26 12l-5.264 3.005z"/></svg></a>
-          <a href="#" aria-label="TikTok" class="w-9 h-9 rounded-lg bg-white/8 hover:bg-white/15 grid place-items-center transition"><svg viewBox="0 0 24 24" class="w-4 h-4" fill="currentColor"><path d="M16.6 5.82c-1.01-.88-1.62-2.14-1.63-3.55h-3.13v13.39c0 1.6-1.3 2.9-2.9 2.9a2.9 2.9 0 0 1 0-5.8c.29 0 .57.04.83.13V9.75a6.03 6.03 0 0 0-.83-.06c-3.34 0-6.05 2.71-6.05 6.05S5.6 21.79 8.94 21.79s6.05-2.71 6.05-6.05V9.01a9.14 9.14 0 0 0 5.34 1.71V7.6a5.94 5.94 0 0 1-3.73-1.78z"/></svg></a>
+          <a href="#" aria-label="X" class="w-11 h-11 rounded-lg bg-white/8 hover:bg-white/15 grid place-items-center transition"><svg viewBox="0 0 24 24" class="w-4 h-4" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24h-6.66l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+          <a href="#" aria-label="LinkedIn" class="w-11 h-11 rounded-lg bg-white/8 hover:bg-white/15 grid place-items-center transition"><svg viewBox="0 0 24 24" class="w-4 h-4" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0z"/></svg></a>
+          <a href="#" aria-label="Instagram" class="w-11 h-11 rounded-lg bg-white/8 hover:bg-white/15 grid place-items-center transition"><svg viewBox="0 0 24 24" class="w-4 h-4" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></a>
+          <a href="#" aria-label="Facebook" class="w-11 h-11 rounded-lg bg-white/8 hover:bg-white/15 grid place-items-center transition"><svg viewBox="0 0 24 24" class="w-4 h-4" fill="currentColor"><path d="M22.675 0H1.325C.593 0 0 .593 0 1.325v21.351C0 23.407.593 24 1.325 24h11.495v-9.294H9.692v-3.622h3.128V8.413c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.716-1.795 1.763v2.313h3.587l-.467 3.622h-3.12V24h6.116C23.407 24 24 23.407 24 22.675V1.325C24 .593 23.407 0 22.675 0z"/></svg></a>
+          <a href="#" aria-label="YouTube" class="w-11 h-11 rounded-lg bg-white/8 hover:bg-white/15 grid place-items-center transition"><svg viewBox="0 0 24 24" class="w-4 h-4" fill="currentColor"><path d="M21.582 6.186a2.684 2.684 0 0 0-1.884-1.9C17.962 3.84 12 3.84 12 3.84s-5.962 0-7.698.446a2.684 2.684 0 0 0-1.884 1.9C2 7.934 2 12 2 12s0 4.066.418 5.814a2.684 2.684 0 0 0 1.884 1.9C6.038 20.16 12 20.16 12 20.16s5.962 0 7.698-.446a2.684 2.684 0 0 0 1.884-1.9C22 16.066 22 12 22 12s0-4.066-.418-5.814zM9.996 15.005V8.994L15.26 12l-5.264 3.005z"/></svg></a>
+          <a href="#" aria-label="TikTok" class="w-11 h-11 rounded-lg bg-white/8 hover:bg-white/15 grid place-items-center transition"><svg viewBox="0 0 24 24" class="w-4 h-4" fill="currentColor"><path d="M16.6 5.82c-1.01-.88-1.62-2.14-1.63-3.55h-3.13v13.39c0 1.6-1.3 2.9-2.9 2.9a2.9 2.9 0 0 1 0-5.8c.29 0 .57.04.83.13V9.75a6.03 6.03 0 0 0-.83-.06c-3.34 0-6.05 2.71-6.05 6.05S5.6 21.79 8.94 21.79s6.05-2.71 6.05-6.05V9.01a9.14 9.14 0 0 0 5.34 1.71V7.6a5.94 5.94 0 0 1-3.73-1.78z"/></svg></a>
         </div>
       </div>
       <div>
@@ -172,10 +173,10 @@
     </div>
     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-3 pt-8 mt-10 border-t border-white/10 text-[12.5px] text-white/50">
       <div class="flex flex-wrap items-center gap-x-3 gap-y-1.5">
-        <a href="public-about.html" class="hover:text-white transition">About</a><span class="text-white/20">·</span>
-            <a href="public-contact.html" class="hover:text-white transition">Contact</a><span class="text-white/20">·</span>
-            <a href="public-advertise.html" class="hover:text-white transition">Advertise</a><span class="text-white/20">·</span>
-            <a href="public-help.html" class="hover:text-white transition">Help Centre</a>
+        <a href="public-about.html" class="hover:text-white transition inline-flex items-center min-h-[44px] min-w-[44px] md:min-h-0 md:min-w-0">About</a><span class="text-white/20">·</span>
+            <a href="public-contact.html" class="hover:text-white transition inline-flex items-center min-h-[44px] min-w-[44px] md:min-h-0 md:min-w-0">Contact</a><span class="text-white/20">·</span>
+            <a href="public-advertise.html" class="hover:text-white transition inline-flex items-center min-h-[44px] min-w-[44px] md:min-h-0 md:min-w-0">Advertise</a><span class="text-white/20">·</span>
+            <a href="public-help.html" class="hover:text-white transition inline-flex items-center min-h-[44px] min-w-[44px] md:min-h-0 md:min-w-0">Help Centre</a>
       </div>
       <p>© 2026 SME South Africa. All rights reserved.</p>
     </div>
@@ -247,7 +248,7 @@
           return;
         }
         let d;
-        if (i === 2 || i === 3) d = plus(5 + i*2); // Exactly two Upcoming events
+        if (i >= 2 && i <= 6) d = plus(3 + i*4); // Five upcoming events (two in person, three online)
         else d = plus(-10 - i); // Past events
         applyTimes(ev, atTime(d, 10, 0), atTime(d, 12, 0));
       });
@@ -267,130 +268,160 @@
       return ev.type === 'IN-PERSON' ? 'event-single-in-person.html' : 'event-single-online.html';
     }
 
-    let state = { view:'directory', params:{}, statusFilter:'All', typeFilter:'All', categoryFilter:'All', topicOpen:false, sort:'priority', search:'', page:1, perPage:12 };
+    let state = { view:'directory', params:{}, pastOpen:false, pastShown:6, calOpen:null, typeFilter:'All', categoryFilter:'All', topicOpen:false, sort:'priority', search:'', page:1, perPage:12 };
     function setState(patch){ Object.assign(state, patch); renderApp(); }
     function goPage(p){ setState({page:p}); window.scrollTo({top:document.getElementById('feedTop').offsetTop-80,behavior:'smooth'}); }
     function toggleTopicDropdown(e){ e.stopPropagation(); state.topicOpen = !state.topicOpen; renderApp(); }
 
     function statusChip(status){
       if(status==='LIVE NOW') return `<span class="px-3 py-1.5 rounded-full text-[10px] font-bold bg-[#DC183C] text-white shadow-lg inline-flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-white animate-pulse"></span> LIVE NOW</span>`;
-      if(status==='Upcoming') return `<span class="px-3 py-1.5 rounded-full text-[10px] font-bold bg-[#FF9900] text-[#0C1F31] shadow-lg uppercase tracking-wider">Upcoming</span>`;
       return '';
     }
+    const FORMAT = { 'IN-PERSON':'In person', 'ONLINE':'Online' };
 
-    function chip(label, active, onclick){ return `<button onclick="${onclick}" class="shrink-0 px-4 py-2 rounded-full text-sm font-semibold border transition-colors ${active?'bg-[#DC183C] text-white border-[#DC183C]':'bg-white text-slate-600 border-[#E7EBEF] hover:bg-slate-50'}">${label}</button>`; }
+    function chip(label, active, onclick){ return `<button type="button" onclick="${onclick}" aria-pressed="${active}" class="shrink-0 px-4 min-h-[44px] md:min-h-[36px] rounded-full text-sm font-semibold border transition-colors ${active?'bg-[#DC183C] text-white border-[#DC183C]':'bg-white text-slate-600 border-[#E7EBEF] hover:bg-slate-50'}">${label}</button>`; }
 
     function statusWeight(s){ return s==='LIVE NOW' ? 0 : s==='Upcoming' ? 1 : 2; }
     function getFilteredEvents(){
       return MOCK_EVENTS.map(ev=> ({ ev, status:computeStatus(ev) }))
-        .filter(({ev,status})=>{
-          if(state.statusFilter!=='All' && status!==state.statusFilter) return false;
+        .filter(({ev})=>{
           if(state.typeFilter!=='All' && ev.type!==state.typeFilter) return false;
           if(state.categoryFilter!=='All' && ev.category!==state.categoryFilter) return false;
           if(state.search && !(`${ev.title} ${ev.description} ${ev.category}`.toLowerCase().includes(state.search.toLowerCase()))) return false;
           return true;
         })
         .sort((a,b)=>{
-          // Default: LIVE NOW first, then Upcoming (soonest first), then Past (most recent first)
+          // LIVE NOW first, then Upcoming (soonest first). Past events (most recent first) sit behind "Past events".
           const wa = statusWeight(a.status), wb = statusWeight(b.status);
           if(wa !== wb) return wa - wb;
           const am=a.ev.logistics.startMs||0, bm=b.ev.logistics.startMs||0;
-          // Within Past bucket flip to descending, most recent past first
           if(a.status==='Past') return bm - am;
           return am - bm;
         });
     }
 
-    function emptyState(){
-      return `<div class="reveal bg-white border border-dashed border-[#E7EBEF] rounded-2xl py-16 px-6 text-center col-span-full">
-        <div class="w-16 h-16 mx-auto rounded-full bg-slate-100 grid place-items-center mb-5"><i data-lucide="calendar-x" class="w-7 h-7 text-slate-500"></i></div>
-        <h3 class="font-jakarta text-2xl font-extrabold text-[#0C1F31] mb-2">No events match your filters</h3>
-        <p class="text-slate-500 max-w-sm mx-auto mb-6">Try widening your search or clearing the filters to see everything we have on.</p>
-        <button onclick="setState({statusFilter:'All',typeFilter:'All',categoryFilter:'All',search:''})" class="bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold px-6 py-3 rounded-xl transition-colors">Clear all filters</button>
+    /* ---------- Add to calendar: Google, Apple (.ics) and Outlook ---------- */
+    const icsStamp = (ms)=> new Date(ms).toISOString().replace(/[-:]/g,'').replace(/\.\d{3}/,'');
+    function calLinks(ev){
+      const s = ev.logistics.startMs, e = ev.logistics.endMs || s + 2*3600000;
+      const where = ev.type==='IN-PERSON' ? (ev.venue.name || '') + ', Johannesburg' : 'Online (' + (ev.venue.platform || 'link in your confirmation email') + ')';
+      const details = ev.description + ' Details: https://smesouthafrica.co.za/events/';
+      return {
+        google: 'https://calendar.google.com/calendar/render?action=TEMPLATE&text=' + encodeURIComponent(ev.title) + '&dates=' + icsStamp(s) + '/' + icsStamp(e) + '&details=' + encodeURIComponent(details) + '&location=' + encodeURIComponent(where),
+        outlook: 'https://outlook.live.com/calendar/0/deeplink/compose?path=%2Fcalendar%2Faction%2Fcompose&rru=addevent&subject=' + encodeURIComponent(ev.title) + '&startdt=' + encodeURIComponent(new Date(s).toISOString()) + '&enddt=' + encodeURIComponent(new Date(e).toISOString()) + '&body=' + encodeURIComponent(details) + '&location=' + encodeURIComponent(where),
+        where, s, e, details
+      };
+    }
+    function downloadIcs(id){
+      const ev = MOCK_EVENTS.find(x=>x.id===id); const c = calLinks(ev);
+      const ics = ['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//SME South Africa//Events//EN','BEGIN:VEVENT','UID:event-' + ev.id + '@smesouthafrica.co.za','DTSTAMP:' + icsStamp(Date.now()),'DTSTART:' + icsStamp(c.s),'DTEND:' + icsStamp(c.e),'SUMMARY:' + ev.title,'DESCRIPTION:' + c.details,'LOCATION:' + c.where,'END:VEVENT','END:VCALENDAR'].join('\r\n');
+      const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([ics], { type:'text/calendar' })); a.download = ev.title.replace(/[^\w]+/g,'-').toLowerCase() + '.ics';
+      document.body.appendChild(a); a.click(); setTimeout(()=>{ URL.revokeObjectURL(a.href); a.remove(); }, 500);
+      state.calOpen = null; renderApp(); showToast('Saved for Apple Calendar. Open the file to add it.');
+    }
+    function toggleCal(e, id){ e.stopPropagation(); state.calOpen = state.calOpen === id ? null : id; renderApp(); }
+    function calMenu(ev){
+      const c = calLinks(ev), open = state.calOpen === ev.id;
+      const item = (href, icon, label, extra) => `<a href="${href}" ${extra||''} class="flex items-center gap-3 px-4 min-h-[44px] text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-[#DC183C]"><i data-lucide="${icon}" class="w-4 h-4 text-slate-500"></i>${label}</a>`;
+      return `<div class="relative cal-wrap">
+        <button type="button" onclick="toggleCal(event, ${ev.id})" aria-haspopup="true" aria-expanded="${open}" class="w-full min-h-[44px] inline-flex items-center justify-center gap-2 border border-[#D8DEE5] hover:border-[#0C1F31] text-[#121A21] font-bold text-sm rounded-xl transition-colors"><i data-lucide="calendar-plus" class="w-4 h-4"></i> Add to calendar</button>
+        ${open ? `<div class="absolute z-30 bottom-full mb-2 right-0 w-56 bg-white rounded-xl border border-[#E7EBEF] shadow-xl py-1.5" role="menu">
+          ${item(c.google, 'calendar', 'Google Calendar', 'target="_blank" rel="noopener" role="menuitem"')}
+          <button type="button" role="menuitem" onclick="event.stopPropagation();downloadIcs(${ev.id})" class="w-full flex items-center gap-3 px-4 min-h-[44px] text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-[#DC183C]"><i data-lucide="calendar-check" class="w-4 h-4 text-slate-500"></i>Apple Calendar</button>
+          ${item(c.outlook, 'mail', 'Outlook', 'target="_blank" rel="noopener" role="menuitem"')}
+        </div>` : ''}
       </div>`;
     }
 
-    function renderDirectory(){
-      const allList = getFilteredEvents();
-      const totalPages = Math.max(1, Math.ceil(allList.length / state.perPage));
-      if(state.page > totalPages) state.page = 1;
-      const startIdx = (state.page-1) * state.perPage;
-      const list = allList.slice(startIdx, startIdx + state.perPage);
-      const grid = list.length ? `<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-        ${list.map(({ev,status}, i)=>`
-          <article class="reveal bg-white rounded-2xl shadow-sm border border-[#E7EBEF] overflow-hidden relative flex flex-col hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group" style="animation-delay:${(i%16)*40}ms">
-            <div class="h-56 bg-[#0C1F31] relative overflow-hidden">
-              <img src="${ev.hero_image}" ${OE_IM} alt="${ev.title}" class="w-full h-full object-cover opacity-90 group-hover:scale-105 transition-all duration-500" />
+    function card({ev,status}, i, past){
+      return `
+          <article class="reveal bg-white rounded-2xl shadow-sm border border-[#E7EBEF] relative flex flex-col hover:shadow-xl transition-all duration-300 group" style="animation-delay:${(i%16)*40}ms">
+            <div class="${past ? 'h-40' : 'h-48 md:h-56'} bg-[#0C1F31] relative overflow-hidden rounded-t-2xl">
+              <img src="${ev.hero_image}" ${OE_IM} alt="${ev.title}" class="w-full h-full object-cover ${past ? 'opacity-60' : 'opacity-90'} group-hover:scale-105 transition-all duration-500" />
               <div class="absolute top-3 left-3 z-10 flex items-center gap-2">
                 <span class="px-3 py-1 rounded-full text-[11px] font-bold bg-[#FDECEF] text-[#DC183C] shadow-sm">${ev.category}</span>
                 ${statusChip(status)}
               </div>
             </div>
             <div class="p-5 flex-1 flex flex-col">
-              <div class="flex justify-between items-center mb-3">
-                <span class="text-slate-500 font-bold text-xs tracking-widest inline-flex items-center gap-1.5"><i data-lucide="${ev.type==='IN-PERSON'?'map-pin':'video'}" class="w-3.5 h-3.5"></i> ${ev.type}</span>
-              </div>
+              <span class="text-slate-500 font-bold text-xs inline-flex items-center gap-1.5 mb-2"><i data-lucide="${ev.type==='IN-PERSON'?'map-pin':'video'}" class="w-3.5 h-3.5"></i> ${FORMAT[ev.type]}</span>
               <h3 class="text-lg font-jakarta font-extrabold text-[#0C1F31] leading-tight mb-2 group-hover:text-[#DC183C] transition-colors">${ev.title}</h3>
-              <p class="text-slate-500 text-sm leading-relaxed line-clamp-3 mb-6 flex-1">${ev.description}</p>
+              ${past ? '' : `<p class="text-slate-500 text-sm leading-relaxed line-clamp-3 mb-5 flex-1">${ev.description}</p>`}
               <div class="mt-auto">
-                <p class="font-extrabold text-[#121A21] text-sm mb-4">${ev.logistics.display_date} • ${ev.logistics.display_time}</p>
-                <a href="${eventDetailUrl(ev)}" class="w-full inline-flex items-center justify-center bg-[#0C1F31] hover:bg-[#16324A] text-white font-bold text-sm py-3 rounded-xl transition-colors shadow-sm">Learn more</a>
+                <p class="font-extrabold text-[#121A21] text-sm mb-4 flex items-center gap-1.5"><i data-lucide="calendar-days" class="w-4 h-4 text-[#DC183C] shrink-0"></i>${ev.logistics.display_date} · ${ev.logistics.display_time}</p>
+                ${past
+                  ? `<a href="${eventDetailUrl(ev)}" class="w-full min-h-[44px] inline-flex items-center justify-center border border-[#D8DEE5] hover:border-[#0C1F31] text-[#121A21] font-bold text-sm rounded-xl transition-colors">${ev.type==='ONLINE' ? 'Watch the recording' : 'See highlights'}</a>`
+                  : `<div class="grid grid-cols-2 gap-2"><a href="${eventDetailUrl(ev)}" class="min-h-[44px] inline-flex items-center justify-center bg-[#0C1F31] hover:bg-[#16324A] text-white font-bold text-sm rounded-xl transition-colors shadow-sm">${status==='LIVE NOW' ? 'Join now' : 'Learn more'}</a>${calMenu(ev)}</div>`}
               </div>
             </div>
-          </article>`).join('')}
-      </div>
+          </article>`;
+    }
 
-      ${list.length > 0 ? `
-      <div class="flex flex-col sm:flex-row items-center justify-between gap-4 pt-8 mt-8 border-t border-[#E7EBEF]">
-        <span class="text-sm text-slate-500 font-medium">Showing <b class="text-[#121A21]">${startIdx+1}–${Math.min(startIdx+list.length, allList.length)}</b></span>
-        <div class="flex items-center gap-2">
-          <button ${state.page===1?'disabled':''} onclick="goPage(${state.page-1})" class="w-10 h-10 rounded-lg border border-[#E7EBEF] ${state.page===1?'text-slate-500 cursor-not-allowed':'text-slate-600 hover:bg-slate-50'} grid place-items-center transition"><i data-lucide="chevron-left" class="w-4 h-4"></i></button>
-          ${Array.from({length: totalPages}, (_, i)=>{
-            const p = i+1;
-            return `<button onclick="goPage(${p})" class="w-10 h-10 rounded-lg ${p===state.page?'bg-[#DC183C] text-white':'border border-[#E7EBEF] text-slate-600 hover:bg-slate-50'} font-bold text-sm shadow-sm transition">${p}</button>`;
-          }).join('')}
-          <button ${state.page===totalPages?'disabled':''} onclick="goPage(${state.page+1})" class="w-10 h-10 rounded-lg border border-[#E7EBEF] ${state.page===totalPages?'text-slate-500 cursor-not-allowed':'text-slate-600 hover:bg-slate-50'} grid place-items-center transition"><i data-lucide="chevron-right" class="w-4 h-4"></i></button>
-        </div>
-      </div>` : ''}
-      ` : emptyState();
+    function emptyState(){
+      return `<div class="reveal bg-white border border-dashed border-[#E7EBEF] rounded-2xl py-12 px-6 text-center col-span-full">
+        <div class="w-16 h-16 mx-auto rounded-full bg-slate-100 grid place-items-center mb-5"><i data-lucide="calendar-x" class="w-7 h-7 text-slate-500"></i></div>
+        <h3 class="font-jakarta text-xl font-extrabold text-[#0C1F31] mb-2">No upcoming events match</h3>
+        <p class="text-slate-500 max-w-sm mx-auto mb-6">Try another format or topic, or look through past events and their recordings.</p>
+        <button type="button" onclick="setState({typeFilter:'All',categoryFilter:'All',search:''})" class="bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold px-6 min-h-[44px] rounded-xl transition-colors">Clear all filters</button>
+      </div>`;
+    }
+
+    function renderDirectory(){
+      const allList = getFilteredEvents();
+      const upcoming = allList.filter(x => x.status !== 'Past');
+      const past = allList.filter(x => x.status === 'Past');
+      const pastShown = past.slice(0, state.pastShown);
+      const grid = upcoming.length ? `<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">${upcoming.map((x, i)=>card(x, i, false)).join('')}</div>` : emptyState();
+      const pastBlock = past.length ? `
+        <section class="mt-12 pt-8 border-t border-[#E7EBEF]" aria-labelledby="pastHead">
+          <h2 class="sr-only">Past events</h2>
+          <button type="button" id="pastHead" onclick="setState({pastOpen:!state.pastOpen})" aria-expanded="${state.pastOpen}" aria-controls="pastList" class="w-full flex items-center justify-between gap-3 min-h-[60px] px-5 rounded-2xl bg-white border border-[#E7EBEF] hover:border-[#0C1F31] transition">
+            <span class="flex items-center gap-3"><span class="w-10 h-10 rounded-full bg-[#F0F5F9] grid place-items-center shrink-0"><i data-lucide="history" class="w-5 h-5 text-[#0C1F31]"></i></span><span class="text-left"><span class="block font-jakarta font-extrabold text-[17px]">Past events</span><span class="block text-[13px] text-slate-500">Recordings and highlights</span></span></span>
+            <i data-lucide="chevron-down" class="w-5 h-5 text-slate-500 shrink-0 transition-transform ${state.pastOpen?'rotate-180':''}"></i>
+          </button>
+          ${state.pastOpen ? `<div id="pastList" class="mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">${pastShown.map((x, i)=>card(x, i, true)).join('')}</div>
+            ${past.length > state.pastShown ? `<div class="text-center mt-8"><button type="button" onclick="setState({pastShown:state.pastShown+6})" class="min-h-[44px] px-6 rounded-full border border-[#D8DEE5] hover:border-[#0C1F31] font-bold text-sm">Show more past events</button></div>` : ''}` : ''}
+        </section>` : '';
 
       return `
       <section class="hero-bg text-white relative overflow-hidden">
         <div class="absolute inset-0 dot-pattern opacity-70 pointer-events-none"></div>
-        <div class="max-w-[1200px] mx-auto px-4 sm:px-6 py-14 relative">
-          <nav aria-label="Breadcrumb" class="text-xs text-white/55 flex items-center flex-wrap gap-x-1.5 mb-4"><a href="public-home.html" class="hover:text-white transition">Home</a><span class="text-white/30">›</span><span class="text-white/85 font-medium truncate">Events</span></nav>
+        <div class="max-w-[1200px] mx-auto px-4 sm:px-6 py-10 md:py-14 relative">
+          <nav aria-label="Breadcrumb" class="text-xs text-white/55 flex items-center flex-wrap gap-x-1.5 mb-2"><a href="public-home.html" class="hover:text-white transition inline-flex items-center min-h-[44px] min-w-[44px]">Home</a><span class="text-white/30">›</span><span class="text-white/85 font-medium truncate">Events</span></nav>
           <h1 class="font-jakarta font-extrabold text-3xl sm:text-5xl mt-1 tracking-tight">Learn, <span class="bg-gradient-to-r from-[#DC183C] to-[#FF9900] bg-clip-text text-transparent">network &amp; grow</span> <button onclick="openBrief()" class="dev-badge align-middle ml-1 w-6 h-6 rounded-full bg-[#FF9900] text-[#0C1F31] items-center justify-center text-[11px] font-bold">i</button></h1>
-          <p class="mt-3 text-white/70 max-w-2xl text-lg">Explore our upcoming and past events. Join in-person summits, live webinars and on-demand replays built for South African SMEs.</p>
+          <p class="mt-3 text-white/70 max-w-2xl text-base md:text-lg">In-person summits and live webinars built for South African SMEs. Upcoming events first; recordings of past events further down.</p>
         </div>
       </section>
 
       <main id="feedTop" class="max-w-[1200px] mx-auto px-4 sm:px-6 py-8 md:py-12 relative z-10">
         <div class="reveal bg-white rounded-2xl shadow-sm border border-[#E7EBEF] p-4 sm:p-5 mb-8 relative z-20" style="animation-delay:120ms; overflow:visible;">
           <div class="flex flex-col lg:flex-row lg:items-center gap-3 relative z-30">
-            <div class="flex items-center gap-2 overflow-x-auto no-scrollbar -mx-1 px-1">
-              <span class="shrink-0 text-xs font-bold text-slate-500 uppercase tracking-wide pr-1">Type</span>
-              ${['All','ONLINE','IN-PERSON'].map(t=>chip(t, state.typeFilter===t, `setState({typeFilter:'${t}',page:1})`)).join('')}
+            <div class="flex items-center gap-2 overflow-x-auto no-scrollbar -mx-1 px-1" role="group" aria-label="Format">
+              <span class="shrink-0 text-xs font-bold text-slate-500 uppercase tracking-wide pr-1">Format</span>
+              ${[['All','All'],['IN-PERSON','In person'],['ONLINE','Online']].map(t=>chip(t[1], state.typeFilter===t[0], `setState({typeFilter:'${t[0]}'})`)).join('')}
             </div>
             <div class="hidden lg:block w-px h-7 bg-[#E7EBEF]"></div>
             <div class="relative shrink-0 z-40" id="topicDropdownWrap">
-              <button onclick="toggleTopicDropdown(event)" class="inline-flex items-center gap-2 pl-4 pr-3 h-9 rounded-full text-sm font-semibold border transition-colors ${state.categoryFilter!=='All'?'bg-[#FDECEF] text-[#DC183C] border-[#F6C7D3]':'bg-white text-slate-600 border-[#E7EBEF] hover:bg-slate-50'}">
+              <button type="button" onclick="toggleTopicDropdown(event)" aria-expanded="${state.topicOpen}" class="inline-flex items-center gap-2 pl-4 pr-3 min-h-[44px] md:min-h-[36px] rounded-full text-sm font-semibold border transition-colors ${state.categoryFilter!=='All'?'bg-[#FDECEF] text-[#DC183C] border-[#F6C7D3]':'bg-white text-slate-600 border-[#E7EBEF] hover:bg-slate-50'}">
                 <i data-lucide="tag" class="w-3.5 h-3.5"></i>
                 <span>${state.categoryFilter==='All' ? 'Topic' : state.categoryFilter}</span>
                 <i data-lucide="chevron-down" class="w-3.5 h-3.5 transition-transform ${state.topicOpen?'rotate-180':''}"></i>
               </button>
               ${state.topicOpen ? `
               <div class="absolute z-50 top-full left-0 mt-2 w-64 bg-white rounded-xl border border-[#E7EBEF] shadow-xl py-1.5 max-h-80 overflow-y-auto">
-                ${['All',...CATEGORIES].map(c=>`<button onclick="event.stopPropagation(); setState({categoryFilter:'${c.replace(/'/g,"\\'")}',page:1,topicOpen:false})" class="w-full text-left px-4 py-2.5 text-sm flex items-center justify-between gap-2 hover:bg-slate-50 transition-colors ${state.categoryFilter===c?'text-[#DC183C] font-bold':'text-slate-600 font-medium'}"><span>${c}</span>${state.categoryFilter===c?'<i data-lucide="check" class="w-4 h-4 shrink-0"></i>':''}</button>`).join('')}
+                ${['All',...CATEGORIES].map(c=>`<button type="button" onclick="event.stopPropagation(); setState({categoryFilter:'${c.replace(/'/g,"\\'")}',topicOpen:false})" class="w-full text-left px-4 min-h-[44px] text-sm flex items-center justify-between gap-2 hover:bg-slate-50 transition-colors ${state.categoryFilter===c?'text-[#DC183C] font-bold':'text-slate-600 font-medium'}"><span>${c}</span>${state.categoryFilter===c?'<i data-lucide="check" class="w-4 h-4"></i>':''}</button>`).join('')}
               </div>` : ''}
             </div>
             <div class="flex items-center gap-2 lg:ml-auto">
-              <div class="relative flex-1 lg:flex-initial lg:w-56"><i data-lucide="search" class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 w-4 h-4"></i><input id="searchInput" type="text" placeholder="Search events…" value="${esc(state.search)}" oninput="state.search=this.value; state.page=1; renderApp();" class="w-full pl-9 pr-3 py-2.5 rounded-lg border border-[#E7EBEF] text-sm bg-slate-50 outline-none focus:border-[#DC183C]" /></div>
-              <button onclick="setState({typeFilter:'All',categoryFilter:'All',search:'',page:1,topicOpen:false})" aria-label="Reset filters" class="shrink-0 w-11 h-11 grid place-items-center rounded-lg text-slate-500 bg-white border border-[#E7EBEF] hover:bg-slate-50"><i data-lucide="rotate-ccw" class="w-4 h-4"></i></button>
+              <div class="relative flex-1 lg:flex-initial lg:w-56"><i data-lucide="search" class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 w-4 h-4"></i><input id="searchInput" type="search" aria-label="Search events" placeholder="Search events" value="${esc(state.search)}" oninput="state.search=this.value; renderApp(); const s=document.getElementById('searchInput'); s.focus(); s.setSelectionRange(s.value.length,s.value.length);" class="w-full pl-9 pr-3 min-h-[44px] rounded-lg border border-[#E7EBEF] text-[16px] md:text-sm bg-slate-50 outline-none focus:border-[#DC183C] focus:bg-white" /></div>
+              <button type="button" onclick="setState({typeFilter:'All',categoryFilter:'All',search:'',topicOpen:false})" aria-label="Reset filters" class="shrink-0 w-11 h-11 grid place-items-center rounded-lg text-slate-500 bg-white border border-[#E7EBEF] hover:bg-slate-50"><i data-lucide="rotate-ccw" class="w-4 h-4"></i></button>
             </div>
           </div>
         </div>
 
+        <h2 class="font-jakarta font-extrabold text-[22px] md:text-2xl mb-5">Upcoming events</h2>
         ${grid}
+        ${pastBlock}
       </main>`;
     }
 
@@ -403,10 +434,10 @@
     const BRIEF = {
       title:'Events &amp; Webinars (Archive)',
       sub:'WordPress CPT, <code>event</code>',
-      purpose:'Public archive of upcoming, live and past events (in-person summits + online webinars). Feed grid + filters + search + 12/page pagination. Filterable by <b>type</b> (Online / In-Person) and by <b>topic</b> (8 categories). Default sort: <b>LIVE NOW → Upcoming (soonest first) → Past (most recent first)</b>. Presentations and photo galleries live inside each event page, no standalone library template.',
+      purpose:'Public archive of events (in-person summits and online webinars). <b>Lane E, 14 Oct (Mobile + PWA audit P4):</b> upcoming events first (LIVE NOW, then soonest); past events sit behind a collapsed <b>Past events</b> section with their recordings, never above an upcoming one. The filter is labelled <b>Format</b> (In person / Online), not Status. Every upcoming card has <b>Add to calendar</b> (Google, Apple .ics, Outlook).',
       data:'Event (CPT <code>event</code>): <code>{ post_title, post_name, post_excerpt, meta_type ("IN-PERSON"|"ONLINE"), meta_start (datetime), meta_end (datetime), meta_venue (name/address for IN-PERSON) or meta_platform ("Zoom"/"Teams"…), taxonomy_category, meta_hero_image, meta_featured (bool) }</code>. Status computed at render, Upcoming / LIVE NOW / Past.',
-      logic:'Archive template = <code>archive-event.php</code>. Query all published events, sort featured→date-asc. Filter chips (type, category), search string. "Learn more" routes to <code>event-single-in-person.html</code> or <code>event-single-online.html</code> based on <code>meta_type</code>. Past-event replays and photo galleries are separate templates, see BRIEFs in those files.',
-      components:'hero + breadcrumb · filter/search bar (type chips + topic dropdown + search + reset, single row) · event card grid (image + category chip + status chip + type + title + date/time + Learn more) · pagination · empty state.',
+      logic:'Archive template = <code>archive-event.php</code>. Query upcoming (meta_start &gt;= now, ascending) and past (descending, 6 at a time behind "Show more past events") separately. Format chips filter meta_type; Topic filters the category; search matches title, excerpt and category. Add to calendar builds the Google and Outlook deep links and a downloadable .ics (UID event-ID@smesouthafrica.co.za) from meta_start/meta_end and the venue or platform. Exactly one H1 (the hero); section titles are H2.',
+      components:'hero + breadcrumb · filter bar (Format chips + Topic dropdown + search + reset) · Upcoming events grid (category, LIVE NOW chip, format, title, date and time, Learn more / Join now, Add to calendar menu) · Past events disclosure (recording or highlights link, show more) · empty state.',
       specs:'<b>Hero:</b> hero-bg gradient, max-w-[1200px], py-14. H1 Plus Jakarta 800, 30/48px, leading-tight. Sub 18px white/70.<br/><b>Filter bar:</b> rounded-2xl border #E7EBEF p-5, overflow visible (for dropdown). Type chips h-9 px-4 rounded-full, active #DC183C white, inactive white/slate-500 border #E7EBEF. Topic dropdown: h-9 pill button (tag icon + label + chevron), active state #FDECEF/#DC183C border #F6C7D3; opens an absolute panel (w-64, rounded-xl, shadow-xl, z-30) listing All + 8 categories with a check mark on the active row; closes on selection or outside click. Search input h-11 pl-9 pr-3 rounded-lg bg slate-50 border #E7EBEF, focus border #DC183C.<br/><b>Event card:</b> rounded-2xl border #E7EBEF shadow-sm; hover shadow-xl + translateY(-4px). Image 224px cover, category chip absolute top-3 left-3 (#FDECEF/#DC183C). Type row 12px uppercase slate-500 with map-pin/video icon. Title Plus Jakarta 800 18px #0C1F31 hover #DC183C. Description slate-500 line-clamp-3. Date/time weight 800 14px #121A21. CTA h-12 rounded-xl #0C1F31 hover #16324A.<br/><b>Past-events band:</b> 2-col md, rounded-2xl border #E7EBEF p-6. 48&times;48 rounded-xl icon tile. Eyebrow 10px uppercase (#DC183C or #AE6B0A) + title 18px 800 + description slate-500.'
     };
 
@@ -426,6 +457,7 @@
     });
     document.addEventListener('click', (e)=>{
       if(state.topicOpen && !e.target.closest('#topicDropdownWrap')){ state.topicOpen = false; renderApp(); }
+      if(state.calOpen != null && !e.target.closest('.cal-wrap')){ state.calOpen = null; renderApp(); }
     });
   </script>
 <script>
@@ -447,15 +479,16 @@
     document.getElementById(CHROME_DROPS[name]).classList.toggle('hidden');
   }
   function closeChromeDrop(name){
-    document.getElementById(CHROME_DROPS[name]).classList.add('hidden');
+    const d=document.getElementById(CHROME_DROPS[name]); if(d) d.classList.add('hidden');
   }
   document.addEventListener('click', e=>{
-    if(!e.target.closest('nav .relative')) Object.values(CHROME_DROPS).forEach(id=>document.getElementById(id).classList.add('hidden'));
+    if(!e.target.closest('nav .relative')) Object.values(CHROME_DROPS).forEach(id=>{ const d=document.getElementById(id); if(d) d.classList.add('hidden'); });
   });
   document.addEventListener('keydown', e=>{
     if(e.key==='Escape'){ const o=document.getElementById('chromeSearchOverlay'); if(o && o.classList.contains('active')) toggleChromeSearch(); }
   });
 </script>
 <script src="member-chrome.js"></script>
+<script src="assets/save-module.js"></script>
 </body>
 </html>
