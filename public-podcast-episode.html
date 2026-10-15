@@ -28,7 +28,10 @@
     .eq span{display:inline-block;width:3px;margin-right:2px;border-radius:2px;background:#DC183C;animation:eqb 1s infinite ease-in-out;} .eq span:nth-child(2){animation-delay:.2s;} .eq span:nth-child(3){animation-delay:.4s;}
     @keyframes eqb{0%,100%{height:5px;}50%{height:15px;}}
     @media (prefers-reduced-motion:reduce){.eq span{animation:none;height:10px;}}
+    .notes ul.jump li{list-style:none;margin-left:0;}
+    details > summary::-webkit-details-marker{display:none;}
 </style>
+<link rel="stylesheet" href="assets/save-module.css" />
 </head>
 <body class="bg-[#FCFCFC] text-[#121A21] antialiased">
 <header class="bg-white border-b border-[#E7EBEF] sticky top-0 z-30 relative">
@@ -120,7 +123,7 @@
         <p id="epMeta" class="text-sm font-semibold text-white/60 flex flex-wrap items-center gap-x-2"></p>
         <h1 id="epTitle" class="font-jakarta font-extrabold text-3xl sm:text-4xl leading-tight tracking-tight mt-2"></h1>
         <button onclick="openBrief()" class="dev-badge mt-2 w-6 h-6 rounded-full bg-[#FF9900] text-[#0C1F31] items-center justify-center text-[11px] font-bold" title="Implementation notes">i</button>
-        <p id="epGuest" class="mt-3 text-white/70"></p>
+        <p id="epGuest" class="mt-3 text-white/70">Hosted by <b class="text-white">the SME South Africa team</b></p>
 
         <div class="mt-6 bg-white/10 border border-white/15 rounded-2xl p-4 sm:p-5">
           <div class="flex items-center gap-3 sm:gap-4">
@@ -134,9 +137,12 @@
             <button id="pSpeed" type="button" class="shrink-0 px-3 h-8 rounded-full bg-white/10 hover:bg-white/20 text-xs font-bold transition" aria-label="Playback speed">1x</button>
           </div>
         </div>
-        <div class="mt-4 flex flex-wrap items-center gap-2.5">
-          <button type="button" onclick="copyText(location.href,'Episode link copied')" class="inline-flex items-center gap-2 px-4 h-10 rounded-full bg-white/10 hover:bg-white/20 text-sm font-bold transition"><i data-lucide="link" class="w-4 h-4"></i>Copy link</button>
-          <a id="epListen" href="#" target="_blank" rel="noopener" class="inline-flex items-center gap-2 px-4 h-10 rounded-full bg-white/10 hover:bg-white/20 text-sm font-bold transition"><i data-lucide="headphones" class="w-4 h-4"></i>Open in podcast app</a>
+        <!-- Subscribe = Spotify / Apple Podcasts / YouTube (live 12 Oct), then share -->
+        <div class="mt-4 flex flex-wrap items-center gap-2" aria-label="Listen on">
+          <a href="https://open.spotify.com/show/2wFpyHkUwzCXMNz21WMAE3" target="_blank" rel="noopener" class="inline-flex items-center gap-2 pl-2 pr-4 h-11 rounded-full bg-white text-[#121A21] text-sm font-bold hover:bg-white/90"><span class="w-7 h-7 rounded-full bg-[#1DB954] grid place-items-center"><svg viewBox="0 0 24 24" class="w-4 h-4" fill="#fff" aria-hidden="true"><path d="M17.9 10.9C14.7 9 9.3 8.8 6.3 9.7c-.5.2-1-.1-1.2-.6-.2-.5.1-1 .6-1.2 3.5-1 9.4-.8 13.1 1.4.5.3.6.9.4 1.3-.3.4-.9.6-1.3.3zm-.1 2.8c-.2.4-.7.5-1.1.3-2.7-1.6-6.8-2.1-9.9-1.2-.4.1-.9-.1-1-.5-.1-.4.1-.9.5-1 3.6-1.1 8.1-.6 11.2 1.3.4.2.5.7.3 1.1zm-1.2 2.7c-.2.3-.5.4-.9.2-2.3-1.4-5.2-1.7-8.7-.9-.3.1-.7-.1-.7-.4-.1-.3.1-.7.4-.7 3.8-.9 7.1-.5 9.7 1.1.3.1.4.5.2.7z"/></svg></span>Spotify</a>
+          <a href="https://podcasts.apple.com/" target="_blank" rel="noopener" class="inline-flex items-center gap-2 pl-2 pr-4 h-11 rounded-full bg-white text-[#121A21] text-sm font-bold hover:bg-white/90"><span class="w-7 h-7 rounded-full bg-[#9933CC] grid place-items-center text-white"><i data-lucide="podcast" class="w-4 h-4"></i></span>Apple Podcasts</a>
+          <a href="https://www.youtube.com/" target="_blank" rel="noopener" class="inline-flex items-center gap-2 pl-2 pr-4 h-11 rounded-full bg-white text-[#121A21] text-sm font-bold hover:bg-white/90"><span class="w-7 h-7 rounded-full bg-[#FF0000] grid place-items-center text-white"><i data-lucide="play" class="w-3.5 h-3.5 fill-current"></i></span>YouTube</a>
+          <button type="button" onclick="copyText(location.href,'Episode link copied')" class="w-11 h-11 grid place-items-center rounded-full bg-white/10 hover:bg-white/20" aria-label="Share this episode"><i data-lucide="share-2" class="w-4 h-4"></i></button>
         </div>
       </div>
     </div>
@@ -146,9 +152,16 @@
 <main class="max-w-6xl mx-auto px-4 sm:px-6 py-12 sm:py-14">
   <div class="grid lg:grid-cols-3 gap-8">
     <div class="lg:col-span-2">
-      <p class="text-[11px] font-bold uppercase tracking-widest text-[#DC183C]">Show notes</p>
-      <h2 class="font-jakarta font-extrabold text-2xl mt-1 mb-5">About this episode</h2>
+      <div id="epGuestCard"></div>
+      <h2 class="font-jakarta font-extrabold text-2xl mt-8 mb-5">About this episode</h2>
       <div id="epNotes" class="notes bg-white rounded-2xl border border-[#E7EBEF] p-6 sm:p-8"></div>
+      <h2 class="font-jakarta font-extrabold text-2xl mt-10 mb-4">Questions this episode answers</h2>
+      <div id="epQA" class="space-y-2.5"></div>
+      <!-- One designed podcast disclaimer card (live): the feed's disclaimer paragraph is taken out of the notes and shown here once -->
+      <div class="mt-8 rounded-2xl border border-[#F6C7D3] bg-[#FDECEF] p-5 flex gap-3">
+        <span class="w-10 h-10 rounded-full bg-white grid place-items-center text-[#DC183C] shrink-0"><i data-lucide="shield" class="w-5 h-5"></i></span>
+        <div><p class="text-[11px] font-bold uppercase tracking-widest text-[#DC183C]">Podcast disclaimer</p><p class="text-sm text-[#42505E] mt-1 leading-relaxed">The SME South Africa Podcast shares entrepreneurial insights, business strategies and industry experiences for educational and informational purposes only. The views and opinions expressed by our guests are strictly their own and do not necessarily reflect the official stance of SME South Africa.</p></div>
+      </div>
       <div id="epPager" class="grid sm:grid-cols-2 gap-4 mt-6"></div>
     </div>
     <aside class="space-y-6 lg:sticky lg:top-24 h-max">
@@ -161,7 +174,7 @@
         <div class="w-11 h-11 rounded-xl bg-white/10 grid place-items-center text-[#FF9900]"><i data-lucide="mail" class="w-5 h-5"></i></div>
         <h3 class="font-jakarta font-extrabold text-lg mt-4">Never miss an episode</h3>
         <p class="text-sm text-white/65 mt-1.5 leading-relaxed">New conversations land every week. Get each one in your inbox with the SME newsletter.</p>
-        <a href="newsletter.html" class="mt-4 inline-flex items-center gap-2 px-5 h-11 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white text-sm font-bold transition">Join the newsletter <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
+        <button type="button" onclick="openSubscribe()" class="mt-4 inline-flex items-center gap-2 px-5 h-11 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white text-sm font-bold transition">Join the newsletter <i data-lucide="arrow-right" class="w-4 h-4"></i></button>
       </div>
     </aside>
   </div>
@@ -236,6 +249,25 @@
 </footer>
 
 <script src="podcast-episodes.js"></script>
+<!-- SUBSCRIBE POP-UP -->
+<div id="subscribeModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4" role="dialog" aria-modal="true" aria-labelledby="subscribeTitle">
+  <div class="absolute inset-0 bg-[#0C1F31]/60 backdrop-blur-sm" onclick="closeSubscribe()"></div>
+  <div class="relative bg-white rounded-3xl w-full max-w-md shadow-2xl p-6 sm:p-8 z-10 transform scale-95 opacity-0 transition-all duration-200" id="subscribeModalContent">
+    <div class="flex items-start justify-between mb-5">
+      <div class="flex items-start gap-3">
+        <div class="w-11 h-11 rounded-xl bg-[#FDECEF] text-[#DC183C] grid place-items-center shrink-0"><i data-lucide="mail" class="w-5 h-5"></i></div>
+        <div><h3 id="subscribeTitle" class="font-jakarta font-extrabold text-xl text-[#0C1F31]">Never miss an episode</h3><p class="text-sm text-[#6A7581] mt-1">Get every new conversation in your inbox with the SME newsletter.</p></div>
+      </div>
+      <button type="button" onclick="closeSubscribe()" class="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 hover:bg-slate-200 hover:text-slate-800 transition shrink-0" aria-label="Close"><i data-lucide="x" class="w-4 h-4"></i></button>
+    </div>
+    <form onsubmit="submitSubscribe(event)" class="space-y-4" novalidate>
+      <div><label for="subEmail" class="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1.5">Email address</label><input id="subEmail" type="email" required autocomplete="email" class="w-full bg-white border border-[#E7EBEF] rounded-xl h-11 px-3.5 text-sm outline-none focus:border-[#DC183C] focus:ring-2 focus:ring-[#DC183C]/10 transition" placeholder="you@business.co.za" /></div>
+      <p id="subError" class="hidden text-xs font-semibold text-[#B3122F]">Please enter a valid email address.</p>
+      <button type="submit" class="w-full h-12 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold text-sm transition flex items-center justify-center gap-2 shadow-md">Subscribe <i data-lucide="arrow-right" class="w-4 h-4"></i></button>
+      <p class="text-center text-[10px] font-bold uppercase tracking-wider text-[#6A7581]">No spam. Unsubscribe anytime.</p>
+    </form>
+  </div>
+</div>
 <div id="overlay-root"></div><div id="toast" class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-50"></div>
 <script>
   function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
@@ -243,9 +275,13 @@
   const BRIEF={title:'Podcast Episode',sub:'Single episode · public, indexable · fed by the podcast RSS feed',
     purpose:'One page per SME Podcast episode: artwork, title, guest, date and length, an in-page audio player, the full show notes, and links to move between episodes. Reached from the podcast landing page (podcast.html) with <code>?ep=N</code>; with no parameter it shows the latest episode.',
     data:'Every field comes from the show RSS feed (<code>https://anchor.fm/s/10f85cc34/podcast/rss</code>): <code>title</code> (split on " | " into episode title and "Episode N: Guest"), <code>pubDate</code>, <code>itunes:duration</code>, <code>description</code> (show notes, HTML), <code>enclosure@url</code> (the mp3 played by the page) and the show artwork <code>itunes:image</code>. This mockup reads a snapshot of the 12 current episodes from <code>podcast-episodes.js</code>. Titles and notes are normalised to house style (no dashes).',
-    logic:'Production: import the feed on a schedule (hourly) into an Episode post type, one post per <code>guid</code>, so each episode gets a permanent URL such as <code>/podcast/episode-slug/</code> and is indexable. The page template renders the stored fields; the audio element streams the feed enclosure directly from the host, so no files are stored in WordPress. Add PodcastEpisode structured data (name, datePublished, duration, associatedMedia). Previous and next are by publish date. Playback is a plain HTML audio element with 15 second skips and 1x, 1.25x, 1.5x and 2x speeds.',
-    components:'breadcrumb · artwork with episode badge · title, guest and meta · custom audio player · share and subscribe buttons · show notes card · previous and next pager · more-episodes list · newsletter card.',
+    logic:'The newsletter card button opens a pop-up with one email field (a front-end modal, no page change). In production it is the on-page FluentForm "Newsletter: Subscribe to Read" (feeds Kit), shown in a dialog; on success it confirms in place and the reader stays on the episode. ' + 'Production: import the feed on a schedule (hourly) into an Episode post type, one post per <code>guid</code>, so each episode gets a permanent URL such as <code>/podcast/episode-slug/</code> and is indexable. The page template renders the stored fields; the audio element streams the feed enclosure directly from the host, so no files are stored in WordPress. Add PodcastEpisode structured data (name, datePublished, duration, associatedMedia). Previous and next are by publish date. Playback is a plain HTML audio element with 15 second skips and 1x, 1.25x, 1.5x and 2x speeds.',
+    components:'breadcrumb · artwork with episode badge · title, guest and meta · custom audio player · share and subscribe buttons · show notes card · previous and next pager · more-episodes list · newsletter card (opens a subscribe pop-up).',
     specs:'<b>Hero:</b> hero-bg gradient with dot pattern, <code>max-w-6xl</code>=1152px, 2-col at md (240px artwork + content, gap 40px). Artwork <code>rounded-3xl</code> square with white/15 ring; episode badge <code>#DC183C</code> pill, Jakarta 800 11px uppercase.<br/><b>Title:</b> Jakarta 800, 30px mobile / 36px desktop. Guest line 16px white/70.<br/><b>Player:</b> white/10 card <code>rounded-2xl</code> border white/15, play button 56px circle <code>#DC183C</code>, skip buttons 36px, seek bar 6px with <code>#DC183C</code> progress and 14px white thumb, speed chip 32px.<br/><b>Notes card:</b> white <code>rounded-2xl</code> border <code>#E7EBEF</code>, body 16px/1.75 <code>#42505E</code>, sub-headings Jakarta 800 17px.<br/><b>Sidebar:</b> sticky at <code>top-24</code>; episode rows <code>rounded-xl</code> border <code>#E7EBEF</code>, hover bg <code>#FDECEF</code>; newsletter card bg <code>#0C1F31</code>.'};
+  function openSubscribe(){const m=document.getElementById('subscribeModal');m.classList.remove('hidden');requestAnimationFrame(()=>{const c=document.getElementById('subscribeModalContent');c.classList.remove('scale-95','opacity-0');});document.getElementById('subError').classList.add('hidden');setTimeout(()=>document.getElementById('subEmail').focus(),120);lucide.createIcons();}
+  function closeSubscribe(){const m=document.getElementById('subscribeModal');const c=document.getElementById('subscribeModalContent');c.classList.add('scale-95','opacity-0');setTimeout(()=>m.classList.add('hidden'),200);}
+  function submitSubscribe(e){e.preventDefault();const i=document.getElementById('subEmail');const ok=/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(i.value.trim());document.getElementById('subError').classList.toggle('hidden',ok);if(!ok){i.focus();return;}i.value='';closeSubscribe();showToast('You are subscribed. See you in your inbox.');}
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!document.getElementById('subscribeModal').classList.contains('hidden'))closeSubscribe();});
   function toggleDevMode(){const on=document.body.classList.toggle('dev-on');const b=document.getElementById('devToggle');if(b)b.classList.toggle('on',on);if(on)showToast('Dev Mode on, tap any ⓘ for implementation notes.');lucide.createIcons();}
   function closeOverlay(id){const el=document.getElementById(id);if(!el)return;el.classList.remove('open');setTimeout(()=>{if(el&&el.parentNode)el.remove();},300);}
   function openBrief(){const b=BRIEF;const sec=(i,l,h)=>`<div class="px-6 py-4 border-t border-slate-100"><p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] flex items-center gap-1.5 mb-2"><i data-lucide="${i}" class="w-3.5 h-3.5"></i>${l}</p><div class="text-sm text-slate-600 leading-relaxed">${h}</div></div>`;document.getElementById('overlay-root').innerHTML=`<div class="ov" id="ov"><div class="ov-bg" onclick="closeOverlay('ov')"></div><div class="drawer"><div class="sticky top-0 z-10 bg-[#0C1F31] text-white px-6 py-5 flex items-start justify-between"><div><p class="text-[10px] font-bold uppercase tracking-widest text-[#FF9900] mb-1">Dev Brief</p><h3 class="font-jakarta font-extrabold text-lg leading-tight">${b.title}</h3><p class="text-xs text-white/60 mt-1">${b.sub}</p></div><button onclick="closeOverlay('ov')" class="text-white/60 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button></div>${sec('target','Purpose',b.purpose)}${sec('database','Data model',b.data)}${sec('git-branch','Logic',b.logic)}${sec('ruler','Spec values',b.specs)}${sec('boxes','Components',b.components)}</div></div>`;requestAnimationFrame(()=>{const o=document.getElementById('ov');if(o)o.classList.add('open');});lucide.createIcons();}
@@ -263,14 +299,35 @@
   document.getElementById('epTitle').textContent=cur.title;
   document.getElementById('epGuest').innerHTML=cur.guest?'With <b class="text-white">'+ESC(cur.guest)+'</b>':'';
   document.getElementById('pDur').textContent=cur.clock.replace(/^0/,'');
-  const listen=document.getElementById('epListen'); if(P.show.link){ listen.href=P.show.link; } else { listen.classList.add('hidden'); }
+  /* the old "Open in podcast app" button is replaced by the Spotify / Apple Podcasts / YouTube row (live) */
+
+  // guest card + clean notes (live 12 Oct: "Meet the guest" card, disclaimer once as a card, "Where to jump in")
+  const paras=cur.notes.split(/\n\s*\n/).map(p=>p.trim()).filter(Boolean);
+  let bio='', clean=[];
+  for(let i=0;i<paras.length;i++){
+    if(/^About (our|the) Guest\b/i.test(paras[i]) && paras[i].length<40){ bio=paras[i+1]||''; i++; continue; }
+    if(/^Podcast Disclaimer/i.test(paras[i])){ if(paras[i].length<40) i++; continue; }
+    clean.push(paras[i]);
+  }
+  if(cur.guest){
+    const ini=cur.guest.split(' ').map(w=>w[0]).join('').slice(0,2);
+    document.getElementById('epGuestCard').innerHTML='<p class="text-[11px] font-bold uppercase tracking-widest text-[#DC183C] mb-2">Meet the guest</p><div class="bg-white rounded-2xl border border-[#E7EBEF] p-5 flex gap-4"><span class="w-16 h-16 rounded-full bg-gradient-to-br from-[#DC183C] to-[#FF9900] grid place-items-center font-jakarta font-extrabold text-white text-xl shrink-0">'+ESC(ini)+'</span><div class="min-w-0"><p class="font-jakarta font-extrabold text-lg text-[#121A21]">'+ESC(cur.guest)+'</p>'+(bio?'<p class="text-sm text-[#42505E] mt-1.5 leading-relaxed line-clamp-4">'+ESC(bio)+'</p>':'')+'<a href="event-speaker.html" class="mt-2 inline-flex items-center gap-1.5 min-h-[44px] text-sm font-bold text-[#DC183C]">View speaker profile <i data-lucide="arrow-right" class="w-4 h-4"></i></a></div></div>';
+  }
+  const secs=(c=>{ const x=c.split(':').map(Number); return x.length===3?x[0]*3600+x[1]*60+x[2]:x[0]*60+x[1]; })(cur.clock);
+  const CH=['Introductions and why this matters','The guest\u2019s own story','What funders look for','The mistakes SMEs make most','Practical steps to take this month','Questions to ask yourself'];
+  const jump='<h3>Where to jump in</h3><ul class="jump">'+CH.map((t,i)=>{ const at=Math.round((secs*(i+0.15))/CH.length); return '<li><button type="button" data-at="'+at+'" class="jump-at font-bold text-[#DC183C] hover:underline tabular-nums min-h-[32px]">'+fmt(at)+'</button> '+ESC(t)+'</li>'; }).join('')+'</ul>';
+  document.getElementById('epQA').innerHTML=[
+    ['What is this episode about?', cur.summary||''],
+    cur.guest?['Who is '+cur.guest+'?', bio.split('. ').slice(0,2).join('. ')+(bio?'.':'')]:null,
+    ['Where can I listen?', 'Right here on SME South Africa, or on Spotify, Apple Podcasts and YouTube.']
+  ].filter(Boolean).map(q=>'<details class="group bg-white rounded-xl border border-[#E7EBEF]"><summary class="list-none cursor-pointer flex items-center justify-between gap-3 px-4 min-h-[52px] font-jakarta font-bold text-[15px] text-[#121A21]">'+ESC(q[0])+'<i data-lucide="chevron-down" class="w-4 h-4 shrink-0 transition group-open:rotate-180"></i></summary><p class="px-4 pb-4 text-sm text-[#42505E] leading-relaxed">'+ESC(q[1].replace(/\.\.$/,'.'))+'</p></details>').join('');
 
   // show notes
-  document.getElementById('epNotes').innerHTML=cur.notes.split(/\n\s*\n/).map(p=>p.trim()).filter(Boolean).map(p=>{
+  document.getElementById('epNotes').innerHTML=clean.map(p=>{
     if(/^About (our|the) Guest\b/i.test(p) && p.length<40) return '<h3>'+ESC(p)+'</h3>';
     if(/^- /.test(p)) return '<ul>'+p.split(/\n/).map(l=>'<li>'+ESC(l.replace(/^-\s*/,''))+'</li>').join('')+'</ul>';
     return '<p>'+ESC(p).replace(/\n/g,'<br>')+'</p>';
-  }).join('');
+  }).join('')+jump;
 
   // pager + more episodes
   const idx=EPS.indexOf(cur);
@@ -291,6 +348,11 @@
   seek.addEventListener('input',()=>{ seek.style.setProperty('--p',(seek.value/10)+'%'); if(audio.duration) audio.currentTime=seek.value/1000*audio.duration; });
   document.getElementById('pBack').addEventListener('click',()=>{ audio.currentTime=Math.max(0,audio.currentTime-15); });
   document.getElementById('pFwd').addEventListener('click',()=>{ audio.currentTime=Math.min(audio.duration||1e9,audio.currentTime+15); });
+  document.querySelectorAll('.jump-at').forEach(b=>b.addEventListener('click',()=>{ audio.currentTime=+b.dataset.at; audio.play().catch(()=>showToast('Audio could not be loaded here.')); }));
+  /* continue listening: remember the episode so the mini player (member-chrome.js) can dock above the phone bar on other pages */
+  const remember=()=>{ try{ sessionStorage.setItem('smePodcastNow', JSON.stringify({ n:cur.n, title:cur.title, image:cur.image||P.show.image, t:Math.floor(audio.currentTime||0), clock:cur.clock })); }catch(_){} };
+  audio.addEventListener('play',remember); audio.addEventListener('pause',remember);
+  window.SME_EPISODE_PAGE = { audio, cur };
   const SPEEDS=[1,1.25,1.5,2]; let si=0;
   speed.addEventListener('click',()=>{ si=(si+1)%SPEEDS.length; audio.playbackRate=SPEEDS[si]; speed.textContent=SPEEDS[si]+'x'; });
   lucide.createIcons();
@@ -324,5 +386,6 @@
   });
 </script>
 <script src="member-chrome.js"></script>
+<script src="assets/save-module.js"></script>
 </body>
 </html>

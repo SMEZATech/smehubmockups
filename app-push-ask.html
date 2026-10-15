@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en-ZA">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Phone alerts ask | SME HUB app</title>
+  <meta name="description" content="SME South Africa app: asking for phone alerts only after a moment of value, the system prompt it leads to, an alert on the phone, and Push on this device in notification preferences." />
+  <meta name="theme-color" content="#0C1F31" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  <script>tailwind.config = { theme: { extend: { fontFamily: { jakarta: ['Plus Jakarta Sans', 'sans-serif'], inter: ['Inter', 'system-ui', 'sans-serif'] } } } };</script>
+  <style>
+    html, body { font-family: 'Inter', system-ui, sans-serif; }
+    .font-jakarta { font-family: 'Plus Jakarta Sans', sans-serif; letter-spacing: 0.005em; }
+    @keyframes slideUp { from { opacity:0; transform:translateY(16px); } to { opacity:1; transform:none; } }
+    .slot { position:fixed; left:12px; right:12px; bottom:calc(72px + env(safe-area-inset-bottom)); z-index:45; animation:slideUp .35s cubic-bezier(.2,.7,.2,1) both; }
+    .scrim { position:fixed; inset:0; background:rgba(0,0,0,.42); z-index:65; }
+    .sw { position:relative; width:52px; height:32px; border-radius:999px; background:#CBD5E1; transition:background .2s; flex:none; }
+    .sw::after { content:""; position:absolute; top:3px; left:3px; width:26px; height:26px; border-radius:999px; background:#fff; box-shadow:0 1px 3px rgba(0,0,0,.25); transition:transform .2s; }
+    .swb { width:56px; height:44px; display:grid; place-items:center; flex:none; }
+    .swb[aria-checked="true"] .sw { background:#29A37A; } .swb[aria-checked="true"] .sw::after { transform:translateX(20px); }
+  </style>
+</head>
+<body class="bg-[#FCFCFC] text-[#121A21] antialiased">
+<header></header>
+<div id="app-root"></div>
+<script src="app-mockup-kit.js"></script>
+<script>
+  const toggle = (id, label, sub, on) => `<div class="flex items-center gap-3 px-4 min-h-[68px] py-3"><div class="flex-1 min-w-0"><p id="${id}-l" class="font-jakarta font-bold text-[15px]">${label}</p>${sub ? `<p class="text-[12.5px] text-slate-500 mt-0.5">${sub}</p>` : ''}</div><button type="button" role="switch" aria-checked="${on}" aria-labelledby="${id}-l" onclick="flip(this)" class="swb"><span class="sw"></span></button></div>`;
+  function flip(b){ const on = b.getAttribute('aria-checked') !== 'true'; b.setAttribute('aria-checked', on); if (b.dataset.master) document.getElementById('pushNote').textContent = on ? 'On for this phone. Turn it off here any time.' : 'Off on this phone. Your other phones keep their own setting.'; }
+  AppKit.init({
+    title: 'Phone alerts: the ask',
+    lead: 'We ask once a member has just done something that will get a reply, never when a page loads. The ask leads to the phone’s own permission prompt; after that, alerts arrive like any app’s, and "Push on this device" in Notification preferences switches them for this phone.',
+    states: [
+      { id:'ask', label:'The ask', icon:'bell-ring', desc:'Right after a post or reply went through: "Get told when someone replies to your post?"' },
+      { id:'system', label:'Phone prompt', icon:'smartphone', desc:'"Turn on alerts" opens the phone’s own prompt (Chrome on Android shown).' },
+      { id:'alert', label:'An alert arrives', icon:'message-circle', desc:'A reply becomes a short alert; tapping it opens the reply.' },
+      { id:'prefs', label:'Push on this device', icon:'settings', desc:'Account settings, Notification preferences: the switch for this phone.' }
+    ],
+    rules: [
+      'Asked only after a post or a reply just went through, in the one banner slot; never on page load.',
+      '"Not now" or the cross hides it for 30 days.',
+      'A few alerts a day at most, none between 21:00 and 07:00 (held and sent from 07:00 as one summary).',
+      'Pushed: replies, mentions, connection requests and acceptances, messages, funding updates. Never promotions.',
+      'iPhone: nothing is offered until the app is on the Home Screen (Apple’s rule, iOS 16.4+).'
+    ],
+    source: 'Matches lane C on the Tshepho copy (smesa-push.php, push.js; shot lane-c/shots/push-ask.png): "Get told when someone replies to your post?", "Turn on alerts", "Not now". Live today the per-phone switch is the account menu item "Turn on phone alerts"; this mockup puts it in Notification preferences as "Push on this device".',
+    render(state){
+      if (state === 'alert') return `<div class="min-h-[640px] bg-gradient-to-b from-[#1d3b52] to-[#0C1F31] text-white px-4 pt-10 pb-24">
+          <h1 class="sr-only">An alert on the phone</h1>
+          <p class="text-center text-[56px] font-light tracking-tight leading-none">18:42</p><p class="text-center text-[13px] text-white/70 mt-1">Tuesday, 14 October</p>
+          <div class="mt-10 space-y-2">
+            <a href="single-post.html" class="block bg-white/90 text-[#121A21] rounded-2xl px-4 py-3 shadow-xl backdrop-blur">
+              <div class="flex items-center gap-2 text-[12px] text-slate-500"><img src="assets/logo-v1-icon.svg" alt="" class="w-4 h-4"> SME South Africa · now</div>
+              <p class="font-bold text-[14.5px] mt-1">New reply</p><p class="text-[14px]">Sipho Dlamini replied to you</p></a>
+            <div class="bg-white/75 text-[#121A21] rounded-2xl px-4 py-3 shadow">
+              <div class="flex items-center gap-2 text-[12px] text-slate-500"><img src="assets/logo-v1-icon.svg" alt="" class="w-4 h-4"> SME South Africa · 1 h ago</div>
+              <p class="font-bold text-[14.5px] mt-1">New connection request</p><p class="text-[14px]">Lerato Khumalo wants to connect with you</p></div>
+          </div>
+          <p class="mt-8 text-center text-[13px] text-white/75 px-4">Tapping an alert opens the reply, only ever on our own site. Several reactions in a row become one alert, not ten.</p>
+        </div>`;
+      if (state === 'prefs') return `<div class="px-4 py-5 max-w-xl mx-auto">
+          <a href="member-account.html#notifications" class="-ml-2 h-11 inline-flex items-center gap-1.5 px-2 text-[13.5px] font-bold text-slate-600"><i data-lucide="arrow-left" class="w-4 h-4"></i> Account settings</a>
+          <h1 class="font-jakarta font-extrabold text-[24px] tracking-tight mt-1">Notification preferences</h1>
+          <h2 class="mt-5 mb-2 px-1 text-[11px] font-extrabold uppercase tracking-widest text-slate-500">This phone</h2>
+          <div class="bg-white rounded-2xl border border-[#E7EBEF]">
+            <div class="flex items-center gap-3 px-4 min-h-[72px] py-3"><span class="w-10 h-10 rounded-xl bg-[#FDECEF] text-[#DC183C] grid place-items-center shrink-0"><i data-lucide="bell-ring" class="w-5 h-5"></i></span><div class="flex-1 min-w-0"><p id="push-l" class="font-jakarta font-bold text-[15px]">Push on this device</p><p id="pushNote" class="text-[12.5px] text-slate-500 mt-0.5">Off on this phone. Your other phones keep their own setting.</p></div><button type="button" role="switch" data-master="1" aria-checked="false" aria-labelledby="push-l" onclick="flip(this)" class="swb"><span class="sw"></span></button></div>
+          </div>
+          <p class="px-1 mt-2 text-[12.5px] text-slate-500">A few a day at most, and none between 21:00 and 07:00.</p>
+          <h2 class="mt-6 mb-2 px-1 text-[11px] font-extrabold uppercase tracking-widest text-slate-500">Tell me when</h2>
+          <div class="bg-white rounded-2xl border border-[#E7EBEF] divide-y divide-[#EEF1F4]">
+            ${toggle('t1', 'Someone replies or mentions me', '', true)}${toggle('t2', 'Someone wants to connect', 'And when they accept your request', true)}${toggle('t3', 'I get a message', '', true)}${toggle('t4', 'My funding application moves', '', true)}${toggle('t5', 'My posts get attention', 'Reactions, grouped into one alert', false)}
+          </div>
+          <p class="px-1 mt-3 text-[12.5px] text-slate-500">These choices apply to alerts in your Inbox, by email and on your phone.</p>
+        </div>`;
+      let html = AppKit.backdrop('hub', { mine:true });
+      if (state === 'ask' || state === 'system') html += `<div class="slot"><div role="dialog" aria-label="Phone alerts" class="relative bg-white rounded-2xl border border-[#E7EBEF] shadow-[0_12px_32px_-8px_rgba(12,31,49,.35)] p-4 pr-12">
+          <p class="font-jakarta font-extrabold text-[17px] leading-snug">Get told when someone replies to your post?</p>
+          <p class="text-[13.5px] text-slate-600 mt-1 leading-snug">Turn on phone alerts: a short message when it happens, never more than a few a day, and none at night.</p>
+          <div class="mt-3 flex gap-2"><a href="?state=system" class="h-11 px-5 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white text-[14px] font-bold inline-flex items-center">Turn on alerts</a><a href="?state=prefs" class="h-11 px-5 rounded-full bg-slate-100 hover:bg-slate-200 text-[14px] font-bold inline-flex items-center">Not now</a></div>
+          <a href="?state=prefs" aria-label="Close" class="absolute top-1.5 right-1.5 w-11 h-11 grid place-items-center rounded-full text-slate-400 hover:bg-slate-100"><i data-lucide="x" class="w-5 h-5"></i></a></div></div>`;
+      if (state === 'system') html += `<div class="scrim"></div><div class="fixed inset-x-4 top-[30%] z-[66] bg-white rounded-3xl shadow-2xl p-6" role="dialog" aria-label="Show notifications">
+          <p class="text-[14.5px] leading-relaxed"><b>smesouthafrica.co.za</b> wants to</p>
+          <p class="mt-2 flex items-center gap-2 text-[15px]"><i data-lucide="bell" class="w-5 h-5 text-slate-500"></i> Show notifications</p>
+          <div class="mt-6 flex justify-end gap-2"><a href="?state=prefs" class="h-11 px-4 rounded-full text-[14px] font-bold text-[#2F5FD0] inline-flex items-center">Block</a><a href="?state=alert" class="h-11 px-5 rounded-full bg-[#2F5FD0] text-white text-[14px] font-bold inline-flex items-center">Allow</a></div>
+          <p class="mt-3 text-[11.5px] text-slate-400">This prompt is the phone’s own; we only ask for it after the member says yes.</p></div>`;
+      if (state === 'ask') html = html.replace('<div class="slot">', '<div class="fixed ' + (AppKit.framed ? 'top-[72px]' : 'top-[176px]') + ' inset-x-0 z-40 flex justify-center"><div class="bg-[#0C1F31] text-white rounded-full pl-3 pr-5 py-2.5 shadow-2xl flex items-center gap-2 text-sm font-semibold" style="border-left:4px solid #29A37A"><i data-lucide="check-circle" class="w-4 h-4" style="color:#29A37A"></i>Your post is live</div></div><div class="slot">');
+      return html;
+    },
+    noChrome: s => s === 'alert'
+  });
+</script>
+<script>window.SME_MEMBER_PAGE=true;</script>
+<script src="member-chrome.js"></script>
+</body>
+</html>

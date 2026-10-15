@@ -229,15 +229,17 @@
 <main class="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
 
 <div class="max-w-3xl mx-auto">
-  <div class="flex items-center gap-1 text-[10px] font-bold mb-3"><span class="uppercase tracking-widest text-slate-400 mr-1">Preview</span><a href="?notifs=has" data-nf="has" class="h-6 leading-6 px-2.5 rounded-full bg-slate-100 text-slate-600 hover:bg-slate-200">Busy</a><a href="?notifs=few" data-nf="few" class="h-6 leading-6 px-2.5 rounded-full bg-slate-100 text-slate-600 hover:bg-slate-200">A few</a><a href="?notifs=empty" data-nf="empty" class="h-6 leading-6 px-2.5 rounded-full bg-slate-100 text-slate-600 hover:bg-slate-200">None yet</a></div>
+  <div class="preview-switch flex items-center gap-1 text-[10px] font-bold mb-3"><span class="uppercase tracking-widest text-slate-400 mr-1">Preview</span><a href="?notifs=has" data-nf="has" class="h-6 leading-6 px-2.5 rounded-full bg-slate-100 text-slate-600 hover:bg-slate-200">Busy</a><a href="?notifs=few" data-nf="few" class="h-6 leading-6 px-2.5 rounded-full bg-slate-100 text-slate-600 hover:bg-slate-200">A few</a><a href="?notifs=empty" data-nf="empty" class="h-6 leading-6 px-2.5 rounded-full bg-slate-100 text-slate-600 hover:bg-slate-200">None yet</a></div>
   <div class="flex items-start justify-between gap-3 mb-4">
     <div><h1 class="font-jakarta font-extrabold text-[26px] tracking-tight flex items-center gap-2">Notifications <button onclick="openBrief('notifications')" class="dev-badge w-5 h-5 rounded-full bg-[#DC183C] text-white items-center justify-center text-[10px] font-bold leading-none animate-pulse" title="Implementation notes">i</button></h1>
       <p class="text-[14px] text-slate-500 mt-1">Everything that needs you, in one place.</p></div>
-    <div class="flex items-center gap-2 shrink-0"><button onclick="markAll()" class="h-10 px-4 rounded-full border border-slate-200 text-[13px] font-bold hover:border-[#0C1F31] transition">Mark all as read</button><a href="member-account.html" aria-label="Notification settings" class="h-10 w-10 rounded-full border border-slate-200 grid place-items-center text-slate-500 hover:border-[#0C1F31] transition"><i data-lucide="settings" class="w-4 h-4"></i></a></div>
+    <div class="flex items-center gap-2 shrink-0"><button onclick="markAll()" class="h-11 px-4 rounded-full border border-slate-200 text-[13px] font-bold hover:border-[#0C1F31] transition">Mark all as read</button><a href="member-account.html" aria-label="Notification settings" class="h-11 w-11 rounded-full border border-slate-200 grid place-items-center text-slate-500 hover:border-[#0C1F31] transition"><i data-lucide="settings" class="w-4 h-4"></i></a></div>
   </div>
+  <!-- Phones: notifications are the Alerts tab of the one Inbox (lane E, 14 Oct). Desktop keeps Notifications as its own page. -->
+  <div class="md:hidden -mx-4 mb-3 border-b border-[#E7EBEF] flex" role="navigation" aria-label="Inbox"><a href="member-inbox.html" class="flex-1 h-12 grid place-items-center font-jakarta font-bold text-[14.5px] text-slate-500">Messages</a><a href="member-inbox.html#alerts" aria-current="page" class="relative flex-1 h-12 grid place-items-center font-jakarta font-bold text-[14.5px] text-[#121A21] after:content-[''] after:absolute after:left-3 after:right-3 after:bottom-[-1px] after:h-[3px] after:rounded-t after:bg-[#DC183C]">Alerts</a></div>
   <div id="n-filters" class="flex gap-1.5 overflow-x-auto no-scrollbar pb-2"></div>
   <div id="n-list" class="mt-3"></div>
-  <div class="text-center mt-5"><button id="n-more" onclick="loadEarlier()" class="h-10 px-5 rounded-full border border-slate-200 text-[13px] font-bold hover:border-[#0C1F31]">Load earlier</button></div>
+  <div class="text-center mt-5"><button id="n-more" onclick="loadEarlier()" class="h-11 px-5 rounded-full border border-slate-200 text-[13px] font-bold hover:border-[#0C1F31]">Load earlier</button></div>
 </div>
 
 </main>
@@ -249,7 +251,7 @@
       <span class="font-bold text-slate-500 uppercase tracking-widest text-[10px]">Community</span>
       <button onclick="openBrief('footer')" class="dev-badge w-4 h-4 rounded-full bg-[#DC183C] text-white items-center justify-center text-[9px] font-bold leading-none animate-pulse" title="Implementation notes">i</button>
     </div>
-    <nav class="flex items-center gap-5 text-xs font-semibold text-slate-500">
+    <nav class="flex items-center gap-5 text-xs font-semibold text-slate-500 [&>a]:min-h-[44px] [&>a]:min-w-[44px] [&>a]:justify-center [&>a]:inline-flex [&>a]:items-center md:[&>a]:min-h-0">
       <a href="public-about.html" class="hover:text-[#DC183C] transition-colors">About</a>
       <a href="public-help.html" class="hover:text-[#DC183C] transition-colors">Help Centre</a>
       <a href="public-terms.html" class="hover:text-[#DC183C] transition-colors">Terms</a>
@@ -266,8 +268,6 @@
 <!-- Toast container -->
 <div id="toast" class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-[100]"></div>
 
-<div class="lg:hidden" style="height:calc(64px + env(safe-area-inset-bottom))"></div>
-<div id="overlay-root"></div>
 <script>
   const BRIEFS = {
     notifications: { title:'Notifications', sub:'The full list behind the header bell',
@@ -326,18 +326,18 @@
   function renderFilters(){
     const n = N.filter(x => x.unread).length;
     const f = [['all','All'],['unread','Unread' + (n ? ' (' + n + ')' : '')],...Object.keys(KIND).filter(k => k !== 'system').map(k => [k, KIND[k][2]])];
-    document.getElementById('n-filters').innerHTML = f.map(x => `<button onclick="filter='${x[0]}';renderFilters();render()" class="shrink-0 h-9 px-4 rounded-full text-[13px] font-bold transition ${filter === x[0] ? 'bg-[#0C1F31] text-white' : 'bg-white border border-slate-200 text-slate-600 hover:border-[#0C1F31]'}">${x[1]}</button>`).join('');
+    document.getElementById('n-filters').innerHTML = f.map(x => `<button onclick="filter='${x[0]}';renderFilters();render()" class="shrink-0 h-11 md:h-9 px-4 rounded-full text-[13px] font-bold transition ${filter === x[0] ? 'bg-[#0C1F31] text-white' : 'bg-white border border-slate-200 text-slate-600 hover:border-[#0C1F31]'}">${x[1]}</button>`).join('');
   }
   function row(x){
     const [icon, col] = KIND[x.k];
     return `<div class="group relative flex gap-3 p-4 border-b border-slate-100 last:border-0 ${x.unread ? 'bg-[#FDECEF]/40' : 'bg-white'} hover:bg-slate-50 transition">
       <div class="w-10 h-10 rounded-full grid place-items-center shrink-0" style="background:${col}1A;color:${col}"><i data-lucide="${icon}" class="w-5 h-5"></i></div>
       <div class="min-w-0 flex-1"><p class="text-[14px] leading-snug ${x.href ? 'cursor-pointer' : ''}" ${x.href ? `onclick="readAndGo(${x.id},'${x.href}')"` : `onclick="markRead(${x.id})"`}>${x.t}</p><p class="text-[12px] text-slate-400 mt-0.5">${x.ago}</p>
-        ${x.act === 'conn' && !x.done ? `<div class="mt-2.5 flex gap-2"><button onclick="resolve(${x.id},'Connected with Lerato.')" class="h-9 px-4 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white text-[13px] font-bold">Accept</button><button onclick="resolve(${x.id},'Request ignored. They are not told.')" class="h-9 px-4 rounded-full border border-slate-200 text-[13px] font-bold hover:border-[#0C1F31]">Ignore</button></div>` : ''}
-        ${x.act === 'group' && !x.done ? `<div class="mt-2.5 flex gap-2"><button onclick="return false" class="h-9 px-4 rounded-full bg-[#0C1F31] hover:bg-[#16324a] text-white text-[13px] font-bold">View invitation</button><button onclick="resolve(${x.id},'Invitation declined.')" class="h-9 px-4 rounded-full border border-slate-200 text-[13px] font-bold hover:border-[#0C1F31]">Decline</button></div>` : ''}
+        ${x.act === 'conn' && !x.done ? `<div class="mt-2.5 flex gap-2"><button onclick="resolve(${x.id},'Connected with Lerato.')" class="h-11 px-5 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white text-[13.5px] font-bold">Accept</button><button onclick="resolve(${x.id},'Request ignored. They are not told.')" class="h-11 px-5 rounded-full border border-slate-300 text-[13.5px] font-bold hover:border-[#0C1F31]">Ignore</button></div>` : ''}
+        ${x.act === 'group' && !x.done ? `<div class="mt-2.5 flex gap-2"><button onclick="return false" class="h-11 px-4 rounded-full bg-[#0C1F31] hover:bg-[#16324a] text-white text-[13px] font-bold">View invitation</button><button onclick="resolve(${x.id},'Invitation declined.')" class="h-11 px-4 rounded-full border border-slate-200 text-[13px] font-bold hover:border-[#0C1F31]">Decline</button></div>` : ''}
         ${x.done ? `<p class="text-[12.5px] font-semibold text-[#29A37A] mt-2">${esc(x.done)}</p>` : ''}</div>
       ${x.unread ? '<span class="w-2.5 h-2.5 rounded-full bg-[#DC183C] mt-2 shrink-0" aria-label="Unread"></span>' : ''}
-      <div class="relative shrink-0"><button onclick="event.stopPropagation();menu(${x.id})" aria-label="Options" class="p-1.5 rounded-md text-slate-400 hover:text-slate-700 hover:bg-white"><i data-lucide="more-horizontal" class="w-4 h-4"></i></button>
+      <div class="relative shrink-0"><button onclick="event.stopPropagation();menu(${x.id})" aria-label="Options" class="w-11 h-11 -mr-2 -mt-2 grid place-items-center rounded-md text-slate-400 hover:text-slate-700 hover:bg-white"><i data-lucide="more-horizontal" class="w-4 h-4"></i></button>
         <div id="nm-${x.id}" class="hidden absolute right-0 top-full mt-1 w-56 bg-white rounded-xl border border-slate-200 shadow-xl py-1.5 z-20 text-[13px] font-semibold text-slate-700">
           <button onclick="toggleRead(${x.id})" class="w-full text-left px-4 py-2 hover:bg-slate-50">${x.unread ? 'Mark as read' : 'Mark as unread'}</button>
           <button onclick="muteKind('${x.k}')" class="w-full text-left px-4 py-2 hover:bg-slate-50">Turn off ${KIND[x.k][2].toLowerCase()} notifications</button>
@@ -349,7 +349,7 @@
     const el = document.getElementById('n-list');
     if(!list.length && filter === 'all'){ document.getElementById('n-more').classList.add('hidden'); el.innerHTML = `<div class="bg-white rounded-2xl border border-slate-200 p-8 sm:p-10 text-center"><div class="w-16 h-16 rounded-2xl bg-[#F0F5F9] grid place-items-center mx-auto"><i data-lucide="bell" class="w-8 h-8 text-slate-400"></i></div><p class="font-jakarta font-extrabold text-lg mt-4">No notifications yet</p><p class="text-sm text-slate-500 mt-1.5 max-w-md mx-auto leading-relaxed">We only tell you about things that need you. They will show up here when:</p>
       <div class="mt-5 grid sm:grid-cols-2 gap-2.5 text-left max-w-lg mx-auto">${[['message-circle','Someone replies to you or mentions you'],['user-plus','A member wants to connect'],['landmark','Your funding application moves'],['calendar-days','A deadline or an event you joined is close']].map(x => `<div class="flex items-center gap-3 rounded-xl border border-slate-200 p-3 text-[13px] font-semibold"><i data-lucide="${x[0]}" class="w-4 h-4 text-[#DC183C] shrink-0"></i>${x[1]}</div>`).join('')}</div>
-      <div class="mt-6 flex gap-3 justify-center flex-wrap"><a href="member-hub.html" class="h-10 leading-10 px-5 rounded-full bg-[#DC183C] text-white font-bold text-sm">Join a conversation</a><a href="member-account.html" class="h-10 leading-10 px-5 rounded-full border border-slate-200 font-bold text-sm">Notification settings</a></div></div>`; lucide.createIcons(); return; }
+      <div class="mt-6 flex gap-3 justify-center flex-wrap"><a href="member-hub.html" class="h-11 leading-[44px] px-5 rounded-full bg-[#DC183C] text-white font-bold text-sm">Join a conversation</a><a href="member-account.html" class="h-11 leading-[44px] px-5 rounded-full border border-slate-200 font-bold text-sm">Notification settings</a></div></div>`; lucide.createIcons(); return; }
     if(!list.length){ el.innerHTML = `<div class="bg-white rounded-2xl border border-slate-200 p-10 text-center"><div class="w-14 h-14 rounded-full bg-[#E4F5EE] grid place-items-center mx-auto"><i data-lucide="check" class="w-7 h-7 text-[#29A37A]"></i></div><p class="font-jakarta font-bold mt-3">${filter === 'unread' ? 'You are all caught up' : 'Nothing here yet'}</p><p class="text-sm text-slate-500 mt-1">${filter === 'unread' ? 'No unread notifications.' : 'When something happens in this category, it shows up here.'}</p></div>`; lucide.createIcons(); return; }
     const fresh = list.filter(x => x.unread), older = list.filter(x => !x.unread);
     el.innerHTML = (fresh.length ? `<p class="text-[11px] font-extrabold uppercase tracking-widest text-slate-400 mb-2 mt-1">New</p><div class="bg-white rounded-2xl border border-slate-200 overflow-hidden">${fresh.map(row).join('')}</div>` : '') + (older.length ? `<p class="text-[11px] font-extrabold uppercase tracking-widest text-slate-400 mb-2 mt-5">Earlier</p><div class="bg-white rounded-2xl border border-slate-200 overflow-hidden">${older.map(row).join('')}</div>` : '');

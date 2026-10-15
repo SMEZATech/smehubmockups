@@ -228,15 +228,17 @@
 
 <main class="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
 
-<div class="flex items-center gap-1 text-[10px] font-bold mb-3"><span class="uppercase tracking-widest text-slate-400 mr-1">Preview</span><a href="?inbox=has" class="h-6 leading-6 px-2.5 rounded-full bg-slate-100 text-slate-600 hover:bg-slate-200 inbox-has">Has messages</a><a href="?inbox=empty" class="h-6 leading-6 px-2.5 rounded-full bg-slate-100 text-slate-600 hover:bg-slate-200 inbox-empty">No messages yet</a></div>
+<div class="preview-switch flex items-center gap-1 text-[10px] font-bold mb-3"><span class="uppercase tracking-widest text-slate-400 mr-1">Preview</span><a href="?inbox=has" class="h-6 leading-6 px-2.5 rounded-full bg-slate-100 text-slate-600 hover:bg-slate-200 inbox-has">Has messages</a><a href="?inbox=empty" class="h-6 leading-6 px-2.5 rounded-full bg-slate-100 text-slate-600 hover:bg-slate-200 inbox-empty">No messages yet</a></div>
 <div class="flex items-center justify-between mb-4">
   <h1 class="font-jakarta font-extrabold text-[26px] tracking-tight flex items-center gap-2">Messages <button onclick="openBrief('messages')" class="dev-badge w-5 h-5 rounded-full bg-[#DC183C] text-white items-center justify-center text-[10px] font-bold leading-none animate-pulse" title="Implementation notes">i</button></h1>
-  <button onclick="newMessage()" class="inline-flex items-center gap-2 h-10 px-4 rounded-full bg-[#0C1F31] hover:bg-[#16324a] text-white font-jakarta font-bold text-[13px] transition"><i data-lucide="square-pen" class="w-4 h-4"></i> New message</button>
+  <button onclick="newMessage()" class="inline-flex items-center gap-2 h-11 px-4 rounded-full bg-[#0C1F31] hover:bg-[#16324a] text-white font-jakarta font-bold text-[13px] transition"><i data-lucide="square-pen" class="w-4 h-4"></i> New message</button>
 </div>
-<div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden grid lg:grid-cols-[340px_1fr]" style="height:calc(100vh - 190px);min-height:560px">
+<!-- Phones: Messages and Alerts are one Inbox (lane E, 14 Oct). Desktop keeps Messaging and Notifications separate. -->
+<div class="md:hidden -mx-4 mb-3 border-b border-[#E7EBEF] flex" role="navigation" aria-label="Inbox"><a href="member-inbox.html" aria-current="page" class="relative flex-1 h-12 grid place-items-center font-jakarta font-bold text-[14.5px] text-[#121A21] after:content-[''] after:absolute after:left-3 after:right-3 after:bottom-[-1px] after:h-[3px] after:rounded-t after:bg-[#DC183C]">Messages</a><a href="member-inbox.html#alerts" class="flex-1 h-12 grid place-items-center font-jakarta font-bold text-[14.5px] text-slate-500">Alerts</a></div>
+<div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden grid grid-cols-[minmax(0,1fr)] lg:grid-cols-[340px_minmax(0,1fr)]" style="height:calc(100vh - 190px);min-height:560px">
   <!-- list -->
   <section id="m-list" class="border-r border-slate-200 flex flex-col min-h-0">
-    <div class="p-3 border-b border-slate-100"><div class="relative"><i data-lucide="search" class="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"></i><input id="m-search" oninput="renderList()" placeholder="Search messages" class="w-full h-10 pl-9 pr-3 rounded-full bg-slate-50 border border-slate-200 text-sm outline-none focus:border-[#DC183C]"></div>
+    <div class="p-3 border-b border-slate-100"><div class="relative"><i data-lucide="search" class="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"></i><input id="m-search" oninput="renderList()" placeholder="Search messages" class="w-full h-11 pl-9 pr-3 rounded-full bg-slate-50 border border-slate-200 text-sm outline-none focus:border-[#DC183C]"></div>
       <div class="flex gap-1.5 mt-3" id="m-tabs"></div></div>
     <div id="m-items" class="overflow-y-auto flex-1"></div>
   </section>
@@ -253,7 +255,7 @@
       <span class="font-bold text-slate-500 uppercase tracking-widest text-[10px]">Community</span>
       <button onclick="openBrief('footer')" class="dev-badge w-4 h-4 rounded-full bg-[#DC183C] text-white items-center justify-center text-[9px] font-bold leading-none animate-pulse" title="Implementation notes">i</button>
     </div>
-    <nav class="flex items-center gap-5 text-xs font-semibold text-slate-500">
+    <nav class="flex items-center gap-5 text-xs font-semibold text-slate-500 [&>a]:min-h-[44px] [&>a]:min-w-[44px] [&>a]:justify-center [&>a]:inline-flex [&>a]:items-center md:[&>a]:min-h-0">
       <a href="public-about.html" class="hover:text-[#DC183C] transition-colors">About</a>
       <a href="public-help.html" class="hover:text-[#DC183C] transition-colors">Help Centre</a>
       <a href="public-terms.html" class="hover:text-[#DC183C] transition-colors">Terms</a>
@@ -270,8 +272,6 @@
 <!-- Toast container -->
 <div id="toast" class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-[100]"></div>
 
-<div class="lg:hidden" style="height:calc(64px + env(safe-area-inset-bottom))"></div>
-<div id="overlay-root"></div>
 <script>
   const BRIEFS = {
     messages: { title:'Messages', sub:'Private one-to-one conversations',
@@ -328,7 +328,7 @@
 
   function renderTabs(){
     const req = CONVOS.filter(c => c.request && !c.handled).length, unr = CONVOS.filter(c => c.unread && !c.request).length;
-    document.getElementById('m-tabs').innerHTML = [['all','All'],['unread','Unread' + (unr ? ' (' + unr + ')' : '')],['requests','Requests' + (req ? ' (' + req + ')' : '')]].map(t => `<button onclick="tab='${t[0]}';renderTabs();renderList()" class="h-8 px-3.5 rounded-full text-[12.5px] font-bold transition ${tab === t[0] ? 'bg-[#0C1F31] text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}">${t[1]}</button>`).join('');
+    document.getElementById('m-tabs').innerHTML = [['all','All'],['unread','Unread' + (unr ? ' (' + unr + ')' : '')],['requests','Requests' + (req ? ' (' + req + ')' : '')]].map(t => `<button onclick="tab='${t[0]}';renderTabs();renderList()" class="h-11 md:h-8 px-4 md:px-3.5 rounded-full text-[13px] md:text-[12.5px] font-bold transition ${tab === t[0] ? 'bg-[#0C1F31] text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}">${t[1]}</button>`).join('');
   }
   function renderList(){
     const q = document.getElementById('m-search').value.toLowerCase();
@@ -352,14 +352,14 @@
   function backToList(){ mobileThread = false; document.getElementById('m-thread').classList.add('hidden'); document.getElementById('m-thread').classList.remove('flex'); document.getElementById('m-list').classList.remove('hidden'); }
   function renderThread(){
     const t = document.getElementById('m-thread'); const c = CONVOS.find(x => x.id === active);
-    if(!c){ t.innerHTML = !CONVOS.length ? `<div class="m-auto text-center p-8 max-w-md"><div class="w-16 h-16 rounded-2xl bg-[#FDECEF] text-[#DC183C] grid place-items-center mx-auto"><i data-lucide="message-square-heart" class="w-8 h-8"></i></div><p class="font-jakarta font-extrabold text-lg mt-4">No conversations yet</p><p class="text-sm text-slate-500 mt-1.5 leading-relaxed">Messages are private, one to one, between members who are connected. Most people start by thanking someone for a helpful answer, or asking a founder in their industry a question.</p>
-      <div class="mt-5 text-left rounded-2xl border border-slate-200 divide-y divide-slate-100">${[['Naledi Mokoena','NM','Catering, Gauteng'],['Sipho Dlamini','SD','Logistics, Gauteng'],['Thandi Mabasa','TM','Bookkeeper, Pretoria']].map(p => `<div class="flex items-center gap-3 px-4 py-3"><div class="w-9 h-9 rounded-full bg-gradient-to-br from-[#0C1F31] to-[#42505E] grid place-items-center text-white text-[11px] font-bold">${p[1]}</div><div class="flex-1 min-w-0"><p class="text-[13.5px] font-bold">${p[0]}</p><p class="text-[12px] text-slate-500">${p[2]}, one of your connections</p></div><button onclick="newMessage()" class="h-8 px-3 rounded-full border border-slate-200 text-[12px] font-bold hover:border-[#0C1F31]">Message</button></div>`).join('')}</div>
-      <a href="members.html" class="inline-flex items-center gap-2 mt-5 h-10 px-5 rounded-full bg-[#DC183C] text-white font-bold text-sm"><i data-lucide="user-plus" class="w-4 h-4"></i> Find members to connect with</a></div>` : `<div class="m-auto text-center p-8"><div class="w-14 h-14 rounded-full bg-slate-100 grid place-items-center mx-auto"><i data-lucide="messages-square" class="w-7 h-7 text-slate-400"></i></div><p class="font-jakarta font-bold mt-3">Select a conversation</p><p class="text-sm text-slate-500 mt-1">Or start a new one.</p></div>`; lucide.createIcons(); return; }
+    if(!c){ t.innerHTML = !CONVOS.length ? `<div class="m-auto text-center p-8 max-w-md"><div class="w-16 h-16 rounded-2xl bg-[#FDECEF] text-[#DC183C] grid place-items-center mx-auto"><i data-lucide="message-square-heart" class="w-8 h-8"></i></div><h2 class="font-jakarta font-extrabold text-lg mt-4">Start a conversation</h2><p class="text-sm text-slate-500 mt-1.5 leading-relaxed">Your chats with other SMEs show up here. Messages are private, one to one. Most people start by thanking someone for a helpful answer, or asking a founder in their industry a question.</p>
+      <div class="mt-5 text-left rounded-2xl border border-slate-200 divide-y divide-slate-100">${[['Naledi Mokoena','NM','Catering, Gauteng'],['Sipho Dlamini','SD','Logistics, Gauteng'],['Thandi Mabasa','TM','Bookkeeper, Pretoria']].map(p => `<div class="flex items-center gap-3 px-4 py-3"><div class="w-9 h-9 rounded-full bg-gradient-to-br from-[#0C1F31] to-[#42505E] grid place-items-center text-white text-[11px] font-bold">${p[1]}</div><div class="flex-1 min-w-0"><p class="text-[13.5px] font-bold">${p[0]}</p><p class="text-[12px] text-slate-500">${p[2]}, one of your connections</p></div><button onclick="newMessage()" class="h-11 px-4 rounded-full border border-slate-200 text-[12.5px] font-bold hover:border-[#0C1F31]">Message</button></div>`).join('')}</div>
+      <a href="members.html" class="inline-flex items-center gap-2 mt-5 h-11 px-5 rounded-full bg-[#DC183C] text-white font-bold text-sm"><i data-lucide="users" class="w-4 h-4"></i> Find SMEs to talk to</a></div>` : `<div class="m-auto text-center p-8"><div class="w-14 h-14 rounded-full bg-slate-100 grid place-items-center mx-auto"><i data-lucide="messages-square" class="w-7 h-7 text-slate-400"></i></div><p class="font-jakarta font-bold mt-3">Select a conversation</p><p class="text-sm text-slate-500 mt-1">Or start a new one.</p></div>`; lucide.createIcons(); return; }
     const req = c.request && !c.handled;
-    t.innerHTML = `<div class="flex items-center gap-3 px-4 py-3 border-b border-slate-200 bg-white"><button onclick="backToList()" aria-label="Back" class="lg:hidden p-1.5 -ml-1.5 text-slate-500"><i data-lucide="arrow-left" class="w-5 h-5"></i></button>
+    t.innerHTML = `<div class="flex items-center gap-3 px-4 py-3 border-b border-slate-200 bg-white"><button onclick="backToList()" aria-label="Back" class="lg:hidden w-11 h-11 -ml-3 grid place-items-center text-slate-500"><i data-lucide="arrow-left" class="w-5 h-5"></i></button>
         <div class="w-10 h-10 rounded-full bg-gradient-to-br from-[#0C1F31] to-[#42505E] grid place-items-center text-white text-xs font-bold shrink-0">${c.ini}</div>
         <div class="min-w-0 flex-1"><a href="single-member.html" class="font-jakarta font-bold text-[14.5px] hover:text-[#DC183C] truncate block">${esc(c.name)}</a><p class="text-[12px] text-slate-500 truncate">${c.online ? '<span class="text-[#29A37A] font-semibold">Online</span> · ' : ''}${esc(c.role)}</p></div>
-        <div class="relative"><button onclick="event.stopPropagation();document.getElementById('tmenu').classList.toggle('hidden')" aria-label="Conversation options" class="p-2 rounded-lg text-slate-500 hover:bg-slate-50"><i data-lucide="more-vertical" class="w-5 h-5"></i></button>
+        <div class="relative"><button onclick="event.stopPropagation();document.getElementById('tmenu').classList.toggle('hidden')" aria-label="Conversation options" class="w-11 h-11 grid place-items-center rounded-lg text-slate-500 hover:bg-slate-50"><i data-lucide="more-vertical" class="w-5 h-5"></i></button>
           <div id="tmenu" class="hidden absolute right-0 top-full mt-1 w-52 bg-white rounded-xl border border-slate-200 shadow-xl py-1.5 z-20 text-[13.5px] font-semibold text-slate-700">
             <a href="single-member.html" class="px-4 py-2 flex items-center gap-3 hover:bg-slate-50"><i data-lucide="user" class="w-4 h-4"></i>View profile</a>
             <button onclick="act('mute')" class="w-full text-left px-4 py-2 flex items-center gap-3 hover:bg-slate-50"><i data-lucide="bell-off" class="w-4 h-4"></i>Mute conversation</button>
@@ -372,7 +372,7 @@
       <div class="px-4 pb-1 text-[11.5px] text-slate-400 flex items-center gap-1.5"><i data-lucide="shield-alert" class="w-3.5 h-3.5 shrink-0"></i> Never pay an up-front fee or share a PIN, OTP or ID copy in a message. Report anything that looks suspicious.</div>
       ${req ? '<div class="p-4 text-center text-[13px] text-slate-500 border-t border-slate-200 bg-white">Accept this request to reply.</div>' : `<div class="p-3 border-t border-slate-200 bg-white"><div id="m-attach" class="hidden mb-2"></div><div class="flex items-end gap-2">
         <input id="m-file" type="file" accept="image/jpeg,image/png" class="hidden" onchange="attachPhoto(this.files[0])">
-        <button onclick="document.getElementById('m-file').click()" aria-label="Attach photo" class="p-2.5 rounded-full text-slate-500 hover:bg-slate-100"><i data-lucide="image" class="w-5 h-5"></i></button>
+        <button onclick="document.getElementById('m-file').click()" aria-label="Attach photo" class="w-11 h-11 grid place-items-center rounded-full text-slate-500 hover:bg-slate-100"><i data-lucide="image" class="w-5 h-5"></i></button>
         <textarea id="m-text" rows="1" placeholder="Write a message" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();send()}" class="flex-1 max-h-32 resize-none rounded-2xl border border-slate-200 px-4 py-2.5 text-[14.5px] outline-none focus:border-[#DC183C]"></textarea>
         <button onclick="send()" aria-label="Send" class="h-11 w-11 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white grid place-items-center transition"><i data-lucide="send" class="w-5 h-5"></i></button></div></div>`}`;
     lucide.createIcons(); const b = document.getElementById('m-body'); if(b) b.scrollTop = b.scrollHeight;
@@ -410,7 +410,15 @@
   renderTabs(); renderList(); renderThread();
   document.querySelectorAll(INBOX_EMPTY ? '.inbox-empty' : '.inbox-has').forEach(a => a.className = a.className.replace('bg-slate-100 text-slate-600 hover:bg-slate-200', 'bg-[#0C1F31] text-white'));
   if(INBOX_EMPTY){ const th = document.getElementById('m-thread'); th.classList.remove('hidden'); th.classList.add('flex'); document.getElementById('m-list').classList.add('hidden', 'lg:flex'); }
-  if(window.innerWidth >= 1024 && CONVOS.length) openConvo(1);
+  /* Deep links from the phone Inbox (member-inbox.html): ?c=<id> opens that conversation, ?tab=requests the requests, ?new=1 a new message.
+     Without one, phones open on the conversation list (never a blank "To:" box); desktop opens the latest conversation beside the list. */
+  (function(){
+    const qs = new URLSearchParams(location.search), c = +qs.get('c');
+    if (qs.get('tab') === 'requests') { tab = 'requests'; renderTabs(); renderList(); }
+    if (c && CONVOS.some(x => x.id === c)) openConvo(c);
+    else if (window.innerWidth >= 1024 && CONVOS.length && tab !== 'requests') openConvo(1);
+    if (qs.get('new') === '1') newMessage();
+  })();
 
   lucide.createIcons();
 </script>

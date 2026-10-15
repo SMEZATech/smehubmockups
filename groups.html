@@ -274,7 +274,7 @@ function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;',
 const GROUPS = [
   { name:'General',            members:1284, privacy:'Public',  created:9,  desc:'Connect, collaborate and grow with fellow South African entrepreneurs.', joined:true,  c1:'#0C1F31', c2:'#1a3a54' },
   { name:'Fintech Founders',   members:342,  privacy:'Private', created:14, desc:'For founders building payments, lending and financial infrastructure in SA.', joined:true,  c1:'#DC183C', c2:'#FF9900' },
-  { name:'Cape Town SMEs',     members:516,  privacy:'Public',  created:7,  desc:'Regional group for Western Cape based small businesses and startups.', joined:false, c1:'#29A37A', c2:'#0C1F31' },
+  { name:'Cape Town SMEs',     members:516,  privacy:'Public',  created:7,  desc:'For small businesses and startups across the Western Cape.', joined:false, c1:'#29A37A', c2:'#0C1F31' },
   { name:'Funding & Investors',members:889,  privacy:'Public',  created:11, desc:'Capital raises, grants and investor intros for vetted SA founders.', joined:false, c1:'#FF9900', c2:'#DC183C' },
   { name:'Women in Business',  members:1102, privacy:'Public',  created:20, desc:'A network for women founders to share, support and scale together.', joined:false, c1:'#DC183C', c2:'#0C1F31' },
   { name:'Agritech ZA',        members:271,  privacy:'Public',  created:5,  desc:'Innovating food, farming and supply-chain across South Africa.', joined:false, c1:'#29A37A', c2:'#FF9900' },
@@ -287,11 +287,11 @@ const state = { seg:'all' };
 
 function renderSegs(){ 
   const tabs = SEGS.map(([id,l])=>{ 
-    return `<button onclick="setSeg('${id}')" class="seg ${state.seg===id?'active':''} shrink-0 px-4 py-1.5 rounded-full text-xs font-bold border ${state.seg===id?'border-[#0C1F31]':'border-transparent text-slate-500 hover:bg-slate-50 hover:text-[#121A21]'} transition-colors">${l}</button>`; 
+    return `<button onclick="setSeg('${id}')" class="seg ${state.seg===id?'active':''} shrink-0 px-4 min-h-[44px] sm:min-h-[34px] rounded-full text-xs font-bold border ${state.seg===id?'border-[#0C1F31]':'border-transparent text-slate-500 hover:bg-slate-50 hover:text-[#121A21]'} transition-colors">${l}</button>`; 
   }).join(''); 
   
   // "Create Group" effectively acts as a tab/action at the end of the strip
-  const createBtn = `<button onclick="setSeg('create')" class="seg ${state.seg==='create'?'active':''} shrink-0 px-4 py-1.5 rounded-full text-xs font-bold border ${state.seg==='create'?'border-[#0C1F31]':'border-transparent text-slate-500 hover:bg-slate-50 hover:text-[#121A21]'} transition-colors flex items-center gap-1.5">Create Group</button>`;
+  const createBtn = `<button onclick="setSeg('create')" class="seg ${state.seg==='create'?'active':''} shrink-0 px-4 min-h-[44px] sm:min-h-[34px] rounded-full text-xs font-bold border ${state.seg==='create'?'border-[#0C1F31]':'border-transparent text-slate-500 hover:bg-slate-50 hover:text-[#121A21]'} transition-colors flex items-center gap-1.5">Create Group</button>`;
   
   document.getElementById('segs').innerHTML = tabs + createBtn;
 }
@@ -343,7 +343,7 @@ function card(g,i){
         <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[10px] font-bold ${g.privacy==='Public'?'bg-[#F0F5F9] text-[#29A37A]':'bg-slate-100 text-slate-500'}"><i data-lucide="${g.privacy==='Public'?'globe':'lock'}" class="w-3 h-3"></i> ${g.privacy}</span>
       </div>
       <p class="text-[13px] text-slate-500 leading-relaxed line-clamp-2 sm:line-clamp-1 mb-2">${esc(g.desc)}</p>
-      <p class="text-[11px] font-semibold text-slate-500 flex items-center gap-1.5"><i data-lucide="users" class="w-3.5 h-3.5 text-slate-500"></i> ${g.members.toLocaleString()} members</p>
+      <p class="text-[11px] font-semibold text-slate-500 flex items-center gap-1.5"><i data-lucide="users" class="w-3.5 h-3.5 text-slate-500"></i> <span class="text-slate-400">&middot;</span> active ${esc(g.active||"this week")}</p>
     </div>
     
     <div class="shrink-0 mt-2 sm:mt-0 w-full sm:w-auto">

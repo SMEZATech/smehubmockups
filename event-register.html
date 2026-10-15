@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Register: How to Use Predictive Analytics to Forecast Growth, SME South Africa</title>
+  <meta name="description" content="Register for the SME South Africa webinar on predictive analytics for growth." />
+  <meta name="robots" content="noindex" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script><script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  <script>tailwind.config={theme:{extend:{fontFamily:{jakarta:['Plus Jakarta Sans','sans-serif'],inter:['Inter','system-ui','sans-serif']}}}};</script>
+  <style>
+    html,body{font-family:'Inter',system-ui,sans-serif;} .font-jakarta{font-family:'Plus Jakarta Sans',sans-serif;letter-spacing:.005em;}
+    html{scroll-behavior:smooth;}
+    .hero-bg{background:linear-gradient(115deg,#0C1F31 0%,#0C1F31 50%,#2b1626 80%,#5e1a2c 115%);}
+    .dot-pattern{background-image:radial-gradient(rgba(255,255,255,.07) 1px,transparent 1.5px);background-size:22px 22px;}
+    .prose p{color:#121A21;line-height:1.8;font-size:1.02rem;margin-bottom:1rem;}
+    .prose ul{list-style:disc;padding-left:1.4rem;margin-bottom:1rem;color:#121A21;line-height:1.85;font-size:1.02rem;}
+    .prose ul li{margin-bottom:.35rem;}
+    .step{display:grid;grid-template-columns:2rem 1fr;gap:.85rem;align-items:start;}
+    .step .num{width:2rem;height:2rem;border-radius:999px;background:#FDECEF;color:#DC183C;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:.85rem;display:grid;place-items:center;}
+    .step .step-title{font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;color:#0C1F31;font-size:.92rem;line-height:1.35;}
+    .step .step-sub{font-size:.78rem;color:#6A7581;line-height:1.5;margin-top:.15rem;}
+    .dev-badge{display:none;} body.dev-on .dev-badge{display:inline-flex;} #devToggle.on{background:#DC183C;color:#fff;border-color:#DC183C;}
+    .dev-note{background:linear-gradient(135deg,rgba(255,153,0,.12),rgba(255,153,0,.04));border:1px dashed rgba(255,153,0,.5);display:none;}
+    body.dev-on .dev-note{display:flex;}
+    .ov{position:fixed;inset:0;z-index:80;} .ov-bg{position:absolute;inset:0;background:rgba(12,31,49,.45);backdrop-filter:blur(2px);opacity:0;transition:opacity .3s;} .ov.open .ov-bg{opacity:1;}
+    .drawer{position:absolute;right:0;top:0;height:100%;width:100%;max-width:440px;background:#fff;box-shadow:-12px 0 40px rgba(12,31,49,.25);overflow-y:auto;transform:translateX(100%);transition:transform .3s cubic-bezier(.2,.7,.2,1);} .ov.open .drawer{transform:translateX(0);}
+      .search-overlay{position:absolute;inset:0;background:#fff;z-index:20;display:flex;align-items:center;justify-content:center;padding:0 1rem;opacity:0;pointer-events:none;transform:translateY(-8px);transition:all .25s cubic-bezier(.2,.8,.2,1);}
+    .search-overlay.active{opacity:1;pointer-events:auto;transform:translateY(0);}
+    @media (min-width:640px){ .search-overlay{padding:0 1.5rem;} }
+
+    /* Registration sheet: bottom sheet on phones, side panel from 768 px */
+    body.reg-lock{overflow:hidden;}
+    .reg-ov{position:fixed;inset:0;z-index:60;}
+    .reg-bg{position:absolute;inset:0;background:rgba(12,31,49,.55);backdrop-filter:blur(2px);}
+    .reg-panel{position:absolute;left:0;right:0;bottom:0;max-height:92vh;max-height:92dvh;background:#fff;border-radius:24px 24px 0 0;overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;box-shadow:0 -12px 40px rgba(12,31,49,.25);padding-bottom:env(safe-area-inset-bottom);}
+    @media (min-width:768px){ .reg-panel{left:auto;top:0;bottom:0;width:460px;max-height:none;border-radius:0;box-shadow:-12px 0 40px rgba(12,31,49,.25);} .reg-grab{display:none;} }
+    .reg-grab{width:44px;height:5px;border-radius:99px;background:#D5DBE1;margin:10px auto 0;}
+    .fld{width:100%;height:48px;border-radius:12px;border:1px solid #E7EBEF;background:#FCFCFC;padding:0 14px;font-size:15px;outline:none;}
+    .fld:focus{border-color:#DC183C;box-shadow:0 0 0 3px rgba(220,24,60,.12);}
+    textarea.fld{height:auto;min-height:88px;padding:12px 14px;line-height:1.5;resize:vertical;}
+    .lbl{display:block;font-size:12px;font-weight:700;color:#0C1F31;margin-bottom:6px;}
+    .lbl .opt{font-weight:500;color:#6A7581;}
+    .tick{display:flex;align-items:flex-start;gap:12px;min-height:44px;padding:10px 12px;border-radius:12px;border:1px solid #E7EBEF;background:#fff;cursor:pointer;}
+    .tick input{width:20px;height:20px;margin-top:1px;accent-color:#DC183C;flex-shrink:0;}
+    .tick span{font-size:13.5px;line-height:1.45;color:#121A21;}
+    .tick small{display:block;font-size:12px;color:#6A7581;margin-top:2px;}
+    .st-tab{flex:1;min-height:44px;border-radius:10px;font-size:12.5px;font-weight:700;color:#64748b;transition:all .15s;}
+    .st-tab.on{background:#fff;color:#1e293b;box-shadow:0 1px 2px rgba(0,0,0,.08);}
+    .qty-btn{width:44px;height:44px;border-radius:12px;border:1px solid #E7EBEF;display:grid;place-items:center;color:#0C1F31;background:#fff;}
+    .qty-btn:disabled{opacity:.4;}
+    .reg-bgpage{filter:saturate(.9);}
+</style>
+</head>
+<body class="bg-[#FCFCFC] text-[#121A21] antialiased">
+<header class="bg-white border-b border-[#E7EBEF] sticky top-0 z-30 relative">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center gap-3">
+    <a href="public-home.html" class="flex items-center gap-2.5 shrink-0">
+      <img src="assets/logo-v1-lockup.svg" alt="SME South Africa" class="h-[42px] lg:h-[50px] w-auto" />
+    </a>
+    <nav class="hidden lg:flex items-center gap-1 ml-auto">
+      <div class="relative" onmouseleave="closeChromeDrop('articles')">
+        <button onclick="toggleChromeDrop('articles')" class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition inline-flex items-center gap-1">Insights <i data-lucide="chevron-down" class="w-3.5 h-3.5"></i></button>
+        <div id="dropArticles" class="hidden absolute left-0 top-full mt-1 w-64 bg-white rounded-xl border border-[#E7EBEF] shadow-xl py-2 z-30">
+          <a href="public-category.html" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-[#DC183C] transition">Starting a Business</a>
+          <a href="public-category.html" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-[#DC183C] transition">Managing a Business</a>
+          <a href="public-category.html" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-[#DC183C] transition">Growing a Business</a>
+          <div class="my-1.5 border-t border-slate-100"></div>
+          <a href="public-founder-focus-category.html" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-[#DC183C] transition">Founder Focus</a>
+          <a href="public-category.html" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-[#DC183C] transition">Business Opportunities</a>
+        </div>
+      </div>
+      <div class="relative" onmouseleave="closeChromeDrop('resources')">
+        <button onclick="toggleChromeDrop('resources')" class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition inline-flex items-center gap-1">Resources <i data-lucide="chevron-down" class="w-3.5 h-3.5"></i></button>
+        <div id="dropResources" class="hidden absolute left-0 top-full mt-1 w-56 bg-white rounded-xl border border-[#E7EBEF] shadow-xl py-2 z-30">
+          <a href="public-resource-category.html?type=ebooks" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-[#DC183C] transition">Ebooks</a>
+          <a href="public-resource-category.html?type=templates" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-[#DC183C] transition">Templates</a>
+          <a href="public-resource-category.html?type=guides" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-[#DC183C] transition">Guides</a>
+          <a href="public-resource-category.html?type=reports" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-[#DC183C] transition">Reports</a>
+        </div>
+      </div>
+      <div class="relative" onmouseleave="closeChromeDrop('funding')">
+        <button onclick="toggleChromeDrop('funding')" class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition inline-flex items-center gap-1">Funding <i data-lucide="chevron-down" class="w-3.5 h-3.5"></i></button>
+        <div id="dropFunding" class="hidden absolute left-0 top-full mt-1 w-60 bg-white rounded-xl border border-[#E7EBEF] shadow-xl py-2 z-30">
+          <a href="public-loan-option.html" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-[#DC183C] transition">Invoice Finance</a>
+          <a href="public-loan-option.html" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-[#DC183C] transition">Inventory Finance</a>
+          <a href="public-loan-option.html" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-[#DC183C] transition">Unsecured Business Loan</a>
+          <a href="public-loan-option.html" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-[#DC183C] transition">Purchase Order Funding</a>
+          <a href="public-loan-option.html" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-[#DC183C] transition">Bridging Finance</a>
+          <a href="public-loan-option.html" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-[#DC183C] transition">Working Capital Loans</a>
+        </div>
+      </div>
+      <a href="public-solutions.html" class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition">Solutions</a>
+      <a href="podcast.html"          class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition">Podcast</a>
+    </nav>
+    <div class="flex items-center gap-1 sm:gap-2 ml-auto lg:ml-3">
+      <button onclick="toggleChromeSearch()" aria-label="Search" class="w-9 h-9 grid place-items-center rounded-full hover:bg-slate-100 text-slate-600"><i data-lucide="search" class="w-4 h-4"></i></button>
+      <a href="public-auth.html" class="hidden sm:inline-flex items-center px-3 h-9 rounded-full text-sm font-bold text-[#121A21] hover:bg-slate-100 transition">Sign in</a>
+      <a href="public-auth.html#join" class="inline-flex items-center px-4 h-9 rounded-full text-sm font-bold text-white bg-[#DC183C] hover:bg-[#B0142F] transition">Join Now</a>
+      <button onclick="toggleChromeBurger()" aria-label="Menu" class="lg:hidden w-9 h-9 grid place-items-center rounded-full hover:bg-slate-100 text-slate-600 ml-1">
+        <i id="chromeBurgerIcon" data-lucide="menu" class="w-5 h-5"></i>
+      </button>
+    </div>
+  </div>
+  <div id="chromeBurgerPanel" class="hidden lg:hidden border-t border-[#E7EBEF] bg-white">
+    <nav class="max-w-7xl mx-auto px-4 sm:px-6 py-2 flex flex-col">
+      <a href="public-articles.html"  class="px-2 py-3 text-sm font-semibold text-slate-700 hover:text-[#DC183C] border-b border-slate-100">Insights</a>
+      <a href="public-resources.html" class="px-2 py-3 text-sm font-semibold text-slate-700 hover:text-[#DC183C] border-b border-slate-100">Resources</a>
+      <a href="public-funding.html"   class="px-2 py-3 text-sm font-semibold text-slate-700 hover:text-[#DC183C] border-b border-slate-100">Funding</a>
+      <a href="public-solutions.html" class="px-2 py-3 text-sm font-semibold text-slate-700 hover:text-[#DC183C] border-b border-slate-100">Solutions</a>
+      <a href="podcast.html"          class="px-2 py-3 text-sm font-semibold text-slate-700 hover:text-[#DC183C] border-b border-slate-100">Podcast</a>
+      <a href="public-auth.html" class="px-2 py-3 text-sm font-semibold text-slate-700 hover:text-[#DC183C]">Sign in</a>
+    </nav>
+  </div>
+  <div id="chromeSearchOverlay" class="search-overlay">
+    <div class="w-full max-w-2xl flex items-center gap-3">
+      <div class="relative flex-1">
+        <i data-lucide="search" class="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500"></i>
+        <input id="chromeSearchInput" type="text" placeholder="Search insights, resources, funding…" class="w-full h-11 pl-11 pr-4 text-sm bg-slate-50 border border-[#DC183C] rounded-full focus:outline-none focus:ring-2 focus:ring-[#DC183C]/20" onkeydown="if(event.key==='Enter') location.href='public-search.html';" />
+      </div>
+      <button onclick="toggleChromeSearch()" class="text-slate-500 hover:text-[#121A21] p-2 transition-colors shrink-0" aria-label="Close search"><i data-lucide="x" class="w-5 h-5"></i></button>
+    </div>
+  </div>
+</header>
+
+<!-- Mobile bottom tab bar, thumb-reach quick nav -->
+<nav aria-label="Quick nav" class="lg:hidden fixed bottom-0 inset-x-0 z-40 bg-white border-t border-[#E7EBEF] shadow-[0_-4px_16px_-4px_rgba(12,31,49,0.08)]" style="padding-bottom:env(safe-area-inset-bottom)">
+  <div class="grid grid-cols-5"><a href="public-home.html" class="relative flex flex-col items-center justify-center gap-1 py-2.5 text-slate-500 hover:text-[#121A21] transition"><i data-lucide="house" class="w-5 h-5"></i><span class="font-jakarta text-[11px] font-bold">Home</span></a><a href="public-articles.html" class="relative flex flex-col items-center justify-center gap-1 py-2.5 text-slate-500 hover:text-[#121A21] transition"><i data-lucide="lightbulb" class="w-5 h-5"></i><span class="font-jakarta text-[11px] font-bold">Insights</span></a><a href="public-funding.html" class="relative flex flex-col items-center justify-center gap-1 py-2.5 text-slate-500 hover:text-[#121A21] transition"><i data-lucide="banknote" class="w-5 h-5"></i><span class="font-jakarta text-[11px] font-bold">Funding</span></a><a href="podcast.html" class="relative flex flex-col items-center justify-center gap-1 py-2.5 text-slate-500 hover:text-[#121A21] transition"><i data-lucide="mic" class="w-5 h-5"></i><span class="font-jakarta text-[11px] font-bold">Podcast</span></a><a href="public-auth.html#join" class="relative flex flex-col items-center justify-center gap-1 py-2.5 text-slate-500 hover:text-[#121A21] transition"><i data-lucide="user-round-plus" class="w-5 h-5"></i><span class="font-jakarta text-[11px] font-bold">Sign up</span></a></div>
+</nav>
+
+<!-- Page behind the sheet: event-single-online.html, upcoming state (shortened) -->
+<div class="reg-bgpage" aria-hidden="true">
+<!-- HERO -->
+<section class="hero-bg text-white relative overflow-hidden">
+  <div class="absolute inset-0 dot-pattern opacity-70 pointer-events-none"></div>
+  <div class="max-w-[1200px] mx-auto px-4 sm:px-6 py-12 sm:py-16 relative">
+    <nav aria-label="Breadcrumb" class="text-xs text-white/55 flex items-center flex-wrap gap-x-1.5 mb-5"><a href="public-home.html" class="hover:text-white transition">Home</a><span class="text-white/30">›</span><a href="events.html" class="hover:text-white transition">Events</a><span class="text-white/30">›</span><span class="text-white/85 font-medium truncate">Predictive Analytics for Growth</span></nav>
+    <div class="max-w-4xl items-start">
+      <div class="flex items-center gap-2 flex-wrap mb-4">
+        <span class="px-3 py-1.5 rounded-full text-[10px] font-bold bg-[#FF9900] text-[#0C1F31] uppercase tracking-wider">Upcoming</span>
+        <span class="px-3 py-1.5 rounded-full text-[10px] font-bold bg-white/10 text-white uppercase tracking-wider inline-flex items-center gap-1.5"><i data-lucide="video" class="w-3.5 h-3.5"></i> Online webinar</span>
+        <span class="px-3 py-1.5 rounded-full text-[10px] font-bold bg-[#FDECEF] text-[#DC183C] uppercase tracking-wider">Tech &amp; Innovation</span>
+      </div>
+      <h1 class="font-jakarta font-extrabold text-3xl sm:text-5xl leading-[1.05] tracking-tight">How to Use Predictive Analytics to Forecast Growth
+        <button onclick="openBrief()" class="dev-badge align-middle ml-2 w-7 h-7 rounded-full bg-[#FF9900] text-[#0C1F31] items-center justify-center text-[12px] font-bold">i</button>
+      </h1>
+    </div>
+  </div>
+</section>
+
+
+<main class="max-w-[1200px] mx-auto px-4 sm:px-6 py-12 flex flex-col lg:grid lg:grid-cols-[1fr,320px] gap-10 items-start">
+  <div class="order-1 lg:col-start-2 w-full">
+    <div class="bg-white rounded-2xl border border-[#E7EBEF] p-5 shadow-xl">
+      <p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] mb-2">Register, no cost</p>
+      <div class="space-y-3 mb-4">
+        <div class="flex items-start gap-2.5"><i data-lucide="calendar" class="w-4 h-4 text-[#DC183C] mt-0.5 shrink-0"></i><div><p class="font-jakarta font-extrabold text-[15px] leading-tight">Thu, 20 Aug 2026</p><p class="text-[13px] text-[#6A7581]">1:00 pm to 2:15 pm (SAST)</p></div></div>
+        <div class="flex items-start gap-2.5"><i data-lucide="video" class="w-4 h-4 text-[#DC183C] mt-0.5 shrink-0"></i><div><p class="font-jakarta font-extrabold text-[15px] leading-tight">Webinar link</p><p class="text-[13px] text-[#6A7581]">Sent 1 hour before start. Also going live on YouTube.</p></div></div>
+      </div>
+      <span class="w-full h-12 rounded-xl bg-[#DC183C] text-white font-bold text-sm inline-flex items-center justify-center gap-1.5">Register now <i data-lucide="arrow-right" class="w-4 h-4"></i></span>
+    </div>
+  </div>
+  <article class="order-2 lg:col-start-1 lg:row-start-1 w-full min-w-0">
+    <div class="rounded-2xl overflow-hidden aspect-[16/9] shadow-lg bg-[#0C1F31] mb-10"><img src="https://img.youtube.com/vi/3UdK9NKwhGY/maxresdefault.jpg" alt="" class="w-full h-full object-cover" /></div>
+    <h2 class="font-jakarta font-extrabold text-2xl sm:text-3xl text-[#0C1F31] mb-4">About this webinar</h2>
+    <div class="prose"><p>In this practical live webinar, we explore how South African SME founders can build accurate revenue, staffing, and working capital forecasts with limited historical data.</p></div>
+  </article>
+</main>
+</div>
+
+<!-- REGISTRATION SHEET (open) -->
+<div id="regRoot" class="reg-ov" role="dialog" aria-modal="true" aria-labelledby="regTitle">
+  <a href="event-single-online.html" class="reg-bg" aria-label="Close registration"></a>
+  <div class="reg-panel" id="regPanel">
+    <div class="reg-grab" aria-hidden="true"></div>
+    <div class="sticky top-0 z-10 bg-white/95 backdrop-blur border-b border-[#E7EBEF] px-5 py-3 flex items-center gap-3">
+      <div class="min-w-0 flex-1">
+        <p id="regEyebrow" class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C]">Register for this webinar</p>
+        <h2 id="regTitle" class="font-jakarta font-extrabold text-[16px] leading-snug text-[#0C1F31] truncate">How to Use Predictive Analytics to Forecast Growth</h2>
+      </div>
+      <a href="event-single-online.html" class="w-11 h-11 shrink-0 grid place-items-center rounded-full hover:bg-slate-100 text-slate-600" aria-label="Close"><i data-lucide="x" class="w-5 h-5"></i></a>
+    </div>
+
+    <div class="px-5 pt-4 pb-8 space-y-5">
+      <!-- State tabs (preview control, same pattern as the event page) -->
+      <div class="flex items-center gap-1 bg-slate-100 p-1.5 rounded-xl w-full border border-slate-200" role="tablist" aria-label="Preview state">
+        <button type="button" class="st-tab on" data-st="guest" onclick="setRegState('guest')">Guest</button>
+        <button type="button" class="st-tab" data-st="member" onclick="setRegState('member')">Member</button>
+        <button type="button" class="st-tab" data-st="paid" onclick="setRegState('paid')">Paid</button>
+        <button type="button" class="st-tab" data-st="waitlist" onclick="setRegState('waitlist')">Waitlist</button>
+      </div>
+
+      <!-- Event summary (online) -->
+      <div id="sumOnline" class="rounded-2xl bg-[#F6F8FA] border border-[#E7EBEF] p-4 space-y-3">
+        <div class="flex items-start gap-2.5"><i data-lucide="calendar" class="w-4 h-4 text-[#DC183C] mt-0.5 shrink-0"></i><div><p class="font-jakarta font-extrabold text-[14.5px] leading-tight">Thu, 20 Aug 2026, 1:00 pm to 2:15 pm SAST</p><p class="text-[12.5px] text-[#6A7581] mt-0.5 js-localtime"></p></div></div>
+        <div class="flex items-start gap-2.5"><i data-lucide="video" class="w-4 h-4 text-[#DC183C] mt-0.5 shrink-0"></i><p class="text-[13px] text-[#42505E] leading-snug">Online. Your webinar link arrives by email 1 hour before start.</p></div>
+      </div>
+      <!-- Event summary (paid in person) -->
+      <div id="sumPaid" class="hidden rounded-2xl bg-[#F6F8FA] border border-[#E7EBEF] p-4 space-y-3">
+        <div class="flex items-start gap-2.5"><i data-lucide="calendar" class="w-4 h-4 text-[#DC183C] mt-0.5 shrink-0"></i><div><p class="font-jakarta font-extrabold text-[14.5px] leading-tight">Fri, 25 Sep 2027, 8:30 am to 5:00 pm SAST</p><p class="text-[12.5px] text-[#6A7581] mt-0.5">SME Funding Summit</p></div></div>
+        <div class="flex items-start gap-2.5"><i data-lucide="map-pin" class="w-4 h-4 text-[#DC183C] mt-0.5 shrink-0"></i><p class="text-[13px] text-[#42505E] leading-snug">Focus Rooms, Sandton, Johannesburg</p></div>
+      </div>
+
+      <!-- ============ STATE: GUEST ============ -->
+      <form id="st-guest" class="space-y-4" onsubmit="submitGuest(event)" novalidate>
+        <p class="text-[13px] text-[#6A7581] leading-relaxed">Already a member? <a href="public-auth.html" class="font-bold text-[#DC183C] underline underline-offset-2">Sign in</a> and register in one tap.</p>
+        <div><label class="lbl" for="gName">Full name</label><input id="gName" class="fld" type="text" autocomplete="name" required placeholder="Thabo Mokoena" /></div>
+        <div><label class="lbl" for="gEmail">Email</label><input id="gEmail" class="fld" type="email" autocomplete="email" inputmode="email" required placeholder="thabo@company.co.za" /></div>
+        <div><label class="lbl" for="gMobile">Mobile number <span class="opt">(optional)</span></label><input id="gMobile" class="fld" type="tel" autocomplete="tel" inputmode="tel" placeholder="082 123 4567" /><p id="gMobileErr" class="hidden text-[12px] text-[#DC183C] font-semibold mt-1.5">Add your mobile number for WhatsApp reminders, or untick WhatsApp.</p></div>
+        <div><label class="lbl" for="gQ">What would you like the speakers to cover? <span class="opt">(optional)</span></label><textarea id="gQ" class="fld" rows="3" placeholder="For example: forecasting with only six months of sales"></textarea></div>
+
+        <fieldset class="space-y-2">
+          <legend class="lbl">What we send you</legend>
+          <p class="text-[12.5px] text-[#6A7581] leading-relaxed mb-1">We always email your confirmation, the webinar link and the replay notice. Everything below is your choice.</p>
+          <label class="tick"><input type="checkbox" id="cEmail" /><span>Email me about future SME South Africa events and insights<small>A few emails a month. Unsubscribe any time.</small></span></label>
+          <label class="tick"><input type="checkbox" id="cWa" onchange="waCheck()" /><span>Send my reminders on WhatsApp too<small>Needs your mobile number. Reply STOP to opt out.</small></span></label>
+          <label class="tick"><input type="checkbox" id="cSp1" /><span>Base Capital, the session partner, may contact me about forecasting support<small>We share your name, email and mobile with Base Capital only if you tick this.</small></span></label>
+        </fieldset>
+
+        <p class="text-[12px] text-[#6A7581] leading-relaxed">We use your details to register you for this webinar, send the webinar link and reminders, and do only what you ticked above. Read our <a href="public-popia.html" class="font-semibold text-[#0C1F31] underline underline-offset-2">POPIA notice</a> to see how we handle your information.</p>
+        <button type="submit" class="w-full h-12 rounded-xl bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold text-[15px] transition inline-flex items-center justify-center gap-1.5">Register <i data-lucide="arrow-right" class="w-4 h-4"></i></button>
+      </form>
+
+      <!-- ============ STATE: SIGNED-IN MEMBER ============ -->
+      <div id="st-member" class="hidden space-y-4">
+        <div class="flex items-center gap-3 rounded-2xl border border-[#E7EBEF] p-4">
+          <div class="w-12 h-12 rounded-full bg-gradient-to-br from-[#DC183C] to-[#FF9900] grid place-items-center font-jakarta font-extrabold text-white shrink-0">TJ</div>
+          <div class="min-w-0 flex-1">
+            <p class="font-jakarta font-extrabold text-[15px] text-[#0C1F31] truncate">Tshepho Joel</p>
+            <p class="text-[12.5px] text-[#6A7581] truncate">tshepho@langaholdings.co.za</p>
+            <p class="text-[12.5px] text-[#6A7581] truncate">082 *** 4567</p>
+          </div>
+          <a href="member-account.html" class="text-[12.5px] font-bold text-[#DC183C] min-h-[44px] inline-flex items-center px-1">Edit</a>
+        </div>
+        <a href="event-confirmed.html?member=1" onclick="track('member')" class="w-full h-12 rounded-xl bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold text-[15px] transition inline-flex items-center justify-center gap-1.5">Register <i data-lucide="check" class="w-4 h-4"></i></a>
+        <details class="rounded-2xl border border-[#E7EBEF] group">
+          <summary class="min-h-[48px] px-4 flex items-center justify-between cursor-pointer list-none text-[13.5px] font-bold text-[#0C1F31]">Your message choices and a question <i data-lucide="chevron-down" class="w-4 h-4 text-slate-500 group-open:rotate-180 transition"></i></summary>
+          <div class="px-4 pb-4 space-y-2">
+            <p class="text-[12.5px] text-[#6A7581] leading-relaxed">Saved from your account. Changes apply to this event.</p>
+            <label class="tick"><input type="checkbox" checked /><span>Email me about future SME South Africa events and insights</span></label>
+            <label class="tick"><input type="checkbox" /><span>Send my reminders on WhatsApp too</span></label>
+            <label class="tick"><input type="checkbox" /><span>Base Capital, the session partner, may contact me about forecasting support</span></label>
+            <label class="lbl pt-2" for="mQ">What would you like the speakers to cover? <span class="opt">(optional)</span></label>
+            <textarea id="mQ" class="fld" rows="2"></textarea>
+          </div>
+        </details>
+        <p class="text-[12px] text-[#6A7581] leading-relaxed">Registering uses the details on your account. See our <a href="public-popia.html" class="font-semibold text-[#0C1F31] underline underline-offset-2">POPIA notice</a>. Not you? <a href="public-auth.html" class="font-semibold text-[#0C1F31] underline underline-offset-2">Sign out</a></p>
+      </div>
+
+      <!-- ============ STATE: PAID IN PERSON ============ -->
+      <form id="st-paid" class="hidden space-y-4" onsubmit="submitPaid(event)" novalidate>
+        <div class="rounded-2xl border border-[#E7EBEF] p-4">
+          <div class="flex items-start justify-between gap-3">
+            <div class="min-w-0"><p class="font-jakarta font-extrabold text-[15px] text-[#0C1F31]">General Admission</p><p class="text-[12.5px] text-[#6A7581]">Includes lunch and drinks</p></div>
+            <p class="font-jakarta font-extrabold text-[15px] text-[#0C1F31] shrink-0">R 1,250</p>
+          </div>
+          <div class="flex items-center justify-between mt-4">
+            <p class="text-[13px] font-bold text-[#0C1F31]" id="qtyLabel">Tickets</p>
+            <div class="flex items-center gap-2">
+              <button type="button" class="qty-btn" id="qtyMinus" onclick="setQty(-1)" aria-label="One ticket fewer"><i data-lucide="minus" class="w-4 h-4"></i></button>
+              <output id="qtyVal" class="w-8 text-center font-jakarta font-extrabold text-[17px]" aria-labelledby="qtyLabel">2</output>
+              <button type="button" class="qty-btn" id="qtyPlus" onclick="setQty(1)" aria-label="One ticket more"><i data-lucide="plus" class="w-4 h-4"></i></button>
+            </div>
+          </div>
+        </div>
+        <div>
+          <p class="lbl">Who is coming</p>
+          <p class="text-[12.5px] text-[#6A7581] leading-relaxed mb-2">One name per seat, so we can print name badges and send each person their own ticket.</p>
+          <div id="seats" class="space-y-3"></div>
+        </div>
+        <div><label class="lbl" for="pVat">Company VAT number <span class="opt">(optional, for your tax invoice)</span></label><input id="pVat" class="fld" type="text" inputmode="numeric" placeholder="4123456789" /></div>
+        <fieldset class="space-y-2">
+          <legend class="lbl">What we send you</legend>
+          <label class="tick"><input type="checkbox" /><span>Email me about future SME South Africa events and insights</span></label>
+          <label class="tick"><input type="checkbox" /><span>Send my reminders on WhatsApp too<small>Needs a mobile number on seat one.</small></span></label>
+        </fieldset>
+        <div class="rounded-2xl bg-[#F6F8FA] border border-[#E7EBEF] p-4">
+          <div class="flex justify-between text-[13.5px] font-semibold text-[#0C1F31]"><p id="lineLabel">2 x General Admission</p><p id="lineTotal">R 2,500</p></div>
+          <div class="flex justify-between text-[12.5px] text-[#6A7581] pt-2 pb-3 border-b border-[#E7EBEF] mb-3"><p>VAT</p><p>Included</p></div>
+          <div class="flex justify-between font-jakarta font-extrabold text-[18px] text-[#0C1F31]"><p>Total</p><p id="grandTotal">R 2,500</p></div>
+        </div>
+        <p class="text-[12px] text-[#6A7581] leading-relaxed">You pay on our secure checkout. See the <a href="public-refunds.html" class="font-semibold text-[#0C1F31] underline underline-offset-2">refunds policy</a> and our <a href="public-popia.html" class="font-semibold text-[#0C1F31] underline underline-offset-2">POPIA notice</a>.</p>
+        <button type="submit" class="w-full h-12 rounded-xl bg-[#0C1F31] hover:bg-[#16324A] text-white font-bold text-[15px] transition inline-flex items-center justify-center gap-1.5"><i data-lucide="lock" class="w-4 h-4"></i> Continue to payment</button>
+      </form>
+
+      <!-- ============ STATE: WAITLIST (optional feature) ============ -->
+      <form id="st-waitlist" class="hidden space-y-4" onsubmit="submitWaitlist(event)" novalidate>
+        <div class="rounded-2xl border border-[#FFD9A0] bg-[#FFF6E8] p-4 flex items-start gap-3">
+          <i data-lucide="hourglass" class="w-5 h-5 text-[#AE6B0A] shrink-0 mt-0.5"></i>
+          <div><p class="font-jakarta font-extrabold text-[14.5px] text-[#0C1F31]">All places are taken for now</p><p class="text-[12.5px] text-[#42505E] leading-relaxed mt-0.5">Join the waitlist and we will email you if a place opens up. You then have a day to claim it.</p></div>
+        </div>
+        <div><label class="lbl" for="wName">Full name</label><input id="wName" class="fld" type="text" autocomplete="name" required placeholder="Thabo Mokoena" /></div>
+        <div><label class="lbl" for="wEmail">Email</label><input id="wEmail" class="fld" type="email" autocomplete="email" required placeholder="thabo@company.co.za" /></div>
+        <div><label class="lbl" for="wMobile">Mobile number <span class="opt">(optional)</span></label><input id="wMobile" class="fld" type="tel" autocomplete="tel" placeholder="082 123 4567" /></div>
+        <label class="tick"><input type="checkbox" /><span>Tell me on WhatsApp too when a place opens</span></label>
+        <label class="tick"><input type="checkbox" /><span>Email me about future SME South Africa events and insights</span></label>
+        <p class="text-[12px] text-[#6A7581] leading-relaxed">We use your details only to manage the waitlist and what you ticked. Read our <a href="public-popia.html" class="font-semibold text-[#0C1F31] underline underline-offset-2">POPIA notice</a>.</p>
+        <button type="submit" class="w-full h-12 rounded-xl bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold text-[15px] transition inline-flex items-center justify-center gap-1.5">Join the waitlist</button>
+      </form>
+      <div id="wlDone" class="hidden rounded-2xl border border-[#BFE6D6] bg-[#EAF7F1] p-5 text-center">
+        <div class="w-12 h-12 mx-auto rounded-full bg-[#29A37A] text-white grid place-items-center mb-3"><i data-lucide="check" class="w-6 h-6"></i></div>
+        <p class="font-jakarta font-extrabold text-[16px] text-[#0C1F31]">You're on the waitlist</p>
+        <p class="text-[13px] text-[#42505E] mt-1 leading-relaxed">We will email you as soon as a place opens up. Watch your inbox, the claim link works for one day.</p>
+      </div>
+
+      <!-- Developer notes -->
+      <div class="dev-note rounded-xl px-4 py-3 items-start gap-3">
+        <i data-lucide="info" class="w-4 h-4 text-[#AE6B0A] shrink-0 mt-0.5"></i>
+        <div class="text-xs text-slate-700 leading-relaxed space-y-2">
+          <p><b>Dev note, registration sheet (Workstream A).</b> Opens from "Register now" on <code>event-single-online.html</code> (and "Get tickets" on the in-person page). Phones: bottom sheet, max 92% height, own scroll. From 768 px: right side panel, 460 px. Close returns to the event URL. Submit goes to <code>event-confirmed.html</code>; paid goes to the site checkout (<code>public-checkout.html</code>, WooCommerce + the existing card account). The state tabs are a preview control only.</p>
+          <p><b>Registration record</b> (one row per person per event): <code>registration_id</code>, <code>event_id</code>, <code>user_id</code> (member) <i>or</i> <code>guest_email</code> (lowercased) + <code>guest_name</code>, <code>mobile</code> (E.164, optional), <code>status</code> (registered, waitlisted, pending, approved, declined, cancelled, attended, no_show), <code>ticket_type</code> (webinar, general_admission, ...), <code>quantity</code> + <code>seats [{ name, email }]</code>, <code>order_id</code> (Woo, paid only), <code>vat_number</code>, <code>method</code> (member or guest), <code>answers [{ question_id, answer }]</code>, <code>created_at</code> / <code>updated_at</code> (ISO 8601, +02:00).</p>
+          <p><b>Consent ledger</b>, one entry per channel, never pre-ticked: <code>{ channel: email_updates | whatsapp | sponsor:&lt;partner_id&gt;, granted: bool, at: timestamp, wording_version: "evt-consent-v1", wording_hash, source_url }</code>. Withdrawal writes a new entry, it never edits the old one. Sponsors: one tick per named sponsor on the event, off by default; export only the people who ticked that sponsor. Confirmation, webinar link, reminders and the replay notice are transactional and need no tick.</p>
+          <p><b>Source:</b> <code>source_url</code>, <code>referrer</code>, <code>utm_source</code>, <code>utm_medium</code>, <code>utm_campaign</code>, <code>utm_term</code>, <code>utm_content</code>, plus the first-touch record, and <code>ref</code> (invite link of the person who shared it).</p>
+          <p><b>Rules:</b> guest email matching an account is linked quietly (no account is created, no password asked). WhatsApp ticked without a mobile shows an inline error. Waitlist is optional per event (off by default); a place that opens is offered for one day. No seat counts, "sold out" or who's going numbers on screen. dataLayer: <code>event_register_click</code>, <code>event_register_complete</code> with <code>method</code>, no personal data.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="lg:hidden" style="height:calc(64px + env(safe-area-inset-bottom))"></div>
+<footer class="bg-[#0C1F31] text-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-12">
+    <div class="grid grid-cols-2 md:grid-cols-6 gap-8">
+      <div class="col-span-2">
+        <a href="public-home.html" class="flex items-center gap-2.5"><img src="assets/logo-v1-lockup-reversed.svg" alt="SME South Africa" class="h-[46px] lg:h-[68px] w-auto" /></a>
+        <p class="text-sm text-white/55 mt-4 max-w-xs leading-relaxed">A community for South African SME owners, connecting founders with funding, events, and the tools to scale.</p>
+        <div class="flex items-center gap-2 mt-5">
+          <a href="#" aria-label="X" class="w-9 h-9 rounded-lg bg-white/8 hover:bg-white/15 grid place-items-center transition"><svg viewBox="0 0 24 24" class="w-4 h-4" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24h-6.66l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+          <a href="#" aria-label="LinkedIn" class="w-9 h-9 rounded-lg bg-white/8 hover:bg-white/15 grid place-items-center transition"><svg viewBox="0 0 24 24" class="w-4 h-4" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0z"/></svg></a>
+          <a href="#" aria-label="Instagram" class="w-9 h-9 rounded-lg bg-white/8 hover:bg-white/15 grid place-items-center transition"><svg viewBox="0 0 24 24" class="w-4 h-4" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></a>
+          <a href="#" aria-label="Facebook" class="w-9 h-9 rounded-lg bg-white/8 hover:bg-white/15 grid place-items-center transition"><svg viewBox="0 0 24 24" class="w-4 h-4" fill="currentColor"><path d="M22.675 0H1.325C.593 0 0 .593 0 1.325v21.351C0 23.407.593 24 1.325 24h11.495v-9.294H9.692v-3.622h3.128V8.413c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.716-1.795 1.763v2.313h3.587l-.467 3.622h-3.12V24h6.116C23.407 24 24 23.407 24 22.675V1.325C24 .593 23.407 0 22.675 0z"/></svg></a>
+          <a href="#" aria-label="YouTube" class="w-9 h-9 rounded-lg bg-white/8 hover:bg-white/15 grid place-items-center transition"><svg viewBox="0 0 24 24" class="w-4 h-4" fill="currentColor"><path d="M21.582 6.186a2.684 2.684 0 0 0-1.884-1.9C17.962 3.84 12 3.84 12 3.84s-5.962 0-7.698.446a2.684 2.684 0 0 0-1.884 1.9C2 7.934 2 12 2 12s0 4.066.418 5.814a2.684 2.684 0 0 0 1.884 1.9C6.038 20.16 12 20.16 12 20.16s5.962 0 7.698-.446a2.684 2.684 0 0 0 1.884-1.9C22 16.066 22 12 22 12s0-4.066-.418-5.814zM9.996 15.005V8.994L15.26 12l-5.264 3.005z"/></svg></a>
+          <a href="#" aria-label="TikTok" class="w-9 h-9 rounded-lg bg-white/8 hover:bg-white/15 grid place-items-center transition"><svg viewBox="0 0 24 24" class="w-4 h-4" fill="currentColor"><path d="M16.6 5.82c-1.01-.88-1.62-2.14-1.63-3.55h-3.13v13.39c0 1.6-1.3 2.9-2.9 2.9a2.9 2.9 0 0 1 0-5.8c.29 0 .57.04.83.13V9.75a6.03 6.03 0 0 0-.83-.06c-3.34 0-6.05 2.71-6.05 6.05S5.6 21.79 8.94 21.79s6.05-2.71 6.05-6.05V9.01a9.14 9.14 0 0 0 5.34 1.71V7.6a5.94 5.94 0 0 1-3.73-1.78z"/></svg></a>
+        </div>
+      </div>
+      <div>
+        <p class="text-[11px] font-bold uppercase tracking-widest text-[#FF9900]">Platform</p>
+        <ul class="mt-4 space-y-2.5 text-sm text-white/70">
+          <li><a href="public-resources.html" class="hover:text-white">Resources Library</a></li>
+          <li><a href="public-funding.html" class="hover:text-white">Funding Portal</a></li>
+          <li><a href="public-solutions.html" class="hover:text-white">Solutions Directory</a></li>
+          <li><a href="public-brands.html" class="hover:text-white">Brands Directory</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="text-[11px] font-bold uppercase tracking-widest text-[#FF9900]">Insights</p>
+        <ul class="mt-4 space-y-2.5 text-sm text-white/70">
+          <li><a href="public-articles.html" class="hover:text-white">All Insights</a></li>
+          <li><a href="public-founder-focus-category.html" class="hover:text-white">Founder Focus</a></li>
+          <li><a href="public-funding-summit-category.html" class="hover:text-white">Funding Summit</a></li>
+          <li><a href="public-category.html" class="hover:text-white">Business Opportunities</a></li>
+          <li><a href="public-category.html" class="hover:text-white">Brand Voice</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="text-[11px] font-bold uppercase tracking-widest text-[#FF9900]">Community</p>
+        <ul class="mt-4 space-y-2.5 text-sm text-white/70">
+          <li><a href="member-hub.html" class="hover:text-white">Community Forum</a></li>
+          <li><a href="events.html" class="hover:text-white">Events &amp; Webinars</a></li>
+          <li><a href="newsletter.html" class="hover:text-white">Newsletter</a></li>
+          <li><a href="podcast.html" class="hover:text-white">Podcast</a></li>
+          <li><a href="public-glossary.html" class="hover:text-white">Glossary</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="text-[11px] font-bold uppercase tracking-widest text-[#FF9900]">Legal</p>
+        <ul class="mt-4 space-y-2.5 text-sm text-white/70">
+          <li><a href="public-terms.html" class="hover:text-white">Terms &amp; Conditions</a></li>
+          <li><a href="public-privacy.html" class="hover:text-white">Privacy Policy</a></li>
+          <li><a href="public-refunds.html" class="hover:text-white">Refunds Policy</a></li>
+          <li><a href="public-popia.html" class="hover:text-white">POPIA</a></li>
+          <li><a href="public-advertising-disclosure.html" class="hover:text-white">Advertising Disclosure</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-3 pt-8 mt-10 border-t border-white/10 text-[12.5px] text-white/50">
+      <div class="flex flex-wrap items-center gap-x-3 gap-y-1.5">
+        <a href="public-about.html" class="hover:text-white transition">About</a><span class="text-white/20">·</span>
+            <a href="public-contact.html" class="hover:text-white transition">Contact</a><span class="text-white/20">·</span>
+            <a href="public-advertise.html" class="hover:text-white transition">Advertise</a><span class="text-white/20">·</span>
+            <a href="public-help.html" class="hover:text-white transition">Help Centre</a>
+      </div>
+      <p>© 2026 SME South Africa. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+
+<div id="overlay-root"></div>
+<div id="toast" class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-[90]"></div>
+<script>
+  function showToast(m){const el=document.getElementById('toast');el.classList.remove('hidden');el.innerHTML=`<div class="bg-[#0C1F31] text-white rounded-full pl-3 pr-5 py-2.5 shadow-2xl flex items-center gap-2 text-sm font-semibold" style="border-left:4px solid #29A37A"><i data-lucide="check-circle" class="w-4 h-4" style="color:#29A37A"></i><span>${m}</span></div>`;lucide.createIcons();setTimeout(()=>{el.classList.add('hidden');el.innerHTML='';},2400);}
+
+  // ===== Registration sheet (preview) =====
+  document.body.classList.add('reg-lock');
+  const EVT = { id: 81001, title: 'How to Use Predictive Analytics to Forecast Growth', format: 'online', state: 'upcoming',
+                startUtc: '2026-08-20T11:00:00Z', endUtc: '2026-08-20T12:15:00Z' };
+  const PRICE = 1250;
+  function track(method){ try { window.smesaEvt && smesaEvt('event_register_complete', { event_id: EVT.id, event_title: EVT.title, event_format: EVT.format, event_state: EVT.state, member: method === 'member' ? 'yes' : 'no', method: method }); } catch (_) {} }
+
+  function localTimeLine(){
+    let tz = 'Africa/Johannesburg';
+    try { const m = location.search.match(/[?&]tz=([^&]+)/); tz = m ? decodeURIComponent(m[1]) : Intl.DateTimeFormat().resolvedOptions().timeZone; } catch (_) {}
+    if (!tz || tz === 'Africa/Johannesburg') return 'That is your local time too.';
+    try {
+      const f = d => new Date(d).toLocaleTimeString('en-GB', { hour: 'numeric', minute: '2-digit', hour12: true, timeZone: tz });
+      const day = new Date(EVT.startUtc).toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short', timeZone: tz });
+      return 'Your time: ' + day + ', ' + f(EVT.startUtc) + ' to ' + f(EVT.endUtc) + ' (' + tz.replace(/_/g, ' ') + ')';
+    } catch (_) { return ''; }
+  }
+  document.querySelectorAll('.js-localtime').forEach(el => el.textContent = localTimeLine());
+
+  const STATES = ['guest', 'member', 'paid', 'waitlist'];
+  function setRegState(s){
+    STATES.forEach(k => document.getElementById('st-' + k).classList.toggle('hidden', k !== s));
+    document.getElementById('wlDone').classList.add('hidden');
+    document.querySelectorAll('.st-tab').forEach(b => { const on = b.dataset.st === s; b.classList.toggle('on', on); b.setAttribute('aria-selected', on ? 'true' : 'false'); });
+    const paid = s === 'paid';
+    document.getElementById('sumOnline').classList.toggle('hidden', paid);
+    document.getElementById('sumPaid').classList.toggle('hidden', !paid);
+    document.getElementById('regEyebrow').textContent = paid ? 'Get tickets' : (s === 'waitlist' ? 'Join the waitlist' : 'Register for this webinar');
+    document.getElementById('regTitle').textContent = paid ? 'SME Funding Summit' : EVT.title;
+    document.getElementById('regPanel').scrollTop = 0;
+    lucide.createIcons();
+  }
+
+  function markErr(el, bad){ el.style.borderColor = bad ? '#DC183C' : ''; }
+  function req(ids){ let ok = true; ids.forEach(id => { const el = document.getElementById(id); const bad = !el.value.trim() || (el.type === 'email' && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(el.value)); markErr(el, bad); if (bad && ok) { el.focus(); ok = false; } }); return ok; }
+  function waCheck(){ const need = document.getElementById('cWa').checked && !document.getElementById('gMobile').value.trim(); document.getElementById('gMobileErr').classList.toggle('hidden', !need); return !need; }
+  document.getElementById('gMobile').addEventListener('input', () => { if (document.getElementById('cWa').checked) waCheck(); });
+
+  function submitGuest(e){
+    e.preventDefault();
+    if (!req(['gName', 'gEmail'])) return;
+    if (!waCheck()) { document.getElementById('gMobile').focus(); return; }
+    track('guest');
+    const wa = document.getElementById('cWa').checked;
+    location.href = 'event-confirmed.html' + (wa ? '?wa=1' : '');
+  }
+
+  let qty = 2;
+  function seatRow(i){
+    return `<div class="rounded-2xl border border-[#E7EBEF] p-3 space-y-2"><p class="text-[11px] font-bold uppercase tracking-widest text-[#6A7581]">Seat ${i + 1}${i === 0 ? ', you' : ''}</p>` +
+      `<input class="fld" type="text" autocomplete="${i === 0 ? 'name' : 'off'}" placeholder="Full name" aria-label="Seat ${i + 1} full name" />` +
+      `<input class="fld" type="email" autocomplete="${i === 0 ? 'email' : 'off'}" placeholder="${i === 0 ? 'Email' : 'Email (optional, we send their ticket here)'}" aria-label="Seat ${i + 1} email" />` +
+      (i === 0 ? `<input class="fld" type="tel" autocomplete="tel" placeholder="Mobile number (optional)" aria-label="Seat 1 mobile number" />` : '') + `</div>`;
+  }
+  function rands(n){ return 'R ' + n.toLocaleString('en-US'); }
+  function setQty(d){
+    qty = Math.max(1, Math.min(10, qty + d));
+    const box = document.getElementById('seats');
+    const have = box.children.length;
+    if (qty > have) for (let i = have; i < qty; i++) box.insertAdjacentHTML('beforeend', seatRow(i));
+    else while (box.children.length > qty) box.lastElementChild.remove();
+    document.getElementById('qtyVal').textContent = qty;
+    document.getElementById('qtyMinus').disabled = qty <= 1;
+    document.getElementById('qtyPlus').disabled = qty >= 10;
+    document.getElementById('lineLabel').textContent = qty + ' x General Admission';
+    document.getElementById('lineTotal').textContent = rands(qty * PRICE);
+    document.getElementById('grandTotal').textContent = rands(qty * PRICE);
+  }
+  setQty(0);
+  function submitPaid(e){ e.preventDefault(); location.href = 'public-checkout.html'; }
+
+  function submitWaitlist(e){
+    e.preventDefault();
+    if (!req(['wName', 'wEmail'])) return;
+    document.getElementById('st-waitlist').classList.add('hidden');
+    document.getElementById('wlDone').classList.remove('hidden');
+    lucide.createIcons();
+  }
+
+  // Signed in preview (Viewing as: Member) opens on the member state; ?state= picks one for review links.
+  (function(){
+    let s = 'guest';
+    try { if (sessionStorage.getItem('smeViewAs') === 'member') s = 'member'; } catch (_) {}
+    const q = (location.search.match(/[?&]state=(guest|member|paid|waitlist)\b/) || [])[1];
+    if (q) s = q;
+    setRegState(s);
+  })();
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && !document.getElementById('chromeSearchOverlay').classList.contains('active')) location.href = 'event-single-online.html'; });
+
+  const BRIEF = {
+    title: 'Event registration sheet',
+    sub: 'Opens from Register now · <code>event</code> CPT',
+    purpose: 'One short form that registers a guest or a signed in member, records consent per channel, and hands paid tickets to the site checkout. Four states: Guest, Member, Paid in person, Waitlist (optional).',
+    data: 'Registration record and consent ledger: see the dev note at the foot of the sheet.',
+    logic: 'Guest submit creates or updates the registration, matches an existing account by email quietly, sends the confirmation email (and WhatsApp when ticked), then redirects to <code>event-confirmed.html</code>. Member submit is one tap with the account details. Paid adds Woo line items (one per seat with the seat name) and goes to checkout; the registration is written on payment complete.',
+    components: 'Sheet shell (bottom sheet / side panel) · state tabs (preview) · event summary with SAST and visitor local time · form fields · consent ticks · POPIA line · primary button.',
+    specs: 'Fields h-12 rounded-xl, ticks 44 px rows, buttons h-12. Bottom sheet radius 24 px, grab handle 44 x 5. Side panel 460 px from 768 px. Brand #DC183C / #0C1F31.'
+  };
+
+  function toggleDevMode(){const on=document.body.classList.toggle('dev-on');const b=document.getElementById('devToggle');if(b)b.classList.toggle('on',on);lucide.createIcons();}
+  function closeOverlay(id){const el=document.getElementById(id);if(!el)return;el.classList.remove('open');setTimeout(()=>{if(el&&el.parentNode)el.remove();},300);}
+  function openBrief(){
+    const b=BRIEF;
+    const sec=(i,l,h)=>`<div class="px-6 py-4 border-t border-slate-100"><p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] flex items-center gap-1.5 mb-2"><i data-lucide="${i}" class="w-3.5 h-3.5"></i>${l}</p><div class="text-sm text-slate-600 leading-relaxed">${h}</div></div>`;
+    document.getElementById('overlay-root').innerHTML=`<div class="ov" id="ov"><div class="ov-bg" onclick="closeOverlay('ov')"></div><div class="drawer"><div class="sticky top-0 z-10 bg-[#0C1F31] text-white px-6 py-5 flex items-start justify-between"><div><p class="text-[10px] font-bold uppercase tracking-widest text-[#FF9900] mb-1">Dev Brief</p><h3 class="font-jakarta font-extrabold text-lg leading-tight">${b.title}</h3><p class="text-xs text-white/60 mt-1">${b.sub}</p></div><button onclick="closeOverlay('ov')" class="text-white/60 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button></div>${sec('target','Purpose',b.purpose)}${sec('database','Data model',b.data)}${sec('git-branch','Logic',b.logic)}${sec('boxes','Components',b.components)}${sec('ruler','Spec values',b.specs)}</div></div>`;
+    requestAnimationFrame(()=>{const o=document.getElementById('ov');if(o)o.classList.add('open');});
+    lucide.createIcons();
+  }
+
+
+  try { if (/[?&]dev=1\b/.test(location.search)) toggleDevMode(); } catch (_) {}
+  lucide.createIcons();
+</script>
+<script>
+  // ===== Recommended header/footer behaviour =====
+  function toggleChromeSearch(){
+    const o = document.getElementById('chromeSearchOverlay');
+    const opening = o.classList.toggle('active');
+    if(opening) setTimeout(()=>document.getElementById('chromeSearchInput').focus(), 100);
+  }
+  function toggleChromeBurger(){
+    const p = document.getElementById('chromeBurgerPanel');
+    const open = p.classList.toggle('hidden') === false;
+    document.getElementById('chromeBurgerIcon').setAttribute('data-lucide', open ? 'x' : 'menu');
+    lucide.createIcons();
+  }
+  const CHROME_DROPS = { articles: 'dropArticles', resources: 'dropResources', funding: 'dropFunding' };
+  function toggleChromeDrop(name){
+    Object.keys(CHROME_DROPS).forEach(k=>{ if(k!==name) document.getElementById(CHROME_DROPS[k]).classList.add('hidden'); });
+    document.getElementById(CHROME_DROPS[name]).classList.toggle('hidden');
+  }
+  function closeChromeDrop(name){
+    document.getElementById(CHROME_DROPS[name]).classList.add('hidden');
+  }
+  document.addEventListener('click', e=>{
+    if(!e.target.closest('nav .relative')) Object.values(CHROME_DROPS).forEach(id=>document.getElementById(id).classList.add('hidden'));
+  });
+  document.addEventListener('keydown', e=>{
+    if(e.key==='Escape'){ const o=document.getElementById('chromeSearchOverlay'); if(o && o.classList.contains('active')) toggleChromeSearch(); }
+  });
+</script>
+<script src="member-chrome.js"></script>
+</body>
+</html>

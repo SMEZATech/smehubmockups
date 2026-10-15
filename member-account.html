@@ -170,6 +170,7 @@
           <div class="p-2 text-sm text-slate-700 font-medium">
             <a href="single-member.html" class="block px-3 py-2 rounded-lg hover:bg-slate-50 hover:text-[#DC183C] transition-colors">Profile</a>
             <a href="member-account.html" class="block px-3 py-2 rounded-lg hover:bg-slate-50 hover:text-[#DC183C] transition-colors">Account Settings</a>
+            <a href="saved.html" class="block px-3 py-2 rounded-lg hover:bg-slate-50 hover:text-[#DC183C] transition-colors">Saved</a>
             <a href="member-account.html" class="block px-3 py-2 rounded-lg hover:bg-slate-50 hover:text-[#DC183C] transition-colors flex items-center justify-between">Orders <span class="bg-slate-100 text-slate-500 text-[10px] font-bold px-2 py-0.5 rounded-full">4</span></a>
           </div>
           <div class="p-2 border-t border-slate-100">
@@ -226,16 +227,18 @@
 
 <!-- ============================ SCREEN B: ACCOUNT SETTINGS ============================ -->
 <main>
-  <div class="max-w-6xl mx-auto px-4 sm:px-6 py-6">
-    <div class="mb-5 pt-6">
-      <h1 class="font-jakarta font-extrabold text-2xl text-[#121A21] tracking-tight">Account Settings</h1>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 pt-4 sm:pt-6 pb-6">
+    <!-- LinkedIn style (Joel, 14 Oct, live CL-436): the member's round photo next to a big title, the module close under the header -->
+    <div class="mb-4 sm:mb-5 flex items-center gap-3">
+      <div id="settings-photo" class="shrink-0"></div>
+      <h1 class="font-jakarta font-extrabold text-[26px] sm:text-[30px] leading-none text-[#121A21] tracking-tight">Account Settings</h1>
     </div>
 
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-6">
       <!-- Settings sidebar -->
       <aside class="lg:col-span-3">
         <div class="lg:sticky lg:top-24">
-          <div id="settings-nav" class="bg-white rounded-2xl border border-slate-100 p-2 flex lg:flex-col gap-1 overflow-x-auto no-scrollbar"></div>
+          <nav id="settings-nav" aria-label="Account Settings" class="bg-white rounded-2xl border border-slate-100 p-2 flex lg:flex-col gap-1 overflow-x-auto no-scrollbar lg:max-h-[calc(100vh-7rem)] lg:overflow-y-auto"></nav>
         </div>
       </aside>
 
@@ -314,26 +317,44 @@ const state = {
 };
 /* ===================== SCREEN B: SETTINGS ===================== */
 const SETTINGS_NAV = [
+  /* Live order (14 Oct 2026): account items, then FUNDING, EVENTS and LEARN. No Membership tab (no Premium upsell) and no
+     "My applications" tab: the applications log is the "Your applications" section inside Funding (Joel, 13 Oct). */
   { id:'login',         label:'Login Information', icon:'key-round' },
   { id:'profile',       label:'Profile',        icon:'user-round' },
   { id:'newsletter',    label:'Newsletter',     icon:'mail-open' },
   { id:'orders',        label:'My Orders',      icon:'shopping-bag' },
   { id:'invites',       label:'Group Invites',  icon:'mail-plus' },
-  { id:'membership',    label:'Membership',     icon:'crown' },
   { id:'notifications', label:'Notification Preferences', icon:'bell' },
   { id:'privacy',       label:'Privacy',        icon:'eye' },
   { id:'export',        label:'Export Data',    icon:'file-down' },
-  { id:'blocked',       label:'Blocked Members',icon:'user-x' }
+  { id:'blocked',       label:'Blocked Members',icon:'user-x' },
+  { id:'scheduled',     label:'Scheduled Posts',icon:'calendar-clock' },
+  { id:'saved',         label:'Saved',          icon:'bookmark' },
+  { id:'funding',       label:'Funding',        icon:'hand-coins', group:'Funding' },
+  { id:'calculator',    label:'Loan calculator',icon:'calculator' },
+  { id:'events',        label:'Events',         icon:'calendar-days', group:'Events' },
+  { id:'guides',        label:'Guides',         icon:'book-open', group:'Learn' },
+  { id:'podcast',       label:'Podcast',        icon:'mic' },
+  { id:'stories',       label:'Founder stories',icon:'sparkles' },
+  { id:'library',       label:'Library',        icon:'folder-open' }
 ];
+/* My Orders shows only for a member who has bought something (Joel, 2026-10-13): most members never have.
+   Demo a buyer with ?orders=1 (the tab and the Orders menu item then appear with the sample orders). */
+const HAS_ORDERS = /[?&]orders=1\b/.test(location.search);
+function settingsNav(){ return SETTINGS_NAV.filter(s => s.id !== 'orders' || HAS_ORDERS); }
 function renderSettingsNav(){
-  document.getElementById('settings-nav').innerHTML = SETTINGS_NAV.map(s=>`
-    <button onclick="setSettingsTab('${s.id}')" class="snav ${state.settingsTab===s.id?'active':'text-slate-600 hover:bg-slate-50'} shrink-0 w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-semibold text-left transition">
+  document.getElementById('settings-nav').innerHTML = settingsNav().map(s=>`${s.group?`<p class="hidden lg:block px-3.5 pt-4 pb-1 text-[10px] font-bold uppercase tracking-widest text-slate-400">${s.group}</p><span class="lg:hidden w-px self-stretch my-2 bg-slate-200 shrink-0" aria-hidden="true"></span>`:''}
+    <button data-sid="${s.id}" ${state.settingsTab===s.id?'aria-current="page"':''} onclick="setSettingsTab('${s.id}')" class="snav ${state.settingsTab===s.id?'active':'text-slate-600 hover:bg-slate-50'} shrink-0 lg:w-full flex items-center gap-3 px-3.5 min-h-[44px] rounded-xl text-sm font-semibold text-left whitespace-nowrap transition">
       <i data-lucide="${s.icon}" class="w-4.5 h-4 text-slate-500"></i> <span>${s.label}</span>
       <button onclick="event.stopPropagation();openBrief('set_${s.id}')" class="dev-badge w-4 h-4 rounded-full bg-[#DC183C] text-white items-center justify-center text-[9px] font-bold leading-none animate-pulse ml-auto" title="Implementation notes">i</button>
     </button>`).join('');
   lucide.createIcons();
+  /* phones: the menu is one swipeable row; keep the open item in view */
+  const on = document.querySelector('#settings-nav [data-sid="'+state.settingsTab+'"]');
+  const centre=()=>{ const el=document.querySelector('#settings-nav [data-sid="'+state.settingsTab+'"]'); if(!el || window.innerWidth >= 1024) return; const nav=document.getElementById('settings-nav'); const nr=nav.getBoundingClientRect(), r=el.getBoundingClientRect(); nav.scrollLeft += (r.left - nr.left) - (nr.width - r.width)/2; };
+  if(on){ centre(); setTimeout(centre, 350); }
 }
-function setSettingsTab(id){ state.settingsTab=id; renderSettingsNav(); renderSettingsContent(); window.scrollTo({top:120,behavior:'smooth'}); }
+function setSettingsTab(id){ if(id==='saved'){ location.href='saved.html'; return; } state.settingsTab=id; try{ history.replaceState(null,'','#'+id); }catch(_){} renderSettingsNav(); renderSettingsContent(); window.scrollTo({top:0,behavior:'smooth'}); }
 
 function settingsCard(title, sub, body){
   return `<div class="bg-white rounded-2xl border border-slate-100 overflow-hidden reveal">
@@ -358,8 +379,10 @@ function toggleRow(label, sub, on, onclick){
 
 function renderSettingsContent(){
   const host = document.getElementById('settings-content');
-  const map = { login:setLogin, profile:setProfile, notifications:setNotifications, newsletter:setNewsletter, privacy:setPrivacy, blocked:setBlocked, invites:setInvites, membership:setMembership, orders:setOrders, export:setExportData };
+  const map = { login:setLogin, profile:setProfile, notifications:setNotifications, newsletter:setNewsletter, privacy:setPrivacy, blocked:setBlocked, invites:setInvites, orders:setOrders, export:setExportData, scheduled:setScheduled, funding:setFunding, calculator:setCalculator, events:()=>setContentList('events'), guides:()=>setContentList('guides'), podcast:()=>setContentList('podcast'), stories:()=>setContentList('stories'), library:()=>setContentList('library') };
   host.innerHTML = (map[state.settingsTab]||setLogin)();
+  if(LISTS[state.settingsTab]) renderListResults();
+  if(state.settingsTab==='calculator') calcUpdate();
   lucide.createIcons();
 }
 
@@ -625,7 +648,7 @@ function setOrders(){
         <i data-lucide="chevron-right" class="w-4 h-4 text-slate-500 ml-auto"></i>
       </button>
     </div>
-    <p class="text-xs text-slate-500 mt-5 flex items-center gap-1.5"><i data-lucide="info" class="w-3.5 h-3.5"></i> The SME SA store sells branded merchandise. Orders are managed securely by <span class="font-jakarta">WooCommerce</span>, payment and address management hands off to the WooCommerce secure account page. Resource downloads and funding applications now live in your <a href="#" class="font-bold text-[#DC183C] hover:underline">My Business</a>.</p>`;
+    <p class="text-xs text-slate-500 mt-5 flex items-center gap-1.5"><i data-lucide="info" class="w-3.5 h-3.5"></i> The SME SA store sells branded merchandise. Orders are managed securely by <span class="font-jakarta">WooCommerce</span>, payment and address management hands off to the WooCommerce secure account page. Funding applications are under <button onclick="setSettingsTab('funding')" class="font-bold text-[#DC183C] hover:underline">Funding</button>.</p>`;
   return settingsCard('My Orders', 'Your SME South Africa merchandise orders.', body);
 }
 
@@ -663,7 +686,7 @@ function setExportData(){
     </div>`;
   const del = `
     <div class="mt-6 pt-6 border-t border-slate-100 flex items-center justify-between gap-4 flex-wrap">
-      <div><h3 class="font-jakarta font-bold uppercase text-sm text-[#DC183C] tracking-wide">Delete my account</h3><p class="text-xs text-slate-500 mt-0.5 max-w-md">Closes your account and erases your profile, connections, messages, My Business data and downloads. Posts you made in groups are removed. You will be asked to type DELETE.</p></div>
+      <div><h3 class="font-jakarta font-bold uppercase text-sm text-[#DC183C] tracking-wide">Delete my account</h3><p class="text-xs text-slate-500 mt-0.5 max-w-md">Closes your account and erases your profile, connections, messages, business details and downloads. Posts you made in groups are removed. You will be asked to type DELETE.</p></div>
       <button onclick="deleteAccount()" class="border border-[#F4C5CF] hover:border-[#DC183C] text-[#DC183C] rounded-full px-5 py-2.5 font-jakarta font-bold text-sm transition">Delete account</button>
     </div>`;
   return settingsCard('Export Data', 'Download a copy of everything we hold about you, or close your account.', body + del);
@@ -677,14 +700,14 @@ function setProfile(){
         <div onclick="showToast('Cover photo upload.',null)" class="border-2 border-dashed border-slate-200 rounded-2xl bg-slate-50 py-10 flex flex-col items-center justify-center text-center gap-1 cursor-pointer hover:border-[#DC183C] transition">
           <i data-lucide="image" class="w-6 h-6 text-slate-500 mb-1"></i>
           <p class="text-sm font-bold text-[#121A21]">Upload Cover Photo</p>
-          <p class="text-xs text-slate-500">1200 &times; 400px minimum</p>
+          <p class="text-xs text-slate-500">A wide banner, 4:1 works best</p>
         </div>`)}
     </div>
     <div class="pb-5 mb-5 border-b border-slate-100">
       <p class="text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-2">Profile Photo</p>
       <div class="flex items-center gap-4">
         ${monogram(p.initials,64)}
-        <div><button onclick="openPhotoModal()" class="bg-[#0C1F31] text-white rounded-full px-4 py-2 text-xs font-bold flex items-center gap-1.5"><i data-lucide="upload" class="w-3.5 h-3.5"></i> Change photo</button><p class="text-xs text-slate-500 mt-1.5">JPG or PNG, max 2MB.</p></div>
+        <div><button onclick="openPhotoModal()" class="bg-[#0C1F31] text-white rounded-full px-4 py-2 text-xs font-bold flex items-center gap-1.5"><i data-lucide="upload" class="w-3.5 h-3.5"></i> Change photo</button><p class="text-xs text-slate-500 mt-1.5">JPG, PNG or WebP. We crop and resize it for you. A real photo is required before posting.</p></div>
       </div>
     </div>
 
@@ -694,16 +717,18 @@ function setProfile(){
       ${field('Last name', inp('p-last',p.lastName))}
       ${field('Username / handle', inp('p-handle','@'+p.handle))}
       ${field('Interest', sel('p-interest',INTERESTS,p.interest))}
-      ${field('Province / Region', sel('p-prov',PROVINCES,p.province))}
+      ${field('Province', sel('p-prov',PROVINCES,p.province))}
       ${field('City', inp('p-city',p.city))}
       ${field('Job title', inp('p-role',p.jobTitle))}
     </div>
     <div class="mt-4">${field('Bio', `<textarea id="p-bio" rows="3" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-sm outline-none focus:border-[#DC183C] focus:bg-white transition">${esc(p.bio)}</textarea>`, 'Max 280 characters.')}</div>
 
-    <!-- Personal and business are separate (Joel, 2026-10-02): business details live in My Business > Business profile. -->
-    <div class="mt-6 pt-5 border-t border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-      <div><p class="font-jakarta font-extrabold text-base text-[#121A21]">Business details</p><p class="text-xs text-slate-500 mt-0.5">Your company, sector, turnover and the rest now live in My Business, under Business profile.</p></div>
-      <a href="#" class="shrink-0 inline-flex items-center gap-1.5 border border-slate-200 hover:border-[#0C1F31] rounded-full px-4 py-2 text-sm font-bold text-[#121A21] transition">Open Business profile <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i></a>
+    <!-- Company details (live: Account Settings > Profile; shown on the profile under About > Company details) -->
+    <h3 class="font-jakarta font-extrabold text-base text-[#121A21] mt-6 pt-5 border-t border-slate-100 mb-4">Company Details</h3>
+    <div class="grid sm:grid-cols-2 gap-4">
+      ${field('Company name', inp('p-company',p.company))}
+      ${field('Industry', sel('p-sector',SECTORS,p.sector))}
+      ${field('LinkedIn URL', inp('p-li','', 'https://www.linkedin.com/in/'))}
     </div>
 
     <div class="mt-6"><button onclick="showToast('Profile saved.', 'win')" class="bg-[#DC183C] hover:bg-[#B0142F] text-white rounded-full px-6 py-2.5 font-jakarta font-bold text-sm transition">Save Changes</button></div>`;
@@ -733,11 +758,11 @@ const BRIEFS = {
     logic:'Email change re-verifies via a confirmation link before it takes effect (not shown in mockup). Password requires current + min-8 + match, same validation as the rest of the hub.',
     components:'Email field + update · change-password form.',
     specs:'<b>Settings shell:</b> see the Notifications brief.<br/><b>Sections:</b> divided by 1px slate-100, 20px bottom padding, each with a Plus Jakarta 700 uppercase 14px heading.<br/><b>Fields:</b> max-width 28rem (<code>max-w-md</code>); inputs bg slate-50 1px slate-200 rounded-xl (12px) padding 14px/10px. Update buttons bg <code>#DC183C</code> hover <code>#B0142F</code> rounded-full padding 20px/10px Plus Jakarta 700 14px white.<br/><b>Password validation message:</b> 12px (<code>#DC183C</code> error / <code>#29A37A</code> match).' },
-  set_profile:{ title:'Settings · Profile', sub:'Public, personal profile only (business details live in My Business › Business profile)',
+  set_profile:{ title:'Settings · Profile', sub:'Personal details plus Company details (job title, company name, industry, LinkedIn), as live on 14 Oct 2026',
     purpose:'Canonical editor for everything shown on the public member profile (see single-member.html) plus the founder/business context used for matching and funding eligibility.',
     data:'<code>{ firstName, lastName, handle, interest, province, city, bio, jobTitle, company, sector, stage, yearsInBusiness, companySize, turnover, challenge, bankAccount, tools[], avatar, cover }</code>.',
     logic:'Save writes to the profile record read by the public profile page. Bio capped at 280 chars. Business-detail fields (sector, stage, turnover, tools) feed the members directory filters and funding-application pre-fill.',
-    components:'Cover-photo uploader · avatar uploader · Personal Details grid (incl. job title) · Business details pointer to My Business › Business profile · Save. Business fields are NOT edited here (Joel, 2026-10-02).',
+    components:'Cover-photo uploader · avatar uploader · Personal Details grid (incl. job title) · Company Details grid (company name, industry, LinkedIn URL; shown on the profile under About › Company details) · Save.',
     specs:'<b>Settings shell:</b> see the Notifications brief.<br/><b>Cover photo:</b> dashed 2px slate-200 rounded-2xl (16px) bg slate-50, 40px vertical padding, centred Lucide <code>image</code> 24&times;24 slate-400, hover border <code>#DC183C</code>.<br/><b>Profile photo row:</b> monogram avatar 64&times;64, Change-photo button bg <code>#0C1F31</code> rounded-full padding 16px/8px 12px weight 700 white + Lucide <code>upload</code> 14&times;14.<br/><b>Section headings:</b> Plus Jakarta 800 16px (<code>text-base</code>) <code>#121A21</code>. The Business details pointer has a 1px slate-100 top border + 20px top padding as a divider.<br/><b>Fields:</b> <code>sm:grid-cols-2</code> 16px gap; label 11px weight 700 uppercase tracking-wider slate-500; input/select bg slate-50 1px slate-200 rounded-xl padding 14px/10px, focus border <code>#DC183C</code> + white bg.<br/><b>Save:</b> bg <code>#DC183C</code> hover <code>#B0142F</code> rounded-full padding 24px/10px Plus Jakarta 700 14px white.' },
   set_blocked:{ title:'Settings · Blocked Members', sub:'Block list management',
     purpose:'Lets a member review and lift blocks. Blocked users can’t message, view posts, or send connection requests, and aren’t notified they were blocked (BuddyBoss moderation).',
@@ -796,13 +821,13 @@ function toggleDevMode(){
   if(on) showToast('Dev Mode on, tap any ⓘ for implementation notes.', null);
   lucide.createIcons();
 }
-// POPIA erasure for the whole account (My Business has its own business-data erase under Settings).
+// POPIA erasure for the whole account.
 function deleteAccount(){
   const premium = window.SME_PLAN === 'premium';
   const old = document.getElementById('ov-del'); if(old) old.remove();
   document.body.insertAdjacentHTML('beforeend', `<div id="ov-del" class="fixed inset-0 z-[90] flex items-center justify-center p-4"><div class="absolute inset-0 bg-[#0C1F31]/50 backdrop-blur-sm" onclick="document.getElementById('ov-del').remove()"></div><div class="relative bg-white rounded-2xl shadow-2xl w-full max-w-md" role="dialog" aria-modal="true"><div class="p-6">
     <p class="font-jakarta font-extrabold text-lg">Delete your account?</p>
-    <p class="text-sm text-slate-500 mt-2 leading-relaxed"><b class="text-[#121A21]">This removes:</b> your login, profile, connections, messages, notifications, My Business data and download history.</p>
+    <p class="text-sm text-slate-500 mt-2 leading-relaxed"><b class="text-[#121A21]">This removes:</b> your login, profile, connections, messages, notifications, business details and download history.</p>
     <p class="text-sm text-slate-500 mt-2 leading-relaxed"><b class="text-[#121A21]">This keeps:</b> order and payment records we must hold for tax law (5 years), and funding applications a partner already received, because the partner holds its own copy.</p>
     ${premium ? '<p class="text-sm text-[#AE6B0A] mt-2 leading-relaxed font-semibold">Your Premium plan is cancelled straight away, with no further payments.</p>' : ''}
     <p class="text-sm text-slate-500 mt-2">We email you when it is done, within 30 days as POPIA requires. You can download your data first.</p>
@@ -876,14 +901,236 @@ function showToast(msg, kind){
   setTimeout(()=>{ const inner=el.firstElementChild; if(inner){ inner.classList.remove('toast-in'); inner.classList.add('toast-out'); } setTimeout(()=>{ el.classList.add('hidden'); el.innerHTML=''; },250); }, 2400);
 }
 
+/* ===================== LIVE SYNC 14 OCT 2026: Scheduled Posts, FUNDING, EVENTS, LEARN =====================
+ * Mirrors what is live in Account Settings on production (sme-success-core views + smesa-hub account extras, CL-436 to CL-441):
+ * content lists show 6 per page with Previous / page numbers / Next; filters (chips + search) wrap on phones;
+ * Events filter = Upcoming / Past and replays / All + Any format / Online / In person; Funding holds "Your applications". */
+const NOPHOTO = /[?&]photo=none\b/.test(location.search);
+const PAGE_SIZE = 6;
+
+/* ---------- Scheduled Posts ---------- */
+let SCHEDULED = [
+  { id:1, type:'share', text:'Five things I wish I knew before registering for VAT. A thread for anyone close to the R1 million mark.', when:'Thu 16 Oct 2026 · 08:00' },
+  { id:2, type:'ask',   text:'Has anyone used a factoring company for invoices to a big retailer? Looking for honest experiences.', when:'Mon 20 Oct 2026 · 12:30' }
+];
+function setScheduled(){
+  const rows = SCHEDULED.length ? SCHEDULED.map(p=>`
+    <div class="flex flex-col sm:flex-row sm:items-start gap-3 py-4 border-b border-slate-100 last:border-0">
+      <div class="w-10 h-10 rounded-xl grid place-items-center shrink-0" style="background:${TYPES[p.type].headerBg}"><i data-lucide="${TYPES[p.type].icon}" class="w-5 h-5" style="color:${TYPES[p.type].color}"></i></div>
+      <div class="min-w-0 flex-1"><p class="text-sm text-[#121A21] leading-relaxed">${esc(p.text)}</p><p class="text-xs text-slate-500 mt-1 flex items-center gap-1.5"><i data-lucide="clock" class="w-3.5 h-3.5"></i> Posts ${esc(p.when)}</p></div>
+      <div class="flex items-center gap-2 shrink-0">
+        <a href="member-hub.html?post=1" class="inline-flex items-center h-11 px-4 rounded-full border border-slate-200 hover:border-[#0C1F31] text-sm font-bold text-[#121A21]">Edit</a>
+        <button onclick="cancelScheduled(${p.id})" class="inline-flex items-center h-11 px-4 rounded-full border border-slate-200 hover:border-[#DC183C] hover:text-[#DC183C] text-sm font-bold text-slate-600">Cancel</button>
+      </div>
+    </div>`).join('')
+    : `<div class="py-10 text-center text-slate-500"><i data-lucide="calendar-clock" class="w-8 h-8 mx-auto mb-2"></i><p class="text-sm font-semibold">No scheduled posts.</p><p class="text-xs mt-1">Pick a time in the composer to schedule one.</p></div>`;
+  return settingsCard('Scheduled Posts', 'Posts you have set to go out later. Edit or cancel them before they post.', `<div>${rows}</div>`);
+}
+function cancelScheduled(id){ SCHEDULED = SCHEDULED.filter(p=>p.id!==id); renderSettingsContent(); showToast('Scheduled post cancelled.', null); }
+
+/* ---------- Funding (with "Your applications") ---------- */
+const FUND_MATCH = [
+  ['Working Capital Loan','wallet','Good fit','Fund day-to-day operations.','Matches most trading businesses with steady monthly income.'],
+  ['Unsecured Business Loan','badge-check','Good fit','Funding without collateral.','No assets needed, suits a service business.'],
+  ['Invoice Finance','file-text','Possible fit','Unlock cash tied up in unpaid invoices.','Works if you invoice other businesses.'],
+  ['Asset Finance','truck','Possible fit','Fund equipment, vehicles and technology.','Useful when the purchase is a specific asset.'],
+  ['Inventory Finance','package','Possible fit','Fund stock and supplies.','Only relevant if you hold physical stock.'],
+  ['Purchase Order Funding','clipboard-check','Possible fit','Finance confirmed customer orders.','Needs a confirmed order from a creditworthy customer.'],
+  ['Bridging Finance','signpost','Not yet','Short-term interim funding.','For a known payment that is late, short term only.'],
+  ['Mezzanine Funding','layers','Not yet','Hybrid debt and equity for larger growth.','Usually needs revenue well above most small businesses.']
+];
+const APPS = [
+  { name:'SME South Africa', ref:'APP-66975', date:'9 March 2026', amount:'R250 000', status:'Not successful', step:4,
+    log:[['Received','9 Mar 2026','We received your application.'],['In review','10 Mar 2026','Our team checked your documents.'],['Matched','12 Mar 2026','Sent to two funding partners that fit.'],['Decision','20 Mar 2026','The partners could not offer funding this time. You can apply again in 3 months.']] },
+  { name:'Working Capital Loan', ref:'APP-71204', date:'2 October 2026', amount:'R120 000', status:'In review', step:2,
+    log:[['Received','2 Oct 2026','We received your application.'],['In review','6 Oct 2026','Our team is checking your bank statements.']] }
+];
+const state2 = { openApp:null };
+function fitBadge(f){
+  const c = f==='Good fit' ? 'bg-[#E4F5EE] text-[#1E7F5E]' : f==='Possible fit' ? 'bg-[#FDECEF] text-[#DC183C]' : 'bg-slate-100 text-slate-500';
+  return `<span class="shrink-0 px-2.5 py-1 rounded-full text-[11px] font-bold ${c}">${f}</span>`;
+}
+function statusBadge(s){
+  const c = s==='Not successful' ? 'bg-[#FDECEF] text-[#DC183C]' : s==='Approved' ? 'bg-[#E4F5EE] text-[#1E7F5E]' : 'bg-[#FFF1E0] text-[#AE6B0A]';
+  return `<span class="shrink-0 px-3 py-1 rounded-full text-xs font-bold ${c}">${s}</span>`;
+}
+function toggleApp(i){ state2.openApp = state2.openApp===i ? null : i; renderSettingsContent(); }
+function setFunding(){
+  const cards = FUND_MATCH.map(f=>`
+    <div class="bg-white rounded-2xl border border-slate-100 p-4 sm:p-5">
+      <div class="flex items-start gap-3">
+        <div class="w-10 h-10 rounded-xl bg-slate-50 border border-slate-100 grid place-items-center shrink-0"><i data-lucide="${f[1]}" class="w-5 h-5 text-[#0C1F31]"></i></div>
+        <p class="font-jakarta font-bold text-[15px] text-[#121A21] flex-1 min-w-0 pt-2">${f[0]}</p>${fitBadge(f[2])}
+      </div>
+      <p class="text-sm text-slate-600 mt-3">${f[3]}</p>
+      <p class="text-sm text-slate-600 mt-1"><b class="text-[#121A21]">Why:</b> ${f[4]}</p>
+    </div>`).join('');
+  const steps = ['Received','In review','Matched','Decision'];
+  const apps = APPS.map((a,i)=>`
+    <div class="bg-white rounded-2xl border border-slate-100 p-4 sm:p-5">
+      <div class="flex items-start gap-3">
+        <div class="w-10 h-10 rounded-xl bg-[#FDECEF] grid place-items-center shrink-0"><i data-lucide="file-text" class="w-5 h-5 text-[#DC183C]"></i></div>
+        <div class="min-w-0 flex-1"><p class="font-jakarta font-bold text-[15px] text-[#121A21]">${esc(a.name)}</p><p class="text-xs text-slate-500 mt-0.5">Ref ${a.ref} &middot; Submitted ${a.date} &middot; ${a.amount}</p></div>
+        <span class="hidden sm:inline-flex">${statusBadge(a.status)}</span>
+      </div>
+      <div class="sm:hidden mt-3">${statusBadge(a.status)}</div>
+      <div class="grid grid-cols-4 gap-1.5 mt-4">${steps.map((s,k)=>`<div><span class="block h-1.5 rounded-full ${k < a.step ? 'bg-[#DC183C]' : 'bg-slate-200'}"></span><span class="block mt-1.5 text-[11px] sm:text-xs ${k===a.step-1?'font-bold text-[#121A21]':'text-slate-500'}">${s}</span></div>`).join('')}</div>
+      <button onclick="toggleApp(${i})" class="mt-2 -ml-2 inline-flex items-center gap-1 h-11 px-2 text-sm font-bold text-[#DC183C]" aria-expanded="${state2.openApp===i}">Track <i data-lucide="chevron-${state2.openApp===i?'up':'down'}" class="w-4 h-4"></i></button>
+      ${state2.openApp===i ? `<ol class="mt-1 border-l-2 border-slate-100 ml-1.5 space-y-3">${a.log.map(l=>`<li class="pl-4 relative"><span class="absolute -left-[7px] top-1 w-3 h-3 rounded-full bg-[#DC183C] ring-2 ring-white"></span><p class="text-sm font-semibold text-[#121A21]">${l[0]} <span class="text-xs font-normal text-slate-500">&middot; ${l[1]}</span></p><p class="text-xs text-slate-500 mt-0.5">${l[2]}</p></li>`).join('')}</ol>` : ''}
+    </div>`).join('');
+  return `<div class="reveal">
+    <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-3 mb-4">
+      <div><h2 class="font-jakarta font-extrabold text-2xl text-[#121A21] tracking-tight">Funding</h2><p class="text-sm text-slate-500 mt-1">Funding options matched to your business profile. Apply once and we match you with partners.</p></div>
+      <a href="public-funding.html" class="shrink-0 inline-flex items-center justify-center gap-2 h-11 px-5 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-jakarta font-bold text-sm">Apply for funding <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
+    </div>
+    <div class="grid sm:grid-cols-2 gap-3">${cards}</div>
+    <p class="text-sm text-slate-600 mt-4">Want to compare repayments first? <button onclick="setSettingsTab('calculator')" class="font-bold text-[#DC183C] hover:underline">Open the calculator</button>.</p>
+    <h3 id="applications" class="font-jakarta font-extrabold text-xl text-[#121A21] mt-8 mb-3">Your applications</h3>
+    <div class="space-y-3">${apps}</div>
+  </div>`;
+}
+
+/* ---------- Loan calculator ---------- */
+function setCalculator(){
+  const rng = (id,label,min,max,step,val,fmt)=>`<div><div class="flex items-center justify-between mb-1.5"><label for="${id}" class="text-[11px] font-bold uppercase tracking-wider text-slate-500">${label}</label><span id="${id}-v" class="font-jakarta font-bold text-sm text-[#121A21]"></span></div><input id="${id}" type="range" min="${min}" max="${max}" step="${step}" value="${val}" oninput="calcUpdate()" class="w-full h-11 accent-[#DC183C]"></div>`;
+  const body = `
+    <div class="grid lg:grid-cols-2 gap-6">
+      <div class="space-y-4">
+        ${rng('c-amt','Amount',20000,2000000,10000,250000)}
+        ${rng('c-term','Term (months)',3,60,1,12)}
+        ${rng('c-rate','Interest rate (yearly)',10,40,0.5,18)}
+      </div>
+      <div class="rounded-2xl bg-[#0C1F31] text-white p-5 relative overflow-hidden">
+        <div class="absolute inset-0 opacity-40 pointer-events-none" style="background:radial-gradient(circle at 85% 15%, #DC183C 0%, transparent 55%)"></div>
+        <p class="relative text-[11px] font-bold uppercase tracking-widest text-white/70">Estimated monthly repayment</p>
+        <p id="c-out" class="relative font-jakarta font-extrabold text-4xl mt-2"></p>
+        <p id="c-tot" class="relative text-sm text-white/75 mt-2"></p>
+        <a href="public-funding.html" class="relative mt-5 inline-flex items-center gap-2 h-11 px-5 rounded-full bg-[#DC183C] hover:bg-[#B0142F] font-jakarta font-bold text-sm">Apply for funding <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
+      </div>
+    </div>
+    <p class="text-xs text-slate-500 mt-4">An estimate only. The rate and fees you are offered depend on the funding partner and your business.</p>`;
+  return settingsCard('Loan calculator', 'Compare repayments before you apply.', body);
+}
+function calcUpdate(){
+  const g = id => document.getElementById(id); if(!g('c-amt')) return;
+  const P = +g('c-amt').value, n = +g('c-term').value, r = +g('c-rate').value/1200;
+  const m = r ? P*r/(1-Math.pow(1+r,-n)) : P/n;
+  const R = v => 'R' + Math.round(v).toLocaleString('en-ZA').replace(/,/g,' ');
+  g('c-amt-v').textContent = R(P); g('c-term-v').textContent = n + ' months'; g('c-rate-v').textContent = (+g('c-rate').value).toFixed(1) + '%';
+  g('c-out').textContent = R(m); g('c-tot').textContent = 'Total repaid ' + R(m*n) + ' over ' + n + ' months';
+}
+
+/* ---------- content lists: Events, Guides, Podcast, Founder stories, Library ---------- */
+const CATS = ['Funding & Finance','Strategy & Growth','Technology & Digital','Operations & Management','Sales & Marketing','Legal & Compliance'];
+const EV_TITLES = ['Customer Acquisition & Retention Strategies for Entrepreneurs','How to Implement Subscription and Membership Models','How to Use Predictive Analytics to Forecast Growth','SME Funding Summit 2026','Cash Flow Clinic: Getting Paid on Time','Pricing for Profit Workshop','The Importance of Good Record-Keeping in Business','Winning Government Tenders','Building a Brand on a Small Budget','Hiring Your First Five Employees','B-BBEE for Small Businesses','Selling Online: From Zero to First Sale','Tax Season Ready: SARS for SMEs','Exporting into Africa with AfCFTA'];
+const EVENTS_DATA = EV_TITLES.map((t,i)=>({ title:t, cat:CATS[i%CATS.length], format: i===3||i===9 ? 'inperson' : 'online', past: i!==3 && i!==10 && i!==12,
+  date:['Thu 17 Sep 2026','Thu 27 Aug 2026','Thu 30 Jul 2026','Thu 18 Jun 2027','Tue 14 Jul 2026','Wed 1 Jul 2026','Mon 25 May 2026','Thu 21 May 2026','Tue 12 May 2026','Thu 30 Apr 2026','Tue 3 Nov 2026','Wed 8 Apr 2026','Thu 19 Nov 2026','Tue 17 Mar 2026'][i], place: i===3 ? 'Sandton' : i===9 ? 'Cape Town' : 'Online' }));
+const GUIDE_TITLES = ['How to register a company with CIPC','Writing a business plan that funders read','Your first year of SARS returns','Pricing your services','Hiring and the BCEA basics','Setting up a simple bookkeeping system','Getting your B-BBEE affidavit','Applying for a business loan','Marketing on WhatsApp Business','Protecting your brand name','Working with a supplier contract','Managing cash flow week by week','Opening a business bank account','POPIA for small businesses'];
+const GUIDES_DATA = GUIDE_TITLES.map((t,i)=>({ title:t, cat:['Start','Manage','Grow','Funding'][i%4], mins: 6 + (i*3)%12 }));
+const POD_TITLES = ['From side hustle to R10 million','What funders look for in your bank statements','Building a team you can trust','Selling to big corporates','The real cost of late payments','Growing a township business','Franchising: buy or build?','Going digital without the jargon','When to raise prices','Surviving load shedding as a manufacturer','Export lessons from the Western Cape','Family business, family rules'];
+const PODCAST_DATA = POD_TITLES.map((t,i)=>({ title:t, ep: 48 - i, cat:['Funding','Growth','People','Sales'][i%4], mins: 28 + (i*7)%25 }));
+const STORY_TITLES = ['How Langa Holdings got its first 100 customers','Mzansi Cart: from garage to warehouse','The bakery that survived lockdown','A cleaning business built on referrals','Why I turned down my first investor','Coding school in Soweto','The farmer selling straight to retailers','Two sisters, one logistics company','From employee to employer at 45','The craft brewer who changed his pricing'];
+const STORIES_DATA = STORY_TITLES.map((t,i)=>({ title:t, cat:['Retail','Services','Food','Tech','Agriculture'][i%5] }));
+const LIB_TITLES = ['Cash flow forecast template','Invoice template','Business plan template','Employment contract template','Pitch deck outline','Marketing calendar 2026','SME funding readiness checklist','Customer survey template','Supplier agreement template','Startup costs calculator','Social media planner','Debt collection letter pack','Annual budget template'];
+const LIBRARY_DATA = LIB_TITLES.map((t,i)=>({ title:t, cat:['Templates','Ebooks','Guides','Reports'][i%4], fmt:['XLSX','DOCX','PDF','PDF'][i%4] }));
+
+const LISTS = {
+  events:  { title:'Events', sub:'Webinars, workshops and summits for South African SMEs, live and on replay.<br>Webinars are included for every member.', items:EVENTS_DATA, ph:'Search events',
+             groups:[ ['when',[['upcoming','Upcoming'],['past','Past and replays'],['all','All']],'all'], ['format',[['any','Any format'],['online','Online'],['inperson','In person']],'any'] ],
+             match:(e,f)=> (f.when==='all' || (f.when==='past') === e.past) && (f.format==='any' || f.format===e.format) },
+  guides:  { title:'Guides', sub:'Step-by-step guides for every stage of your business.', items:GUIDES_DATA, ph:'Search guides',
+             groups:[ ['cat',[['all','All'],['Start','Start'],['Manage','Manage'],['Grow','Grow'],['Funding','Funding']],'all'] ], match:(e,f)=> f.cat==='all' || e.cat===f.cat },
+  podcast: { title:'Podcast', sub:'Conversations with South African founders and the people who back them.', items:PODCAST_DATA, ph:'Search episodes',
+             groups:[ ['cat',[['all','All'],['Funding','Funding'],['Growth','Growth'],['People','People'],['Sales','Sales']],'all'] ], match:(e,f)=> f.cat==='all' || e.cat===f.cat },
+  stories: { title:'Founder stories', sub:'Founder Focus: how South African SMEs started, grew and kept going.', items:STORIES_DATA, ph:'Search stories',
+             groups:[ ['cat',[['all','All'],['Retail','Retail'],['Services','Services'],['Food','Food'],['Tech','Tech'],['Agriculture','Agriculture']],'all'] ], match:(e,f)=> f.cat==='all' || e.cat===f.cat },
+  library: { title:'Library', sub:'Templates, ebooks, guides and reports, included with your membership.', items:LIBRARY_DATA, ph:'Search the library',
+             groups:[ ['cat',[['all','All'],['Templates','Templates'],['Ebooks','Ebooks'],['Guides','Guides'],['Reports','Reports']],'all'] ], match:(e,f)=> f.cat==='all' || e.cat===f.cat }
+};
+const LSTATE = {};
+function lstate(key){ if(!LSTATE[key]){ const f={}; LISTS[key].groups.forEach(g=>f[g[0]]=g[2]); LSTATE[key] = { page:1, q:'', f }; } return LSTATE[key]; }
+function chipBtn(key, gk, v, label, on){
+  return `<button onclick="setListChip('${key}','${gk}','${v}')" class="inline-flex items-center h-11 px-4 rounded-full text-sm font-bold transition ${on?'bg-[#0C1F31] text-white':'bg-white border border-slate-200 text-[#121A21] hover:border-[#0C1F31]'}" aria-pressed="${on}">${label}</button>`;
+}
+function setContentList(key){
+  const L = LISTS[key], st = lstate(key);
+  const groups = L.groups.map((g,i)=>`${i?'<span class="hidden sm:block w-px h-7 bg-slate-200 mx-1" aria-hidden="true"></span>':''}<div class="flex flex-wrap gap-2">${g[1].map(o=>chipBtn(key,g[0],o[0],o[1],st.f[g[0]]===o[0])).join('')}</div>`).join('');
+  return `<div class="reveal">
+    <h2 class="font-jakarta font-extrabold text-2xl text-[#121A21] tracking-tight">${L.title}</h2>
+    <p class="text-sm text-slate-500 mt-1 leading-relaxed">${L.sub}</p>
+    <div class="mt-4 bg-white rounded-2xl border border-slate-100 p-3 sm:p-4 flex flex-wrap items-center gap-2 sm:gap-3">
+      <div class="flex flex-wrap items-center gap-2">${groups}</div>
+      <label class="relative w-full lg:w-auto lg:flex-1 lg:min-w-[200px] lg:ml-auto"><span class="sr-only">${L.ph}</span><i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-4 top-1/2 -translate-y-1/2"></i><input id="list-q" type="search" value="${esc(st.q)}" oninput="setListQ('${key}',this.value)" placeholder="${L.ph}" class="w-full h-11 pl-11 pr-4 rounded-full border border-slate-200 bg-white text-sm outline-none focus:border-[#DC183C]"></label>
+    </div>
+    <div id="list-results" class="mt-4"></div>
+  </div>`;
+}
+function setListChip(key,g,v){ const st=lstate(key); st.f[g]=v; st.page=1; renderSettingsContent(); }
+function setListQ(key,v){ const st=lstate(key); st.q=v; st.page=1; renderListResults(); }
+function setListPage(key,p){ lstate(key).page=p; renderListResults(); const r=document.getElementById('list-results'); if(r) window.scrollTo({ top: r.getBoundingClientRect().top + window.scrollY - 140, behavior:'smooth' }); }
+function listCard(key, e, i){
+  const img = `assets/article-${(i%8)+1}.jpg`;
+  const save = `<button onclick="this.classList.toggle('text-[#DC183C]');showToast('Saved.',null)" class="absolute top-3 right-3 w-11 h-11 rounded-full bg-white/90 grid place-items-center text-[#121A21]" aria-label="Save"><i data-lucide="bookmark" class="w-4 h-4"></i></button>`;
+  const chip = (t,cls) => `<span class="px-2.5 py-1 rounded-full text-[11px] font-bold ${cls}">${esc(t)}</span>`;
+  if(key==='events') return `<article class="bg-white rounded-2xl border border-slate-100 overflow-hidden flex flex-col">
+      <div class="relative h-36 bg-[#0C1F31]"><div class="absolute inset-0 opacity-40" style="background:radial-gradient(circle at 85% 20%, #DC183C 0%, transparent 55%)"></div><div class="absolute top-3 left-3 right-16 flex flex-wrap gap-1.5">${chip(e.cat,'bg-[#FDECEF] text-[#DC183C]')}${chip(e.past?'Replay':'Live','bg-white text-[#121A21]')}</div>${save}</div>
+      <div class="p-4 flex-1 flex flex-col">
+        <div class="flex items-center justify-between gap-2"><span class="text-[11px] font-bold uppercase tracking-widest text-slate-500 flex items-center gap-1.5"><i data-lucide="${e.format==='online'?'video':'map-pin'}" class="w-3.5 h-3.5"></i>${e.format==='online'?'Online':esc(e.place)}</span>${chip('Included','bg-[#E4F5EE] text-[#1E7F5E]')}</div>
+        <h3 class="font-jakarta font-bold text-[16px] leading-snug text-[#121A21] mt-2">${esc(e.title)}</h3>
+        <p class="text-sm font-semibold text-[#121A21] mt-2">${e.date} &middot; 13:00 SAST</p>
+        <a href="${e.format==='online'?'event-single-online.html':'event-single-in-person.html'}" class="mt-auto pt-4"><span class="flex items-center justify-center h-11 rounded-xl bg-[#0C1F31] hover:bg-[#13304a] text-white font-jakarta font-bold text-sm">${e.past?'Watch the replay':'Register'}</span></a>
+      </div></article>`;
+  const meta = key==='guides' ? `${e.mins} min read` : key==='podcast' ? `Episode ${e.ep} &middot; ${e.mins} min` : key==='library' ? `${e.fmt} &middot; Included` : 'Founder Focus';
+  const href = key==='guides' ? 'public-guide.html' : key==='podcast' ? 'public-podcast-episode.html' : key==='library' ? 'public-resource.html' : 'public-article.html';
+  const cta = key==='podcast' ? 'Listen' : key==='library' ? 'Download' : 'Read';
+  return `<article class="bg-white rounded-2xl border border-slate-100 overflow-hidden flex flex-col">
+      <div class="relative h-36 bg-slate-100">${key==='library'?`<div class="absolute inset-0 bg-[#0C1F31] grid place-items-center"><i data-lucide="file-spreadsheet" class="w-10 h-10 text-white/40"></i></div>`:`<img src="${img}" alt="" class="w-full h-full object-cover" loading="lazy">`}<div class="absolute top-3 left-3">${chip(e.cat,'bg-white text-[#121A21]')}</div>${save}</div>
+      <div class="p-4 flex-1 flex flex-col"><p class="text-[11px] font-bold uppercase tracking-widest text-slate-500">${meta}</p><h3 class="font-jakarta font-bold text-[16px] leading-snug text-[#121A21] mt-1.5">${esc(e.title)}</h3>
+      <a href="${href}" class="mt-auto pt-4"><span class="flex items-center justify-center gap-2 h-11 rounded-xl border border-slate-200 hover:border-[#0C1F31] font-jakarta font-bold text-sm text-[#121A21]"><i data-lucide="${key==='podcast'?'play':key==='library'?'download':'arrow-right'}" class="w-4 h-4"></i>${cta}</span></a></div></article>`;
+}
+function pager(key, page, pages, total){
+  if(pages <= 1) return total ? `<p class="text-sm text-slate-500 text-center mt-5">Showing 1 to ${total} of ${total}</p>` : '';
+  const start = (page-1)*PAGE_SIZE + 1, end = Math.min(total, page*PAGE_SIZE);
+  let nums = [];
+  for(let n=1;n<=pages;n++){ if(n===1||n===pages||Math.abs(n-page)<=2) nums.push(n); else if(nums[nums.length-1]!=='…') nums.push('…'); }
+  const num = n => n==='…' ? `<span class="w-11 h-11 grid place-items-center text-slate-400">…</span>` : `<button onclick="setListPage('${key}',${n})" class="w-11 h-11 rounded-xl text-sm font-bold ${n===page?'bg-[#DC183C] text-white':'bg-white border border-slate-200 text-[#121A21] hover:border-[#0C1F31]'}" ${n===page?'aria-current="page"':''}>${n}</button>`;
+  const nav = (lbl, p, dis, icon, after) => `<button ${dis?'disabled':''} onclick="setListPage('${key}',${p})" class="flex-1 sm:flex-none inline-flex items-center justify-center gap-1 h-11 px-5 rounded-xl border border-slate-200 bg-white text-sm font-bold ${dis?'text-slate-300 cursor-not-allowed':'text-[#121A21] hover:border-[#0C1F31]'}">${after?'':`<i data-lucide="${icon}" class="w-4 h-4"></i>`}${lbl}${after?`<i data-lucide="${icon}" class="w-4 h-4"></i>`:''}</button>`;
+  return `<div class="mt-6 pt-5 border-t border-slate-100">
+    <p class="text-sm text-slate-500 text-center">Showing <b class="text-[#121A21]">${start} to ${end}</b> of ${total}</p>
+    <div class="mt-3 flex flex-wrap items-center justify-center gap-2">
+      <span class="order-2 sm:order-1 w-[calc(50%-4px)] sm:w-auto flex">${nav('Previous', page-1, page===1, 'chevron-left', false)}</span>
+      <span class="order-1 sm:order-2 w-full sm:w-auto flex flex-wrap justify-center gap-1.5">${nums.map(num).join('')}</span>
+      <span class="order-3 w-[calc(50%-4px)] sm:w-auto flex">${nav('Next', page+1, page===pages, 'chevron-right', true)}</span>
+    </div></div>`;
+}
+function renderListResults(){
+  const key = state.settingsTab, L = LISTS[key], host = document.getElementById('list-results');
+  if(!L || !host) return;
+  const st = lstate(key), q = st.q.trim().toLowerCase();
+  const list = L.items.filter(e => L.match(e, st.f) && (!q || e.title.toLowerCase().includes(q)));
+  const pages = Math.max(1, Math.ceil(list.length / PAGE_SIZE));
+  st.page = Math.min(st.page, pages);
+  const slice = list.slice((st.page-1)*PAGE_SIZE, st.page*PAGE_SIZE);
+  host.innerHTML = list.length
+    ? `<div class="grid sm:grid-cols-2 xl:grid-cols-3 gap-4">${slice.map((e,i)=>listCard(key,e,(st.page-1)*PAGE_SIZE+i)).join('')}</div>${pager(key, st.page, pages, list.length)}`
+    : `<div class="bg-white rounded-2xl border border-slate-100 py-12 text-center text-slate-500"><i data-lucide="search-x" class="w-8 h-8 mx-auto mb-2"></i><p class="text-sm font-semibold">Nothing matches that search.</p><button onclick="LSTATE['${key}']=null;renderSettingsContent()" class="mt-2 h-11 px-4 text-sm font-bold text-[#DC183C]">Clear filters</button></div>`;
+  lucide.createIcons();
+}
+
 /* ===================== INIT ===================== */
 document.addEventListener('keydown', e=>{ if(e.key==='Escape') document.querySelectorAll('.ov.open').forEach(o=>closeOverlay(o.id)); });
 
 /* Deep-link support: #funding, #profile, etc., lets other pages (e.g. the member workspace) land straight on a settings tab */
 (function(){
   var hashId = (location.hash || '').replace('#','');
-  if(hashId && SETTINGS_NAV.some(function(s){ return s.id === hashId; })) state.settingsTab = hashId;
+  if(hashId === 'saved'){ location.replace('saved.html'); return; } // Saved has its own screen (saved.html)
+  if(hashId === 'applications') hashId = 'funding'; // the old "My applications" address lands on Funding > Your applications
+  if(hashId && settingsNav().some(function(s){ return s.id === hashId; })) state.settingsTab = hashId;
+  window.addEventListener('hashchange', function(){ var h=(location.hash||'').replace('#',''); if(h==='applications') h='funding'; if(h && h!==state.settingsTab && settingsNav().some(function(s){ return s.id===h; })){ state.settingsTab=h; renderSettingsNav(); renderSettingsContent(); } });
 })();
+document.getElementById('settings-photo').innerHTML = NOPHOTO
+  ? `<button onclick="setSettingsTab('profile')" class="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-slate-100 border-2 border-dashed border-slate-300 grid place-items-center text-slate-500" aria-label="Add a profile photo"><i data-lucide="camera" class="w-5 h-5"></i></button>`
+  : monogram(PROFILE.initials, window.innerWidth < 640 ? 48 : 56);
 
 renderSettingsNav();
 renderSettingsContent();

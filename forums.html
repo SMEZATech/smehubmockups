@@ -28,6 +28,7 @@
     @media (min-width:640px){ .search-overlay{ padding:0 1.5rem; } }
 </style>
 <script src="plan.js"></script>
+<link rel="stylesheet" href="assets/save-module.css" />
 </head>
 <body class="bg-[#FCFCFC] text-[#121A21] font-inter">
 
@@ -175,7 +176,7 @@
     <!-- Discussions -->
     <section class="lg:col-span-8 min-w-0">
       <div class="flex flex-col sm:flex-row sm:items-center gap-3 mb-4">
-        <div id="segs" class="flex gap-2 overflow-x-auto no-scrollbar"></div>
+        <div id="segs" class="flex flex-wrap gap-2"></div>
         <div class="sm:ml-auto relative"><i data-lucide="search" class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500"></i><input id="d-search" oninput="render()" placeholder="Search discussions…" class="bg-white border border-slate-200 rounded-full pl-9 pr-3 py-2 text-sm outline-none focus:border-[#DC183C] w-full sm:w-56"></div>
       </div>
       <div id="discussions" class="space-y-3"></div>
@@ -269,7 +270,7 @@ const DISCUSSIONS = [
   { id:6, title:'How do you handle late-paying clients?', forum:'Operations & Compliance', author:'Karabo K.', initials:'KK', replies:23, members:15, last:'3 days ago', pinned:false, locked:false, mine:false, replied:true, favorite:false, excerpt:'We moved to 50% upfront and it changed everything. What works for you?' }
 ];
 
-const SEGS = [['all','All discussions'],['mine','My discussions'],['replies','My replies']];
+const SEGS = [['all','All discussions'],['mine','My discussions'],['replies','My replies'],['fav','Favourites']];
 const state = { seg:'all', forum:'' };
 
 function renderForums(){
@@ -283,7 +284,7 @@ function renderForums(){
 }
 function filterForum(name){ state.forum = state.forum===name ? '' : name; renderForums(); render(); }
 
-function renderSegs(){ document.getElementById('segs').innerHTML = SEGS.map(([id,l])=>`<button onclick="setSeg('${id}')" class="seg ${state.seg===id?'active':''} shrink-0 px-3.5 py-1.5 rounded-full text-xs font-bold border ${state.seg===id?'border-[#0C1F31]':'border-slate-200 text-slate-600 hover:bg-slate-50'}">${l}</button>`).join(''); }
+function renderSegs(){ document.getElementById('segs').innerHTML = SEGS.map(([id,l])=>`<button onclick="setSeg('${id}')" class="seg ${state.seg===id?'active':''} shrink-0 px-3.5 min-h-[44px] sm:min-h-[34px] rounded-full text-xs font-bold border ${state.seg===id?'border-[#0C1F31]':'border-slate-200 text-slate-600 hover:bg-slate-50'}">${l}</button>`).join(''); }
 function setSeg(s){ state.seg=s; renderSegs(); render(); }
 
 function row(d){
@@ -309,6 +310,7 @@ function render(){
   let list = DISCUSSIONS.slice();
   if(state.seg==='mine') list = list.filter(d=>d.mine);
   else if(state.seg==='replies') list = list.filter(d=>d.replied);
+  else if(state.seg==='fav') list = list.filter(d=>d.favorite);
   if(state.forum) list = list.filter(d=>d.forum===state.forum);
   list = list.filter(d => !q || (d.title+' '+d.excerpt+' '+d.author).toLowerCase().includes(q));
   // pinned first
@@ -369,5 +371,6 @@ renderForums(); renderSegs(); render(); lucide.createIcons();
 </script>
 <script>window.SME_MEMBER_PAGE=true;</script>
 <script src="member-chrome.js"></script>
+<script src="assets/save-module.js"></script>
 </body>
 </html>
