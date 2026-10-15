@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>You're in: How to Use Predictive Analytics to Forecast Growth, SME South Africa</title>
+  <meta name="description" content="Your registration is confirmed. Add the webinar to your calendar and get ready." />
+  <meta name="robots" content="noindex" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script><script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  <script>tailwind.config={theme:{extend:{fontFamily:{jakarta:['Plus Jakarta Sans','sans-serif'],inter:['Inter','system-ui','sans-serif']}}}};</script>
+  <style>
+    html,body{font-family:'Inter',system-ui,sans-serif;} .font-jakarta{font-family:'Plus Jakarta Sans',sans-serif;letter-spacing:.005em;}
+    html{scroll-behavior:smooth;}
+    .hero-bg{background:linear-gradient(115deg,#0C1F31 0%,#0C1F31 50%,#2b1626 80%,#5e1a2c 115%);}
+    .dot-pattern{background-image:radial-gradient(rgba(255,255,255,.07) 1px,transparent 1.5px);background-size:22px 22px;}
+    .prose p{color:#121A21;line-height:1.8;font-size:1.02rem;margin-bottom:1rem;}
+    .prose ul{list-style:disc;padding-left:1.4rem;margin-bottom:1rem;color:#121A21;line-height:1.85;font-size:1.02rem;}
+    .prose ul li{margin-bottom:.35rem;}
+    .step{display:grid;grid-template-columns:2rem 1fr;gap:.85rem;align-items:start;}
+    .step .num{width:2rem;height:2rem;border-radius:999px;background:#FDECEF;color:#DC183C;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:.85rem;display:grid;place-items:center;}
+    .step .step-title{font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;color:#0C1F31;font-size:.92rem;line-height:1.35;}
+    .step .step-sub{font-size:.78rem;color:#6A7581;line-height:1.5;margin-top:.15rem;}
+    .dev-badge{display:none;} body.dev-on .dev-badge{display:inline-flex;} #devToggle.on{background:#DC183C;color:#fff;border-color:#DC183C;}
+    .dev-note{background:linear-gradient(135deg,rgba(255,153,0,.12),rgba(255,153,0,.04));border:1px dashed rgba(255,153,0,.5);display:none;}
+    body.dev-on .dev-note{display:flex;}
+    .ov{position:fixed;inset:0;z-index:80;} .ov-bg{position:absolute;inset:0;background:rgba(12,31,49,.45);backdrop-filter:blur(2px);opacity:0;transition:opacity .3s;} .ov.open .ov-bg{opacity:1;}
+    .drawer{position:absolute;right:0;top:0;height:100%;width:100%;max-width:440px;background:#fff;box-shadow:-12px 0 40px rgba(12,31,49,.25);overflow-y:auto;transform:translateX(100%);transition:transform .3s cubic-bezier(.2,.7,.2,1);} .ov.open .drawer{transform:translateX(0);}
+      .search-overlay{position:absolute;inset:0;background:#fff;z-index:20;display:flex;align-items:center;justify-content:center;padding:0 1rem;opacity:0;pointer-events:none;transform:translateY(-8px);transition:all .25s cubic-bezier(.2,.8,.2,1);}
+    .search-overlay.active{opacity:1;pointer-events:auto;transform:translateY(0);}
+    @media (min-width:640px){ .search-overlay{padding:0 1.5rem;} }
+
+    .card{background:#fff;border:1px solid #E7EBEF;border-radius:1rem;}
+    .eyebrow{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:#DC183C;}
+    .cal-btn{min-height:48px;border-radius:12px;border:1px solid #E7EBEF;background:#fff;display:flex;align-items:center;justify-content:center;gap:8px;font-weight:700;font-size:13.5px;color:#0C1F31;padding:0 12px;}
+    .cal-btn:hover{border-color:#DC183C;color:#DC183C;}
+    .st-tab{flex:1;min-height:44px;border-radius:10px;font-size:12.5px;font-weight:700;color:#64748b;transition:all .15s;}
+    .st-tab.on{background:#fff;color:#1e293b;box-shadow:0 1px 2px rgba(0,0,0,.08);}
+    .wa-bg{background:#ECE5DD;background-image:radial-gradient(rgba(12,31,49,.05) 1px,transparent 1.5px);background-size:16px 16px;}
+    .wa-bubble{background:#fff;border-radius:4px 14px 14px 14px;box-shadow:0 1px 1px rgba(0,0,0,.08);}
+    .wa-qr{border-top:1px solid #E7EBEF;min-height:44px;display:flex;align-items:center;justify-content:center;gap:6px;color:#0B7C6B;font-weight:700;font-size:13px;}
+</style>
+</head>
+<body class="bg-[#FCFCFC] text-[#121A21] antialiased">
+<header class="bg-white border-b border-[#E7EBEF] sticky top-0 z-30 relative">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center gap-3">
+    <a href="public-home.html" class="flex items-center gap-2.5 shrink-0">
+      <img src="assets/logo-v1-lockup.svg" alt="SME South Africa" class="h-[42px] lg:h-[50px] w-auto" />
+    </a>
+    <nav class="hidden lg:flex items-center gap-1 ml-auto">
+      <div class="relative" onmouseleave="closeChromeDrop('articles')">
+        <button onclick="toggleChromeDrop('articles')" class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition inline-flex items-center gap-1">Insights <i data-lucide="chevron-down" class="w-3.5 h-3.5"></i></button>
+        <div id="dropArticles" class="hidden absolute left-0 top-full mt-1 w-64 bg-white rounded-xl border border-[#E7EBEF] shadow-xl py-2 z-30">
+          <a href="public-category.html" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-[#DC183C] transition">Starting a Business</a>
+          <a href="public-category.html" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-[#DC183C] transition">Managing a Business</a>
+          <a href="public-category.html" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-[#DC183C] transition">Growing a Business</a>
+          <div class="my-1.5 border-t border-slate-100"></div>
+          <a href="public-founder-focus-category.html" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-[#DC183C] transition">Founder Focus</a>
+          <a href="public-category.html" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-[#DC183C] transition">Business Opportunities</a>
+        </div>
+      </div>
+      <div class="relative" onmouseleave="closeChromeDrop('resources')">
+        <button onclick="toggleChromeDrop('resources')" class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition inline-flex items-center gap-1">Resources <i data-lucide="chevron-down" class="w-3.5 h-3.5"></i></button>
+        <div id="dropResources" class="hidden absolute left-0 top-full mt-1 w-56 bg-white rounded-xl border border-[#E7EBEF] shadow-xl py-2 z-30">
+          <a href="public-resource-category.html?type=ebooks" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-[#DC183C] transition">Ebooks</a>
+          <a href="public-resource-category.html?type=templates" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-[#DC183C] transition">Templates</a>
+          <a href="public-resource-category.html?type=guides" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-[#DC183C] transition">Guides</a>
+          <a href="public-resource-category.html?type=reports" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-[#DC183C] transition">Reports</a>
+        </div>
+      </div>
+      <div class="relative" onmouseleave="closeChromeDrop('funding')">
+        <button onclick="toggleChromeDrop('funding')" class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition inline-flex items-center gap-1">Funding <i data-lucide="chevron-down" class="w-3.5 h-3.5"></i></button>
+        <div id="dropFunding" class="hidden absolute left-0 top-full mt-1 w-60 bg-white rounded-xl border border-[#E7EBEF] shadow-xl py-2 z-30">
+          <a href="public-loan-option.html" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-[#DC183C] transition">Invoice Finance</a>
+          <a href="public-loan-option.html" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-[#DC183C] transition">Inventory Finance</a>
+          <a href="public-loan-option.html" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-[#DC183C] transition">Unsecured Business Loan</a>
+          <a href="public-loan-option.html" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-[#DC183C] transition">Purchase Order Funding</a>
+          <a href="public-loan-option.html" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-[#DC183C] transition">Bridging Finance</a>
+          <a href="public-loan-option.html" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-[#DC183C] transition">Working Capital Loans</a>
+        </div>
+      </div>
+      <a href="public-solutions.html" class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition">Solutions</a>
+      <a href="podcast.html"          class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition">Podcast</a>
+    </nav>
+    <div class="flex items-center gap-1 sm:gap-2 ml-auto lg:ml-3">
+      <button onclick="toggleChromeSearch()" aria-label="Search" class="w-9 h-9 grid place-items-center rounded-full hover:bg-slate-100 text-slate-600"><i data-lucide="search" class="w-4 h-4"></i></button>
+      <a href="public-auth.html" class="hidden sm:inline-flex items-center px-3 h-9 rounded-full text-sm font-bold text-[#121A21] hover:bg-slate-100 transition">Sign in</a>
+      <a href="public-auth.html#join" class="inline-flex items-center px-4 h-9 rounded-full text-sm font-bold text-white bg-[#DC183C] hover:bg-[#B0142F] transition">Join Now</a>
+      <button onclick="toggleChromeBurger()" aria-label="Menu" class="lg:hidden w-9 h-9 grid place-items-center rounded-full hover:bg-slate-100 text-slate-600 ml-1">
+        <i id="chromeBurgerIcon" data-lucide="menu" class="w-5 h-5"></i>
+      </button>
+    </div>
+  </div>
+  <div id="chromeBurgerPanel" class="hidden lg:hidden border-t border-[#E7EBEF] bg-white">
+    <nav class="max-w-7xl mx-auto px-4 sm:px-6 py-2 flex flex-col">
+      <a href="public-articles.html"  class="px-2 py-3 text-sm font-semibold text-slate-700 hover:text-[#DC183C] border-b border-slate-100">Insights</a>
+      <a href="public-resources.html" class="px-2 py-3 text-sm font-semibold text-slate-700 hover:text-[#DC183C] border-b border-slate-100">Resources</a>
+      <a href="public-funding.html"   class="px-2 py-3 text-sm font-semibold text-slate-700 hover:text-[#DC183C] border-b border-slate-100">Funding</a>
+      <a href="public-solutions.html" class="px-2 py-3 text-sm font-semibold text-slate-700 hover:text-[#DC183C] border-b border-slate-100">Solutions</a>
+      <a href="podcast.html"          class="px-2 py-3 text-sm font-semibold text-slate-700 hover:text-[#DC183C] border-b border-slate-100">Podcast</a>
+      <a href="public-auth.html" class="px-2 py-3 text-sm font-semibold text-slate-700 hover:text-[#DC183C]">Sign in</a>
+    </nav>
+  </div>
+  <div id="chromeSearchOverlay" class="search-overlay">
+    <div class="w-full max-w-2xl flex items-center gap-3">
+      <div class="relative flex-1">
+        <i data-lucide="search" class="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500"></i>
+        <input id="chromeSearchInput" type="text" placeholder="Search insights, resources, funding…" class="w-full h-11 pl-11 pr-4 text-sm bg-slate-50 border border-[#DC183C] rounded-full focus:outline-none focus:ring-2 focus:ring-[#DC183C]/20" onkeydown="if(event.key==='Enter') location.href='public-search.html';" />
+      </div>
+      <button onclick="toggleChromeSearch()" class="text-slate-500 hover:text-[#121A21] p-2 transition-colors shrink-0" aria-label="Close search"><i data-lucide="x" class="w-5 h-5"></i></button>
+    </div>
+  </div>
+</header>
+
+<!-- Mobile bottom tab bar, thumb-reach quick nav -->
+<nav aria-label="Quick nav" class="lg:hidden fixed bottom-0 inset-x-0 z-40 bg-white border-t border-[#E7EBEF] shadow-[0_-4px_16px_-4px_rgba(12,31,49,0.08)]" style="padding-bottom:env(safe-area-inset-bottom)">
+  <div class="grid grid-cols-5"><a href="public-home.html" class="relative flex flex-col items-center justify-center gap-1 py-2.5 text-slate-500 hover:text-[#121A21] transition"><i data-lucide="house" class="w-5 h-5"></i><span class="font-jakarta text-[11px] font-bold">Home</span></a><a href="public-articles.html" class="relative flex flex-col items-center justify-center gap-1 py-2.5 text-slate-500 hover:text-[#121A21] transition"><i data-lucide="lightbulb" class="w-5 h-5"></i><span class="font-jakarta text-[11px] font-bold">Insights</span></a><a href="public-funding.html" class="relative flex flex-col items-center justify-center gap-1 py-2.5 text-slate-500 hover:text-[#121A21] transition"><i data-lucide="banknote" class="w-5 h-5"></i><span class="font-jakarta text-[11px] font-bold">Funding</span></a><a href="podcast.html" class="relative flex flex-col items-center justify-center gap-1 py-2.5 text-slate-500 hover:text-[#121A21] transition"><i data-lucide="mic" class="w-5 h-5"></i><span class="font-jakarta text-[11px] font-bold">Podcast</span></a><a href="public-auth.html#join" class="relative flex flex-col items-center justify-center gap-1 py-2.5 text-slate-500 hover:text-[#121A21] transition"><i data-lucide="user-round-plus" class="w-5 h-5"></i><span class="font-jakarta text-[11px] font-bold">Sign up</span></a></div>
+</nav>
+
+<!-- HERO -->
+<section class="hero-bg text-white relative overflow-hidden">
+  <div class="absolute inset-0 dot-pattern opacity-70 pointer-events-none"></div>
+  <div class="max-w-[1200px] mx-auto px-4 sm:px-6 py-10 sm:py-14 relative">
+    <nav aria-label="Breadcrumb" class="text-xs text-white/55 flex items-center flex-wrap gap-x-1.5 mb-5"><a href="public-home.html" class="hover:text-white transition">Home</a><span class="text-white/30">›</span><a href="events.html" class="hover:text-white transition">Events</a><span class="text-white/30">›</span><a href="event-single-online.html" class="hover:text-white transition truncate">Predictive Analytics for Growth</a><span class="text-white/30">›</span><span class="text-white/85 font-medium">Registered</span></nav>
+    <div class="flex items-start gap-4">
+      <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-[#29A37A] grid place-items-center shrink-0 shadow-lg"><i data-lucide="check" class="w-7 h-7 text-white"></i></div>
+      <div class="min-w-0">
+        <h1 class="font-jakarta font-extrabold text-3xl sm:text-5xl leading-[1.05] tracking-tight">You're in
+          <button onclick="openBrief()" class="dev-badge align-middle ml-2 w-7 h-7 rounded-full bg-[#FF9900] text-[#0C1F31] items-center justify-center text-[12px] font-bold">i</button>
+        </h1>
+        <p class="text-white/75 mt-2 text-[15px] sm:text-[17px] leading-snug">How to Use Predictive Analytics to Forecast Growth</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<main class="max-w-[1200px] mx-auto px-4 sm:px-6 py-8 sm:py-12 flex flex-col lg:grid lg:grid-cols-[1fr,340px] gap-6 lg:gap-10 items-start">
+
+  <div class="order-1 w-full min-w-0 space-y-6">
+    <!-- WHEN -->
+    <section class="card p-5 sm:p-6">
+      <p class="eyebrow mb-3">When</p>
+      <div class="flex items-start gap-3">
+        <i data-lucide="calendar" class="w-5 h-5 text-[#DC183C] mt-0.5 shrink-0"></i>
+        <div class="min-w-0">
+          <p class="font-jakarta font-extrabold text-[17px] sm:text-[19px] leading-tight text-[#0C1F31]">Thursday, 20 August 2026</p>
+          <p class="text-[14.5px] text-[#121A21] mt-1">1:00 pm to 2:15 pm <span class="font-semibold">SAST</span></p>
+          <p class="text-[13px] text-[#6A7581] mt-1 js-localtime"></p>
+        </div>
+      </div>
+
+      <p class="eyebrow mt-6 mb-3">Add to your calendar</p>
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+        <a id="calGoogle" target="_blank" rel="noopener" class="cal-btn" onclick="calTrack('google')"><i data-lucide="calendar-plus" class="w-4 h-4"></i> Google</a>
+        <a id="calOutlook" target="_blank" rel="noopener" class="cal-btn" onclick="calTrack('outlook')"><i data-lucide="calendar-plus" class="w-4 h-4"></i> Outlook</a>
+        <button type="button" class="cal-btn" onclick="downloadIcs()"><i data-lucide="calendar-plus" class="w-4 h-4"></i> Apple (.ics)</button>
+      </div>
+    </section>
+
+    <!-- HOW THE LINK ARRIVES -->
+    <section class="card p-5 sm:p-6">
+      <div class="flex items-center justify-between gap-3 mb-4 flex-wrap">
+        <p class="eyebrow">How your webinar link arrives</p>
+      </div>
+      <div class="flex items-center gap-1 bg-slate-100 p-1.5 rounded-xl w-full border border-slate-200 mb-4" aria-label="Preview state">
+        <button type="button" class="st-tab" data-st="email" onclick="setWa(false)">Email only</button>
+        <button type="button" class="st-tab" data-st="wa" onclick="setWa(true)">Email and WhatsApp</button>
+      </div>
+      <ul class="space-y-4">
+        <li class="flex items-start gap-3"><span class="w-9 h-9 rounded-full bg-[#FDECEF] text-[#DC183C] grid place-items-center shrink-0"><i data-lucide="mail" class="w-4 h-4"></i></span><div><p class="font-jakarta font-bold text-[14.5px] text-[#0C1F31]">Check your email now</p><p class="text-[13px] text-[#6A7581] leading-relaxed">We sent your confirmation with a calendar file. If it is not there, look in your promotions or spam folder.</p></div></li>
+        <li class="flex items-start gap-3"><span class="w-9 h-9 rounded-full bg-[#FDECEF] text-[#DC183C] grid place-items-center shrink-0"><i data-lucide="link" class="w-4 h-4"></i></span><div><p class="font-jakarta font-bold text-[14.5px] text-[#0C1F31]">Your webinar link, 1 hour before start</p><p class="text-[13px] text-[#6A7581] leading-relaxed">A personal link on smesouthafrica.co.za, by email<span class="js-wa-only">, and on WhatsApp</span>. Please do not share it; send colleagues the invite link below instead.</p></div></li>
+        <li class="flex items-start gap-3 js-wa-only-row"><span class="w-9 h-9 rounded-full bg-[#E7F6F1] text-[#0B7C6B] grid place-items-center shrink-0"><i data-lucide="message-circle" class="w-4 h-4"></i></span><div><p class="font-jakarta font-bold text-[14.5px] text-[#0C1F31]">WhatsApp reminders are on</p><p class="text-[13px] text-[#6A7581] leading-relaxed">A day before and when we go live. Reply STOP at any time to turn them off.</p></div></li>
+        <li class="flex items-start gap-3"><span class="w-9 h-9 rounded-full bg-[#FDECEF] text-[#DC183C] grid place-items-center shrink-0"><i data-lucide="rotate-cw" class="w-4 h-4"></i></span><div><p class="font-jakarta font-bold text-[14.5px] text-[#0C1F31]">Missed it? Watch the replay</p><p class="text-[13px] text-[#6A7581] leading-relaxed">Replays are for members. <a href="public-auth.html#join" class="font-bold text-[#DC183C] underline underline-offset-2">Join SME South Africa</a> so it is waiting for you.</p></div></li>
+      </ul>
+    </section>
+
+    <!-- GET READY -->
+    <section>
+      <h2 class="font-jakarta font-extrabold text-xl sm:text-2xl text-[#0C1F31] mb-4">Get ready</h2>
+      <div class="grid sm:grid-cols-2 gap-4">
+        <a href="public-article.html" class="card overflow-hidden group block hover:shadow-md transition">
+          <div class="aspect-[16/9] bg-gradient-to-br from-[#0C1F31] to-[#5e1a2c] grid place-items-center"><i data-lucide="line-chart" class="w-10 h-10 text-white/70"></i></div>
+          <div class="p-4"><p class="eyebrow mb-1">Managing a Business</p><p class="font-jakarta font-extrabold text-[15px] leading-snug text-[#0C1F31] group-hover:text-[#DC183C] transition">How to build a cash flow forecast for your small business</p><p class="text-[12.5px] text-[#6A7581] mt-1">6 min read</p></div>
+        </a>
+        <a href="public-guide.html" class="card overflow-hidden group block hover:shadow-md transition">
+          <div class="aspect-[16/9] bg-gradient-to-br from-[#DC183C] to-[#FF9900] grid place-items-center"><i data-lucide="calculator" class="w-10 h-10 text-white/80"></i></div>
+          <div class="p-4"><p class="eyebrow mb-1">Guide</p><p class="font-jakarta font-extrabold text-[15px] leading-snug text-[#0C1F31] group-hover:text-[#DC183C] transition">Unit economics explained for South African founders</p><p class="text-[12.5px] text-[#6A7581] mt-1">Guide</p></div>
+        </a>
+      </div>
+    </section>
+  </div>
+
+  <!-- RIGHT RAIL: share + invite -->
+  <aside class="order-2 lg:col-start-2 lg:row-start-1 lg:row-span-2 w-full space-y-6 lg:sticky lg:top-6">
+    <section class="card p-5">
+      <p class="eyebrow mb-1">Share this webinar</p>
+      <p class="text-[13px] text-[#6A7581] leading-relaxed mb-4">Know a founder who should be there?</p>
+      <div class="space-y-2">
+        <a id="shareWa" target="_blank" rel="noopener" onclick="shareTrack('whatsapp')" class="w-full h-12 rounded-xl bg-[#1FA855] hover:bg-[#178F47] text-white font-bold text-sm inline-flex items-center justify-center gap-2 transition"><svg viewBox="0 0 24 24" class="w-4 h-4" fill="currentColor" aria-hidden="true"><path d="M17.47 14.38c-.3-.15-1.75-.86-2.02-.96-.27-.1-.47-.15-.67.15-.2.3-.77.96-.94 1.16-.17.2-.35.22-.64.07-.3-.15-1.26-.46-2.4-1.48-.89-.79-1.49-1.77-1.66-2.07-.17-.3-.02-.46.13-.6.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.61-.92-2.2-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.88 1.21 3.08c.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.69.63.71.23 1.36.2 1.87.12.57-.09 1.75-.72 2-1.41.25-.69.25-1.29.17-1.41-.07-.12-.27-.2-.57-.35zM12.04 21.5h-.01a9.45 9.45 0 0 1-4.82-1.32l-.35-.21-3.58.94.96-3.49-.23-.36a9.43 9.43 0 0 1-1.45-5.03c0-5.22 4.25-9.46 9.48-9.46 2.53 0 4.91.99 6.7 2.78a9.4 9.4 0 0 1 2.77 6.69c0 5.22-4.25 9.46-9.47 9.46zm8.06-17.52A11.32 11.32 0 0 0 12.04.65C5.77.65.66 5.75.66 12.02c0 2 .52 3.96 1.52 5.69L.57 23.6l6.03-1.58a11.4 11.4 0 0 0 5.44 1.39h.01c6.27 0 11.38-5.1 11.38-11.37 0-3.04-1.18-5.89-3.33-8.04z"/></svg> Share on WhatsApp</a>
+        <a id="shareLi" target="_blank" rel="noopener" onclick="shareTrack('linkedin')" class="w-full h-12 rounded-xl bg-[#0A66C2] hover:bg-[#084F97] text-white font-bold text-sm inline-flex items-center justify-center gap-2 transition"><svg viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4" aria-hidden="true"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.42v1.56h.05c.47-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.07 2.07 0 1 1 0-4.14 2.07 2.07 0 0 1 0 4.14zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.8 0 0 .78 0 1.73v20.54C0 23.22.8 24 1.77 24h20.45C23.2 24 24 23.22 24 22.27V1.73C24 .78 23.2 0 22.22 0z"/></svg> Share on LinkedIn</a>
+        <button type="button" onclick="copyLink('event')" class="w-full h-12 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-sm inline-flex items-center justify-center gap-2 transition"><i data-lucide="link" class="w-4 h-4"></i> Copy link</button>
+      </div>
+    </section>
+
+    <section class="card p-5">
+      <p class="eyebrow mb-1">Invite a colleague</p>
+      <p class="font-jakarta font-extrabold text-[16px] text-[#0C1F31]">Bring your team along</p>
+      <p class="text-[13px] text-[#6A7581] leading-relaxed mt-1 mb-4">Send this invite link to a colleague or business partner. They register with their own details and get their own webinar link.</p>
+      <div class="flex items-center gap-2 rounded-xl border border-[#E7EBEF] bg-[#FCFCFC] pl-3 pr-1 h-12 min-w-0">
+        <i data-lucide="user-round-plus" class="w-4 h-4 text-slate-500 shrink-0"></i>
+        <span id="inviteUrl" class="text-[13px] text-slate-600 truncate flex-1 min-w-0">smesouthafrica.co.za/e/predictive-analytics?ref=tj7k</span>
+        <button type="button" onclick="copyLink('invite')" class="h-10 px-3 rounded-lg bg-[#0C1F31] hover:bg-[#16324A] text-white text-xs font-bold shrink-0">Copy</button>
+      </div>
+      <a id="inviteWa" target="_blank" rel="noopener" onclick="shareTrack('whatsapp_invite')" class="mt-2 w-full h-11 rounded-xl border border-[#E7EBEF] hover:border-[#1FA855] text-[#0C1F31] font-bold text-[13px] inline-flex items-center justify-center gap-2 transition"><i data-lucide="message-circle" class="w-4 h-4 text-[#1FA855]"></i> Send the invite on WhatsApp</a>
+    </section>
+
+    <a href="event-single-online.html" class="w-full h-12 rounded-xl border border-[#E7EBEF] bg-white hover:bg-slate-50 text-[#0C1F31] font-bold text-sm inline-flex items-center justify-center gap-2 transition"><i data-lucide="arrow-left" class="w-4 h-4"></i> Back to the webinar page</a>
+  </aside>
+
+  <!-- MESSAGE PREVIEWS -->
+  <section class="order-3 lg:col-start-1 w-full min-w-0">
+    <div class="flex items-center gap-2 mb-1"><span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-[#FFF2DC] text-[#AE6B0A] uppercase tracking-wider">Preview</span><h2 class="font-jakarta font-extrabold text-xl sm:text-2xl text-[#0C1F31]">What the registrant receives</h2></div>
+    <p class="text-[13px] text-[#6A7581] mb-5">Design previews of the confirmation email and the WhatsApp messages. Not shown to visitors on the live page.</p>
+
+    <div class="grid xl:grid-cols-[1fr,340px] gap-6 items-start">
+      <!-- EMAIL PREVIEW -->
+      <div class="card overflow-hidden min-w-0">
+        <div class="px-4 py-3 border-b border-[#E7EBEF] bg-[#F6F8FA] text-[12.5px] space-y-1 min-w-0">
+          <p class="truncate"><span class="text-[#6A7581] w-16 inline-block">From</span> <b>SME South Africa Events</b> &lt;events@smesouthafrica.co.za&gt;</p>
+          <p class="truncate"><span class="text-[#6A7581] w-16 inline-block">To</span> thabo@company.co.za</p>
+          <p class="truncate"><span class="text-[#6A7581] w-16 inline-block">Subject</span> <b>You're in: How to Use Predictive Analytics to Forecast Growth</b></p>
+        </div>
+        <div class="bg-[#EEF1F4] p-3 sm:p-6">
+          <div class="max-w-[560px] mx-auto bg-white rounded-xl overflow-hidden shadow-sm">
+            <div class="bg-[#0C1F31] px-5 py-4"><img src="assets/logo-v1-lockup-reversed.svg" alt="SME South Africa" class="h-8 w-auto" /></div>
+            <div class="px-5 sm:px-7 py-6 text-[14px] leading-relaxed text-[#121A21] space-y-4">
+              <p>Hi Thabo,</p>
+              <p>You're registered for <b>How to Use Predictive Analytics to Forecast Growth</b>.</p>
+              <div class="rounded-lg bg-[#F6F8FA] border border-[#E7EBEF] p-4">
+                <p class="font-bold text-[#0C1F31]">Thursday, 20 August 2026</p>
+                <p>1:00 pm to 2:15 pm SAST</p>
+                <p class="text-[13px] text-[#6A7581] mt-1">Online. Your personal webinar link arrives in a separate email 1 hour before start.</p>
+              </div>
+              <div class="flex flex-wrap gap-2">
+                <span class="inline-flex items-center h-10 px-4 rounded-lg bg-[#DC183C] text-white font-bold text-[13px]">Add to Google</span>
+                <span class="inline-flex items-center h-10 px-4 rounded-lg bg-[#0C1F31] text-white font-bold text-[13px]">Add to Outlook</span>
+                <span class="inline-flex items-center h-10 px-4 rounded-lg border border-[#E7EBEF] text-[#0C1F31] font-bold text-[13px]">Calendar file attached</span>
+              </div>
+              <p><b>Get ready:</b> read <span class="text-[#DC183C] underline">How to build a cash flow forecast</span> before the session.</p>
+              <p>Can't make it? <span class="text-[#DC183C] underline">Cancel your registration</span> so we can offer your place to someone else.</p>
+              <p>See you there,<br />The SME South Africa team</p>
+            </div>
+            <div class="px-5 sm:px-7 py-4 border-t border-[#E7EBEF] text-[11.5px] text-[#6A7581] leading-relaxed">You are receiving this email because you registered for this event on smesouthafrica.co.za. <span class="underline">Manage your email choices</span> · <span class="underline">POPIA notice</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- WHATSAPP PREVIEW -->
+      <div class="card overflow-hidden w-full max-w-[360px] mx-auto xl:mx-0" id="waPreview">
+        <div class="bg-[#0C1F31] text-white px-4 h-14 flex items-center gap-3">
+          <div class="w-9 h-9 rounded-full bg-white grid place-items-center shrink-0"><img src="assets/logo-v1-lockup.svg" alt="" class="w-7 h-auto" /></div>
+          <div class="min-w-0"><p class="font-bold text-[14px] leading-tight truncate">SME South Africa</p><p class="text-[11px] text-white/60">Business account</p></div>
+        </div>
+        <div class="wa-bg p-3 space-y-3">
+          <p class="text-center"><span class="inline-block text-[11px] bg-white/80 rounded-md px-2 py-0.5 text-slate-600">Template: event_confirmation</span></p>
+          <div class="wa-bubble max-w-[92%] overflow-hidden">
+            <div class="px-3 pt-2.5 pb-2 text-[13.5px] leading-relaxed text-[#121A21]">
+              <p>Hi Thabo, you're registered for <b>How to Use Predictive Analytics to Forecast Growth</b> on Thu 20 Aug at 1:00 pm SAST.</p>
+              <p class="mt-1.5">We'll send your webinar link here 1 hour before start.</p>
+              <p class="mt-1.5 text-[12px] text-[#6A7581]">Reply STOP to stop WhatsApp messages from SME South Africa.</p>
+              <p class="text-right text-[10.5px] text-slate-400 mt-1">10:42</p>
+            </div>
+            <div class="wa-qr"><i data-lucide="calendar-plus" class="w-4 h-4"></i> Add to calendar</div>
+            <div class="wa-qr"><i data-lucide="bell-off" class="w-4 h-4"></i> Stop reminders</div>
+          </div>
+          <p class="text-center"><span class="inline-block text-[11px] bg-white/80 rounded-md px-2 py-0.5 text-slate-600">Template: event_link_1h</span></p>
+          <div class="wa-bubble max-w-[92%] overflow-hidden">
+            <div class="px-3 pt-2.5 pb-2 text-[13.5px] leading-relaxed text-[#121A21]">
+              <p>We start in 1 hour. Here is your personal webinar link (please don't share it):</p>
+              <p class="mt-1.5 text-[#0B7C6B] underline break-all">smesouthafrica.co.za/e/j/8Hq2Ld</p>
+              <p class="mt-1.5 text-[12px] text-[#6A7581]">Reply STOP to opt out.</p>
+              <p class="text-right text-[10.5px] text-slate-400 mt-1">12:00</p>
+            </div>
+            <div class="wa-qr"><i data-lucide="video" class="w-4 h-4"></i> Join the webinar</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="dev-note rounded-xl px-4 py-3 items-start gap-3 mt-5">
+      <i data-lucide="info" class="w-4 h-4 text-[#AE6B0A] shrink-0 mt-0.5"></i>
+      <div class="text-xs text-slate-700 leading-relaxed space-y-2">
+        <p><b>Dev note, confirmation (Workstreams A, B, C).</b> Reached after a successful registration (<code>event-register.html</code>). <code>?wa=1</code> when WhatsApp was ticked, <code>?member=1</code> for a member; the state tabs above are a preview control. The page is <code>noindex</code> and per registrant (the URL carries a signed registration token, never the email).</p>
+        <p><b>Time:</b> always SAST first; the visitor's local time is computed in the browser with <code>Intl</code> and only shown when it differs (try <code>?tz=Europe/London</code>). Store times as UTC with the event timezone <code>Africa/Johannesburg</code>; schema and .ics carry <code>+02:00</code> / <code>TZID</code>.</p>
+        <p><b>Calendar:</b> Google <code>calendar.google.com/calendar/render?action=TEMPLATE</code>, Outlook <code>outlook.live.com/calendar/0/deeplink/compose</code>, Apple = .ics (<code>UID event-ID@smesouthafrica.co.za</code>, same file attached to the email). Location = the event page URL, never the join link. Do not copy the old shortcode bug (SAST string read as UTC, labelled Z).</p>
+        <p><b>Join link:</b> personal, on our domain (<code>/e/j/&lt;token&gt;</code>), redirects to the webinar link from 30 minutes before start and records the click. Never printed on this page. Vendor name never shown.</p>
+        <p><b>WhatsApp:</b> approved templates only (<code>event_confirmation</code>, <code>event_reminder_1d</code>, <code>event_link_1h</code>, <code>event_live_now</code>, <code>event_replay_ready</code>), sent only when the WhatsApp consent entry is granted, every template ends with the STOP line; STOP writes a withdrawal to the consent ledger. Sender sits behind an off switch and the Comms Governor (transactional class).</p>
+        <p><b>Invite link:</b> <code>?ref=</code> code of this registrant, stored on the new registration. dataLayer: <code>event_add_to_calendar</code> (calendar), <code>event_share</code> (network), no personal data.</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div class="lg:hidden" style="height:calc(64px + env(safe-area-inset-bottom))"></div>
+<footer class="bg-[#0C1F31] text-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-12">
+    <div class="grid grid-cols-2 md:grid-cols-6 gap-8">
+      <div class="col-span-2">
+        <a href="public-home.html" class="flex items-center gap-2.5"><img src="assets/logo-v1-lockup-reversed.svg" alt="SME South Africa" class="h-[46px] lg:h-[68px] w-auto" /></a>
+        <p class="text-sm text-white/55 mt-4 max-w-xs leading-relaxed">A community for South African SME owners, connecting founders with funding, events, and the tools to scale.</p>
+        <div class="flex items-center gap-2 mt-5">
+          <a href="#" aria-label="X" class="w-9 h-9 rounded-lg bg-white/8 hover:bg-white/15 grid place-items-center transition"><svg viewBox="0 0 24 24" class="w-4 h-4" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24h-6.66l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+          <a href="#" aria-label="LinkedIn" class="w-9 h-9 rounded-lg bg-white/8 hover:bg-white/15 grid place-items-center transition"><svg viewBox="0 0 24 24" class="w-4 h-4" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0z"/></svg></a>
+          <a href="#" aria-label="Instagram" class="w-9 h-9 rounded-lg bg-white/8 hover:bg-white/15 grid place-items-center transition"><svg viewBox="0 0 24 24" class="w-4 h-4" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></a>
+          <a href="#" aria-label="Facebook" class="w-9 h-9 rounded-lg bg-white/8 hover:bg-white/15 grid place-items-center transition"><svg viewBox="0 0 24 24" class="w-4 h-4" fill="currentColor"><path d="M22.675 0H1.325C.593 0 0 .593 0 1.325v21.351C0 23.407.593 24 1.325 24h11.495v-9.294H9.692v-3.622h3.128V8.413c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.716-1.795 1.763v2.313h3.587l-.467 3.622h-3.12V24h6.116C23.407 24 24 23.407 24 22.675V1.325C24 .593 23.407 0 22.675 0z"/></svg></a>
+          <a href="#" aria-label="YouTube" class="w-9 h-9 rounded-lg bg-white/8 hover:bg-white/15 grid place-items-center transition"><svg viewBox="0 0 24 24" class="w-4 h-4" fill="currentColor"><path d="M21.582 6.186a2.684 2.684 0 0 0-1.884-1.9C17.962 3.84 12 3.84 12 3.84s-5.962 0-7.698.446a2.684 2.684 0 0 0-1.884 1.9C2 7.934 2 12 2 12s0 4.066.418 5.814a2.684 2.684 0 0 0 1.884 1.9C6.038 20.16 12 20.16 12 20.16s5.962 0 7.698-.446a2.684 2.684 0 0 0 1.884-1.9C22 16.066 22 12 22 12s0-4.066-.418-5.814zM9.996 15.005V8.994L15.26 12l-5.264 3.005z"/></svg></a>
+          <a href="#" aria-label="TikTok" class="w-9 h-9 rounded-lg bg-white/8 hover:bg-white/15 grid place-items-center transition"><svg viewBox="0 0 24 24" class="w-4 h-4" fill="currentColor"><path d="M16.6 5.82c-1.01-.88-1.62-2.14-1.63-3.55h-3.13v13.39c0 1.6-1.3 2.9-2.9 2.9a2.9 2.9 0 0 1 0-5.8c.29 0 .57.04.83.13V9.75a6.03 6.03 0 0 0-.83-.06c-3.34 0-6.05 2.71-6.05 6.05S5.6 21.79 8.94 21.79s6.05-2.71 6.05-6.05V9.01a9.14 9.14 0 0 0 5.34 1.71V7.6a5.94 5.94 0 0 1-3.73-1.78z"/></svg></a>
+        </div>
+      </div>
+      <div>
+        <p class="text-[11px] font-bold uppercase tracking-widest text-[#FF9900]">Platform</p>
+        <ul class="mt-4 space-y-2.5 text-sm text-white/70">
+          <li><a href="public-resources.html" class="hover:text-white">Resources Library</a></li>
+          <li><a href="public-funding.html" class="hover:text-white">Funding Portal</a></li>
+          <li><a href="public-solutions.html" class="hover:text-white">Solutions Directory</a></li>
+          <li><a href="public-brands.html" class="hover:text-white">Brands Directory</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="text-[11px] font-bold uppercase tracking-widest text-[#FF9900]">Insights</p>
+        <ul class="mt-4 space-y-2.5 text-sm text-white/70">
+          <li><a href="public-articles.html" class="hover:text-white">All Insights</a></li>
+          <li><a href="public-founder-focus-category.html" class="hover:text-white">Founder Focus</a></li>
+          <li><a href="public-funding-summit-category.html" class="hover:text-white">Funding Summit</a></li>
+          <li><a href="public-category.html" class="hover:text-white">Business Opportunities</a></li>
+          <li><a href="public-category.html" class="hover:text-white">Brand Voice</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="text-[11px] font-bold uppercase tracking-widest text-[#FF9900]">Community</p>
+        <ul class="mt-4 space-y-2.5 text-sm text-white/70">
+          <li><a href="member-hub.html" class="hover:text-white">Community Forum</a></li>
+          <li><a href="events.html" class="hover:text-white">Events &amp; Webinars</a></li>
+          <li><a href="newsletter.html" class="hover:text-white">Newsletter</a></li>
+          <li><a href="podcast.html" class="hover:text-white">Podcast</a></li>
+          <li><a href="public-glossary.html" class="hover:text-white">Glossary</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="text-[11px] font-bold uppercase tracking-widest text-[#FF9900]">Legal</p>
+        <ul class="mt-4 space-y-2.5 text-sm text-white/70">
+          <li><a href="public-terms.html" class="hover:text-white">Terms &amp; Conditions</a></li>
+          <li><a href="public-privacy.html" class="hover:text-white">Privacy Policy</a></li>
+          <li><a href="public-refunds.html" class="hover:text-white">Refunds Policy</a></li>
+          <li><a href="public-popia.html" class="hover:text-white">POPIA</a></li>
+          <li><a href="public-advertising-disclosure.html" class="hover:text-white">Advertising Disclosure</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-3 pt-8 mt-10 border-t border-white/10 text-[12.5px] text-white/50">
+      <div class="flex flex-wrap items-center gap-x-3 gap-y-1.5">
+        <a href="public-about.html" class="hover:text-white transition">About</a><span class="text-white/20">·</span>
+            <a href="public-contact.html" class="hover:text-white transition">Contact</a><span class="text-white/20">·</span>
+            <a href="public-advertise.html" class="hover:text-white transition">Advertise</a><span class="text-white/20">·</span>
+            <a href="public-help.html" class="hover:text-white transition">Help Centre</a>
+      </div>
+      <p>© 2026 SME South Africa. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+
+<div id="overlay-root"></div>
+<div id="toast" class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-[90]"></div>
+<script>
+  function showToast(m){const el=document.getElementById('toast');el.classList.remove('hidden');el.innerHTML=`<div class="bg-[#0C1F31] text-white rounded-full pl-3 pr-5 py-2.5 shadow-2xl flex items-center gap-2 text-sm font-semibold" style="border-left:4px solid #29A37A"><i data-lucide="check-circle" class="w-4 h-4" style="color:#29A37A"></i><span>${m}</span></div>`;lucide.createIcons();setTimeout(()=>{el.classList.add('hidden');el.innerHTML='';},2400);}
+
+  // ===== Registration confirmed (preview) =====
+  const EVT = { id: 81001, title: 'How to Use Predictive Analytics to Forecast Growth', format: 'online', state: 'upcoming',
+                startUtc: '2026-08-20T11:00:00Z', endUtc: '2026-08-20T12:15:00Z',
+                url: 'https://smesouthafrica.co.za/events/how-to-use-predictive-analytics-to-forecast-growth/' };
+  const params = p => ({ event_id: EVT.id, event_title: EVT.title, event_format: EVT.format, event_state: EVT.state, ...p });
+  function dl(name, p){ try { window.smesaEvt && smesaEvt(name, params(p)); } catch (_) {} }
+
+  function localTimeLine(){
+    let tz = 'Africa/Johannesburg';
+    try { const m = location.search.match(/[?&]tz=([^&]+)/); tz = m ? decodeURIComponent(m[1]) : Intl.DateTimeFormat().resolvedOptions().timeZone; } catch (_) {}
+    if (!tz || tz === 'Africa/Johannesburg') return 'That is your local time too.';
+    try {
+      const f = d => new Date(d).toLocaleTimeString('en-GB', { hour: 'numeric', minute: '2-digit', hour12: true, timeZone: tz });
+      const day = new Date(EVT.startUtc).toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short', timeZone: tz });
+      return 'Your time: ' + day + ', ' + f(EVT.startUtc) + ' to ' + f(EVT.endUtc) + ' (' + tz.replace(/_/g, ' ') + ')';
+    } catch (_) { return ''; }
+  }
+  document.querySelectorAll('.js-localtime').forEach(el => el.textContent = localTimeLine());
+
+  // Calendar links (UTC with Z for Google; +02:00 offsets for Outlook)
+  const stamp = s => s.replace(/[-:]/g, '').replace('.000', '');
+  const details = 'Your personal webinar link arrives by email 1 hour before start. Event page: ' + EVT.url;
+  document.getElementById('calGoogle').href = 'https://calendar.google.com/calendar/render?action=TEMPLATE&text=' + encodeURIComponent(EVT.title) +
+    '&dates=' + stamp(EVT.startUtc) + '/' + stamp(EVT.endUtc) + '&details=' + encodeURIComponent(details) + '&location=' + encodeURIComponent(EVT.url) + '&ctz=Africa/Johannesburg';
+  document.getElementById('calOutlook').href = 'https://outlook.live.com/calendar/0/deeplink/compose?path=/calendar/action/compose&rru=addevent&subject=' + encodeURIComponent(EVT.title) +
+    '&startdt=' + encodeURIComponent('2026-08-20T13:00:00+02:00') + '&enddt=' + encodeURIComponent('2026-08-20T14:15:00+02:00') + '&body=' + encodeURIComponent(details) + '&location=' + encodeURIComponent(EVT.url);
+  function calTrack(c){ dl('event_add_to_calendar', { calendar: c }); }
+  function downloadIcs(){
+    const ics = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//SME South Africa//Events//EN', 'CALSCALE:GREGORIAN', 'METHOD:PUBLISH',
+      'BEGIN:VTIMEZONE', 'TZID:Africa/Johannesburg', 'BEGIN:STANDARD', 'DTSTART:19700101T000000', 'TZOFFSETFROM:+0200', 'TZOFFSETTO:+0200', 'TZNAME:SAST', 'END:STANDARD', 'END:VTIMEZONE',
+      'BEGIN:VEVENT', 'UID:event-' + EVT.id + '@smesouthafrica.co.za', 'DTSTAMP:' + stamp(new Date().toISOString().replace(/\.\d+Z$/, 'Z')),
+      'DTSTART;TZID=Africa/Johannesburg:20260820T130000', 'DTEND;TZID=Africa/Johannesburg:20260820T141500',
+      'SUMMARY:' + EVT.title, 'DESCRIPTION:' + details, 'URL:' + EVT.url, 'LOCATION:' + EVT.url, 'END:VEVENT', 'END:VCALENDAR'].join('\r\n');
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(new Blob([ics], { type: 'text/calendar' }));
+    a.download = 'sme-south-africa-webinar.ics';
+    document.body.appendChild(a); a.click(); a.remove();
+    calTrack('apple');
+  }
+
+  // Share: WhatsApp first, LinkedIn, copy link
+  const shareText = 'I am going to this SME South Africa webinar: ' + EVT.title + '. Register here: ';
+  const inviteLink = 'https://smesouthafrica.co.za/e/predictive-analytics?ref=tj7k';
+  document.getElementById('shareWa').href = 'https://wa.me/?text=' + encodeURIComponent(shareText + EVT.url);
+  document.getElementById('shareLi').href = 'https://www.linkedin.com/sharing/share-offsite/?url=' + encodeURIComponent(EVT.url);
+  document.getElementById('inviteWa').href = 'https://wa.me/?text=' + encodeURIComponent('Join me at this SME South Africa webinar: ' + EVT.title + '. Register with your own details here: ' + inviteLink);
+  function shareTrack(n){ dl('event_share', { network: n }); }
+  function copyLink(kind){
+    const v = kind === 'invite' ? inviteLink : EVT.url;
+    try { navigator.clipboard && navigator.clipboard.writeText(v); } catch (_) {}
+    shareTrack(kind === 'invite' ? 'copy_invite' : 'copy_link');
+    showToast(kind === 'invite' ? 'Invite link copied.' : 'Link copied.');
+  }
+
+  // Email only / Email and WhatsApp
+  function setWa(on){
+    document.querySelectorAll('.js-wa-only').forEach(el => el.classList.toggle('hidden', !on));
+    document.querySelectorAll('.js-wa-only-row').forEach(el => el.classList.toggle('hidden', !on));
+    document.querySelectorAll('.st-tab').forEach(b => b.classList.toggle('on', (b.dataset.st === 'wa') === on));
+  }
+  setWa(/[?&]wa=1\b/.test(location.search));
+  dl('event_register_complete_view', { member: /[?&]member=1\b/.test(location.search) ? 'yes' : 'no' });
+
+  const BRIEF = {
+    title: 'Registration confirmed',
+    sub: 'After Register · per registrant, noindex',
+    purpose: 'Tell the registrant they are in, when it is (SAST plus their own time), how the webinar link arrives, and get the event into their calendar. Then turn them into a promoter: share on WhatsApp first, LinkedIn, copy link, invite a colleague.',
+    data: 'Reads the registration (token in the URL): event, status, consent per channel (decides the WhatsApp rows), ref code for the invite link.',
+    logic: 'Google / Outlook links built server-side from the one event start field in UTC. .ics is the same file attached to the confirmation email. Email and WhatsApp previews are design references for Workstream C.',
+    components: 'Hero (check + You\'re in) · When card with calendar buttons · How your link arrives · Get ready (two related reads) · Share card · Invite a colleague · Message previews.',
+    specs: 'Buttons h-12 rounded-xl; calendar buttons 48 px, one column on phones, three from 640 px. WhatsApp button #1FA855, LinkedIn #0A66C2.'
+  };
+
+  function toggleDevMode(){const on=document.body.classList.toggle('dev-on');const b=document.getElementById('devToggle');if(b)b.classList.toggle('on',on);lucide.createIcons();}
+  function closeOverlay(id){const el=document.getElementById(id);if(!el)return;el.classList.remove('open');setTimeout(()=>{if(el&&el.parentNode)el.remove();},300);}
+  function openBrief(){
+    const b=BRIEF;
+    const sec=(i,l,h)=>`<div class="px-6 py-4 border-t border-slate-100"><p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] flex items-center gap-1.5 mb-2"><i data-lucide="${i}" class="w-3.5 h-3.5"></i>${l}</p><div class="text-sm text-slate-600 leading-relaxed">${h}</div></div>`;
+    document.getElementById('overlay-root').innerHTML=`<div class="ov" id="ov"><div class="ov-bg" onclick="closeOverlay('ov')"></div><div class="drawer"><div class="sticky top-0 z-10 bg-[#0C1F31] text-white px-6 py-5 flex items-start justify-between"><div><p class="text-[10px] font-bold uppercase tracking-widest text-[#FF9900] mb-1">Dev Brief</p><h3 class="font-jakarta font-extrabold text-lg leading-tight">${b.title}</h3><p class="text-xs text-white/60 mt-1">${b.sub}</p></div><button onclick="closeOverlay('ov')" class="text-white/60 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button></div>${sec('target','Purpose',b.purpose)}${sec('database','Data model',b.data)}${sec('git-branch','Logic',b.logic)}${sec('boxes','Components',b.components)}${sec('ruler','Spec values',b.specs)}</div></div>`;
+    requestAnimationFrame(()=>{const o=document.getElementById('ov');if(o)o.classList.add('open');});
+    lucide.createIcons();
+  }
+
+
+  try { if (/[?&]dev=1\b/.test(location.search)) toggleDevMode(); } catch (_) {}
+  lucide.createIcons();
+</script>
+<script>
+  // ===== Recommended header/footer behaviour =====
+  function toggleChromeSearch(){
+    const o = document.getElementById('chromeSearchOverlay');
+    const opening = o.classList.toggle('active');
+    if(opening) setTimeout(()=>document.getElementById('chromeSearchInput').focus(), 100);
+  }
+  function toggleChromeBurger(){
+    const p = document.getElementById('chromeBurgerPanel');
+    const open = p.classList.toggle('hidden') === false;
+    document.getElementById('chromeBurgerIcon').setAttribute('data-lucide', open ? 'x' : 'menu');
+    lucide.createIcons();
+  }
+  const CHROME_DROPS = { articles: 'dropArticles', resources: 'dropResources', funding: 'dropFunding' };
+  function toggleChromeDrop(name){
+    Object.keys(CHROME_DROPS).forEach(k=>{ if(k!==name) document.getElementById(CHROME_DROPS[k]).classList.add('hidden'); });
+    document.getElementById(CHROME_DROPS[name]).classList.toggle('hidden');
+  }
+  function closeChromeDrop(name){
+    document.getElementById(CHROME_DROPS[name]).classList.add('hidden');
+  }
+  document.addEventListener('click', e=>{
+    if(!e.target.closest('nav .relative')) Object.values(CHROME_DROPS).forEach(id=>document.getElementById(id).classList.add('hidden'));
+  });
+  document.addEventListener('keydown', e=>{
+    if(e.key==='Escape'){ const o=document.getElementById('chromeSearchOverlay'); if(o && o.classList.contains('active')) toggleChromeSearch(); }
+  });
+</script>
+<script src="member-chrome.js"></script>
+</body>
+</html>

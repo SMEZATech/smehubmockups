@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en-ZA">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Offline screen | SME HUB app</title>
+  <meta name="description" content="SME South Africa app: the branded offline screen with what was saved to read offline, the saved article reader, and the Save to read offline button." />
+  <meta name="theme-color" content="#0C1F31" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  <script>tailwind.config = { theme: { extend: { fontFamily: { jakarta: ['Plus Jakarta Sans', 'sans-serif'], inter: ['Inter', 'system-ui', 'sans-serif'] } } } };</script>
+  <style>
+    html, body { font-family: 'Inter', system-ui, sans-serif; }
+    .font-jakarta { font-family: 'Plus Jakarta Sans', sans-serif; letter-spacing: 0.005em; }
+    body.app-nochrome { background:#F4F6F8; }
+  </style>
+</head>
+<body class="bg-[#FCFCFC] text-[#121A21] antialiased">
+<header></header>
+<div id="app-root"></div>
+<script src="app-mockup-kit.js"></script>
+<script>
+  const SAVED = [
+    ['Marketplaces Help Scale, But Only When Done Right', 'Article · saved 8 Oct', 'newspaper'],
+    ['How to register your business for VAT', 'Guide · saved 2 Oct', 'book-open']
+  ];
+  function offlineCard(empty){
+    return `<main class="min-h-[100dvh] px-4 py-8 flex items-start justify-center">
+      <div class="w-full max-w-md bg-white rounded-3xl border border-[#E7EBEF] shadow-sm px-6 py-8 text-center">
+        <span class="w-[72px] h-[72px] rounded-2xl bg-white border border-[#E7EBEF] grid place-items-center mx-auto"><img src="assets/logo-v1-icon.svg" alt="SME South Africa" class="w-11 h-11"></span>
+        <h1 class="font-jakarta font-extrabold text-[24px] mt-5">You are offline</h1>
+        <p class="text-[15px] text-slate-600 mt-2 leading-relaxed">There is no signal right now. What you saved to read offline is below; everything else is back as soon as you are connected.</p>
+        <button type="button" onclick="retry(this)" class="mt-5 h-12 px-7 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-jakarta font-bold text-[15px] inline-flex items-center gap-2"><i data-lucide="rotate-cw" class="w-4 h-4"></i> Try again</button>
+        <h2 class="mt-8 text-left text-[12px] font-extrabold uppercase tracking-widest text-[#0C1F31]">Saved to read offline</h2>
+        ${empty
+          ? `<p class="mt-2 text-left text-[14px] text-slate-500 leading-relaxed">Nothing saved yet. Tap “Save to read offline” on an article while you have signal.</p>`
+          : `<ul class="mt-2 text-left divide-y divide-[#EEF1F4]">${SAVED.map(s => `<li><a href="?state=reader" class="flex items-center gap-3 py-3 min-h-[56px]"><span class="w-10 h-10 rounded-lg bg-[#F0F5F9] text-[#0C1F31] grid place-items-center shrink-0"><i data-lucide="${s[2]}" class="w-5 h-5"></i></span><span class="min-w-0 flex-1"><span class="block font-jakarta font-bold text-[14.5px] leading-snug">${s[0]}</span><span class="block text-[12.5px] text-slate-500">${s[1]}</span></span><i data-lucide="chevron-right" class="w-5 h-5 text-slate-400 shrink-0"></i></a></li>`).join('')}</ul>`}
+        <p class="mt-6 text-[12.5px] text-slate-400 flex items-center justify-center gap-1.5"><i data-lucide="wifi-off" class="w-4 h-4"></i> This page reloads by itself when the signal is back.</p>
+      </div></main>`;
+  }
+  function retry(b){ b.innerHTML = '<i data-lucide="loader" class="w-4 h-4 animate-spin"></i> Checking'; lucide.createIcons(); setTimeout(() => { b.innerHTML = '<i data-lucide="rotate-cw" class="w-4 h-4"></i> Try again'; lucide.createIcons(); }, 1400); }
+  AppKit.init({
+    title: 'Offline screen and saved reading',
+    lead: 'On a weak or no signal the app never shows the browser’s dinosaur. Members get a branded screen with a "Try again" button and everything they saved to read offline: in the taxi, in a queue, in bed.',
+    states: [
+      { id:'offline', label:'Offline', icon:'wifi-off', desc:'No signal: the branded screen and the "Saved to read offline" list.' },
+      { id:'empty', label:'Nothing saved', icon:'inbox', desc:'The same screen when the member has not saved anything yet.' },
+      { id:'reader', label:'Saved article', icon:'book-open-text', desc:'A saved article opens with no signal, images included.' },
+      { id:'save', label:'Save button', icon:'download', desc:'"Save to read offline" under every article title; tap again to remove it.' }
+    ],
+    rules: [
+      'Pages are always fetched fresh first; the offline screen only shows when there is no signal.',
+      'Signed-in pages are never stored on the phone; a saved article is a plain public copy with no member data.',
+      'The offline screen reloads itself when the signal returns.',
+      'Saving again removes the copy. Guides join articles in the next version.'
+    ],
+    source: 'Matches lane B on the Tshepho copy (/sme-offline/ and /sme-offline-article/{id}/; shots member-offline.png, member-saved-offline.png, member-article-save.png): "You are offline", "Try again", "Saved to read offline", "Nothing saved yet. Tap “Save to read offline” on an article while you have signal."',
+    render(state){
+      if (state === 'offline') return offlineCard(false);
+      if (state === 'empty') return offlineCard(true);
+      if (state === 'reader') return `<div class="bg-white min-h-[100dvh]"><div class="bg-[#0C1F31] text-white text-[12px] font-bold uppercase tracking-widest px-4 py-3 flex items-center justify-between gap-2"><span>SME South Africa · saved to read offline</span><a href="?state=offline" aria-label="Back to the offline screen" class="w-11 h-11 shrink-0 -my-3 -mr-3 grid place-items-center"><i data-lucide="x" class="w-5 h-5"></i></a></div>
+          <article class="px-4 py-5 max-w-2xl mx-auto"><h1 class="font-jakarta font-extrabold text-[27px] leading-tight text-[#0C1F31]">Marketplaces Help Scale, But Only When Done Right</h1><p class="text-[14px] text-slate-500 mt-2">8 October 2026</p>
+          <img src="assets/article-7.jpg" alt="" class="w-full h-52 object-cover rounded-2xl mt-4">
+          <p class="text-[16.5px] leading-relaxed mt-5">You shop online, spot the picture that looks exactly like what you want, and the price is good. The package arrives and it is not what you ordered. Marketplaces can grow a small business fast, but only when the basics are right.</p>
+          <p class="text-[16.5px] leading-relaxed mt-4">The SMEs who sell well on marketplaces show honest photos, answer questions the same day, and price delivery into the product rather than surprising the buyer at checkout.</p>
+          <p class="text-[16.5px] leading-relaxed mt-4">Start small: one marketplace, your ten best sellers, and a clear returns promise.</p></article></div>`;
+      return AppKit.backdrop('article', { saved:false });
+    },
+    after(state){
+      const b = document.getElementById('saveBtn'); if (!b) return;
+      b.addEventListener('click', () => {
+        const on = b.getAttribute('aria-pressed') !== 'true';
+        b.setAttribute('aria-pressed', on);
+        b.className = 'mt-3 h-11 px-5 rounded-full border text-[14px] font-semibold inline-flex items-center gap-2 ' + (on ? 'bg-[#E4F5EE] border-[#29A37A] text-[#1F7F5E]' : 'bg-white border-[#DC183C] text-[#DC183C]');
+        b.innerHTML = `<i data-lucide="${on ? 'check' : 'download'}" class="w-4 h-4"></i>${on ? 'Saved to read offline' : 'Save to read offline'}`; lucide.createIcons();
+      });
+    },
+    noChrome: s => s !== 'save'
+  });
+</script>
+<script>window.SME_MEMBER_PAGE=true;</script>
+<script src="member-chrome.js"></script>
+</body>
+</html>

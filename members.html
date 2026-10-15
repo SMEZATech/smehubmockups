@@ -156,35 +156,57 @@
   </div>
 </nav>
 
-<main class="max-w-7xl mx-auto px-4 sm:px-6 py-6">
-  <div class="flex items-end justify-between gap-3 mb-5 flex-wrap">
-    <div>
-      <h1 class="font-jakarta font-extrabold text-2xl text-[#121A21] tracking-tight flex items-center gap-2">Members
-        <button onclick="openBrief('directory')" class="dev-badge w-4 h-4 rounded-full bg-[#DC183C] text-white items-center justify-center text-[9px] font-bold leading-none animate-pulse" title="Implementation notes">i</button>
-      </h1>
-    </div>
-    <div class="flex items-center gap-2">
-      <select id="f-sort" onchange="render()" class="text-xs font-semibold border border-slate-200 rounded-lg px-3 py-2 outline-none text-slate-600"><option value="active">Recently active</option><option value="contrib">Top contributors</option><option value="az">A → Z</option></select>
-    </div>
+<!-- Members directory as live since 14 Oct (smesa-network + smesa-directory-gate + smesa-members-desktop-fix):
+     members-only, hero "Find fellow SMEs", filter column, All Members / My Connections tabs, "SMEs like yours", cards with real
+     cover photos, Previous / Page N / Next. NEVER any member total or count, anywhere. Visitors get the sign-up wall (?view=visitor). -->
+<section class="relative overflow-hidden border-b border-[#E7EBEF] bg-[linear-gradient(120deg,#FDECEF_0%,#FFF8EE_45%,#F4F6F8_100%)]">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-7 sm:py-10">
+    <h1 class="font-jakarta font-extrabold text-[28px] sm:text-[36px] leading-tight text-[#121A21] tracking-tight flex items-center gap-2"><span id="hero-title">Find fellow SMEs, Tshepho</span>
+      <button onclick="openBrief('directory')" class="dev-badge w-4 h-4 rounded-full bg-[#DC183C] text-white items-center justify-center text-[9px] font-bold leading-none animate-pulse" title="Implementation notes">i</button>
+    </h1>
+    <p class="text-[15px] text-slate-600 mt-2 max-w-xl leading-relaxed">Connect with South African SMEs: suppliers, customers and future partners, and grow the network your business runs on.</p>
   </div>
+</section>
 
-  <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+<main id="dir-member" class="max-w-7xl mx-auto px-4 sm:px-6 py-6">
+  <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-6">
     <!-- Filters -->
     <aside class="lg:col-span-3">
-      <div class="lg:sticky lg:top-28 space-y-4">
-        <div class="relative"><i data-lucide="search" class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500"></i><input id="f-search" oninput="render()" placeholder="Search members…" class="w-full bg-white border border-slate-200 rounded-xl pl-9 pr-3 py-2.5 text-sm outline-none focus:border-[#DC183C]"></div>
-        <div class="bg-white rounded-2xl border border-slate-100 p-4 space-y-4">
-          <div><p class="text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1.5">Industry</p><select id="f-industry" onchange="render()" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-sm outline-none focus:border-[#DC183C]"></select></div>
-          <div><p class="text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1.5">Interest</p><select id="f-interest" onchange="render()" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-sm outline-none focus:border-[#DC183C]"></select></div>
-          <div><p class="text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1.5">Region</p><select id="f-region" onchange="render()" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-sm outline-none focus:border-[#DC183C]"></select></div>
-          <button onclick="resetFilters()" class="w-full text-xs font-bold text-[#DC183C] uppercase tracking-wide hover:underline pt-1">Reset filters</button>
+      <div class="lg:sticky lg:top-24 space-y-4">
+        <label class="relative block"><span class="sr-only">Search members</span><i data-lucide="search" class="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500"></i><input id="f-search" type="search" oninput="state.page=1;render()" placeholder="Search members..." class="w-full h-12 bg-white border border-slate-200 rounded-full pl-11 pr-4 text-sm outline-none focus:border-[#DC183C]"></label>
+        <div class="bg-white rounded-2xl border border-slate-100 p-4 grid grid-cols-2 lg:grid-cols-1 gap-3">
+          <label class="block"><span class="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1.5">Industry</span><select id="f-industry" onchange="state.page=1;render()" class="w-full h-11 bg-slate-50 border border-slate-200 rounded-xl px-3 text-sm outline-none focus:border-[#DC183C]"></select></label>
+          <label class="block"><span class="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1.5">Interest</span><select id="f-interest" onchange="state.page=1;render()" class="w-full h-11 bg-slate-50 border border-slate-200 rounded-xl px-3 text-sm outline-none focus:border-[#DC183C]"></select></label>
+          <label class="block col-span-2 lg:col-span-1"><span class="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1.5">Province</span><select id="f-region" onchange="state.page=1;render()" class="w-full h-11 bg-slate-50 border border-slate-200 rounded-xl px-3 text-sm outline-none focus:border-[#DC183C]"></select></label>
+          <button onclick="resetFilters()" class="col-span-2 lg:col-span-1 h-11 text-xs font-bold text-[#DC183C] uppercase tracking-wide hover:underline">Reset filters</button>
         </div>
       </div>
     </aside>
     <!-- Results -->
     <section class="lg:col-span-9 min-w-0">
-      <div id="results"></div>
+      <div role="tablist" aria-label="Members" class="grid grid-cols-2 sm:inline-grid sm:grid-cols-[auto_auto] gap-1 p-1 bg-[#EEF2F6] rounded-full w-full sm:w-auto">
+        <button role="tab" id="tab-all" onclick="setSeg('all')" class="h-11 px-5 rounded-full text-sm font-bold whitespace-nowrap">All Members</button>
+        <button role="tab" id="tab-mine" onclick="setSeg('mine')" class="h-11 px-5 rounded-full text-sm font-bold whitespace-nowrap">My Connections</button>
+      </div>
+      <div id="pymk" class="mt-4"></div>
+      <div id="results" class="mt-4"></div>
     </section>
+  </div>
+</main>
+
+<!-- Visitors: /members/ is members-only (live smesa-directory-gate.php) -->
+<main id="dir-visitor" class="hidden max-w-7xl mx-auto px-4 sm:px-6 py-6">
+  <div class="relative rounded-2xl overflow-hidden">
+    <div id="wall-ghost" class="grid grid-cols-2 lg:grid-cols-4 gap-4 blur-[4px] opacity-60 select-none pointer-events-none" aria-hidden="true"></div>
+    <div class="absolute inset-0 bg-gradient-to-b from-[#FCFCFC]/40 via-[#FCFCFC]/85 to-[#FCFCFC] flex items-start sm:items-center justify-center px-4 pt-10 sm:pt-0">
+      <div class="bg-white rounded-2xl border border-slate-100 shadow-xl p-6 sm:p-8 max-w-md w-full text-center">
+        <span class="w-12 h-12 mx-auto rounded-full bg-[#FDECEF] grid place-items-center text-[#DC183C]"><i data-lucide="lock" class="w-5 h-5"></i></span>
+        <h2 class="font-jakarta font-extrabold text-xl text-[#121A21] mt-3">The members directory is for members</h2>
+        <p class="text-sm text-slate-500 mt-2 leading-relaxed">Sign up to search South African SMEs by industry, interest and province, and to connect with suppliers, customers and partners.</p>
+        <a href="public-auth.html#join" class="mt-5 flex items-center justify-center h-12 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-jakarta font-bold">Sign up</a>
+        <a href="public-auth.html" class="mt-1 flex items-center justify-center min-h-[44px] text-sm font-semibold text-[#DC183C]">Already a member? Sign in</a>
+      </div>
+    </div>
   </div>
 </main>
 
@@ -215,92 +237,106 @@
 function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
 function monogram(i,s=64){const fs=Math.max(10,Math.floor(s*0.38));return `<div class="mx-auto rounded-full bg-gradient-to-br from-[#DC183C] to-[#FF9900] grid place-items-center font-jakarta font-bold text-white shrink-0 shadow-sm" style="width:${s}px;height:${s}px;font-size:${fs}px">${esc(i)}</div>`;}
 
+const PH = id => `https://images.unsplash.com/${id}?auto=format&fit=crop&q=80&w=160&h=160`;
 const MEMBERS = [
-  { name:'Thandi Nkosi',    initials:'TN', role:'CEO',         company:'Khula Agri',   industry:'Agritech',  interest:'Operations',  province:'Limpopo',       contrib:31,  status:'none' },
-  { name:'Amahle Jacobs',   initials:'AJ', role:'Founder',     company:'FinFlow',      industry:'Fintech',   interest:'Funding',     province:'Western Cape',  contrib:88,  status:'none' },
-  { name:'Bongani Khumalo', initials:'BK', role:'Founder',     company:'BuildRight',   industry:'Construction',interest:'Networking',province:'Gauteng',       contrib:19,  status:'none' },
-  { name:'Zinhle Mthembu',  initials:'ZM', role:'Founder',     company:'CraftBrew',    industry:'Retail',    interest:'Sales',       province:'KwaZulu-Natal', contrib:9,   status:'none' },
-  { name:'Sello Monare',    initials:'SM', role:'MD',          company:'TechSolve RSA',industry:'Fintech',   interest:'Networking',  province:'Gauteng',       contrib:64,  status:'connected' },
-  { name:'Karabo Kgophane', initials:'KK', role:'E-comm Lead', company:'Mzansi Cart',  industry:'Retail',    interest:'Marketing',   province:'Gauteng',       contrib:58,  status:'connected' },
-  { name:'Mandla Dlamini',  initials:'MD', role:'Co-founder',  company:'PesaPay',      industry:'Fintech',   interest:'Funding',     province:'Western Cape',  contrib:21,  status:'none' },
-  { name:'Refiloe Sithole', initials:'RS', role:'Founder',     company:'Skhokho',      industry:'SaaS',      interest:'Sales',       province:'Gauteng',       contrib:47,  status:'connected' },
-  { name:'Sipho Ngubane',   initials:'SN', role:'Founder',     company:'TapWallet',    industry:'Fintech',   interest:'Tech',        province:'KwaZulu-Natal', contrib:12,  status:'none' },
-  { name:'Lerato Phakathi', initials:'LP', role:'Founder',     company:'Inkundla AI',  industry:'AI',        interest:'Mentorship',  province:'Gauteng',       contrib:73,  status:'pending' },
-  { name:'Thabo Maseko',    initials:'TM', role:'Founder',     company:'Kasi Eats',    industry:'Food',      interest:'Marketing',   province:'Gauteng',       contrib:54,  status:'none' },
-  { name:'Kagiso Ndlovu',   initials:'KN', role:'Founder',     company:'Urban Eats',   industry:'Food',      interest:'Funding',     province:'Gauteng',       contrib:0,   status:'none' }
+  { name:'Thandi Nkosi',    role:'CEO',         company:'Khula Agri',   industry:'Agritech',  interest:'Operations',  province:'Limpopo',       mutual:4, status:'none', photo:'photo-1573496359142-b8d87734a5a2', cover:'article-1.jpg' },
+  { name:'Amahle Jacobs',   role:'Founder',     company:'FinFlow',      industry:'Fintech',   interest:'Funding',     province:'Western Cape',  mutual:3, status:'none', photo:'photo-1531384441138-2736e62e0919', cover:'' },
+  { name:'Bongani Khumalo', role:'Founder',     company:'BuildRight',   industry:'Construction',interest:'Networking',province:'Gauteng',       mutual:3, status:'none', photo:'photo-1506277886164-e25aa3f4ef7f', cover:'article-3.jpg' },
+  { name:'Zinhle Mthembu',  role:'Founder',     company:'CraftBrew',    industry:'Retail',    interest:'Sales',       province:'KwaZulu-Natal', mutual:2, status:'none', photo:'photo-1494790108377-be9c29b29330', cover:'' },
+  { name:'Sello Monare',    role:'MD',          company:'TechSolve RSA',industry:'Fintech',   interest:'Networking',  province:'Gauteng',       mutual:6, status:'connected', photo:'photo-1507003211169-0a1dd7228f2d', cover:'article-5.jpg' },
+  { name:'Karabo Kgophane', role:'E-comm Lead', company:'Mzansi Cart',  industry:'Retail',    interest:'Marketing',   province:'Gauteng',       mutual:5, status:'connected', photo:'photo-1534308143481-c55f00be8bd7', cover:'' },
+  { name:'Mandla Dlamini',  role:'Co-founder',  company:'PesaPay',      industry:'Fintech',   interest:'Funding',     province:'Western Cape',  mutual:1, status:'none', photo:'', cover:'article-6.jpg' },
+  { name:'Refiloe Sithole', role:'Founder',     company:'Skhokho',      industry:'SaaS',      interest:'Sales',       province:'Gauteng',       mutual:2, status:'connected', photo:'photo-1580489944761-15a19d654956', cover:'article-7.jpg' },
+  { name:'Sipho Ngubane',   role:'Founder',     company:'TapWallet',    industry:'Fintech',   interest:'Tech',        province:'KwaZulu-Natal', mutual:0, status:'none', photo:'', cover:'' },
+  { name:'Lerato Phakathi', role:'Founder',     company:'Inkundla AI',  industry:'AI',        interest:'Mentorship',  province:'Gauteng',       mutual:3, status:'pending', photo:'photo-1438761681033-6461ffad8d80', cover:'article-8.jpg' },
+  { name:'Thabo Maseko',    role:'Owner',       company:'Kasi Eats',    industry:'Food',      interest:'Marketing',   province:'Gauteng',       mutual:2, status:'none', photo:'photo-1500648767791-00dcc994a43e', cover:'article-2.jpg' },
+  { name:'Kagiso Ndlovu',   role:'Founder',     company:'Urban Eats',   industry:'Food',      interest:'Funding',     province:'Gauteng',       mutual:0, status:'none', photo:'', cover:'' },
+  { name:'Nomsa Lubisi',    role:'Director',    company:'Devine Advance',industry:'Services', interest:'Networking',  province:'Mpumalanga',    mutual:3, status:'none', photo:'photo-1544005313-94ddf0286df2', cover:'article-4.jpg' },
+  { name:'Andries Nkoana',  role:'Manager',     company:'Azurd Professional Services', industry:'Services', interest:'Sales', province:'Limpopo', mutual:3, status:'none', photo:'photo-1472099645785-5658abf4ff4e', cover:'' },
+  { name:'Dino Retsos',     role:'Owner',       company:'Authentus Consulting', industry:'Services', interest:'Mentorship', province:'Gauteng', mutual:3, status:'none', photo:'photo-1519085360753-af0119f7cbe7', cover:'article-1.jpg' }
 ];
+MEMBERS.forEach(m => { m.initials = m.name.split(' ').map(x=>x[0]).join('').slice(0,2); });
+const PAGE = 9;
+const state = { seg:'all', page:1, dismissed:{} };
 
 function uniq(arr){ return [...new Set(arr)]; }
 function fillSelect(id, all, label){ const el=document.getElementById(id); el.innerHTML = `<option value="">All ${label}</option>` + uniq(MEMBERS.map(m=>m[all])).sort().map(v=>`<option>${esc(v)}</option>`).join(''); }
-
-function resetFilters(){ ['f-search','f-industry','f-interest','f-region'].forEach(id=>document.getElementById(id).value=''); render(); }
-
-function connectBtn(m,i){
-  if(m.status==='connected') return `<button class="w-full bg-white border border-[#29A37A] text-[#29A37A] rounded-xl py-2.5 text-xs font-bold flex justify-center items-center gap-1.5 mt-4"><i data-lucide="check" class="w-3.5 h-3.5"></i> Connected</button>`;
-  if(m.status==='pending')  return `<button class="w-full bg-white border border-slate-200 text-slate-500 rounded-xl py-2.5 text-xs font-bold flex justify-center items-center gap-1.5 mt-4"><i data-lucide="clock" class="w-3.5 h-3.5"></i> Pending</button>`;
-  return `<button onclick="connect(${i})" class="w-full bg-[#DC183C] hover:bg-[#B0142F] text-white rounded-xl py-2.5 text-xs font-bold transition flex justify-center items-center gap-1.5 mt-4"><i data-lucide="user-plus" class="w-3.5 h-3.5"></i> Connect</button>`;
-}
-
+function resetFilters(){ ['f-search','f-industry','f-interest','f-region'].forEach(id=>document.getElementById(id).value=''); state.page=1; render(); }
+function setSeg(v){ state.seg=v; state.page=1; render(); }
 function connect(i){ MEMBERS[i].status='pending'; render(); showToast('Connection request sent to '+MEMBERS[i].name.split(' ')[0]+'.', null); }
+function dismiss(i){ state.dismissed[i]=true; render(); }
 
-function pill(t){ return `<span class="inline-flex items-center px-2.5 py-1 rounded-full bg-slate-100 text-slate-600 text-[11px] font-semibold">${esc(t)}</span>`; }
-
-function gridCard(m,gi){
-  // Only shows contributions if greater than 0, with no active status text.
-  const metaLine = m.contrib > 0 
-    ? `<p class="text-[11px] text-slate-500 mt-4 flex items-center justify-center gap-1"><i data-lucide="hand-heart" class="w-3.5 h-3.5 text-[#29A37A]"></i> ${m.contrib} contributions</p>`
-    : `<div class="h-8 mt-4"></div>`; // Spacer to maintain consistent card height if no contributions
-    
-  return `<div class="bg-white rounded-[20px] border border-slate-100 p-6 text-center card-lift flex flex-col h-full shadow-sm">
-    <a href="single-member.html" class="inline-block mb-4">${monogram(m.initials, 72)}</a>
-    
-    <a href="single-member.html" class="font-jakarta font-bold text-[17px] text-[#121A21] hover:text-[#DC183C] transition leading-tight mb-1">${esc(m.name)}</a>
-    <p class="text-xs text-slate-500 mb-4">${esc(m.role)} · ${esc(m.company)}</p>
-    
-    <!-- Pills Layout exactly as requested -->
-    <div class="flex flex-col items-center gap-1.5 mb-2 mt-auto">
-       <div class="flex items-center justify-center gap-1.5">
-          ${pill(m.interest)}
-          ${pill(m.industry)}
-       </div>
-       ${pill(m.province)}
+function avatarImg(m, size){
+  return m.photo ? `<img src="${PH(m.photo)}" alt="" class="rounded-full object-cover ring-4 ring-white bg-white" style="width:${size}px;height:${size}px">`
+                 : `<span class="rounded-full ring-4 ring-white bg-gradient-to-br from-[#DC183C] to-[#FF9900] grid place-items-center font-jakarta font-bold text-white" style="width:${size}px;height:${size}px;font-size:${Math.round(size*.34)}px">${esc(m.initials)}</span>`;
+}
+function connectBtn(m){
+  if(m.status==='connected') return `<a href="member-messages.html" class="w-full h-11 rounded-full border border-slate-200 text-[#121A21] text-sm font-bold flex justify-center items-center gap-1.5"><i data-lucide="message-circle" class="w-4 h-4"></i> Message</a>`;
+  if(m.status==='pending')  return `<button class="w-full h-11 rounded-full border border-slate-200 text-slate-500 text-sm font-bold flex justify-center items-center gap-1.5"><i data-lucide="clock" class="w-4 h-4"></i> Pending</button>`;
+  return `<button onclick="connect(${m._i})" class="w-full h-11 rounded-full border border-[#0C1F31] hover:bg-[#0C1F31] hover:text-white text-[#0C1F31] text-sm font-bold transition flex justify-center items-center gap-1.5"><i data-lucide="user-plus" class="w-4 h-4"></i> Connect</button>`;
+}
+/* card: the member's real cover photo when uploaded (pulls through everywhere, live CL-446), soft brand wash otherwise */
+function card(m, dismissable){
+  return `<div class="relative bg-white rounded-2xl border border-slate-100 overflow-hidden flex flex-col text-center shadow-sm">
+    <div class="h-16 bg-[linear-gradient(120deg,#FDECEF_0%,#FFF1E0_55%,#F4F6F8_100%)] relative">${m.cover?`<img src="assets/${m.cover}" alt="" class="absolute inset-0 w-full h-full object-cover">`:''}</div>
+    ${dismissable?`<button onclick="dismiss(${m._i})" class="absolute z-10 top-1.5 right-1.5 w-11 h-11 grid place-items-center" aria-label="Not now"><span class="w-7 h-7 rounded-full bg-[#121A21]/55 text-white grid place-items-center"><i data-lucide="x" class="w-4 h-4"></i></span></button>`:''}
+    <a href="single-member.html?view=member" class="relative z-10 -mt-10 mx-auto">${avatarImg(m, 80)}</a>
+    <div class="px-3 pb-3 pt-2 flex-1 flex flex-col">
+      <a href="single-member.html?view=member" class="font-jakarta font-bold text-[15px] text-[#121A21] hover:text-[#DC183C] leading-tight">${esc(m.name)}</a>
+      <p class="text-xs text-slate-500 mt-1 leading-snug">${esc(m.role)} at ${esc(m.company)}</p>
+      ${m.mutual ? `<p class="text-[11px] text-slate-500 mt-2 flex items-center justify-center gap-1.5"><span class="flex -space-x-1.5"><span class="w-4 h-4 rounded-full bg-[#FF9900] ring-2 ring-white"></span><span class="w-4 h-4 rounded-full bg-[#DC183C] ring-2 ring-white"></span></span>${m.mutual} mutual connection${m.mutual>1?'s':''}</p>` : `<p class="text-[11px] text-slate-500 mt-2">${esc(m.industry)} &middot; ${esc(m.province)}</p>`}
+      <div class="mt-auto pt-3">${connectBtn(m)}</div>
     </div>
-    
-    ${metaLine}
-    
-    <!-- Full width connect button at bottom -->
-    ${connectBtn(m,m._i)}
   </div>`;
 }
-
 function render(){
+  document.getElementById('tab-all').className = 'h-11 px-5 rounded-full text-sm font-bold whitespace-nowrap ' + (state.seg==='all' ? 'bg-[#0C1F31] text-white' : 'text-[#121A21]');
+  document.getElementById('tab-mine').className = 'h-11 px-5 rounded-full text-sm font-bold whitespace-nowrap ' + (state.seg==='mine' ? 'bg-[#0C1F31] text-white' : 'text-[#121A21]');
+  document.getElementById('tab-all').setAttribute('aria-selected', state.seg==='all'); document.getElementById('tab-mine').setAttribute('aria-selected', state.seg==='mine');
   const q = document.getElementById('f-search').value.toLowerCase();
-  const ind = document.getElementById('f-industry').value;
-  const int = document.getElementById('f-interest').value;
-  const reg = document.getElementById('f-region').value;
-  const sort = document.getElementById('f-sort').value;
+  const ind = document.getElementById('f-industry').value, int = document.getElementById('f-interest').value, reg = document.getElementById('f-region').value;
   let list = MEMBERS.map((m,i)=>({ ...m, _i:i }));
+  if(state.seg==='mine') list = list.filter(m=>m.status==='connected');
   list = list.filter(m => (!q || (m.name+' '+m.company+' '+m.role).toLowerCase().includes(q)) && (!ind||m.industry===ind) && (!int||m.interest===int) && (!reg||m.province===reg));
-  if(sort==='contrib') list.sort((a,b)=>b.contrib-a.contrib);
-  else if(sort==='az') list.sort((a,b)=>a.name.localeCompare(b.name));
-  
+  const filtering = q || ind || int || reg;
+  /* SMEs like yours: shown on All Members when not filtering (live smesa-network PYMK) */
+  const like = MEMBERS.map((m,i)=>({ ...m, _i:i })).filter(m => m.status==='none' && m.mutual>0 && !state.dismissed[m._i]).slice(0,4);
+  document.getElementById('pymk').innerHTML = (state.seg==='all' && !filtering && like.length) ? `<div class="bg-white rounded-2xl border border-slate-100 p-4">
+      <h2 class="font-jakarta font-extrabold text-lg text-[#121A21]">SMEs like yours</h2><p class="text-xs text-slate-500 mt-0.5">Based on your connections, industry and skills</p>
+      <div class="grid grid-cols-2 xl:grid-cols-4 gap-3 mt-3">${like.map(m=>card(m,true)).join('')}</div></div>` : '';
+  const pages = Math.max(1, Math.ceil(list.length / PAGE)); state.page = Math.min(state.page, pages);
+  const slice = list.slice((state.page-1)*PAGE, state.page*PAGE);
   const host = document.getElementById('results');
-  if(!list.length){ host.innerHTML = `<div class="bg-white rounded-2xl border border-slate-100 py-16 text-center text-slate-500"><i data-lucide="user-x" class="w-8 h-8 mx-auto mb-2"></i><p class="font-semibold">No members match those filters.</p><button onclick="resetFilters()" class="text-xs font-bold text-[#DC183C] uppercase mt-2 hover:underline">Reset filters</button></div>`; }
-  else { host.innerHTML = `<div class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">${list.map(gridCard).join('')}</div>`; }
+  /* Previous / Page N / Next: never "of N", never a member total (Joel, 14 Oct) */
+  const pager = pages > 1 ? `<div class="mt-6 flex items-center justify-center gap-2">
+      <button ${state.page===1?'disabled':''} onclick="state.page--;render();window.scrollTo({top:0,behavior:'smooth'})" class="h-11 px-4 rounded-full border border-slate-200 bg-white text-sm font-bold inline-flex items-center gap-1 ${state.page===1?'text-slate-300':'text-[#121A21] hover:border-[#0C1F31]'}"><i data-lucide="chevron-left" class="w-4 h-4"></i> Previous</button>
+      <span class="h-11 px-4 inline-flex items-center text-sm font-bold text-[#121A21]">Page ${state.page}</span>
+      <button ${state.page===pages?'disabled':''} onclick="state.page++;render();window.scrollTo({top:0,behavior:'smooth'})" class="h-11 px-4 rounded-full border border-slate-200 bg-white text-sm font-bold inline-flex items-center gap-1 ${state.page===pages?'text-slate-300':'text-[#121A21] hover:border-[#0C1F31]'}">Next <i data-lucide="chevron-right" class="w-4 h-4"></i></button></div>` : '';
+  host.innerHTML = list.length
+    ? `<div class="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">${slice.map(m=>card(m,false)).join('')}</div>${pager}`
+    : `<div class="bg-white rounded-2xl border border-slate-100 py-14 text-center text-slate-500"><i data-lucide="user-x" class="w-8 h-8 mx-auto mb-2"></i><p class="font-semibold">${state.seg==='mine'?'No connections match yet.':'No SMEs match those filters.'}</p><button onclick="resetFilters()" class="mt-2 h-11 px-4 text-sm font-bold text-[#DC183C]">Reset filters</button></div>`;
   lucide.createIcons();
 }
 
 const BRIEFS = {
     footer:{ title:'Community Footer', sub:'Shared app-shell component', purpose:'The closing utility bar for every logged-in community screen (Feed, Members, Groups, Forums, Profile, Account). Deliberately minimal &mdash; a single thin row, not a marketing footer &mdash; so it closes the app experience the same way the BuddyBoss header opens it, bookending all 9 community templates consistently.', data:'Static link list: <code>{ label, href }[]</code> &mdash; About, Help Centre, Terms, Privacy. No dynamic data.', logic:'Rendered identically on every community template (member-hub, members, single-member, single-post, groups, single-group, forums, single-discussion, member-account). All four links resolve to existing public pages.', components:'Copyright + Community tag (left) &middot; utility link row (right).', specs:'<b>Container:</b> <code>bg-white border-t border-slate-200</code> &mdash; light, matches the header, NOT the navy marketing surface used for hero bands elsewhere on the site. <code>max-w-7xl</code>, 20px vertical padding (<code>py-5</code>), stacks to a column below <code>sm</code>.<br/><b>Left group:</b> 12px (<code>text-xs</code>) slate-500, <code>&middot;</code> separator slate-300, "Community" tag 10px weight 800 uppercase tracking-widest slate-400 &mdash; a quiet reminder you\'re inside the app, not the marketing site.<br/><b>Right nav:</b> 12px weight 600 slate-500, 20px gap, hover <code>#DC183C</code>.<br/><br/><b>Why this differs from the (not-yet-built) public-site footer:</b> Articles/Resources/marketing pages are editorial and SEO-facing &mdash; that footer should be the tall, dark <code>navy</code> sitemap block with category columns, socials and a newsletter CTA, matching the hero-band treatment used across the public site. This community footer is the opposite on purpose: thin, light, utility-only &mdash; a logged-in member is inside a tool, not reading an article, so the chrome should get out of the way rather than sell anything.' },
-     directory:{ title:'Members Directory', sub:'Browse & filter all members', purpose:'The discovery surface for the whole community. Search + facet filters (industry, interest, region) and sort. Drives connection density, the metric that makes a community sticky. Cards deep-link to the member profile and offer one-tap Connect.', data:'<code>members[] { id, name, role, company, industry, interest, province, contribution_total, connection_status }</code>.', logic:'Server-side faceted search with pagination. &ldquo;Top contributors&rdquo; sort surfaces generous members (reputation = generosity). Connect creates a pending request, optimistic UI. Honours each member&rsquo;s &ldquo;show in directory&rdquo; privacy setting.', components:'Filter sidebar · sort · member cards · connect.', specs:'<b>Page shell:</b> container <code>max-w-7xl</code> = 1280px, padding-x 16px/24px (<code>px-4 sm:px-6</code>), padding-y 24px (<code>py-6</code>). 12-col grid, 24px gap (<code>gap-6</code>), filter sidebar <code>col-span-3</code> &asymp;258px, results <code>col-span-9</code> &asymp;822px; stacks below <code>lg</code> (1024px).<br/><b>Page title:</b> H1 Plus Jakarta Sans weight 800 24px (<code>text-2xl</code>) <code>#121A21</code>.<br/><b>Sort select:</b> 12px weight 600, 1px border slate-200 (<code>#E2E8F0</code>), radius 8px (<code>rounded-lg</code>), padding 12px&times;8px.<br/><b>Filter sidebar:</b> sticky top 112px (<code>top-28</code>), 16px stack.<br/><b>Search field:</b> bg white, 1px border slate-200, radius 12px (<code>rounded-xl</code>), padding-left 36px py 10px, Lucide `search` 16&times;16 slate-400, focus border <code>#DC183C</code>.<br/><b>Filter card:</b> bg white, radius 16px (<code>rounded-2xl</code>), 1px border slate-100 (<code>#F0F5F9</code>), padding 16px.<br/><b>Filter labels:</b> 11px weight 700 uppercase tracking-wider slate-500.<br/><b>Selects:</b> bg slate-50 (<code>#F8FAFC</code>), 1px border slate-200, radius 8px, padding 12px&times;8px, 14px.<br/><br/><b>Grid cards:</b> responsive 4-column <code>sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4</code>, 16px gap (<code>gap-4</code>); card bg white radius 16px 1px border slate-100 padding 20px (<code>p-5</code>) centred, hover lift shadow <code>0 8px 20px -8px rgba(10,44,61,.12)</code>.<br/><b>Card avatar:</b> 64&times;64 rounded-full gradient <code>#DC183C&rarr;#FF9900</code>.<br/><b>Card name:</b> Plus Jakarta Sans weight 700 <code>#121A21</code> hover <code>#DC183C</code>.<br/><b>Role line:</b> 12px slate-500; pills 11px weight 600 bg slate-100 slate-600 (<code>#6A7581</code>), padding 8px&times;2px rounded-full.<br/><b>Contribution meta:</b> Hidden if 0 contributions. 11px slate-400 (<code>#94A3B8</code>), Lucide `hand-heart` 14&times;14 <code>#29A37A</code>.<br/><b>Connect button:</b> bg <code>#DC183C</code> hover <code>#B0142F</code>, rounded-full, padding 16px&times;6px (<code>px-4 py-1.5</code>), 12px white weight 700, `user-plus` 14&times;14; Connected = <code>#29A37A</code> outline + `check`; Pending = slate-200 outline + `clock`.' } };
+     directory:{ title:'Members Directory', sub:'Browse & filter all members', purpose:'The discovery surface for the whole community. Search + facet filters (industry, interest, province) and sort. Drives connection density, the metric that makes a community sticky. Cards deep-link to the member profile and offer one-tap Connect.', data:'<code>members[] { id, name, role, company, industry, interest, province, contribution_total, connection_status }</code>.', logic:'Server-side faceted search with pagination. &ldquo;Top contributors&rdquo; sort surfaces generous members (reputation = generosity). Connect creates a pending request, optimistic UI. Honours each member&rsquo;s &ldquo;show in directory&rdquo; privacy setting.', components:'Filter sidebar · sort · member cards · connect.', specs:'<b>Page shell:</b> container <code>max-w-7xl</code> = 1280px, padding-x 16px/24px (<code>px-4 sm:px-6</code>), padding-y 24px (<code>py-6</code>). 12-col grid, 24px gap (<code>gap-6</code>), filter sidebar <code>col-span-3</code> &asymp;258px, results <code>col-span-9</code> &asymp;822px; stacks below <code>lg</code> (1024px).<br/><b>Page title:</b> H1 Plus Jakarta Sans weight 800 24px (<code>text-2xl</code>) <code>#121A21</code>.<br/><b>Sort select:</b> 12px weight 600, 1px border slate-200 (<code>#E2E8F0</code>), radius 8px (<code>rounded-lg</code>), padding 12px&times;8px.<br/><b>Filter sidebar:</b> sticky top 112px (<code>top-28</code>), 16px stack.<br/><b>Search field:</b> bg white, 1px border slate-200, radius 12px (<code>rounded-xl</code>), padding-left 36px py 10px, Lucide `search` 16&times;16 slate-400, focus border <code>#DC183C</code>.<br/><b>Filter card:</b> bg white, radius 16px (<code>rounded-2xl</code>), 1px border slate-100 (<code>#F0F5F9</code>), padding 16px.<br/><b>Filter labels:</b> 11px weight 700 uppercase tracking-wider slate-500.<br/><b>Selects:</b> bg slate-50 (<code>#F8FAFC</code>), 1px border slate-200, radius 8px, padding 12px&times;8px, 14px.<br/><br/><b>Grid cards:</b> responsive 4-column <code>sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4</code>, 16px gap (<code>gap-4</code>); card bg white radius 16px 1px border slate-100 padding 20px (<code>p-5</code>) centred, hover lift shadow <code>0 8px 20px -8px rgba(10,44,61,.12)</code>.<br/><b>Card avatar:</b> 64&times;64 rounded-full gradient <code>#DC183C&rarr;#FF9900</code>.<br/><b>Card name:</b> Plus Jakarta Sans weight 700 <code>#121A21</code> hover <code>#DC183C</code>.<br/><b>Role line:</b> 12px slate-500; pills 11px weight 600 bg slate-100 slate-600 (<code>#6A7581</code>), padding 8px&times;2px rounded-full.<br/><b>Contribution meta:</b> Hidden if 0 contributions. 11px slate-400 (<code>#94A3B8</code>), Lucide `hand-heart` 14&times;14 <code>#29A37A</code>.<br/><b>Connect button:</b> bg <code>#DC183C</code> hover <code>#B0142F</code>, rounded-full, padding 16px&times;6px (<code>px-4 py-1.5</code>), 12px white weight 700, `user-plus` 14&times;14; Connected = <code>#29A37A</code> outline + `check`; Pending = slate-200 outline + `clock`.' } };
 function toggleDevMode(){const on=document.body.classList.toggle('dev-on');const b=document.getElementById('devToggle');if(b)b.classList.toggle('on',on);if(on)showToast('Dev Mode on, tap any ⓘ for implementation notes.',null);lucide.createIcons();}
 function closeOverlay(id){const el=document.getElementById(id);if(!el)return;el.classList.remove('open');setTimeout(()=>{if(el&&el.parentNode)el.remove();},300);}
 function openBrief(id){const b=BRIEFS[id];if(!b)return;const sec=(icon,label,html)=>`<div class="px-6 py-4 border-t border-slate-100"><p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] flex items-center gap-1.5 mb-2"><i data-lucide="${icon}" class="w-3.5 h-3.5"></i>${label}</p><div class="text-sm text-slate-600 leading-relaxed">${html}</div></div>`;document.getElementById('overlay-root').innerHTML=`<div class="ov" id="ov-brief"><div class="ov-bg" onclick="closeOverlay('ov-brief')"></div><div class="drawer"><div class="sticky top-0 z-10 bg-[#0C1F31] text-white px-6 py-5 flex items-start justify-between"><div class="min-w-0"><p class="text-[10px] font-bold uppercase tracking-widest text-[#FF9900] mb-1">Dev Brief</p><h3 class="font-jakarta font-extrabold text-lg leading-tight">${b.title}</h3><p class="text-xs text-white/60 mt-1">${b.sub}</p></div><button onclick="closeOverlay('ov-brief')" class="text-white/60 hover:text-white shrink-0 ml-3"><i data-lucide="x" class="w-5 h-5"></i></button></div>${sec('target','Purpose',b.purpose)}${sec('database','Data model',b.data)}${sec('git-branch','Logic',b.logic)}${b.specs?sec('ruler','Spec values',b.specs):''}${sec('boxes','Components',b.components)}</div></div>`;requestAnimationFrame(()=>{const o=document.getElementById('ov-brief');if(o)o.classList.add('open');});lucide.createIcons();}
 function showToast(msg,kind){const el=document.getElementById('toast');const color=kind==='ask'?'#DC183C':kind==='win'?'#29A37A':kind==='share'?'#FF9900':'#0C1F31';el.classList.remove('hidden');el.innerHTML=`<div class="toast-in bg-[#0C1F31] text-white rounded-full pl-3 pr-5 py-2.5 shadow-2xl flex items-center gap-2 text-sm font-semibold" style="border-left:4px solid ${color}"><i data-lucide="check-circle" class="w-4 h-4" style="color:${color}"></i><span>${esc(msg)}</span></div>`;lucide.createIcons();setTimeout(()=>{const i=el.firstElementChild;if(i){i.classList.remove('toast-in');i.classList.add('toast-out');}setTimeout(()=>{el.classList.add('hidden');el.innerHTML='';},250);},2400);}
 
 document.addEventListener('keydown',e=>{ if(e.key==='Escape') document.querySelectorAll('.ov.open').forEach(o=>closeOverlay(o.id)); });
-fillSelect('f-industry','industry','industries'); fillSelect('f-interest','interest','interests'); fillSelect('f-region','province','regions');
-render();
+if (/[?&]view=visitor\b/.test(location.search)) {
+  document.getElementById('dir-member').remove();
+  document.getElementById('dir-visitor').classList.remove('hidden');
+  document.getElementById('hero-title').textContent = 'Find fellow SMEs';
+  document.getElementById('wall-ghost').innerHTML = MEMBERS.slice(0,8).map((m,i)=>card({ ...m, _i:i, status:'none' }, false)).join('');
+  lucide.createIcons();
+} else {
+  fillSelect('f-industry','industry','industries'); fillSelect('f-interest','interest','interests'); fillSelect('f-region','province','provinces');
+  render();
+}
 lucide.createIcons();
   /* HEADER-SEARCH-JS */
   function toggleHeaderSearch(){
@@ -322,7 +358,7 @@ lucide.createIcons();
   });
   document.addEventListener('keydown', function(e){ if(e.key==='Escape'){ var o=document.getElementById('headerSearchOverlay'); if(o&&o.classList.contains('active')) toggleHeaderSearch(); closeHeaderDrop('community'); } });
 </script>
-<script>window.SME_MEMBER_PAGE=true;</script>
+<script>window.SME_VISITOR_VIEW=/[?&]view=visitor\b/.test(location.search); window.SME_MEMBER_PAGE=!window.SME_VISITOR_VIEW;</script>
 <script src="member-chrome.js"></script>
 </body>
 </html>

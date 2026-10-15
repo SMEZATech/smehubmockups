@@ -77,6 +77,7 @@
     @media (min-width:640px){ .search-overlay{ padding:0 1.5rem; } }
 </style>
 <script src="plan.js"></script>
+<link rel="stylesheet" href="assets/save-module.css" />
 </head>
 <body class="bg-[#FCFCFC] text-[#121A21] antialiased">
 
@@ -285,7 +286,7 @@
             <span class="hidden sm:inline text-slate-500">·</span>
             <span class="flex items-center gap-1.5"><i data-lucide="message-circle" class="w-4 h-4"></i> 7 Replies</span>
           </div>
-          <button onclick="showToast('Link copied to clipboard', 'win')" class="inline-flex items-center gap-1.5 font-bold hover:text-[#DC183C] transition-colors"><i data-lucide="share-2" class="w-4 h-4"></i> Share Topic</button>
+          <button type="button" data-mock-share data-title="Business advise" class="inline-flex items-center gap-1.5 font-bold hover:text-[#DC183C] transition-colors"><i data-lucide="share-2" class="w-4 h-4"></i> Share Topic <span class="text-slate-400">3</span></button>
         </div>
       </div>
 
@@ -369,7 +370,7 @@
         </div>
 
         <!-- Reply Composer -->
-        <div class="p-6 sm:p-8 bg-slate-50 border-t border-[#E7EBEF]">
+        <div id="replyComposer" class="p-6 sm:p-8 bg-slate-50 border-t border-[#E7EBEF]">
           <div class="flex items-start gap-4">
             <div class="shrink-0 mt-1 hidden sm:block">
               <div class="w-10 h-10 rounded-full bg-[#0C1F31] grid place-items-center font-jakarta font-bold text-white text-sm shadow-sm ring-2 ring-white">ME</div>
@@ -401,7 +402,7 @@
     <aside class="space-y-5 lg:sticky lg:top-24 order-first lg:order-last">
       
       <!-- Action Buttons -->
-      <div class="space-y-3">
+      <div id="topicActions" class="space-y-3">
         <button onclick="focusReply()" class="w-full h-12 rounded-xl bg-[#DC183C] hover:bg-[#B0142F] text-white font-jakarta font-bold text-[15px] transition-colors shadow-lg shadow-[#DC183C]/20 flex items-center justify-center gap-2">
           <i data-lucide="reply" class="w-4 h-4"></i> Reply
         </button>
@@ -569,7 +570,22 @@
   });
   document.addEventListener('keydown', function(e){ if(e.key==='Escape'){ var o=document.getElementById('headerSearchOverlay'); if(o&&o.classList.contains('active')) toggleHeaderSearch(); closeHeaderDrop('community'); } });
 </script>
-<script>window.SME_MEMBER_PAGE=true;</script>
+<script>
+/* Visitors can read forum discussions again on production (14 Oct): the topic and replies are public, replying needs an account.
+   Demo with ?view=visitor (public visitor header, "Sign up to reply" in place of the composer and the action buttons). */
+window.SME_VISITOR_VIEW=/[?&]view=visitor\b/.test(location.search); window.SME_MEMBER_PAGE=!window.SME_VISITOR_VIEW;
+if (window.SME_VISITOR_VIEW) {
+  var join = '<div class="text-center"><p class="font-jakarta font-extrabold text-lg text-[#121A21]">Join the conversation</p><p class="text-sm text-slate-500 mt-1">Sign up to reply, follow this discussion and ask fellow SMEs your own questions.</p><div class="mt-4 flex justify-center gap-2"><a href="public-auth.html#join" class="inline-flex items-center h-11 px-6 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-jakarta font-bold text-sm">Sign up</a><a href="public-auth.html" class="inline-flex items-center h-11 px-6 rounded-full border border-slate-200 hover:border-[#0C1F31] font-jakarta font-bold text-sm text-[#121A21]">Sign in</a></div></div>';
+  var rc = document.getElementById('replyComposer'); if (rc) rc.innerHTML = join;
+  var ta = document.getElementById('topicActions'); if (ta) ta.innerHTML = '<a href="public-auth.html#join" class="w-full h-12 rounded-xl bg-[#DC183C] hover:bg-[#B0142F] text-white font-jakarta font-bold text-[15px] flex items-center justify-center gap-2"><i data-lucide="reply" class="w-4 h-4"></i> Sign up to reply</a>';
+  document.querySelectorAll('main button[title="Favourite"], main button[title="More options"]').forEach(function(b){ b.remove(); });
+  document.querySelectorAll('main button').forEach(function(b){ if (/^\s*Reply\s*$/.test(b.textContent)) b.remove(); });
+  var back = document.querySelector('main a[href="forums.html"]'); if (back) back.setAttribute('href', 'forums.html');
+  if (window.lucide) lucide.createIcons();
+}
+</script>
 <script src="member-chrome.js"></script>
+<script src="share-menu.js"></script>
+<script src="assets/save-module.js"></script>
 </body>
 </html>

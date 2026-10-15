@@ -54,6 +54,7 @@
     }
   </style>
 <script src="plan.js"></script>
+<link rel="stylesheet" href="assets/save-module.css" />
 </head>
 <body class="bg-[#FCFCFC] text-[#121A21] font-inter">
 
@@ -181,21 +182,109 @@
   </div>
 </nav>
 
-<main class="max-w-6xl mx-auto px-4 sm:px-6 py-8">
-  <!-- PROFILE HERO -->
-  <div id="profile-hero"></div>
-
-  <div class="mt-6 grid grid-cols-1 lg:grid-cols-12 gap-6">
-    <div class="lg:col-span-8 min-w-0">
-      <div class="bg-white rounded-2xl border border-slate-100 overflow-hidden">
+<main class="max-w-7xl mx-auto px-4 sm:px-6 py-8">
+  <!-- LinkedIn layout (Joel, 2026-10-13): left edge lines up with the header logo; 300 px right column from the top: 300x250 banner, More profiles for you, events -->
+  <div class="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_300px] gap-6 items-start">
+    <div class="min-w-0">
+      <!-- PROFILE HERO -->
+      <div id="profile-hero"></div>
+      <div class="mt-6 bg-white rounded-2xl border border-slate-100 overflow-hidden">
         <div id="profile-subnav" class="flex gap-1 px-2 border-b border-slate-100 overflow-x-auto no-scrollbar"></div>
         <div id="profile-content" class="p-4 sm:p-5 bg-slate-50/50"></div>
       </div>
     </div>
 
     <!-- SIDEBAR: hidden on mobile/tablet -->
-    <aside class="hidden lg:block lg:col-span-4 space-y-5">
+    <aside id="rail-member" class="hidden lg:flex flex-col gap-5">
+      <!-- 300x250 banner (ad placement; house banner until one is booked) -->
+      <a href="public-funding.html" class="relative flex flex-col w-[300px] h-[250px] rounded-2xl overflow-hidden bg-[#0C1F31] p-6 text-white group" aria-label="Advertisement: SME Funding">
+        <div class="absolute inset-0 opacity-60" style="background:radial-gradient(circle at 88% 12%, #DC183C 0%, transparent 58%);"></div>
+        <span class="relative text-[10px] font-bold uppercase tracking-widest text-white/60">Advertisement</span>
+        <span class="relative mt-3 font-jakarta font-extrabold text-[22px] leading-tight">Need funding to grow your business?</span>
+        <span class="relative mt-2 text-[13px] text-white/75 leading-snug">Compare funding options and apply once, in one place.</span>
+        <span class="relative mt-auto self-start inline-flex items-center gap-1.5 bg-[#DC183C] group-hover:bg-[#B0142F] transition rounded-full px-4 py-2 text-xs font-bold">See funding options <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i></span>
+      </a>
+
       
+      <!-- Suggested members -->
+      <div class="bg-white rounded-2xl border border-slate-100 overflow-hidden reveal" style="animation-delay:240ms">
+        <div class="px-5 py-3 border-b border-slate-100 flex items-center justify-between">
+          <h4 class="font-jakarta font-bold text-sm text-[#121A21] tracking-wide flex items-center gap-1.5">More profiles for you
+            <button onclick="openBrief('suggested')" class="dev-badge w-4 h-4 rounded-full bg-[#DC183C] text-white items-center justify-center text-[9px] font-bold leading-none animate-pulse" title="Implementation notes">i</button>
+          </h4>
+        </div>
+        <a href="single-member.html?view=member" class="block px-5 py-3 hover:bg-slate-50 transition group">
+          <div class="flex items-start gap-3">
+            <div class="relative shrink-0">
+              <img src="https://images.unsplash.com/photo-1506277886164-e25aa3f4ef7f?auto=format&fit=crop&q=80&w=100&h=100" alt="Brent Fisher" class="w-10 h-10 rounded-full object-cover">
+            </div>
+            <div class="min-w-0 flex-1">
+              <p class="text-[13px] font-bold text-[#121A21] group-hover:text-[#DC183C] transition truncate">Brent Fisher</p>
+              <p class="text-[12px] text-slate-500 mt-0.5 leading-snug">Owner · Africa IT Professionals Pty Ltd</p>
+              <button onclick="event.preventDefault();event.stopPropagation();" class="mt-2 inline-flex items-center gap-1.5 text-[12px] font-bold text-[#DC183C] bg-white border border-[#DC183C] hover:bg-[#FDECEF] px-3.5 h-9 rounded-full transition" aria-label="Connect">
+                <i data-lucide="user-plus" class="w-3.5 h-3.5"></i> Connect
+              </button>
+            </div>
+          </div>
+        </a>
+        <a href="single-member.html?view=member" class="block px-5 py-3 hover:bg-slate-50 transition group border-t border-slate-100">
+          <div class="flex items-start gap-3">
+            <div class="relative shrink-0">
+              <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=100&h=100" alt="Nobom Nini" class="w-10 h-10 rounded-full object-cover">
+            </div>
+            <div class="min-w-0 flex-1">
+              <p class="text-[13px] font-bold text-[#121A21] group-hover:text-[#DC183C] transition truncate">Nobom Nini</p>
+              <p class="text-[12px] text-slate-500 mt-0.5 leading-snug">Owner · SIPHETHUBOMI PTY LTD</p>
+              <button onclick="event.preventDefault();event.stopPropagation();" class="mt-2 inline-flex items-center gap-1.5 text-[12px] font-bold text-[#DC183C] bg-white border border-[#DC183C] hover:bg-[#FDECEF] px-3.5 h-9 rounded-full transition" aria-label="Connect">
+                <i data-lucide="user-plus" class="w-3.5 h-3.5"></i> Connect
+              </button>
+            </div>
+          </div>
+        </a>
+        <a href="single-member.html?view=member" class="block px-5 py-3 hover:bg-slate-50 transition group border-t border-slate-100">
+          <div class="flex items-start gap-3">
+            <div class="relative shrink-0">
+              <img src="https://images.unsplash.com/photo-1534308143481-c55f00be8bd7?auto=format&fit=crop&q=80&w=100&h=100" alt="Marvin Mafa" class="w-10 h-10 rounded-full object-cover">
+            </div>
+            <div class="min-w-0 flex-1">
+              <p class="text-[13px] font-bold text-[#121A21] group-hover:text-[#DC183C] transition truncate">Marvin Mafa</p>
+              <p class="text-[12px] text-slate-500 mt-0.5 leading-snug">Manager · African cooperative desk</p>
+              <button onclick="event.preventDefault();event.stopPropagation();" class="mt-2 inline-flex items-center gap-1.5 text-[12px] font-bold text-[#DC183C] bg-white border border-[#DC183C] hover:bg-[#FDECEF] px-3.5 h-9 rounded-full transition" aria-label="Connect">
+                <i data-lucide="user-plus" class="w-3.5 h-3.5"></i> Connect
+              </button>
+            </div>
+          </div>
+        </a>
+        <a href="single-member.html?view=member" class="block px-5 py-3 hover:bg-slate-50 transition group border-t border-slate-100">
+          <div class="flex items-start gap-3">
+            <div class="relative shrink-0">
+              <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=100&h=100" alt="Nndivhe Godfrey Marema" class="w-10 h-10 rounded-full object-cover">
+            </div>
+            <div class="min-w-0 flex-1">
+              <p class="text-[13px] font-bold text-[#121A21] group-hover:text-[#DC183C] transition truncate">Nndivhe Godfrey Marema</p>
+              <p class="text-[12px] text-slate-500 mt-0.5 leading-snug">Co-Founder · Arem Enterprises Pty (Ltd)</p>
+              <button onclick="event.preventDefault();event.stopPropagation();" class="mt-2 inline-flex items-center gap-1.5 text-[12px] font-bold text-[#DC183C] bg-white border border-[#DC183C] hover:bg-[#FDECEF] px-3.5 h-9 rounded-full transition" aria-label="Connect">
+                <i data-lucide="user-plus" class="w-3.5 h-3.5"></i> Connect
+              </button>
+            </div>
+          </div>
+        </a>
+        <a href="single-member.html?view=member" class="block px-5 py-3 hover:bg-slate-50 transition group border-t border-slate-100">
+          <div class="flex items-start gap-3">
+            <div class="relative shrink-0">
+              <img src="https://images.unsplash.com/photo-1531384441138-2736e62e0919?auto=format&fit=crop&q=80&w=100&h=100" alt="Aadil Khan" class="w-10 h-10 rounded-full object-cover">
+            </div>
+            <div class="min-w-0 flex-1">
+              <p class="text-[13px] font-bold text-[#121A21] group-hover:text-[#DC183C] transition truncate">Aadil Khan</p>
+              <p class="text-[12px] text-slate-500 mt-0.5 leading-snug">Partner · Core Claim Holdings (Pty) Ltd</p>
+              <button onclick="event.preventDefault();event.stopPropagation();" class="mt-2 inline-flex items-center gap-1.5 text-[12px] font-bold text-[#DC183C] bg-white border border-[#DC183C] hover:bg-[#FDECEF] px-3.5 h-9 rounded-full transition" aria-label="Connect">
+                <i data-lucide="user-plus" class="w-3.5 h-3.5"></i> Connect
+              </button>
+            </div>
+          </div>
+        </a>
+      </div>
+
       <!-- Upcoming events -->
       <div class="bg-white rounded-2xl border border-slate-100 overflow-hidden reveal" style="animation-delay:120ms">
         <div class="px-5 py-3 border-b border-slate-100 flex items-center justify-between">
@@ -223,91 +312,13 @@
             </div>
             <div class="min-w-0">
               <h5 class="font-bold text-sm text-[#121A21] leading-tight group-hover:text-[#DC183C] transition">Funding Without Tears Webinar</h5>
-              <p class="text-[11px] text-slate-500 mt-1 flex items-center gap-1"><i data-lucide="video" class="w-3 h-3"></i> Online · Zoom</p>
+              <p class="text-[11px] text-slate-500 mt-1 flex items-center gap-1"><i data-lucide="video" class="w-3 h-3"></i> Online</p>
               <p class="text-[11px] text-slate-500 mt-0.5 flex items-center gap-1"><i data-lucide="clock" class="w-3 h-3"></i> 11:00 AM SAST</p>
             </div>
           </div>
         </a>
       </div>
 
-      <!-- Suggested members -->
-      <div class="bg-white rounded-2xl border border-slate-100 overflow-hidden reveal" style="animation-delay:240ms">
-        <div class="px-5 py-3 border-b border-slate-100 flex items-center justify-between">
-          <h4 class="font-jakarta font-bold text-sm text-[#121A21] tracking-wide flex items-center gap-1.5">Entrepreneurs to connect with
-            <button onclick="openBrief('suggested')" class="dev-badge w-4 h-4 rounded-full bg-[#DC183C] text-white items-center justify-center text-[9px] font-bold leading-none animate-pulse" title="Implementation notes">i</button>
-          </h4>
-        </div>
-        <a href="single-member.html" class="block px-5 py-3 hover:bg-slate-50 transition group">
-          <div class="flex items-start gap-3">
-            <div class="relative shrink-0">
-              <img src="https://images.unsplash.com/photo-1506277886164-e25aa3f4ef7f?auto=format&fit=crop&q=80&w=100&h=100" alt="Brent Fisher" class="w-10 h-10 rounded-full object-cover">
-            </div>
-            <div class="min-w-0 flex-1">
-              <p class="text-[13px] font-bold text-[#121A21] group-hover:text-[#DC183C] transition truncate">Brent Fisher</p>
-              <p class="text-[12px] text-slate-500 mt-0.5 leading-snug">Owner · Africa IT Professionals Pty Ltd</p>
-              <button onclick="event.preventDefault();event.stopPropagation();" class="mt-2 inline-flex items-center gap-1 text-[11px] font-bold text-[#DC183C] bg-white border border-[#DC183C] hover:bg-[#FDECEF] px-3 py-1.5 rounded-full transition" aria-label="Connect">
-                <i data-lucide="plus" class="w-3 h-3"></i> Connect
-              </button>
-            </div>
-          </div>
-        </a>
-        <a href="single-member.html" class="block px-5 py-3 hover:bg-slate-50 transition group border-t border-slate-100">
-          <div class="flex items-start gap-3">
-            <div class="relative shrink-0">
-              <img src="https://images.unsplash.com/photo-1531123897727-8f129e1bfa82?auto=format&fit=crop&q=80&w=100&h=100" alt="Nobom Nini" class="w-10 h-10 rounded-full object-cover">
-            </div>
-            <div class="min-w-0 flex-1">
-              <p class="text-[13px] font-bold text-[#121A21] group-hover:text-[#DC183C] transition truncate">Nobom Nini</p>
-              <p class="text-[12px] text-slate-500 mt-0.5 leading-snug">Owner · SIPHETHUBOMI PTY LTD</p>
-              <button onclick="event.preventDefault();event.stopPropagation();" class="mt-2 inline-flex items-center gap-1 text-[11px] font-bold text-[#DC183C] bg-white border border-[#DC183C] hover:bg-[#FDECEF] px-3 py-1.5 rounded-full transition" aria-label="Connect">
-                <i data-lucide="plus" class="w-3 h-3"></i> Connect
-              </button>
-            </div>
-          </div>
-        </a>
-        <a href="single-member.html" class="block px-5 py-3 hover:bg-slate-50 transition group border-t border-slate-100">
-          <div class="flex items-start gap-3">
-            <div class="relative shrink-0">
-              <img src="https://images.unsplash.com/photo-1534308143481-c55f00be8bd7?auto=format&fit=crop&q=80&w=100&h=100" alt="Marvin Mafa" class="w-10 h-10 rounded-full object-cover">
-            </div>
-            <div class="min-w-0 flex-1">
-              <p class="text-[13px] font-bold text-[#121A21] group-hover:text-[#DC183C] transition truncate">Marvin Mafa</p>
-              <p class="text-[12px] text-slate-500 mt-0.5 leading-snug">Manager · African cooperative desk</p>
-              <button onclick="event.preventDefault();event.stopPropagation();" class="mt-2 inline-flex items-center gap-1 text-[11px] font-bold text-[#DC183C] bg-white border border-[#DC183C] hover:bg-[#FDECEF] px-3 py-1.5 rounded-full transition" aria-label="Connect">
-                <i data-lucide="plus" class="w-3 h-3"></i> Connect
-              </button>
-            </div>
-          </div>
-        </a>
-        <a href="single-member.html" class="block px-5 py-3 hover:bg-slate-50 transition group border-t border-slate-100">
-          <div class="flex items-start gap-3">
-            <div class="relative shrink-0">
-              <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=100&h=100" alt="Nndivhe Godfrey Marema" class="w-10 h-10 rounded-full object-cover">
-            </div>
-            <div class="min-w-0 flex-1">
-              <p class="text-[13px] font-bold text-[#121A21] group-hover:text-[#DC183C] transition truncate">Nndivhe Godfrey Marema</p>
-              <p class="text-[12px] text-slate-500 mt-0.5 leading-snug">Co-Founder · Arem Enterprises Pty (Ltd)</p>
-              <button onclick="event.preventDefault();event.stopPropagation();" class="mt-2 inline-flex items-center gap-1 text-[11px] font-bold text-[#DC183C] bg-white border border-[#DC183C] hover:bg-[#FDECEF] px-3 py-1.5 rounded-full transition" aria-label="Connect">
-                <i data-lucide="plus" class="w-3 h-3"></i> Connect
-              </button>
-            </div>
-          </div>
-        </a>
-        <a href="single-member.html" class="block px-5 py-3 hover:bg-slate-50 transition group border-t border-slate-100">
-          <div class="flex items-start gap-3">
-            <div class="relative shrink-0">
-              <img src="https://images.unsplash.com/photo-1531384441138-2736e62e0919?auto=format&fit=crop&q=80&w=100&h=100" alt="Aadil Khan" class="w-10 h-10 rounded-full object-cover">
-            </div>
-            <div class="min-w-0 flex-1">
-              <p class="text-[13px] font-bold text-[#121A21] group-hover:text-[#DC183C] transition truncate">Aadil Khan</p>
-              <p class="text-[12px] text-slate-500 mt-0.5 leading-snug">Partner · Core Claim Holdings (Pty) Ltd</p>
-              <button onclick="event.preventDefault();event.stopPropagation();" class="mt-2 inline-flex items-center gap-1 text-[11px] font-bold text-[#DC183C] bg-white border border-[#DC183C] hover:bg-[#FDECEF] px-3 py-1.5 rounded-full transition" aria-label="Connect">
-                <i data-lucide="plus" class="w-3 h-3"></i> Connect
-              </button>
-            </div>
-          </div>
-        </a>
-      </div>
 
       <!-- Links & Footer -->
       <div class="text-center">
@@ -317,7 +328,7 @@
             <a href="public-resources.html" class="hover:text-slate-600">Resources</a>
             <a href="public-founder-focus-category.html" class="hover:text-slate-600">Founder Focus</a>
             <a href="public-articles.html" class="hover:text-slate-600">Insights</a>
-            <a href="events.html" class="hover:text-slate-600">Event</a>
+            <a href="events.html" class="hover:text-slate-600">Events</a>
             <a href="podcast.html" class="hover:text-slate-600">Podcast</a>
             <a href="public-solutions.html" class="hover:text-slate-600">Solutions</a>
             <a href="public-shop.html" class="hover:text-slate-600">Shop</a>
@@ -327,6 +338,21 @@
             <a href="public-terms.html" class="hover:text-slate-600">Terms</a>
         </div>
         <p class="text-[11px] text-slate-500 mt-4">SME South Africa © 2026</p>
+      </div>
+    </aside>
+
+    <!-- Visitor rail (live, signed out): sign-up card + "More SMEs to meet", no Connect, no counts -->
+    <aside id="rail-visitor" class="hidden flex-col gap-5">
+      <div class="bg-white rounded-2xl border border-slate-100 p-6">
+        <h4 class="font-jakarta font-extrabold text-lg text-[#121A21]">Meet fellow SMEs</h4>
+        <p class="text-sm text-slate-500 mt-2 leading-relaxed">Connect with South African small business owners, suppliers and future partners on SME South Africa.</p>
+        <a href="public-auth.html#join" class="mt-4 flex items-center justify-center h-12 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-jakarta font-bold">Sign up</a>
+        <a href="public-auth.html" class="mt-1 flex items-center justify-center min-h-[44px] text-sm font-semibold text-[#DC183C]">Already a member? Sign in</a>
+      </div>
+      <div class="bg-white rounded-2xl border border-slate-100 overflow-hidden">
+        <h4 class="px-5 pt-5 pb-2 font-jakarta font-extrabold text-base text-[#121A21]">More SMEs to meet</h4>
+        <div id="more-smes" class="px-5 divide-y divide-slate-100"></div>
+        <a href="public-auth.html#join" class="flex items-center justify-center h-12 mt-2 text-sm font-bold text-[#DC183C] border-t border-slate-100">Sign up to find more SMEs</a>
       </div>
     </aside>
 
@@ -410,46 +436,59 @@ const M_CONNECTIONS = [
 // NOTE: We changed the default tab to 'about' per user instructions
 const state = { tab:'about' };
 
+/* ===== views (live 13-14 Oct): self = your own profile, member = another member's profile, visitor = signed out ===== */
+const VIEW = (location.search.match(/[?&]view=(member|visitor)\b/) || [,'self'])[1];
+if (VIEW !== 'self') Object.assign(MEMBER, { name:'Naledi Mokoena', initials:'NM', role:'Founder', company:'GreenTrace', sector:'Cleantech', stage:'Growing', province:'Western Cape', interest:'Funding',
+  bio:"Naledi founded GreenTrace in 2021 to help South African agri-exporters track sustainability compliance without the spreadsheet chaos.", connectionStatus:'none' });
+const NOCOVER = /[?&]cover=none\b/.test(location.search);
+const MORE_SMES = [['Rirhandzu Mabilana','Owner · BSAP','photo-1506277886164-e25aa3f4ef7f'],['Siyolise Krayi','Owner','photo-1573496359142-b8d87734a5a2'],['Sikhumbuzo Miya','Consultant','photo-1534308143481-c55f00be8bd7'],['Angelina Khatlise','Director · Khatlise Foods','photo-1531384441138-2736e62e0919'],['Emmanuel Mahlangu','Owner · Mahlangu Build','photo-1507003211169-0a1dd7228f2d'],['Gertrude Muller','Director','photo-1494790108377-be9c29b29330']];
+
 /* ===== hero ===== */
+function connectBtns(){
+  const m = MEMBER;
+  if (VIEW === 'self') return `
+            <button onclick="copyProfileLink()" class="border border-slate-200 hover:border-[#DC183C] hover:text-[#DC183C] text-slate-600 rounded-full px-4 h-11 text-sm font-bold transition flex items-center gap-1.5 whitespace-nowrap"><i data-lucide="link" class="w-4 h-4"></i> Copy profile link</button>
+            <a href="member-account.html#profile" class="bg-[#DC183C] hover:bg-[#B0142F] text-white rounded-full px-5 h-11 font-jakarta font-bold text-sm transition flex items-center gap-2 whitespace-nowrap"><i data-lucide="pencil" class="w-4 h-4"></i> Edit Profile</a>`;
+  if (VIEW === 'visitor') return `
+            <a href="public-auth.html" class="bg-[#DC183C] hover:bg-[#B0142F] text-white rounded-full px-5 h-11 font-jakarta font-bold text-sm transition flex items-center whitespace-nowrap">Sign in to connect</a>
+            <a href="public-auth.html#join" class="border border-slate-200 hover:border-[#0C1F31] text-[#121A21] rounded-full px-5 h-11 font-jakarta font-bold text-sm transition flex items-center whitespace-nowrap">Join SME South Africa</a>`;
+  /* Connect is open to every member: no Premium lock, no upgrade step (Joel, 13 Oct, CL-420) */
+  const c = m.connectionStatus === 'pending'
+    ? `<button onclick="setConn('none')" class="border border-slate-300 text-slate-600 rounded-full px-5 h-11 font-jakarta font-bold text-sm transition flex items-center gap-2 whitespace-nowrap"><i data-lucide="clock" class="w-4 h-4"></i> Pending</button>`
+    : m.connectionStatus === 'connected'
+    ? `<button class="border border-[#29A37A] text-[#1E7F5E] rounded-full px-5 h-11 font-jakarta font-bold text-sm flex items-center gap-2 whitespace-nowrap"><i data-lucide="check" class="w-4 h-4"></i> Connected</button>`
+    : `<button onclick="setConn('pending')" class="flex-1 sm:flex-none justify-center bg-[#DC183C] hover:bg-[#B0142F] text-white rounded-full px-5 h-11 font-jakarta font-bold text-sm transition flex items-center gap-2 whitespace-nowrap"><i data-lucide="user-plus" class="w-4 h-4"></i> Connect</button>`;
+  return c + `
+            <a href="member-messages.html" class="flex-1 sm:flex-none justify-center border border-slate-200 hover:border-[#0C1F31] text-[#121A21] rounded-full px-5 h-11 text-sm font-bold transition flex items-center gap-2 whitespace-nowrap"><i data-lucide="message-circle" class="w-4 h-4"></i> Message</a>
+            <button onclick="showToast('Share profile, report or block.',null)" class="shrink-0 border border-slate-200 hover:border-[#0C1F31] text-slate-600 rounded-full w-11 h-11 grid place-items-center transition" aria-label="More"><i data-lucide="more-horizontal" class="w-4 h-4"></i></button>`;
+}
+function setConn(v){ MEMBER.connectionStatus = v; renderHero(); lucide.createIcons(); showToast(v==='pending' ? 'Connection request sent.' : 'Request withdrawn.', v==='pending' ? 'win' : null); }
 function renderHero(){
   const m = MEMBER;
   document.getElementById('profile-hero').innerHTML = `
     <div class="bg-white rounded-2xl border border-slate-100 overflow-hidden reveal shadow-sm">
-      <div class="h-32 sm:h-40 relative bg-gradient-to-br from-[#0C1F31] to-[#1a3a54]">
-        <div class="absolute inset-0 opacity-40" style="background:radial-gradient(circle at 30% 50%, #FFF1E0 0%, transparent 65%);"></div>
+      <!-- cover: the member's own cover photo when uploaded, else a soft brand wash (live, Joel item 11). ?cover=none shows the fallback -->
+      <div class="h-32 sm:h-40 relative bg-[linear-gradient(120deg,#FDECEF_0%,#FFF1E0_55%,#F4F6F8_100%)]">
+        ${NOCOVER ? '' : `<img src="assets/${VIEW==='self'?'hero-entrepreneurs.jpg':'article-4.jpg'}" alt="" class="absolute inset-0 w-full h-full object-cover">`}
         <button onclick="openBrief('profile')" class="dev-badge absolute top-3 left-3 w-5 h-5 rounded-full bg-[#DC183C] text-white items-center justify-center text-[10px] font-bold leading-none animate-pulse">i</button>
       </div>
       <div class="px-5 sm:px-7 pb-6">
         <div class="relative shrink-0 inline-block -mt-12 sm:-mt-14">
           <div class="ring-4 ring-white rounded-full shadow-lg">${monogram(m.initials,96,'from-[#DC183C] to-[#FF9900]')}</div>
-          <span class="absolute bottom-1 right-1 w-4 h-4 rounded-full bg-[#29A37A] ring-2 ring-white" title="Active now"></span>
         </div>
-        <div class="mt-3 flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
+        <div class="mt-3 flex flex-col md:flex-row md:items-end md:justify-between gap-4">
           <div class="min-w-0 flex-1">
             <div class="flex items-center gap-2 flex-wrap">
               <h1 class="font-jakarta font-extrabold text-2xl sm:text-3xl text-[#121A21] tracking-tight">${esc(m.name)}</h1>
-              ${m.complete ? '<i data-lucide="badge-check" class="w-5 h-5 text-[#29A37A]" title="Complete profile"></i>' : ''}
+              ${m.complete && VIEW !== 'visitor' ? '<i data-lucide="badge-check" class="w-5 h-5 text-[#29A37A]" title="Complete profile"></i>' : ''}
             </div>
-            <p class="text-sm text-slate-500 mt-1">${esc(m.role)} at <span class="font-semibold text-[#121A21]">${esc(m.company)}</span></p>
-            <div class="flex flex-wrap gap-1.5 mt-2.5">
+            <p class="text-sm text-slate-500 mt-1">${esc(m.role)}${VIEW === 'visitor' ? '' : ` at <span class="font-semibold text-[#121A21]">${esc(m.company)}</span>`}</p>
+            ${VIEW === 'visitor' ? '' : `<div class="flex flex-wrap gap-1.5 mt-2.5">
               <span class="px-2 py-0.5 rounded-full text-[11px] font-semibold bg-slate-100 text-slate-600">${esc(m.sector)}</span>
-              <span class="px-2 py-0.5 rounded-full text-[11px] font-semibold bg-slate-100 text-slate-600">${esc(m.stage)}</span>
               <span class="px-2 py-0.5 rounded-full text-[11px] font-semibold bg-slate-100 text-slate-600">${esc(m.province)}</span>
-            </div>
-            <p class="text-sm text-slate-500 mt-3 flex items-center gap-1.5 flex-wrap">
-              <i data-lucide="hand-heart" class="w-4 h-4 text-[#29A37A]"></i> ${m.contribTotal} contributions
-              <span class="text-slate-500">&middot;</span>
-              <i data-lucide="users" class="w-4 h-4"></i> ${m.connectionsCount} connections
-              <span class="text-slate-500">&middot;</span> active ${esc(m.lastActive)}
-            </p>
+            </div>`}
           </div>
-          <div class="flex items-center gap-2 shrink-0 flex-wrap sm:flex-nowrap justify-end">
-            <button onclick="copyProfileLink()" class="border border-slate-200 hover:border-[#DC183C] hover:text-[#DC183C] text-slate-600 rounded-full px-4 h-11 text-sm font-bold transition flex items-center gap-1.5 whitespace-nowrap">
-              <i data-lucide="link" class="w-4 h-4"></i> Copy profile link
-            </button>
-            <button onclick="showToast('Edit profile.',null)" class="bg-[#DC183C] hover:bg-[#B0142F] text-white rounded-full px-5 h-11 font-jakarta font-bold text-sm transition flex items-center gap-2 whitespace-nowrap"><i data-lucide="pencil" class="w-4 h-4"></i> Edit Profile</button>
-            <button onclick="showToast('Profile settings.',null)" class="border border-slate-200 hover:border-[#0C1F31] hover:text-[#0C1F31] text-slate-600 rounded-full w-11 h-11 grid place-items-center transition"><i data-lucide="settings" class="w-4 h-4"></i></button>
-          </div>
+          <div class="flex items-center gap-2 shrink-0 flex-wrap sm:flex-nowrap">${connectBtns()}</div>
         </div>
       </div>
     </div>`;
@@ -466,7 +505,7 @@ const P_TABS = [
   { id:'timeline', label:'Timeline', icon:'rss' },
   { id:'groups', label:'Groups', icon:'layout-grid' },
   { id:'connections', label:'Connections', icon:'users' }
-];
+].filter(t => VIEW === 'self' || t.id !== 'groups').filter(t => VIEW !== 'visitor' || t.id !== 'timeline');
 function renderSubnav(){
   document.getElementById('profile-subnav').innerHTML = P_TABS.map(t=>`
     <button onclick="setTab('${t.id}')" class="gtab ${state.tab===t.id?'active':'text-slate-500 hover:text-[#121A21]'} shrink-0 px-4 py-3.5 text-sm font-bold font-jakarta flex items-center gap-2">
@@ -530,8 +569,30 @@ function postCard(p){
 }
 function like(id){ const p=M_POSTS.find(x=>x.id===id); if(!p) return; p.liked=!p.liked; p.likes+=p.liked?1:-1; renderTab(); }
 
+/* ===== visitor lock (live: company details, interests, LinkedIn and Connections are for members) ===== */
+function lockPanel(title, line){
+  const ghost = [1,2,3,4,5].map(i=>`<div class="flex justify-between gap-6 py-2.5"><span class="h-3 w-28 rounded bg-slate-200/80"></span><span class="h-3 w-40 rounded bg-slate-200/80"></span></div>`).join('');
+  return `<div class="relative mt-6 rounded-2xl overflow-hidden">
+      <div class="blur-[3px] opacity-70 select-none min-h-[300px] sm:min-h-[260px]" aria-hidden="true">${ghost}</div>
+      <div class="absolute inset-0 bg-white/60 flex flex-col items-center justify-center text-center px-4">
+        <span class="w-12 h-12 rounded-full bg-[#FDECEF] grid place-items-center text-[#DC183C]"><i data-lucide="lock" class="w-5 h-5"></i></span>
+        <p class="font-jakarta font-extrabold text-lg text-[#121A21] mt-3">${title}</p>
+        <p class="text-sm text-slate-500 mt-1 max-w-md">${line}</p>
+        <div class="mt-4 flex gap-2"><a href="public-auth.html#join" class="inline-flex items-center h-11 px-6 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-jakarta font-bold text-sm">Sign up</a><a href="public-auth.html" class="inline-flex items-center h-11 px-6 rounded-full border border-slate-200 hover:border-[#0C1F31] font-jakarta font-bold text-sm text-[#121A21]">Sign in</a></div>
+      </div>
+    </div>`;
+}
+
 /* ===== ABOUT ===== */
 function tabAbout(){
+  if (VIEW === 'visitor') {
+    const first = MEMBER.name.split(' ')[0];
+    return `<div class="flex items-center justify-between mb-3">${sectionLabel('About','about')}</div>
+    <div class="bg-white rounded-2xl border border-slate-200 p-6 sm:p-8 shadow-sm">
+      <p class="text-[14.5px] text-[#121A21] leading-relaxed">${esc(MEMBER.bio)}</p>
+      ${lockPanel(`See ${esc(first)}&rsquo;s company details`, 'Sign up to see the full profile, including industry, interests and LinkedIn, and to connect with fellow SMEs.')}
+    </div>`;
+  }
   return `<div class="flex items-center justify-between mb-3">${sectionLabel('About','about')}</div>
     <div class="bg-white rounded-2xl border border-slate-200 p-6 sm:p-8 shadow-sm">
       <p class="text-[14.5px] text-[#121A21] leading-relaxed">${esc(MEMBER.bio)}</p>
@@ -565,7 +626,7 @@ function tabGroups(){
   const rows = M_GROUPS.map(g=>`
     <a href="single-group.html" class="flex items-center gap-3 border border-slate-100 rounded-2xl p-4 hover:shadow-md transition bg-white">
       <div class="w-11 h-11 rounded-lg bg-[#0C1F31] grid place-items-center shrink-0"><i data-lucide="users" class="w-5 h-5 text-[#FF9900]"></i></div>
-      <div class="min-w-0 flex-1"><p class="font-jakarta font-bold text-[#121A21] truncate">${esc(g.name)}</p><p class="text-xs text-slate-500">${g.members.toLocaleString()} members</p></div>
+      <div class="min-w-0 flex-1"><p class="font-jakarta font-bold text-[#121A21] truncate">${esc(g.name)}</p><p class="text-xs text-slate-500">Active this week</p></div>
       ${g.role==='Moderator' ? '<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#FFF1E0] text-[#AE6B0A] shrink-0">Moderator</span>' : '<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-slate-100 text-slate-500 shrink-0">Member</span>'}
       <i data-lucide="chevron-right" class="w-4 h-4 text-slate-500 shrink-0"></i>
     </a>`).join('');
@@ -574,13 +635,14 @@ function tabGroups(){
 
 /* ===== CONNECTIONS ===== */
 function tabConnections(){
+  if (VIEW === 'visitor') return `<div class="flex items-center justify-between mb-3">${sectionLabel('Connections','connections')}</div><div class="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm">${lockPanel('See who ' + esc(MEMBER.name.split(' ')[0]) + ' is connected with', 'Connections are visible to members. Sign up to build your own network of SMEs.')}</div>`;
   const cards = M_CONNECTIONS.map(c=>`
-    <a href="single-member.html" class="flex flex-col items-center text-center border border-slate-100 rounded-2xl p-4 hover:shadow-md transition bg-white">
+    <a href="single-member.html?view=member" class="flex flex-col items-center text-center border border-slate-100 rounded-2xl p-4 hover:shadow-md transition bg-white">
       ${monogram(c.initials,56)}
       <p class="font-jakarta font-bold text-sm text-[#121A21] mt-3">${esc(c.name)}</p>
       <p class="text-[11px] text-slate-500 mt-0.5">${esc(c.role)} &middot; ${esc(c.company)}</p>
     </a>`).join('');
-  return `<div class="flex items-center justify-between mb-3">${sectionLabel('Connections','connections')}<span class="text-xs font-bold text-slate-500">${MEMBER.connectionsCount} total</span></div>
+  return `<div class="flex items-center justify-between mb-3">${sectionLabel('Connections','connections')}</div>
     <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">${cards}</div>
     <button onclick="showToast('Loading more connections…',null)" class="w-full mt-4 py-2.5 rounded-full border border-slate-200 text-slate-600 hover:bg-slate-50 text-sm font-bold transition">Show all connections</button>`;
 }
@@ -629,6 +691,11 @@ document.addEventListener('keydown', (e) => {
   }
 });
 
+if (VIEW === 'visitor') {
+  document.getElementById('rail-member').remove();
+  const rv = document.getElementById('rail-visitor'); rv.classList.remove('hidden'); rv.classList.add('flex');
+  document.getElementById('more-smes').innerHTML = MORE_SMES.map(x=>`<a href="single-member.html?view=visitor" class="flex items-center gap-3 py-3 min-h-[56px]"><img src="https://images.unsplash.com/${x[2]}?auto=format&fit=crop&q=80&w=96&h=96" alt="" class="w-11 h-11 rounded-full object-cover"><span class="min-w-0"><span class="block text-sm font-bold text-[#121A21] truncate">${esc(x[0])}</span><span class="block text-xs text-slate-500 truncate">${esc(x[1])}</span></span></a>`).join('');
+}
 renderHero(); renderSubnav(); renderTab(); lucide.createIcons();
   /* HEADER-SEARCH-JS */
   function toggleHeaderSearch(){
@@ -650,7 +717,8 @@ renderHero(); renderSubnav(); renderTab(); lucide.createIcons();
   });
   document.addEventListener('keydown', function(e){ if(e.key==='Escape'){ var o=document.getElementById('headerSearchOverlay'); if(o&&o.classList.contains('active')) toggleHeaderSearch(); closeHeaderDrop('community'); } });
 </script>
-<script>window.SME_MEMBER_PAGE=true;</script>
+<script>window.SME_VISITOR_VIEW=/[?&]view=visitor\b/.test(location.search); window.SME_MEMBER_PAGE=!window.SME_VISITOR_VIEW;</script>
 <script src="member-chrome.js"></script>
+<script src="assets/save-module.js"></script>
 </body>
 </html>

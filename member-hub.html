@@ -95,8 +95,13 @@
     @media (min-width: 640px) {
       .search-overlay { padding: 0 1.5rem; }
     }
-  </style>
+      /* loading skeleton (live loading style, 14 Oct) */
+    .sk { background: linear-gradient(90deg, #EEF2F6 0%, #F7F9FB 40%, #EEF2F6 80%); background-size: 200% 100%; animation: skShimmer 1.3s ease-in-out infinite; }
+    @keyframes skShimmer { from { background-position: 100% 0; } to { background-position: -100% 0; } }
+    @media (prefers-reduced-motion: reduce) { .sk { animation: none; } }
+</style>
 <script src="plan.js"></script>
+<link rel="stylesheet" href="assets/save-module.css" />
 </head>
 <body class="bg-[#FCFCFC] text-[#121A21] antialiased relative">
 
@@ -235,16 +240,17 @@
 
       <!-- Profile card -->
       <div class="bg-white rounded-2xl border border-slate-100 overflow-hidden reveal">
-        <div class="h-20 bg-[#0C1F31] relative">
-          <div class="absolute inset-0 opacity-40" style="background: radial-gradient(circle at 30% 50%, #FFF1E0 0%, transparent 65%);"></div>
+        <!-- Cover: the member's own cover photo when uploaded (pulls through everywhere), else a soft brand wash. Demo the fallback with ?cover=none -->
+        <div id="hub-cover" class="h-20 relative bg-[linear-gradient(120deg,#FDECEF_0%,#FFF1E0_55%,#F4F6F8_100%)]">
+          <img id="hub-cover-img" src="assets/hero-entrepreneurs.jpg" alt="" class="absolute inset-0 w-full h-full object-cover">
           <div class="absolute -bottom-9 left-1/2 -translate-x-1/2">
             <div class="w-[72px] h-[72px] rounded-full bg-gradient-to-br from-[#DC183C] to-[#FF9900] grid place-items-center font-jakarta font-extrabold text-white text-2xl ring-4 ring-white">TJ</div>
           </div>
         </div>
         <div class="pt-11 pb-4 px-5 text-center">
-          <a href="member-account.html" class="font-jakarta font-extrabold uppercase text-lg text-[#121A21] tracking-wide hover:text-[#DC183C] transition">Tshepho Joel</a>
+          <a href="single-member.html" class="font-jakarta font-extrabold uppercase text-lg text-[#121A21] tracking-wide hover:text-[#DC183C] transition">Tshepho Joel</a>
           <p class="text-xs text-slate-500 mt-0.5">Founder at <span class="font-bold text-[#121A21]">Langa Holdings</span></p>
-          <a href="member-account.html" class="inline-flex items-center gap-1 mt-2 text-xs font-bold text-[#DC183C] uppercase tracking-wide hover:underline">View profile <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i></a>
+          <a href="single-member.html" class="inline-flex items-center gap-1 mt-2 text-xs font-bold text-[#DC183C] uppercase tracking-wide hover:underline">View profile <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i></a>
         </div>
         <div class="grid grid-cols-3 border-t border-slate-100 text-center pb-2">
           <div class="py-3 border-r border-slate-100">
@@ -256,8 +262,8 @@
             <p class="font-jakarta font-bold text-sm text-[#121A21] mt-1">Fintech</p>
           </div>
           <div class="py-3">
-            <p class="text-[9px] font-bold uppercase tracking-widest text-slate-500">Region</p>
-            <p class="font-jakarta font-bold text-sm text-[#121A21] mt-1">GP</p>
+            <p class="text-[9px] font-bold uppercase tracking-widest text-slate-500">Province</p>
+            <p class="font-jakarta font-bold text-sm text-[#121A21] mt-1">Gauteng</p>
           </div>
         </div>
       </div>
@@ -277,7 +283,7 @@
           </div>
           <div class="min-w-0">
             <p class="text-xs text-slate-600 leading-snug mb-2">Complete your profile to be <span class="font-bold text-[#121A21]">discoverable in member search</span>.</p>
-            <a href="member-account.html" class="text-xs font-bold text-[#DC183C] uppercase tracking-wide hover:underline">Update →</a>
+            <a href="member-account.html#profile" class="text-xs font-bold text-[#DC183C] uppercase tracking-wide hover:underline">Update →</a>
           </div>
         </div>
       </div>
@@ -313,10 +319,16 @@
 
       <!-- Composer -->
       <div id="composer" class="bg-white rounded-2xl border border-slate-100 overflow-hidden reveal shadow-sm">
-        <div id="composer-default" class="p-5">
-          <div class="flex items-center gap-3">
+        <div id="composer-default" class="p-4">
+          <!-- Members without a profile photo cannot post (live 2026-10-14): the composer points at the photo upload. Demo with ?photo=none -->
+          <a id="composer-needs-photo" href="member-account.html?photo=none#profile" class="hidden items-center gap-3 rounded-xl">
+            <span class="w-11 h-11 rounded-full bg-slate-100 border-2 border-dashed border-slate-300 grid place-items-center text-slate-500 shrink-0"><i data-lucide="camera" class="w-5 h-5"></i></span>
+            <span class="flex-1 min-w-0"><span class="block font-jakarta font-bold text-sm text-[#121A21]">Add a profile photo to start posting</span><span class="block text-xs text-slate-500 mt-0.5">A real photo helps fellow SMEs trust who they are talking to.</span></span>
+            <span class="shrink-0 inline-flex items-center h-11 px-4 rounded-full bg-[#DC183C] text-white font-jakarta font-bold text-sm">Add photo</span>
+          </a>
+          <div id="composer-can-post" class="flex items-center gap-3">
             <div class="w-11 h-11 rounded-full bg-gradient-to-br from-[#DC183C] to-[#FF9900] grid place-items-center font-jakarta font-bold text-white shrink-0">TJ</div>
-            <button onclick="openComposer()" class="flex-1 text-left bg-slate-50 hover:bg-slate-100 transition px-4 py-3 rounded-full text-sm text-slate-500 font-medium border border-slate-200">
+            <button onclick="openComposer()" class="flex-1 min-h-[44px] text-left bg-slate-50 hover:bg-slate-100 transition px-4 py-2.5 rounded-full text-sm text-slate-500 font-medium border border-slate-200">
               What would you like to share, Tshepho?
             </button>
           </div>
@@ -324,6 +336,15 @@
         <div id="composer-expanded" class="hidden"></div>
         <div id="scheduled-chip" class="hidden px-5 pb-4 -mt-1"></div>
       </div>
+
+      <!-- Learn and Funding shortcuts: Funding one tap from Hub (Mobile + PWA audit, lane E) -->
+      <nav aria-label="Funding and Learn" class="flex items-center gap-2 overflow-x-auto no-scrollbar -mx-1 px-1 reveal">
+        <a href="member-funding.html" class="shrink-0 inline-flex items-center gap-1.5 min-h-[44px] px-4 rounded-full bg-[#DC183C] text-white text-sm font-bold"><i data-lucide="hand-coins" class="w-4 h-4"></i>Funding</a>
+        <a href="public-articles.html" class="shrink-0 inline-flex items-center gap-1.5 min-h-[44px] px-4 rounded-full bg-white border border-slate-200 text-slate-700 text-sm font-semibold hover:border-[#DC183C] hover:text-[#DC183C] transition"><i data-lucide="newspaper" class="w-4 h-4"></i>Insights</a>
+        <a href="public-guides.html" class="shrink-0 inline-flex items-center gap-1.5 min-h-[44px] px-4 rounded-full bg-white border border-slate-200 text-slate-700 text-sm font-semibold hover:border-[#DC183C] hover:text-[#DC183C] transition"><i data-lucide="book-open" class="w-4 h-4"></i>Guides</a>
+        <a href="podcast.html" class="shrink-0 inline-flex items-center gap-1.5 min-h-[44px] px-4 rounded-full bg-white border border-slate-200 text-slate-700 text-sm font-semibold hover:border-[#DC183C] hover:text-[#DC183C] transition"><i data-lucide="mic-2" class="w-4 h-4"></i>Podcast</a>
+        <a href="events.html" class="shrink-0 inline-flex items-center gap-1.5 min-h-[44px] px-4 rounded-full bg-white border border-slate-200 text-slate-700 text-sm font-semibold hover:border-[#DC183C] hover:text-[#DC183C] transition"><i data-lucide="calendar-days" class="w-4 h-4"></i>Events</a>
+      </nav>
 
       <!-- Sort tabs -->
       <div id="sort-tabs" class="flex items-center gap-2 overflow-x-auto no-scrollbar -mx-1 px-1 reveal" style="animation-delay:80ms">
@@ -348,14 +369,14 @@
     <!-- RIGHT RAIL -->
     <aside class="hidden lg:flex flex-col gap-5 lg:col-span-3">
 
-      <!-- UPGRADE WIDGET (takes the ad slot; paying members see nothing here, same as the live smec_rail_ad) -->
-      <a href="public-premium-checkout.html" class="standard-only block w-full rounded-2xl overflow-hidden border border-slate-100 bg-[#0C1F31] relative aspect-[6/5] p-6 text-white group">
-        <div class="absolute inset-0 opacity-50" style="background:radial-gradient(circle at 85% 15%, #DC183C 0%, transparent 55%);"></div>
-        <div class="relative h-full flex flex-col">
-          <p class="font-jakarta font-extrabold text-xl leading-tight">Never miss a SARS or CIPC deadline again.</p>
-          <p class="text-xs text-white/70 mt-2 leading-relaxed">Autopilot reminders, the Document Vault and unlimited invoices in My Business.</p>
-          <span class="mt-auto inline-flex items-center gap-1.5 self-start bg-[#DC183C] group-hover:bg-[#B0142F] transition text-white rounded-full px-4 py-2 text-xs font-bold"><i data-lucide="crown" class="w-3.5 h-3.5"></i> See Premium</span>
-        </div>
+      <!-- 300x250 ad slot at the top of the right column (live 14 Oct; replaces the old "See Premium" card, Premium is not on sale).
+           House banner until a booking runs; same slot as the profile page. -->
+      <a href="public-funding.html" class="relative flex flex-col w-full max-w-[300px] aspect-[6/5] mx-auto rounded-2xl overflow-hidden bg-[#0C1F31] p-6 text-white group" aria-label="Advertisement: SME Funding">
+        <div class="absolute inset-0 opacity-60" style="background:radial-gradient(circle at 88% 12%, #DC183C 0%, transparent 58%);"></div>
+        <span class="relative text-[10px] font-bold uppercase tracking-widest text-white/60">Advertisement</span>
+        <span class="relative mt-2 font-jakarta font-extrabold text-[20px] leading-tight">Need funding to grow your business?</span>
+        <span class="relative mt-2 text-[13px] text-white/75 leading-snug">Compare funding options and apply once, in one place.</span>
+        <span class="relative mt-auto self-start inline-flex items-center gap-1.5 bg-[#DC183C] group-hover:bg-[#B0142F] transition rounded-full px-4 py-2 text-xs font-bold">See funding options <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i></span>
       </a>
 
       <!-- Suggested members -->
@@ -365,7 +386,7 @@
             <button onclick="openBrief('suggested')" class="dev-badge w-4 h-4 rounded-full bg-[#DC183C] text-white items-center justify-center text-[9px] font-bold leading-none animate-pulse" title="Implementation notes">i</button>
           </h4>
         </div>
-        <a href="single-member.html" class="block px-5 py-3 hover:bg-slate-50 transition group">
+        <a href="single-member.html?view=member" class="block px-5 py-3 hover:bg-slate-50 transition group">
           <div class="flex items-start gap-3">
             <div class="relative shrink-0">
               <img src="https://images.unsplash.com/photo-1506277886164-e25aa3f4ef7f?auto=format&fit=crop&q=80&w=100&h=100" alt="Brent Fisher" class="w-10 h-10 rounded-full object-cover">
@@ -373,27 +394,27 @@
             <div class="min-w-0 flex-1">
               <p class="text-[13px] font-bold text-[#121A21] group-hover:text-[#DC183C] transition truncate">Brent Fisher</p>
               <p class="text-[12px] text-slate-500 mt-0.5 leading-snug">Owner · Africa IT Professionals Pty Ltd</p>
-              <button onclick="event.preventDefault();event.stopPropagation();" class="mt-2 inline-flex items-center gap-1 text-[11px] font-bold text-[#DC183C] bg-white border border-[#DC183C] hover:bg-[#FDECEF] px-3 py-1.5 rounded-full transition" aria-label="Connect">
+              <button onclick="event.preventDefault();event.stopPropagation();" class="mt-2 inline-flex items-center gap-1 text-[12px] font-bold text-[#DC183C] bg-white border border-[#DC183C] hover:bg-[#FDECEF] px-3.5 h-9 rounded-full transition" aria-label="Connect">
                 <i data-lucide="plus" class="w-3 h-3"></i> Connect
               </button>
             </div>
           </div>
         </a>
-        <a href="single-member.html" class="block px-5 py-3 hover:bg-slate-50 transition group border-t border-slate-100">
+        <a href="single-member.html?view=member" class="block px-5 py-3 hover:bg-slate-50 transition group border-t border-slate-100">
           <div class="flex items-start gap-3">
             <div class="relative shrink-0">
-              <img src="https://images.unsplash.com/photo-1531123897727-8f129e1bfa82?auto=format&fit=crop&q=80&w=100&h=100" alt="Nobom Nini" class="w-10 h-10 rounded-full object-cover">
+              <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=100&h=100" alt="Nobom Nini" class="w-10 h-10 rounded-full object-cover">
             </div>
             <div class="min-w-0 flex-1">
               <p class="text-[13px] font-bold text-[#121A21] group-hover:text-[#DC183C] transition truncate">Nobom Nini</p>
               <p class="text-[12px] text-slate-500 mt-0.5 leading-snug">Owner · SIPHETHUBOMI PTY LTD</p>
-              <button onclick="event.preventDefault();event.stopPropagation();" class="mt-2 inline-flex items-center gap-1 text-[11px] font-bold text-[#DC183C] bg-white border border-[#DC183C] hover:bg-[#FDECEF] px-3 py-1.5 rounded-full transition" aria-label="Connect">
+              <button onclick="event.preventDefault();event.stopPropagation();" class="mt-2 inline-flex items-center gap-1 text-[12px] font-bold text-[#DC183C] bg-white border border-[#DC183C] hover:bg-[#FDECEF] px-3.5 h-9 rounded-full transition" aria-label="Connect">
                 <i data-lucide="plus" class="w-3 h-3"></i> Connect
               </button>
             </div>
           </div>
         </a>
-        <a href="single-member.html" class="block px-5 py-3 hover:bg-slate-50 transition group border-t border-slate-100">
+        <a href="single-member.html?view=member" class="block px-5 py-3 hover:bg-slate-50 transition group border-t border-slate-100">
           <div class="flex items-start gap-3">
             <div class="relative shrink-0">
               <img src="https://images.unsplash.com/photo-1534308143481-c55f00be8bd7?auto=format&fit=crop&q=80&w=100&h=100" alt="Marvin Mafa" class="w-10 h-10 rounded-full object-cover">
@@ -401,13 +422,13 @@
             <div class="min-w-0 flex-1">
               <p class="text-[13px] font-bold text-[#121A21] group-hover:text-[#DC183C] transition truncate">Marvin Mafa</p>
               <p class="text-[12px] text-slate-500 mt-0.5 leading-snug">Manager · African cooperative desk</p>
-              <button onclick="event.preventDefault();event.stopPropagation();" class="mt-2 inline-flex items-center gap-1 text-[11px] font-bold text-[#DC183C] bg-white border border-[#DC183C] hover:bg-[#FDECEF] px-3 py-1.5 rounded-full transition" aria-label="Connect">
+              <button onclick="event.preventDefault();event.stopPropagation();" class="mt-2 inline-flex items-center gap-1 text-[12px] font-bold text-[#DC183C] bg-white border border-[#DC183C] hover:bg-[#FDECEF] px-3.5 h-9 rounded-full transition" aria-label="Connect">
                 <i data-lucide="plus" class="w-3 h-3"></i> Connect
               </button>
             </div>
           </div>
         </a>
-        <a href="single-member.html" class="block px-5 py-3 hover:bg-slate-50 transition group border-t border-slate-100">
+        <a href="single-member.html?view=member" class="block px-5 py-3 hover:bg-slate-50 transition group border-t border-slate-100">
           <div class="flex items-start gap-3">
             <div class="relative shrink-0">
               <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=100&h=100" alt="Nndivhe Godfrey Marema" class="w-10 h-10 rounded-full object-cover">
@@ -415,13 +436,13 @@
             <div class="min-w-0 flex-1">
               <p class="text-[13px] font-bold text-[#121A21] group-hover:text-[#DC183C] transition truncate">Nndivhe Godfrey Marema</p>
               <p class="text-[12px] text-slate-500 mt-0.5 leading-snug">Co-Founder · Arem Enterprises Pty (Ltd)</p>
-              <button onclick="event.preventDefault();event.stopPropagation();" class="mt-2 inline-flex items-center gap-1 text-[11px] font-bold text-[#DC183C] bg-white border border-[#DC183C] hover:bg-[#FDECEF] px-3 py-1.5 rounded-full transition" aria-label="Connect">
+              <button onclick="event.preventDefault();event.stopPropagation();" class="mt-2 inline-flex items-center gap-1 text-[12px] font-bold text-[#DC183C] bg-white border border-[#DC183C] hover:bg-[#FDECEF] px-3.5 h-9 rounded-full transition" aria-label="Connect">
                 <i data-lucide="plus" class="w-3 h-3"></i> Connect
               </button>
             </div>
           </div>
         </a>
-        <a href="single-member.html" class="block px-5 py-3 hover:bg-slate-50 transition group border-t border-slate-100">
+        <a href="single-member.html?view=member" class="block px-5 py-3 hover:bg-slate-50 transition group border-t border-slate-100">
           <div class="flex items-start gap-3">
             <div class="relative shrink-0">
               <img src="https://images.unsplash.com/photo-1531384441138-2736e62e0919?auto=format&fit=crop&q=80&w=100&h=100" alt="Aadil Khan" class="w-10 h-10 rounded-full object-cover">
@@ -429,12 +450,13 @@
             <div class="min-w-0 flex-1">
               <p class="text-[13px] font-bold text-[#121A21] group-hover:text-[#DC183C] transition truncate">Aadil Khan</p>
               <p class="text-[12px] text-slate-500 mt-0.5 leading-snug">Partner · Core Claim Holdings (Pty) Ltd</p>
-              <button onclick="event.preventDefault();event.stopPropagation();" class="mt-2 inline-flex items-center gap-1 text-[11px] font-bold text-[#DC183C] bg-white border border-[#DC183C] hover:bg-[#FDECEF] px-3 py-1.5 rounded-full transition" aria-label="Connect">
+              <button onclick="event.preventDefault();event.stopPropagation();" class="mt-2 inline-flex items-center gap-1 text-[12px] font-bold text-[#DC183C] bg-white border border-[#DC183C] hover:bg-[#FDECEF] px-3.5 h-9 rounded-full transition" aria-label="Connect">
                 <i data-lucide="plus" class="w-3 h-3"></i> Connect
               </button>
             </div>
           </div>
         </a>
+        <a href="members.html" class="flex items-center justify-center gap-1.5 h-12 border-t border-slate-100 text-xs font-bold uppercase tracking-wide text-[#DC183C] hover:bg-slate-50">See more people <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i></a>
       </div>
 
       <!-- Links & Footer -->
@@ -445,7 +467,7 @@
             <a href="public-resources.html" class="hover:text-slate-600">Resources</a>
             <a href="public-founder-focus-category.html" class="hover:text-slate-600">Founder Focus</a>
             <a href="public-articles.html" class="hover:text-slate-600">Insights</a>
-            <a href="events.html" class="hover:text-slate-600">Event</a>
+            <a href="events.html" class="hover:text-slate-600">Events</a>
             <a href="podcast.html" class="hover:text-slate-600">Podcast</a>
             <a href="public-solutions.html" class="hover:text-slate-600">Solutions</a>
             <a href="public-shop.html" class="hover:text-slate-600">Shop</a>
@@ -683,7 +705,7 @@
             <i data-lucide="message-circle" class="w-4 h-4"></i>
             <span>Comment${p.comments ? ' (' + p.comments + ')' : ''}</span>
           </button>
-          <button class="flex-1 flex items-center justify-center gap-2 py-3 rounded-lg hover:bg-slate-50 text-slate-500 text-[13.5px] font-bold transition">
+          <button type="button" data-mock-share data-title="${esc((p.content || 'A post from the community').toString().slice(0, 80))}" class="flex-1 flex items-center justify-center gap-2 py-3 rounded-lg hover:bg-slate-50 text-slate-500 text-[13.5px] font-bold transition">
             <i data-lucide="forward" class="w-4 h-4"></i>
             <span class="hidden sm:inline">Share</span>
           </button>
@@ -1186,7 +1208,19 @@
   });
 
   renderSortTabs();
-  renderFeed();
+  /* Loading: skeleton cards while the feed loads (live, Joel item 10: our own calm shimmer, no spinner) */
+  (function(){
+    const sk = () => `<div class="sk-card bg-white rounded-2xl border border-slate-100 p-5" aria-hidden="true"><div class="flex items-center gap-3"><span class="sk w-11 h-11 rounded-full"></span><span class="flex-1 space-y-2"><span class="sk block h-3 w-1/3 rounded"></span><span class="sk block h-2.5 w-1/4 rounded"></span></span></div><span class="sk block h-3 w-full rounded mt-5"></span><span class="sk block h-3 w-11/12 rounded mt-2.5"></span><span class="sk block h-3 w-2/3 rounded mt-2.5"></span><span class="sk block h-40 w-full rounded-xl mt-4"></span></div>`;
+    const feed = document.getElementById('feed');
+    feed.setAttribute('aria-busy', 'true');
+    feed.innerHTML = sk() + sk();
+    setTimeout(() => { feed.removeAttribute('aria-busy'); renderFeed(); lucide.createIcons(); }, /[?&]loading=1/.test(location.search) ? 600000 : 900);
+  })();
+  const NOPHOTO = /[?&]photo=none\b/.test(location.search);
+  if (NOPHOTO) { document.getElementById('composer-can-post').classList.add('hidden'); const np = document.getElementById('composer-needs-photo'); np.classList.remove('hidden'); np.classList.add('flex'); }
+  if (/[?&]cover=none\b/.test(location.search)) { const ci = document.getElementById('hub-cover-img'); if (ci) ci.remove(); }
+  window.smeOpenComposer = function(){ if (NOPHOTO) { location.href = 'member-account.html?photo=none#profile'; return; } openComposer(); };
+  if (/[?&]post=1\b/.test(location.search) && !NOPHOTO) { setTimeout(openComposer, 50); }
   lucide.createIcons();
 
   /* HEADER-SEARCH-JS */
@@ -1213,5 +1247,7 @@
 <script src="gate-links.js"></script>
 <script>window.SME_MEMBER_PAGE=true;</script>
 <script src="member-chrome.js"></script>
+<script src="share-menu.js"></script>
+<script src="assets/save-module.js"></script>
 </body>
 </html>

@@ -693,5 +693,19 @@
 </script>
 
 <script src="member-chrome.js"></script>
+
+<!-- Admin view (Joel, 2026-10-07): local mockups only, never on the published site. Opens Mission Control, the owner's back end. -->
+<script>
+  if (/^(127\.0\.0\.1|localhost)$/.test(location.hostname)) {
+    document.addEventListener('DOMContentLoaded', function () {
+      var a = document.createElement('a');
+      a.href = 'mission-control/mc-home.html';
+      a.title = 'Admin view: Mission Control (local only)';
+      a.setAttribute('style', 'position:fixed;left:16px;bottom:16px;z-index:9999;display:inline-flex;align-items:center;gap:8px;height:40px;padding:0 16px;border-radius:9999px;background:#0C1F31;color:#fff;font:700 13px/1 "Plus Jakarta Sans",system-ui,sans-serif;box-shadow:0 10px 30px -10px rgba(12,31,49,.6);text-decoration:none');
+      a.innerHTML = '<span style="width:8px;height:8px;border-radius:9999px;background:#FF9900;display:inline-block"></span>Admin view';
+      document.body.appendChild(a);
+    });
+  }
+</script>
 </body>
 </html>

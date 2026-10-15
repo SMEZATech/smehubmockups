@@ -34,6 +34,7 @@
     @media (min-width:640px){ .search-overlay{ padding:0 1.5rem; } }
 </style>
 <script src="plan.js"></script>
+<link rel="stylesheet" href="assets/save-module.css" />
 </head>
 <body class="bg-[#FCFCFC] text-[#121A21] font-inter">
 
@@ -181,7 +182,7 @@
         <p class="text-sm text-slate-600 leading-relaxed">Connect, collaborate and grow with fellow South African entrepreneurs. Share insights, ask questions, and celebrate wins together.</p>
         <div class="mt-4 space-y-2 text-sm">
           <div class="flex items-center gap-2 text-slate-600"><i data-lucide="globe" class="w-4 h-4 text-slate-500"></i> Public group</div>
-          <div class="flex items-center gap-2 text-slate-600"><i data-lucide="users" class="w-4 h-4 text-slate-500"></i> 1,284 members</div>
+          <div class="flex items-center gap-2 text-slate-600"><i data-lucide="activity" class="w-4 h-4 text-slate-500"></i> Active 5 days ago</div>
           <div class="flex items-center gap-2 text-slate-600"><i data-lucide="calendar" class="w-4 h-4 text-slate-500"></i> Created Mar 2023</div>
         </div>
       </div>
@@ -303,7 +304,7 @@ function renderHero(){
               <h1 class="font-jakarta font-extrabold text-2xl sm:text-3xl text-[#121A21] tracking-tight">${esc(g.name)}</h1>
               <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#E4F5EE] text-[#29A37A]"><i data-lucide="globe" class="w-3 h-3"></i> ${esc(g.privacy)}</span>
             </div>
-            <p class="text-sm text-slate-500 mt-1 flex items-center gap-1.5"><i data-lucide="users" class="w-4 h-4"></i> ${g.members.toLocaleString()} members <span class="text-slate-500">·</span> active ${esc(g.active)}</p>
+            <p class="text-sm text-slate-500 mt-1 flex items-center gap-1.5"><i data-lucide="users" class="w-4 h-4"></i> <span class="text-slate-500">·</span> active ${esc(g.active)}</p>
             <!-- Mobile-only group description context -->
             <p class="text-[13px] text-slate-600 mt-3 lg:hidden leading-relaxed pr-2">Connect, collaborate and grow with fellow South African entrepreneurs. Share insights, ask questions, and celebrate wins together.</p>
           </div>
@@ -432,7 +433,7 @@ function tabMembers(){
       ${m.name==='Tshepho Joel'?'<span class="text-xs text-slate-500 font-semibold">You</span>':`<button onclick="showToast('Connection request sent to ${esc(m.name.split(' ')[0])}.','win')" class="border border-slate-200 hover:border-[#DC183C] hover:text-[#DC183C] text-slate-600 rounded-full px-4 py-1.5 text-xs font-bold transition">Connect</button>`}
     </div>`).join('');
   return `<div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm">
-      <div class="flex items-center justify-between mb-1">${sectionLabel('Members','members')}<span class="text-xs font-bold text-slate-500">${GROUP.members.toLocaleString()} total</span></div>
+      <div class="flex items-center justify-between mb-1">${sectionLabel('Members','members')}</div>
       <div class="divide-y divide-slate-100">${rows}</div>
       <button onclick="showToast('Loading more members…',null)" class="w-full mt-4 py-2.5 rounded-full border border-slate-200 text-slate-600 hover:bg-slate-50 text-sm font-bold transition">Show all members</button>
     </div>`;
@@ -448,7 +449,7 @@ function tabDiscussions(){
       </div>
       <p class="text-sm text-slate-500 mt-1 leading-snug line-clamp-2">${esc(d.excerpt)}</p>
       <div class="flex items-center gap-3 mt-2 text-[11px] text-slate-500 flex-wrap">
-        <span>by ${esc(d.author)}</span><span class="inline-flex items-center gap-1"><i data-lucide="users" class="w-3.5 h-3.5"></i> ${d.members}</span><span class="inline-flex items-center gap-1"><i data-lucide="message-circle" class="w-3.5 h-3.5"></i> ${d.replies} replies</span><span class="inline-flex items-center gap-1"><i data-lucide="clock" class="w-3.5 h-3.5"></i> ${esc(d.last)}</span>
+        <span>by ${esc(d.author)}</span><span class="inline-flex items-center gap-1"><i data-lucide="message-circle" class="w-3.5 h-3.5"></i> ${d.replies} replies</span><span class="inline-flex items-center gap-1"><i data-lucide="clock" class="w-3.5 h-3.5"></i> ${esc(d.last)}</span>
       </div>
     </button>`).join('');
   return `<div class="flex items-center justify-between mb-3">${sectionLabel('Discussions','discussions')}<button onclick="showToast('New discussion composer.',null)" class="bg-[#DC183C] hover:bg-[#B0142F] text-white rounded-full px-4 py-1.5 text-xs font-bold flex items-center gap-1.5 transition shadow-sm"><i data-lucide="plus" class="w-3.5 h-3.5"></i> New</button></div><div class="space-y-3">${rows}</div>`;
@@ -489,7 +490,7 @@ function renderAside(){
   document.getElementById('other-groups').innerHTML = OTHER_GROUPS.map(g=>`
     <a href="single-group.html" class="flex items-center gap-3 px-5 py-3 hover:bg-slate-50 transition border-b border-slate-50 last:border-0">
       <div class="w-9 h-9 rounded-lg bg-[#0C1F31] grid place-items-center shrink-0"><i data-lucide="users" class="w-4 h-4 text-[#FF9900]"></i></div>
-      <div class="min-w-0"><p class="font-jakarta font-bold text-sm text-[#121A21] truncate">${esc(g.name)}</p><p class="text-[11px] text-slate-500">${g.members.toLocaleString()} members</p></div>
+      <div class="min-w-0"><p class="font-jakarta font-bold text-sm text-[#121A21] truncate">${esc(g.name)}</p><p class="text-[11px] text-slate-500">Active this week</p></div>
     </a>`).join('');
 }
 
@@ -551,5 +552,6 @@ renderHero(); renderSubnav(); renderTab(); renderAside(); lucide.createIcons();
 </script>
 <script>window.SME_MEMBER_PAGE=true;</script>
 <script src="member-chrome.js"></script>
+<script src="assets/save-module.js"></script>
 </body>
 </html>

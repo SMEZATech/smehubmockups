@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en-ZA">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Inbox | SME HUB</title>
+  <meta name="description" content="SME South Africa, Inbox: your conversations and your alerts in one place on a phone." />
+  <meta name="theme-color" content="#0C1F31" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  <script>tailwind.config = { theme: { extend: { fontFamily: { jakarta: ['Plus Jakarta Sans', 'sans-serif'], inter: ['Inter', 'system-ui', 'sans-serif'] } } } };</script>
+  <style>
+    html, body { font-family: 'Inter', system-ui, sans-serif; }
+    .font-jakarta { font-family: 'Plus Jakarta Sans', sans-serif; letter-spacing: 0.005em; }
+    .no-scrollbar::-webkit-scrollbar { display: none; } .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    @keyframes fadeUp { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:none; } }
+    .reveal { animation: fadeUp .4s cubic-bezier(.2,.7,.2,1) backwards; }
+    .dev-badge { display:none; } body.dev-on .dev-badge { display:inline-flex; }
+    .ov { position:fixed; inset:0; z-index:60; }
+    .ov-bg { position:absolute; inset:0; background:rgba(12,31,49,.45); opacity:0; transition:opacity .3s; } .ov.open .ov-bg { opacity:1; }
+    .drawer { position:absolute; right:0; top:0; height:100%; width:100%; max-width:440px; background:#fff; overflow-y:auto; transform:translateX(100%); transition:transform .3s cubic-bezier(.2,.7,.2,1); } .ov.open .drawer { transform:none; }
+    .itab[aria-selected="true"] { color:#121A21; }
+    .itab[aria-selected="true"]::after { content:""; position:absolute; left:12px; right:12px; bottom:-1px; height:3px; border-radius:3px 3px 0 0; background:#DC183C; }
+  </style>
+</head>
+<body class="bg-[#FCFCFC] text-[#121A21] antialiased">
+
+<header></header>
+
+<main class="max-w-3xl mx-auto px-0 sm:px-6 pb-6 sm:py-8">
+  <!-- Title row -->
+  <div class="flex items-center justify-between gap-3 px-4 sm:px-0 pt-4 sm:pt-0">
+    <h1 class="font-jakarta font-extrabold text-[24px] sm:text-[28px] tracking-tight flex items-center gap-2">Inbox <button onclick="openBrief()" class="dev-badge w-5 h-5 rounded-full bg-[#DC183C] text-white items-center justify-center text-[10px] font-bold" title="Implementation notes">i</button></h1>
+    <div class="flex items-center gap-1">
+      <a href="member-account.html#notifications" aria-label="Notification settings" class="w-11 h-11 rounded-full grid place-items-center text-slate-500 hover:bg-slate-100"><i data-lucide="settings" class="w-5 h-5"></i></a>
+      <button type="button" onclick="newMessage()" aria-label="New message" class="w-11 h-11 rounded-full grid place-items-center bg-[#0C1F31] text-white hover:bg-[#16324a]"><i data-lucide="square-pen" class="w-5 h-5"></i></button>
+    </div>
+  </div>
+
+  <!-- Preview states (review only) -->
+  <div class="preview-switch flex flex-wrap items-center gap-1 text-[10px] font-bold px-4 sm:px-0 mt-2"><span class="uppercase tracking-widest text-slate-400 mr-1">Preview</span>
+    <a href="?inbox=has" data-pv="has" class="h-6 leading-6 px-2.5 rounded-full bg-slate-100 text-slate-600">Has messages</a>
+    <a href="?inbox=empty" data-pv="empty" class="h-6 leading-6 px-2.5 rounded-full bg-slate-100 text-slate-600">No messages yet</a>
+  </div>
+
+  <!-- Messages | Alerts -->
+  <div role="tablist" aria-label="Inbox" class="sticky top-[60px] md:top-16 z-30 bg-[#FCFCFC] mt-2 border-b border-[#E7EBEF] flex px-2 sm:px-0">
+    <button role="tab" id="tab-messages" aria-controls="panel-messages" aria-selected="true" onclick="setTab('messages')" class="itab relative flex-1 sm:flex-none sm:px-6 h-12 font-jakarta font-bold text-[14.5px] text-slate-500 inline-flex items-center justify-center gap-2">Messages <span id="cnt-messages"></span></button>
+    <button role="tab" id="tab-alerts" aria-controls="panel-alerts" aria-selected="false" onclick="setTab('alerts')" class="itab relative flex-1 sm:flex-none sm:px-6 h-12 font-jakarta font-bold text-[14.5px] text-slate-500 inline-flex items-center justify-center gap-2">Alerts <span id="cnt-alerts"></span></button>
+  </div>
+
+  <!-- Messages panel: conversations first -->
+  <section id="panel-messages" role="tabpanel" aria-labelledby="tab-messages" class="mt-3">
+    <div id="m-search-wrap" class="px-4 sm:px-0">
+      <label class="relative block"><span class="sr-only">Search messages</span><i data-lucide="search" class="w-4 h-4 absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
+        <input id="m-search" oninput="renderMessages()" type="search" placeholder="Search messages" class="w-full h-11 rounded-full bg-[#EEF2F6] pl-11 pr-4 text-[14px] outline-none focus:bg-white focus:ring-2 focus:ring-[#DC183C]"></label>
+    </div>
+    <div id="m-list" class="mt-3 bg-white sm:rounded-2xl border-y sm:border border-[#E7EBEF] overflow-hidden"></div>
+  </section>
+
+  <!-- Alerts panel -->
+  <section id="panel-alerts" role="tabpanel" aria-labelledby="tab-alerts" class="mt-3 hidden">
+    <div class="flex items-center justify-between px-4 sm:px-0">
+      <p class="text-[13px] text-slate-500">Replies, mentions, requests and updates on your applications.</p>
+      <button type="button" onclick="markAll()" class="shrink-0 h-11 px-3 -mr-3 text-[13px] font-bold text-[#DC183C]">Mark all read</button>
+    </div>
+    <div id="n-list" class="mt-1"></div>
+    <p class="text-center mt-5 px-4"><a href="member-notifications.html" class="inline-flex items-center h-11 px-5 rounded-full border border-slate-200 bg-white text-[13px] font-bold hover:border-[#0C1F31]">See older alerts</a></p>
+  </section>
+</main>
+
+<div class="md:hidden" style="height:calc(72px + env(safe-area-inset-bottom))"></div>
+<div id="overlay-root"></div>
+<div id="toast" class="hidden fixed bottom-24 md:bottom-6 left-1/2 -translate-x-1/2 z-[100] w-max max-w-[calc(100%-2rem)]"></div>
+
+<script>
+  function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c])); }
+  function showToast(msg){ const el = document.getElementById('toast'); el.classList.remove('hidden'); el.innerHTML = `<div class="bg-[#0C1F31] text-white rounded-full pl-3 pr-5 py-2.5 shadow-2xl flex items-center gap-2 text-sm font-semibold" style="border-left:4px solid #29A37A"><i data-lucide="check-circle" class="w-4 h-4 shrink-0" style="color:#29A37A"></i><span>${esc(msg)}</span></div>`; lucide.createIcons(); clearTimeout(window.__t); window.__t = setTimeout(() => { el.classList.add('hidden'); el.innerHTML=''; }, 2600); }
+  function toggleDevMode(){ const on = document.body.classList.toggle('dev-on'); const b = document.getElementById('devToggle'); if(b) b.classList.toggle('on', on); lucide.createIcons(); }
+  function closeOverlay(id){ const el = document.getElementById(id); if(!el) return; el.classList.remove('open'); setTimeout(() => { if(el.parentNode) el.remove(); }, 300); }
+  function openBrief(){
+    const sec = (l, h) => `<div class="px-6 py-4 border-t border-slate-100"><p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] mb-2">${l}</p><div class="text-sm text-slate-600 leading-relaxed">${h}</div></div>`;
+    document.getElementById('overlay-root').innerHTML = `<div class="ov" id="ov-brief"><div class="ov-bg" onclick="closeOverlay('ov-brief')"></div><div class="drawer"><div class="sticky top-0 bg-[#0C1F31] text-white px-6 py-5 flex justify-between"><div><p class="text-[10px] font-bold uppercase tracking-widest text-[#FF9900] mb-1">Dev Brief</p><h3 class="font-jakarta font-extrabold text-lg">Inbox (phone)</h3></div><button onclick="closeOverlay('ov-brief')" aria-label="Close" class="w-11 h-11 grid place-items-center"><i data-lucide="x" class="w-5 h-5"></i></button></div>
+      ${sec('Purpose', 'Mobile + PWA audit, section 4 and P4: on a phone, one Inbox for chats and alerts is calmer and frees a tab. Messages open on your conversations, never on a blank "To:" box. Live: the bottom bar Inbox and the header message icon open BuddyBoss messages; the bell opens notifications.')}
+      ${sec('Logic', 'Two tabs, Messages (default) and Alerts (#alerts). Conversations sorted by latest message, unread bold with a dot. Message requests from non-connections sit in a row under the conversations. Connection requests in Alerts carry Accept / Ignore inline: never a lock or a paid-plan badge. Empty state invites the member to start a conversation and links to the directory.')}
+      ${sec('Data', 'BuddyBoss messages threads (thread_id, recipients, last message, unread_count) and bp_notifications (component, action, item_id, is_new). Same counts as the header badges.')}</div></div>`;
+    requestAnimationFrame(() => document.getElementById('ov-brief').classList.add('open')); lucide.createIcons();
+  }
+
+  /* ---------- data ---------- */
+  const CONVOS = [
+    { id:1, name:'Naledi Mokoena', ini:'NM', role:'Founder, Mokoena Catering', online:true, unread:2, last:'Asking because I have a similar one coming up.', time:'08:02' },
+    { id:2, name:'Sipho Dlamini', ini:'SD', role:'Logistics, Dlamini Freight', unread:0, last:'Yes, I have already registered. See you there.', time:'Fri' },
+    { id:4, name:'Thandi Mabasa', ini:'TM', role:'Bookkeeper', online:true, unread:0, mine:true, last:'That would be great, thank you.', time:'Wed' }
+  ];
+  const REQUESTS = [{ id:3, name:'Lerato Khumalo', ini:'LK' }];
+  let ALERTS = [
+    { id:1, k:'conn', who:'Lerato Khumalo', ini:'LK', t:'<b>Lerato Khumalo</b> wants to connect.', sub:'Designer, Studio Lerato', ago:'12 min', unread:true },
+    { id:2, k:'reply', t:'<b>Sipho Dlamini</b> replied to your post <b>How are you handling late payers?</b>', ago:'40 min', unread:true, href:'single-post.html' },
+    { id:3, k:'mention', t:'<b>Naledi Mokoena</b> mentioned you in a comment.', ago:'1 h', unread:true, href:'single-post.html' },
+    { id:4, k:'funding', t:'Your funding application <b>SME-24817</b> needs your bank statements.', ago:'5 h', unread:true, href:'member-funding.html#applications' },
+    { id:5, k:'react', t:'<b>Thandi Mabasa</b> and others reacted to your post.', ago:'Yesterday', unread:false, href:'single-post.html' },
+    { id:6, k:'event', t:'<b>Business Compliance Essentials</b> starts tomorrow at 11:00.', ago:'Yesterday', unread:false, href:'event-single-online.html' },
+    { id:7, k:'accepted', t:'<b>Zanele Ndlovu</b> accepted your connection request.', ago:'Mon', unread:false, href:'single-member.html' }
+  ];
+  const KIND = { conn:['user-plus','#0C1F31'], reply:['message-circle','#29A37A'], mention:['at-sign','#DC183C'], funding:['landmark','#DC183C'], react:['thumbs-up','#2F6FED'], event:['calendar-days','#AE6B0A'], accepted:['user-check','#29A37A'] };
+
+  const EMPTY = (function(){ try { const q = new URLSearchParams(location.search).get('inbox'); if(q) sessionStorage.setItem('smeInbox', q); return sessionStorage.getItem('smeInbox') === 'empty'; } catch(e){ return false; } })();
+  if (EMPTY) { CONVOS.length = 0; REQUESTS.length = 0; }
+  document.querySelectorAll('[data-pv="' + (EMPTY ? 'empty' : 'has') + '"]').forEach(a => { a.classList.remove('bg-slate-100','text-slate-600'); a.classList.add('bg-[#0C1F31]','text-white'); });
+
+  const pill = n => n ? `<span class="min-w-[20px] h-5 px-1.5 rounded-full bg-[#DC183C] text-white text-[11px] font-bold leading-5 text-center">${n}</span>` : '';
+  function counts(){
+    document.getElementById('cnt-messages').innerHTML = pill(CONVOS.reduce((n, c) => n + c.unread, 0) + REQUESTS.length);
+    document.getElementById('cnt-alerts').innerHTML = pill(ALERTS.filter(a => a.unread).length);
+  }
+
+  /* ---------- messages ---------- */
+  function renderMessages(){
+    const el = document.getElementById('m-list');
+    document.getElementById('m-search-wrap').classList.toggle('hidden', !CONVOS.length);
+    if (!CONVOS.length) {
+      el.className = 'mt-3';
+      el.innerHTML = `<div class="reveal mx-4 sm:mx-0 bg-white rounded-2xl border border-[#E7EBEF] px-6 py-9 text-center">
+        <div class="w-16 h-16 rounded-2xl bg-[#FDECEF] text-[#DC183C] grid place-items-center mx-auto"><i data-lucide="message-square-heart" class="w-8 h-8"></i></div>
+        <h2 class="font-jakarta font-extrabold text-[19px] mt-4">Start a conversation</h2>
+        <p class="text-[14px] text-slate-500 mt-1.5 leading-relaxed max-w-sm mx-auto">Your chats with other SMEs show up here. Thank someone for a helpful answer, or ask a founder in your industry a question.</p>
+        <a href="members.html" class="mt-5 inline-flex items-center gap-2 h-11 px-6 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-jakarta font-bold text-[14px]"><i data-lucide="users" class="w-4 h-4"></i> Find SMEs to talk to</a>
+        <p class="text-[12.5px] text-slate-400 mt-4">Messages are private, one to one.</p></div>`;
+      lucide.createIcons(); return;
+    }
+    el.className = 'mt-3 bg-white sm:rounded-2xl border-y sm:border border-[#E7EBEF] overflow-hidden';
+    const q = (document.getElementById('m-search').value || '').toLowerCase();
+    const list = CONVOS.filter(c => !q || (c.name + ' ' + c.last).toLowerCase().includes(q));
+    el.innerHTML = (list.length ? list.map(c => `<a href="member-messages.html?c=${c.id}" class="flex items-center gap-3 px-4 min-h-[72px] py-3 border-b border-[#EEF1F4] last:border-0 hover:bg-slate-50 ${c.unread ? 'bg-[#FDECEF]/30' : ''}">
+        <span class="relative shrink-0"><span class="w-12 h-12 rounded-full bg-gradient-to-br from-[#0C1F31] to-[#42505E] grid place-items-center text-white text-[13px] font-bold">${c.ini}</span>${c.online ? '<span class="absolute bottom-0 right-0 w-3.5 h-3.5 rounded-full bg-[#29A37A] ring-2 ring-white"></span>' : ''}</span>
+        <span class="min-w-0 flex-1"><span class="flex items-baseline justify-between gap-2"><span class="font-jakarta text-[15px] ${c.unread ? 'font-extrabold' : 'font-bold'} truncate">${esc(c.name)}</span><span class="text-[12px] ${c.unread ? 'text-[#DC183C] font-bold' : 'text-slate-400'} shrink-0">${c.time}</span></span>
+          <span class="flex items-center gap-2"><span class="text-[13.5px] ${c.unread ? 'text-[#121A21] font-semibold' : 'text-slate-500'} truncate flex-1">${c.mine ? 'You: ' : ''}${esc(c.last)}</span>${c.unread ? `<span class="shrink-0 min-w-[20px] h-5 px-1.5 rounded-full bg-[#DC183C] text-white text-[11px] font-bold leading-5 text-center">${c.unread}</span>` : ''}</span></span></a>`).join('')
+      : `<p class="p-6 text-center text-[14px] text-slate-500">No messages match "${esc(q)}".</p>`) +
+      (REQUESTS.length && !q ? `<a href="member-messages.html?tab=requests" class="flex items-center gap-3 px-4 min-h-[60px] bg-[#FBFCFD] border-t border-[#EEF1F4] hover:bg-slate-50"><span class="w-12 h-12 shrink-0 grid place-items-center"><span class="w-9 h-9 rounded-full bg-[#FFF1E0] text-[#AE6B0A] grid place-items-center"><i data-lucide="mail-question" class="w-[18px] h-[18px]"></i></span></span><span class="flex-1 min-w-0"><span class="block font-jakarta font-bold text-[14px]">Message requests</span><span class="block text-[12.5px] text-slate-500 truncate">${esc(REQUESTS[0].name)} is not one of your connections yet</span></span><i data-lucide="chevron-right" class="w-5 h-5 text-slate-400"></i></a>` : '');
+    lucide.createIcons();
+  }
+
+  /* ---------- alerts ---------- */
+  function alertRow(a){
+    const [icon, col] = KIND[a.k];
+    const lead = a.k === 'conn'
+      ? `<span class="relative shrink-0 self-start"><span class="w-12 h-12 rounded-full bg-gradient-to-br from-[#0C1F31] to-[#42505E] grid place-items-center text-white text-[13px] font-bold">${a.ini}</span><span class="absolute -bottom-0.5 -right-0.5 w-5 h-5 rounded-full grid place-items-center ring-2 ring-white" style="background:${col};color:#fff"><i data-lucide="${icon}" class="w-3 h-3"></i></span></span>`
+      : `<span class="w-12 h-12 rounded-full grid place-items-center shrink-0" style="background:${col}1A;color:${col}"><i data-lucide="${icon}" class="w-5 h-5"></i></span>`;
+    const body = `<span class="block text-[14px] leading-snug">${a.t}</span>${a.sub ? `<span class="block text-[12.5px] text-slate-500 mt-0.5">${esc(a.sub)}</span>` : ''}<span class="block text-[12px] text-slate-400 mt-0.5">${a.ago}</span>`;
+    const actions = a.k === 'conn' ? (a.done ? `<p class="text-[13px] font-semibold text-[#29A37A] mt-2 flex items-center gap-1.5"><i data-lucide="check" class="w-4 h-4"></i>${esc(a.done)}</p>`
+      : `<div class="mt-2.5 flex gap-2"><button type="button" onclick="resolve(${a.id},'accept')" class="h-11 px-5 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white text-[13.5px] font-bold">Accept</button><button type="button" onclick="resolve(${a.id},'ignore')" class="h-11 px-5 rounded-full border border-slate-300 text-[13.5px] font-bold text-slate-700 hover:border-[#0C1F31]">Ignore</button></div>`) : '';
+    const inner = `${lead}<span class="min-w-0 flex-1">${body}${actions}</span>${a.unread ? '<span class="w-2.5 h-2.5 rounded-full bg-[#DC183C] mt-2 shrink-0" aria-label="Unread"></span>' : ''}`;
+    const cls = `flex gap-3 px-4 py-3.5 border-b border-[#EEF1F4] last:border-0 ${a.unread ? 'bg-[#FDECEF]/40' : 'bg-white'}`;
+    return a.href ? `<a href="${a.href}" class="${cls} hover:bg-slate-50">${inner}</a>` : `<div class="${cls}">${inner}</div>`;
+  }
+  function renderAlerts(){
+    const el = document.getElementById('n-list');
+    if (!ALERTS.length) { el.innerHTML = `<div class="mx-4 sm:mx-0 bg-white rounded-2xl border border-[#E7EBEF] p-8 text-center"><div class="w-14 h-14 rounded-2xl bg-[#F0F5F9] grid place-items-center mx-auto"><i data-lucide="bell" class="w-7 h-7 text-slate-400"></i></div><h2 class="font-jakarta font-extrabold text-[18px] mt-3">No alerts yet</h2><p class="text-[14px] text-slate-500 mt-1">When someone replies, mentions you or wants to connect, it shows here.</p></div>`; lucide.createIcons(); return; }
+    const fresh = ALERTS.filter(a => a.unread), older = ALERTS.filter(a => !a.unread);
+    const block = (h, arr) => arr.length ? `<h2 class="text-[11px] font-extrabold uppercase tracking-widest text-slate-400 px-4 sm:px-0 mt-4 mb-2">${h}</h2><div class="bg-white sm:rounded-2xl border-y sm:border border-[#E7EBEF] overflow-hidden">${arr.map(alertRow).join('')}</div>` : '';
+    el.innerHTML = block('New', fresh) + block('Earlier', older);
+    lucide.createIcons();
+  }
+  function resolve(id, how){
+    const a = ALERTS.find(x => x.id === id); a.unread = false;
+    a.done = how === 'accept' ? 'You are now connected with ' + a.who.split(' ')[0] + '.' : 'Request ignored. They are not told.';
+    counts(); renderAlerts(); showToast(how === 'accept' ? 'Connected with ' + a.who + '.' : 'Request ignored.');
+  }
+  function markAll(){ ALERTS.forEach(a => a.unread = false); counts(); renderAlerts(); showToast('All alerts marked as read.'); }
+
+  /* ---------- tabs ---------- */
+  function setTab(t, quiet){
+    ['messages','alerts'].forEach(k => {
+      document.getElementById('tab-' + k).setAttribute('aria-selected', String(k === t));
+      document.getElementById('panel-' + k).classList.toggle('hidden', k !== t);
+    });
+    if (!quiet) history.replaceState(null, '', location.pathname + location.search + (t === 'alerts' ? '#alerts' : ''));
+  }
+  window.addEventListener('hashchange', () => setTab(location.hash === '#alerts' ? 'alerts' : 'messages', true));
+
+  function newMessage(){
+    if (!CONVOS.length) { location.href = 'members.html'; return; }
+    location.href = 'member-messages.html?new=1';
+  }
+
+  counts(); renderMessages(); renderAlerts(); setTab(location.hash === '#alerts' ? 'alerts' : 'messages', true);
+  lucide.createIcons();
+</script>
+<script>window.SME_MEMBER_PAGE=true;</script>
+<script src="member-chrome.js"></script>
+<script>
+  /* The Inbox is a top-level destination (bottom bar), so no back arrow and the Inbox tab is lit, as live.
+     member-chrome.js does not know this new page yet; this does nothing once it lists member-inbox.html as a root page. */
+  (function(){
+    var b = document.getElementById('smeBackBtn'); if (!b) return;
+    var logo = b.nextElementSibling; b.remove();
+    if (logo) logo.querySelectorAll('img').forEach(function(i){ if (/icon/.test(i.src)) i.remove(); else i.classList.remove('hidden'); });
+    document.querySelectorAll('nav[aria-label="Quick nav"] a[href="member-messages.html"]').forEach(function(a){
+      a.classList.remove('text-slate-500'); a.classList.add('text-[#DC183C]'); a.setAttribute('aria-current', 'page');
+      a.insertAdjacentHTML('afterbegin', '<span class="absolute top-0 left-1/2 -translate-x-1/2 w-8 h-0.5 rounded-full bg-[#DC183C]"></span>');
+    });
+  })();
+</script>
+</body>
+</html>

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en-ZA">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Me | SME HUB</title>
+  <meta name="description" content="SME South Africa, Me: your profile, account settings, funding, saved items and help, in one short list on a phone." />
+  <meta name="theme-color" content="#0C1F31" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  <script>tailwind.config = { theme: { extend: { fontFamily: { jakarta: ['Plus Jakarta Sans', 'sans-serif'], inter: ['Inter', 'system-ui', 'sans-serif'] } } } };</script>
+  <style>
+    html, body { font-family: 'Inter', system-ui, sans-serif; }
+    .font-jakarta { font-family: 'Plus Jakarta Sans', sans-serif; letter-spacing: 0.005em; }
+    @keyframes fadeUp { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:none; } }
+    .reveal { animation: fadeUp .4s cubic-bezier(.2,.7,.2,1) backwards; }
+    .dev-badge { display:none; } body.dev-on .dev-badge { display:inline-flex; }
+    .ov { position:fixed; inset:0; z-index:60; }
+    .ov-bg { position:absolute; inset:0; background:rgba(12,31,49,.45); opacity:0; transition:opacity .3s; } .ov.open .ov-bg { opacity:1; }
+    .sheet { position:absolute; left:0; right:0; bottom:0; max-height:88vh; overflow-y:auto; background:#fff; border-radius:22px 22px 0 0; transform:translateY(100%); transition:transform .3s cubic-bezier(.2,.7,.2,1); padding-bottom:env(safe-area-inset-bottom); }
+    .ov.open .sheet { transform:none; }
+    @media (min-width:768px){ .sheet { left:50%; right:auto; bottom:auto; top:50%; width:520px; border-radius:20px; transform:translate(-50%,-46%); opacity:0; transition:all .25s; } .ov.open .sheet { transform:translate(-50%,-50%); opacity:1; } }
+    .drawer { position:absolute; right:0; top:0; height:100%; width:100%; max-width:440px; background:#fff; overflow-y:auto; transform:translateX(100%); transition:transform .3s; } .ov.open .drawer { transform:none; }
+  </style>
+</head>
+<body class="bg-[#F4F6F8] text-[#121A21] antialiased">
+
+<header></header>
+
+<main class="max-w-xl mx-auto px-4 py-5 sm:py-8">
+  <h1 class="sr-only">Me</h1>
+
+  <!-- Profile card -->
+  <section class="reveal bg-white rounded-2xl border border-[#E7EBEF] overflow-hidden" aria-label="Your profile">
+    <div class="h-16 bg-gradient-to-r from-[#0C1F31] via-[#2b1626] to-[#5e1a2c]"></div>
+    <div class="px-5 pb-5 -mt-9">
+      <div class="flex items-end justify-between gap-3">
+        <span class="w-[76px] h-[76px] rounded-full ring-4 ring-white bg-gradient-to-br from-[#DC183C] to-[#FF9900] grid place-items-center font-jakarta font-extrabold text-white text-[26px]">TJ</span>
+        <button onclick="openBrief()" class="dev-badge w-5 h-5 mb-2 rounded-full bg-[#DC183C] text-white items-center justify-center text-[10px] font-bold" title="Implementation notes">i</button>
+      </div>
+      <p class="font-jakarta font-extrabold text-[20px] mt-3 leading-tight">Tshepho Joel</p>
+      <p class="text-[14px] text-slate-600 mt-0.5">Founder at Langa Holdings</p>
+      <p class="text-[13px] text-slate-500 mt-0.5 flex items-center gap-1"><i data-lucide="map-pin" class="w-3.5 h-3.5"></i> Johannesburg, Gauteng</p>
+      <div class="mt-4 grid grid-cols-2 gap-2">
+        <a href="single-member.html" class="h-11 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-jakarta font-bold text-[14px] grid place-items-center">View profile</a>
+        <a href="member-account.html#profile" class="h-11 rounded-full border border-slate-300 hover:border-[#0C1F31] font-jakarta font-bold text-[14px] grid place-items-center">Edit profile</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Your account -->
+  <nav aria-label="Your account" class="mt-4">
+    <h2 class="px-1 mb-2 text-[11px] font-extrabold uppercase tracking-widest text-slate-500">Your account</h2>
+    <div class="bg-white rounded-2xl border border-[#E7EBEF] divide-y divide-[#EEF1F4] overflow-hidden">
+      <a href="member-account.html" class="flex items-center gap-3.5 px-4 min-h-[64px] hover:bg-slate-50">
+        <span class="w-10 h-10 rounded-xl bg-[#F0F5F9] text-[#0C1F31] grid place-items-center shrink-0"><i data-lucide="settings" class="w-5 h-5"></i></span>
+        <span class="flex-1 min-w-0"><span class="block font-jakarta font-bold text-[15px]">Account settings</span><span class="block text-[12.5px] text-slate-500 truncate">Login, alerts, privacy, your data</span></span>
+        <i data-lucide="chevron-right" class="w-5 h-5 text-slate-400 shrink-0"></i></a>
+      <a href="member-funding.html" class="flex items-center gap-3.5 px-4 min-h-[64px] hover:bg-slate-50">
+        <span class="w-10 h-10 rounded-xl bg-[#FDECEF] text-[#DC183C] grid place-items-center shrink-0"><i data-lucide="hand-coins" class="w-5 h-5"></i></span>
+        <span class="flex-1 min-w-0"><span class="block font-jakarta font-bold text-[15px]">Funding</span><span class="block text-[12.5px] text-slate-500 truncate">Apply and track</span></span>
+        <span class="shrink-0 h-6 px-2 rounded-full bg-[#FFF1E0] text-[#AE6B0A] text-[11px] font-bold leading-6">1 needs you</span>
+        <i data-lucide="chevron-right" class="w-5 h-5 text-slate-400 shrink-0"></i></a>
+      <button type="button" onclick="openSaved()" class="w-full text-left flex items-center gap-3.5 px-4 min-h-[64px] hover:bg-slate-50">
+        <span class="w-10 h-10 rounded-xl bg-[#E4F5EE] text-[#1F7F5E] grid place-items-center shrink-0"><i data-lucide="bookmark" class="w-5 h-5"></i></span>
+        <span class="flex-1 min-w-0"><span class="block font-jakarta font-bold text-[15px]">Saved items</span><span class="block text-[12.5px] text-slate-500 truncate">Articles and guides, also offline</span></span>
+        <i data-lucide="chevron-right" class="w-5 h-5 text-slate-400 shrink-0"></i></button>
+    </div>
+  </nav>
+
+  <!-- This phone -->
+  <nav aria-label="This phone" class="mt-4">
+    <h2 class="px-1 mb-2 text-[11px] font-extrabold uppercase tracking-widest text-slate-500">This phone</h2>
+    <div class="bg-white rounded-2xl border border-[#E7EBEF] divide-y divide-[#EEF1F4] overflow-hidden">
+      <a href="app-install.html" class="flex items-center gap-3.5 px-4 min-h-[64px] hover:bg-slate-50">
+        <span class="w-10 h-10 rounded-xl bg-[#F0F5F9] text-[#0C1F31] grid place-items-center shrink-0"><i data-lucide="smartphone" class="w-5 h-5"></i></span>
+        <span class="flex-1 min-w-0"><span class="block font-jakarta font-bold text-[15px]">Install the app</span><span class="block text-[12.5px] text-slate-500 truncate">One tap from your home screen</span></span>
+        <i data-lucide="chevron-right" class="w-5 h-5 text-slate-400 shrink-0"></i></a>
+      <a href="app-push-ask.html#prefs" class="flex items-center gap-3.5 px-4 min-h-[64px] hover:bg-slate-50">
+        <span class="w-10 h-10 rounded-xl bg-[#F0F5F9] text-[#0C1F31] grid place-items-center shrink-0"><i data-lucide="bell-ring" class="w-5 h-5"></i></span>
+        <span class="flex-1 min-w-0"><span class="block font-jakarta font-bold text-[15px]">Phone alerts</span><span class="block text-[12.5px] text-slate-500 truncate">Off on this phone</span></span>
+        <i data-lucide="chevron-right" class="w-5 h-5 text-slate-400 shrink-0"></i></a>
+    </div>
+    <p class="px-1 mt-2 text-[12px] text-slate-500">These rows show only where the phone supports them.</p>
+  </nav>
+
+  <!-- Help + sign out -->
+  <nav aria-label="Help" class="mt-4">
+    <div class="bg-white rounded-2xl border border-[#E7EBEF] divide-y divide-[#EEF1F4] overflow-hidden">
+      <a href="public-help.html" class="flex items-center gap-3.5 px-4 min-h-[64px] hover:bg-slate-50">
+        <span class="w-10 h-10 rounded-xl bg-[#F0F5F9] text-[#0C1F31] grid place-items-center shrink-0"><i data-lucide="life-buoy" class="w-5 h-5"></i></span>
+        <span class="flex-1 min-w-0"><span class="block font-jakarta font-bold text-[15px]">Help Centre</span><span class="block text-[12.5px] text-slate-500 truncate">Answers, and how to reach us</span></span>
+        <i data-lucide="chevron-right" class="w-5 h-5 text-slate-400 shrink-0"></i></a>
+      <a href="public-home.html?as=visitor" class="flex items-center gap-3.5 px-4 min-h-[60px] hover:bg-[#FDECEF] text-[#DC183C]">
+        <span class="w-10 h-10 rounded-xl bg-[#FDECEF] grid place-items-center shrink-0"><i data-lucide="log-out" class="w-5 h-5"></i></span>
+        <span class="flex-1 font-jakarta font-bold text-[15px]">Sign out</span></a>
+    </div>
+  </nav>
+
+  <p class="mt-6 text-center text-[12px] text-slate-500 flex flex-wrap justify-center gap-x-1">
+    <a href="public-about.html" class="inline-flex items-center justify-center min-h-[44px] min-w-[44px] px-1 hover:text-[#DC183C]">About</a>
+    <a href="public-terms.html" class="inline-flex items-center justify-center min-h-[44px] min-w-[44px] px-1 hover:text-[#DC183C]">Terms</a>
+    <a href="public-privacy.html" class="inline-flex items-center justify-center min-h-[44px] min-w-[44px] px-1 hover:text-[#DC183C]">Privacy</a>
+  </p>
+</main>
+
+<div class="md:hidden" style="height:calc(64px + env(safe-area-inset-bottom))"></div>
+<div id="overlay-root"></div>
+
+<script>
+  function closeOverlay(id){ const el = document.getElementById(id); if(!el) return; el.classList.remove('open'); setTimeout(() => { if(el.parentNode) el.remove(); }, 300); }
+  function toggleDevMode(){ document.body.classList.toggle('dev-on'); lucide.createIcons(); }
+  const SAVED = [
+    ['public-article.html', 'Marketplaces Help Scale, But Only When Done Right', 'Article', true],
+    ['public-guide.html', 'How to register your business for VAT', 'Guide', true],
+    ['public-article.html', 'The National Payment System in South Africa: What It Means for Small Businesses', 'Article', false]
+  ];
+  function openSaved(){
+    document.getElementById('overlay-root').innerHTML = `<div class="ov" id="ov-saved"><div class="ov-bg" onclick="closeOverlay('ov-saved')"></div>
+      <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="saved-h">
+        <div class="md:hidden w-10 h-1.5 rounded-full bg-slate-200 mx-auto mt-2.5"></div>
+        <div class="flex items-center justify-between px-5 pt-3 pb-2"><h2 id="saved-h" class="font-jakarta font-extrabold text-[19px]">Saved items</h2><button onclick="closeOverlay('ov-saved')" aria-label="Close" class="w-11 h-11 -mr-2 grid place-items-center rounded-full text-slate-500 hover:bg-slate-100"><i data-lucide="x" class="w-5 h-5"></i></button></div>
+        <ul class="px-3 pb-2">${SAVED.map(s => `<li><a href="${s[0]}" class="flex items-start gap-3 px-2 py-3 rounded-xl hover:bg-slate-50"><span class="w-10 h-10 rounded-lg bg-[#F0F5F9] grid place-items-center shrink-0 text-[#0C1F31]"><i data-lucide="${s[2] === 'Guide' ? 'book-open' : 'newspaper'}" class="w-5 h-5"></i></span><span class="min-w-0"><span class="block font-jakarta font-bold text-[14.5px] leading-snug">${s[1]}</span><span class="block text-[12.5px] text-slate-500 mt-0.5">${s[2]}${s[3] ? ' · <span class="text-[#1F7F5E] font-semibold">Saved to read offline</span>' : ''}</span></span></a></li>`).join('')}</ul>
+        <div class="px-5 pb-5"><a href="app-offline.html" class="h-11 rounded-full border border-slate-300 font-jakarta font-bold text-[14px] flex items-center justify-center gap-2 hover:border-[#0C1F31]"><i data-lucide="wifi-off" class="w-4 h-4"></i> What you can read with no signal</a></div>
+      </div></div>`;
+    requestAnimationFrame(() => document.getElementById('ov-saved').classList.add('open')); lucide.createIcons();
+  }
+  function openBrief(){
+    const sec = (l, h) => `<div class="px-6 py-4 border-t border-slate-100"><p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] mb-2">${l}</p><div class="text-sm text-slate-600 leading-relaxed">${h}</div></div>`;
+    document.getElementById('overlay-root').innerHTML = `<div class="ov" id="ov-brief"><div class="ov-bg" onclick="closeOverlay('ov-brief')"></div><div class="drawer"><div class="sticky top-0 bg-[#0C1F31] text-white px-6 py-5 flex justify-between"><div><p class="text-[10px] font-bold uppercase tracking-widest text-[#FF9900] mb-1">Dev Brief</p><h3 class="font-jakarta font-extrabold text-lg">Me (phone)</h3></div><button onclick="closeOverlay('ov-brief')" aria-label="Close" class="w-11 h-11 grid place-items-center"><i data-lucide="x" class="w-5 h-5"></i></button></div>
+      ${sec('Purpose', 'Mobile + PWA audit, section 4 and P4: replaces the 13-item avatar menu on phones with one calm page. The avatar in the phone header opens it. Learn links (Insights, Guides, Podcast, Events) moved to the Learn strip on Hub, so they are not repeated here.')}
+      ${sec('Rows', 'Account settings (member-account), Funding (the funding home; applications live inside it), Saved items (articles and guides the member saved, with the offline copies), Help Centre, Sign out. "This phone": Install the app (only when the phone can install it, live: smesa-pwa "Install the app") and Phone alerts (live: "Turn on phone alerts" / "Turn off phone alerts on this phone"). Only these rows; no paid-plan upsell.')}
+      ${sec('Badge', 'Funding shows "1 needs you" only when an application waits on the member (e.g. bank statements requested).')}</div></div>`;
+    requestAnimationFrame(() => document.getElementById('ov-brief').classList.add('open')); lucide.createIcons();
+  }
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') document.querySelectorAll('.ov.open').forEach(o => closeOverlay(o.id)); });
+  if (location.hash === '#saved') openSaved();
+  lucide.createIcons();
+</script>
+<script>window.SME_MEMBER_PAGE=true;</script>
+<script src="member-chrome.js"></script>
+</body>
+</html>
