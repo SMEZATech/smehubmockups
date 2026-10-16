@@ -121,9 +121,9 @@
 
 <!-- SPEAKER GRID -->
 <main class="max-w-7xl mx-auto px-4 sm:px-6 py-12">
-  <p id="speakerCount" class="text-sm text-[#6A7581] mb-6">12 speakers</p>
   <div id="speakerGrid" class="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6"></div>
   <p id="speakerEmpty" class="hidden text-center text-[#6A7581] py-16">No speakers match "<span id="speakerEmptyQuery"></span>".</p>
+  <nav id="speakerPager" aria-label="Speakers pagination" class="flex items-center justify-center gap-2 mt-12"></nav>
 </main>
 
 <!-- FOOTER -->
@@ -226,27 +226,58 @@
         <p class="text-[11px] text-[#6A7581] uppercase tracking-wide font-bold">${esc(s.company)}</p>
       </a>`;
   }
+  const PAGE_SIZE = 4;
+  let currentList = SPEAKERS, currentPage = 1;
+
   function renderSpeakers(list){
     document.getElementById('speakerGrid').innerHTML = list.map(speakerCard).join('');
-    document.getElementById('speakerCount').textContent = `${list.length} speaker${list.length===1?'':'s'}`;
     lucide.createIcons();
+  }
+  function renderPager(total){
+    const pages = Math.max(1, Math.ceil(total / PAGE_SIZE));
+    const pager = document.getElementById('speakerPager');
+    if (pages <= 1){ pager.innerHTML = ''; return; }
+    const pageBtn = (p, active) => `<button type="button" onclick="goToPage(${p})" class="w-10 h-10 rounded-full text-[13px] font-bold transition-colors ${active ? 'bg-[#DC183C] text-white shadow-md' : 'border border-[#E7EBEF] bg-white text-[#121A21] hover:border-[#DC183C] hover:text-[#DC183C]'}">${p}</button>`;
+    const ellipsis = `<span class="w-10 h-10 flex items-center justify-center text-[#6A7581]">...</span>`;
+    let nums = [];
+    nums.push(pageBtn(1, currentPage === 1));
+    if (currentPage > 3) nums.push(ellipsis);
+    for (let p = Math.max(2, currentPage - 1); p <= Math.min(pages - 1, currentPage + 1); p++) nums.push(pageBtn(p, p === currentPage));
+    if (currentPage < pages - 2) nums.push(ellipsis);
+    if (pages > 1) nums.push(pageBtn(pages, currentPage === pages));
+    const prev = `<button type="button" onclick="goToPage(${currentPage - 1})" ${currentPage === 1 ? 'disabled' : ''} class="inline-flex items-center gap-1 h-10 px-4 rounded-full border border-[#E7EBEF] bg-white text-[13px] font-semibold transition-colors ${currentPage === 1 ? 'text-slate-400 cursor-not-allowed' : 'text-[#121A21] hover:border-[#DC183C] hover:text-[#DC183C]'}"><i data-lucide="chevron-left" class="w-4 h-4"></i> Prev</button>`;
+    const next = `<button type="button" onclick="goToPage(${currentPage + 1})" ${currentPage === pages ? 'disabled' : ''} class="inline-flex items-center gap-1 h-10 px-4 rounded-full border border-[#E7EBEF] bg-white text-[13px] font-semibold transition-colors ${currentPage === pages ? 'text-slate-400 cursor-not-allowed' : 'text-[#121A21] hover:border-[#DC183C] hover:text-[#DC183C]'}">Next <i data-lucide="chevron-right" class="w-4 h-4"></i></button>`;
+    pager.innerHTML = prev + nums.join('') + next;
+    lucide.createIcons();
+  }
+  function goToPage(p){
+    const pages = Math.max(1, Math.ceil(currentList.length / PAGE_SIZE));
+    currentPage = Math.min(Math.max(1, p), pages);
+    showPage();
+    document.getElementById('speakerGrid').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+  function showPage(){
+    const start = (currentPage - 1) * PAGE_SIZE;
+    renderSpeakers(currentList.slice(start, start + PAGE_SIZE));
+    renderPager(currentList.length);
   }
   function filterSpeakers(){
     const q = document.getElementById('speakerSearch').value.trim().toLowerCase();
-    const list = !q ? SPEAKERS : SPEAKERS.filter(s => s.name.toLowerCase().includes(q) || s.company.toLowerCase().includes(q) || s.role.toLowerCase().includes(q));
-    renderSpeakers(list);
-    document.getElementById('speakerGrid').classList.toggle('hidden', list.length === 0);
-    document.getElementById('speakerEmpty').classList.toggle('hidden', list.length !== 0);
+    currentList = !q ? SPEAKERS : SPEAKERS.filter(s => s.name.toLowerCase().includes(q) || s.company.toLowerCase().includes(q) || s.role.toLowerCase().includes(q));
+    currentPage = 1;
+    showPage();
+    document.getElementById('speakerGrid').classList.toggle('hidden', currentList.length === 0);
+    document.getElementById('speakerEmpty').classList.toggle('hidden', currentList.length !== 0);
     document.getElementById('speakerEmptyQuery').textContent = q;
   }
-  renderSpeakers(SPEAKERS);
+  showPage();
 
   const BRIEF = {
     title:'Speakers Archive', sub:'CPT <code>speaker</code> archive template',
     purpose:'The directory a member browses to find "who\'s speaking" before committing to an event, and the destination for "View all speakers" links from event pages, pairs with the single Speaker Profile page (<code>event-speaker.html</code>) the same way public-articles.html pairs with public-article.html.',
     data:'Same <code>speaker</code> records as the single profile page: <code>{ post_title, meta_role, meta_company, meta_avatar }</code>. This grid only needs the summary fields, bio, socials and talk history load on the single profile.',
-    logic:'Client-side search filters the in-memory <code>SPEAKERS</code> array by name, role or company, no page reload. Real build: <code>WP_Query</code> on the <code>speaker</code> CPT, with the same filter re-implemented as a debounced AJAX search (<code>public-search.html</code>\'s pattern) once the roster is too large to ship inline. Every card links to the single Speaker Profile template, resolved by the speaker\'s own post ID rather than always to the same demo page.',
-    components:'Search input · responsive grid (2-col mobile, 4-col desktop) of speaker cards (gradient monogram avatar · name · role · company) · empty state.',
+    logic:'Client-side search filters the in-memory <code>SPEAKERS</code> array by name, role or company, no page reload, and resets to page 1. Results are paginated 4 per page (matches the live <code>/speakers/</code> pattern: numbered pages, an ellipsis once there are more than a few, Prev/Next, no speaker count shown anywhere). Real build: <code>WP_Query</code> on the <code>speaker</code> CPT with <code>paged</code>, the same filter re-implemented as a debounced AJAX search (<code>public-search.html</code>\'s pattern) once the roster is too large to ship inline. Every card links to the single Speaker Profile template, resolved by the speaker\'s own post ID rather than always to the same demo page.',
+    components:'Search input · responsive grid (2-col mobile, 4-col desktop) of speaker cards (gradient monogram avatar · name · role · company) · numbered pagination with Prev/Next · empty state.',
     specs:'Card: bg white rounded-2xl border #E7EBEF, hover lift + shadow (card-lift). Avatar 64/80px rounded-full gradient (per-speaker, falls back to slate-400 flat when no brand pairing is set). Name Plus Jakarta 800 15px #0C1F31, hover #DC183C. Role 12px #DC183C 600. Company 11px #6A7581 uppercase tracking-wide 700.'
   };
   function toggleDevMode(){const on=document.body.classList.toggle('dev-on');const b=document.getElementById('devToggle');if(b)b.classList.toggle('on',on);if(on)showToast('Dev Mode on, tap any ⓘ for the BRIEF.');lucide.createIcons();}
