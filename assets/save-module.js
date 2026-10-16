@@ -28,15 +28,15 @@
     { sel: 'a.episode-card', type: 'podcast', inline: '.play-btn' },
     { sel: 'a.card-lift[href="single-discussion.html"]', type: 'discussion', pad: 'always' }
   ];
-  // Single pages: the pill under the title.
+  // Single pages: joins an existing action row when the page has one (anchor), else gets its own pill under the title.
   var PAGES = {
-    'public-article.html': { type: 'article', mt: 16, mb: 0 },
+    'public-article.html': { type: 'article', mt: 16, mb: 0, anchor: '#shareRow', small: true },
     'public-guide.html': { type: 'guide', mt: 16, mb: 0 },
     'public-resource.html': { type: 'resource', mt: 12, mb: 0 },
-    'public-podcast-episode.html': { type: 'podcast', mt: 14, mb: 0, dark: true },
+    'public-podcast-episode.html': { type: 'podcast', mt: 14, mb: 0, dark: true, anchor: '#podcastShareRow' },
     'event-single-online.html': { type: 'event', mt: 20, mb: 0, dark: true },
     'event-single-in-person.html': { type: 'event', mt: 20, mb: 0, dark: true },
-    'single-discussion.html': { type: 'discussion', mt: -8, mb: 24 }
+    'single-discussion.html': { type: 'discussion', mt: -8, mb: 24, anchor: '#discThreadBar', small: true }
   };
   // Community posts: quiet Save in the action row, and the "..." menu item adopted.
   var POSTS = [
@@ -105,11 +105,20 @@
         b.__card = card; b.__rule = r;
       });
     });
-    // single page pill
+    // single page: joins an existing action row (anchor) so it never sits alone on its own line;
+    // falls back to a pill under the title when the page has no such row.
     var P = PAGES[here];
     if (P) {
       var h = document.querySelector('h1');
-      if (h && !h.__sv) {
+      var anchorEl = P.anchor ? document.querySelector(P.anchor) : null;
+      if (anchorEl && !anchorEl.__sv) {
+        anchorEl.__sv = 1;
+        if (h) h.__sv = 1;
+        var extra = (P.dark ? ' sv-dark' : '') + (P.small ? ' sv-outline sv-sm' : '');
+        var ab = btn('round', extra);
+        ab.setAttribute('data-sv-type', P.type); ab.__h1 = h || anchorEl; ab.__page = P;
+        anchorEl.appendChild(ab);
+      } else if (!P.anchor && h && !h.__sv) {
         h.__sv = 1;
         var row = document.createElement('div'); row.className = 'sv-row';
         row.style.margin = P.mt + 'px 0 ' + P.mb + 'px';
