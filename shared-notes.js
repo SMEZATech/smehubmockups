@@ -134,6 +134,12 @@ window.SHARED_NOTES = {
       "ts": "2026-07-10",
       "actioned": true,
       "text": "- I have combined the last two sections into one, please check the updated mockup"
+    },
+    "first-section": {
+      "label": "First Section",
+      "author": "Tshepho",
+      "ts": "2026-10-16",
+      "text": "- Revise the first section with the widget on the right"
     }
   },
 
