@@ -87,7 +87,7 @@ window.MOCKUP_STATUS = {
   "public-404.html": "finalised",
   "public-unauthorized.html": "finalised"
 };
-window.MOCKUP_STATUS_PUBLISHED = "2026-10-06T07:54:08.941Z";
+window.MOCKUP_STATUS_PUBLISHED = "2026-10-16T06:50:55.486Z";
 /* Developer builds (staging), { mockup file: { url, status } }; status: "pending-review" | "reviewed" | "approved" */
 window.MOCKUP_DEV = {
   "public-home.html": {"url":"https://smesastg.wpengine.com/","status":"reviewed"},
@@ -122,7 +122,7 @@ window.MOCKUP_DEV = {
   "public-error.html": {"url":"","status":"approved"},
   "public-about.html": {"url":"https://smesastg.wpengine.com/about/","status":"approved"},
   "public-contact.html": {"url":"https://smesastg.wpengine.com/contact-us/","status":"approved"},
-  "public-advertise.html": {"url":"https://smesastg.wpengine.com/advertise-with-us/","status":"approved"},
+  "public-advertise.html": {"url":"https://smesastg.wpengine.com/advertise-with-us/","status":"reviewed"},
   "public-privacy.html": {"url":"https://smesastg.wpengine.com/privacy-policy/","status":"approved"},
   "public-terms.html": {"url":"https://smesastg.wpengine.com/terms-of-use/","status":"approved"},
   "public-refunds.html": {"url":"https://smesastg.wpengine.com/refund-and-cancellation/","status":"approved"},
@@ -141,6 +141,7 @@ window.MOCKUP_DEV = {
   "newsletter.html": {"url":"https://smesastg.wpengine.com/newsletters/","status":"approved"},
   "newsletter-issue.html": {"url":"https://smesastg.wpengine.com/newsletters/back-from-the-long-weekend-heres-what-you-missed/","status":"reviewed"},
   "podcast.html": {"url":"https://smesastg.wpengine.com/podcast/","status":"approved"},
+  "public-podcast-episode.html": {"url":"","status":"reviewed"},
   "public-help.html": {"url":"https://smesastg.wpengine.com/help/","status":"approved"},
   "public-help-category.html": {"url":"https://smesastg.wpengine.com/help-category/getting-started/","status":"approved"},
   "public-help-article.html": {"url":"https://smesastg.wpengine.com/help/how-to-change-email-or-password/","status":"approved"},
