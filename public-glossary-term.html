@@ -33,6 +33,7 @@
     .search-overlay.active{opacity:1;pointer-events:auto;transform:translateY(0);}
     @media (min-width:640px){ .search-overlay{padding:0 1.5rem;} }
 </style>
+<link rel="stylesheet" href="assets/save-module.css" />
 </head>
 <body class="bg-[#FCFCFC] text-[#121A21] antialiased">
 <header class="bg-white border-b border-[#E7EBEF] sticky top-0 z-30 relative">
@@ -142,12 +143,11 @@
           </div>
         </div>
         
-        <div class="flex items-center gap-1.5">
-          <button class="w-8 h-8 rounded-full border border-[#E7EBEF] flex items-center justify-center hover:bg-slate-50 transition text-slate-500"><i data-lucide="copy" class="w-3.5 h-3.5"></i></button>
-          <button class="w-8 h-8 rounded-full border border-[#E7EBEF] flex items-center justify-center hover:bg-slate-50 transition text-slate-500"><svg viewBox="0 0 24 24" fill="currentColor" class="w-3.5 h-3.5"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></button>
-          <button class="w-8 h-8 rounded-full border border-[#E7EBEF] flex items-center justify-center hover:bg-slate-50 transition text-slate-500"><svg viewBox="0 0 24 24" fill="currentColor" class="w-3.5 h-3.5"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.42v1.56h.05c.47-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.07 2.07 0 1 1 0-4.14 2.07 2.07 0 0 1 0 4.14zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.8 0 0 .78 0 1.73v20.54C0 23.22.8 24 1.77 24h20.45C23.2 24 24 23.22 24 22.27V1.73C24 .78 23.2 0 22.22 0z"/></svg></button>
-          <button class="w-8 h-8 rounded-full border border-[#E7EBEF] flex items-center justify-center hover:bg-slate-50 transition text-slate-500"><svg viewBox="0 0 24 24" fill="currentColor" class="w-3.5 h-3.5"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.469h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.469h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></button>
-          <button class="w-8 h-8 rounded-full border border-[#E7EBEF] flex items-center justify-center hover:bg-slate-50 transition text-slate-500"><i data-lucide="share-2" class="w-3.5 h-3.5"></i></button>
+        <div id="shareRow" class="flex items-center gap-1.5">
+          <button type="button" onclick="copyLink()" aria-label="Copy link" class="w-8 h-8 rounded-full border border-[#E7EBEF] flex items-center justify-center hover:border-[#DC183C] hover:text-[#DC183C] transition text-slate-500"><i data-lucide="copy" class="w-3.5 h-3.5"></i></button>
+          <a href="#" onclick="event.preventDefault();showToast('Shared to X.')" aria-label="Share on X" class="w-8 h-8 rounded-full border border-[#E7EBEF] flex items-center justify-center hover:border-[#DC183C] hover:text-[#DC183C] transition text-slate-500"><svg viewBox="0 0 24 24" fill="currentColor" class="w-3.5 h-3.5"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+          <a href="#" onclick="event.preventDefault();showToast('Shared to LinkedIn.')" aria-label="Share on LinkedIn" class="w-8 h-8 rounded-full border border-[#E7EBEF] flex items-center justify-center hover:border-[#DC183C] hover:text-[#DC183C] transition text-slate-500"><svg viewBox="0 0 24 24" fill="currentColor" class="w-3.5 h-3.5"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.42v1.56h.05c.47-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.07 2.07 0 1 1 0-4.14 2.07 2.07 0 0 1 0 4.14zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.8 0 0 .78 0 1.73v20.54C0 23.22.8 24 1.77 24h20.45C23.2 24 24 23.22 24 22.27V1.73C24 .78 23.2 0 22.22 0z"/></svg></a>
+          <a href="#" onclick="event.preventDefault();showToast('Shared to Facebook.')" aria-label="Share on Facebook" class="w-8 h-8 rounded-full border border-[#E7EBEF] flex items-center justify-center hover:border-[#DC183C] hover:text-[#DC183C] transition text-slate-500"><svg viewBox="0 0 24 24" fill="currentColor" class="w-3.5 h-3.5"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.469h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.469h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>
         </div>
       </div>
 
@@ -309,8 +309,13 @@
 </footer>
 
 <div id="overlay-root"></div>
+<div id="toast" class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-50"></div>
 
 <script>
+  function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c])); }
+  function showToast(m){const el=document.getElementById('toast');el.classList.remove('hidden');el.innerHTML=`<div class="bg-[#0C1F31] text-white rounded-full pl-3 pr-5 py-2.5 shadow-2xl flex items-center gap-2 text-sm font-semibold" style="border-left:4px solid #29A37A"><i data-lucide="check-circle" class="w-4 h-4" style="color:#29A37A"></i><span>${esc(m)}</span></div>`;lucide.createIcons();setTimeout(()=>{el.classList.add('hidden');el.innerHTML='';},2400);}
+  function copyLink(){if(navigator.clipboard)navigator.clipboard.writeText(location.href).catch(()=>{});showToast('Link copied.');}
+
   // TOC active-state on scroll
   const links = document.querySelectorAll('#tocNav .toc-link');
   const targets = Array.from(links).map(a=>document.querySelector(a.getAttribute('href'))).filter(Boolean);
@@ -355,5 +360,6 @@
   lucide.createIcons();
 </script>
 <script src="member-chrome.js"></script>
+<script src="assets/save-module.js"></script>
 </body>
 </html>

@@ -38,9 +38,10 @@
     'event-single-online.html': { type: 'event', mt: 20, mb: 0, dark: true },
     'event-single-in-person.html': { type: 'event', mt: 20, mb: 0, dark: true },
     'single-discussion.html': { type: 'discussion', mt: -8, mb: 24, anchor: '#discThreadBar', small: true },
-    'public-solution-category.html': { type: 'solution', mt: 20, mb: 0, dark: true, anchor: '#shareRow' },
-    'public-brand.html': { type: 'brand', mt: 16, mb: 0, dark: true, anchor: '#shareRow', small: true },
-    'newsletter-issue.html': { type: 'newsletter', mt: 14, mb: 0, dark: true, anchor: '#shareRow' }
+    'public-solution-category.html': { type: 'solution', dark: true, anchor: '#shareRow', pill: true, prepend: true },
+    'public-brand.html': { type: 'brand', dark: true, anchor: '#shareRow', pill: true, prepend: true },
+    'newsletter-issue.html': { type: 'newsletter', mt: 14, mb: 0, dark: true, anchor: '#shareRow' },
+    'public-glossary-term.html': { type: 'glossary', anchor: '#shareRow', small: true }
   };
   // Community posts: quiet Save in the action row, and the "..." menu item adopted.
   var POSTS = [
@@ -124,9 +125,9 @@
         anchorEl.__sv = 1;
         if (h) h.__sv = 1;
         var extra = (P.dark ? ' sv-dark' : (P.small ? ' sv-outline' : '')) + (P.small ? ' sv-sm' : '');
-        var ab = btn('round', extra);
+        var ab = btn(P.pill ? 'pill' : 'round', extra);
         ab.setAttribute('data-sv-type', P.type); ab.__h1 = h || anchorEl; ab.__page = P;
-        anchorEl.appendChild(ab);
+        if (P.prepend) anchorEl.insertBefore(ab, anchorEl.firstChild); else anchorEl.appendChild(ab);
       } else if (!P.anchor && h && !h.__sv) {
         h.__sv = 1;
         var row = document.createElement('div'); row.className = 'sv-row';
