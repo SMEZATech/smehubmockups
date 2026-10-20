@@ -26,7 +26,8 @@
     { sel: 'a.group[href="public-resource.html"], a.result[data-type="resource"]', type: 'resource', pad: 'result' },
     { sel: 'article.reveal[class*="rounded-2xl"]', type: 'event', file: 'events.html' },
     { sel: 'a.episode-card', type: 'podcast', inline: '.play-btn' },
-    { sel: 'a.card-lift[href="single-discussion.html"]', type: 'discussion', pad: 'always' }
+    { sel: 'a.card-lift[href="single-discussion.html"]', type: 'discussion', pad: 'always' },
+    { sel: '[data-sv-card="brand"]', type: 'brand', anchor: '[data-sv-anchor]' }
   ];
   // Single pages: joins an existing action row when the page has one (anchor), else gets its own pill under the title.
   var PAGES = {
@@ -36,7 +37,10 @@
     'public-podcast-episode.html': { type: 'podcast', mt: 14, mb: 0, dark: true, anchor: '#podcastShareRow' },
     'event-single-online.html': { type: 'event', mt: 20, mb: 0, dark: true },
     'event-single-in-person.html': { type: 'event', mt: 20, mb: 0, dark: true },
-    'single-discussion.html': { type: 'discussion', mt: -8, mb: 24, anchor: '#discThreadBar', small: true }
+    'single-discussion.html': { type: 'discussion', mt: -8, mb: 24, anchor: '#discThreadBar', small: true },
+    'public-solution-category.html': { type: 'solution', mt: 20, mb: 0, dark: true, anchor: '#shareRow' },
+    'public-brand.html': { type: 'brand', mt: 16, mb: 0, dark: true, anchor: '#shareRow', small: true },
+    'newsletter-issue.html': { type: 'newsletter', mt: 14, mb: 0, dark: true, anchor: '#shareRow' }
   };
   // Community posts: quiet Save in the action row, and the "..." menu item adopted.
   var POSTS = [
@@ -88,11 +92,16 @@
       list.forEach(function(card){
         if (card.__sv) return; card.__sv = 1;
         var b;
-        if (r.inline) {
+        if (r.anchor) {
+          var anchorEl = card.querySelector(r.anchor);
+          if (!anchorEl) return;
+          b = btn('round', r.extra || ' sv-outline sv-sm');
+          anchorEl.appendChild(b);
+        } else if (r.inline) {
           var tgt = card.querySelector(r.inline);
           if (!tgt || !tgt.parentNode) return;
           var g = document.createElement('span'); g.className = 'sv-grp';
-          tgt.parentNode.insertBefore(g, tgt); b = btn('round', ' sv-flat'); g.appendChild(b); g.appendChild(tgt);
+          tgt.parentNode.insertBefore(g, tgt); b = btn('round', r.extra || ' sv-flat'); g.appendChild(b); g.appendChild(tgt);
         } else {
           var f = card.firstElementChild, host = card;
           if (f && f.querySelector && f.querySelector('img') && /relative/.test(f.className)) host = f;
@@ -114,7 +123,7 @@
       if (anchorEl && !anchorEl.__sv) {
         anchorEl.__sv = 1;
         if (h) h.__sv = 1;
-        var extra = (P.dark ? ' sv-dark' : '') + (P.small ? ' sv-outline sv-sm' : '');
+        var extra = (P.dark ? ' sv-dark' : (P.small ? ' sv-outline' : '')) + (P.small ? ' sv-sm' : '');
         var ab = btn('round', extra);
         ab.setAttribute('data-sv-type', P.type); ab.__h1 = h || anchorEl; ab.__page = P;
         anchorEl.appendChild(ab);
