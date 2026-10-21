@@ -518,12 +518,15 @@ function renderTab(){
   document.getElementById('profile-content').innerHTML = (map[state.tab]||tabTimeline)();
   lucide.createIcons();
 }
+// For sub-section headings inside a tab only; never repeat the tab's own name as a heading.
 function sectionLabel(t, brief){ const b = brief?`<button onclick="openBrief('${brief}')" class="dev-badge w-4 h-4 rounded-full bg-[#DC183C] text-white items-center justify-center text-[9px] font-bold leading-none animate-pulse ml-1.5">i</button>`:''; return `<h3 class="font-jakarta font-bold uppercase text-sm text-[#121A21] tracking-wide flex items-center">${esc(t)}${b}</h3>`; }
+// The active tab already names the panel, so no visible heading; the brief stays reachable in Dev Mode.
+function tabBrief(brief){ return `<div class="dev-badge mb-3 items-center gap-1.5 text-[10px] font-bold uppercase tracking-widest text-[#DC183C]"><button onclick="openBrief('${brief}')" class="w-4 h-4 rounded-full bg-[#DC183C] text-white grid place-items-center text-[9px] font-bold leading-none animate-pulse">i</button>Tab brief</div>`; }
 
 /* ===== TIMELINE ===== */
 function tabTimeline(){
   const rows = M_POSTS.map(p=>postCard(p)).join('');
-  return `<div class="flex items-center justify-between mb-3">${sectionLabel('Timeline','timeline')}</div><div class="space-y-4">${rows}</div>`;
+  return `${tabBrief('timeline')}<div class="space-y-4">${rows}</div>`;
 }
 function postCard(p){
   const t = TYPES[p.type];
@@ -587,16 +590,16 @@ function lockPanel(title, line){
 function tabAbout(){
   if (VIEW === 'visitor') {
     const first = MEMBER.name.split(' ')[0];
-    return `<div class="flex items-center justify-between mb-3">${sectionLabel('About','about')}</div>
+    return `${tabBrief('about')}
     <div class="bg-white rounded-2xl border border-slate-200 p-6 sm:p-8 shadow-sm">
       <p class="text-[14.5px] text-[#121A21] leading-relaxed">${esc(MEMBER.bio)}</p>
       ${lockPanel(`See ${esc(first)}&rsquo;s company details`, 'Sign up to see the full profile, including industry, interests and LinkedIn, and to connect with fellow SMEs.')}
     </div>`;
   }
-  return `<div class="flex items-center justify-between mb-3">${sectionLabel('About','about')}</div>
+  return `${tabBrief('about')}
     <div class="bg-white rounded-2xl border border-slate-200 p-6 sm:p-8 shadow-sm">
       <p class="text-[14.5px] text-[#121A21] leading-relaxed">${esc(MEMBER.bio)}</p>
-      
+
       <div class="mt-8 grid sm:grid-cols-2 gap-8 sm:gap-12">
         <!-- Company Details -->
         <div>
@@ -630,19 +633,19 @@ function tabGroups(){
       ${g.role==='Moderator' ? '<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#FFF1E0] text-[#AE6B0A] shrink-0">Moderator</span>' : '<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-slate-100 text-slate-500 shrink-0">Member</span>'}
       <i data-lucide="chevron-right" class="w-4 h-4 text-slate-500 shrink-0"></i>
     </a>`).join('');
-  return `<div class="flex items-center justify-between mb-3">${sectionLabel('Groups','groups')}<span class="text-xs font-bold text-slate-500">${M_GROUPS.length} groups</span></div><div class="space-y-3">${rows}</div>`;
+  return `${tabBrief('groups')}<div class="space-y-3">${rows}</div>`;
 }
 
 /* ===== CONNECTIONS ===== */
 function tabConnections(){
-  if (VIEW === 'visitor') return `<div class="flex items-center justify-between mb-3">${sectionLabel('Connections','connections')}</div><div class="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm">${lockPanel('See who ' + esc(MEMBER.name.split(' ')[0]) + ' is connected with', 'Connections are visible to members. Sign up to build your own network of SMEs.')}</div>`;
+  if (VIEW === 'visitor') return `${tabBrief('connections')}<div class="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm">${lockPanel('See who ' + esc(MEMBER.name.split(' ')[0]) + ' is connected with', 'Connections are visible to members. Sign up to build your own network of SMEs.')}</div>`;
   const cards = M_CONNECTIONS.map(c=>`
     <a href="single-member.html?view=member" class="flex flex-col items-center text-center border border-slate-100 rounded-2xl p-4 hover:shadow-md transition bg-white">
       ${monogram(c.initials,56)}
       <p class="font-jakarta font-bold text-sm text-[#121A21] mt-3">${esc(c.name)}</p>
       <p class="text-[11px] text-slate-500 mt-0.5">${esc(c.role)} &middot; ${esc(c.company)}</p>
     </a>`).join('');
-  return `<div class="flex items-center justify-between mb-3">${sectionLabel('Connections','connections')}</div>
+  return `${tabBrief('connections')}
     <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">${cards}</div>
     <button onclick="showToast('Loading more connections…',null)" class="w-full mt-4 py-2.5 rounded-full border border-slate-200 text-slate-600 hover:bg-slate-50 text-sm font-bold transition">Show all connections</button>`;
 }
