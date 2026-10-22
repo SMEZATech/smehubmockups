@@ -12,6 +12,8 @@
   <script>tailwind.config={theme:{extend:{fontFamily:{jakarta:['Plus Jakarta Sans','sans-serif'],inter:['Inter','system-ui','sans-serif'],mono:['ui-monospace','monospace']},colors:{primary:'#DC183C',accent:'#FF9900',navy:'#0C1F31',success:'#29A37A',ink:'#121A21'}}}};</script>
   
   <style>
+    .hero-bg{background:linear-gradient(115deg,#0C1F31 0%,#0C1F31 55%,#2b1626 85%,#5e1a2c 120%);}
+    .dot-pattern{background-image:radial-gradient(rgba(255,255,255,.07) 1px,transparent 1.5px);background-size:22px 22px;}
     html,body{font-family:'Inter',system-ui,sans-serif;} .font-jakarta{font-family:'Plus Jakarta Sans',sans-serif;letter-spacing:.005em;}
     .no-scrollbar::-webkit-scrollbar{display:none;} .no-scrollbar{-ms-overflow-style:none;scrollbar-width:none;}
     @keyframes fadeUp{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}} .reveal{animation:fadeUp .45s cubic-bezier(.2,.7,.2,1) backwards;}
@@ -159,12 +161,12 @@
 <!-- Members directory as live since 14 Oct (smesa-network + smesa-directory-gate + smesa-members-desktop-fix):
      members-only, hero "Find fellow SMEs", filter column, All Members / My Connections tabs, "SMEs like yours", cards with real
      cover photos, Previous / Page N / Next. NEVER any member total or count, anywhere. Visitors get the sign-up wall (?view=visitor). -->
-<section class="relative overflow-hidden border-b border-[#E7EBEF] bg-[linear-gradient(120deg,#FDECEF_0%,#FFF8EE_45%,#F4F6F8_100%)]">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-7 sm:py-10">
-    <h1 class="font-jakarta font-extrabold text-[28px] sm:text-[36px] leading-tight text-[#121A21] tracking-tight flex items-center gap-2"><span id="hero-title">Find fellow SMEs, Tshepho</span>
+<section class="hero-bg text-white relative overflow-hidden"><div class="absolute inset-0 dot-pattern opacity-70 pointer-events-none"></div>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-7 sm:py-10 relative">
+    <h1 class="font-jakarta font-extrabold text-[28px] sm:text-[36px] leading-tight text-white tracking-tight flex items-center gap-2"><span id="hero-title">Find fellow SMEs, Tshepho</span>
       <button onclick="openBrief('directory')" class="dev-badge w-4 h-4 rounded-full bg-[#DC183C] text-white items-center justify-center text-[9px] font-bold leading-none animate-pulse" title="Implementation notes">i</button>
     </h1>
-    <p class="text-[15px] text-slate-600 mt-2 max-w-xl leading-relaxed">Connect with South African SMEs: suppliers, customers and future partners, and grow the network your business runs on.</p>
+    <p class="text-[15px] text-white/70 mt-2 max-w-xl leading-relaxed">Connect with South African SMEs: suppliers, customers and future partners, and grow the network your business runs on.</p>
   </div>
 </section>
 
