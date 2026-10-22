@@ -87,7 +87,7 @@ window.MOCKUP_STATUS = {
   "public-404.html": "finalised",
   "public-unauthorized.html": "finalised"
 };
-window.MOCKUP_STATUS_PUBLISHED = "2026-10-16T06:50:55.486Z";
+window.MOCKUP_STATUS_PUBLISHED = "2026-10-22T05:08:41.939Z";
 /* Developer builds (staging), { mockup file: { url, status } }; status: "pending-review" | "reviewed" | "approved" */
 window.MOCKUP_DEV = {
   "public-home.html": {"url":"https://smesastg.wpengine.com/","status":"reviewed"},
@@ -128,7 +128,19 @@ window.MOCKUP_DEV = {
   "public-refunds.html": {"url":"https://smesastg.wpengine.com/refund-and-cancellation/","status":"approved"},
   "public-popia.html": {"url":"https://smesastg.wpengine.com/popia/","status":"approved"},
   "public-advertising-disclosure.html": {"url":"https://smesastg.wpengine.com/advertising-disclosure/","status":"approved"},
-  "member-finish-profile.html": {"url":"https://smesouthafrica.co.za/finish-profile/?preview=1","status":"pending-review"},
+  "member-hub.html": {"url":"","status":"approved"},
+  "members.html": {"url":"","status":"approved"},
+  "single-member.html": {"url":"","status":"approved"},
+  "single-post.html": {"url":"","status":"approved"},
+  "groups.html": {"url":"","status":"approved"},
+  "single-group.html": {"url":"","status":"approved"},
+  "forums.html": {"url":"","status":"approved"},
+  "single-discussion.html": {"url":"","status":"approved"},
+  "member-account.html": {"url":"","status":"approved"},
+  "member-messages.html": {"url":"","status":"approved"},
+  "member-notifications.html": {"url":"","status":"approved"},
+  "member-group-manage.html": {"url":"","status":"approved"},
+  "member-finish-profile.html": {"url":"https://smesouthafrica.co.za/finish-profile/?preview=1","status":"approved"},
   "events.html": {"url":"https://smesastg.wpengine.com/events/","status":"reviewed"},
   "event-single-in-person.html": {"url":"https://smesastg.wpengine.com/events/funding-summit-2026/","status":"reviewed"},
   "event-single-online.html": {"url":"https://smesastg.wpengine.com/events/how-to-scale-a-business-with-minimal-capital-investment/","status":"reviewed"},
