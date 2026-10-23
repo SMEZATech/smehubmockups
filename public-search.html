@@ -140,6 +140,20 @@
       <p class="text-xs text-[#6A7581] mt-2 flex items-center gap-1"><i data-lucide="link" class="w-3 h-3"></i>smesouthafrica.co.za › articles › raise-funding</p>
     </a>
 
+    <a href="public-article.html" class="result card-lift block bg-white border border-[#E7EBEF] rounded-2xl p-5" data-type="article" data-text="how to raise business funding without giving up equity bootstrapping revenue based finance">
+      <span class="inline-flex items-center gap-1 text-[11px] font-bold uppercase tracking-wider text-[#DC183C] bg-[#FDECEF] rounded-full px-2.5 py-1 mb-2"><i data-lucide="newspaper" class="w-3 h-3"></i>Article</span>
+      <h3 class="font-jakarta font-extrabold text-lg leading-snug result-title hover:text-[#DC183C] transition">How to read a lender&rsquo;s criteria before you apply for business funding</h3>
+      <p class="text-sm text-slate-600 mt-1 result-snippet">What funders check first, and how to see if your business fits before you spend time on an application.</p>
+      <p class="text-xs text-[#6A7581] mt-2 flex items-center gap-1"><i data-lucide="link" class="w-3 h-3"></i>smesouthafrica.co.za › articles › raise-funding</p>
+    </a>
+
+    <a href="public-article.html" class="result card-lift block bg-white border border-[#E7EBEF] rounded-2xl p-5" data-type="article" data-text="how to raise business funding without giving up equity bootstrapping revenue based finance">
+      <span class="inline-flex items-center gap-1 text-[11px] font-bold uppercase tracking-wider text-[#DC183C] bg-[#FDECEF] rounded-full px-2.5 py-1 mb-2"><i data-lucide="newspaper" class="w-3 h-3"></i>Article</span>
+      <h3 class="font-jakarta font-extrabold text-lg leading-snug result-title hover:text-[#DC183C] transition">A business funding readiness checklist for small businesses</h3>
+      <p class="text-sm text-slate-600 mt-1 result-snippet">Statements, registration, turnover and trading history: the basics most funders ask for, in one list.</p>
+      <p class="text-xs text-[#6A7581] mt-2 flex items-center gap-1"><i data-lucide="link" class="w-3 h-3"></i>smesouthafrica.co.za › articles › raise-funding</p>
+    </a>
+
     <a href="public-guide.html" class="result card-lift block bg-white border border-[#E7EBEF] rounded-2xl p-5" data-type="guide" data-text="the complete business funding readiness guide checklist documents financial statements pitch deck">
       <span class="inline-flex items-center gap-1 text-[11px] font-bold uppercase tracking-wider text-[#29A37A] bg-[#E4F5EE] rounded-full px-2.5 py-1 mb-2"><i data-lucide="book-open" class="w-3 h-3"></i>Guide</span>
       <h3 class="font-jakarta font-extrabold text-lg leading-snug result-title hover:text-[#DC183C] transition">The complete business funding readiness guide</h3>
@@ -285,14 +299,19 @@
     const q=document.getElementById('q').value.trim().toLowerCase();
     const cards=document.querySelectorAll('#results .result');
     let visible=0;
+    // "All results" shows 3 per type with "View (N) more" (live: search); a type tab shows every match.
+    document.querySelectorAll('#results .vm').forEach(b=>b.remove());
+    const seen={},lastOf={};
     cards.forEach(c=>{
       const typeOk=activeTab==='all'||c.dataset.type===activeTab;
       const txt=(c.dataset.text+' '+c.querySelector('.result-title').textContent+' '+c.querySelector('.result-snippet').textContent).toLowerCase();
       const textOk=q===''||txt.includes(q);
-      const show=typeOk&&textOk;
+      let show=typeOk&&textOk;
+      if(show&&activeTab==='all'){const t=c.dataset.type;seen[t]=(seen[t]||0)+1;if(seen[t]>3)show=false;else lastOf[t]=c;}
       c.style.display=show?'':'none';
       if(show)visible++;
     });
+    if(activeTab==='all'){Object.keys(seen).forEach(t=>{const more=seen[t]-3;if(more>0){const b=document.createElement('button');b.type='button';b.className='vm text-sm font-bold text-[#DC183C] hover:underline px-1 -mt-2 mb-2';b.textContent='View ('+more+') more';b.onclick=()=>setTab(document.querySelector('#tabs .tab[data-filter="'+t+'"]'),t);lastOf[t].after(b);}});}
     // count line
     const cnt=document.getElementById('count');
     if(q===''){cnt.innerHTML=`Showing all results`;}

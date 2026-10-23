@@ -228,7 +228,8 @@
 
 <main class="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
 
-<div class="max-w-3xl">
+<div class="lg:grid lg:grid-cols-[minmax(0,1fr)_300px] lg:gap-8 items-start">
+<div class="max-w-3xl min-w-0 lg:max-w-none">
   <div class="preview-switch flex items-center gap-1 text-[10px] font-bold mb-3"><span class="uppercase tracking-widest text-slate-400 mr-1">Preview</span><a href="?notifs=has" data-nf="has" class="h-6 leading-6 px-2.5 rounded-full bg-slate-100 text-slate-600 hover:bg-slate-200">Busy</a><a href="?notifs=few" data-nf="few" class="h-6 leading-6 px-2.5 rounded-full bg-slate-100 text-slate-600 hover:bg-slate-200">A few</a><a href="?notifs=empty" data-nf="empty" class="h-6 leading-6 px-2.5 rounded-full bg-slate-100 text-slate-600 hover:bg-slate-200">None yet</a></div>
   <div class="flex items-start justify-between gap-3 mb-4">
     <div><h1 class="font-jakarta font-extrabold text-[26px] tracking-tight flex items-center gap-2">Notifications <button onclick="openBrief('notifications')" class="dev-badge w-5 h-5 rounded-full bg-[#DC183C] text-white items-center justify-center text-[10px] font-bold leading-none animate-pulse" title="Implementation notes">i</button></h1>
@@ -240,6 +241,8 @@
   <div id="n-filters" class="flex gap-1.5 overflow-x-auto no-scrollbar pb-2"></div>
   <div id="n-list" class="mt-3"></div>
   <div class="text-center mt-5"><button id="n-more" onclick="loadEarlier()" class="h-11 px-5 rounded-full border border-slate-200 text-[13px] font-bold hover:border-[#0C1F31]">Load earlier</button></div>
+</div>
+<aside class="hidden lg:block sticky top-24" aria-label="Advertisement"><p class="text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-1.5">Advertisement</p><div class="w-[300px] h-[600px] rounded-xl border border-dashed border-slate-300 bg-slate-50 grid place-items-center text-center text-[12px] text-slate-400 font-semibold">300 x 600<br>Half page ad</div></aside>
 </div>
 
 </main>
@@ -272,7 +275,7 @@
   const BRIEFS = {
     notifications: { title:'Notifications', sub:'The full list behind the header bell',
       purpose:'<b>Live today:</b> BuddyBoss notifications at /members/&lt;username&gt;/notifications/. <b>Built on Local:</b> sme-south-africa.local/community/notifications/ (sme-community). The bell badge showed a count but had no page behind it. This is the inbox for everything that needs the member: mentions, replies, connection requests, group invitations, events, funding status and compliance deadlines.',
-      data:'notifications(id, user_id, kind, actor_id, object_type, object_id, text, read_at, acted_at, created_at). Kinds: mention, reply, conn, group, event, funding, system.',
+      data:'notifications(id, user_id, kind, actor_id, object_type, object_id, text, read_at, acted_at, created_at). Kinds: mention, reply, conn, group, event, resource, funding, system. Live: a 300x600 ad sits on the right at laptop width; "Resources" chip sits between Events and Funding (new templates and tools in the library); event notices read "Upcoming event: {title}, {date}. Save your seat."',
       logic:'Unread rows are tinted with a dot, grouped New then Earlier. Connection requests and group invitations carry inline actions so the member does not leave the page, and the resolved result replaces the buttons. Per-item menu: mark read or unread, turn off that kind (writes the preference in Account Settings), remove. Filters by kind. Funding and compliance items are transactional and must stay on even if a kind is muted. In-app notifications are separate from email: email obeys the comms ceiling, this list does not. Retain 90 days, then archive.',
       components:'Filter chips, New/Earlier groups, notification row with icon, inline actions, row menu, empty state, load earlier.' }
   };
@@ -302,7 +305,7 @@
   document.addEventListener('click', function(e){ if(!e.target.closest('#dropCommunity') && !e.target.closest('[onclick*=toggleHeaderDrop]')) closeHeaderDrop('community'); });
   document.addEventListener('keydown', function(e){ if(e.key === 'Escape'){ document.querySelectorAll('.ov.open').forEach(o => closeOverlay(o.id)); } });
 
-  const KIND = { mention:['at-sign','#DC183C','Mentions'], reply:['message-circle','#29A37A','Replies'], conn:['user-plus','#0C1F31','Connections'], group:['users','#AE6B0A','Groups'], event:['calendar-days','#2F6FED','Events'], funding:['landmark','#DC183C','Funding'], system:['bell','#6A7581','System'] };
+  const KIND = { mention:['at-sign','#DC183C','Mentions'], reply:['message-circle','#29A37A','Replies'], conn:['user-plus','#0C1F31','Connections'], group:['users','#AE6B0A','Groups'], event:['calendar-days','#2F6FED','Events'], resource:['book-open','#29A37A','Resources'], funding:['landmark','#DC183C','Funding'], system:['bell','#6A7581','System'] };
   let N = [
     { id:1, k:'conn', t:'<b>Lerato Khumalo</b> sent you a connection request.', ago:'12 min', unread:true, act:'conn' },
     { id:2, k:'mention', t:'<b>Naledi Mokoena</b> mentioned you in <b>How are you handling late payers?</b>', ago:'1 h', unread:true, href:'single-post.html' },
@@ -312,7 +315,9 @@
     { id:6, k:'system', t:'Your <b>CIPC annual return</b> is due in 5 days.', ago:'Yesterday', unread:false, href:'member-hub.html' },
     { id:7, k:'event', t:'<b>Business Compliance Essentials</b> starts tomorrow at 11:00.', ago:'Yesterday', unread:false, href:'event-single-online.html' },
     { id:8, k:'conn', t:'<b>Zanele Ndlovu</b> accepted your connection request.', ago:'Mon', unread:false },
-    { id:9, k:'reply', t:'<b>Thandi Mabasa</b> and 3 others replied to your post.', ago:'Mon', unread:false, href:'single-post.html' }
+    { id:9, k:'reply', t:'<b>Thandi Mabasa</b> and 3 others replied to your post.', ago:'Mon', unread:false, href:'single-post.html' },
+    { id:10, k:'event', t:'Upcoming event: <b>Business Compliance Essentials</b>, Thu 29 Oct, 11:00. Save your seat.', ago:'Tue', unread:false, href:'event-single-online.html' },
+    { id:11, k:'resource', t:'New in the resource library: <b>Proof of Income Template for Self-Employed Entrepreneurs</b>.', ago:'Tue', unread:false, href:'public-resource.html' }
   ];
   const EARLIER = [
     { id:20, k:'group', t:'You were approved to join <b>Gauteng Founders</b>.', ago:'12 Sep', unread:false },
