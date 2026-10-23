@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>Dr. Dineo Molefe, Speaker, SME South Africa</title>
-  <meta name="description" content="Dr. Dineo Molefe, Head of Advisory at Base Capital. SME South Africa event speaker on funding strategy and predictive analytics." />
+  <title>Dr. Dineo Molefe | SME Speaker</title>
+  <meta name="description" content="Dr. Dineo Molefe, Head of Advisory at Base Capital. Watch her SME Funding Summit talks and get the slides free with a member account." />
   <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <script src="https://cdn.tailwindcss.com"></script><script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
@@ -20,6 +20,77 @@
       .search-overlay{position:absolute;inset:0;background:#fff;z-index:20;display:flex;align-items:center;justify-content:center;padding:0 1rem;opacity:0;pointer-events:none;transform:translateY(-8px);transition:all .25s cubic-bezier(.2,.8,.2,1);}
     .search-overlay.active{opacity:1;pointer-events:auto;transform:translateY(0);}
     @media (min-width:640px){ .search-overlay{padding:0 1.5rem;} }
+    /* Speaker profile with talks: layout, states and copy as live (smesa-speakers-design.php 1.4.0), drawn in the 2026 CI */
+    .spk-pro-grid{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:44px;align-items:start;}
+    .spk-pro-grid.solo{grid-template-columns:minmax(0,1fr);}
+    .spk-at{border:1px solid #E7EBEF;border-radius:18px;padding:20px 22px;background:#fff;box-shadow:0 1px 2px rgba(12,31,49,.05);}
+    .spk-at h2{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:20px;color:#0C1F31;margin:0 0 4px;}
+    .spk-at p{margin:0 0 14px;font-size:14px;color:#6A7581;}
+    .spk-at-row{display:flex;align-items:center;gap:12px;padding:12px 0;border-top:1px solid #E7EBEF;color:#0C1F31;}
+    .spk-at p + .spk-at-row{border-top:0;}
+    .spk-at-ic{width:38px;height:38px;border-radius:10px;background:#FDECEF;color:#DC183C;display:grid;place-items:center;flex:none;}
+    .spk-at-ic.pod{background:#EAF0F4;color:#0C1F31;}
+    .spk-at-b{min-width:0;}
+    .spk-at-b b{display:block;font-size:15px;line-height:1.3;font-weight:700;transition:color .15s;}
+    .spk-at-b small{display:block;color:#6A7581;font-size:12.5px;font-weight:600;}
+    .spk-at-go{margin-left:auto;font-size:13px;font-weight:700;color:#DC183C;white-space:nowrap;}
+    .spk-at-row:hover b{color:#DC183C;}
+    .spk-tk{background:#F5F7FA;border-top:1px solid #E7EBEF;border-bottom:1px solid #E7EBEF;}
+    .spk-tk-in{padding-top:52px;padding-bottom:60px;}
+    .spk-tk h2{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:34px;line-height:1.15;color:#0C1F31;margin:0 0 6px;}
+    .spk-tk-sub{margin:0 0 26px;color:#6A7581;font-size:15.5px;}
+    .spk-tk-sum{font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#6A7581;margin:30px 0 14px;display:flex;align-items:center;gap:10px;}
+    .spk-tk-sub + .spk-tk-sum{margin-top:0;}
+    .spk-tk-sum::after{content:"";flex:1;height:1px;background:#DFE5EB;}
+    .spk-tk-sum a{color:#0C1F31;}.spk-tk-sum a:hover{color:#DC183C;}
+    .spk-tk-card{background:#fff;border:1px solid #E7EBEF;border-radius:20px;overflow:hidden;display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);box-shadow:0 12px 32px -22px rgba(12,31,49,.4);margin:0 0 18px;scroll-margin-top:88px;}
+    .spk-tk-card.noplay{grid-template-columns:1fr;}
+    .spk-tk-media{position:relative;aspect-ratio:16/9;background:#0C1F31;}
+    .spk-tk-play{all:unset;cursor:pointer;display:block;width:100%;height:100%;position:relative;}
+    .spk-tk-poster{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;gap:6px;padding:26px 28px;color:#fff;background:radial-gradient(120% 90% at 85% 10%,rgba(220,24,60,.55),transparent 60%),linear-gradient(135deg,#0C1F31,#14324a);}
+    .spk-tk-poster .pt{font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:#FF9900;}
+    .spk-tk-poster b{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:22px;line-height:1.15;max-width:22ch;}
+    .spk-tk-poster em{font-style:normal;font-size:13px;color:rgba(255,255,255,.7);}
+    .spk-tk-pb{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:64px;height:64px;border-radius:50%;background:#DC183C;color:#fff;display:grid;place-items:center;box-shadow:0 8px 22px rgba(0,0,0,.35);transition:transform .15s;}
+    .spk-tk-play:hover .spk-tk-pb{transform:translate(-50%,-50%) scale(1.08);}
+    .spk-tk-play:focus-visible{outline:3px solid #DC183C;outline-offset:-3px;}
+    .spk-tk-media iframe{position:absolute;inset:0;width:100%;height:100%;border:0;}
+    .spk-tk-body{padding:26px 28px;display:flex;flex-direction:column;gap:12px;min-width:0;}
+    .spk-tk-tag{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#DC183C;}
+    .spk-tk-tag i{width:6px;height:6px;border-radius:50%;background:#DC183C;}
+    .spk-tk-body h3{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:26px;line-height:1.15;color:#0C1F31;margin:0;}
+    .spk-tk-when{font-size:13.5px;color:#6A7581;}
+    .spk-tk-desc{margin:0;color:#33424B;font-size:15.5px;line-height:1.6;}
+    .spk-tk-slides{margin-top:auto;padding-top:6px;display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;}
+    .spk-tk-btn{display:inline-flex;align-items:center;gap:9px;height:48px;padding:0 24px;border-radius:9999px;background:#DC183C;color:#fff;font-weight:700;font-size:15px;box-shadow:0 10px 22px -14px rgba(220,24,60,.8);transition:background .15s;}
+    .spk-tk-btn:hover{background:#B0142F;}
+    .spk-tk-btn.ok{background:#0C1F31;box-shadow:0 10px 22px -14px rgba(12,31,49,.8);}
+    .spk-tk-btn.ok:hover{background:#16324A;}
+    .spk-tk-note{font-size:13px;color:#6A7581;}.spk-tk-note b{color:#0C1F31;}
+    .spk-tk-file{display:inline-flex;align-items:center;gap:8px;font-size:13px;color:#6A7581;}
+    .spk-tk-card.noplay .spk-tk-body{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:6px 22px;align-items:center;}
+    .spk-tk-card.noplay h3{margin-top:8px;}.spk-tk-card.noplay .spk-tk-desc{margin-top:6px;}
+    .spk-tk-doc{width:64px;height:78px;border-radius:10px;background:linear-gradient(160deg,#fff,#F1F4F6);border:1px solid #E7EBEF;display:grid;place-items:center;color:#DC183C;grid-row:1/4;}
+    .spk-tk-card.noplay .spk-tk-slides{grid-column:3;grid-row:1/4;margin:0;padding:0;}
+    .spk-tk-soon{display:inline-flex;align-items:center;gap:8px;font-size:13px;color:#6A7581;background:#F5F7FA;border:1px solid #E7EBEF;border-radius:99px;padding:5px 12px;width:max-content;margin-top:10px;}
+    .spk-more{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;}
+    .spk-mini{display:flex;align-items:center;gap:14px;padding:16px;min-width:0;background:#fff;border:1px solid #E7EBEF;border-radius:14px;transition:box-shadow .15s,transform .15s,border-color .15s;}
+    .spk-mini:hover{box-shadow:0 10px 28px rgba(12,31,49,.12);transform:translateY(-2px);border-color:#F5B8C4;}
+    .spk-mini-av{width:56px;height:56px;border-radius:50%;flex:none;display:grid;place-items:center;color:#fff;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:17px;box-shadow:0 8px 24px rgba(12,31,49,.14);}
+    .spk-mini .n{display:block;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:16px;line-height:1.2;color:#0C1F31;transition:color .15s;}
+    .spk-mini .r{display:block;font-size:12.5px;color:#DC183C;font-weight:600;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+    #spkEx button{color:#cfdae2;}#spkEx button.on{background:#fff;color:#0C1F31;}
+    @media (max-width:1024px){.spk-pro-grid{grid-template-columns:1fr;gap:28px;}.spk-more{grid-template-columns:repeat(2,minmax(0,1fr));}}
+    @media (max-width:980px){.spk-tk-card{grid-template-columns:1fr;}}
+    @media (max-width:640px){
+      .spk-tk-in{padding-top:38px;padding-bottom:44px;}.spk-tk h2{font-size:28px;}
+      .spk-tk-body{padding:20px 18px;}.spk-tk-body h3{font-size:22px;}
+      .spk-tk-poster{padding:18px;}.spk-tk-poster b{font-size:17px;}
+      .spk-tk-card.noplay .spk-tk-body{grid-template-columns:1fr;gap:10px;}.spk-tk-doc{grid-row:auto;}.spk-tk-card.noplay .spk-tk-slides{grid-column:1;grid-row:auto;}
+      .spk-tk-btn{width:100%;justify-content:center;}
+      .spk-more{grid-template-columns:minmax(0,1fr);}
+    }
+    @media (prefers-reduced-motion:reduce){.spk-tk-pb,.spk-mini{transition:none;}}
 </style>
 </head>
 <body class="bg-[#FCFCFC] text-[#121A21] antialiased">
@@ -101,92 +172,67 @@
 </nav>
 
 
-<!-- SPEAKER PROFILE SECTION -->
+<!-- SPEAKER PROFILE (live: smesa-speakers-design.php 1.4.0) -->
 <section class="bg-white border-b border-[#E7EBEF]">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-10">
-    <nav aria-label="Breadcrumb" class="text-xs text-[#6A7581] flex items-center flex-wrap gap-x-1.5 mb-5"><a href="public-home.html" class="hover:text-[#DC183C] transition">Home</a><span class="text-slate-500">›</span><a href="event-speakers.html" class="hover:text-[#DC183C] transition">Speakers</a><span class="text-slate-500">›</span><span class="text-[#121A21] font-medium truncate">Dr. Dineo Molefe</span></nav>
-    <div class="flex flex-col sm:flex-row gap-6 sm:gap-8">
-      <div class="relative w-24 h-24 sm:w-32 sm:h-32 rounded-full shrink-0 shadow-lg overflow-hidden">
-        <div class="absolute inset-0 bg-gradient-to-br from-[#0C1F31] to-[#5e1a2c] grid place-items-center font-jakarta font-extrabold text-white text-4xl" aria-hidden="true">DM</div>
-      </div>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 pt-6 pb-8 sm:pt-[34px] sm:pb-11">
+    <nav aria-label="Breadcrumb" class="text-xs text-[#6A7581] flex items-center flex-wrap gap-x-1.5 mb-5"><a href="public-home.html" class="font-semibold hover:text-[#DC183C] transition">Home</a><span class="text-slate-500">›</span><a href="event-speakers.html" class="font-semibold hover:text-[#DC183C] transition">Speakers</a></nav>
+    <div id="spkGrid" class="spk-pro-grid">
       <div class="min-w-0">
-        <p class="text-[11px] font-bold uppercase tracking-widest text-[#DC183C] mb-1.5">SME Speaker</p>
-        <div class="flex items-start gap-2">
-          <h1 class="font-jakarta font-extrabold text-3xl sm:text-4xl text-[#0C1F31] tracking-tight">Dr. Dineo Molefe</h1>
-          <button onclick="openBrief()" class="dev-badge w-6 h-6 rounded-full bg-[#DC183C] text-white items-center justify-center text-[11px] font-bold mt-1.5">i</button>
+        <div class="flex items-center gap-4 sm:gap-6">
+          <div class="relative w-[88px] h-[88px] sm:w-32 sm:h-32 rounded-full shrink-0 overflow-hidden shadow-[0_8px_24px_rgba(12,31,49,.14)]">
+            <div class="absolute inset-0 bg-gradient-to-br from-[#0C1F31] to-[#5e1a2c] grid place-items-center font-jakarta font-extrabold text-white text-3xl sm:text-4xl" aria-hidden="true">DM</div>
+          </div>
+          <div class="min-w-0">
+            <p class="text-[11px] font-bold uppercase tracking-widest text-[#DC183C] mb-1.5">SME Speaker</p>
+            <div class="flex items-start gap-2">
+              <h1 class="font-jakarta font-extrabold text-[30px] sm:text-[44px] leading-[1.1] text-[#0C1F31] tracking-tight">Dr. Dineo Molefe</h1>
+              <button onclick="openBrief()" class="dev-badge w-6 h-6 rounded-full bg-[#DC183C] text-white items-center justify-center text-[11px] font-bold mt-1.5 shrink-0" title="Implementation notes">i</button>
+            </div>
+            <p class="text-[#DC183C] font-bold text-[15px] sm:text-[17px] mt-2">Head of Advisory &middot; Base Capital</p>
+            <div class="flex items-center gap-2 mt-3.5">
+              <a href="#" class="w-[34px] h-[34px] rounded-full bg-[#F1F4F6] text-[#0C1F31] hover:bg-[#FDECEF] hover:text-[#DC183C] grid place-items-center transition" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16" aria-hidden="true"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.42v1.56h.05c.47-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.07 2.07 0 1 1 0-4.14 2.07 2.07 0 0 1 0 4.14zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.8 0 0 .78 0 1.73v20.54C0 23.22.8 24 1.77 24h20.45C23.2 24 24 23.22 24 22.27V1.73C24 .78 23.2 0 22.22 0z"/></svg></a>
+              <a href="#" class="w-[34px] h-[34px] rounded-full bg-[#F1F4F6] text-[#0C1F31] hover:bg-[#FDECEF] hover:text-[#DC183C] grid place-items-center transition" aria-label="Website"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></a>
+            </div>
+          </div>
         </div>
-        <p class="text-[#DC183C] font-bold mt-1">Head of Advisory &middot; Base Capital</p>
-        <div class="flex flex-wrap items-center gap-4 mt-3 text-sm text-[#6A7581]">
-          <span class="flex items-center gap-1.5"><i data-lucide="calendar" class="w-4 h-4"></i> Speaking since 2023</span>
-          <span class="flex items-center gap-1.5"><i data-lucide="map-pin" class="w-4 h-4"></i> Johannesburg, SA</span>
-        </div>
-        <div class="flex items-center gap-2 mt-4">
-          <a href="#" class="w-8 h-8 rounded-full bg-slate-100 hover:bg-[#FDECEF] hover:text-[#DC183C] grid place-items-center transition" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.42v1.56h.05c.47-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.07 2.07 0 1 1 0-4.14 2.07 2.07 0 0 1 0 4.14zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.8 0 0 .78 0 1.73v20.54C0 23.22.8 24 1.77 24h20.45C23.2 24 24 23.22 24 22.27V1.73C24 .78 23.2 0 22.22 0z"/></svg></a>
-          <a href="#" class="w-8 h-8 rounded-full bg-slate-100 hover:bg-[#FDECEF] hover:text-[#DC183C] grid place-items-center transition" aria-label="X"><svg viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
-          <a href="#" class="w-8 h-8 rounded-full bg-slate-100 hover:bg-[#FDECEF] hover:text-[#DC183C] grid place-items-center transition" aria-label="Email"><i data-lucide="mail" class="w-4 h-4"></i></a>
+        <div class="mt-6 sm:mt-[26px] space-y-3 text-[16.5px] leading-relaxed text-[#33424B]">
+          <p>Dineo is Head of Advisory at Base Capital, where she helps SME founders turn raw numbers into fundable growth plans. She previously ran analytics at a Johannesburg fintech.</p>
+          <p>She runs financial modelling workshops for South African founders and holds a doctorate in financial economics from Wits.</p>
+          <p>Her talks focus on funding strategy and predictive analytics, closing the gap between what DFIs look for and what early-stage founders actually understand.</p>
         </div>
       </div>
-    </div>
-    <div class="mt-7 max-w-3xl space-y-4 text-[#6A7581] leading-relaxed">
-      <p>Dineo is Head of Advisory at Base Capital, where she helps SME founders turn raw numbers into fundable growth plans. She previously ran analytics at a Johannesburg fintech unicorn.</p>
-      <p>She has led financial modelling workshops with more than 800 South African founders since 2020 and holds a doctorate in financial economics from Wits.</p>
-      <p>Her talks focus on funding strategy and predictive analytics, closing the gap between what DFIs look for and what early-stage founders actually understand.</p>
+      <aside id="spkAt" class="spk-at" aria-label="Where Dr. Dineo Molefe appears"></aside>
     </div>
   </div>
 </section>
 
-<!-- TALK SECTION -->
-<main class="max-w-7xl mx-auto px-4 sm:px-6 py-12">
-  <section class="bg-[#FDECEF] rounded-2xl p-5 sm:p-7 reveal">
-    <h2 class="font-jakarta font-extrabold text-xl text-[#0C1F31] mb-4">Talk</h2>
+<!-- TALKS (live: smesa_spkd_talks_band(), rows from smesa-speaker-talks.php). Drawn by the script below for the chosen example. -->
+<section class="spk-tk" id="talks" aria-label="Talks"><div class="max-w-7xl mx-auto px-4 sm:px-6 spk-tk-in" id="talksIn"></div></section>
 
-    <a href="event-single-online.html" class="group flex items-center gap-4 bg-white rounded-xl border border-[#E7EBEF] p-4 sm:p-5 card-lift">
-      <div class="w-12 h-12 rounded-xl bg-white shadow-md grid place-items-center shrink-0" aria-hidden="true">
-        <i data-lucide="calendar" class="w-5 h-5 text-[#DC183C]"></i>
-      </div>
-      <div class="min-w-0 flex-1">
-        <span class="inline-block px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-widest text-[#DC183C] bg-[#FDECEF] mb-1.5">Event</span>
-        <h3 class="font-jakarta font-bold text-[16px] sm:text-[17px] text-[#0C1F31] leading-snug group-hover:text-[#DC183C] transition-colors truncate">How to Use Predictive Analytics to Forecast Growth</h3>
-        <p class="text-[13px] text-[#6A7581] mt-1">17 Sep 2026</p>
-      </div>
-      <span class="hidden sm:inline-flex items-center gap-1 text-sm font-bold text-[#DC183C] shrink-0">View <i data-lucide="chevron-right" class="w-4 h-4"></i></span>
-    </a>
-  </section>
-
-  <!-- MORE SPEAKERS -->
-  <section class="mt-14">
-    <div class="flex items-end justify-between gap-4 mb-6">
+<!-- MORE SPEAKERS -->
+<main class="max-w-7xl mx-auto px-4 sm:px-6 pt-10 sm:pt-12 pb-14">
+  <section>
+    <div class="flex flex-wrap items-end justify-between gap-x-4">
       <div>
-        <h2 class="font-jakarta font-extrabold text-2xl text-[#0C1F31]">More speakers</h2>
-        <p class="text-sm text-[#6A7581] mt-1">Others who have shared what works alongside Dr. Dineo Molefe.</p>
+        <h2 class="font-jakarta font-extrabold text-[26px] sm:text-[30px] leading-tight text-[#0C1F31]">More speakers</h2>
+        <p class="text-[14.5px] text-[#6A7581] mt-1.5 mb-[22px]">Others who have shared what works alongside Dineo.</p>
       </div>
-      <a href="event-speakers.html" class="shrink-0 inline-flex items-center gap-1 text-sm font-bold text-[#DC183C] hover:text-[#B0142F] transition">All speakers <i data-lucide="chevron-right" class="w-4 h-4"></i></a>
+      <a href="event-speakers.html" class="mb-[22px] inline-flex items-center gap-0.5 text-sm font-bold text-[#DC183C] hover:text-[#B0142F] transition">All speakers <span aria-hidden="true">&rsaquo;</span></a>
     </div>
-
-    <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
-      <a href="event-speaker.html" class="group flex flex-col items-center text-center gap-2.5 p-5 rounded-xl hover:bg-slate-50 transition reveal">
-        <div class="w-14 h-14 rounded-full shrink-0 bg-gradient-to-br from-[#DC183C] to-[#FF9900] grid place-items-center font-jakarta font-extrabold text-white text-sm" aria-hidden="true">TN</div>
-        <p class="font-jakarta font-bold text-[14px] text-[#0C1F31] group-hover:text-[#DC183C] transition-colors truncate w-full">Thandi Ngwenya</p>
-        <p class="text-[12px] text-[#DC183C] font-semibold truncate w-full">General Partner</p>
-      </a>
-      <a href="event-speaker.html" class="group flex flex-col items-center text-center gap-2.5 p-5 rounded-xl hover:bg-slate-50 transition reveal" style="animation-delay:40ms">
-        <div class="w-14 h-14 rounded-full shrink-0 bg-gradient-to-br from-[#29A37A] to-[#0C1F31] grid place-items-center font-jakarta font-extrabold text-white text-sm" aria-hidden="true">SM</div>
-        <p class="font-jakarta font-bold text-[14px] text-[#0C1F31] group-hover:text-[#DC183C] transition-colors truncate w-full">Sipho Mabaso</p>
-        <p class="text-[12px] text-[#DC183C] font-semibold truncate w-full">Investment Lead</p>
-      </a>
-      <a href="event-speaker.html" class="group flex flex-col items-center text-center gap-2.5 p-5 rounded-xl hover:bg-slate-50 transition reveal" style="animation-delay:80ms">
-        <div class="w-14 h-14 rounded-full shrink-0 bg-gradient-to-br from-[#FF9900] to-[#DC183C] grid place-items-center font-jakarta font-extrabold text-white text-sm" aria-hidden="true">LK</div>
-        <p class="font-jakarta font-bold text-[14px] text-[#0C1F31] group-hover:text-[#DC183C] transition-colors truncate w-full">Lerato Kgomo</p>
-        <p class="text-[12px] text-[#DC183C] font-semibold truncate w-full">Angel Investor</p>
-      </a>
-      <a href="event-speaker.html" class="group flex flex-col items-center text-center gap-2.5 p-5 rounded-xl hover:bg-slate-50 transition reveal" style="animation-delay:120ms">
-        <div class="w-14 h-14 rounded-full shrink-0 bg-gradient-to-br from-[#94A3B8] to-[#94A3B8] grid place-items-center font-jakarta font-extrabold text-white text-sm" aria-hidden="true">JM</div>
-        <p class="font-jakarta font-bold text-[14px] text-[#0C1F31] group-hover:text-[#DC183C] transition-colors truncate w-full">Jaco van der Merwe</p>
-        <p class="text-[12px] text-[#DC183C] font-semibold truncate w-full">Managing Director</p>
-      </a>
+    <div class="spk-more">
+      <a href="event-speaker.html" class="spk-mini group"><span class="spk-mini-av bg-gradient-to-br from-[#DC183C] to-[#FF9900]" aria-hidden="true">TN</span><span class="min-w-0"><span class="n group-hover:text-[#DC183C]">Thandi Ngwenya</span><span class="r">General Partner</span></span></a>
+      <a href="event-speaker.html" class="spk-mini group"><span class="spk-mini-av bg-gradient-to-br from-[#29A37A] to-[#0C1F31]" aria-hidden="true">SM</span><span class="min-w-0"><span class="n group-hover:text-[#DC183C]">Sipho Mabaso</span><span class="r">Investment Lead</span></span></a>
+      <a href="event-speaker.html" class="spk-mini group"><span class="spk-mini-av bg-gradient-to-br from-[#FF9900] to-[#DC183C]" aria-hidden="true">LK</span><span class="min-w-0"><span class="n group-hover:text-[#DC183C]">Lerato Kgomo</span><span class="r">Angel Investor</span></span></a>
+      <a href="event-speaker.html" class="spk-mini group"><span class="spk-mini-av bg-[#94A3B8]" aria-hidden="true">JM</span><span class="min-w-0"><span class="n group-hover:text-[#DC183C]">Jaco van der Merwe</span><span class="r">Managing Director</span></span></a>
     </div>
   </section>
 </main>
+
+<!-- Example switch (mockup review only, hidden inside frames) -->
+<div id="spkEx" class="hidden fixed right-3 bottom-[120px] md:bottom-4 z-[55] bg-[#0C1F31]/90 text-white rounded-full shadow-lg h-7 pl-2.5 pr-1 items-center gap-0.5 text-[10.5px] font-bold" role="group" aria-label="Talks example">
+  <span class="text-white/55 uppercase tracking-widest text-[8.5px] mr-1">Example</span>
+  <button type="button" data-ex="two" class="px-2 h-5 rounded-full">Two summits</button><button type="button" data-ex="slides" class="px-2 h-5 rounded-full">Slides only</button><button type="button" data-ex="video" class="px-2 h-5 rounded-full">Video only</button><button type="button" data-ex="none" class="px-2 h-5 rounded-full">No talks</button>
+</div>
 
 <!-- FOOTER -->
 <div class="lg:hidden" style="height:calc(64px + env(safe-area-inset-bottom))"></div>
@@ -260,16 +306,100 @@
 <div id="overlay-root"></div>
 <div id="toast" class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-[90]"></div>
 <script>
-  function showToast(m){const el=document.getElementById('toast');el.classList.remove('hidden');el.innerHTML=`<div class="bg-[#0C1F31] text-white rounded-full pl-3 pr-5 py-2.5 shadow-2xl flex items-center gap-2 text-sm font-semibold" style="border-left:4px solid #29A37A"><i data-lucide="check-circle" class="w-4 h-4" style="color:#29A37A"></i><span>${m}</span></div>`;lucide.createIcons();setTimeout(()=>{el.classList.add('hidden');el.innerHTML='';},2400);}
+  function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c])); }
+  function showToast(m){const el=document.getElementById('toast');el.classList.remove('hidden');el.innerHTML=`<div class="bg-[#0C1F31] text-white rounded-full pl-3 pr-5 py-2.5 shadow-2xl flex items-center gap-2 text-sm font-semibold" style="border-left:4px solid #29A37A"><i data-lucide="check-circle" class="w-4 h-4" style="color:#29A37A"></i><span>${esc(m)}</span></div>`;lucide.createIcons();setTimeout(()=>{el.classList.add('hidden');el.innerHTML='';},2400);}
+
+  // ===== Talks, exactly as live (smesa-speakers-design.php 1.4.0 smesa_spkd_talks_band + "Appears at"). =====
+  // Signed in or not follows the set's "Viewing as" switch (member-chrome.js, ?as=member / ?as=visitor). Example: ?talks=two|slides|video|none
+  const MEMBER = (()=>{ try { const q=(location.search.match(/[?&]as=(member|visitor)\b/)||[])[1]; if(q) return q==='member'; return sessionStorage.getItem('smeViewAs')==='member'; } catch(_) { return false; } })();
+  const FIRST = 'Dineo', PAGE = 'event-speaker.html';
+  const IC = {
+    lock:'<rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/>',
+    dl:'<path d="M12 4v11M7 10l5 5 5-5M5 20h14"/>',
+    play:'<path d="M8 5v14l11-7z" fill="currentColor" stroke="none"/>',
+    doc:'<path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6M8 13h8M8 17h5"/>',
+    cal:'<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/>',
+    mic:'<path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2M12 19v3"/>'
+  };
+  const ic = (k,s) => `<svg width="${s||18}" height="${s||18}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${IC[k]}</svg>`;
+  // where the speaker appears (live: the event relation + podcast guests), newest first
+  const APPEAR = {
+    web:{ title:'How to Use Predictive Analytics to Forecast Growth', date:'17 Sep 2026', url:'event-single-online.html' },
+    pod:{ title:'Turning Your Numbers Into a Funding Story', tag:'Podcast, episode 9', date:'6 Aug 2026', url:'public-podcast-episode.html', pod:true },
+    s26:{ title:'SME Funding Summit 2026', date:'18 Jun 2026', url:'event-single-in-person.html', recent:true },
+    s25:{ title:'SME Funding Summit 2025', date:'12 Jun 2025', url:'event-single-in-person.html', recent:false }
+  };
+  // talk rows (live: post meta _smesa_speaker_talks {event, title, desc, video, deck, slug}); desc is optional and empty on every live talk so far
+  const T26 = { ev:'s26', slug:'fundable-numbers-what-funders-read-first', title:'Fundable Numbers: What Funders Read First', desc:'', video:'', deck:'PDF' };
+  const T25 = { ev:'s25', slug:'forecasting-growth-with-the-data-you-already-have', title:'Forecasting Growth With the Data You Already Have', desc:'How a small business can plan the next year from its own sales and cash-flow records, and what funders look for in a forecast.', video:'disoNg7NoIw', deck:'' };
+  const EX = {
+    two:    { at:['web','pod','s26','s25'], talks:[T26, Object.assign({}, T25, { deck:'PDF' })] },
+    slides: { at:['pod','s26'],             talks:[T26] },
+    video:  { at:['s25'],                   talks:[Object.assign({}, T25, { desc:'' })] },
+    none:   { at:['web'],                   talks:[] }
+  };
+  let ex = ((location.search.match(/[?&]talks=(two|slides|video|none)\b/)||[])[1]) || 'two';
+
+  function slidesHtml(t){
+    if (!t.deck) return '';
+    if (MEMBER) return `<div class="spk-tk-slides"><a class="spk-tk-btn ok" href="#" data-dl="${esc(t.title)}">${ic('dl',17)}Download the slides</a><span class="spk-tk-file">${ic('doc',15)}${esc(t.deck)}</span></div>`;
+    const back = encodeURIComponent(PAGE + '#talk-' + t.slug);
+    return `<div class="spk-tk-slides"><a class="spk-tk-btn" rel="nofollow" href="public-auth.html?redirect_to=${back}#join">${ic('lock',17)}Get the slides</a><span class="spk-tk-note"><b>Free</b> with a member account</span></div>`;
+  }
+  function cardHtml(t){
+    const e = APPEAR[t.ev], tag = `<span class="spk-tk-tag"><i></i>${esc(e.title)}</span>`, desc = t.desc ? `<p class="spk-tk-desc">${esc(t.desc)}</p>` : '';
+    if (t.video) {
+      // live: <img src="https://i.ytimg.com/vi/<id>/hqdefault.jpg">; the mockup draws a stand-in poster because the demo speaker is not a real person
+      return `<article class="spk-tk-card" id="talk-${t.slug}"><div class="spk-tk-media"><button type="button" class="spk-tk-play" data-v="${t.video}" aria-label="${esc('Play: ' + t.title)}"><span class="spk-tk-poster" aria-hidden="true"><span class="pt">${esc(e.title)}</span><b>${esc(t.title)}</b><em>Dr. Dineo Molefe</em></span><span class="spk-tk-pb">${ic('play',26)}</span></button></div>`
+        + `<div class="spk-tk-body">${tag}<h3>${esc(t.title)}</h3><div class="spk-tk-when">${esc(e.date)}</div>${desc}${slidesHtml(t)}</div></article>`;
+    }
+    const soon = e.recent ? `<span class="spk-tk-soon">${ic('play',13)}Video coming soon</span>` : '';
+    return `<article class="spk-tk-card noplay" id="talk-${t.slug}"><div class="spk-tk-body"><span class="spk-tk-doc">${ic('doc',28)}</span><div>${tag}<h3>${esc(t.title)}</h3></div><div><div class="spk-tk-when">${esc(e.date)}</div>${desc}${soon}</div>${slidesHtml(t)}</div></article>`;
+  }
+  function render(){
+    const X = EX[ex], talks = X.talks;
+    const groups = []; talks.forEach(t => { let g = groups.find(g => g.ev === t.ev); if (!g) { g = { ev:t.ev, talks:[] }; groups.push(g); } g.talks.push(t); });
+    const jump = {}; groups.forEach(g => { jump[g.ev] = g.talks[0].slug; });
+    // Appears at (hidden, and the profile goes full width, when the speaker appears nowhere)
+    const at = document.getElementById('spkAt'), grid = document.getElementById('spkGrid');
+    const pods = X.at.some(k => APPEAR[k].pod);
+    const sub = groups.length ? 'Jump to the talks.' : (pods ? `Where ${FIRST} has shared what works.` : `Events ${FIRST} has spoken at.`);
+    at.hidden = !X.at.length; grid.classList.toggle('solo', !X.at.length);
+    at.innerHTML = `<h2>Appears at</h2><p>${esc(sub)}</p>` + X.at.map(k => {
+      const a = APPEAR[k], j = !a.pod && jump[k];
+      const small = a.pod ? `${a.tag} · ${a.date}` : a.date;
+      return `<a class="spk-at-row" href="${j ? '#talk-' + j : a.url}"><span class="spk-at-ic${a.pod ? ' pod' : ''}">${ic(a.pod ? 'mic' : 'cal', 18)}</span><span class="spk-at-b"><b>${esc(a.title)}</b><small>${esc(small)}</small></span><span class="spk-at-go">${j ? 'Talks' : (a.pod ? 'Listen' : 'View')} &rsaquo;</span></a>`;
+    }).join('');
+    // Talks band: no talks = no band and no heading
+    const band = document.getElementById('talks');
+    band.hidden = !talks.length;
+    if (!talks.length) { document.getElementById('talksIn').innerHTML = ''; return; }
+    const decks = talks.some(t => t.deck), vids = talks.some(t => t.video);
+    const tsub = decks && vids ? (MEMBER ? 'Watch the talks and download the slides.' : 'Watch the talks free. Slides are free with a member account.')
+      : decks ? (MEMBER ? 'Download the slides from the talks.' : 'Slides are free with a member account.')
+      : (groups.length === 1 ? 'Watch the talks from the summit.' : 'Watch the talks from the summits.');
+    document.getElementById('talksIn').innerHTML = `<h2>Talks</h2><p class="spk-tk-sub">${esc(tsub)}</p>` + groups.map(g => `<div class="spk-tk-sum"><a href="${APPEAR[g.ev].url}">${esc(APPEAR[g.ev].title)}</a></div>` + g.talks.map(cardHtml).join('')).join('');
+  }
+  document.addEventListener('click', e => {
+    const p = e.target.closest('.spk-tk-play');
+    if (p) { const v = p.getAttribute('data-v') || ''; if (!/^[A-Za-z0-9_-]{11}$/.test(v)) return; const f = document.createElement('iframe'); f.src = 'https://www.youtube-nocookie.com/embed/' + v + '?autoplay=1&rel=0'; f.title = p.getAttribute('aria-label') || 'Video'; f.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen'; f.allowFullscreen = true; f.setAttribute('loading', 'eager'); p.replaceWith(f); return; }
+    const d = e.target.closest('[data-dl]'); if (d) { e.preventDefault(); showToast('Downloading the slides'); return; }
+    const b = e.target.closest('#spkEx [data-ex]');
+    if (b) { ex = b.getAttribute('data-ex'); markEx(); render(); try { const u = new URL(location.href); u.searchParams.set('talks', ex); history.replaceState(null, '', u); } catch(_) {} }
+  });
+  function markEx(){ document.querySelectorAll('#spkEx [data-ex]').forEach(b => b.classList.toggle('on', b.getAttribute('data-ex') === ex)); }
+  (function(){ let framed = false; try { framed = window.top !== window.self; } catch(_) { framed = true; } const bar = document.getElementById('spkEx'); if (!framed) { bar.classList.remove('hidden'); bar.classList.add('flex'); } markEx(); })();
+  render();
+  if (/^#talk-/.test(location.hash)) { const t = document.getElementById(location.hash.slice(1)); if (t) setTimeout(() => t.scrollIntoView(), 50); }
 
   const BRIEF = {
-    title:'Speaker Profile Page',
-    sub:'CPT <code>speaker</code> (or Author taxonomy extended)',
-    purpose:'Public profile for an event speaker / panelist / host. Shows their bio, role, social links and the event(s) they have actually spoken at, not a fabricated back-catalogue. This corrects a mockup review finding: an earlier version of this page showed a 12-card image grid with pagination, implying every speaker had a dozen talks. In reality most SME South Africa speakers have done at most one or two events, so the archive grid and pagination were removed and replaced with a single tinted "Talk" card section that lists only the real appearance(s) on record. Linked from Keynote Speakers sections on in-person events and Host/Guest cards on online events.',
-    data:'Speaker: <code>{ post_title (name), meta_role, meta_company, meta_avatar, meta_bio (3 short paragraphs), meta_socials { linkedin, x, email }, meta_speaking_since (year), meta_location }</code>. Talks are queried by relationship: <code>event → speakers</code> (many-to-many), typically returning 1, occasionally 2, results per speaker, never a large archive. Each result carries: <code>event.post_title, event.meta_start, event.permalink</code>. Rendered oldest-concern-free: just whatever is actually on record, no synthetic volume.',
-    logic:'Template = <code>single-speaker.php</code>. If the speaker record lives in the same Authors CPT as article authors, add a <code>meta_is_speaker</code> flag and render this template when true. Otherwise register a dedicated <code>speaker</code> CPT. Talks query: <code>WP_Query</code> on <code>event</code> CPT filtered by <code>meta_speakers</code> relationship containing the current speaker ID, no artificial pagination since the realistic result set is 1 to 2 rows. "More speakers" below pulls 4 other records from the same roster used on <code>event-speakers.html</code>, excluding the current speaker.',
-    components:'Profile block (eyebrow label + avatar + name + role/company line + stats row + social icons + 3-paragraph bio, single column) · Talk section (tinted #FDECEF container, heading, one row-style event card: icon tile, EVENT tag, title link, date, View link) · More speakers section (heading, subtext, All speakers link, 2x4 responsive mini-card grid of avatar + name + role).',
-    specs:'<b>Profile:</b> white bg border-b #E7EBEF. Avatar 96/128px rounded-full shadow-lg gradient #0C1F31→#5e1a2c. Eyebrow #DC183C 11px bold uppercase. Name Plus Jakarta 800 30/36px #0C1F31. Role line #DC183C 700, role · company on one line. Stats row 14px #6A7581 with Lucide calendar/map-pin 16×16. Social icons 32×32 rounded-full slate-100 hover #FDECEF/#DC183C. Bio 3 short paragraphs, #6A7581 relaxed, max-w-3xl, no card/border.<br/><b>Talk card:</b> outer section bg #FDECEF rounded-2xl padded. Inner row card white rounded-xl border #E7EBEF, icon tile 48px white shadow with red calendar icon, EVENT tag 10px bold uppercase red-on-tint, title Plus Jakarta 800 navy hover red, date 13px #6A7581, "View ›" link red right-aligned. Exactly one card, no pagination.<br/><b>More speakers:</b> white bg, heading + subtext + "All speakers ›" top-right, grid 2 cols mobile / 4 cols desktop, mini-card avatar 56px + name (navy bold, hover red) + role (red, smaller).'
+    title:'Speaker Profile Page (with talks)',
+    sub:'CPT <code>organizers</code>, public at <code>/speakers/{name}/</code> &middot; live: <code>smesa-speakers-design.php</code> 1.4.0 + <code>smesa-speaker-talks.php</code>',
+    purpose:'Public profile for a speaker, panellist or podcast guest: who they are, where they have appeared, and the talks they gave at our summits. The talks are the reason to land here: a visitor can watch a talk free, and the slides are the member offer ("Get the slides" goes to sign-up and brings them back to the same talk). Linked from the speakers directory (<code>event-speakers.html</code>), Keynote Speakers on in-person events and host/guest cards on online events and podcast episodes. Same layout, states and wording as live; drawn in the 2026 CI (Jakarta + Inter, red <code>#DC183C</code>, navy <code>#0C1F31</code>, pill buttons). No counts anywhere: no "N talks", no totals.',
+    data:'Speaker post: <code>post_title</code>, <code>organizer_title</code> + <code>organizer_company_name</code> (shown as "Title &middot; Company"), photo (initials when none), bio (<code>post_content</code>), LinkedIn / X / website links. <b>Appears at</b>: events from the JetEngine event relation plus podcast episodes where the speaker is a guest (<code>_sme_pod_speaker</code>), newest first. <b>Talks</b>: post meta <code>_smesa_speaker_talks</code>, rows <code>{ event, title, desc, video (11-character YouTube ID), deck (MemberPress file ID), slug }</code>, entered by administrators only in the speaker\'s "Talks" box. Slides: the MemberPress file (<code>/mp-files/&lt;name&gt;/</code>) and its type (PDF). <code>desc</code> is optional; no live talk has one yet.',
+    logic:'<b>Appears at</b> (right of the profile on laptop, under the bio below 1025 px; not drawn when the speaker appears nowhere, and the profile goes full width): sub line "Jump to the talks." when there are talks, else "Where {first name} has shared what works." when a podcast is listed, else "Events {first name} has spoken at.". Row action: an event with talks jumps to <code>#talk-&lt;slug&gt;</code> ("Talks &rsaquo;"), a podcast episode "Listen &rsaquo;", any other event "View &rsaquo;". <b>Talks band</b> (only when there are talks; no band and no heading otherwise): grouped by summit, newest first, each group headed by the summit name linking to the summit page; each card <code>id="talk-&lt;slug&gt;"</code>. A video card shows the YouTube thumbnail (<code>i.ytimg.com/vi/&lt;id&gt;/hqdefault.jpg</code>; the mockup draws a stand-in poster) and builds the <code>youtube-nocookie.com/embed/&lt;id&gt;?autoplay=1&amp;rel=0</code> player only on click, so nothing loads from YouTube before that. A talk with slides and no video leads with the slides, plus "Video coming soon" when its summit was in the last year or is still to come. Sub line: video and slides "Watch the talks free. Slides are free with a member account." (member: "Watch the talks and download the slides."); slides only "Slides are free with a member account." (member: "Download the slides from the talks."); video only "Watch the talks from the summit." / "...from the summits.". <b>Slides gate</b>: visitor "Get the slides" (lock) + "Free with a member account" &rarr; <code>/sign-up/?redirect_to=&lt;speaker&gt;#talk-&lt;slug&gt;</code>; member "Download the slides" + file type. The file address itself is gated for visitors by <code>smesa-staff-files.php</code> through <code>smesa_st_deck_ids()</code>. Switch: option <code>smesa_speaker_talks</code> = <code>off</code> hides the band and the "Talks &rsaquo;" jumps. <b>More speakers</b>: four others, people from the same events first, then others. In this mockup "Viewing as" (bottom left, or <code>?as=member</code> / <code>?as=visitor</code>) switches visitor/member and "Example" (bottom right) switches Two summits / Slides only / Video only / No talks (<code>?talks=</code>). Local: <code>single-organizers.php</code>.',
+    components:'Breadcrumb (Home &rsaquo; Speakers) &middot; profile (avatar, "SME Speaker" eyebrow, name, Title &middot; Company, social circles, bio) &middot; "Appears at" card (icon tile, title, date or "Podcast, episode N &middot; date", action) &middot; Talks band (heading, sub line, summit group rule, video card / slides card, slides button, "Video coming soon" pill) &middot; More speakers (heading, sub line, "All speakers &rsaquo;", four row cards: avatar, name, role).',
+    specs:'<b>Profile:</b> grid main + 340 px aside, gap 44 px (one column at 1024 px and below, gap 28). Avatar 128 px (88 px on phones) round, shadow 0 8 24 rgba(12,31,49,.14). Eyebrow 11 px bold uppercase red. Name Jakarta 800 44/30 px navy. Role 17/15 px bold red. Social circles 34 px #F1F4F6. Bio 16.5 px #33424B.<br/><b>Appears at:</b> white, border #E7EBEF, radius 18, padding 20/22. Heading Jakarta 800 20 px; sub 14 px muted; rows 12 px vertical padding, top rule; icon tile 38 px radius 10 (event #FDECEF red, podcast #EAF0F4 navy); title 15 px bold; small 12.5 px muted; action 13 px bold red.<br/><b>Talks band:</b> #F5F7FA with top/bottom rule, padding 52/60 (38/44 on phones). H2 Jakarta 800 34 px (28). Group label 12 px bold uppercase tracking .12em muted with a rule to the right. Card white radius 20, border, shadow 0 12 32 -22; video card 1.15fr media (16:9) + 1fr body, one column at 980 px and below; body padding 26/28 (20/18). Tag 12 px bold uppercase red with a 6 px dot. Title Jakarta 800 26 px (22). Play 64 px red circle. Slides card: 64x78 document tile, title, date, slides block on the right (stacked on phones). Button 48 px pill, red (visitor) or navy (member), full width on phones. "Video coming soon" pill 13 px.<br/><b>More speakers:</b> H2 Jakarta 800 30 px, sub 14.5 px; row cards radius 14, padding 16, avatar 56 px; 4 columns, 2 at 1024 px, 1 on phones.'
   };
 
   function toggleDevMode(){const on=document.body.classList.toggle('dev-on');const b=document.getElementById('devToggle');if(b)b.classList.toggle('on',on);if(on)showToast('Dev Mode on, tap any ⓘ for the BRIEF.');lucide.createIcons();}
@@ -281,6 +411,7 @@
     requestAnimationFrame(()=>{const o=document.getElementById('ov');if(o)o.classList.add('open');});
     lucide.createIcons();
   }
+  document.addEventListener('keydown', e=>{ if(e.key==='Escape'){ document.querySelectorAll('.ov.open').forEach(o=>closeOverlay(o.id)); } });
 
   lucide.createIcons();
 </script>
