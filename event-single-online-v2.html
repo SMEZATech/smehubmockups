@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>v2 · How to Use Predictive Analytics to Forecast Growth, Webinar, SME South Africa</title>
+  <meta name="description" content="Live webinar: how SA SMEs are using predictive analytics to forecast revenue, staffing and inventory with limited data." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script><script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  <script>tailwind.config={theme:{extend:{fontFamily:{jakarta:['Plus Jakarta Sans','sans-serif'],inter:['Inter','system-ui','sans-serif']}}}};</script>
+  <style>
+    html,body{font-family:'Inter',system-ui,sans-serif;} .font-jakarta{font-family:'Plus Jakarta Sans',sans-serif;letter-spacing:.005em;}
+    html{scroll-behavior:smooth;}
+    .hero-bg{background:linear-gradient(115deg,#0C1F31 0%,#0C1F31 50%,#2b1626 80%,#5e1a2c 115%);}
+    .dot-pattern{background-image:radial-gradient(rgba(255,255,255,.07) 1px,transparent 1.5px);background-size:22px 22px;}
+    .prose p{color:#121A21;line-height:1.8;font-size:1.02rem;margin-bottom:1rem;}
+    .prose ul{list-style:disc;padding-left:1.4rem;margin-bottom:1rem;color:#121A21;line-height:1.85;font-size:1.02rem;}
+    .prose ul li{margin-bottom:.35rem;}
+    .step{display:grid;grid-template-columns:2rem 1fr;gap:.85rem;align-items:start;}
+    .step .num{width:2rem;height:2rem;border-radius:999px;background:#FDECEF;color:#DC183C;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:.85rem;display:grid;place-items:center;}
+    .step .step-title{font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;color:#0C1F31;font-size:.92rem;line-height:1.35;}
+    .step .step-sub{font-size:.78rem;color:#6A7581;line-height:1.5;margin-top:.15rem;}
+    .dev-badge{display:none;} body.dev-on .dev-badge{display:inline-flex;} #devToggle.on{background:#DC183C;color:#fff;border-color:#DC183C;}
+    .dev-note{background:linear-gradient(135deg,rgba(255,153,0,.12),rgba(255,153,0,.04));border:1px dashed rgba(255,153,0,.5);display:none;}
+    body.dev-on .dev-note{display:flex;}
+    .ov{position:fixed;inset:0;z-index:80;} .ov-bg{position:absolute;inset:0;background:rgba(12,31,49,.45);backdrop-filter:blur(2px);opacity:0;transition:opacity .3s;} .ov.open .ov-bg{opacity:1;}
+    .drawer{position:absolute;right:0;top:0;height:100%;width:100%;max-width:440px;background:#fff;box-shadow:-12px 0 40px rgba(12,31,49,.25);overflow-y:auto;transform:translateX(100%);transition:transform .3s cubic-bezier(.2,.7,.2,1);} .ov.open .drawer{transform:translateX(0);}
+      .search-overlay{position:absolute;inset:0;background:#fff;z-index:20;display:flex;align-items:center;justify-content:center;padding:0 1rem;opacity:0;pointer-events:none;transform:translateY(-8px);transition:all .25s cubic-bezier(.2,.8,.2,1);}
+    .search-overlay.active{opacity:1;pointer-events:auto;transform:translateY(0);}
+    @media (min-width:640px){ .search-overlay{padding:0 1.5rem;} }
+</style>
+<link rel="stylesheet" href="assets/save-module.css" />
+</head>
+<body class="bg-[#FCFCFC] text-[#121A21] antialiased">
+<header class="bg-white border-b border-[#E7EBEF] sticky top-0 z-30 relative">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center gap-3">
+    <a href="public-home.html" class="flex items-center gap-2.5 shrink-0">
+      <img src="assets/logo-v1-lockup.svg" alt="SME South Africa" class="h-[42px] lg:h-[50px] w-auto" />
+    </a>
+    <nav class="hidden lg:flex items-center gap-1 ml-auto">
+      <div class="relative" onmouseleave="closeChromeDrop('articles')">
+        <button onclick="toggleChromeDrop('articles')" class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition inline-flex items-center gap-1">Insights <i data-lucide="chevron-down" class="w-3.5 h-3.5"></i></button>
+        <div id="dropArticles" class="hidden absolute left-0 top-full mt-1 w-64 bg-white rounded-xl border border-[#E7EBEF] shadow-xl py-2 z-30">
+          <a href="public-category.html" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-[#DC183C] transition">Starting a Business</a>
+          <a href="public-category.html" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-[#DC183C] transition">Managing a Business</a>
+          <a href="public-category.html" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-[#DC183C] transition">Growing a Business</a>
+          <div class="my-1.5 border-t border-slate-100"></div>
+          <a href="public-founder-focus-category.html" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-[#DC183C] transition">Founder Focus</a>
+          <a href="public-category.html" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-[#DC183C] transition">Business Opportunities</a>
+        </div>
+      </div>
+      <div class="relative" onmouseleave="closeChromeDrop('resources')">
+        <button onclick="toggleChromeDrop('resources')" class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition inline-flex items-center gap-1">Resources <i data-lucide="chevron-down" class="w-3.5 h-3.5"></i></button>
+        <div id="dropResources" class="hidden absolute left-0 top-full mt-1 w-56 bg-white rounded-xl border border-[#E7EBEF] shadow-xl py-2 z-30">
+          <a href="public-resource-category.html?type=ebooks" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-[#DC183C] transition">Ebooks</a>
+          <a href="public-resource-category.html?type=templates" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-[#DC183C] transition">Templates</a>
+          <a href="public-resource-category.html?type=guides" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-[#DC183C] transition">Guides</a>
+          <a href="public-resource-category.html?type=reports" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-[#DC183C] transition">Reports</a>
+        </div>
+      </div>
+      <div class="relative" onmouseleave="closeChromeDrop('funding')">
+        <button onclick="toggleChromeDrop('funding')" class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition inline-flex items-center gap-1">Funding <i data-lucide="chevron-down" class="w-3.5 h-3.5"></i></button>
+        <div id="dropFunding" class="hidden absolute left-0 top-full mt-1 w-60 bg-white rounded-xl border border-[#E7EBEF] shadow-xl py-2 z-30">
+          <a href="public-loan-option.html" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-[#DC183C] transition">Invoice Finance</a>
+          <a href="public-loan-option.html" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-[#DC183C] transition">Inventory Finance</a>
+          <a href="public-loan-option.html" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-[#DC183C] transition">Unsecured Business Loan</a>
+          <a href="public-loan-option.html" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-[#DC183C] transition">Purchase Order Funding</a>
+          <a href="public-loan-option.html" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-[#DC183C] transition">Bridging Finance</a>
+          <a href="public-loan-option.html" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-[#DC183C] transition">Working Capital Loans</a>
+        </div>
+      </div>
+      <a href="public-solutions.html" class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition">Solutions</a>
+      <a href="podcast.html"          class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-[#121A21] hover:bg-slate-100 transition">Podcast</a>
+    </nav>
+    <div class="flex items-center gap-1 sm:gap-2 ml-auto lg:ml-3">
+      <button onclick="toggleChromeSearch()" aria-label="Search" class="w-9 h-9 grid place-items-center rounded-full hover:bg-slate-100 text-slate-600"><i data-lucide="search" class="w-4 h-4"></i></button>
+      <a href="public-auth.html" class="hidden sm:inline-flex items-center px-3 h-9 rounded-full text-sm font-bold text-[#121A21] hover:bg-slate-100 transition">Sign in</a>
+      <a href="public-auth.html#join" class="inline-flex items-center px-4 h-9 rounded-full text-sm font-bold text-white bg-[#DC183C] hover:bg-[#B0142F] transition">Join Now</a>
+      <button onclick="toggleChromeBurger()" aria-label="Menu" class="lg:hidden w-9 h-9 grid place-items-center rounded-full hover:bg-slate-100 text-slate-600 ml-1">
+        <i id="chromeBurgerIcon" data-lucide="menu" class="w-5 h-5"></i>
+      </button>
+    </div>
+  </div>
+  <div id="chromeBurgerPanel" class="hidden lg:hidden border-t border-[#E7EBEF] bg-white">
+    <nav class="max-w-7xl mx-auto px-4 sm:px-6 py-2 flex flex-col">
+      <a href="public-articles.html"  class="px-2 py-3 text-sm font-semibold text-slate-700 hover:text-[#DC183C] border-b border-slate-100">Insights</a>
+      <a href="public-resources.html" class="px-2 py-3 text-sm font-semibold text-slate-700 hover:text-[#DC183C] border-b border-slate-100">Resources</a>
+      <a href="public-funding.html"   class="px-2 py-3 text-sm font-semibold text-slate-700 hover:text-[#DC183C] border-b border-slate-100">Funding</a>
+      <a href="public-solutions.html" class="px-2 py-3 text-sm font-semibold text-slate-700 hover:text-[#DC183C] border-b border-slate-100">Solutions</a>
+      <a href="podcast.html"          class="px-2 py-3 text-sm font-semibold text-slate-700 hover:text-[#DC183C] border-b border-slate-100">Podcast</a>
+      <a href="public-auth.html" class="px-2 py-3 text-sm font-semibold text-slate-700 hover:text-[#DC183C]">Sign in</a>
+    </nav>
+  </div>
+  <div id="chromeSearchOverlay" class="search-overlay">
+    <div class="w-full max-w-2xl flex items-center gap-3">
+      <div class="relative flex-1">
+        <i data-lucide="search" class="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500"></i>
+        <input id="chromeSearchInput" type="text" placeholder="Search insights, resources, funding…" class="w-full h-11 pl-11 pr-4 text-sm bg-slate-50 border border-[#DC183C] rounded-full focus:outline-none focus:ring-2 focus:ring-[#DC183C]/20" onkeydown="if(event.key==='Enter') location.href='public-search.html';" />
+      </div>
+      <button onclick="toggleChromeSearch()" class="text-slate-500 hover:text-[#121A21] p-2 transition-colors shrink-0" aria-label="Close search"><i data-lucide="x" class="w-5 h-5"></i></button>
+    </div>
+  </div>
+</header>
+
+<!-- Mobile bottom tab bar, thumb-reach quick nav -->
+<nav aria-label="Quick nav" class="lg:hidden fixed bottom-0 inset-x-0 z-40 bg-white border-t border-[#E7EBEF] shadow-[0_-4px_16px_-4px_rgba(12,31,49,0.08)]" style="padding-bottom:env(safe-area-inset-bottom)">
+  <div class="grid grid-cols-5"><a href="public-home.html" class="relative flex flex-col items-center justify-center gap-1 py-2.5 text-slate-500 hover:text-[#121A21] transition"><i data-lucide="house" class="w-5 h-5"></i><span class="font-jakarta text-[11px] font-bold">Home</span></a><a href="public-articles.html" class="relative flex flex-col items-center justify-center gap-1 py-2.5 text-slate-500 hover:text-[#121A21] transition"><i data-lucide="lightbulb" class="w-5 h-5"></i><span class="font-jakarta text-[11px] font-bold">Insights</span></a><a href="public-funding.html" class="relative flex flex-col items-center justify-center gap-1 py-2.5 text-slate-500 hover:text-[#121A21] transition"><i data-lucide="banknote" class="w-5 h-5"></i><span class="font-jakarta text-[11px] font-bold">Funding</span></a><a href="podcast.html" class="relative flex flex-col items-center justify-center gap-1 py-2.5 text-slate-500 hover:text-[#121A21] transition"><i data-lucide="mic" class="w-5 h-5"></i><span class="font-jakarta text-[11px] font-bold">Podcast</span></a><a href="public-auth.html#join" class="relative flex flex-col items-center justify-center gap-1 py-2.5 text-slate-500 hover:text-[#121A21] transition"><i data-lucide="user-round-plus" class="w-5 h-5"></i><span class="font-jakarta text-[11px] font-bold">Sign up</span></a></div>
+</nav>
+
+
+<!-- HERO -->
+<section class="hero-bg text-white relative overflow-hidden">
+  <div class="absolute inset-0 dot-pattern opacity-70 pointer-events-none"></div>
+  <div class="max-w-[1200px] mx-auto px-4 sm:px-6 py-12 sm:py-16 relative">
+    <nav aria-label="Breadcrumb" class="text-xs text-white/55 flex items-center flex-wrap gap-x-1.5 mb-5"><a href="public-home.html" class="hover:text-white transition">Home</a><span class="text-white/30">›</span><a href="events.html" class="hover:text-white transition">Events</a><span class="text-white/30">›</span><span class="text-white/85 font-medium truncate">Predictive Analytics for Growth</span></nav>
+    <div class="max-w-4xl items-start">
+      <div class="flex items-center gap-2 flex-wrap mb-4" id="heroChips"></div>
+      <h1 class="font-jakarta font-extrabold text-3xl sm:text-5xl leading-[1.05] tracking-tight">How to Use Predictive Analytics to Forecast Growth
+        <button onclick="openBrief()" class="dev-badge align-middle ml-2 w-7 h-7 rounded-full bg-[#FF9900] text-[#0C1F31] items-center justify-center text-[12px] font-bold">i</button>
+      </h1>
+
+      <!-- NEW: byline. The host chosen on the event (team member or speaker), their photo, the event date. Save and Share sit in the same row. -->
+      <div id="heroActions" class="mt-6 flex flex-wrap items-center gap-x-4 gap-y-3">
+        <a href="#host" class="group inline-flex items-center gap-3 min-w-0 mr-2" aria-label="Hosted by Karabo Kgophane">
+          <span class="relative w-11 h-11 rounded-full overflow-hidden shrink-0 ring-2 ring-white/25 bg-gradient-to-br from-[#DC183C] to-[#FF9900] grid place-items-center font-jakarta font-extrabold text-white text-sm">KK<img src="https://smesouthafrica.co.za/wp-content/uploads/2025/02/SME-South-Africa-Team-Members_0000s_0004_3-2048x2048.jpg" alt="" class="absolute inset-0 w-full h-full object-cover" onerror="this.remove()" /></span>
+          <span class="leading-tight min-w-0"><span class="block text-[13.5px] text-white/75">Hosted by <b class="text-white font-bold group-hover:underline">Karabo Kgophane</b></span><span id="heroDate" class="block text-[12.5px] text-white/60 mt-0.5">Thu, 20 Aug 2026</span></span>
+        </a>
+        <button onclick="copyShareLink()" class="inline-flex items-center gap-2 h-10 px-4 rounded-full border border-white/30 text-white text-[13px] font-bold hover:bg-white/10 transition" aria-label="Share"><i data-lucide="share-2" class="w-4 h-4"></i> Share</button>
+      </div>
+      <div class="dev-note rounded-xl px-4 py-3 items-start gap-3 mt-5 max-w-3xl">
+        <i data-lucide="info" class="w-4 h-4 text-[#AE6B0A] shrink-0 mt-0.5"></i>
+        <p class="text-sm text-slate-700 leading-relaxed"><b>Byline (Joel, 21 Oct 2026):</b> "Hosted by" the person chosen in the <b>Hosted by</b> box on the event's edit screen (administrators only): a team member or a speaker, with their photo, and the <b>event date</b> underneath, never "Updated". No host chosen: the author shows as the host. Online events only; in-person events keep no byline. Save and Share sit in the same row.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BODY -->
+<main class="max-w-[1200px] mx-auto px-4 sm:px-6 py-12 flex flex-col lg:grid lg:grid-cols-[1fr,320px] lg:grid-rows-[auto_1fr] gap-10 items-start">
+
+  <!-- TOP SIDEBAR: Reg Widgets (Mobile: 1st, Desktop: Right Col Top) -->
+  <div class="order-1 lg:col-start-2 lg:row-start-1 w-full space-y-5">
+
+    <!-- REVIEW SWITCH (mockup only). Visitor or Member: the dark "Viewing as" pill at the bottom left. -->
+    <div class="w-full">
+      <p class="text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-1.5">Review only: the page in each state</p>
+      <div id="stSwitch" class="grid grid-cols-3 gap-1 bg-slate-100 p-1.5 rounded-xl border border-slate-200"></div>
+    </div>
+
+    <!-- REGISTER CARD (drawn for the state) -->
+    <div id="regCard" class="bg-white rounded-2xl border border-[#E7EBEF] p-5 shadow-xl"></div>
+
+    <!-- PEOPLE YOU KNOW (members only: connections who chose to show it) -->
+    <div id="goingCard" class="hidden bg-white rounded-2xl border border-[#E7EBEF] p-5">
+      <p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] mb-3 flex items-center gap-1.5"><i data-lucide="users" class="w-3.5 h-3.5"></i> People you know</p>
+      <div class="flex items-center">
+        <a href="single-member.html" title="Thabo Mokoena" class="relative w-9 h-9 rounded-full overflow-hidden border-2 border-white bg-gradient-to-br from-[#0C1F31] to-[#5e1a2c] grid place-items-center text-white text-xs font-bold">TM<img src="assets/founder-1.jpg" alt="" class="absolute inset-0 w-full h-full object-cover" onerror="this.remove()" /></a>
+        <a href="single-member.html" title="Lerato Khumalo" class="relative -ml-2.5 w-9 h-9 rounded-full overflow-hidden border-2 border-white bg-gradient-to-br from-[#DC183C] to-[#FF9900] grid place-items-center text-white text-xs font-bold">LK<img src="assets/founder-2.jpg" alt="" class="absolute inset-0 w-full h-full object-cover" onerror="this.remove()" /></a>
+        <a href="single-member.html" title="Naledi Dube" class="relative -ml-2.5 w-9 h-9 rounded-full overflow-hidden border-2 border-white bg-gradient-to-br from-[#29A37A] to-[#0C1F31] grid place-items-center text-white text-xs font-bold">ND<img src="assets/founder-3.jpg" alt="" class="absolute inset-0 w-full h-full object-cover" onerror="this.remove()" /></a>
+      </div>
+      <p id="goingText" class="text-[13px] text-[#6A7581] mt-3 leading-relaxed">Thabo, Lerato and Naledi are going.</p>
+      <div class="dev-note rounded-xl px-3 py-2.5 items-start gap-2 mt-3">
+        <i data-lucide="info" class="w-4 h-4 text-[#AE6B0A] shrink-0 mt-0.5"></i>
+        <p class="text-xs text-slate-700 leading-relaxed"><b>Dev Note:</b> members only. Faces and first names of <b>your connections</b> who registered and ticked "Let my connections see I am going". Never a count, anywhere. None of your connections going: the card is not drawn. Visitors never see it. After the event: "attended".</p>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ARTICLE CONTENT (Mobile: 2nd, Desktop: Left Col Span 2 Rows) -->
+  <article class="order-2 lg:col-start-1 lg:row-start-1 lg:row-span-2 w-full min-w-0">
+
+    <!-- FEATURE IMAGE / VIDEO TRAILER -->
+    <section class="mb-10">
+      <div id="videoBlock" class="relative rounded-2xl overflow-hidden aspect-[16/9] shadow-lg bg-[#0C1F31] group cursor-pointer" onclick="handleVideoClick()">
+        <img id="videoThumb" src="https://img.youtube.com/vi/3UdK9NKwhGY/maxresdefault.jpg" alt="Webinar video" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" />
+        <span id="liveTag" class="hidden absolute top-4 left-4 items-center gap-2 px-3 py-1.5 rounded-full bg-[#DC183C] text-white text-[11px] font-bold uppercase tracking-wider"><span class="w-2 h-2 rounded-full bg-white animate-pulse"></span> Live now</span>
+        <div id="playOverlay" class="absolute inset-0 m-auto w-20 h-20 rounded-full bg-[#DC183C]/95 text-white grid place-items-center shadow-2xl group-hover:scale-110 transition-transform"><i data-lucide="play" class="w-8 h-8 ml-1"></i></div>
+        <div id="lockOverlay" class="hidden absolute inset-0 bg-[#0C1F31]/75 flex flex-col items-center justify-center text-center px-6">
+          <div class="w-16 h-16 rounded-full bg-white/10 border border-white/25 grid place-items-center mb-4"><i data-lucide="lock" class="w-6 h-6 text-white"></i></div>
+          <p id="lockTitle" class="font-jakarta font-extrabold text-white text-[15px]">This replay is for members</p>
+          <p id="lockSub" class="text-white/70 text-[13px] mt-1 max-w-xs">Sign in, or join SME South Africa, to watch the full recording.</p>
+          <div id="lockBtns" class="mt-4 flex flex-wrap items-center justify-center gap-2"></div>
+        </div>
+      </div>
+      <div class="dev-note rounded-xl px-4 py-3 items-start gap-3 mt-3">
+        <i data-lucide="info" class="w-4 h-4 text-[#AE6B0A] shrink-0 mt-0.5"></i>
+        <p class="text-sm text-slate-700 leading-relaxed"><b>Video:</b> as approved. Upcoming shows the trailer to everyone. Live and replay are for members: visitors get the thumbnail under the navy scrim with a lock (live: Register to join; replay: Sign in or Join). The video address is never printed for visitors.</p>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section class="mb-10">
+      <h2 class="font-jakarta font-extrabold text-2xl sm:text-3xl text-[#0C1F31] mb-4">About this webinar</h2>
+      <div class="prose mb-6">
+        <p>In this practical 75-minute live webinar, we explore how South African SME founders can build accurate revenue, staffing, and working capital forecasts with limited historical data.</p>
+        <p>Whether you're preparing for your next funding round, planning headcount for Q4, or managing inventory cash lock-up, learn how to turn light data into actionable growth predictions using bottom-up unit economics.</p>
+      </div>
+      <h2 class="font-jakarta font-extrabold text-2xl sm:text-3xl text-[#0C1F31] mb-4">What you'll learn</h2>
+      <div class="prose">
+        <ul>
+          <li>How to build a revenue forecast on light data, bottom-up unit economics vs top-down TAM slicing, and when to use which.</li>
+          <li>How to tie your staffing plan to revenue, trigger points for the next 3 hires and how to test them before you commit.</li>
+          <li>Inventory and working capital, reorder points, safety stock and the cash lock-up you can control.</li>
+          <li>The three forecast mistakes founders repeatedly make, and one thing every forecast should include but usually doesn't.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- HOST -->
+    <section class="mb-10" id="host">
+      <h2 class="font-jakarta font-extrabold text-2xl sm:text-3xl text-[#0C1F31] mb-6">Your host</h2>
+      <div class="bg-white rounded-2xl border border-[#E7EBEF] p-6">
+        <div class="flex flex-col sm:flex-row gap-5 sm:gap-6">
+          <div class="relative w-24 h-24 sm:w-28 sm:h-28 rounded-full shrink-0 shadow-lg overflow-hidden">
+            <div class="absolute inset-0 bg-gradient-to-br from-[#DC183C] to-[#FF9900] grid place-items-center font-jakarta font-extrabold text-white text-3xl" aria-hidden="true">KK</div>
+            <img src="https://smesouthafrica.co.za/wp-content/uploads/2025/02/SME-South-Africa-Team-Members_0000s_0004_3-2048x2048.jpg" alt="Karabo Kgophane" class="absolute inset-0 w-full h-full object-cover" onerror="this.remove()" />
+          </div>
+          <div class="min-w-0">
+            <h3 class="font-jakarta font-extrabold text-2xl text-[#0C1F31] tracking-tight">Karabo Kgophane</h3>
+            <p class="text-[#DC183C] font-semibold mt-1">Social Media &amp; Digital Community Manager · SME South Africa</p>
+            <div class="flex items-center gap-2 mt-3">
+              <a href="#" class="w-8 h-8 rounded-full bg-slate-100 hover:bg-[#FDECEF] hover:text-[#DC183C] grid place-items-center transition" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.42v1.56h.05c.47-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.07 2.07 0 1 1 0-4.14 2.07 2.07 0 0 1 0 4.14zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.8 0 0 .78 0 1.73v20.54C0 23.22.8 24 1.77 24h20.45C23.2 24 24 23.22 24 22.27V1.73C24 .78 23.2 0 22.22 0z"/></svg></a>
+              <a href="#" class="w-8 h-8 rounded-full bg-slate-100 hover:bg-[#FDECEF] hover:text-[#DC183C] grid place-items-center transition" aria-label="X"><svg viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+              <a href="#" class="w-8 h-8 rounded-full bg-slate-100 hover:bg-[#FDECEF] hover:text-[#DC183C] grid place-items-center transition" aria-label="Email"><i data-lucide="mail" class="w-4 h-4"></i></a>
+            </span>
+            </div>
+            <p class="text-[#6A7581] leading-relaxed mt-4">Karabo has a background in journalism and film &amp; television, and over four years of experience curating content for SA entrepreneurs. He hosts our monthly webinars and works with founders on brand voice and content strategy.</p>
+            <a href="event-speaker.html" class="inline-flex items-center gap-1 mt-4 text-[13px] font-bold text-[#DC183C] hover:underline">View profile <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i></a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- GUEST -->
+    <section class="mb-10">
+      <h2 class="font-jakarta font-extrabold text-2xl sm:text-3xl text-[#0C1F31] mb-6">Guest speaker</h2>
+      <div class="bg-white rounded-2xl border border-[#E7EBEF] p-6">
+        <div class="flex flex-col sm:flex-row gap-5 sm:gap-6">
+          <div class="relative w-24 h-24 sm:w-28 sm:h-28 rounded-full shrink-0 shadow-lg overflow-hidden">
+            <div class="absolute inset-0 bg-gradient-to-br from-[#DC183C] to-[#FF9900] grid place-items-center font-jakarta font-extrabold text-white text-3xl" aria-hidden="true">DM</div>
+          </div>
+          <div class="min-w-0">
+            <h3 class="font-jakarta font-extrabold text-2xl text-[#0C1F31] tracking-tight">Dr. Dineo Molefe</h3>
+            <p class="text-[#DC183C] font-semibold mt-1">Head of Advisory · Base Capital</p>
+            <div class="flex items-center gap-2 mt-3">
+              <a href="#" class="w-8 h-8 rounded-full bg-slate-100 hover:bg-[#FDECEF] hover:text-[#DC183C] grid place-items-center transition" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.42v1.56h.05c.47-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.07 2.07 0 1 1 0-4.14 2.07 2.07 0 0 1 0 4.14zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.8 0 0 .78 0 1.73v20.54C0 23.22.8 24 1.77 24h20.45C23.2 24 24 23.22 24 22.27V1.73C24 .78 23.2 0 22.22 0z"/></svg></a>
+              <a href="#" class="w-8 h-8 rounded-full bg-slate-100 hover:bg-[#FDECEF] hover:text-[#DC183C] grid place-items-center transition" aria-label="X"><svg viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+            </span>
+            </div>
+            <p class="text-[#6A7581] leading-relaxed mt-4">Dineo has led financial-modelling workshops with more than 800 SA founders since 2020, and previously ran analytics at a Jozi fintech unicorn. She'll walk us through the three-model stack live.</p>
+            <a href="event-speaker-talks.html" class="inline-flex items-center gap-1 mt-4 text-[13px] font-bold text-[#DC183C] hover:underline">Talks and slides <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i></a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </article>
+
+  <!-- BOTTOM SIDEBAR (Mobile: 3rd, Desktop: Right Col Bottom) -->
+  <aside class="order-3 lg:col-start-2 lg:row-start-2 w-full space-y-5 lg:sticky lg:top-6">
+
+    <!-- SLIDES: from the guest speaker's talk (from the start of the session) -->
+    <div id="slidesCard" class="hidden bg-white rounded-2xl border border-[#E7EBEF] p-5">
+      <p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] mb-1">Get the slides</p>
+      <p class="font-jakarta font-extrabold text-[16px] text-[#0C1F31] leading-snug">Forecasting on light data</p>
+      <p class="text-[13px] text-[#6A7581] mt-1 mb-4 leading-relaxed">From the talk by <a href="event-speaker-talks.html" class="font-semibold text-[#0C1F31] hover:text-[#DC183C]">Dr. Dineo Molefe</a>: the slide deck and financial templates used in this session.</p>
+      <div id="slidesBtn"></div>
+      <div class="dev-note rounded-xl px-3 py-2.5 items-start gap-2 mt-3">
+        <i data-lucide="info" class="w-4 h-4 text-[#AE6B0A] shrink-0 mt-0.5"></i>
+        <p class="text-xs text-slate-700 leading-relaxed"><b>Dev Note:</b> comes from the speaker's talk (Talks box on the speaker, a MemberPress file), so nothing extra is uploaded on the event. Hidden before the session and when the speaker has no slides for this event. Visitor: "Get the slides" goes to sign-up and back. Member: "Download the slides".</p>
+      </div>
+    </div>
+
+    <!-- DISCUSSION (only when one is attached to the event) -->
+    <div id="discCard" class="hidden bg-white rounded-2xl border border-[#E7EBEF] p-5">
+      <p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] mb-1 flex items-center gap-1.5"><i data-lucide="message-circle" class="w-3.5 h-3.5"></i> Discussion</p>
+      <p id="discTitle" class="font-jakarta font-extrabold text-[16px] text-[#0C1F31] leading-snug">Ask the speakers before the session</p>
+      <p id="discSub" class="text-[13px] text-[#6A7581] mt-1 mb-4 leading-relaxed">Post your question and other founders can add theirs.</p>
+      <div id="discBtn"></div>
+      <div class="dev-note rounded-xl px-3 py-2.5 items-start gap-2 mt-3">
+        <i data-lucide="info" class="w-4 h-4 text-[#AE6B0A] shrink-0 mt-0.5"></i>
+        <p class="text-xs text-slate-700 leading-relaxed"><b>Dev Note:</b> Joel, 20 Oct: no event posts in the feed and no discussion threads made automatically. The card shows only when staff attach an existing discussion to the event by hand; with nothing attached it stays hidden.</p>
+      </div>
+    </div>
+
+    <!-- SHARE -->
+    <div class="bg-white rounded-2xl border border-[#E7EBEF] p-5">
+      <p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] mb-1">Share this webinar</p>
+      <p class="text-[13px] text-[#6A7581] mb-3">Know a founder who should be there?</p>
+      <div class="space-y-2">
+        <a href="#" onclick="showToast('Opening WhatsApp.');return false" class="w-full h-10 rounded-lg bg-[#25D366] hover:bg-[#1FB757] text-white text-[13px] font-bold transition inline-flex items-center justify-center gap-2">Share on WhatsApp</a>
+        <a href="#" onclick="showToast('Opening LinkedIn.');return false" class="w-full h-10 rounded-lg bg-[#0A66C2] hover:bg-[#08539C] text-white text-[13px] font-bold transition inline-flex items-center justify-center gap-2">Share on LinkedIn</a>
+        <button onclick="copyShareLink()" class="w-full h-10 rounded-lg border border-[#E7EBEF] hover:border-[#0C1F31] text-[#0C1F31] text-[13px] font-bold transition inline-flex items-center justify-center gap-2"><i data-lucide="link" class="w-4 h-4"></i> Copy link</button>
+      </div>
+    </div>
+
+    <!-- RELATED EVENTS -->
+    <div class="bg-white rounded-2xl border border-[#E7EBEF] p-5">
+      <h3 class="font-jakarta font-extrabold text-[15px] text-[#0C1F31] mb-4">Related webinars</h3>
+      <div class="space-y-4">
+        <a href="event-single-online-v2.html" class="group block">
+          <p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] mb-1">12 Sep 2026</p>
+          <p class="font-jakarta font-extrabold text-[#0C1F31] text-[13px] leading-tight group-hover:text-[#DC183C] transition">E-commerce Expansion Workshop</p>
+        </a>
+        <div class="w-full h-px bg-[#E7EBEF]"></div>
+        <a href="event-single-online-v2.html" class="group block">
+          <p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] mb-1">05 Oct 2026</p>
+          <p class="font-jakarta font-extrabold text-[#0C1F31] text-[13px] leading-tight group-hover:text-[#DC183C] transition">Marketing Your Event Management Business</p>
+        </a>
+        <div class="w-full h-px bg-[#E7EBEF]"></div>
+        <a href="event-single-online-v2.html" class="group block">
+          <p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] mb-1">18 Nov 2026</p>
+          <p class="font-jakarta font-extrabold text-[#0C1F31] text-[13px] leading-tight group-hover:text-[#DC183C] transition">The Township Economy Playbook</p>
+        </a>
+      </div>
+    </div>
+  </aside>
+
+</main>
+
+<div class="lg:hidden" style="height:calc(64px + env(safe-area-inset-bottom))"></div>
+<footer class="bg-[#0C1F31] text-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-12">
+    <div class="grid grid-cols-2 md:grid-cols-6 gap-8">
+      <div class="col-span-2">
+        <a href="public-home.html" class="flex items-center gap-2.5"><img src="assets/logo-v1-lockup-reversed.svg" alt="SME South Africa" class="h-[46px] lg:h-[68px] w-auto" /></a>
+        <p class="text-sm text-white/55 mt-4 max-w-xs leading-relaxed">A community for South African SME owners, connecting founders with funding, events, and the tools to scale.</p>
+        <div class="flex items-center gap-2 mt-5">
+          <a href="#" aria-label="X" class="w-9 h-9 rounded-lg bg-white/8 hover:bg-white/15 grid place-items-center transition"><svg viewBox="0 0 24 24" class="w-4 h-4" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24h-6.66l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+          <a href="#" aria-label="LinkedIn" class="w-9 h-9 rounded-lg bg-white/8 hover:bg-white/15 grid place-items-center transition"><svg viewBox="0 0 24 24" class="w-4 h-4" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0z"/></svg></a>
+          <a href="#" aria-label="Instagram" class="w-9 h-9 rounded-lg bg-white/8 hover:bg-white/15 grid place-items-center transition"><svg viewBox="0 0 24 24" class="w-4 h-4" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></a>
+          <a href="#" aria-label="Facebook" class="w-9 h-9 rounded-lg bg-white/8 hover:bg-white/15 grid place-items-center transition"><svg viewBox="0 0 24 24" class="w-4 h-4" fill="currentColor"><path d="M22.675 0H1.325C.593 0 0 .593 0 1.325v21.351C0 23.407.593 24 1.325 24h11.495v-9.294H9.692v-3.622h3.128V8.413c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.716-1.795 1.763v2.313h3.587l-.467 3.622h-3.12V24h6.116C23.407 24 24 23.407 24 22.675V1.325C24 .593 23.407 0 22.675 0z"/></svg></a>
+          <a href="#" aria-label="YouTube" class="w-9 h-9 rounded-lg bg-white/8 hover:bg-white/15 grid place-items-center transition"><svg viewBox="0 0 24 24" class="w-4 h-4" fill="currentColor"><path d="M21.582 6.186a2.684 2.684 0 0 0-1.884-1.9C17.962 3.84 12 3.84 12 3.84s-5.962 0-7.698.446a2.684 2.684 0 0 0-1.884 1.9C2 7.934 2 12 2 12s0 4.066.418 5.814a2.684 2.684 0 0 0 1.884 1.9C6.038 20.16 12 20.16 12 20.16s5.962 0 7.698-.446a2.684 2.684 0 0 0 1.884-1.9C22 16.066 22 12 22 12s0-4.066-.418-5.814zM9.996 15.005V8.994L15.26 12l-5.264 3.005z"/></svg></a>
+          <a href="#" aria-label="TikTok" class="w-9 h-9 rounded-lg bg-white/8 hover:bg-white/15 grid place-items-center transition"><svg viewBox="0 0 24 24" class="w-4 h-4" fill="currentColor"><path d="M16.6 5.82c-1.01-.88-1.62-2.14-1.63-3.55h-3.13v13.39c0 1.6-1.3 2.9-2.9 2.9a2.9 2.9 0 0 1 0-5.8c.29 0 .57.04.83.13V9.75a6.03 6.03 0 0 0-.83-.06c-3.34 0-6.05 2.71-6.05 6.05S5.6 21.79 8.94 21.79s6.05-2.71 6.05-6.05V9.01a9.14 9.14 0 0 0 5.34 1.71V7.6a5.94 5.94 0 0 1-3.73-1.78z"/></svg></a>
+        </div>
+      </div>
+      <div>
+        <p class="text-[11px] font-bold uppercase tracking-widest text-[#FF9900]">Platform</p>
+        <ul class="mt-4 space-y-2.5 text-sm text-white/70">
+          <li><a href="public-resources.html" class="hover:text-white">Resources Library</a></li>
+          <li><a href="public-funding.html" class="hover:text-white">Funding Portal</a></li>
+          <li><a href="public-solutions.html" class="hover:text-white">Solutions Directory</a></li>
+          <li><a href="public-brands.html" class="hover:text-white">Brands Directory</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="text-[11px] font-bold uppercase tracking-widest text-[#FF9900]">Insights</p>
+        <ul class="mt-4 space-y-2.5 text-sm text-white/70">
+          <li><a href="public-articles.html" class="hover:text-white">All Insights</a></li>
+          <li><a href="public-founder-focus-category.html" class="hover:text-white">Founder Focus</a></li>
+          <li><a href="public-funding-summit-category.html" class="hover:text-white">Funding Summit</a></li>
+          <li><a href="public-category.html" class="hover:text-white">Business Opportunities</a></li>
+          <li><a href="public-category.html" class="hover:text-white">Brand Voice</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="text-[11px] font-bold uppercase tracking-widest text-[#FF9900]">Community</p>
+        <ul class="mt-4 space-y-2.5 text-sm text-white/70">
+          <li><a href="member-hub.html" class="hover:text-white">Community Forum</a></li>
+          <li><a href="events.html" class="hover:text-white">Events &amp; Webinars</a></li>
+          <li><a href="newsletter.html" class="hover:text-white">Newsletter</a></li>
+          <li><a href="podcast.html" class="hover:text-white">Podcast</a></li>
+          <li><a href="public-glossary.html" class="hover:text-white">Glossary</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="text-[11px] font-bold uppercase tracking-widest text-[#FF9900]">Legal</p>
+        <ul class="mt-4 space-y-2.5 text-sm text-white/70">
+          <li><a href="public-terms.html" class="hover:text-white">Terms &amp; Conditions</a></li>
+          <li><a href="public-privacy.html" class="hover:text-white">Privacy Policy</a></li>
+          <li><a href="public-refunds.html" class="hover:text-white">Refunds Policy</a></li>
+          <li><a href="public-popia.html" class="hover:text-white">POPIA</a></li>
+          <li><a href="public-advertising-disclosure.html" class="hover:text-white">Advertising Disclosure</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-3 pt-8 mt-10 border-t border-white/10 text-[12.5px] text-white/50">
+      <div class="flex flex-wrap items-center gap-x-3 gap-y-1.5">
+        <a href="public-about.html" class="hover:text-white transition">About</a><span class="text-white/20">·</span>
+            <a href="public-contact.html" class="hover:text-white transition">Contact</a><span class="text-white/20">·</span>
+            <a href="public-advertise.html" class="hover:text-white transition">Advertise</a><span class="text-white/20">·</span>
+            <a href="public-help.html" class="hover:text-white transition">Help Centre</a>
+      </div>
+      <p>© 2026 SME South Africa. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+
+<div id="overlay-root"></div>
+<div id="toast" class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-[90]"></div>
+<script>
+
+  /* ============ v2: page states. Visitor or Member comes from the dark "Viewing as" pill (member-chrome.js). ============ */
+  const MODE = (function(){ try { if (window.SME_VISITOR_VIEW) return 'visitor'; const q=(location.search.match(/[?&]as=(member|visitor)\b/)||[])[1]; if(q) return q; return sessionStorage.getItem('smeViewAs')||'visitor'; } catch(_) { return 'visitor'; } })();
+  const MEMBER = MODE === 'member';
+  const STATES = [['upcoming','Upcoming'],['registered','Registered'],['live','Live now'],['past','Replay'],['full','Full'],['closed','Closed']];
+  let st = 'upcoming';
+  try { st = (location.search.match(/[?&]st=([a-z]+)/)||[])[1] || sessionStorage.getItem('smeEvSt') || 'upcoming'; } catch(_) {}
+  if (!MEMBER && st === 'registered') st = 'upcoming';
+  let optIn = false;
+  const YOUTUBE_ID = '3UdK9NKwhGY';
+  const fact = (ic, t, sub) => `<div class="flex items-start gap-2.5"><i data-lucide="${ic}" class="w-4 h-4 text-[#DC183C] mt-0.5 shrink-0"></i><div><p class="font-jakarta font-extrabold text-[15px] leading-tight">${t}</p><p class="text-[13px] text-[#6A7581]">${sub}</p></div></div>`;
+  const eyebrow = (t, c) => `<p class="text-[10px] font-bold uppercase tracking-widest ${c || 'text-[#DC183C]'} mb-2">${t}</p>`;
+  const btnRed = (label, extra) => `<button type="button" ${extra || ''} class="w-full h-12 rounded-xl bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold text-sm transition inline-flex items-center justify-center gap-1.5">${label}</button>`;
+  const linkRed = (label, href) => `<a href="${href}" class="w-full h-12 rounded-xl bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold text-sm transition inline-flex items-center justify-center gap-1.5">${label}</a>`;
+  const linkDark = (label, href) => `<a href="${href}" class="w-full h-12 rounded-xl bg-[#0C1F31] hover:bg-[#16324A] text-white font-bold text-sm transition inline-flex items-center justify-center gap-1.5">${label}</a>`;
+  const when = fact('calendar', 'Thu, 20 Aug 2026', '1:00 pm to 2:15 pm (SAST)');
+  const link = fact('video', 'Webinar link', 'Sent 1 hour before start. Also going live on YouTube.');
+  const replayFact = fact('rotate-cw', 'Replay for members', 'Members can watch the recording and download the slides afterwards.');
+  const memberHint = `<p class="text-[12.5px] text-[#6A7581] mt-3 text-center">Already a member? <a href="public-auth.html" class="font-bold text-[#DC183C] hover:underline">Sign in to register in one tap</a></p>`;
+
+  function calMenu(){
+    const row = (t) => `<a href="#" onclick="showToast('Added to ${t}.');document.getElementById('calPop').classList.add('hidden');return false" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-[#DC183C]">${t}</a>`;
+    return `<div class="relative" id="calWrap"><button type="button" onclick="document.getElementById('calPop').classList.toggle('hidden')" class="w-full h-11 rounded-xl border border-[#E7EBEF] hover:border-[#0C1F31] text-[#0C1F31] font-bold text-sm transition inline-flex items-center justify-center gap-2"><i data-lucide="calendar-plus" class="w-4 h-4"></i> Add to calendar <i data-lucide="chevron-down" class="w-4 h-4"></i></button>
+      <div id="calPop" class="hidden absolute left-0 right-0 top-full mt-1 bg-white rounded-xl border border-[#E7EBEF] shadow-xl py-1.5 z-20">${row('Google Calendar')}${row('Outlook')}${row('Apple Calendar')}${row('Download .ics file')}</div></div>`;
+  }
+  function optRow(){
+    return `<label class="flex items-start gap-3 min-h-[44px] cursor-pointer select-none"><input type="checkbox" id="optIn" ${optIn ? 'checked' : ''} onchange="optIn=this.checked;if(st==='registered')showToast(this.checked?'Your connections can see you are going.':'Hidden from your connections.')" class="mt-0.5 w-5 h-5 accent-[#DC183C] shrink-0"><span><span class="block text-[13.5px] font-semibold text-[#0C1F31] leading-snug">Let my connections see I am going</span><span class="block text-[12px] text-[#6A7581] leading-snug mt-0.5">Only people you are connected to see it.</span></span></label>`;
+  }
+
+  function regHTML(){
+    if (st === 'past') {
+      if (MEMBER) return eyebrow('On-demand replay') + `<div class="space-y-3 mb-4">${fact('calendar','Recorded 20 Aug 2026','75-minute session')}${fact('play-circle','Full video replay','Watch it whenever it suits you.')}${fact('file-down','Slides','Download them from the talk.')}</div>` + btnRed('<i data-lucide="play" class="w-4 h-4"></i> Watch the replay', 'onclick="watchNow()"');
+      return eyebrow('On-demand replay') + `<div class="space-y-3 mb-4">${fact('calendar','Recorded 20 Aug 2026','75-minute session')}${fact('play-circle','Full video replay','For SME South Africa members.')}${fact('file-down','Slides','Free with a member account.')}</div><div class="space-y-2"><p class="text-[13px] text-[#6A7581] leading-relaxed mb-1">The replay is for SME South Africa members. Sign in, or join to watch it.</p>${linkDark('<i data-lucide="log-in" class="w-4 h-4"></i> Sign in','public-auth.html')}${linkRed('<i data-lucide="user-round-plus" class="w-4 h-4"></i> Join SME South Africa','public-auth.html#join')}</div>`;
+    }
+    if (st === 'full') return eyebrow('Fully booked','text-[#AE6B0A]') + `<div class="space-y-3 mb-4">${when}${link}</div><p class="text-[13px] text-[#6A7581] leading-relaxed mb-3">This webinar is full. Join the waitlist and we will email you if a seat opens.</p>` + (MEMBER ? btnRed('Join the waitlist','onclick="showToast(\'You are on the waitlist.\')"') : linkRed('Join the waitlist','event-register.html'));
+    if (st === 'closed') return eyebrow('Registration closed','text-slate-500') + `<div class="space-y-3 mb-4">${when}</div><p class="text-[13px] text-[#6A7581] leading-relaxed mb-3">Registration for this webinar has closed. Members can watch the replay here after the session.</p><a href="events.html" class="w-full h-11 rounded-xl border border-[#E7EBEF] hover:border-[#0C1F31] text-[#0C1F31] font-bold text-sm transition inline-flex items-center justify-center">See upcoming webinars</a>`;
+    if (st === 'live') {
+      const head = `<p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] mb-2 flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-[#DC183C] animate-pulse"></span> Live now</p>`;
+      if (MEMBER) return head + `<div class="space-y-3 mb-4">${when}${fact('video','Your webinar link','Opens when you press Join now.')}</div>` + btnRed('Join now <i data-lucide="arrow-right" class="w-4 h-4"></i>','onclick="showToast(\'Opening your webinar link.\')"');
+      return head + `<div class="space-y-3 mb-4">${when}${fact('video','Webinar link','Register to get your link.')}</div>` + linkRed('Register to join <i data-lucide="arrow-right" class="w-4 h-4"></i>','event-register.html') + memberHint;
+    }
+    if (st === 'registered' && MEMBER) {
+      return eyebrow("You're registered",'text-[#1E7F5E]') + `<div class="space-y-3 mb-4">${when}${fact('video','Your webinar link','We email it to you 1 hour before the start.')}</div><div class="space-y-3">${calMenu()}${optRow()}<button type="button" onclick="setSt('upcoming');showToast('Your registration was cancelled.')" class="text-[12.5px] font-bold text-slate-500 hover:text-[#DC183C] underline underline-offset-2">I can no longer attend</button></div>`;
+    }
+    return eyebrow('Register, no cost') + `<div class="space-y-3 mb-4">${when}${link}${replayFact}</div>` + (MEMBER
+      ? `<div class="space-y-3">${btnRed('Register <i data-lucide="arrow-right" class="w-4 h-4"></i>','onclick="doRegister()"')}${optRow()}</div>`
+      : linkRed('Register now <i data-lucide="arrow-right" class="w-4 h-4"></i>','event-register.html') + memberHint);
+  }
+  function doRegister(){ setSt('registered'); showToast("You're registered. Your link follows 1 hour before the start."); }
+  function watchNow(){ playVideo(); document.getElementById('videoBlock').scrollIntoView({ behavior: 'smooth', block: 'center' }); }
+
+  function chipsHTML(){
+    const base = 'px-3 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-wider';
+    const stateChip = st === 'live' ? `<span class="${base} bg-[#DC183C] text-white inline-flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span> Live now</span>`
+      : st === 'past' ? `<span class="${base} bg-white/15 text-white">Replay</span>`
+      : st === 'closed' ? `<span class="${base} bg-white/15 text-white">Registration closed</span>`
+      : `<span class="${base} bg-[#FF9900] text-[#0C1F31]">Upcoming</span>`;
+    return stateChip + `<span class="${base} bg-white/10 text-white inline-flex items-center gap-1.5"><i data-lucide="video" class="w-3.5 h-3.5"></i> Online webinar</span><span class="${base} bg-[#FDECEF] text-[#DC183C]">Tech &amp; Innovation</span>`;
+  }
+  function slidesHTML(){
+    return MEMBER
+      ? `<button onclick="showToast('Slide deck download started.')" class="w-full h-11 rounded-lg bg-[#0C1F31] hover:bg-[#16324A] text-white text-sm font-bold transition inline-flex items-center justify-center gap-2"><i data-lucide="download" class="w-4 h-4"></i> Download the slides</button><p class="text-[12px] text-[#6A7581] mt-2 flex items-center gap-1.5"><i data-lucide="file-text" class="w-3.5 h-3.5"></i> PDF</p>`
+      : `<a href="public-auth.html#join" class="w-full h-11 rounded-lg bg-[#0C1F31] hover:bg-[#16324A] text-white text-sm font-bold transition inline-flex items-center justify-center gap-2"><i data-lucide="lock" class="w-4 h-4"></i> Get the slides</a><p class="text-[12px] text-[#6A7581] mt-2"><b class="text-[#0C1F31]">Free</b> with a member account</p>`;
+  }
+  function discHTML(){
+    return MEMBER
+      ? `<a href="single-discussion.html" class="w-full h-11 rounded-lg bg-[#0C1F31] hover:bg-[#16324A] text-white text-sm font-bold transition inline-flex items-center justify-center gap-2">Join the conversation</a>`
+      : `<a href="public-auth.html" class="w-full h-11 rounded-lg border border-[#E7EBEF] hover:border-[#0C1F31] text-[#0C1F31] text-sm font-bold transition inline-flex items-center justify-center gap-2"><i data-lucide="log-in" class="w-4 h-4"></i> Sign in to join the conversation</a>`;
+  }
+  function lockBtns(){
+    return st === 'live'
+      ? `<a href="event-register.html" onclick="event.stopPropagation()" class="inline-flex items-center gap-1.5 h-11 px-4 rounded-lg bg-[#DC183C] text-white text-xs font-bold">Register to join <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i></a><a href="public-auth.html" onclick="event.stopPropagation()" class="inline-flex items-center gap-1.5 h-11 px-4 rounded-lg bg-white text-[#0C1F31] text-xs font-bold">Sign in</a>`
+      : `<a href="public-auth.html" onclick="event.stopPropagation()" class="inline-flex items-center gap-1.5 h-11 px-4 rounded-lg bg-white text-[#0C1F31] text-xs font-bold">Sign in <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i></a><a href="public-auth.html#join" onclick="event.stopPropagation()" class="inline-flex items-center gap-1.5 h-11 px-4 rounded-lg bg-[#DC183C] text-white text-xs font-bold">Join SME South Africa</a>`;
+  }
+
+  function render(){
+    document.getElementById('heroChips').innerHTML = chipsHTML();
+    document.getElementById('heroDate').textContent = st === 'past' ? 'Recorded Thu, 20 Aug 2026' : 'Thu, 20 Aug 2026';
+    document.getElementById('regCard').innerHTML = regHTML();
+    const avail = STATES.filter(([k]) => MEMBER || k !== 'registered');
+    document.getElementById('stSwitch').innerHTML = avail.map(([k, l]) => `<button type="button" onclick="setSt('${k}')" class="py-1.5 rounded-lg text-xs font-bold transition ${st === k ? 'bg-white shadow-sm text-slate-800' : 'text-slate-500 hover:text-slate-800'}">${l}</button>`).join('');
+    const showGoing = MEMBER && ['upcoming', 'registered', 'live', 'past'].includes(st);
+    document.getElementById('goingCard').classList.toggle('hidden', !showGoing);
+    document.getElementById('goingText').textContent = st === 'past' ? 'Thabo, Lerato and Naledi attended.' : 'Thabo, Lerato and Naledi are going.';
+    document.getElementById('slidesCard').classList.toggle('hidden', !(st === 'live' || st === 'past'));
+    document.getElementById('slidesBtn').innerHTML = slidesHTML();
+    document.getElementById('discCard').classList.toggle('hidden', !['upcoming', 'registered', 'live', 'past'].includes(st));
+    document.getElementById('discBtn').innerHTML = discHTML();
+    document.getElementById('discTitle').textContent = st === 'past' ? 'Questions and takeaways' : 'Ask the speakers before the session';
+    document.getElementById('discSub').textContent = st === 'past' ? 'Carry on the conversation from the session.' : 'Post your question and other founders can add theirs.';
+    updateVideoLock();
+    lucide.createIcons();
+  }
+  function setSt(k){ st = k; try { sessionStorage.setItem('smeEvSt', k); } catch(_) {} resetVideo(); render(); }
+
+  function showToast(m){const el=document.getElementById('toast');el.classList.remove('hidden');el.innerHTML=`<div class="bg-[#0C1F31] text-white rounded-full pl-3 pr-5 py-2.5 shadow-2xl flex items-center gap-2 text-sm font-semibold" style="border-left:4px solid #29A37A"><i data-lucide="check-circle" class="w-4 h-4" style="color:#29A37A"></i><span>${m}</span></div>`;lucide.createIcons();setTimeout(()=>{el.classList.add('hidden');el.innerHTML='';},2400);}
+  function copyShareLink(){ navigator.clipboard?.writeText(location.href); showToast('Link copied to clipboard.'); }
+
+  const VIDEO_HTML = document.getElementById('videoBlock').innerHTML;
+  function resetVideo(){ const b = document.getElementById('videoBlock'); if (!b.querySelector('iframe')) return; b.innerHTML = VIDEO_HTML; b.onclick = handleVideoClick; b.classList.add('cursor-pointer', 'group'); }
+  function isLocked(){ return !MEMBER && (st === 'past' || st === 'live'); }
+  function updateVideoLock(){
+    if (!document.getElementById('lockOverlay')) return;
+    const locked = isLocked(), live = st === 'live';
+    document.getElementById('lockOverlay').classList.toggle('hidden', !locked);
+    document.getElementById('playOverlay').classList.toggle('hidden', locked);
+    const tag = document.getElementById('liveTag'); tag.classList.toggle('hidden', !live); tag.classList.toggle('inline-flex', live);
+    document.getElementById('lockTitle').textContent = live ? 'This webinar is live' : 'This replay is for members';
+    document.getElementById('lockSub').textContent = live ? 'Register to get your link and join the session.' : 'Sign in, or join SME South Africa, to watch the full recording.';
+    document.getElementById('lockBtns').innerHTML = lockBtns();
+  }
+  function handleVideoClick(){
+    if (isLocked()) { document.getElementById('regCard')?.scrollIntoView({ behavior: 'smooth', block: 'center' }); showToast(st === 'live' ? 'Register to join the live session.' : 'Sign in or join SME South Africa to watch this replay.'); return; }
+    playVideo();
+  }
+  function playVideo(){
+    const block = document.getElementById('videoBlock');
+    block.onclick = null;
+    block.classList.remove('cursor-pointer', 'group');
+    block.innerHTML = `<iframe class="w-full h-full" src="https://www.youtube-nocookie.com/embed/${YOUTUBE_ID}?autoplay=1&rel=0" title="Webinar video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+  }
+  document.addEventListener('click', (e) => { const p = document.getElementById('calPop'); if (p && !e.target.closest('#calWrap')) p.classList.add('hidden'); });
+  render();
+
+  const BRIEF = {
+    title:'Single Online Event (Webinar), v2',
+    sub:'CPT <code>event</code> · meta_type = "ONLINE"',
+    purpose:'<b>v2 (21 Oct 2026):</b> the approved page plus: Hosted-by byline with the event date (host chosen in a backend box); registration states for visitors and members (one-tap register with an opt-in to show connections you are going, registered with add to calendar and cancel, live with Join now, full, closed); People you know (connections only, no counts); slides from the guest speaker talk; optional discussion; share card.<br/><br/>Dedicated template for online/webinar events. Register-first UX (email capture in the hero sidebar). Also streamed live on YouTube. The right sidebar walks the attendee through how to join. Doubles as a replay-landing page when <code>event_ended = true</code>, the sidebar CTA flips to "Watch replay".',
+    data:'Extends the base event CPT with online fields: <code>meta_stream_platform</code> (kept internal, do NOT surface a specific vendor name on the front-end; copy always says "webinar link"), <code>meta_join_url</code> (secret, server-side only, emailed in reminder), <code>meta_join_link_activates_at</code> (default 30min before start), <code>meta_youtube_url</code> (public simulcast), <code>meta_replay_url</code>, <code>meta_resource_downloads [{ label, file }]</code>, <code>meta_host</code> and <code>meta_guest</code> (both use the same shape as author records: <code>{ name, role, avatar, bio, socials { linkedin, x, email } }</code>), <code>meta_learning_outcomes []</code>.',
+    logic:'Template = <code>single-event.php</code> with a switch on <code>meta_type === "ONLINE"</code>. Registration writes to the mail-list integration server-side, which returns a signed .ics attachment. Never render <code>meta_join_url</code> client-side, the reminder email is the only surface for it. Host/Guest cards reuse the author-preview component from <code>public-author.html</code>. The How-to-join widget in the right rail replaces what would otherwise be a quick-facts card.',
+    components:'Hero (breadcrumb + chip row + title + sticky register card w/ inline name+email form) · About prose · What you\'ll learn (plain UL, no card grid) · Host card (author-preview design, staff) · Guest card (author-preview design, external speaker) · Right sidebar (How-to-join 4-step widget + past-events pointer).',
+    specs:'<b>Hero:</b> hero-bg gradient max-w-[1200px], 2-col at lg: content + 380px sticky register card. Chip row: Upcoming (#FF9900/#0C1F31), Online (white/10 white with video icon), Category (#FDECEF/#DC183C). H1 Plus Jakarta 800 30/48px leading 1.05. <b>No countdown, no subtext under the title.</b><br/><b>Register card:</b> rounded-2xl bg-white p-5 shadow-2xl. Facts row: Date (calendar icon), Webinar link (video icon, never "Zoom", "Teams" etc.), Replay (rotate-cw icon). Sub-text on the webinar-link row mentions "Also going live on YouTube". Inline form 2 inputs h-11 rounded-lg bg slate-50; submit h-12 rounded-xl #DC183C hover #B0142F.<br/><b>About + What you\'ll learn:</b> prose class only. UL is disc-bullet, no card grid. Line-height 1.85, font-size 16.3px.<br/><b>Host/Guest cards:</b> rounded-2xl border #E7EBEF p-6. Avatar 96 to 112px rounded-full shadow-lg. Fallback gradient monogram: Host uses #DC183C→#FF9900, Guest uses #0C1F31→#5e1a2c to visually distinguish. Real photo overlaid via absolute img with <code>onerror="this.remove()"</code>. Name Plus Jakarta 800 24px. Role #DC183C 600. Social pills 32×32 rounded-full slate-100 hover #FDECEF/#DC183C. Bio 15px slate-500 line-1.7 max-w-3xl.<br/><b>How-to-join widget:</b> rounded-2xl border #E7EBEF p-5 (right rail, replaces quick facts). Eyebrow 10px uppercase #DC183C. Each step 2rem #FDECEF/#DC183C monogram + title Plus Jakarta 700 14.7px #0C1F31 + sub 12.5px #6A7581 line-1.5.<br/><b>Removed:</b> countdown, hero image inside the article, hero subtitle paragraph, agenda, FAQ, "Register now" final CTA, any Zoom/Teams naming, sidebar Quick-facts card.'
+  };
+
+  function toggleDevMode(){const on=document.body.classList.toggle('dev-on');const b=document.getElementById('devToggle');if(b)b.classList.toggle('on',on);lucide.createIcons();}
+  function closeOverlay(id){const el=document.getElementById(id);if(!el)return;el.classList.remove('open');setTimeout(()=>{if(el&&el.parentNode)el.remove();},300);}
+  function openBrief(){
+    const b=BRIEF;
+    const sec=(i,l,h)=>`<div class="px-6 py-4 border-t border-slate-100"><p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] flex items-center gap-1.5 mb-2"><i data-lucide="${i}" class="w-3.5 h-3.5"></i>${l}</p><div class="text-sm text-slate-600 leading-relaxed">${h}</div></div>`;
+    document.getElementById('overlay-root').innerHTML=`<div class="ov" id="ov"><div class="ov-bg" onclick="closeOverlay('ov')"></div><div class="drawer"><div class="sticky top-0 z-10 bg-[#0C1F31] text-white px-6 py-5 flex items-start justify-between"><div><p class="text-[10px] font-bold uppercase tracking-widest text-[#FF9900] mb-1">Dev Brief</p><h3 class="font-jakarta font-extrabold text-lg leading-tight">${b.title}</h3><p class="text-xs text-white/60 mt-1">${b.sub}</p></div><button onclick="closeOverlay('ov')" class="text-white/60 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button></div>${sec('target','Purpose',b.purpose)}${sec('database','Data model',b.data)}${sec('git-branch','Logic',b.logic)}${sec('boxes','Components',b.components)}${sec('ruler','Spec values',b.specs)}</div></div>`;
+    requestAnimationFrame(()=>{const o=document.getElementById('ov');if(o)o.classList.add('open');});
+    lucide.createIcons();
+  }
+
+  lucide.createIcons();
+</script>
+<script>
+  // ===== Recommended header/footer behaviour =====
+  function toggleChromeSearch(){
+    const o = document.getElementById('chromeSearchOverlay');
+    const opening = o.classList.toggle('active');
+    if(opening) setTimeout(()=>document.getElementById('chromeSearchInput').focus(), 100);
+  }
+  function toggleChromeBurger(){
+    const p = document.getElementById('chromeBurgerPanel');
+    const open = p.classList.toggle('hidden') === false;
+    document.getElementById('chromeBurgerIcon').setAttribute('data-lucide', open ? 'x' : 'menu');
+    lucide.createIcons();
+  }
+  const CHROME_DROPS = { articles: 'dropArticles', resources: 'dropResources', funding: 'dropFunding' };
+  function toggleChromeDrop(name){
+    Object.keys(CHROME_DROPS).forEach(k=>{ if(k!==name) document.getElementById(CHROME_DROPS[k]).classList.add('hidden'); });
+    document.getElementById(CHROME_DROPS[name]).classList.toggle('hidden');
+  }
+  function closeChromeDrop(name){
+    document.getElementById(CHROME_DROPS[name]).classList.add('hidden');
+  }
+  document.addEventListener('click', e=>{
+    if(!e.target.closest('nav .relative')) Object.values(CHROME_DROPS).forEach(id=>document.getElementById(id).classList.add('hidden'));
+  });
+  document.addEventListener('keydown', e=>{
+    if(e.key==='Escape'){ const o=document.getElementById('chromeSearchOverlay'); if(o && o.classList.contains('active')) toggleChromeSearch(); }
+  });
+</script>
+<script src="member-chrome.js"></script>
+<script src="assets/save-module.js"></script>
+</body>
+</html>

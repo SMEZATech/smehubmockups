@@ -37,6 +37,7 @@
     'public-podcast-episode.html': { type: 'podcast', mt: 14, mb: 0, dark: true, anchor: '#podcastShareRow' },
     'event-single-online.html': { type: 'event', mt: 20, mb: 0, dark: true },
     'event-single-in-person.html': { type: 'event', mt: 20, mb: 0, dark: true },
+    'event-single-online-v2.html': { type: 'event', dark: true, anchor: '#heroActions', pill: true },
     'single-discussion.html': { type: 'discussion', mt: -8, mb: 24, anchor: '#discThreadBar', small: true },
     'public-solution-category.html': { type: 'solution', dark: true, anchor: '#shareRow', pill: true, prepend: true },
     'public-brand.html': { type: 'brand', dark: true, anchor: '#shareRow', pill: true, prepend: true },
