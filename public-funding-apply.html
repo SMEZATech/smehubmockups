@@ -1,0 +1,641 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>SME Funding Application</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --n:#0A2C3D;--n2:#123b52;--n3:#1b5576;--r:#9C1C1F;--rd:#7e1619;--r50:#fdf3f3;
+  --ink:#0f1f2b;--ink2:#2a3a47;--mut:#5d6b78;--mut2:#8795a1;--line:#e3e8ee;--line2:#eef2f6;--soft:#f5f7fa;--bg:#f2f4f7;
+  --ok:#14804a;--ok50:#e9f6ef;--warn:#b25e09;--warn50:#fff5e8;
+  --sh1:0 1px 2px rgba(10,44,61,.06),0 1px 1px rgba(10,44,61,.04);
+  --sh2:0 12px 32px -14px rgba(10,44,61,.28),0 2px 6px -2px rgba(10,44,61,.08);
+  --sh3:0 30px 70px -30px rgba(10,44,61,.45);
+  --rad:16px;
+}
+*{box-sizing:border-box}
+[hidden]{display:none !important}
+html,body{margin:0}
+body{font-family:Roboto,Arial,sans-serif;color:var(--ink);background:var(--bg);font-size:15.5px;line-height:1.5;-webkit-font-smoothing:antialiased}
+a{color:var(--r);text-decoration:none}
+button{font:inherit}
+h1,h2,h3,h4{margin:0;color:var(--n)}
+.osw{font-family:Oswald,Arial,sans-serif;letter-spacing:.005em}
+svg{flex:none}
+
+/* ---------------- app bar ---------------- */
+.bar{position:sticky;top:0;z-index:40;background:rgba(255,255,255,.88);backdrop-filter:saturate(1.6) blur(14px);-webkit-backdrop-filter:saturate(1.6) blur(14px);border-bottom:1px solid var(--line)}
+.bar-in{max-width:1240px;margin:0 auto;height:66px;padding:0 28px;display:flex;align-items:center;gap:18px}
+.bar-logo img{height:32px;display:block}
+.bar-div{width:1px;height:26px;background:var(--line)}
+.bar-title{display:flex;flex-direction:column;line-height:1.2}
+.bar-title b{font-size:14px;color:var(--n)}
+.bar-title span{font-size:12.5px;color:var(--mut)}
+.bar-sp{flex:1}
+.saved{display:inline-flex;align-items:center;gap:7px;font-size:13px;color:var(--mut)}
+.saved i{width:8px;height:8px;border-radius:50%;background:var(--ok);box-shadow:0 0 0 4px var(--ok50)}
+.pill{display:inline-flex;align-items:center;gap:7px;height:38px;padding:0 14px;border-radius:99px;border:1px solid var(--line);background:#fff;color:var(--ink2);font-size:13.5px;font-weight:500;cursor:pointer}
+.pill:hover{border-color:#cdd6df;color:var(--n)}
+.me{display:inline-flex;align-items:center;gap:9px;height:38px;padding:0 12px 0 4px;border-radius:99px;border:1px solid var(--line);background:#fff;font-size:13.5px;font-weight:500;color:var(--ink2)}
+.av{width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,var(--r),#c3423f);color:#fff;display:grid;place-items:center;font-weight:700;font-size:13px}
+.prog{height:3px;background:transparent}
+.prog b{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--r),#d1474a);transition:width .6s cubic-bezier(.2,.7,.2,1)}
+
+/* ---------------- hero band ---------------- */
+.band{background:radial-gradient(1200px 380px at 85% -40%,rgba(156,28,31,.38),transparent 60%),radial-gradient(900px 400px at 0% 0%,rgba(27,85,118,.55),transparent 60%),linear-gradient(180deg,var(--n) 0%,#0c3247 100%);color:#fff}
+.band-in{max-width:1240px;margin:0 auto;padding:34px 28px 92px;display:flex;align-items:flex-end;justify-content:space-between;gap:24px}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#f3c2c3}
+.eyebrow i{width:6px;height:6px;border-radius:50%;background:#ff6b6e;box-shadow:0 0 0 4px rgba(255,107,110,.18)}
+.band h1{color:#fff;font-family:Oswald,Arial,sans-serif;font-weight:600;font-size:40px;line-height:1.08;margin:10px 0 8px;max-width:640px}
+.band p{margin:0;color:#c6d4de;max-width:600px;font-size:16px}
+.band-facts{display:grid;grid-template-columns:1fr;gap:8px;flex:none}
+.fact{display:flex;align-items:center;gap:12px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:14px;padding:9px 16px;width:250px}
+.fact svg{color:#ffb4b5}
+.fact b{display:block;font-size:14px;color:#fff}
+.fact span{display:block;font-size:12.5px;color:#a9bccb}
+
+/* ---------------- layout ---------------- */
+.shell{max-width:1240px;margin:-64px auto 0;padding:0 28px 80px;display:grid;grid-template-columns:minmax(0,1fr) 372px;gap:28px;align-items:start;position:relative;z-index:2}
+.col{min-width:0;display:flex;flex-direction:column;gap:16px}
+.rail{position:sticky;top:86px;display:flex;flex-direction:column;gap:16px}
+.panel{background:#fff;border:1px solid var(--line);border-radius:var(--rad);box-shadow:var(--sh1)}
+
+/* stepper */
+.stepper{display:flex;gap:6px;padding:8px;background:#fff;border:1px solid var(--line);border-radius:14px;box-shadow:var(--sh2)}
+.st{flex:1;display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;cursor:pointer;min-width:0;border:0;background:transparent;text-align:left}
+.st i{font-style:normal;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;font-size:12.5px;font-weight:700;border:1.5px solid var(--line);color:var(--mut2);background:#fff;flex:none;transition:all .2s}
+.st span{display:flex;flex-direction:column;min-width:0;line-height:1.2}
+.st b{font-size:13.5px;color:var(--mut);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:600}
+.st small{font-size:11.5px;color:var(--mut2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.st.on{background:var(--soft)}
+.st.on i{background:var(--n);border-color:var(--n);color:#fff}
+.st.on b{color:var(--n)}
+.st.ok i{background:var(--ok50);border-color:#bfe3cf;color:var(--ok)}
+.st.ok b{color:var(--ink2)}
+.st.ok small{color:var(--ok)}
+.st:disabled{cursor:default}
+
+/* main card */
+.card{background:#fff;border:1px solid var(--line);border-radius:20px;box-shadow:var(--sh3);overflow:hidden}
+.card-h{padding:26px 32px 0}
+.card-h .k{font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--r)}
+.card-h h2{font-family:Oswald,Arial,sans-serif;font-weight:600;font-size:28px;margin:6px 0 4px}
+.card-h p{margin:0;color:var(--mut)}
+.card-b{padding:22px 32px 6px}
+.card-f{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:18px 32px;border-top:1px solid var(--line2);background:linear-gradient(180deg,#fff,#fbfcfd)}
+.card-f .hint{font-size:13px;color:var(--mut);display:inline-flex;align-items:center;gap:7px}
+
+/* fields */
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px 16px}
+.grid .full{grid-column:1/-1}
+.f{border:0;padding:0;margin:0;min-width:0}
+.l{display:flex;align-items:center;gap:8px;font-size:13.5px;font-weight:600;color:var(--ink2);margin:0 0 7px}
+.l .opt{font-weight:400;color:var(--mut2);font-size:12.5px}
+.l .lock{display:inline-flex;align-items:center;gap:4px;font-size:11.5px;font-weight:600;color:var(--ok);background:var(--ok50);border-radius:99px;padding:2px 8px}
+.in{position:relative}
+.i{width:100%;height:50px;padding:0 14px;border:1.5px solid var(--line);border-radius:12px;background:#fff;font:inherit;font-size:16px;color:var(--ink);appearance:none;transition:border-color .15s,box-shadow .15s}
+.i:hover{border-color:#cfd8e1}
+.i:focus{outline:0;border-color:var(--n);box-shadow:0 0 0 4px rgba(10,44,61,.09)}
+.i.ok{border-color:#bfe3cf;background:#fbfefc}
+.in .chk{position:absolute;right:13px;top:50%;transform:translateY(-50%);color:var(--ok)}
+select.i{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%230A2C3D' stroke-width='1.8' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;padding-right:38px}
+.money .cur{position:absolute;left:14px;top:50%;transform:translateY(-50%);font-weight:700;color:var(--n)}
+.money .i{padding-left:32px;font-weight:600;letter-spacing:.01em}
+.h{margin:7px 0 0;font-size:12.5px;color:var(--mut)}
+.blk{margin-top:18px;padding:12px 14px;border:1px solid #F3C2CB;background:#FDECEF;border-radius:12px;color:#B0142F;font-size:13.5px;font-weight:600}.blk p{margin:0}.blk p+p{margin-top:6px}
+.seg{display:inline-flex;background:var(--soft);border:1px solid var(--line);border-radius:12px;padding:4px;gap:4px;width:100%}
+.seg button{flex:1;border:0;background:transparent;height:40px;border-radius:9px;font-weight:600;color:var(--mut);cursor:pointer}
+.seg button.on{background:#fff;color:var(--n);box-shadow:var(--sh1)}
+.prod{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.pc{position:relative;cursor:pointer;border:1.5px solid var(--line);border-radius:14px;padding:14px;background:#fff;text-align:left;transition:all .15s}
+.pc:hover{border-color:#cfd8e1;box-shadow:var(--sh1)}
+.pc .ico{width:36px;height:36px;border-radius:10px;display:grid;place-items:center;background:var(--soft);color:var(--n);margin-bottom:10px}
+.pc b{display:block;color:var(--n);font-size:14.5px}
+.pc small{display:block;color:var(--mut);font-size:12.5px;margin-top:2px;line-height:1.35}
+.pc .rd{position:absolute;right:12px;top:12px;width:18px;height:18px;border-radius:50%;border:2px solid #c3cdd6}
+.pc.on{border-color:var(--r);background:var(--r50);box-shadow:0 0 0 3px rgba(156,28,31,.09)}
+.pc.on .ico{background:#fff;color:var(--r)}
+.pc.on .rd{border-color:var(--r);background:var(--r);box-shadow:inset 0 0 0 3px #fff}
+.sub{display:flex;align-items:center;gap:10px;margin:26px 0 14px;font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--mut)}
+.sub::after{content:"";flex:1;height:1px;background:var(--line2)}
+
+/* on-file profile card (members) */
+.onfile{border:1px solid #d7e7de;background:linear-gradient(180deg,#f7fcf9,#fff);border-radius:16px;padding:16px 18px;margin:0 0 6px}
+.onfile-h{display:flex;align-items:center;gap:12px}
+.onfile-h .logo{width:44px;height:44px;border-radius:12px;background:var(--n);color:#fff;display:grid;place-items:center;font-family:Oswald,Arial,sans-serif;font-weight:600;font-size:18px}
+.onfile-h .av{width:44px;height:44px;font-size:16px}
+.onfile-h b{display:block;color:var(--n);font-size:15.5px}
+.onfile-h span{display:block;font-size:13px;color:var(--mut)}
+.onfile-h .tag{margin-left:auto;display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;color:var(--ok);background:var(--ok50);border-radius:99px;padding:5px 10px;white-space:nowrap}
+.kv{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px 18px;margin-top:14px;padding-top:14px;border-top:1px dashed #d7e7de}
+.kv div span{display:block;font-size:11.5px;color:var(--mut2);text-transform:uppercase;letter-spacing:.06em;font-weight:600}
+.kv div b{display:block;font-size:14px;color:var(--ink);font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.onfile-f{display:flex;justify-content:space-between;align-items:center;margin-top:12px;font-size:13px;color:var(--mut)}
+.onfile-f button{border:0;background:none;color:var(--r);font-weight:700;cursor:pointer;padding:0}
+
+/* statements */
+.months{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.mo{border:1.5px dashed #c8d2db;border-radius:14px;padding:16px 14px;text-align:center;background:var(--soft);cursor:pointer;transition:all .15s}
+.mo:hover{border-color:var(--n);background:#fff}
+.mo b{display:block;color:var(--n);font-size:15px}
+.mo span{display:block;font-size:12.5px;color:var(--mut)}
+.mo .ic{width:38px;height:38px;border-radius:50%;margin:0 auto 8px;display:grid;place-items:center;background:#fff;color:var(--n);border:1px solid var(--line)}
+.mo.ok{border-style:solid;border-color:#bfe3cf;background:var(--ok50)}
+.mo.ok .ic{background:var(--ok);color:#fff;border-color:var(--ok)}
+.mo.ok span{color:var(--ok);font-weight:600}
+.drophint{display:flex;align-items:center;gap:10px;margin-top:12px;padding:12px 14px;border-radius:12px;background:#f7f9fb;border:1px solid var(--line2);font-size:13px;color:var(--mut)}
+
+/* review */
+.rv{border:1px solid var(--line);border-radius:14px;margin:0 0 10px;overflow:hidden}
+.rv-h{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:var(--soft)}
+.rv-h b{color:var(--n);font-size:14.5px}
+.rv-h button{border:0;background:none;color:var(--r);font-weight:700;cursor:pointer;font-size:13px}
+.rv-g{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px 18px;padding:14px 16px}
+.rv-g span{display:block;font-size:12px;color:var(--mut2)}
+.rv-g b{display:block;font-size:14px;color:var(--ink);font-weight:500}
+.consent{display:flex;gap:10px;align-items:flex-start;margin:14px 0 4px;font-size:13px;color:var(--mut)}
+.consent input{width:18px;height:18px;margin-top:2px;accent-color:var(--r)}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;height:50px;padding:0 24px;border-radius:12px;border:0;background:var(--r);color:#fff;font-weight:700;font-size:15.5px;cursor:pointer;box-shadow:0 10px 22px -12px rgba(156,28,31,.8);transition:transform .12s,background .15s}
+.btn:hover{background:var(--rd)}
+.btn:active{transform:translateY(1px)}
+.btn.dark{background:var(--n);box-shadow:0 10px 22px -12px rgba(10,44,61,.8)}
+.btn.ghost{background:#fff;color:var(--n);border:1.5px solid var(--line);box-shadow:none}
+.btn.ghost:hover{border-color:#cdd6df;background:#fff}
+.link{border:0;background:none;color:var(--n);font-weight:600;cursor:pointer;padding:0;display:inline-flex;align-items:center;gap:6px}
+
+/* sign-in nudge for visitors */
+.nudge{display:flex;align-items:center;gap:14px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px 14px 12px 16px;box-shadow:var(--sh1)}
+.nudge .ic{width:38px;height:38px;border-radius:10px;background:var(--r50);color:var(--r);display:grid;place-items:center}
+.nudge b{display:block;color:var(--n);font-size:14.5px}
+.nudge span{display:block;font-size:13px;color:var(--mut)}
+.nudge .act{margin-left:auto;display:flex;gap:8px}
+.gbtn{display:inline-flex;align-items:center;gap:8px;height:40px;padding:0 14px;border-radius:10px;border:1px solid var(--line);background:#fff;font-weight:600;color:var(--ink2);cursor:pointer;font-size:13.5px}
+
+/* rail */
+.match{overflow:hidden}
+.match-h{padding:18px 20px 14px;background:linear-gradient(135deg,#0c3247,#123b52);color:#fff}
+.match-h .k{font-size:11.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#9fb6c6}
+.match-h h3{color:#fff;font-family:Oswald,Arial,sans-serif;font-weight:600;font-size:22px;margin:4px 0 0;display:flex;align-items:center;gap:10px}
+.dot{width:10px;height:10px;border-radius:50%;background:#9fb6c6}
+.dot.good{background:#36d17f;box-shadow:0 0 0 5px rgba(54,209,127,.18)}
+.dot.mid{background:#ffb648;box-shadow:0 0 0 5px rgba(255,182,72,.18)}
+.dot.no{background:#ff6b6e;box-shadow:0 0 0 5px rgba(255,107,110,.18)}
+.meter{height:8px;border-radius:99px;background:rgba(255,255,255,.12);margin-top:14px;overflow:hidden}
+.meter b{display:block;height:100%;width:0;border-radius:99px;background:linear-gradient(90deg,#36d17f,#9be9b9);transition:width .5s}
+.meter.mid b{background:linear-gradient(90deg,#ffb648,#ffd99b)}
+.meter.no b{background:linear-gradient(90deg,#ff6b6e,#ffb0b1)}
+.match-b{padding:14px 20px 18px}
+.crit{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:9px}
+.crit li{display:flex;align-items:center;gap:10px;font-size:14px;color:var(--ink2)}
+.crit li i{font-style:normal;width:22px;height:22px;border-radius:50%;display:grid;place-items:center;background:var(--soft);color:var(--mut2);font-size:12px;font-weight:700;flex:none}
+.crit li.ok i{background:var(--ok50);color:var(--ok)}
+.crit li.no i{background:#fdeeee;color:var(--r)}
+.crit li em{font-style:normal;margin-left:auto;font-size:12.5px;color:var(--mut)}
+.fits{margin-top:14px;padding-top:14px;border-top:1px solid var(--line2)}
+.fits > span{display:block;font-size:12px;color:var(--mut2);font-weight:600;text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{display:inline-flex;align-items:center;gap:6px;height:30px;padding:0 11px;border-radius:99px;background:var(--soft);border:1px solid var(--line);font-size:12.5px;font-weight:600;color:var(--n)}
+.chip.on{background:var(--ok50);border-color:#bfe3cf;color:var(--ok)}
+.rbox{padding:18px 20px}
+.rbox h4{font-size:15px;margin:0 0 12px;display:flex;align-items:center;gap:8px}
+.need{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:11px}
+.need li{display:flex;gap:11px;align-items:flex-start;font-size:14px;color:var(--ink2)}
+.need li .c{width:22px;height:22px;border-radius:7px;border:1.5px solid #c8d2db;display:grid;place-items:center;flex:none;margin-top:1px;color:#fff;transition:all .2s}
+.need li .c svg{stroke-width:3}
+.need li.ok .c{background:var(--ok);border-color:var(--ok)}
+.need li.ok span{color:var(--mut)}
+.need li small{display:block;font-size:12.5px;color:var(--mut)}
+.tl{list-style:none;margin:0;padding:0;position:relative}
+.tl li{position:relative;padding:0 0 14px 30px;font-size:14px}
+.tl li::before{content:"";position:absolute;left:10px;top:22px;bottom:0;width:2px;background:var(--line2)}
+.tl li:last-child::before{display:none}
+.tl li i{position:absolute;left:0;top:0;width:22px;height:22px;border-radius:50%;background:var(--soft);border:1.5px solid var(--line);display:grid;place-items:center;font-style:normal;font-size:11px;font-weight:700;color:var(--n)}
+.tl b{display:block;color:var(--n)}
+.tl span{color:var(--mut);font-size:13px}
+.faq details{border-top:1px solid var(--line2);padding:12px 0}
+.faq details:first-of-type{border-top:0;padding-top:0}
+.faq summary{cursor:pointer;list-style:none;font-weight:600;color:var(--n);font-size:14px;display:flex;justify-content:space-between;gap:10px}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"";width:9px;height:9px;border-right:2px solid var(--mut2);border-bottom:2px solid var(--mut2);transform:rotate(45deg);margin-top:4px;flex:none;transition:transform .2s}
+.faq details[open] summary::after{transform:rotate(-135deg);margin-top:8px}
+.faq p{margin:8px 0 0;font-size:13.5px;color:var(--mut)}
+.helpc{display:flex;align-items:center;gap:12px}
+.helpc .ic{width:40px;height:40px;border-radius:50%;background:var(--soft);display:grid;place-items:center;color:var(--n)}
+.helpc b{display:block;color:var(--n);font-size:14px}
+.helpc span{display:block;font-size:13px;color:var(--mut)}
+
+.more{grid-column:1/-1;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.35fr);gap:16px;align-items:start}
+.more-l{display:flex;flex-direction:column;gap:16px}
+@media (max-width:1060px){.more{grid-template-columns:1fr}}
+
+/* existing application */
+.existing{padding:28px 32px}
+.ex-top{display:flex;align-items:flex-start;gap:16px}
+.ex-top .ic{width:48px;height:48px;border-radius:14px;background:var(--warn50);color:var(--warn);display:grid;place-items:center}
+.ex-top h2{font-family:Oswald,Arial,sans-serif;font-weight:600;font-size:26px}
+.ex-top p{margin:4px 0 0;color:var(--mut)}
+.track{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin:26px 0 8px;position:relative}
+.track div{position:relative;text-align:center;font-size:13px;color:var(--mut)}
+.track div i{display:grid;place-items:center;width:30px;height:30px;border-radius:50%;margin:0 auto 8px;background:#fff;border:2px solid var(--line);color:var(--mut2);font-style:normal;font-weight:700;font-size:12px;position:relative;z-index:1}
+.track div::before{content:"";position:absolute;top:14px;left:-50%;right:50%;height:2px;background:var(--line)}
+.track div:first-child::before{display:none}
+.track div.ok i{background:var(--ok);border-color:var(--ok);color:#fff}
+.track div.ok::before,.track div.now::before{background:var(--ok)}
+.track div.now i{border-color:var(--warn);color:var(--warn);box-shadow:0 0 0 5px var(--warn50)}
+.track div b{display:block;color:var(--n);font-size:13.5px}
+.outs{display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin:14px auto 0;font-size:13px;color:var(--mut);max-width:560px;justify-content:center}
+.outs span{font-weight:700;color:var(--n)}
+.outs em{font-style:normal;font-weight:600;font-size:12.5px;border-radius:99px;padding:3px 10px;border:1px solid var(--line);background:var(--soft);color:var(--ink2)}
+.outs em.o-ok{background:var(--ok50);border-color:#bfe3cf;color:var(--ok)}
+.outs em.o-no{background:#fdeeee;border-color:#f3cccc;color:var(--r)}
+.outs small{flex-basis:100%;text-align:center;color:var(--mut2);font-size:12.5px}
+.ex-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:20px}
+.ex-grid div{background:var(--soft);border-radius:12px;padding:12px 14px}
+.ex-grid span{display:block;font-size:12px;color:var(--mut2)}
+.ex-grid b{display:block;color:var(--n);font-size:15px}
+.ex-note{margin-top:18px;padding:14px 16px;border-radius:12px;border:1px solid var(--line);font-size:14px;color:var(--ink2);display:flex;gap:12px;align-items:flex-start}
+.ex-note svg{color:var(--n);margin-top:2px}
+.ex-act{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}
+
+/* done */
+.done{padding:36px 32px 32px;text-align:center}
+.done .big{width:76px;height:76px;border-radius:50%;margin:0 auto 16px;background:var(--ok50);display:grid;place-items:center;color:var(--ok);box-shadow:0 0 0 10px #f3fbf6}
+.done h2{font-family:Oswald,Arial,sans-serif;font-size:32px;font-weight:600}
+.done p{color:var(--mut);max-width:520px;margin:8px auto 0}
+.ref{display:inline-flex;align-items:center;gap:10px;margin-top:16px;padding:8px 8px 8px 14px;border:1px solid var(--line);border-radius:12px;font-size:14px;color:var(--mut)}
+.ref b{color:var(--n);font-family:ui-monospace,Menlo,monospace;letter-spacing:.04em}
+.ref button{height:32px;padding:0 10px;border-radius:8px;border:1px solid var(--line);background:var(--soft);font-weight:600;color:var(--n);cursor:pointer;font-size:12.5px}
+.done .track{max-width:560px;margin:28px auto 6px}
+.done-act{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:22px}
+
+/* preview switch (mockup only) */
+.pv{position:fixed;left:18px;bottom:18px;z-index:60;display:flex;align-items:center;gap:4px;background:#0b1720;color:#fff;border-radius:14px;padding:5px;box-shadow:0 18px 40px -16px rgba(0,0,0,.5);font-size:12.5px}
+.pv span{padding:0 8px 0 6px;color:#8fa3b2;font-weight:600}
+.pv button{border:0;background:transparent;color:#cfdae2;height:32px;padding:0 11px;border-radius:9px;cursor:pointer;font-weight:600}
+.pv button.on{background:#fff;color:#0b1720}
+
+/* mobile action bar */
+.mbar{display:none}
+
+@media (max-width:1060px){
+  .shell{grid-template-columns:1fr;margin-top:-56px}
+  .rail{position:static}
+  .band-facts{display:none}
+}
+@media (max-width:720px){
+  body{font-size:15px}
+  .bar-in{height:58px;padding:0 16px;gap:10px}
+  .bar-logo img{height:27px}
+  .bar-div,.bar-title,.pill .t,.me .t,.saved .t{display:none}
+  .band-in{padding:22px 16px 76px}
+  .band h1{font-size:28px}
+  .band p{font-size:14.5px}
+  .shell{padding:0 12px 120px;gap:14px}
+  .stepper{overflow-x:auto;scrollbar-width:none}
+  .stepper::-webkit-scrollbar{display:none}
+  .st{flex:0 0 auto}
+  .st:not(.on) span{display:none}
+  .card{border-radius:18px}
+  .card-h{padding:20px 18px 0}
+  .card-h h2{font-size:24px}
+  .card-b{padding:18px 18px 4px}
+  .card-f{display:none}
+  .grid{grid-template-columns:1fr}
+  .prod{grid-template-columns:1fr}
+  .pc{display:flex;align-items:center;gap:12px}
+  .pc .ico{margin:0}
+  .kv{grid-template-columns:1fr 1fr}
+  .onfile-h{flex-wrap:wrap}
+  .onfile-h > div{flex:1;min-width:0}
+  .onfile-h .tag{margin-left:56px}
+  .onfile-f{flex-direction:column;align-items:flex-start;gap:6px}
+  .months{grid-template-columns:1fr}
+  .mo{display:flex;align-items:center;gap:12px;text-align:left}
+  .mo .ic{margin:0}
+  .rv-g{grid-template-columns:1fr}
+  .nudge{flex-wrap:wrap}
+  .nudge .act{margin-left:0;width:100%}
+  .nudge .act > *{flex:1;justify-content:center}
+  .existing,.done{padding:22px 18px}
+  .track{grid-template-columns:repeat(4,1fr)}
+  .track div{font-size:11.5px}
+  .ex-grid{grid-template-columns:1fr}
+  .mbar{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:50;gap:10px;padding:10px 12px calc(10px + env(safe-area-inset-bottom));background:rgba(255,255,255,.94);backdrop-filter:blur(12px);border-top:1px solid var(--line)}
+  .mbar .btn{flex:1}
+  .mbar .btn.ghost{flex:0 0 auto;padding:0 18px}
+  .pv{left:50%;transform:translateX(-50%);bottom:84px}
+  .pv span{display:none}
+}
+</style>
+</head>
+<body data-who="visitor">
+
+<!-- ============ app bar ============ -->
+<header class="bar">
+  <div class="bar-in">
+    <a class="bar-logo" href="public-funding.html"><img src="assets/logo-v1-lockup.svg" alt="SME South Africa"></a>
+    <span class="bar-div"></span>
+    <span class="bar-title"><b>Funding application</b><span id="barStep">Step 1 of 5 · Eligibility</span></span>
+    <span class="bar-sp"></span>
+    <span class="saved" id="saved"><i></i><span class="t">Saved just now</span></span>
+    <button class="pill" type="button" onclick="document.getElementById('faq').scrollIntoView({behavior:'smooth'})"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 1 1 3.5 2.3c-.7.3-1 .9-1 1.7M12 17h.01"/></svg><span class="t">Help</span></button>
+    <span class="me" data-show="member,existing"><span class="av">TM</span><span class="t">Thabo</span></span>
+    <a class="pill" href="public-funding.html"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M6 6l12 12M18 6L6 18"/></svg><span class="t">Save and exit</span></a>
+  </div>
+  <div class="prog"><b id="prog"></b></div>
+</header>
+
+<!-- ============ hero band ============ -->
+<section class="band">
+  <div class="band-in">
+    <div>
+      <span class="eyebrow"><i></i>SME Funding</span>
+      <h1 id="heroH">One application. Matched to the funders that fit your business.</h1>
+      <p id="heroP">Tell us about your business once. We check it, then match you only with funding partners who fund businesses like yours.</p>
+    </div>
+    <div class="band-facts">
+      <div class="fact"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><div><b>About 5 minutes</b><span>Save and finish later</span></div></div>
+      <div class="fact"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7z"/></svg><div><b>POPIA protected</b><span>Shared only with your matches</span></div></div>
+      <div class="fact"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg><div><b>Free to apply</b><span>No application fee</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ app ============ -->
+<div class="shell">
+  <div class="col">
+    <nav class="stepper" id="stepper" aria-label="Application steps"></nav>
+
+    <div class="nudge" data-show="visitor" id="nudge">
+      <div class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21a8 8 0 0 0-16 0"/><circle cx="12" cy="8" r="4"/></svg></div>
+      <div><b>Already a member?</b><span>Sign in and we fill in what we already know about you and your business. Sign in with Google or email.</span></div>
+      <div class="act"><button class="gbtn" type="button" onclick="setWho('member')"><svg width="16" height="16" viewBox="0 0 48 48"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.7 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.4-.4-3.5z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-7.9l-6.5 5C9.5 39.6 16.2 44 24 44z"/><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 38.2 44 33 44 24c0-1.3-.1-2.4-.4-3.5z"/></svg>Google</button><button class="btn dark" type="button" style="height:40px;padding:0 16px;font-size:14px" onclick="setWho('member')">Sign in</button></div>
+    </div>
+
+    <section class="card" id="card" aria-live="polite"></section>
+  </div>
+
+  <!-- ============ rail ============ -->
+  <aside class="rail">
+    <section class="panel match" id="matchPanel">
+      <div class="match-h">
+        <span class="k">Your match so far</span>
+        <h3><span class="dot" id="mDot"></span><span id="mTitle">Tell us the basics</span></h3>
+        <div class="meter" id="meter"><b id="mBar"></b></div>
+      </div>
+      <div class="match-b">
+        <ul class="crit" id="crit"></ul>
+        <div class="fits"><span>Funding that fits</span><div class="chips" id="fits"></div></div>
+      </div>
+    </section>
+
+    <section class="panel rbox" id="needBox">
+      <h4><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3 8-8"/><path d="M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>Have these ready</h4>
+      <ul class="need" id="need"></ul>
+    </section>
+
+  </aside>
+  <div class="more">
+    <div class="more-l">
+    <section class="panel rbox">
+      <h4><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>What happens next</h4>
+      <ol class="tl">
+        <li><i>1</i><b>We check your application</b><span>Usually within one working day.</span></li>
+        <li><i>2</i><b>We match you</b><span>Only with partners that fund businesses like yours. We email and text you when we send it, so you know who to expect.</span></li>
+        <li><i>3</i><b>A partner contacts you</b><span>They call you to take it from here. You decide whether to go ahead.</span></li>
+      </ol>
+    </section>
+
+    <section class="panel rbox help-box">
+      <div class="helpc"><div class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v12H5.2L4 17.2z"/></svg></div><div><b>Talk to the funding team</b><span><a href="mailto:funding@smesouthafrica.co.za">funding@smesouthafrica.co.za</a> · weekdays</span></div></div>
+    </section>
+    </div>
+        <section class="panel rbox faq faq-box" id="faq">
+      <h4>Questions</h4>
+      <details><summary>Who can apply?</summary><p>Registered South African companies with a CIPC number. Most of our funding partners need at least a year of trading and a monthly turnover of R50,000 or more.</p></details>
+      <details><summary>Will this affect my credit record?</summary><p>A partner you are matched with may do a credit check on you and your business before they decide. We tell you by email and SMS who your application goes to.</p></details>
+      <details><summary>Why do you need my bank statements?</summary><p>Funders decide mostly on how money moves through your business account. Six months gives them a fair picture of the good months and the quiet ones, and it means fewer questions later.</p></details>
+      <details><summary>Can I stop and come back?</summary><p>Yes. Your answers are saved on this device as you go (never your ID number). Members' answers are also saved to their account.</p></details>
+      <details><summary>I need start-up funding</summary><p>Our funding partners fund trading businesses. Our guides on start-up funding cover grants and development finance for new businesses.</p></details>
+    </section>
+
+  </div>
+</div>
+
+<div class="mbar" id="mbar"><button class="btn ghost" type="button" data-act="back">Back</button><button class="btn" type="button" data-act="next" id="mNext">Continue</button></div>
+
+<div class="pv" role="group" aria-label="Preview as">
+  <span>Preview as</span>
+  <button type="button" data-who="visitor" class="on">Visitor</button>
+  <button type="button" data-who="member">Member</button>
+  <button type="button" data-who="existing">Member, already applied</button>
+</div>
+
+<script>
+(function () {
+  var who = 'visitor', S = 0, sent = false;
+  var D = { prod: 'wc', reg: 'yes', since_m: 'March', since_y: '2019', turnover: '180000', amount: '250000', months: [true, true, true, true, false, false] };
+  var MEMBER = { name: 'Thabo Mokoena', first: 'Thabo', email: 'thabo@thabofresh.co.za', phone: '082 123 4567', company: 'Thabo Fresh Produce (Pty) Ltd', cipc: '2019/123456/07', industry: 'Agriculture', since: 'March 2019', city: 'Polokwane, Limpopo', type: 'Private company' };
+  var STEPS = [
+    { t: 'Eligibility', s: '4 questions' },
+    { t: 'Business', s: 'CIPC and address' },
+    { t: 'About you', s: 'ID and home' },
+    { t: 'Statements', s: '6 months' },
+    { t: 'Review', s: 'Check and send' }
+  ];
+  var ic = function (d, s) { s = s || 18; return '<svg width="' + s + '" height="' + s + '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + d + '</svg>'; };
+  var TICK = '<path d="M20 6L9 17l-5-5"/>';
+  var money = function (v) { v = String(v || '').replace(/\D/g, ''); return v ? v.replace(/\B(?=(\d{3})+(?!\d))/g, ' ') : ''; };
+  var isMember = function () { return who !== 'visitor'; };
+
+  function field(label, inner, o) { o = o || {}; return '<div class="f' + (o.full ? ' full' : '') + '"><label class="l">' + label + (o.opt ? ' <span class="opt">Optional</span>' : '') + (o.lock ? ' <span class="lock">' + ic(TICK, 12) + 'From your profile</span>' : '') + '</label>' + inner + (o.h ? '<p class="h">' + o.h + '</p>' : '') + '</div>'; }
+  function input(v, o) { o = o || {}; return '<div class="in' + (o.money ? ' money' : '') + '">' + (o.money ? '<span class="cur">R</span>' : '') + '<input class="i' + (o.ok ? ' ok' : '') + '" value="' + (v || '') + '"' + (o.ph ? ' placeholder="' + o.ph + '"' : '') + (o.mode ? ' inputmode="' + o.mode + '"' : '') + (o.name ? ' data-k="' + o.name + '"' : '') + '>' + (o.ok ? '<span class="chk">' + ic(TICK, 18) + '</span>' : '') + '</div>'; }
+  function sel(opts, v, o) { o = o || {}; return '<select class="i"' + (o.name ? ' data-k="' + o.name + '"' : '') + '>' + opts.map(function (x) { return '<option' + (x === v ? ' selected' : '') + '>' + x + '</option>'; }).join('') + '</select>'; }
+
+  /* ---------- step bodies ---------- */
+  function stepElig() {
+    var P = [['wc', 'Working capital', 'Stock, cash flow, bills', '<path d="M3 7h18v10H3z"/><circle cx="12" cy="12" r="2.5"/>'], ['loan', 'Business loan', 'Grow, equipment, expand', '<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>'], ['po', 'Purchase order', 'Deliver an order or invoice', '<path d="M6 3h9l4 4v14H6z"/><path d="M14 3v5h5M9 13h7M9 17h5"/>']];
+    var h = '<div class="f"><label class="l">What do you need funding for?</label><div class="prod">' + P.map(function (p) { return '<button type="button" class="pc' + (D.prod === p[0] ? ' on' : '') + '" data-prod="' + p[0] + '"><span class="rd"></span><span class="ico">' + ic(p[3], 18) + '</span><span><b>' + p[1] + '</b><small>' + p[2] + '</small></span></button>'; }).join('') + '</div></div>';
+    h += '<div class="grid" style="margin-top:18px">';
+    h += field('How much do you need?', input(money(D.amount), { money: 1, mode: 'numeric', name: 'amount' }), { h: 'Between R10 000 and R10 000 000.' });
+    h += field('Average monthly turnover', input(money(D.turnover), { money: 1, mode: 'numeric', name: 'turnover' }), { h: 'What goes into your business account in a normal month. Minimum R50 000.' });
+    h += field('When did you start trading?', '<div class="grid" style="gap:8px">' + sel(['January','February','March','April','May','June','July','August','September','October','November','December'], D.since_m, { name: 'since_m' }) + sel(['2026','2025','2024','2023','2022','2021','2020','2019','2018','2017','2016','2015'], D.since_y, { name: 'since_y' }) + '</div>', { h: 'At least a year ago.' });
+    h += field('Is the business registered with CIPC?', '<div class="seg" data-seg="reg"><button type="button" class="' + (D.reg === 'yes' ? 'on' : '') + '" data-v="yes">Yes, it is</button><button type="button" class="' + (D.reg === 'no' ? 'on' : '') + '" data-v="no">Not yet</button></div>');
+    h += '</div>';
+    if (isMember()) h = onfileBiz(true) + '<div class="sub">This application</div>' + h;
+    return h;
+  }
+  function onfileBiz(compact) {
+    var M = MEMBER;
+    return '<div class="onfile"><div class="onfile-h"><span class="logo">TF</span><div><b>' + M.company + '</b><span>' + M.type + ' · ' + M.industry + ' · ' + M.city + '</span></div><span class="tag">' + ic(TICK, 13) + 'On your profile</span></div>' +
+      (compact ? '' : '<div class="kv"><div><span>CIPC number</span><b>' + M.cipc + '</b></div><div><span>Trading since</span><b>' + M.since + '</b></div><div><span>Industry</span><b>' + M.industry + '</b></div><div><span>Business address</span><b>14 Market St, Polokwane</b></div><div><span>Business type</span><b>Private company</b></div><div><span>VAT number</span><b style="color:var(--warn)">Not on file</b></div></div>') +
+      '<div class="onfile-f"><span>' + (compact ? 'We use your business profile for this application.' : 'Already on your profile, so you don’t need to type it again.') + '</span><button type="button">Edit on profile</button></div></div>';
+  }
+  function stepBiz() {
+    if (isMember()) {
+      return onfileBiz(false) + '<div class="sub">Just one thing missing</div><div class="grid">' + field('VAT number', input('', { ph: 'Leave empty if not VAT registered', mode: 'numeric' }), { opt: 1, full: 1, h: 'We add it to your profile too, so you won’t be asked again.' }) + '</div>';
+    }
+    var h = '<div class="grid">';
+    h += field('Registered business name', input('Thabo Fresh Produce (Pty) Ltd', { ok: 1 }), { full: 1 });
+    h += field('CIPC registration number', input('2019/123456/07', { ok: 1 }), { h: 'Type the 12 digits; we add the slashes. Only registered companies can apply. Business type is filled in from it.' });
+    h += field('Business type', sel(['Private company (Pty) Ltd', 'Close corporation (CC)', 'Public company'], 'Private company (Pty) Ltd'));
+    h += field('Industry', sel(['Agriculture', 'Retail', 'Construction', 'Manufacturing'], 'Agriculture'));
+    h += field('VAT number', input('', { ph: 'If registered', mode: 'numeric' }), { opt: 1 });
+    h += '</div><div class="sub">Where the business operates</div><div class="grid">';
+    h += field('Street address', input('', { ph: 'Start typing an address' }), { full: 1, h: 'Pick from the suggestions and we fill in the rest.' });
+    h += field('Suburb', input('')) + field('City or town', input('')) + field('Province', sel(['Choose', 'Gauteng', 'Limpopo', 'Western Cape'], 'Choose')) + field('Postal code', input('', { ph: '0000', mode: 'numeric' }));
+    return h + '</div>';
+  }
+  function stepYou() {
+    var h = '';
+    if (isMember()) {
+      var M = MEMBER;
+      h += '<div class="onfile"><div class="onfile-h"><span class="av">TM</span><div><b>' + M.name + '</b><span>' + M.email + ' · ' + M.phone + '</span></div><span class="tag">' + ic(TICK, 13) + 'Verified email</span></div><div class="onfile-f"><span>From your account.</span><button type="button">Change</button></div></div>';
+      h += '<div class="sub">For the funder’s checks</div>';
+    } else {
+      h += '<div class="grid">' + field('First name', input('')) + field('Last name', input('')) + field('Email', input('', { ph: 'you@business.co.za' }), { h: 'We send your reference here.' }) + field('Mobile number', input('', { ph: '082 123 4567', mode: 'tel' })) + '</div><div class="sub">For the funder’s checks</div>';
+    }
+    h += '<div class="grid">';
+    h += field('Title', sel(['Mr', 'Ms', 'Mrs', 'Dr'], 'Mr'));
+    h += field('South African ID number', input('', { ph: '13 digits', mode: 'numeric' }), { h: 'Never saved on this device or your profile. <a href="#">I use a passport</a>' });
+    h += field('Your home', sel(['I rent', 'I own it, paid off', 'I own it, with a bond', 'I live with family'], 'I rent'));
+    h += field('Living there since', '<div class="grid" style="gap:8px">' + sel(['June'], 'June') + sel(['2021'], '2021') + '</div>');
+    h += '<div class="f full"><label class="l" style="font-weight:500"><input type="checkbox" checked style="width:18px;height:18px;accent-color:var(--r)"> I live at the business address</label></div>';
+    return h + '</div>';
+  }
+  function stepDocs() {
+    var M = ['April 2026', 'May 2026', 'June 2026', 'July 2026', 'August 2026', 'September 2026'];
+    var h = '<div class="months">' + M.map(function (m, i) { var ok = D.months[i]; return '<button type="button" class="mo' + (ok ? ' ok' : '') + '" data-mo="' + i + '"><span class="ic">' + (ok ? ic(TICK, 18) : ic('<path d="M12 16V4M7 9l5-5 5 5"/><path d="M20 16.5V19a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-2.5"/>', 18)) + '</span><span><b>' + m + '</b><span>' + (ok ? 'Uploaded · PDF' : 'Add statement') + '</span></span></button>'; }).join('') + '</div>';
+    h += '<div class="drophint">' + ic('<rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/>', 18) + '<span>PDFs straight from your bank work best, up to 10 MB each. One PDF with all six months is fine too: add it to any month.</span></div>';
+    if (isMember()) h += '<div class="drophint" style="background:var(--ok50);border-color:#d7e7de">' + ic(TICK, 18) + '<span>Saved to your secure document vault, so your next application can reuse them.</span></div>';
+    return h;
+  }
+  function stepReview() {
+    var M = MEMBER, mem = isMember();
+    var block = function (t, i, rows) { return '<div class="rv"><div class="rv-h"><b>' + t + '</b><button type="button" data-go="' + i + '">Edit</button></div><div class="rv-g">' + rows.map(function (r) { return '<div><span>' + r[0] + '</span><b>' + r[1] + '</b></div>'; }).join('') + '</div></div>'; };
+    var P = { wc: 'Working capital', loan: 'Business loan', po: 'Purchase order' };
+    return block('Your funding', 0, [['Type', P[D.prod]], ['Amount', 'R ' + money(D.amount)], ['Monthly turnover', 'R ' + money(D.turnover)], ['Trading since', D.since_m + ' ' + D.since_y]]) +
+      block('Your business', 1, [['Name', mem ? M.company : 'Thabo Fresh Produce (Pty) Ltd'], ['CIPC number', '2019/123456/07'], ['Industry', 'Agriculture'], ['Address', '14 Market St, Polokwane']]) +
+      block('About you', 2, [['Name', mem ? M.name : 'Thabo Mokoena'], ['Email', mem ? M.email : 'thabo@thabofresh.co.za'], ['ID', 'Ending 0085'], ['Home', 'Rented since June 2021']]) +
+      block('Statements', 3, [['Files', D.months.filter(Boolean).length + ' of 6 months'], ['Stored', 'Encrypted']]) +
+      '<label class="consent"><input type="checkbox"><span>I agree that a funder may do a credit check on me and my business, to the <a href="#">Terms and Conditions</a> and <a href="#">Privacy Policy</a>, and that SME Funding may share my application with the funding partners it matches me with.</span></label>';
+  }
+  var BODY = [stepElig, stepBiz, stepYou, stepDocs, stepReview];
+  var HEAD = [
+    ['Step 1 of 5', 'Let’s see what fits', 'Answer four quick questions. Your match updates on the right as you go.'],
+    ['Step 2 of 5', 'Your business', 'The basics every funder looks at first.'],
+    ['Step 3 of 5', 'About you', 'So the funder knows who they are speaking to.'],
+    ['Step 4 of 5', 'Bank statements', 'Funders decide on these more than anything else. Add the last six months.'],
+    ['Step 5 of 5', 'Review and send', 'Check everything once. You can edit any section.']
+  ];
+  var ERR = [];
+  function eligErrors() {
+    var mt = (2026 - +D.since_y) * 12 + (10 - (['January','February','March','April','May','June','July','August','September','October','November','December'].indexOf(D.since_m) + 1)), t = +String(D.turnover).replace(/\D/g, ''), e = [];
+    if (t < 50000) e.push('We can only accept applications from businesses with an average monthly turnover of R50 000 or more.');
+    if (mt < 12) e.push('We can only accept applications from businesses that have been trading for a year or more.');
+    return e;
+  }
+  var HEAD_M = { 1: 'Most of this is already on your profile. Check it, then add what is missing.', 2: 'We have your contact details. Just the checks funders need.' };
+
+  /* ---------- match panel ---------- */
+  function match() {
+    var mt = (2026 - +D.since_y) * 12 + (10 - (['January','February','March','April','May','June','July','August','September','October','November','December'].indexOf(D.since_m) + 1)), t = +String(D.turnover).replace(/\D/g, ''), yrs = mt >= 12, reg = D.reg === 'yes';
+    var c = [['Registered company', reg, reg ? 'CIPC' : 'Needed'], ['Trading a year or more', yrs, mt >= 24 ? Math.floor(mt / 12) + ' years' : (mt >= 12 ? '1 year' : mt + ' months')], ['Turnover R50k+ a month', t >= 50000, t ? 'R ' + money(t) : '—']];
+    var n = c.filter(function (x) { return x[1]; }).length;
+    var st = n === 3 ? 'good' : (n === 2 ? 'mid' : 'no');
+    document.getElementById('crit').innerHTML = c.map(function (x) { return '<li class="' + (x[1] ? 'ok' : 'no') + '"><i>' + (x[1] ? '✓' : '!') + '</i>' + x[0] + '<em>' + x[2] + '</em></li>'; }).join('');
+    document.getElementById('mDot').className = 'dot ' + st;
+    document.getElementById('mTitle').textContent = n === 3 ? 'Strong fit' : (n === 2 ? 'Close. One thing to check' : 'Not a fit yet');
+    var m = document.getElementById('meter'); m.className = 'meter' + (st === 'good' ? '' : ' ' + st);
+    document.getElementById('mBar').style.width = (n === 3 ? 100 : n === 2 ? 64 : 28) + '%';
+    var F = [['Working capital', n === 3], ['Business loans', n === 3 && t >= 100000], ['Purchase order funding', reg], ['Invoice finance', n >= 2]];
+    document.getElementById('fits').innerHTML = F.map(function (f) { return '<span class="chip' + (f[1] ? ' on' : '') + '">' + (f[1] ? ic(TICK, 13) : '') + f[0] + '</span>'; }).join('');
+  }
+  function need() {
+    var mem = isMember();
+    var L = [
+      [mem || S > 1, 'CIPC registration number', mem ? 'On your profile' : ''],
+      [S > 2, 'SA ID or passport number', 'Never stored on this device'],
+      [D.months.every(Boolean) && S > 3, 'Six months of bank statements', D.months.filter(Boolean).length + ' of 6 added'],
+      [mem || S > 1, 'Business address', mem ? 'On your profile' : '']
+    ];
+    document.getElementById('need').innerHTML = L.map(function (x) { return '<li class="' + (x[0] ? 'ok' : '') + '"><span class="c">' + (x[0] ? ic(TICK, 13) : '') + '</span><span>' + x[1] + (x[2] ? '<small>' + x[2] + '</small>' : '') + '</span></li>'; }).join('');
+  }
+
+  /* ---------- render ---------- */
+  function stepper() {
+    document.getElementById('stepper').innerHTML = STEPS.map(function (s, i) {
+      var cls = sent ? 'ok' : (i < S ? 'ok' : (i === S ? 'on' : ''));
+      var sub = (i < S || sent) ? 'Done' : (isMember() && (i === 1 || i === 2) ? 'Mostly filled in' : s.s);
+      return '<button type="button" class="st ' + cls + '" data-go="' + i + '"' + (i > S || sent || who === 'existing' ? ' disabled' : '') + '><i>' + ((i < S || sent) ? '✓' : i + 1) + '</i><span><b>' + s.t + '</b><small>' + sub + '</small></span></button>';
+    }).join('');
+  }
+  function render() {
+    var card = document.getElementById('card');
+    document.querySelectorAll('[data-show]').forEach(function (el) { el.hidden = el.getAttribute('data-show').split(',').indexOf(who) < 0; });
+    document.getElementById('heroH').textContent = who === 'visitor' ? 'One application. Matched to the funders that fit your business.' : (who === 'member' ? 'Welcome back, Thabo. Most of your application is already done.' : 'Welcome back, Thabo. Your application is in progress.');
+    document.getElementById('heroP').textContent = who === 'visitor' ? 'Tell us about your business once. We check it, then match you only with funding partners who fund businesses like yours.' : (who === 'member' ? 'We filled in what’s on your profile. Check it, add what’s missing, and send.' : 'Here is where it stands. We’ll email you when anything changes.');
+    document.getElementById('mbar').hidden = sent || who === 'existing';
+    document.getElementById('matchPanel').hidden = who === 'existing';
+    document.getElementById('needBox').hidden = who === 'existing';
+    document.getElementById('stepper').hidden = who === 'existing';
+    stepper(); match(); need();
+    if (who === 'existing') { card.innerHTML = existing(); bar(100, 'Application in review'); return; }
+    if (sent) { card.innerHTML = done(); bar(100, 'Application sent'); return; }
+    var hd = HEAD[S];
+    card.innerHTML = '<div class="card-h"><span class="k">' + hd[0] + '</span><h2>' + hd[1] + '</h2><p>' + (isMember() && HEAD_M[S] ? HEAD_M[S] : hd[2]) + '</p></div><div class="card-b">' + BODY[S]() + (S === 0 && ERR.length ? '<div class="blk" role="alert">' + ERR.map(function (m) { return '<p>' + m + '</p>'; }).join('') + '</div>' : '') + '</div>' +
+      '<div class="card-f">' + (S ? '<button class="link" type="button" data-act="back">' + ic('<path d="M15 18l-6-6 6-6"/>', 16) + 'Back</button>' : '<span class="hint">' + ic('<rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/>', 15) + 'Your answers are private and saved as you go</span>') +
+      '<button class="btn" type="button" data-act="next">' + (S === 4 ? 'Send my application' : 'Continue') + ic('<path d="M5 12h14M13 5l7 7-7 7"/>', 17) + '</button></div>';
+    document.getElementById('mNext').textContent = S === 4 ? 'Send application' : 'Continue';
+    document.querySelector('#mbar [data-act="back"]').style.display = S ? '' : 'none';
+    bar(Math.round(((S + (isMember() ? 0.6 : 0)) / 5) * 100), 'Step ' + (S + 1) + ' of 5 · ' + STEPS[S].t);
+  }
+  function bar(p, t) { document.getElementById('prog').style.width = Math.min(100, p) + '%'; document.getElementById('barStep').textContent = t; }
+  function track(now) {
+    var T = [['Received', '19 Oct'], ['In review', now === 1 ? 'Now' : ''], ['Matched', ''], ['Outcome', '']];
+    return '<div class="track">' + T.map(function (x, i) { return '<div class="' + (i < now ? 'ok' : (i === now ? 'now' : '')) + '"><i>' + (i < now ? '✓' : i + 1) + '</i><b>' + x[0] + '</b>' + (x[1] ? x[1] : '') + '</div>'; }).join('') + '</div>' +
+      '<p class="outs"><span>Outcome</span><em class="o-ok">Approved</em><em class="o-no">Declined</em><em class="o-cl">Closed</em><small>We update this page and email you when it changes.</small></p>';
+  }
+  function existing() {
+    return '<div class="existing"><div class="ex-top"><span class="ic">' + ic('<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>', 24) + '</span><div><h2>Your application is being reviewed</h2><p>You applied on 19 October 2026 for Thabo Fresh Produce. One application per business every 90 days keeps things fair for everyone.</p></div></div>' + track(1) +
+      '<div class="ex-grid"><div><span>Reference</span><b>SME-131702</b></div><div><span>Funding</span><b>Working capital · R 250 000</b></div><div><span>You can apply again from</span><b>17 January 2027</b></div></div>' +
+      '<div class="ex-note">' + ic('<path d="M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7z"/>', 18) + '<span>Something changed, like a big new order or a new month of statements? Add it to this application rather than starting again. It helps your match.</span></div>' +
+      '<div class="ex-act"><button class="btn" type="button">' + ic('<path d="M12 16V4M7 9l5-5 5 5"/><path d="M20 16.5V19a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-2.5"/>', 17) + 'Add a document</button><button class="btn ghost" type="button">View my application</button><button class="btn ghost" type="button">Message the funding team</button></div></div>';
+  }
+  function done() {
+    var mem = isMember();
+    return '<div class="done"><div class="big">' + ic(TICK, 36) + '</div><h2>Application sent</h2><p>Thank you, Thabo. We’re checking your application and matching Thabo Fresh Produce with the funders that fit. We’ll email you at every step.</p>' +
+      '<div class="ref">Your reference <b>SME-131702</b><button type="button">Copy</button></div>' + track(0).replace('class="now"', 'class="now"') +
+      '<div class="done-act">' + (mem ? '<button class="btn" type="button">Track it in My Funding</button><button class="btn ghost" type="button">Back to the SME Hub</button>' : '<button class="btn" type="button">Create your account to track it</button><button class="gbtn" type="button" style="height:50px;padding:0 18px">Continue with Google</button>') + '</div>' +
+      (mem ? '' : '<p style="font-size:13px;margin-top:14px">Your account is created with the details you already gave us. No forms to fill again.</p>') + '</div>';
+  }
+
+  /* ---------- events ---------- */
+  document.addEventListener('click', function (e) {
+    var t;
+    if ((t = e.target.closest('.pv [data-who]'))) { setWho(t.getAttribute('data-who')); return; }
+    if ((t = e.target.closest('[data-prod]'))) { D.prod = t.getAttribute('data-prod'); render(); return; }
+    if ((t = e.target.closest('[data-seg] button'))) { D[t.parentNode.getAttribute('data-seg')] = t.getAttribute('data-v'); render(); return; }
+    if ((t = e.target.closest('[data-mo]'))) { D.months[+t.getAttribute('data-mo')] = true; render(); return; }
+    if ((t = e.target.closest('[data-go]')) && !t.disabled) { S = +t.getAttribute('data-go'); sent = false; render(); top(); return; }
+    if ((t = e.target.closest('[data-act]'))) {
+      if (t.getAttribute('data-act') === 'next') { if (S === 0) { ERR = eligErrors(); if (ERR.length) { render(); return; } } else { ERR = []; } if (S === 4) { sent = true; } else { S++; } } else { ERR = []; S = Math.max(0, S - 1); }
+      saved(); render(); top();
+    }
+  });
+  document.addEventListener('input', function (e) { var k = e.target.getAttribute('data-k'); if (!k) return; D[k] = e.target.value; match(); saved(); });
+  document.addEventListener('change', function (e) { var k = e.target.getAttribute('data-k'); if (!k) return; D[k] = e.target.value; match(); });
+  function top() { var c = document.querySelector('.stepper'); window.scrollTo({ top: Math.max(0, c.getBoundingClientRect().top + scrollY - 80), behavior: 'smooth' }); }
+  function saved() { var s = document.querySelector('#saved .t'); if (s) { s.textContent = 'Saving…'; setTimeout(function () { s.textContent = 'Saved just now'; }, 600); } }
+  window.setWho = function (w) { who = w; sent = false; S = 0; document.body.setAttribute('data-who', w); document.querySelectorAll('.pv [data-who]').forEach(function (b) { b.classList.toggle('on', b.getAttribute('data-who') === w); }); render(); };
+  render();
+})();
+</script>
+</body>
+</html>
