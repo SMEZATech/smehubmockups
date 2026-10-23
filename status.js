@@ -16,6 +16,7 @@ window.MOCKUP_STATUS = {
   "public-resource-category.html": "finalised",
   "public-resource.html": "finalised",
   "public-funding.html": "finalised",
+  "public-funding-apply.html": "finalised",
   "public-funding-category.html": "finalised",
   "public-loan-option.html": "finalised",
   "public-solutions.html": "finalised",
@@ -49,6 +50,7 @@ window.MOCKUP_STATUS = {
   "member-hub.html": "finalised",
   "members.html": "finalised",
   "single-member.html": "finalised",
+  "member-hover-card.html": "finalised",
   "single-post.html": "finalised",
   "groups.html": "finalised",
   "single-group.html": "finalised",
@@ -64,6 +66,8 @@ window.MOCKUP_STATUS = {
   "event-single-online.html": "finalised",
   "event-speaker.html": "finalised",
   "event-speakers.html": "finalised",
+  "event-speaker-talks.html": "under-review",
+  "event-single-online-v2.html": "under-review",
   "public-glossary.html": "finalised",
   "public-glossary-categories.html": "finalised",
   "public-glossary-category.html": "finalised",
@@ -87,7 +91,7 @@ window.MOCKUP_STATUS = {
   "public-404.html": "finalised",
   "public-unauthorized.html": "finalised"
 };
-window.MOCKUP_STATUS_PUBLISHED = "2026-10-22T05:08:41.939Z";
+window.MOCKUP_STATUS_PUBLISHED = "2026-10-23T05:10:07.000Z";
 /* Developer builds (staging), { mockup file: { url, status } }; status: "pending-review" | "reviewed" | "approved" */
 window.MOCKUP_DEV = {
   "public-home.html": {"url":"https://smesastg.wpengine.com/","status":"reviewed"},
