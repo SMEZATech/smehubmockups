@@ -19,7 +19,7 @@
 }
 *{box-sizing:border-box}
 [hidden]{display:none !important}
-html,body{margin:0}
+html,body{margin:0;max-width:100%;overflow-x:hidden}
 body{font-family:Inter,system-ui,sans-serif;color:var(--ink);background:var(--bg);font-size:15.5px;line-height:1.5;-webkit-font-smoothing:antialiased}
 a{color:var(--r);text-decoration:none}
 button{font:inherit}
@@ -46,12 +46,15 @@ svg{flex:none}
 .prog b{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--r),#FF9900);transition:width .6s cubic-bezier(.2,.7,.2,1)}
 
 /* ---------------- hero band ---------------- */
-.band{background:radial-gradient(1200px 380px at 85% -40%,rgba(220,24,60,.38),transparent 60%),radial-gradient(900px 400px at 0% 0%,rgba(23,50,74,.55),transparent 60%),linear-gradient(180deg,var(--n) 0%,#17324A 100%);color:#fff}
-.band-in{max-width:1240px;margin:0 auto;padding:34px 28px 92px;display:flex;align-items:flex-end;justify-content:space-between;gap:24px}
-.eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#FF9900}
-.eyebrow i{width:6px;height:6px;border-radius:50%;background:#FF9900;box-shadow:0 0 0 4px rgba(255,153,0,.18)}
-.band h1{color:#fff;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;font-size:40px;line-height:1.08;margin:10px 0 8px;max-width:640px}
-.band p{margin:0;color:#c6d4de;max-width:600px;font-size:16px}
+.band{position:relative;overflow:hidden;background:linear-gradient(115deg,#0C1F31 0%,#0C1F31 50%,#2b1626 80%,#5e1a2c 115%);color:#fff}
+.band::before{content:"";position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.07) 1px,transparent 1.5px);background-size:22px 22px;opacity:.7;pointer-events:none}
+.band::after{content:"";position:absolute;width:520px;height:520px;border-radius:50%;background:#DC183C;filter:blur(110px);opacity:.28;top:-170px;right:-140px;pointer-events:none}
+.band-in{position:relative;z-index:1;max-width:1240px;margin:0 auto;padding:40px 28px 96px;display:flex;align-items:flex-end;justify-content:space-between;gap:24px}
+.crumb{display:flex;align-items:center;flex-wrap:wrap;gap:6px;font-size:12px;color:rgba(255,255,255,.55);margin-bottom:18px}
+.crumb a{color:rgba(255,255,255,.55)}.crumb a:hover{color:#fff}.crumb span{color:rgba(255,255,255,.3)}.crumb b{color:rgba(255,255,255,.85);font-weight:500}
+.band h1{color:#fff;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:clamp(30px,5vw,52px);line-height:1.06;letter-spacing:-.01em;margin:0 0 14px;max-width:720px}
+.gtext{background:linear-gradient(90deg,#DC183C,#FF9900);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent}
+.band p{margin:0;color:rgba(255,255,255,.72);max-width:600px;font-size:16px}
 .band-facts{display:grid;grid-template-columns:1fr;gap:8px;flex:none}
 .fact{display:flex;align-items:center;gap:12px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:14px;padding:9px 16px;width:250px}
 .fact svg{color:#FF9900}
@@ -179,7 +182,7 @@ select.i{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.or
 
 /* rail */
 .match{overflow:hidden}
-.match-h{padding:18px 20px 14px;background:linear-gradient(135deg,#17324A,#123b52);color:#fff}
+.match-h{padding:18px 20px 14px;background:linear-gradient(135deg,#17324A,#17324A);color:#fff}
 .match-h .k{font-size:11.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#9fb6c6}
 .match-h h3{color:#fff;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;font-size:22px;margin:4px 0 0;display:flex;align-items:center;gap:10px}
 .dot{width:10px;height:10px;border-radius:50%;background:#9fb6c6}
@@ -293,9 +296,10 @@ select.i{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.or
   .bar-in{height:58px;padding:0 16px;gap:10px}
   .bar-logo img{height:27px}
   .bar-div,.bar-title,.pill .t,.me .t,.saved .t{display:none}
-  .band-in{padding:22px 16px 76px}
-  .band h1{font-size:28px}
-  .band p{font-size:14.5px}
+  .band-in{padding:20px 16px 72px}
+  .band h1{font-size:clamp(28px,8.4vw,34px);line-height:1.1;margin-bottom:12px}
+  .band p{font-size:14.5px;line-height:1.55}
+  .band::after{width:300px;height:300px;top:-120px;right:-120px}
   .shell{padding:0 12px 120px;gap:14px}
   .stepper{overflow-x:auto;scrollbar-width:none}
   .stepper::-webkit-scrollbar{display:none}
@@ -331,6 +335,8 @@ select.i{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.or
   .mbar .btn.ghost{flex:0 0 auto;padding:0 18px}
   .pv{left:50%;transform:translateX(-50%);bottom:84px}
   .pv span{display:none}
+  .pill,.me{height:44px}
+  .pv button{height:40px;white-space:nowrap;font-size:12.5px}
 }
 </style>
 </head>
@@ -355,14 +361,14 @@ select.i{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.or
 <section class="band">
   <div class="band-in">
     <div>
-      <span class="eyebrow"><i></i>SME Funding</span>
-      <h1 id="heroH">One application. Matched to the funders that fit your business.</h1>
+      <nav class="crumb" aria-label="Breadcrumb"><a href="public-home.html">Home</a><span>›</span><a href="public-funding.html">Funding</a><span>›</span><b>Apply</b></nav>
+      <h1 id="heroH">One application. Matched to <span class="gtext">the funders that fit your business.</span></h1>
       <p id="heroP">Tell us about your business once. We check it, then match you only with funding partners who fund businesses like yours.</p>
     </div>
     <div class="band-facts">
       <div class="fact"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><div><b>About 5 minutes</b><span>Save and finish later</span></div></div>
       <div class="fact"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7z"/></svg><div><b>POPIA protected</b><span>Shared only with your matches</span></div></div>
-      <div class="fact"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg><div><b>Free to apply</b><span>No application fee</span></div></div>
+      <div class="fact"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg><div><b>No application fee</b><span>Apply at no cost</span></div></div>
     </div>
   </div>
 </section>
@@ -579,7 +585,8 @@ select.i{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.or
   function render() {
     var card = document.getElementById('card');
     document.querySelectorAll('[data-show]').forEach(function (el) { el.hidden = el.getAttribute('data-show').split(',').indexOf(who) < 0; });
-    document.getElementById('heroH').textContent = who === 'visitor' ? 'One application. Matched to the funders that fit your business.' : (who === 'member' ? 'Welcome back, Thabo. Most of your application is already done.' : 'Welcome back, Thabo. Your application is in progress.');
+    const GT=(a,b)=>a+' <span class="gtext">'+b+'</span>';
+    document.getElementById('heroH').innerHTML = who === 'visitor' ? GT('One application. Matched to','the funders that fit your business.') : (who === 'member' ? GT('Welcome back, Thabo.','Most of your application is already done.') : GT('Welcome back, Thabo.','Your application is in progress.'));
     document.getElementById('heroP').textContent = who === 'visitor' ? 'Tell us about your business once. We check it, then match you only with funding partners who fund businesses like yours.' : (who === 'member' ? 'We filled in what’s on your profile. Check it, add what’s missing, and send.' : 'Here is where it stands. We’ll email you when anything changes.');
     document.getElementById('mbar').hidden = sent || who === 'existing';
     document.getElementById('matchPanel').hidden = who === 'existing';
