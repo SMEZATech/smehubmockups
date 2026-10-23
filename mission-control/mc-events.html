@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Events workspace · Mission Control</title>
+<meta name="robots" content="noindex,nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<link rel="stylesheet" href="mc-ui.css">
+<style>
+  .ev-row{display:flex;gap:14px;align-items:center}
+  .ev-date{width:52px;flex:0 0 52px;border-radius:12px;border:1px solid var(--line);text-align:center;overflow:hidden;background:#fff}
+  .ev-date small{display:block;background:var(--red);color:#fff;font:800 10px/18px 'Plus Jakarta Sans';letter-spacing:.08em;text-transform:uppercase}
+  .ev-date b{display:block;font:800 20px/30px 'Plus Jakarta Sans';color:var(--ink)}
+  .ev-cards{display:grid;gap:14px;grid-template-columns:repeat(3,minmax(0,1fr))}
+  .ev-card{border:1px solid var(--line);border-radius:18px;overflow:hidden;background:#fff;display:flex;flex-direction:column}
+  .ev-cover{height:112px;position:relative;background:linear-gradient(135deg,var(--navy),#1a3350 60%,var(--red));color:#fff;padding:14px 16px;display:flex;flex-direction:column;justify-content:space-between}
+  .ev-cover.inp{background:linear-gradient(135deg,#0C1F31,#29A37A)}
+  .ev-cover .when{font:800 12px 'Plus Jakarta Sans';letter-spacing:.06em;text-transform:uppercase;opacity:.85}
+  .ev-cover h4{margin:0;font:800 16px/1.25 'Plus Jakarta Sans';color:#fff}
+  .ev-card .bd{padding:14px 16px;display:grid;gap:10px}
+  .ev-card .meta{display:flex;justify-content:space-between;font-size:12.5px;color:var(--muted);font-weight:600}
+  .sched{display:grid;gap:0;position:relative;padding-left:26px}
+  .sched::before{content:'';position:absolute;left:9px;top:8px;bottom:8px;width:2px;background:var(--line)}
+  .sched .s{position:relative;padding:10px 0 14px}
+  .sched .s::before{content:'';position:absolute;left:-22px;top:14px;width:12px;height:12px;border-radius:50%;background:#fff;border:3px solid var(--green)}
+  .sched .s.amber::before{border-color:var(--amber)}.sched .s.grey::before{border-color:#B3BCC5}.sched .s.red::before{border-color:var(--red)}
+  .sched .s b{display:block;font-weight:700}.sched .s small{color:var(--muted);display:block;margin-top:2px;line-height:1.5}
+  .sched .s .r{float:right;margin-left:10px}
+  .form{display:grid;gap:14px}
+  .form .row2{display:grid;gap:14px;grid-template-columns:1fr 1fr}
+  .form .row3{display:grid;gap:14px;grid-template-columns:1fr 1fr 1fr}
+  .opt{display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid var(--line);border-radius:14px;background:#fff}
+  .opt b{display:block;font-size:13.5px}.opt small{color:var(--muted);font-size:12px}
+  .opt .grow{flex:1}
+  .choice{display:grid;gap:10px;grid-template-columns:1fr 1fr}
+  .choice button{border:1.5px solid var(--line);background:#fff;border-radius:14px;padding:14px;text-align:left;font:inherit;cursor:pointer}
+  .choice button.on{border-color:var(--red);box-shadow:0 0 0 3px rgba(220,24,60,.12)}
+  .choice button b{display:flex;align-items:center;gap:8px;font-size:14px}.choice button small{color:var(--muted);display:block;margin-top:4px}
+  .cover-drop{height:150px;border:2px dashed #CBD3DB;border-radius:16px;display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--muted);gap:6px;background:linear-gradient(135deg,#F6F8FA,#EEF2F6)}
+  .q{display:flex;gap:10px;align-items:center;padding:10px 12px;border:1px solid var(--line);border-radius:12px;background:#fff;font-size:13px}
+  .q .grow{flex:1;font-weight:600}
+  .mapbar{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+  .mapbar .ws{border-radius:16px;padding:14px;border:1px solid var(--line);background:#fff}
+  .mapbar .ws b{display:block;font:800 13px 'Plus Jakarta Sans'}.mapbar .ws small{display:block;color:var(--muted);margin:4px 0 10px;line-height:1.45}
+  .cap{display:grid;grid-template-columns:1fr auto;gap:6px 12px;align-items:center;padding:11px 0;border-bottom:1px solid var(--line)}
+  .cap:last-child{border-bottom:0}.cap b{font-size:13.5px}.cap small{grid-column:1/-1;color:var(--muted);font-size:12px;line-height:1.5}
+  .scan{border-radius:22px;background:var(--navy);color:#fff;padding:18px;display:grid;gap:12px;max-width:340px;margin:0 auto}
+  .scan .vf{height:220px;border-radius:16px;border:2px solid rgba(255,255,255,.25);position:relative;display:flex;align-items:center;justify-content:center;background:radial-gradient(circle at 50% 40%,#1a3350,#05080F)}
+  .scan .vf::after{content:'';position:absolute;left:12%;right:12%;top:50%;height:2px;background:var(--red);box-shadow:0 0 12px var(--red)}
+  .scan .ok{border-radius:14px;background:rgba(41,163,122,.18);border:1px solid rgba(41,163,122,.5);padding:12px 14px}
+  .legend-st{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 14px}
+  .nb-step{border:1px solid var(--line);border-radius:22px;background:#fff;padding:20px;margin:0 0 18px;display:grid;gap:14px}
+  .nb-h{display:flex;gap:14px;align-items:flex-start}
+  .nb-h .grow{flex:1;min-width:0}
+  .nb-h h2{margin:0;font:800 19px/1.25 'Plus Jakarta Sans';color:var(--ink)}
+  .nb-h small{display:block;color:var(--muted);margin-top:4px;line-height:1.5}
+  .nb-n{flex:0 0 36px;height:36px;border-radius:12px;background:var(--navy);color:#fff;display:grid;place-items:center;font:800 15px 'Plus Jakarta Sans'}
+  .nb-cols{display:grid;gap:16px;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);align-items:start}
+  .nb-rules{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+  .nb-rules li{display:flex;gap:8px;align-items:flex-start;font-size:13px;line-height:1.5}
+  .nb-rules li svg{flex:0 0 16px;width:16px;height:16px;color:var(--green);margin-top:2px}
+  .nb-phones{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;align-items:flex-start}
+  .nb-phone{width:250px;max-width:100%;border-radius:28px;border:8px solid #0C1F31;background:#fff;overflow:hidden;box-shadow:0 12px 30px -18px rgba(12,31,49,.5)}
+  .nb-bar{background:#0C1F31;color:#fff;font:700 11px/24px 'Inter';text-align:center;letter-spacing:.02em}
+  .nb-scr{padding:14px;display:grid;gap:9px;font-size:12.5px}
+  .nb-scr h5{margin:0;font:800 14px/1.3 'Plus Jakarta Sans';color:var(--ink)}
+  .nb-scr svg{width:28px;height:28px;color:var(--green)}
+  .nb-scr .in{height:34px;border:1px solid var(--line);border-radius:10px;padding:0 10px;display:flex;align-items:center;color:var(--muted)}
+  .nb-scr .in.ta{height:56px;align-items:flex-start;padding-top:8px}
+  .nb-scr .tick{display:flex;gap:8px;align-items:flex-start;color:var(--ink)}
+  .nb-scr .tick i{flex:0 0 14px;height:14px;border:1.5px solid #9AA6B2;border-radius:4px;margin-top:1px}
+  .nb-scr .tick i.on{background:var(--red);border-color:var(--red)}
+  .nb-pill{padding:5px 14px;border-radius:999px;border:1px solid var(--line);font-weight:700}.nb-pill.on{border-color:var(--red);color:var(--red);background:#FDECEF}
+  .nb-btn{height:38px;border-radius:999px;background:var(--red);color:#fff;font:700 13px 'Inter';display:grid;place-items:center}
+  .nb-btn.ghost{background:#fff;color:var(--ink);border:1px solid var(--line)}
+  .nb-qr{width:150px;height:150px;margin:4px auto;border-radius:14px;border:1px solid var(--line);display:grid;place-items:center}
+  .nb-qr svg{width:118px;height:118px;color:#0C1F31}
+  .nb-warn{border-radius:12px;padding:8px 10px;font-size:11.5px;font-weight:700;display:flex;gap:6px;align-items:center}
+  .nb-warn svg{width:14px;height:14px}.nb-warn.amber{background:rgba(255,153,0,.15);color:#FFC266}.nb-warn.red{background:rgba(220,24,60,.18);color:#FF8FA3}
+  .nb-mail{width:100%;max-width:440px;border:1px solid #e2e8f0;border-radius:12px;overflow:hidden;background:#fff;margin:0 auto;font-size:12.5px;color:#22303f}
+  .nb-mtop{height:6px;background:#0a2c3d}
+  .nb-mlogo{padding:12px 20px 8px;text-align:center;font:800 13px 'Plus Jakarta Sans';color:#9c1c1f;border-bottom:1px solid #f3f5f9}
+  .nb-mbody{padding:14px 20px;display:grid;gap:8px;line-height:1.55}
+  .nb-subj{color:var(--muted);font-weight:600}
+  .nb-mbtn{justify-self:start;background:#9c1c1f;color:#fff;border-radius:8px;padding:8px 14px;font-weight:700}
+  .nb-score{display:flex;gap:3px;flex-wrap:wrap}.nb-score span{width:26px;height:26px;border-radius:6px;border:1px solid #e2e8f0;display:grid;place-items:center;font-weight:700;font-size:11px}
+  .nb-mfoot{background:#0a2c3d;color:#7e97a6;font-size:10.5px;padding:10px 20px;line-height:1.55}
+  .nb-steps{display:flex;gap:8px;flex-wrap:wrap}.nb-steps span{padding:6px 12px;border-radius:999px;border:1px solid var(--line);font-weight:700;font-size:12px;color:var(--muted)}.nb-steps span.on{background:var(--navy);color:#fff;border-color:var(--navy)}
+  .nb-map{display:grid;grid-template-columns:minmax(0,1fr) 20px minmax(0,1fr);gap:8px;align-items:center;font-size:13px}.nb-map svg{width:16px;height:16px;color:var(--muted)}
+  .nb-map .a{padding:8px 10px;border-radius:10px;background:#F4F6F8;font-family:ui-monospace,monospace;font-size:12px;overflow-wrap:anywhere}.nb-map .b{padding:8px 10px;border-radius:10px;border:1px solid var(--line);font-weight:600}
+  @media (max-width:1100px){.nb-cols{grid-template-columns:1fr}}
+  @media (max-width:1100px){.ev-cards{grid-template-columns:1fr 1fr}.mapbar{grid-template-columns:1fr 1fr}}
+  @media (max-width:680px){.ev-cards,.mapbar,.form .row2,.form .row3,.choice{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<script src="mc-ui.js"></script>
+<script>
+/* Where the engine stands, 22 Oct 2026 (checked against the files, the Tshepho copy and PROJECT-BLUEPRINT.md). Status keys: see ST below. */
+window.EV_WS = [
+  { n: 'A. Registration engine', d: 'Capacity, waitlist, tickets, guest list, confirmation with calendar file, SMS tick, community link. Version 1.0.4, 71 of 71 tests on the copy, packaged. Ship this first.', s: 'ready' },
+  { n: 'B. Event page and archive', d: 'Register button on the page, replays in the archive. Packaged; it needs re-cutting because the copy now has the Hosted by line.', s: 'ready' },
+  { n: 'C. Reminders and host tools', d: 'Reminders, message guests, check-in, insights, private Zoom links, SMS and WhatsApp in dry-run. Packaged, 52 of 52 tests, all switches off.', s: 'ready' },
+  { n: 'D. Community fit', d: 'Event discussion link and attendees in the community. Packaged but off; its discussion link is now saved by A (1.0.4).', s: 'ready' },
+  { n: 'E. Search, tracking, gate', d: 'Members-only replays, event schema, GA4 events, Hosted by, new-event notices, SAST times on old events (today).', s: 'live' }
+];
+window.EV_GROUPS = [
+  { k: 'setup', h: 'Set up an event', sub: 'What you fill in' },
+  { k: 'fill', h: 'Fill it', sub: 'Getting people registered' },
+  { k: 'day', h: 'Before and on the day', sub: 'Reminders, links and the door' },
+  { k: 'after', h: 'After the event', sub: 'Replays, feedback and numbers' }
+];
+window.EV_CAPS = [
+  { g: 'setup', n: 'Create and edit events, cover image', s: 'live', w: 'Today in the WordPress Events editor. The one-screen editor in this mockup is still to build.' },
+  { g: 'setup', n: 'One-screen editor (this mockup)', s: 'build', w: 'Replaces the JetEngine screens for events; the engine already has the settings it would save to. Mockup: Next to build, step 1.' },
+  { g: 'setup', n: 'Online or in person', s: 'live', w: 'Event category on every event.' },
+  { g: 'setup', n: 'Date and time in SAST', s: 'live', w: 'Old events showed 2 hours early; fixed on production today.' },
+  { g: 'setup', n: 'Hosts and speakers', s: 'live', w: 'Hosted by box and speaker profiles with their talks.' },
+  { g: 'setup', n: 'Capacity and waitlist', s: 'ready', w: 'Engine A: Events > Registrations settings. The waitlist moves the next person in automatically.' },
+  { g: 'setup', n: 'Free tickets', s: 'ready', w: 'Engine A.' },
+  { g: 'setup', n: 'Paid tickets', s: 'ready', w: 'Decided 22 Oct: WooCommerce checkout with your Stripe account. Engine A creates a hidden ticket product per event (in person today; online paid events to add). Check Stripe is the active Woo gateway when A ships.' },
+  { g: 'setup', n: 'Questions on the form', s: 'build', w: 'Engine A stores answers; there is no editor for questions yet. Mockup: Next to build, step 2.' },
+  { g: 'setup', n: 'Approve each guest', s: 'build', w: 'Not in the engine yet (needs the statuses Pending approval and Declined). Mockup: Next to build, step 2.' },
+  { g: 'setup', n: 'Recurring series', s: 'later', w: 'Not planned for the first release.' },
+  { g: 'fill', n: 'Register button on the event page', s: 'ready', w: 'Engine B; re-cut on top of the Hosted by version, then your deploy.' },
+  { g: 'fill', n: 'Confirmation email with calendar file', s: 'ready', w: 'Engine A sends it with the .ics file and a manage link. It moves to the events@ sender when C ships.' },
+  { g: 'fill', n: 'New-event notice to members', s: 'live', w: 'In-app notice when an event is published.' },
+  { g: 'fill', n: 'Email invites to chosen members', s: 'build', w: 'Not built.' },
+  { g: 'fill', n: 'Import guests from Luma (CSV)', s: 'build', w: 'The engine has a place for it (sources import_luma and luma_follow); the importer is not built. Mockup: Next to build, step 5.' },
+  { g: 'day', n: 'Guest list and CSV export', s: 'ready', w: 'Engine A on the copy; C adds three exports that respect each guest\'s consent.' },
+  { g: 'day', n: 'Day-before reminder, inside 08:00 to 17:00', s: 'ready', w: 'Engine C; up to three reminder slots, editable.' },
+  { g: 'day', n: '1-hour reminder (time-sensitive)', s: 'ready', w: 'Engine C sends it on time, even after 17:00 (your decision).' },
+  { g: 'day', n: 'Message guests', s: 'ready', w: 'Engine C: Host tools > Message registrants.' },
+  { g: 'day', n: 'Private joining link and Zoom', s: 'ready', w: 'Engine C gives each guest a private link. Zoom needs app credentials from you.' },
+  { g: 'day', n: 'SMS reminders with a consent tick', s: 'ready', w: 'The tick is in A 1.0.4 and tested; C sends the SMS.' },
+  { g: 'day', n: 'WhatsApp reminders', s: 'decide', w: 'Built in dry-run (C). Waiting for your Meta Business verification and a number.' },
+  { g: 'day', n: 'Check-in by name', s: 'ready', w: 'Engine C: Host tools > Check-in.' },
+  { g: 'day', n: 'QR code check-in', s: 'build', w: 'Not built; check-in is by name for now. Mockup: Next to build, step 3.' },
+  { g: 'after', n: 'Members-only replays', s: 'live', w: 'Webinar gate 2.0.1; replays in the archive and Account > Events.' },
+  { g: 'after', n: '"Replay is ready" email', s: 'build', w: 'Sent by hand today. Mockup: Next to build, step 4.' },
+  { g: 'after', n: 'Feedback survey', s: 'build', w: 'Not built. Mockup: Next to build, step 4.' },
+  { g: 'after', n: 'GA4 event tracking', s: 'live', w: 'Registrations and joins tracked in GA4.' },
+  { g: 'after', n: 'Insights for each event', s: 'ready', w: 'Engine C: Host tools > Insights.' }
+];
+window.EV_NEXT = [
+  ['Deploy A (packaged, 71 of 71 tests)', 'Registration, capacity, waitlist, tickets, guest list, SMS tick. Off until switched on per event.'],
+  ['Re-cut and deploy B', 'The register button goes live on event pages.'],
+  ['Deploy C with every switch off', 'Turn on email reminders first, then SMS. Zoom after you send the app credentials, WhatsApp after Meta.'],
+  ['D after the community proposal is approved', 'It is packaged and switched off.'],
+  ['Build the missing back end, in this order', 'The one-screen editor, questions and approval, QR check-in, the replay email and feedback survey, then the Luma import. Each has a mockup in the Next to build tab and starts only after your yes on it.']
+];
+</script>
+<script>
+(function () {
+  var B = MC.briefs, E = MC.esc;
+
+  /* Build status: one source for every chip on this page. */
+  var ST = { live: ['Live', 'green'], ready: ['Built, waiting for deploy', 'blue'], copy: ['On the test copy', 'violet'], test: ['Built, not tested yet', ''], build: ['To build', 'amber'], decide: ['Needs you', 'red'], later: ['Later', 'navy'] };
+  var st = function (k) { return MC.chip(ST[k][0], ST[k][1], true); };
+  var cap = function (name) { var c = (window.EV_CAPS || []).filter(function (x) { return x.n === name; })[0]; return c ? '<span title="' + E(c.w) + '">' + st(c.s) + '</span>' : ''; };
+
+  /* Illustrative data (mockup). */
+  var events = [
+    { id: 1, t: 'Funding readiness: what lenders check first', d: 'Thu 30 Oct 2026', day: '30', mon: 'Oct', time: '11:00 to 12:00 SAST', f: 'Online', reg: 214, cap: 300, wait: 0, att: null, st: 'Published', tk: 'Free', host: 'Tshepho Joel', src: 'Newsletter 46%' },
+    { id: 2, t: 'Tax season for small businesses: provisional tax made simple', d: 'Sat 1 Nov 2026', day: '1', mon: 'Nov', time: '11:00 to 12:00 SAST', f: 'Online', reg: 168, cap: 300, wait: 0, att: null, st: 'Published', tk: 'Free', host: 'Staff Writer', src: 'Community 38%' },
+    { id: 3, t: 'SME Connect: Johannesburg networking breakfast', d: 'Thu 13 Nov 2026', day: '13', mon: 'Nov', time: '07:30 to 09:30 SAST', f: 'In person', reg: 80, cap: 80, wait: 17, att: null, st: 'Published', tk: 'R150', host: 'Tshepho Joel', src: 'Members 61%' },
+    { id: 4, t: 'Selling to government: tenders without the guesswork', d: 'Thu 27 Nov 2026', day: '27', mon: 'Nov', time: '18:30 to 19:30 SAST', f: 'Online', reg: 0, cap: 300, wait: 0, att: null, st: 'Draft', tk: 'Free', host: 'Staff Writer', src: '' },
+    { id: 5, t: 'How to protect your intellectual property', d: 'Thu 23 Apr 2026', day: '23', mon: 'Apr', time: '11:00 to 12:00 SAST', f: 'Online', reg: 233, cap: 300, wait: 0, att: 41, st: 'Past', tk: 'Free', host: 'Staff Writer', src: 'Newsletter 52%' },
+    { id: 6, t: 'How to buy a franchise in South Africa', d: 'Thu 26 Mar 2026', day: '26', mon: 'Mar', time: '11:00 to 12:00 SAST', f: 'Online', reg: 198, cap: 300, wait: 0, att: 38, st: 'Past', tk: 'Free', host: 'Staff Writer', src: 'Newsletter 47%' }
+  ];
+  var guests = [
+    { n: 'Nomsa Radebe', biz: 'Radebe Interiors', s: 'Going', how: 'Member', when: '2 days ago', src: 'Newsletter', q: 'Funding for stock', sms: 'Yes', ci: '' },
+    { n: 'Pieter Jacobs', biz: 'Jacobs Welding', s: 'Going', how: 'Member', when: '3 days ago', src: 'Community', q: 'Equipment finance', sms: 'No', ci: '' },
+    { n: 'Ayanda Ngcobo', biz: 'Ngcobo Creative', s: 'Waitlist', how: 'Member', when: 'Today', src: 'Event page', q: 'Cash flow', sms: 'Yes', ci: '' },
+    { n: 'Fatima Patel', biz: 'Patel Spices', s: 'Pending approval', how: 'Visitor (joined to register)', when: 'Today', src: 'Google', q: 'Exporting', sms: 'Yes', ci: '' },
+    { n: 'Thulani Mabaso', biz: 'Mabaso Plumbing', s: 'Going', how: 'Member', when: '1 week ago', src: 'WhatsApp share', q: 'Tenders', sms: 'No', ci: '' },
+    { n: 'Rene du Plessis', biz: 'Du Plessis Vineyards', s: 'Checked in', how: 'Member', when: '2 weeks ago', src: 'Newsletter', q: 'Exporting', sms: 'Yes', ci: '07:41' },
+    { n: 'Zanele Mkhize', biz: 'Mkhize Midwifery', s: 'Declined', how: 'Visitor', when: '4 days ago', src: 'Facebook', q: '', sms: 'No', ci: '' },
+    { n: 'Kabelo Seboko', biz: 'Seboko Solar', s: 'Going', how: 'Member', when: 'Yesterday', src: 'LinkedIn', q: 'Solar finance', sms: 'Yes', ci: '' },
+    { n: 'Lindiwe Cele', biz: 'Cele Couriers', s: 'Checked in', how: 'Member', when: '3 weeks ago', src: 'Community', q: 'Vehicle finance', sms: 'Yes', ci: '07:52' },
+    { n: 'Johan Pretorius', biz: 'Pretorius Panelbeaters', s: 'Going', how: 'Member', when: '5 days ago', src: 'Newsletter', q: 'Insurance', sms: 'No', ci: '' }
+  ];
+  var GT = { 'Going': 'green', 'Waitlist': 'amber', 'Pending approval': 'blue', 'Checked in': 'navy', 'Declined': '' };
+  var ET = { Published: 'green', Draft: 'amber', Past: '', Live: 'red' };
+
+  /* Implementation briefs (Dev Mode). */
+  B.e_where = { title: 'Where the events engine stands', purpose: 'One page that says what is live, what is built and waiting for your deploy, and what is still to build, so every agent works from the same map.', rules: ['Ship order: A (data and registration), then B (event page and archive), then D (community fit), then C (reminders and replays).', 'Nothing here sends to real members from the test copy.'] };
+  B.e_list = { title: 'Events list', purpose: 'Every event in one table with its registration count against capacity.', data: ['Post type <code>events</code>; start and end stored as UNIX timestamps (<code>event_start_date</code>, <code>event_end_date</code>).', 'Registrations come from the Events A registration table, not from a form plugin.'], components: 'Filters by status and format; a drawer per event with quick actions.' };
+  B.e_create = { title: 'Create or edit an event', purpose: 'A Luma-style editor in WordPress admin so you never need Elementor to publish an event.', data: ['Format (online or in person), venue or joining link, capacity, waitlist, approval, ticket type and price, registration questions, visibility.', 'Times are typed in SAST and stored as UTC timestamps; the page always shows SAST.'], rules: ['The joining link is only shown to registered guests.', 'Replays are members-only.'] };
+  B.e_guests = { title: 'Guest list', purpose: 'Who is coming, who is waiting, who needs approval and who checked in.', data: 'One row per registration: status, member or visitor, source (UTM), answers, SMS consent, check-in time.', components: 'Status tabs, search, approve or decline, move from waitlist, CSV export, Luma CSV import.' };
+  B.e_checkin = { title: 'Check-in', purpose: 'Door check-in for in-person events from a phone.', logic: 'Each confirmation carries a QR code with a signed ticket id; scanning marks the row checked in. Manual search for people without a phone.' };
+  B.e_msgs = { title: 'Reminders and messages', purpose: 'The automatic schedule per event plus one-off messages to guests.', rules: ['All event email goes out Mon to Fri, 08:00 to 17:00 SAST, except the 1-hour reminder, which is time-sensitive (your decision, 22 Oct).', 'WhatsApp stays off until the Meta Business verification is done.', 'Every message respects the Comms Governor weekly ceiling.'] };
+  B.e_replays = { title: 'Replays', purpose: 'Add the recording after the event; members watch it, visitors are asked to join.', data: 'Replay link on the event; members-only gate (webinar gate 2.0.1).', logic: 'Replays show in the /events/ archive and in Account > Events "Past and replays". No separate library page.' };
+  B.e_insights = { title: 'Insights', purpose: 'Registrations, show-up rate, where guests came from and what they thought.', data: 'GA4 events plus the registration table; feedback survey answers.' };
+  B.e_settings = { title: 'Settings', purpose: 'Defaults for every new event so creating one takes two minutes.' };
+  B.e_next = { title: 'Next to build', purpose: 'The five back-end parts still to build, each as a mockup for Joel\'s yes before any code: one-screen editor, questions and approval, QR check-in, replay email and survey, Luma import.', rules: ['Build only after the mockup is approved and Events A is live.', 'Each part is tested on the test copy and deployed on its own after Joel says deploy.', 'Engine seams already there: answers (JSON) and smesa_evr_fields() for questions, status attended, sources import_luma and luma_follow.'] };
+
+  var panel = {};
+
+  /* ---------- Overview ---------- */
+  var upcoming = events.filter(function (e) { return e.st !== 'Past'; });
+  panel.overview =
+    MC.callout('blue', 'compass', 'Where this stands today', 'Live now: event pages, members-only replays, speaker profiles, Hosted by, GA4 tracking and SAST times. The engine behind this workspace comes in four parts. Registration (A) is on the test copy. The event page (B), reminders and host tools (C) and community (D) are built and wait for A. Every feature carries a status chip, and the <b>Build status</b> tab has the full map and the order to ship.') +
+    '<div class="sec-h" style="margin-top:22px">Next events</div>' +
+    '<div class="ev-cards">' + upcoming.slice(0, 3).map(function (e) {
+      var pct = Math.round(e.reg / e.cap * 100);
+      return '<div class="ev-card" data-dr="ev' + e.id + '"><div class="ev-cover' + (e.f === 'In person' ? ' inp' : '') + '"><span class="when">' + E(e.d) + ' &middot; ' + E(e.time.split(' to ')[0]) + '</span><h4>' + E(e.t) + '</h4></div><div class="bd"><div class="meta"><span>' + MC.icon(e.f === 'Online' ? 'video' : 'map-pin') + ' ' + E(e.f) + ' &middot; ' + E(e.tk) + '</span><span>' + e.reg + ' / ' + e.cap + '</span></div>' + MC.prog([{ v: pct, c: pct >= 100 ? '#FF9900' : '#29A37A' }]) + '<div class="meta"><span>' + (e.wait ? e.wait + ' on the waitlist' : 'No waitlist') + '</span><span>' + MC.chip(e.st, ET[e.st], true) + '</span></div></div></div>';
+    }).join('') + '</div>' +
+    '<div class="grid g4" style="margin:16px 0">' + MC.kpi({ label: 'Registered, next 30 days', icon: 'ticket', value: '462', tone: 'navy', dir: 'up', delta: '+38', sub: 'this week' }) + MC.kpi({ label: 'Show-up rate', icon: 'user-check', value: '18%', tone: 'amber', dir: 'flat', delta: 'Webinar average' }) + MC.kpi({ label: 'Joined to register', icon: 'user-plus', value: '57', tone: 'green', dir: 'up', delta: 'new members', sub: '30 days' }) + MC.kpi({ label: 'Replay views', icon: 'play-circle', value: '311', tone: 'violet', dir: 'up', delta: 'members only' }) + '</div>' +
+    '<div class="grid g-21"><div class="card flush"><div class="card-h"><div><h3>Needs you</h3><small>Things only you can unblock</small></div></div><ul class="list">' +
+      MC.li('red', 'video', 'Zoom app credentials', 'Needed for private joining links and attendance. Until then guests get the link you paste.', 'Send') +
+      MC.li('amber', 'message-circle', 'WhatsApp reminders', 'Start the Meta Business verification and get a number. Off until then.', 'Yours') +
+      MC.li('blue', 'rocket', 'Your "deploy" on A, then B, C and D', 'We bring each part to you tested on the copy, one at a time.', 'Next') +
+    '</ul></div>' +
+    MC.card({ title: 'This week', sub: 'Automatic messages the engine will send' }, '<div class="sched">' +
+      '<div class="s"><b>Wed 29 Oct, 10:00</b><small>Day-before reminder to 214 guests: Funding readiness</small></div>' +
+      '<div class="s red"><b>Thu 30 Oct, 10:00</b><small>1-hour reminder (time-sensitive) to 214 guests</small></div>' +
+      '<div class="s"><b>Fri 31 Oct, 09:00</b><small>Replay email to everyone who registered</small></div>' +
+      '<div class="s amber"><b>Fri 31 Oct, 10:00</b><small>Day-before reminder for the Saturday webinar (weekend events are reminded on Friday)</small></div>' +
+    '</div>') + '</div>';
+
+  /* ---------- Events list ---------- */
+  var evRow = function (e) {
+    return { title: E(e.t), sub: e.d + ' · ' + e.time, html:
+      '<div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px">' + MC.chip(e.st, ET[e.st], true) + MC.chip(e.f, 'navy') + MC.chip(e.tk === 'Free' ? 'Free' : e.tk + ' ticket', e.tk === 'Free' ? 'green' : 'violet') + '</div>' +
+      '<dl class="kv"><dt>Registered</dt><dd>' + e.reg + ' of ' + e.cap + (e.wait ? ' (+' + e.wait + ' waitlist)' : '') + '</dd><dt>Host</dt><dd>' + E(e.host) + '</dd><dt>Top source</dt><dd>' + E(e.src || 'Not open yet') + '</dd>' + (e.att != null ? '<dt>Showed up</dt><dd>' + e.att + '%</dd>' : '') + '</dl>' +
+      '<div class="sec-h" style="margin-top:22px">Actions</div><div style="display:flex;gap:8px;flex-wrap:wrap">' +
+      '<button class="btn sm pri" data-act="Opens the event editor" data-ico="pencil">' + MC.icon('pencil') + 'Edit</button>' +
+      '<button class="btn sm" data-act="Guest list for this event" data-ico="users">' + MC.icon('users') + 'Guests</button>' +
+      '<button class="btn sm" data-act="Message composer opens; sends inside 08:00 to 17:00 SAST" data-ico="send">' + MC.icon('send') + 'Message guests</button>' +
+      '<button class="btn sm" data-act="Copy made as a draft" data-ico="copy">' + MC.icon('copy') + 'Duplicate</button>' +
+      (e.st === 'Past' ? '<button class="btn sm" data-act="Replay link saved; members can watch" data-ico="play-circle">' + MC.icon('play-circle') + 'Add replay</button>' : '') + '</div>' };
+  };
+  events.forEach(function (e) { MC._dr['ev' + e.id] = function () { return evRow(e); }; });
+  panel.events =
+    '<div class="card flush">' + MC.table({ placeholder: 'Search events', perPage: 8, rows: events, onRow: evRow,
+      filters: [{ k: 'st', label: 'All statuses', opts: ['Published', 'Draft', 'Past'] }, { k: 'f', label: 'All formats', opts: ['Online', 'In person'] }],
+      right: cap('Import guests from Luma (CSV)') + '<button class="btn sm" data-act="Luma CSV import: maps name, email, status and answers" data-ico="upload">' + MC.icon('upload') + 'Import from Luma</button><button class="btn sm pri" data-act="New event: opens the editor" data-ico="plus">' + MC.icon('plus') + 'New event</button>',
+      cols: [
+        { k: 't', label: 'Event', render: function (r) { return '<div class="ev-row"><div class="ev-date"><small>' + r.mon + '</small><b>' + r.day + '</b></div><div><b>' + E(r.t) + '</b><br><small style="color:var(--muted)">' + E(r.time) + ' &middot; ' + E(r.f) + '</small></div></div>'; } },
+        { k: 'st', label: 'Status', render: function (r) { return MC.chip(r.st, ET[r.st], true); } },
+        { k: 'reg', label: 'Registered', cls: 'num', render: function (r) { var p = Math.round(r.reg / r.cap * 100); return '<div style="min-width:120px">' + r.reg + ' / ' + r.cap + (r.wait ? ' <small style="color:var(--amber-d)">+' + r.wait + '</small>' : '') + MC.prog([{ v: p, c: p >= 100 ? '#FF9900' : '#29A37A' }]) + '</div>'; } },
+        { k: 'tk', label: 'Ticket' },
+        { k: 'att', label: 'Showed up', cls: 'num', render: function (r) { return r.att == null ? '<small style="color:var(--muted)">After the event</small>' : r.att + '%'; } }
+      ] }) + '</div>';
+
+  /* ---------- Create / edit ---------- */
+  var opt = function (title, sub, on, tag) { return '<div class="opt"><div class="grow"><b>' + title + '</b><small>' + sub + '</small></div>' + (tag || '') + '<button class="toggle' + (on ? ' on' : '') + '" data-flip aria-label="' + E(title) + '"></button></div>'; };
+  panel.create =
+    '<div class="grid g-21"><div class="card"><div class="card-h"><div><h3>New event</h3><small>Everything an event needs, on one screen</small></div><div class="r">' + cap('One-screen editor (this mockup)') + MC.dev('e_create') + '</div></div><div class="card-b form">' +
+      '<div class="cover-drop">' + MC.icon('image-plus') + '<b>Cover image</b><small>1600 x 900, shown on the event page, the archive and social shares</small></div>' +
+      '<div class="field"><label>Event name</label><input value="Selling to government: tenders without the guesswork"></div>' +
+      '<div class="choice" id="fmt"><button type="button" class="on" data-f="on"><b>' + MC.icon('video') + 'Online</b><small>Zoom or YouTube link, shown only to registered guests</small></button><button type="button" data-f="in"><b>' + MC.icon('map-pin') + 'In person</b><small>Venue, map and door check-in</small></button></div>' +
+      '<div class="row3"><div class="field"><label>Date</label><input value="Thu 27 Nov 2026"></div><div class="field"><label>Starts (SAST)</label><input value="18:30"></div><div class="field"><label>Ends (SAST)</label><input value="19:30"></div></div>' +
+      '<div class="field" id="where"><label>Joining link (private)</label><input value="https://zoom.us/j/&hellip;"></div>' +
+      '<div class="field"><label>About this event</label><textarea>What government buyers look for, where tenders are published, and how to price your first bid.</textarea></div>' +
+      '<div class="row2"><div class="field"><label>Hosts and speakers</label><select><option>Tshepho Joel + 1 speaker profile</option></select></div><div class="field"><label>Category</label><select><option>Webinar</option><option>Summit</option><option>Networking</option></select></div></div>' +
+      '<div class="sec-h" style="margin:8px 0 0">Registration ' + cap('Capacity and waitlist') + '</div>' +
+      '<div class="row2"><div class="field"><label>Capacity</label><input value="300"></div><div class="field"><label>Who can register</label><select><option>Members (visitors join first)</option><option>Anyone</option></select></div></div>' +
+      opt('Waitlist when full', 'Moves the next person in automatically when someone cancels', true) +
+      opt('Approve each guest', 'For closed rooms such as investor breakfasts', false, cap('Approve each guest')) +
+      opt('SMS reminders (with consent tick)', 'Guests choose on the form; the tick is required by POPIA', true, cap('SMS reminders with a consent tick')) +
+      '<div class="sec-h" style="margin:8px 0 0">Tickets ' + cap('Free tickets') + ' ' + cap('Paid tickets') + '</div>' +
+      '<div class="choice"><button type="button" class="on"><b>' + MC.icon('gift') + 'Free</b><small>Members register in one click</small></button><button type="button"><b>' + MC.icon('credit-card') + 'Paid</b><small>Price in rand, VAT included. Checkout through WooCommerce and Stripe</small></button></div>' +
+      '<div class="sec-h" style="margin:8px 0 0">Questions on the form ' + cap('Questions on the form') + '</div>' +
+      ['Business name (from the profile)', 'Which industry are you in? (from the profile)', 'What do you most want answered?'].map(function (q, i) { return '<div class="q">' + MC.icon(i < 2 ? 'link-2' : 'help-circle') + '<span class="grow">' + q + '</span>' + (i < 2 ? MC.chip('Prefilled', 'green') : MC.chip('Optional', '')) + '</div>'; }).join('') +
+      '<button class="btn sm" data-act="Question added" data-ico="plus" style="justify-self:start">' + MC.icon('plus') + 'Add a question</button>' +
+      '<div style="display:flex;gap:8px;justify-content:flex-end;margin-top:6px"><button class="btn" data-act="Saved as draft" data-ico="save">' + MC.icon('save') + 'Save draft</button><button class="btn pri" data-act="Published: page, archive and calendar updated" data-ico="rocket">' + MC.icon('rocket') + 'Publish</button></div>' +
+    '</div></div>' +
+    '<div style="display:grid;gap:16px;align-content:start">' +
+      MC.card({ title: 'Automatic messages', sub: 'Set once in Settings, applied to every event' }, '<div class="sched">' +
+        '<div class="s"><b>On registering</b><small>Confirmation email with the calendar file and the private link</small></div>' +
+        '<div class="s"><b>Day before, 10:00</b><small>Email reminder inside 08:00 to 17:00 SAST (Friday for weekend events)</small></div>' +
+        '<div class="s red"><b>1 hour before</b><small>Time-sensitive: may send after 17:00 for evening events</small></div>' +
+        '<div class="s"><b>Next working morning</b><small>Replay link (members) and a two-question feedback survey</small></div>' +
+        '<div class="s grey"><b>WhatsApp</b><small>Off until the Meta verification is done</small></div></div>') +
+      MC.card({ title: 'Page preview', sub: 'What guests will see' }, '<div class="ev-card"><div class="ev-cover"><span class="when">Thu 27 Nov &middot; 18:30 SAST</span><h4>Selling to government: tenders without the guesswork</h4></div><div class="bd"><div class="meta"><span>' + MC.icon('video') + ' Online &middot; Free</span><span>300 seats</span></div><button class="btn pri sm" style="justify-self:start">Register</button></div></div>') +
+    '</div></div>';
+
+  /* ---------- Guests ---------- */
+  var gRow = function (g) { return { title: E(g.n), sub: g.biz, html: '<div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px">' + MC.chip(g.s, GT[g.s], true) + MC.chip(g.how, 'navy') + '</div><dl class="kv"><dt>Registered</dt><dd>' + g.when + '</dd><dt>Came from</dt><dd>' + g.src + '</dd><dt>Wants answered</dt><dd>' + E(g.q || 'No answer') + '</dd><dt>SMS reminders</dt><dd>' + g.sms + '</dd>' + (g.ci ? '<dt>Checked in</dt><dd>' + g.ci + '</dd>' : '') + '</dl><div class="sec-h" style="margin-top:22px">Actions</div><div style="display:flex;gap:8px;flex-wrap:wrap">' + (g.s === 'Pending approval' ? '<button class="btn sm ok" data-act="Approved: confirmation email sent" data-ico="check">' + MC.icon('check') + 'Approve</button><button class="btn sm" data-act="Declined with a polite note" data-ico="x">' + MC.icon('x') + 'Decline</button>' : '') + (g.s === 'Waitlist' ? '<button class="btn sm ok" data-act="Moved in: confirmation email sent" data-ico="arrow-up">' + MC.icon('arrow-up') + 'Move in</button>' : '') + '<button class="btn sm" data-act="Checked in" data-ico="scan-line">' + MC.icon('scan-line') + 'Check in</button><button class="btn sm" data-act="Opens the member profile" data-ico="user">' + MC.icon('user') + 'Profile</button></div>' }; };
+  panel.guests =
+    '<div class="grid g5" style="margin-bottom:16px">' + [['Going', 5, 'green', 'check-circle-2'], ['Waitlist', 1, 'amber', 'clock'], ['Pending approval', 1, 'blue', 'user-check'], ['Checked in', 2, 'navy', 'scan-line'], ['Declined', 1, 'muted', 'x-circle']].map(function (x) { return MC.kpi({ label: x[0], icon: x[3], value: String(x[1]), tone: x[2] }); }).join('') + '</div>' +
+    '<div class="card flush"><div class="card-h"><div><h3>SME Connect: Johannesburg networking breakfast</h3><small>Thu 13 Nov 2026 &middot; 80 seats, full, 17 on the waitlist</small></div><div class="r">' + cap('Guest list and CSV export') + MC.dev('e_guests') + '</div></div>' + MC.table({ placeholder: 'Search guests', perPage: 6, rows: guests, onRow: gRow,
+      filters: [{ k: 's', label: 'All statuses', opts: ['Going', 'Waitlist', 'Pending approval', 'Checked in', 'Declined'] }, { k: 'src', label: 'All sources', opts: ['Newsletter', 'Community', 'Event page', 'Google', 'LinkedIn', 'Facebook', 'WhatsApp share'] }],
+      right: '<button class="btn sm" data-act="CSV downloaded (name, business, status, answers, source)" data-ico="download">' + MC.icon('download') + 'Export CSV</button>',
+      cols: [{ k: 'n', label: 'Guest', render: function (r) { return MC.person(r.n, r.biz); } }, { k: 's', label: 'Status', render: function (r) { return MC.chip(r.s, GT[r.s], true); } }, { k: 'how', label: 'Type' }, { k: 'src', label: 'Came from' }, { k: 'when', label: 'Registered' }] }) + '</div>';
+
+  /* ---------- Check-in ---------- */
+  panel.checkin =
+    '<div class="grid g-12"><div class="card"><div class="card-h"><div><h3>Door check-in</h3><small>Runs on any phone, no app needed</small></div><div class="r">' + cap('Check-in by name') + ' ' + cap('QR code check-in') + MC.dev('e_checkin') + '</div></div><div class="card-b"><div class="scan"><b style="font:800 15px \'Plus Jakarta Sans\'">Johannesburg breakfast &middot; 2 of 80 in</b><div class="vf">' + MC.icon('qr-code') + '</div><div class="ok"><b>' + MC.icon('check-circle-2') + ' Lindiwe Cele, Cele Couriers</b><br><small style="opacity:.75">Checked in 07:52 &middot; Member</small></div><label class="search" style="background:#fff">' + MC.icon('search') + '<input placeholder="No phone? Search by name"></label></div></div></div>' +
+    MC.card({ title: 'How it works' }, '<div class="tl"><div><b>Confirmation email</b><small>Every guest gets a QR code with a signed ticket number</small></div><div><b>Scan at the door</b><small>The camera reads it and marks the guest as checked in</small></div><div><b>Walk-ins</b><small>Search by name or add a walk-in; capacity updates live</small></div><div><b>After the event</b><small>Show-up rate goes to Insights; no-shows get the replay or the photos</small></div></div>') + '</div>';
+
+  /* ---------- Messages ---------- */
+  var chan = function (name, sub, on, tag) { return '<div class="opt"><div class="grow"><b>' + name + '</b><small>' + sub + '</small></div>' + tag + '<button class="toggle' + (on ? ' on' : '') + '" data-flip aria-label="' + E(name) + '"></button></div>'; };
+  panel.messages =
+    '<div class="grid g-21"><div style="display:grid;gap:16px;align-content:start">' +
+      MC.card({ title: 'Automatic schedule', sub: 'Applies to every event unless you change it on the event', dev: 'e_msgs' }, '<div class="sched">' +
+        '<div class="s"><span class="r">' + MC.chip('Email + in-app', 'green') + '</span><b>Confirmation ' + cap('Confirmation email with calendar file') + '</b><small>Straight away, with the calendar file (.ics) and the private joining link. Receipts for paid tickets go out straight away too.</small></div>' +
+        '<div class="s"><span class="r">' + MC.chip('Email + SMS', 'blue') + '</span><b>Day-before reminder ' + cap('Day-before reminder, inside 08:00 to 17:00') + '</b><small>10:00 SAST on the working day before. Weekend events are reminded on Friday. Never outside Mon to Fri, 08:00 to 17:00.</small></div>' +
+        '<div class="s red"><span class="r">' + MC.chip('Time-sensitive', 'red') + '</span><b>1-hour reminder ' + cap('1-hour reminder (time-sensitive)') + '</b><small>One hour before the start, even after 17:00 for evening events (your decision, 22 Oct). Email, in-app and SMS for guests who ticked SMS.</small></div>' +
+        '<div class="s"><span class="r">' + MC.chip('Members only', 'violet') + '</span><b>Replay and thank you ' + cap('"Replay is ready" email') + '</b><small>Next working morning at 09:00: replay link for members, a join link for visitors.</small></div>' +
+        '<div class="s"><span class="r">' + MC.chip('2 questions', '') + '</span><b>Feedback survey ' + cap('Feedback survey') + '</b><small>With the replay email: score out of 10 and "what should we cover next?"</small></div></div>') +
+      MC.card({ title: 'Message guests', sub: 'One-off note, for example a speaker change or a venue update', right: cap('Message guests') }, '<div class="form"><div class="row2"><div class="field"><label>To</label><select><option>Going (214)</option><option>Waitlist</option><option>Checked in</option><option>Did not show up</option></select></div><div class="field"><label>Send</label><select><option>Next slot inside the window (Thu 08:00)</option><option>Now (only if it is time-sensitive)</option></select></div></div><div class="field"><label>Message</label><textarea>Our speaker for Thursday has changed: Thandi Mokoena from the National Treasury eTender team joins us.</textarea></div><div style="display:flex;justify-content:flex-end"><button class="btn pri" data-act="Scheduled for 08:00 Thursday" data-ico="send">' + MC.icon('send') + 'Schedule</button></div></div>') +
+    '</div>' +
+    MC.card({ title: 'Channels' }, '<div style="display:grid;gap:10px">' +
+      chan('Email', 'Through the site mail route and the send window', true, '') +
+      chan('In-app notification', 'Bell and inbox inside the community', true, '') +
+      chan('SMS', 'Only for guests who ticked the SMS box', true, st('ready')) +
+      chan('WhatsApp', 'Needs a number and Meta Business verification (you are starting it)', false, MC.chip('Waiting for Meta', 'amber', true)) +
+      MC.callout('amber', 'shield', 'Comms Governor applies', 'Event messages count towards each member\'s weekly ceiling, except the confirmation and the 1-hour reminder.') +
+    '</div>') + '</div>';
+
+  /* ---------- Replays ---------- */
+  var past = events.filter(function (e) { return e.st === 'Past'; });
+  panel.replays =
+    '<div class="card flush"><div class="card-h"><div><h3>Past events and replays</h3><small>Shown in the /events/ archive and in Account &gt; Events "Past and replays". Members watch, visitors are asked to join.</small></div><div class="r">' + cap('Members-only replays') + MC.dev('e_replays') + '</div></div>' + MC.table({ search: false, perPage: 6, rows: past.concat([{ id: 7, t: 'Unlocking funding through digital transformation', d: 'Thu 27 Feb 2025', day: '27', mon: 'Feb', time: '11:00 to 12:00 SAST', f: 'Online', reg: 176, cap: 300, att: 35, st: 'Past', tk: 'Free' }]),
+      cols: [{ k: 't', label: 'Event', render: function (r) { return '<div class="ev-row"><div class="ev-date"><small>' + r.mon + '</small><b>' + r.day + '</b></div><div><b>' + E(r.t) + '</b><br><small style="color:var(--muted)">' + E(r.d) + '</small></div></div>'; } },
+        { k: 'rp', label: 'Replay', sort: false, render: function (r) { return r.id === 7 ? MC.chip('No recording', '') : MC.chip('YouTube, members only', 'violet', true); } },
+        { k: 'att', label: 'Showed up', cls: 'num', render: function (r) { return r.att + '%'; } },
+        { k: 'x', label: '', sort: false, cls: 'r', render: function (r) { return '<button class="btn sm" data-act="' + (r.id === 7 ? 'Replay link saved' : 'Replay link updated') + '" data-ico="play-circle">' + MC.icon('play-circle') + (r.id === 7 ? 'Add replay' : 'Change') + '</button>'; } }] }) + '</div>';
+
+  /* ---------- Insights ---------- */
+  panel.insights =
+    '<div class="grid g-21" style="margin-bottom:16px">' + MC.card({ title: 'Registrations per webinar', sub: 'Last 8 webinars', dev: 'e_insights', right: cap('Insights for each event') }, MC.bars([142, 176, 160, 198, 233, 205, 214, 168], ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jul', 'Sep', 'Oct'], 4)) +
+      MC.card({ title: 'Where guests come from' }, '<div style="display:flex;justify-content:center">' + MC.donut([{ v: 46, c: '#DC183C' }, { v: 24, c: '#0C1F31' }, { v: 14, c: '#29A37A' }, { v: 9, c: '#2F6FED' }, { v: 7, c: '#B3BCC5' }], 170, '214', 'GUESTS') + '</div><div class="legend" style="justify-content:center;margin-top:10px"><span><i style="background:#DC183C"></i>Newsletter</span><span><i style="background:#0C1F31"></i>Community</span><span><i style="background:#29A37A"></i>Search</span><span><i style="background:#2F6FED"></i>Social</span><span><i style="background:#B3BCC5"></i>Other</span></div>') + '</div>' +
+    '<div class="grid g3">' + MC.card({ title: 'Registration to attendance' }, MC.funnel([{ l: 'Viewed the event page', v: 1840 }, { l: 'Registered', v: 214, c: '#1a3350' }, { l: 'Opened the 1-hour reminder', v: 96, c: '#2F6FED' }, { l: 'Joined live', v: 39, c: '#29A37A' }, { l: 'Watched the replay', v: 61, c: '#7A5AF8' }])) +
+      MC.card({ title: 'Feedback', sub: 'Last webinar, 2-question survey' }, '<div style="display:grid;gap:12px"><div style="display:flex;align-items:baseline;gap:8px"><b style="font:800 34px \'Plus Jakarta Sans\'">8.6</b><small style="color:var(--muted)">average score out of 10, 27 answers</small></div><div class="q"><span class="grow">"More on tenders and municipal payments"</span></div><div class="q"><span class="grow">"Send the slides with the replay"</span></div></div>') +
+      MC.card({ title: 'Members gained' }, '<div style="display:grid;gap:10px"><div style="display:flex;align-items:baseline;gap:8px"><b style="font:800 34px \'Plus Jakarta Sans\'">57</b><small style="color:var(--muted)">visitors joined to register, last 30 days</small></div><small style="color:var(--muted);line-height:1.6">Registration asks visitors to join first, so every webinar grows the community. Tracked in GA4 as <code>event_register</code> with the join step.</small></div>') + '</div>';
+
+  /* ---------- Settings ---------- */
+  panel.settings =
+    '<div class="grid g2"><div class="card"><div class="card-h"><div><h3>Defaults for new events</h3><small>Change once, used every time</small></div><div class="r">' + MC.dev('e_settings') + '</div></div><div class="card-b form">' +
+      '<div class="row2"><div class="field"><label>Time zone</label><input value="South Africa (SAST, UTC+2)"></div><div class="field"><label>Default capacity</label><input value="300"></div></div>' +
+      '<div class="row2"><div class="field"><label>Default start</label><input value="11:00"></div><div class="field"><label>Default length</label><select><option>1 hour</option><option>90 minutes</option><option>2 hours</option></select></div></div>' +
+      '<div class="field"><label>Sender name</label><input value="SME South Africa Events"></div>' +
+      opt('Members only by default', 'Visitors join the community to register', true) + opt('Waitlist on by default', 'When an event fills up', true) + opt('Show the guest count on the page', 'Hidden for now (your rule: no numbers in public)', false) +
+    '</div></div>' +
+    MC.card({ title: 'Connected services' }, '<div style="display:grid;gap:10px">' + [['Zoom', 'Joining links and attendance import', 'Connect later', 'amber'], ['YouTube', 'Replays (unlisted), members-only player', 'Connected', 'green'], ['Google Calendar (.ics)', 'Calendar file in every confirmation', 'Built in', 'green'], ['Dripcel SMS', 'SMS reminders for guests who tick the box', 'Connected', 'green'], ['WhatsApp (Meta Cloud API)', 'Waiting for your Meta Business verification', 'Not connected', 'amber'], ['Luma', 'One-off CSV import of past guests', 'Import only', 'navy']].map(function (s) { return '<div class="opt"><div class="grow"><b>' + s[0] + '</b><small>' + s[1] + '</small></div>' + MC.chip(s[2], s[3], true) + '</div>'; }).join('') + '</div>') + '</div>';
+
+  /* ---------- Next to build: the five back-end parts, in build order. Each mockup needs Joel's yes before it is built (22 Oct). ---------- */
+  var stepH = function (n, title, sub, capName) { return '<div class="nb-h"><span class="nb-n">' + n + '</span><div class="grow"><h2>' + title + '</h2><small>' + sub + '</small></div>' + cap(capName) + '</div>'; };
+  var spec = function (rows) { return '<dl class="kv">' + rows.map(function (r) { return '<dt>' + r[0] + '</dt><dd>' + r[1] + '</dd>'; }).join('') + '</dl>'; };
+  var rules = function (list) { return '<ul class="nb-rules">' + list.map(function (x) { return '<li>' + MC.icon('check') + '<span>' + x + '</span></li>'; }).join('') + '</ul>'; };
+  var ask = function (q, rec) { return MC.callout('red', 'help-circle', 'Your call', q + (rec ? '<br><b>We suggest:</b> ' + rec : '')); };
+  var phone = function (title, body) { return '<div class="nb-phone"><div class="nb-bar">' + title + '</div><div class="nb-scr">' + body + '</div></div>'; };
+  var tick = function (t, on) { return '<div class="tick"><i' + (on ? ' class="on"' : '') + '></i><span>' + t + '</span></div>'; };
+  var mail = function (subj, body, why) { return '<div class="nb-mail"><div class="nb-mtop"></div><div class="nb-mlogo">SME South Africa</div><div class="nb-mbody"><small class="nb-subj">Subject: ' + subj + '</small>' + body + '</div><div class="nb-mfoot">SME South Africa &middot; Events &middot; Building 2, 1st Floor, Clearwater Office Park, Strubens Valley, Roodepoort<br>' + why + '</div></div>'; };
+
+  panel.next =
+    MC.callout('blue', 'hammer', 'What is left for the events back end', 'Five parts, shown below in the order we would build them. <b>Nothing here is built yet.</b> Each one starts only after you say yes to its mockup, is built and tested on the test copy once A is live, and then comes to you for "deploy" on its own.') +
+    '<div style="height:16px"></div>' +
+
+    /* 1. One-screen editor */
+    '<section class="nb-step">' + stepH(1, 'One-screen event editor', 'Create or change an event on one screen, without Elementor or the JetEngine boxes. The full screen is the <b>Create event</b> tab.', 'One-screen editor (this mockup)') +
+      '<div class="nb-cols"><div>' + spec([
+        ['Where', 'WordPress admin &gt; Events &gt; Add event (and Edit). Mission Control\'s Create event opens it.'],
+        ['On the event page', 'Name, about text, cover image, date and times (typed in SAST, kept as UTC), online or in person, venue.'],
+        ['In the engine', 'Registration on or off, capacity, waitlist, approval, ticket price, questions, private joining link, discussion link.'],
+        ['People', 'Host (the Hosted by box) and speakers (their profiles and talks).'],
+        ['Templates', 'The event page designs stay as they are; publishing no longer needs Elementor.']
+      ]) + '</div><div>' + MC.card({ title: 'The screen, top to bottom' }, '<div class="tl">' +
+        '<div><b>1. Basics</b><small>Name, cover image, about text, category</small></div>' +
+        '<div><b>2. When and where</b><small>Date, start and end in SAST, online link or venue</small></div>' +
+        '<div><b>3. Registration</b><small>Who can register, capacity, waitlist, approval, SMS tick</small></div>' +
+        '<div><b>4. Tickets</b><small>No cost, or a price in rand through WooCommerce and Stripe</small></div>' +
+        '<div><b>5. Questions</b><small>Up to five, see step 2 below</small></div>' +
+        '<div><b>6. Publish</b><small>Page, archive, calendar file and member notice in one go</small></div></div>') + '</div></div>' +
+      rules(['One Save keeps the event page, the engine settings and the calendar in step.', 'The publish date never changes when an event is edited.', 'Agents never edit the editorial team\'s events with it; it is your and your editors\' tool.']) +
+      ask('Where should the editor live?', 'in WordPress admin, where the editorial team already works, with Mission Control linking to it.') +
+    '</section>' +
+
+    /* 2. Questions and approval */
+    '<section class="nb-step">' + stepH(2, 'Registration questions and guest approval', 'Ask guests a few questions, and approve each guest for closed rooms such as investor breakfasts.', 'Questions on the form') +
+      '<div class="nb-cols"><div style="display:grid;gap:12px;align-content:start">' +
+        MC.card({ title: 'Questions for this event', sub: 'Up to five. No sponsor questions (your rule, 16 Oct).', right: cap('Approve each guest') },
+          '<div style="display:grid;gap:8px">' +
+          [['Business name', 'Prefilled from the profile', 'green'], ['Which industry are you in?', 'One choice, prefilled', 'green'], ['What do you most want answered?', 'Short answer, optional', ''], ['Have you applied for funding before?', 'Yes or no, required', 'violet']].map(function (q) { return '<div class="q">' + MC.icon('grip-vertical') + '<span class="grow">' + q[0] + '</span>' + MC.chip(q[1], q[2]) + '</div>'; }).join('') +
+          '<div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn sm" data-act="Short answer added" data-ico="plus">' + MC.icon('plus') + 'Short answer</button><button class="btn sm" data-act="One-choice question added" data-ico="plus">' + MC.icon('plus') + 'One choice</button><button class="btn sm" data-act="Yes or no question added" data-ico="plus">' + MC.icon('plus') + 'Yes or no</button></div></div>') +
+        MC.card({ title: 'How approval works' }, '<div class="tl">' +
+          '<div><b>Guest asks for a place</b><small>Status "Pending approval". It does not take a seat yet.</small></div>' +
+          '<div><b>You decide in Guests</b><small>One by one, or approve everyone you have ticked.</small></div>' +
+          '<div><b>Approved</b><small>Confirmation with the calendar file and joining details, sent straight away.</small></div>' +
+          '<div><b>Declined</b><small>A polite note, sent straight away. Nothing is said about numbers.</small></div>' +
+          '<div><b>Still waiting a day before</b><small>A reminder to you. Nobody is declined automatically.</small></div></div>') +
+      '</div><div class="nb-phones">' +
+        phone('Guest form, phone', '<h5>SME Connect: Johannesburg networking breakfast</h5><small style="color:var(--muted)">Thu 13 Nov &middot; 07:30 SAST &middot; In person</small>' +
+          '<div class="in">Your name</div><div class="in">Email address</div><div class="in">Business name</div>' +
+          '<div class="in ta">What do you most want answered?</div>' +
+          '<div><small style="font-weight:700">Have you applied for funding before?</small><div style="display:flex;gap:6px;margin-top:6px"><span class="nb-pill on">Yes</span><span class="nb-pill">No</span></div></div>' +
+          tick('Email me about future SME events', true) + tick('SMS reminders (add a mobile number)', false) +
+          '<div class="nb-btn">Ask for a place</div>') +
+        phone('After sending', '<div style="display:grid;place-items:center;gap:8px;text-align:center;padding:20px 0">' + MC.icon('mail-check') + '<h5>Request sent</h5><small style="color:var(--muted);line-height:1.5">We will email you once the host has looked at it. Places at this breakfast are approved one by one.</small></div><div class="nb-btn ghost">Back to the event</div>') +
+      '</div></div>' +
+      '<div class="nb-cols" style="margin-top:14px">' +
+        mail('You have a place: SME Connect breakfast', '<b>Good news, Nomsa.</b><span>Your place at the Johannesburg networking breakfast on Thu 13 Nov at 07:30 is confirmed.</span><span class="nb-mbtn">Add to calendar</span><small style="color:var(--muted)">Your ticket and the venue are in Account &gt; Events.</small>', 'You are getting this because you asked for a place at this event.') +
+        mail('About your request: SME Connect breakfast', '<b>Thank you for asking, Fatima.</b><span>We could not offer you a place at this breakfast. We will let you know about the next one in your area.</span><span class="nb-mbtn">See upcoming events</span>', 'You are getting this because you asked for a place at this event.') +
+      '</div>' +
+      spec([
+        ['Saves', 'The questions with the event\'s engine settings; each guest\'s answers with their registration (the engine already keeps an answers field).'],
+        ['New statuses', 'Pending approval and Declined, next to Registered, Waitlist and Cancelled.'],
+        ['Exports', 'Answers come out in the guest CSV, one column per question.']
+      ]) +
+      ask('With approval on, should members be approved automatically and only visitors wait?', 'one switch per event: on for webinars, off for closed rooms.') +
+    '</section>' +
+
+    /* 3. QR check-in */
+    '<section class="nb-step">' + stepH(3, 'QR code check-in at the door', 'Every confirmation carries a ticket with a QR code. The door scans it with any phone camera. Check-in by name stays for people without a phone.', 'QR code check-in') +
+      '<div class="nb-cols"><div class="nb-phones">' +
+        phone('Guest: your ticket', '<h5>SME Connect breakfast</h5><small style="color:var(--muted)">Thu 13 Nov &middot; 07:30 &middot; The Wanderers Club</small><div class="nb-qr">' + MC.icon('qr-code') + '</div><div style="text-align:center"><b>Nomsa Radebe</b><br><small style="color:var(--muted)">Show this at the door</small></div><div class="nb-btn ghost">Add to calendar</div>') +
+        phone('Door: scanning', '<div class="scan" style="max-width:none;padding:12px"><div class="vf" style="height:130px">' + MC.icon('qr-code') + '</div><div class="ok"><b>' + MC.icon('check-circle-2') + ' Nomsa Radebe</b><br><small style="opacity:.75">Checked in 07:41</small></div><div class="nb-warn amber">' + MC.icon('alert-triangle') + ' Already checked in at 07:41</div><div class="nb-warn red">' + MC.icon('x-circle') + ' This ticket is for another event</div></div>') +
+      '</div><div>' + spec([
+        ['The code', 'A signed ticket number only: no name, email or phone number in it.'],
+        ['Where they find it', 'In the confirmation email and in Account &gt; Events.'],
+        ['The door page', 'A page for signed-in staff on any phone; no app to install.'],
+        ['No signal', 'Scans are kept on the phone and sent when it is back online.'],
+        ['Walk-ins', 'Name, email and the consent ticks; they count against capacity.'],
+        ['Saves', 'Status Attended and the check-in time (one new column in the engine).'],
+        ['Online events', 'Attendance comes from the Zoom report (part C), not from QR.']
+      ]) + '</div></div>' +
+      ask('Who may run the door?', 'admins and editors, plus a door role you can give a volunteer for one event only.') +
+    '</section>' +
+
+    /* 4. Replay email and feedback survey */
+    '<section class="nb-step">' + stepH(4, '"Replay is ready" email and a two-question survey', 'When you add the replay link, the guests hear about it the next working morning, with a one-tap score in the same email.', '"Replay is ready" email') +
+      '<div class="nb-cols">' +
+        mail('Watch the replay: Funding readiness', '<b>Thanks for joining us, Pieter.</b><span>The replay of "Funding readiness: what lenders check first" is ready for members.</span><span class="nb-mbtn">Watch the replay</span><span style="font-weight:700;margin-top:6px">How was it? Tap a score</span><div class="nb-score">' + [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(function (n) { return '<span>' + n + '</span>'; }).join('') + '</div>', 'You are getting this because you registered for this event. Unsubscribe from event emails.') +
+        '<div class="nb-phones">' + phone('After tapping 9', '<h5>Thank you</h5><small style="color:var(--muted)">One more question, if you have a moment.</small><div class="in ta">What should we cover next?</div><div class="nb-btn">Send</div><small style="color:var(--muted);text-align:center">Your answer goes to the events team only.</small>') + '</div>' +
+      '</div>' +
+      '<div class="nb-cols" style="margin-top:14px"><div>' + MC.card({ title: 'Three versions of the email' }, '<div class="tl">' +
+          '<div><b>Came to the event</b><small>"Thanks for joining us", the replay and the survey</small></div>' +
+          '<div><b>Registered, did not come</b><small>"Sorry we missed you", the replay and the survey</small></div>' +
+          '<div><b>Guest without an account</b><small>Replays are for members: "Join SME South Africa to watch", no survey</small></div></div>') + '</div><div>' +
+        spec([
+          ['When', 'The next working morning at 09:00 SAST after you add the replay, never outside Mon to Fri 08:00 to 17:00.'],
+          ['Survey', 'A score out of 10 (one tap in the email) and "What should we cover next?". Results only in Insights, never on the site.'],
+          ['Limits', 'Counts towards the Comms Governor weekly ceiling. One replay email per event per guest.']
+        ]) + '</div></div>' +
+      ask('Who gets the replay email: every guest of the event, or only guests who ticked "Email me about future SME events"?', 'every guest gets this one email about the event they registered for; anything after it needs the tick (part C already works this way for follow-ups).') +
+    '</section>' +
+
+    /* 5. Luma import */
+    '<section class="nb-step">' + stepH(5, 'Import guests from Luma (CSV)', 'Bring past Luma guests and followers into the engine once, so their history and consent sit with SME South Africa.', 'Import guests from Luma (CSV)') +
+      '<div class="nb-steps"><span>1. What you import</span><span>2. Upload the CSV</span><span class="on">3. Match the columns</span><span>4. Check</span><span>5. Import</span></div>' +
+      '<div class="nb-cols"><div>' + MC.card({ title: 'Match the columns', sub: 'Luma\'s export on the left, our field on the right. Recognised columns are matched for you.' }, '<div style="display:grid;gap:8px">' +
+          [['name', 'Name'], ['email', 'Email'], ['approval_status', 'Status (approved = Registered)'], ['checked_in_at', 'Attended, with the time'], ['created_at', 'Registered on'], ['Q: What do you want answered?', 'Answer to the same question']].map(function (m) { return '<div class="nb-map"><span class="a">' + m[0] + '</span>' + MC.icon('arrow-right') + '<span class="b">' + m[1] + '</span></div>'; }).join('') + '</div>') +
+        '</div><div>' + MC.card({ title: 'Check before importing', sub: 'Funding readiness, 23 Apr 2026' }, '<div style="display:grid;gap:10px">' +
+          '<div class="opt"><div class="grow"><b>New guests</b><small>Added as guests of this event</small></div>' + MC.chip('Ready', 'green', true) + '</div>' +
+          '<div class="opt"><div class="grow"><b>Already members</b><small>Linked to their account by email</small></div>' + MC.chip('Linked', 'blue', true) + '</div>' +
+          '<div class="opt"><div class="grow"><b>Skipped</b><small>A broken email address or a duplicate row</small></div>' + MC.chip('See list', 'amber', true) + '</div>' +
+          '<div style="display:flex;gap:8px;justify-content:flex-end"><button class="btn" data-act="Back to the columns" data-ico="arrow-left">' + MC.icon('arrow-left') + 'Back</button><button class="btn pri" data-act="Imported. No emails were sent. You can undo this import." data-ico="upload">' + MC.icon('upload') + 'Import</button></div></div>') + '</div></div>' +
+      rules(['Nothing is sent to anyone on import: no confirmation, no reminder, no SMS.', 'Followers of SME Events on Luma count as agreeing to event emails (your decision); guests of one event only do not.', 'The CSV file is deleted after the import; each import can be undone in one step.', 'Imported guests are marked "From Luma" in the guest list and the exports.']) +
+      MC.callout('amber', 'file-up', 'From you when we get here', 'The Luma CSV exports: Event &gt; Guests &gt; Export for each past event, and the followers list from the calendar page.') +
+    '</section>';
+
+  /* ---------- Build status (the map) ---------- */
+  var caps = window.EV_CAPS || [];
+  panel.status =
+    '<div class="legend-st">' + ['live', 'ready', 'copy', 'test', 'build', 'decide', 'later'].map(st).join('') + '</div>' +
+    '<div class="mapbar" style="margin-bottom:16px">' + (window.EV_WS || []).map(function (w) { return '<div class="ws"><b>' + w.n + '</b><small>' + w.d + '</small>' + st(w.s) + '</div>'; }).join('') + '</div>' +
+    MC.card({ title: 'The order to ship', sub: 'Each step is tested on the copy and brought to you for "deploy"' }, '<div class="tl">' + (window.EV_NEXT || []).map(function (x, i) { return '<div><b>' + (i + 1) + '. ' + x[0] + '</b><small>' + x[1] + '</small></div>'; }).join('') + '</div>') + '<div style="height:16px"></div>' +
+    '<div class="grid g2">' + (window.EV_GROUPS || []).map(function (g) { return MC.card({ title: g.h, sub: g.sub }, caps.filter(function (c) { return c.g === g.k; }).map(function (c) { return '<div class="cap"><b>' + c.n + '</b>' + st(c.s) + '<small>' + c.w + '</small></div>'; }).join('')); }).join('') + '</div>';
+
+  var tabs = [
+    { k: 'overview', label: 'Overview', icon: 'layout-dashboard' }, { k: 'events', label: 'Events', icon: 'calendar-days' }, { k: 'create', label: 'Create event', icon: 'calendar-plus' }, { k: 'guests', label: 'Guests', icon: 'users', n: 1 }, { k: 'checkin', label: 'Check-in', icon: 'scan-line' },
+    { k: 'messages', label: 'Reminders & messages', icon: 'send' }, { k: 'replays', label: 'Replays', icon: 'play-circle' }, { k: 'insights', label: 'Insights', icon: 'bar-chart-3' }, { k: 'settings', label: 'Settings', icon: 'settings' }, { k: 'next', label: 'Next to build', icon: 'hammer' }, { k: 'status', label: 'Build status', icon: 'map' }
+  ];
+  var devKey = { overview: 'e_where', events: 'e_list', create: 'e_create', guests: 'e_guests', checkin: 'e_checkin', messages: 'e_msgs', replays: 'e_replays', insights: 'e_insights', settings: 'e_settings', next: 'e_next', status: 'e_where' };
+
+  var html =
+    '<section class="hero"><div class="hero-in"><div><span class="eyebrow"><i></i> Events workspace &middot; mockup, illustrative data</span><h1>Run every event from one place</h1><p>Create the event, fill it, remind people, check them in and share the replay: the Luma features you asked for, inside SME South Africa and tied to the community.</p></div>' +
+    '<div class="hero-stats"><div class="hs"><b>4</b><small>Upcoming</small></div><div class="hs g"><b>462</b><small>Registered</small></div><div class="hs a"><b>17</b><small>Waitlist</small></div><div class="hs r"><b>1</b><small>To approve</small></div></div></div></section>' +
+    MC.tabs('ws', tabs) + tabs.map(function (t) { return '<div class="panel" data-k="' + t.k + '"><div style="display:flex;justify-content:flex-end;margin:-6px 0 8px">' + MC.dev(devKey[t.k]) + '</div>' + panel[t.k] + '</div>'; }).join('');
+
+  MC.page({ active: 'events', crumbs: ['Workspaces', 'Events'], html: html, workspace: tabs, after: function () {
+    document.addEventListener('click', function (e) {
+      var c = e.target.closest('.choice button'); if (c) { c.parentNode.querySelectorAll('button').forEach(function (b) { b.classList.remove('on'); }); c.classList.add('on');
+        if (c.getAttribute('data-f')) { var w = document.getElementById('where'); w.innerHTML = c.getAttribute('data-f') === 'in' ? '<label>Venue</label><input value="The Wanderers Club, Illovo, Johannesburg">' : '<label>Joining link (private)</label><input value="https://zoom.us/j/&hellip;">'; } }
+    });
+  } });
+})();
+</script>
+</body>
+</html>

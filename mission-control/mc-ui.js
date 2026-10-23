@@ -10,6 +10,7 @@
     { h: 'Workspaces', items: [
       { k: 'funding', label: 'Funding', file: 'mc-funding.html', icon: 'banknote', n: 73, hot: 1 },
       { k: 'community', label: 'Community', file: 'mc-community.html', icon: 'users', n: 6 },
+      { k: 'events', label: 'Events', file: 'mc-events.html', icon: 'calendar-days', n: 1 },
       { k: 'solutions', label: 'Solutions', file: 'mc-solutions.html', icon: 'star' },
       { k: 'resources', label: 'Resources', file: 'mc-resources.html', icon: 'folder-open' },
       { k: 'tracking', label: 'Solutions tracking', file: 'mc-tracking.html', icon: 'radar' } ] },
@@ -20,6 +21,7 @@
   MC.WS_TABS = {
     funding: [['desk', 'Funding Desk'], ['ledger', 'Applications & Outcomes'], ['chase', 'Weekly Outcome Review'], ['declines', 'Declines'], ['frontdoor', 'Front Door'], ['lula', 'Lula Pre-Qual'], ['docreq', 'Request Docs'], ['share', 'Statement Share'], ['vault', 'Statement Vault'], ['affiliate', 'Affiliate Tracking'], ['nudge', 'Complete-app Nudge'], ['money', 'Commission'], ['recurring', 'Recurring Funding']],
     community: [['members', 'Member Report'], ['rescue', 'Connection Rescue'], ['lifecycle', 'Lifecycle Engine'], ['engagement', 'Member Engagement'], ['reply', 'Reply-Rate'], ['feedback', 'Feedback Hub'], ['funnel', 'Funnel Health'], ['stats', 'Community Stats'], ['nameguard', 'Name Guard'], ['promoguard', 'Promo Guard'], ['avatars', 'Avatar Review'], ['profilepush', 'Profile Campaign']],
+    events: [['overview', 'Overview'], ['events', 'Events'], ['create', 'Create event'], ['guests', 'Guests'], ['checkin', 'Check-in'], ['messages', 'Reminders & messages'], ['replays', 'Replays'], ['insights', 'Insights'], ['settings', 'Settings'], ['status', 'Build status']],
     solutions: [['health', 'Health'], ['brands', 'Brand catalogue'], ['roundups', 'Roundups'], ['earnings', 'Earnings'], ['deals', 'Tracked partners']],
     resources: [['library', 'Library'], ['leads', 'Leads'], ['revival', 'Revival engine']],
     tracking: [['ads', 'Ad Manager'], ['money', 'Money Links'], ['conversion', 'Conversion Tracking'], ['capi', 'Meta CAPI'], ['lula', 'Lula API'], ['gotyme', 'GoTyme Web-to-Lead'], ['dripcel', 'Dripcel SMS']]
