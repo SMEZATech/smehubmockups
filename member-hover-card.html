@@ -7,20 +7,20 @@
   <meta name="description" content="SME South Africa: the card that opens when you hover a member's name in the feed. Proposal for Joel, 22 Oct 2026." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/lucide@0.453.0/dist/umd/lucide.min.js"></script>
   <style>
-    body { font-family: Roboto, Arial, sans-serif; background: #F3F5F9; color: #121A21; }
-    .osw { font-family: Oswald, Arial, sans-serif; }
-    .card { width: 340px; background: #fff; border-radius: 18px; box-shadow: 0 18px 50px rgba(10,44,61,.16), 0 2px 6px rgba(10,44,61,.06); overflow: hidden; border: 1px solid #E6EAEF; }
-    .cover { height: 64px; background: radial-gradient(circle at 85% 0%, rgba(156,28,31,.22), transparent 55%), linear-gradient(120deg, #0A2C3D 0%, #123d52 100%); position: relative; }
+    body { font-family: Inter,system-ui,sans-serif; background: #F3F5F9; color: #121A21; }
+    .osw { font-family: 'Plus Jakarta Sans',sans-serif; }
+    .card { width: 340px; background: #fff; border-radius: 18px; box-shadow: 0 18px 50px rgba(12,31,49,.16), 0 2px 6px rgba(12,31,49,.06); overflow: hidden; border: 1px solid #E6EAEF; }
+    .cover { height: 64px; background: radial-gradient(circle at 85% 0%, rgba(220,24,60,.22), transparent 55%), linear-gradient(120deg, #0C1F31 0%, #123d52 100%); position: relative; }
     .cover::after { content: ""; position: absolute; inset: 0; background-image: radial-gradient(rgba(255,255,255,.08) 1px, transparent 1px); background-size: 12px 12px; }
     .av { width: 72px; height: 72px; border-radius: 999px; border: 4px solid #fff; margin-top: -40px; object-fit: cover; background: #F7E9E9; box-shadow: 0 4px 12px rgba(0,0,0,.08); position: relative; z-index: 1; }
     .chip { display: inline-flex; align-items: center; gap: 5px; font-size: 12px; color: #3B4754; background: #F3F5F9; border-radius: 999px; padding: 4px 10px; }
     .btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; height: 38px; border-radius: 999px; font-weight: 700; font-size: 14px; padding: 0 16px; }
-    .btn-red { background: #9C1C1F; color: #fff; } .btn-red:hover { background: #7f1619; }
-    .btn-line { border: 1.5px solid #CBD5E1; color: #0A2C3D; } .btn-line:hover { border-color: #0A2C3D; }
+    .btn-red { background: #DC183C; color: #fff; } .btn-red:hover { background: #7f1619; }
+    .btn-line { border: 1.5px solid #CBD5E1; color: #0C1F31; } .btn-line:hover { border-color: #0C1F31; }
     .tip { position: absolute; top: -7px; left: 36px; width: 14px; height: 14px; background: #fff; transform: rotate(45deg); border-left: 1px solid #E6EAEF; border-top: 1px solid #E6EAEF; }
     .mut img { width: 22px; height: 22px; border-radius: 999px; border: 2px solid #fff; margin-left: -6px; }
     .mut img:first-child { margin-left: 0; }
@@ -29,7 +29,7 @@
 <body class="min-h-screen">
   <div class="max-w-6xl mx-auto px-4 py-10">
     <p class="text-xs font-bold uppercase tracking-widest text-[#1a7f37]">Approved 22 Oct, live (without the Premium badge)</p>
-    <h1 class="osw text-3xl font-bold text-[#0A2C3D] mt-1">Member preview card</h1>
+    <h1 class="osw text-3xl font-bold text-[#0C1F31] mt-1">Member preview card</h1>
     <p class="text-slate-600 mt-2 max-w-3xl">Opens when you hover a member's name or photo in the feed (laptop). On a phone a tap goes straight to the profile, as today. It answers three questions at a glance: <strong>who is this, what do they do, and how am I connected to them</strong>. It never shows follower counts, last active, the member tag or the joined date.</p>
 
     <div class="grid lg:grid-cols-3 gap-10 mt-10 items-start">
@@ -38,15 +38,15 @@
       <div>
         <p class="osw text-sm font-semibold uppercase tracking-wider text-slate-500 mb-3">1. Someone you have not met</p>
         <div class="relative">
-          <div class="bg-white rounded-xl border border-slate-200 px-4 py-3 text-sm mb-3"><span class="font-bold text-[#0A2C3D] underline decoration-dotted">Asanda Mapara</span> <span class="text-slate-500">posted an update</span></div>
+          <div class="bg-white rounded-xl border border-slate-200 px-4 py-3 text-sm mb-3"><span class="font-bold text-[#0C1F31] underline decoration-dotted">Asanda Mapara</span> <span class="text-slate-500">posted an update</span></div>
           <div class="card relative">
             <div class="cover"></div>
             <div class="px-5 pb-5">
               <div class="flex items-end justify-between">
                 <img class="av" src="https://i.pravatar.cc/160?img=47" alt="" />
-                <span class="chip mb-1" title="Premium members, later"><i data-lucide="badge-check" class="w-3.5 h-3.5 text-[#9C1C1F]"></i> Verified business <em style="font-style:normal;font-size:10px;color:#9C1C1F;margin-left:2px">PREMIUM · LATER</em></span>
+                <span class="chip mb-1" title="Premium members, later"><i data-lucide="badge-check" class="w-3.5 h-3.5 text-[#DC183C]"></i> Verified business <em style="font-style:normal;font-size:10px;color:#DC183C;margin-left:2px">PREMIUM · LATER</em></span>
               </div>
-              <h3 class="osw text-[22px] font-semibold text-[#0A2C3D] mt-2 leading-tight">Asanda Mapara</h3>
+              <h3 class="osw text-[22px] font-semibold text-[#0C1F31] mt-2 leading-tight">Asanda Mapara</h3>
               <p class="text-[14px] text-slate-700 leading-snug">Founder · <span class="font-medium">NaturaVale Agri-Foods</span></p>
               <p class="text-[13px] text-slate-500 mt-2 leading-relaxed" style="display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden">Turning fresh South African fruit and vegetables into quality powders and dried products.</p>
               <div class="flex flex-wrap gap-1.5 mt-3">
@@ -55,7 +55,7 @@
               </div>
               <div class="flex items-center gap-2 mt-4 pt-3 border-t border-slate-100">
                 <span class="mut flex"><img src="https://i.pravatar.cc/60?img=12" alt="" /><img src="https://i.pravatar.cc/60?img=32" alt="" /></span>
-                <span class="text-[12.5px] text-slate-600">You both know <strong class="text-[#0A2C3D]">Jabulani S.</strong> and <strong class="text-[#0A2C3D]">Sthembile M.</strong></span>
+                <span class="text-[12.5px] text-slate-600">You both know <strong class="text-[#0C1F31]">Jabulani S.</strong> and <strong class="text-[#0C1F31]">Sthembile M.</strong></span>
               </div>
               <div class="grid grid-cols-2 gap-2 mt-4">
                 <button class="btn btn-red"><i data-lucide="user-plus" class="w-4 h-4"></i> Connect</button>
@@ -77,14 +77,14 @@
               <img class="av" src="https://i.pravatar.cc/160?img=59" alt="" />
               <span class="chip mb-1 bg-[#E8F5EF] text-[#1a7f37]"><i data-lucide="check" class="w-3.5 h-3.5"></i> Connected</span>
             </div>
-            <h3 class="osw text-[22px] font-semibold text-[#0A2C3D] mt-2 leading-tight">Sandile Sibiya</h3>
+            <h3 class="osw text-[22px] font-semibold text-[#0C1F31] mt-2 leading-tight">Sandile Sibiya</h3>
             <p class="text-[14px] text-slate-700 leading-snug">Owner · <span class="font-medium">Ezosibiya Trading</span></p>
             <p class="text-[13px] text-slate-500 mt-2 leading-relaxed">Supplying cleaning products to offices and schools in Gauteng.</p>
             <div class="flex flex-wrap gap-1.5 mt-3">
               <span class="chip"><i data-lucide="store" class="w-3.5 h-3.5"></i> Wholesale</span>
               <span class="chip"><i data-lucide="map-pin" class="w-3.5 h-3.5"></i> Gauteng</span>
             </div>
-            <div class="mt-4 pt-3 border-t border-slate-100 text-[12.5px] text-slate-600"><p class="flex items-center gap-1.5 font-medium text-slate-500"><i data-lucide="message-circle" class="w-3.5 h-3.5 text-[#9C1C1F]"></i> Latest post</p><p class="mt-1 text-[#0A2C3D]">"Looking for a printing supplier in Joburg…"</p></div>
+            <div class="mt-4 pt-3 border-t border-slate-100 text-[12.5px] text-slate-600"><p class="flex items-center gap-1.5 font-medium text-slate-500"><i data-lucide="message-circle" class="w-3.5 h-3.5 text-[#DC183C]"></i> Latest post</p><p class="mt-1 text-[#0C1F31]">"Looking for a printing supplier in Joburg…"</p></div>
             <div class="grid grid-cols-2 gap-2 mt-4">
               <button class="btn btn-red"><i data-lucide="send" class="w-4 h-4"></i> Message</button>
               <a class="btn btn-line" href="#"><i data-lucide="user" class="w-4 h-4"></i> View profile</a>
@@ -100,7 +100,7 @@
           <div class="cover"></div>
           <div class="px-5 pb-5">
             <img class="av" src="https://i.pravatar.cc/160?img=15" alt="" />
-            <h3 class="osw text-[22px] font-semibold text-[#0A2C3D] mt-2 leading-tight">You</h3>
+            <h3 class="osw text-[22px] font-semibold text-[#0C1F31] mt-2 leading-tight">You</h3>
             <p class="text-[14px] text-slate-700 leading-snug">Director · <span class="font-medium">Your Business (Pty) Ltd</span></p>
             <div class="mt-4 rounded-xl bg-[#FBF3F3] border border-[#F2D4D5] p-3 text-[13px] text-[#5b1012] flex gap-2"><i data-lucide="sparkles" class="w-4 h-4 shrink-0 mt-0.5"></i><span>This is how other members see you. Add a one-line description of your business so people know how to work with you.</span></div>
             <a class="btn btn-line w-full mt-4" href="#"><i data-lucide="pencil" class="w-4 h-4"></i> Edit my profile</a>
@@ -110,7 +110,7 @@
     </div>
 
     <div class="mt-12 bg-white rounded-2xl border border-slate-200 p-6 max-w-3xl">
-      <h2 class="osw text-lg font-semibold uppercase text-[#0A2C3D]">What it shows, and where it comes from</h2>
+      <h2 class="osw text-lg font-semibold uppercase text-[#0C1F31]">What it shows, and where it comes from</h2>
       <ul class="mt-3 space-y-2 text-[14px] text-slate-700 list-disc pl-5">
         <li><strong>Name, role and business:</strong> the profile's position and company (the same line as the feed and "Entrepreneurs to connect with").</li>
         <li><strong>One line about the business:</strong> the first sentence of the bio, two lines at most; hidden when empty.</li>
