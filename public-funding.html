@@ -21,11 +21,6 @@
     input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:6px;border-radius:9999px;background:#E7EBEF;outline:none;}
     input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:22px;height:22px;border-radius:9999px;background:#DC183C;cursor:pointer;border:3px solid #fff;box-shadow:0 2px 6px rgba(12,31,49,.25);}
     input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:9999px;background:#DC183C;cursor:pointer;border:3px solid #fff;box-shadow:0 2px 6px rgba(12,31,49,.25);}
-    /* Application modal */
-    body.modal-open{overflow:hidden;}
-    .modal{position:fixed;inset:0;z-index:70;display:flex;align-items:center;justify-content:center;padding:16px;}
-    .modal-bg{position:absolute;inset:0;background:rgba(12,31,49,.55);backdrop-filter:blur(3px);opacity:0;transition:opacity .25s;} .modal.open .modal-bg{opacity:1;}
-    .modal-card{position:relative;width:100%;max-width:560px;max-height:92vh;overflow-y:auto;background:#fff;border-radius:24px;box-shadow:0 30px 70px -20px rgba(12,31,49,.45);transform:translateY(16px) scale(.98);opacity:0;transition:transform .28s cubic-bezier(.2,.7,.2,1),opacity .28s;} .modal.open .modal-card{transform:translateY(0) scale(1);opacity:1;}
     .field label{display:block;font-size:13px;font-weight:600;color:#0C1F31;margin-bottom:6px;}
     .field input,.field select{width:100%;height:46px;padding:0 14px;font-size:14px;border:1px solid #E7EBEF;border-radius:12px;outline:none;background:#fff;color:#121A21;transition:border-color .15s,box-shadow .15s;}
     .field select{appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='none' stroke='%236A7581' stroke-width='2' viewBox='0 0 24 24'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;padding-right:38px;}
@@ -488,7 +483,7 @@
   </div>
 </footer>
 
-<div id="overlay-root"></div><div id="apply-root"></div><div id="toast" class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-50"></div>
+<div id="overlay-root"></div><div id="toast" class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-50"></div>
 <script>
   function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
   function showToast(m){const el=document.getElementById('toast');el.classList.remove('hidden');el.innerHTML=`<div class="bg-[#0C1F31] text-white rounded-full pl-3 pr-5 py-2.5 shadow-2xl flex items-center gap-2 text-sm font-semibold" style="border-left:4px solid #29A37A"><i data-lucide="check-circle" class="w-4 h-4" style="color:#29A37A"></i><span>${esc(m)}</span></div>`;lucide.createIcons();setTimeout(()=>{el.classList.add('hidden');el.innerHTML='';},2400);}
@@ -611,100 +606,6 @@
   function closeOverlay(id){const el=document.getElementById(id);if(!el)return;el.classList.remove('open');setTimeout(()=>{if(el&&el.parentNode)el.remove();},300);}
   function openBrief(id){const b=BRIEFS[id];if(!b)return;const sec=(i,l,h)=>`<div class="px-6 py-4 border-t border-slate-100"><p class="text-[10px] font-bold uppercase tracking-widest text-[#DC183C] flex items-center gap-1.5 mb-2"><i data-lucide="${i}" class="w-3.5 h-3.5"></i>${l}</p><div class="text-sm text-slate-600 leading-relaxed">${h}</div></div>`;document.getElementById('overlay-root').innerHTML=`<div class="ov" id="ov"><div class="ov-bg" onclick="closeOverlay('ov')"></div><div class="drawer"><div class="sticky top-0 z-10 bg-[#0C1F31] text-white px-6 py-5 flex items-start justify-between"><div><p class="text-[10px] font-bold uppercase tracking-widest text-[#FF9900] mb-1">Dev Brief</p><h3 class="font-jakarta font-extrabold text-lg leading-tight">${b.title}</h3><p class="text-xs text-white/60 mt-1">${b.sub}</p></div><button onclick="closeOverlay('ov')" class="text-white/60 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button></div>${sec('target','Purpose',b.purpose)}${sec('database','Data model',b.data)}${sec('git-branch','Logic',b.logic)}${sec('ruler','Spec values',b.specs)}${sec('boxes','Components',b.components)}</div></div>`;requestAnimationFrame(()=>{const o=document.getElementById('ov');if(o)o.classList.add('open');});lucide.createIcons();}
 
-  /* ---------- Application popup (3-step wizard) ---------- */
-  const APPLY_STEPS=['Business Information','Bank Statements','Personal Information','Confirmation'];
-  let applyStep=1; // 1..3 wizard, 4 = confirmation
-  function applyProgress(){
-    return `<div class="flex items-center gap-2">${APPLY_STEPS.map((label,i)=>{
-      const n=i+1;const done=applyStep>n;const active=applyStep===n;
-      const dot=done
-        ?`<span class="w-7 h-7 rounded-full bg-[#29A37A] text-white grid place-items-center shrink-0"><i data-lucide="check" class="w-4 h-4"></i></span>`
-        :`<span class="w-7 h-7 rounded-full grid place-items-center text-xs font-bold shrink-0 ${active?'bg-[#DC183C] text-white':'bg-[#FDECEF] text-[#DC183C]'}">${n}</span>`;
-      const line=i<APPLY_STEPS.length-1?`<span class="flex-1 h-0.5 ${applyStep>n?'bg-[#29A37A]':'bg-[#E7EBEF]'}"></span>`:'';
-      return dot+line;
-    }).join('')}</div>
-    <p class="text-[11px] font-bold uppercase tracking-widest text-[#DC183C] mt-3">Step ${Math.min(applyStep,3)} of 3 · ${esc(APPLY_STEPS[Math.min(applyStep,3)-1])}</p>`;
-  }
-  function applyStepBody(){
-    if(applyStep===1) return `
-      <h3 class="font-jakarta font-extrabold text-2xl tracking-tight mt-4">Business Information</h3>
-      <p class="text-sm text-[#6A7581] mt-1">Tell us about your business so we can match you with the right lenders.</p>
-      <div class="space-y-4 mt-6"><div class="field"><label>Funding type <span class="text-[#DC183C]">*</span></label><div class="grid sm:grid-cols-3 gap-2"><label class="flex items-center gap-2 rounded-xl border border-[#E7EBEF] px-3 py-3 text-sm font-semibold cursor-pointer has-[:checked]:border-[#DC183C] has-[:checked]:bg-[#FDECEF]/40"><input type="radio" name="pf-type" value="Working Capital" checked onchange=\"document.querySelectorAll('.pf-po').forEach(e=>e.classList.toggle('hidden', this.value!=='Purchase Order Funding'))\" class="accent-[#DC183C]"> Working Capital</label><label class="flex items-center gap-2 rounded-xl border border-[#E7EBEF] px-3 py-3 text-sm font-semibold cursor-pointer has-[:checked]:border-[#DC183C] has-[:checked]:bg-[#FDECEF]/40"><input type="radio" name="pf-type" value="Unsecured Business Loan" onchange=\"document.querySelectorAll('.pf-po').forEach(e=>e.classList.toggle('hidden', this.value!=='Purchase Order Funding'))\" class="accent-[#DC183C]"> Unsecured Business Loan</label><label class="flex items-center gap-2 rounded-xl border border-[#E7EBEF] px-3 py-3 text-sm font-semibold cursor-pointer has-[:checked]:border-[#DC183C] has-[:checked]:bg-[#FDECEF]/40"><input type="radio" name="pf-type" value="Purchase Order Funding" onchange=\"document.querySelectorAll('.pf-po').forEach(e=>e.classList.toggle('hidden', this.value!=='Purchase Order Funding'))\" class="accent-[#DC183C]"> Purchase Order Funding</label></div></div><div class="pf-po hidden"><div class="field"><label>What do you need it for? <span class="text-[#DC183C]">*</span></label><select required><option value="">Select</option><option value="I have a purchase order to deliver">I have a purchase order to deliver</option><option value="I have an invoice not yet paid">I have an invoice not yet paid</option></select></div></div><div class="field"><label>Funding amount <span class="text-[#DC183C]">*</span></label><select required><option value="">Select</option><option value="Less than R150,000">Less than R150,000</option><option value="R150,000 - R250,000">R150,000 to R250,000</option><option value="R250,000 - R1 Million">R250,000 to R1 Million</option><option value="R1 Million - R2 Million">R1 Million to R2 Million</option><option value="More than R2 Million">More than R2 Million</option></select></div><div class="field"><label>Have you applied for a business loan in the last 3 months? <span class="text-[#DC183C]">*</span></label><select required onchange="document.getElementById('pf-lenders').classList.toggle('hidden', this.value!=='Yes')"><option value="">Select</option><option>Yes</option><option>No</option></select></div><div id="pf-lenders" class="field hidden"><label>Which lender(s) did you apply with? <span class="text-[#DC183C]">*</span></label><div class="flex flex-wrap gap-2"><label class="inline-flex items-center gap-2 rounded-full border border-[#E7EBEF] px-3 py-1.5 text-sm font-semibold cursor-pointer"><input type="checkbox" value="My Bank" class="accent-[#DC183C]"> My Bank</label><label class="inline-flex items-center gap-2 rounded-full border border-[#E7EBEF] px-3 py-1.5 text-sm font-semibold cursor-pointer"><input type="checkbox" value="Lula" class="accent-[#DC183C]"> Lula</label><label class="inline-flex items-center gap-2 rounded-full border border-[#E7EBEF] px-3 py-1.5 text-sm font-semibold cursor-pointer"><input type="checkbox" value="Genfin" class="accent-[#DC183C]"> Genfin</label><label class="inline-flex items-center gap-2 rounded-full border border-[#E7EBEF] px-3 py-1.5 text-sm font-semibold cursor-pointer"><input type="checkbox" value="GoTyme" class="accent-[#DC183C]"> GoTyme</label><label class="inline-flex items-center gap-2 rounded-full border border-[#E7EBEF] px-3 py-1.5 text-sm font-semibold cursor-pointer"><input type="checkbox" value="Other" class="accent-[#DC183C]"> Other</label></div></div><div class="field"><label>Company name <span class="text-[#DC183C]">*</span></label><input type="text" required placeholder="Your company name" /></div><div class="field"><label>Industry <span class="text-[#DC183C]">*</span></label><select required><option value="">Select</option><option value="Accommodation">Accommodation</option><option value="Advertising and Marketing">Advertising and Marketing</option><option value="IT and Communications">IT and Communications</option><option value="Manufacturing">Manufacturing</option><option value="Agriculture and Farming">Agriculture and Farming</option><option value="Construction/Mining">Construction/Mining</option><option value="Education and Training">Education and Training</option><option value="Retail, Restaurants, Bar, Pub">Retail, Restaurants, Bar, Pub</option><option value="Maintenance Services">Maintenance Services</option><option value="Professional Services">Professional Services</option><option value="Transportation/Logistics">Transportation/Logistics</option><option value="Wholesale/Distribution">Wholesale/Distribution</option><option value="Security">Security</option><option value="Beauty Salons/Spas">Beauty Salons/Spas</option><option value="Food Service (Catering)">Food Service (Catering)</option><option value="Automotive">Automotive</option><option value="Health">Health</option><option value="Media and Production">Media and Production</option><option value="Property">Property</option><option value="Finance/Insurance">Finance/Insurance</option><option value="Funeral Homes">Funeral Homes</option><option value="Cleaning/Landscaping/Gardening">Cleaning/Landscaping/Gardening</option><option value="Event Planning/Coordination">Event Planning/Coordination</option><option value="Other">Other</option></select></div><div class="field"><label>How long have you been in business? <span class="text-[#DC183C]">*</span></label><select required><option value="">Select</option><option value="Less than a Year">Less than a Year</option><option value="1 - 2 Years">1 to 2 Years</option><option value="2 - 4 Years">2 to 4 Years</option><option value="4 -5 Years">4 to 5 Years</option><option value="5 - 10 Years">5 to 10 Years</option><option value="10 + Years">10 + Years</option></select></div><div class="field"><label>Do you have a business bank account? <span class="text-[#DC183C]">*</span></label><select required><option value="">Select</option><option value="Yes">Yes</option><option value="No">No</option></select></div><div class="field"><label>Company registration number <span class="text-[#DC183C]">*</span></label><input type="text" required placeholder="YYYY/NNNNNN/NN" /></div><div class="field"><label>Monthly turnover <span class="text-[#DC183C]">*</span></label><select required><option value="">Select</option><option value="Less than R50K">Less than R50K</option><option value="R50K - R100K">R50K to R100K</option><option value="R100K - R200K">R100K to R200K</option><option value="R200K - R300K">R200K to R300K</option><option value="R300K - R500K">R300K to R500K</option><option value="R500K+">R500K+</option></select></div><div class="pf-po hidden"><div class="field"><label>Who issued the purchase order? <span class="text-[#DC183C]">*</span></label><input type="text" placeholder="Company that issued the PO" /></div></div></div>`;
-    if(applyStep===2) return `
-      <h3 class="font-jakarta font-extrabold text-2xl tracking-tight mt-4">Bank statements</h3>
-      <p class="text-sm text-[#6A7581] mt-1">We use these to verify turnover and speed up your offer.</p>
-      <div class="mt-6">
-        <div class="dropzone" onclick="event.preventDefault()">
-          <div class="w-12 h-12 rounded-2xl bg-[#FDECEF] text-[#DC183C] grid place-items-center mx-auto"><i data-lucide="upload-cloud" class="w-6 h-6"></i></div>
-          <p class="font-jakarta font-bold text-[#0C1F31] mt-4">Upload 12 months bank statements <span class="text-[#DC183C]">*</span></p>
-          <p class="text-sm text-[#6A7581] mt-1">Drag &amp; drop or browse</p>
-        </div>
-      </div>`;
-    return `
-      <h3 class="font-jakarta font-extrabold text-2xl tracking-tight mt-4">Personal Information</h3>
-      <p class="text-sm text-[#6A7581] mt-1">Finally, your contact details so we can reach you with offers.</p>
-      <div class="space-y-4 mt-6"><div class="grid sm:grid-cols-2 gap-4"><div class="field"><label>First name <span class="text-[#DC183C]">*</span></label><input type="text" required placeholder="First name" /></div><div class="field"><label>Last name <span class="text-[#DC183C]">*</span></label><input type="text" required placeholder="Last name" /></div></div><div class="grid sm:grid-cols-2 gap-4"><div class="field"><label>Work email address <span class="text-[#DC183C]">*</span></label><input type="email" required placeholder="you@company.co.za" /></div><div class="field"><label>Work number <span class="text-[#DC183C]">*</span></label><input type="tel" required placeholder="0XX XXX XXXX" /></div></div>
-        <label class="flex items-start gap-2.5 text-xs text-[#6A7581] leading-relaxed"><input type="checkbox" required class="mt-0.5 accent-[#DC183C]"><span>I agree that SME South Africa may share this application with its funding partners, and that a partner may do a credit check on me and my business. I accept the <a href="public-terms.html" class="text-[#DC183C] font-semibold hover:underline">Terms</a> and <a href="public-privacy.html" class="text-[#DC183C] font-semibold hover:underline">Privacy Policy</a>.</span></label>
-        <p class="text-xs text-[#6A7581]">Already a member? <a href="public-auth.html" class="font-bold text-[#DC183C] hover:underline">Sign in</a> and we fill this in for you from My Business.</p>
-      </div>`;
-  }
-  function applyConfirmBody(){
-    return `<div class="text-center py-6">
-      <div class="w-16 h-16 rounded-full bg-[#E4F5EE] text-[#29A37A] grid place-items-center mx-auto"><i data-lucide="check-circle" class="w-9 h-9"></i></div>
-      <h3 class="font-jakarta font-extrabold text-2xl tracking-tight mt-5">Application received</h3>
-      <p class="text-sm text-[#6A7581] mt-2 max-w-sm mx-auto">We'll match you with lenders and be in touch within 24 hours.</p>
-      <button type="button" onclick="closeApply()" class="mt-7 inline-flex items-center justify-center gap-2 px-8 h-12 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold transition">Close</button>
-    </div>`;
-  }
-  function applyFooter(){
-    if(applyStep===4) return '';
-    const back = applyStep>1
-      ? `<button type="button" onclick="applyBack()" class="inline-flex items-center justify-center gap-2 px-6 h-12 rounded-full border border-[#E7EBEF] text-[#0C1F31] font-bold hover:bg-slate-50 transition"><i data-lucide="arrow-left" class="w-4 h-4"></i> Back</button>`
-      : `<span></span>`;
-    const next = applyStep<3
-      ? `<button type="submit" class="inline-flex items-center justify-center gap-2 px-7 h-12 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold transition">Next <i data-lucide="arrow-right" class="w-4 h-4"></i></button>`
-      : `<button type="submit" class="inline-flex items-center justify-center gap-2 px-7 h-12 rounded-full bg-[#DC183C] hover:bg-[#B0142F] text-white font-bold transition">Submit <i data-lucide="arrow-right" class="w-4 h-4"></i></button>`;
-    return `<div class="flex items-center justify-between gap-3 mt-8">${back}${next}</div>`;
-  }
-  function renderApply(){
-    const root=document.getElementById('apply-root');
-    const header = applyStep<4
-      ? `<div class="px-6 sm:px-8 pt-6">${applyProgress()}</div>`
-      : '';
-    const body = applyStep===4 ? applyConfirmBody() : `<form onsubmit="applyNext(event)" novalidate>${applyStepBody()}${applyFooter()}</form>`;
-    root.innerHTML=`<div class="modal" id="applyModal" role="dialog" aria-modal="true" aria-label="Funding application">
-      <div class="modal-bg" onclick="closeApply()"></div>
-      <div class="modal-card">
-        <button type="button" onclick="closeApply()" aria-label="Close" class="absolute top-4 right-4 z-10 w-9 h-9 rounded-full grid place-items-center text-slate-500 hover:text-[#0C1F31] hover:bg-slate-100 transition"><i data-lucide="x" class="w-5 h-5"></i></button>
-        ${header}
-        <div class="px-6 sm:px-8 pb-8 pt-2">${body}</div>
-      </div>
-    </div>`;
-    lucide.createIcons();
-  }
-  function openApply(){
-    applyStep=1;
-    document.body.classList.add('modal-open');
-    renderApply();
-    requestAnimationFrame(()=>{const m=document.getElementById('applyModal');if(m)m.classList.add('open');});
-  }
-  function closeApply(){
-    const m=document.getElementById('applyModal');
-    document.body.classList.remove('modal-open');
-    if(m){m.classList.remove('open');setTimeout(()=>{const r=document.getElementById('apply-root');if(r)r.innerHTML='';},280);}
-    else{const r=document.getElementById('apply-root');if(r)r.innerHTML='';}
-  }
-  function applyNext(e){
-    e.preventDefault();
-    if(applyStep<3){applyStep++;renderApply();const c=document.querySelector('#applyModal .modal-card');if(c)c.scrollTop=0;return;}
-    // step 3 → submit
-    applyStep=4;renderApply();showToast('Application received, we will be in touch within 24 hours.');
-  }
-  function applyBack(){ if(applyStep>1){applyStep--;renderApply();const c=document.querySelector('#applyModal .modal-card');if(c)c.scrollTop=0;} }
-  document.addEventListener('keydown',e=>{ if(e.key==='Escape'&&document.getElementById('applyModal')) closeApply(); });
-  // Deep-link: open the popup automatically when arriving with #apply
-  if(location.hash==='#apply'){ requestAnimationFrame(openApply); }
-
   renderOptions();calc();renderInsights();renderFaq();lucide.createIcons();
 </script>
 <script>
@@ -736,8 +637,6 @@
   });
 </script>
 <script src="member-chrome.js">
-  // Apply buttons on loan-option / category pages arrive here with ?apply=1: open the wizard straight away instead of scrolling to a band.
-  if(new URLSearchParams(location.search).get('apply')==='1'){ setTimeout(openApply, 400); }
 </script>
 </body>
 </html>
