@@ -171,5 +171,5 @@ window.MOCKUP_DEV = {
 window.MOCKUP_GROUPS = {
   "podcast.html": "Site pages"
 };
-/* Built by Tshepho (Mission Control "Built" toggle): developer must not build these; they count as ready */
+/* Built in-house (Mission Control "Built" toggle): live, not for the developer to build; they count as ready */
 window.MOCKUP_BUILT_LOCAL = ["forums.html", "groups.html", "member-account.html", "member-finish-profile.html", "member-group-manage.html", "member-hub.html", "member-messages.html", "member-notifications.html", "member-workspace.html", "members.html", "public-health-check.html", "public-verify-email.html", "public-workspace.html", "single-discussion.html", "single-group.html", "single-member.html", "single-post.html"];
