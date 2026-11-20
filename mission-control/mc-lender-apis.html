@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lender APIs · Mission Control</title>
+<meta name="robots" content="noindex,nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<link rel="stylesheet" href="mc-ui.css">
+<style>
+  .lc-grid{display:grid;gap:16px;grid-template-columns:repeat(3,minmax(0,1fr))}
+  .lc{border:1px solid var(--line);border-radius:18px;background:#fff;display:flex;flex-direction:column;overflow:hidden}
+  .lc-top{padding:16px 18px 12px;display:flex;align-items:center;gap:12px;border-bottom:1px solid var(--line)}
+  .lc-logo{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;font:800 15px 'Plus Jakarta Sans';color:#fff}
+  .lc-top h3{margin:0;font:800 16px 'Plus Jakarta Sans'}.lc-top small{color:var(--muted);font-size:12px;display:block}
+  .lc-top .r{margin-left:auto}
+  .lc-b{padding:14px 18px;display:grid;gap:10px;font-size:13px}
+  .lc-row{display:flex;justify-content:space-between;gap:10px}.lc-row span{color:var(--muted)}.lc-row b{text-align:right}
+  .lc-f{padding:12px 18px;border-top:1px solid var(--line);display:flex;gap:8px;flex-wrap:wrap;background:#FAFBFC;margin-top:auto}
+  .env{display:inline-flex;align-items:center;gap:6px;font:800 11px 'Plus Jakarta Sans';letter-spacing:.06em;text-transform:uppercase;padding:4px 9px;border-radius:999px;background:#E9F7F1;color:#167A57}
+  .env.uat{background:#FFF4E0;color:#9A5B00}
+  .lock{display:flex;gap:14px;align-items:flex-start;padding:16px 18px;border:1px dashed #B3BCC5;border-radius:16px;background:#F7F9FB}
+  .lock b{display:block;font:800 14px 'Plus Jakarta Sans'}.lock small{color:var(--muted);display:block;margin-top:3px;line-height:1.5}
+  .ro{display:grid;grid-template-columns:200px 1fr auto;gap:10px 16px;align-items:center;font-size:13.5px}
+  .ro span{color:var(--muted)}.ro code{font-family:ui-monospace,Menlo,monospace;font-size:12.5px;background:#F2F4F7;padding:2px 6px;border-radius:6px}
+  .ro .sec{color:#167A57;font-weight:700;display:inline-flex;gap:6px;align-items:center}
+  .guard{display:grid;gap:12px;grid-template-columns:repeat(3,minmax(0,1fr))}
+  .guard .g{border:1px solid var(--line);border-radius:14px;padding:14px;background:#fff}
+  .guard .g b{display:flex;gap:8px;align-items:center;font:800 13.5px 'Plus Jakarta Sans'}.guard .g small{color:var(--muted);display:block;margin-top:6px;line-height:1.5}
+  .steps{display:grid;gap:10px;counter-reset:s}
+  .steps .st{display:flex;gap:12px;align-items:flex-start;padding:12px 14px;border:1px solid var(--line);border-radius:14px;background:#fff}
+  .steps .st::before{counter-increment:s;content:counter(s);flex:0 0 26px;height:26px;border-radius:50%;background:var(--navy);color:#fff;display:grid;place-items:center;font:800 12px 'Plus Jakarta Sans'}
+  .steps .st.done::before{background:#29A37A;content:'✓'}.steps .st.now::before{background:var(--red)}
+  .steps .st b{display:block}.steps .st small{color:var(--muted);display:block;margin-top:2px;line-height:1.5}
+  .typed{display:flex;gap:8px;align-items:center;margin-top:8px;flex-wrap:wrap}.typed input{flex:1;min-width:160px;border:1.5px solid var(--line);border-radius:10px;padding:9px 11px;font:inherit}
+  .btn[disabled]{opacity:.4;cursor:not-allowed;filter:grayscale(1)}
+  .rule{display:grid;grid-template-columns:150px 1fr;gap:6px 14px;font-size:13px}.rule span{color:var(--muted)}
+  @media (max-width:1100px){.lc-grid,.guard{grid-template-columns:1fr}.ro{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<script src="mc-ui.js"></script>
+<script>
+(function () {
+  var B = MC.briefs;
+  B.la_over = { title: 'Lender APIs: overview', purpose: 'One place for every lender connection: is it live, what went out from the Funding Desk this week, and did any call fail. Built for management first.', data: 'Reads each connection\'s own switch, log and Desk record (Lula: smesa_lula_api_* and the Lula API log, Retail Capital: smesa_gtw_* and its log, Genfin: smesa_genfin*). Nothing is migrated: the module (smesa-lender-apis.php) is a front over the existing connections.', logic: 'Failed calls count only real failures: Lula "customer already exists" is reused by the sender, and Genfin UAT testing is excluded.', rules: 'Nothing sends from this page; sends only ever happen per application from the Funding Desk. Pause/Resume is the only action and pausing needs a reason. There is no Test button.' };
+  B.la_log = { title: 'Send log', purpose: 'Every application sent to a lender in the last 30 days, in one list, plus the failed calls of the last 7 days.', data: 'Desk meta per lender: fa_lula_application_id / fa_sent_lula_at, fa_rc_lead_id / fa_sent_retail_capital_at, fa_genfin_lead_id / fa_sent_genfin_at, and who sent it. Failed calls come from each connection\'s own log; no personal data is shown.', rules: 'Read-only. Resending is done from the Desk, never from here, so a lead goes to each lender once. Next, after go-live: a payload viewer (not built).' };
+  B.la_set = { title: 'Connection settings (locked)', purpose: 'Change a login, address or environment without being able to break a live connection by a stray click.', logic: 'Read-only for everyone. An owner (option smesa_lender_owners, default [2174]) types the lender name to unlock it; that lender\'s own settings page then opens for 15 minutes (user meta smesa_la_unlock). Otherwise smesa-lula-api, smesa-gotyme-webtolead and smesa-genfin redirect back here. "Lock again" closes it early.', rules: 'Passwords and keys are never shown and never kept in history. Next, after go-live: edit a draft, test it, then type the name to apply (not built; v1 unlocks the lender\'s own page instead).' };
+  B.la_rules = { title: 'Lending rules', purpose: 'What each lender accepts, so the Desk warns before sending something they will decline.', data: 'Lula and Retail Capital: R50 000 a month (Joel, 26 Oct). Genfin: R100 000 a month, 12 months trading, CIPC number required.', logic: 'The Funding Desk warns before sending an application that falls outside these (Lula: "Send anyway?" under R50 000 a month, CL-542).' };
+  B.la_hist = { title: 'Change history', purpose: 'Audit trail of every lender switch and setting change.', data: 'Option smesa_lender_audit (newest 300): when, who, lender, setting, from, to, note. Secrets show as "•••• (saved)" / "•••• (new value)".', rules: 'Owner only: Restore puts a non-secret setting back to its earlier value, and the restore is itself recorded. Passwords and keys cannot be restored because they are never kept.' };
+
+  var L = [
+    { k: 'lula', n: 'Lula', c: '#2F6FED', i: 'L', how: 'Lula API', since: '15 Oct 2026', env: 'Production', sent: 12, last: 'Today 09:40', fail: 6, desk: 'On', who: 'Lula partner team' },
+    { k: 'rc', n: 'Retail Capital', c: '#29A37A', i: 'RC', how: 'Web-to-lead (via GoTyme)', since: '9 Oct 2026', env: 'Production', sent: 9, last: 'Today 08:55', fail: 0, desk: 'On', who: 'Retail Capital partner desk' },
+    { k: 'genfin', n: 'Genfin', c: '#DC183C', i: 'G', how: 'Genfin lead API', since: '26 Oct 2026', env: 'Production', sent: 1, last: 'Today 11:32', fail: 0, desk: 'On', who: 'Genfin partner team' }
+  ];
+  var sent = L.reduce(function (a, l) { return a + l.sent; }, 0), fails = L.reduce(function (a, l) { return a + l.fail; }, 0);
+
+  var env = function (e) { return '<span class="env' + (e === 'Production' ? '' : ' uat') + '">' + MC.icon('lock') + e + '</span>'; };
+  var card = function (l) {
+    return '<div class="lc"><div class="lc-top"><div class="lc-logo" style="background:' + l.c + '">' + l.i + '</div><div><h3>' + l.n + '</h3><small>' + l.how + ' &middot; live since ' + l.since + '</small></div><div class="r">' + MC.chip('Live', 'green', true) + '</div></div>' +
+      '<div class="lc-b"><div class="lc-row"><span>Environment</span><b>' + env(l.env) + '</b></div>' +
+      '<div class="lc-row"><span>Sent from the Desk (7 days)</span><b>' + l.sent + '</b></div>' +
+      '<div class="lc-row"><span>Last successful send</span><b>' + l.last + '</b></div>' +
+      '<div class="lc-row"><span>Failed calls (7 days)</span><b>' + l.fail + '</b></div>' +
+      '<div class="lc-row"><span>"Send to ' + l.n + '" on the Desk</span><b>' + l.desk + '</b></div>' +
+      '<div class="lc-row"><span>Partner contact</span><b>' + l.who + '</b></div></div>' +
+      '<div class="lc-f"><button class="btn sm" data-open="pause-' + l.k + '">' + MC.icon('pause') + 'Pause sends</button><button class="btn sm" data-open="log-' + l.k + '">' + MC.icon('list') + 'Sends</button></div></div>';
+  };
+
+  var over =
+    '<div class="grid g4" style="margin-bottom:16px">' +
+    MC.kpi({ label: 'Lenders live', icon: 'plug-zap', value: '3 of 3', tone: 'green' }) + MC.kpi({ label: 'Sent from the Desk (7 days)', icon: 'send', value: String(sent), tone: 'blue' }) +
+    MC.kpi({ label: 'Failed calls (7 days)', icon: 'triangle-alert', value: String(fails), tone: fails ? 'amber' : 'navy' }) + MC.kpi({ label: 'Settings', icon: 'lock', value: 'Locked', tone: 'navy' }) + '</div>' +
+    '<div class="lc-grid">' + L.map(card).join('') + '</div>' +
+    '<div style="margin-top:18px">' + MC.card({ title: 'How this page protects the connections', sub: 'Built so a wrong click cannot break a live lender', dev: 'la_over' },
+      '<div class="guard">' +
+      '<div class="g"><b>' + MC.icon('send') + 'No sends from here</b><small>Applications only go to a lender from the Funding Desk, one at a time. This page watches; it never sends.</small></div>' +
+      '<div class="g"><b>' + MC.icon('pause') + 'Pause needs a reason</b><small>Pausing hides "Send to …" on the Desk. It is recorded in Change history and undone with Resume.</small></div>' +
+      '<div class="g"><b>' + MC.icon('lock') + 'Settings are locked</b><small>Logins, addresses and environment open only for an owner who types the lender name, for 15 minutes.</small></div>' +
+      '<div class="g"><b>' + MC.icon('eye-off') + 'Passwords are never shown</b><small>Write-only. An empty password field keeps the saved one; history never stores them.</small></div>' +
+      '<div class="g"><b>' + MC.icon('history') + 'Every change is undoable</b><small>Change history keeps who, when and the previous value, with Restore for every setting except secrets.</small></div>' +
+      '<div class="g"><b>' + MC.icon('split') + 'One lender cannot stop another</b><small>Each connection runs on its own. An error at one lender never touches the others.</small></div></div>') + '</div>';
+
+  var log =
+    '<p style="margin:0 0 12px;color:var(--muted)">Applications sent to a lender in the last 30 days, with the lender\'s reference.</p>' +
+    '<div class="card flush">' + MC.table({ perPage: 8, placeholder: 'Search business or reference',
+      filters: [{ k: 'l', label: 'All lenders', opts: ['Lula', 'Retail Capital', 'Genfin'] }],
+      rows: [
+        { t: 'Today 11:32', b: 'SMESA Test App 1', l: 'Genfin', id: '164522', by: 'Tshepho Joel' },
+        { t: 'Today 09:40', b: 'Langa Holdings', l: 'Lula', id: 'LA-88214', by: 'Funding desk' },
+        { t: 'Today 08:55', b: 'Dlamini Civils', l: 'Retail Capital', id: 'RC-30117', by: 'Funding desk' },
+        { t: 'Fri 15:12', b: 'Kopano Catering', l: 'Lula', id: 'LA-88190', by: 'Funding desk' },
+        { t: 'Fri 10:03', b: 'Soweto Solar Installs', l: 'Retail Capital', id: 'RC-30098', by: 'Funding desk' }],
+      cols: [{ k: 't', label: 'When' }, { k: 'b', label: 'Business', render: function (r) { return MC.person(r.b); } }, { k: 'l', label: 'Lender' }, { k: 'id', label: 'Lender reference', render: function (r) { return '<code>' + r.id + '</code>'; } }, { k: 'by', label: 'Sent by' }]
+    }) + '</div>' +
+    '<h3 style="margin:22px 0 10px;font:800 15px \'Plus Jakarta Sans\'">Failed calls (7 days)</h3>' +
+    '<div class="card flush">' + MC.table({ perPage: 6, search: false,
+      rows: [
+        { t: 'Today 11:11', l: 'Lula', st: 'documents', a: 'Bank statement upload refused' },
+        { t: 'Fri 14:02', l: 'Lula', st: 'application', a: 'IdentificationType not valid' },
+        { t: 'Fri 09:47', l: 'Lula', st: 'application', a: 'Company registration number required' },
+        { t: 'Thu 16:20', l: 'Lula', st: 'customer', a: 'Address Line2 required' }],
+      cols: [{ k: 't', label: 'When' }, { k: 'l', label: 'Lender' }, { k: 'st', label: 'Step' }, { k: 'a', label: 'Answer' }]
+    }) + '</div>' +
+    '<p style="margin:12px 0 0;color:var(--muted)">Resending is done from the Funding Desk only. A lead goes to each lender once.</p>';
+
+  var line = function (k, v) { return '<span>' + k + '</span><div>' + v + '</div><div></div>'; };
+  var saved = function (t) { return '<span class="sec">' + MC.icon('shield-check') + (t || 'Saved (never shown)') + '</span>'; };
+  var settings = function (l, rows) {
+    return MC.card({ title: l.n + ' connection', sub: 'Read-only', dev: 'la_set', right: '<button class="btn sm pri" data-open="unlock-' + l.k + '">' + MC.icon('lock-open') + 'Unlock to change</button>' },
+      '<div class="ro">' + rows + '</div>');
+  };
+  var conn =
+    '<div class="lock" style="margin-bottom:16px">' + MC.icon('lock') + '<div><b>All connections are locked</b><small>You can read everything here. To change something, an owner unlocks that lender by typing its name; the lender\'s own settings page then opens for 15 minutes. Every change lands in Change history, and every setting except passwords and keys can be restored there.</small></div></div>' +
+    '<div style="display:grid;gap:16px">' +
+    settings(L[0], line('Environment', env('Production')) + line('Address', '<code>Lula production API</code>') + line('Client ID and secret', saved()) + line('API switched on', 'Yes') + line('Application form', 'Funding form 74')) +
+    settings(L[1], line('Environment', env('Production')) + line('Route', 'GoTyme / Retail Capital web-to-lead') + line('Lead source', '<code>SME South Africa</code>') + line('Callback key', saved()) + line('Callback key required', 'Yes')) +
+    settings(L[2], line('Environment', env('Production')) + line('Address', '<code>https://api.genfin.co.za/GenfinAPI</code>') + line('Production login', saved()) + line('UAT login', saved('Saved (kept for testing)')) + line('Affiliate number', '<code>A29••••</code>') + line('Our server address', '<code>34.••.••.••</code> (whitelisted by Genfin)') + line('Fixed fields', 'hearAboutUs "Lead Provider", product 12, source "Affiliate", WhatsApp updates N, employees blank')) +
+    '</div>';
+
+  var rules = '<div class="grid g3">' + [
+    ['Lula', [['Minimum turnover', 'R50 000 a month'], ['Documents', 'business bank statements (personal statements are refused)']]],
+    ['Retail Capital', [['Minimum turnover', 'R50 000 a month']]],
+    ['Genfin', [['Minimum turnover', 'R100 000 a month'], ['Trading', '12 months or more'], ['Registration', 'CIPC number required'], ['WhatsApp', 'the client consents themselves (we send N)']]]
+  ].map(function (x) { return MC.card({ title: x[0], sub: 'What they accept', dev: 'la_rules' }, '<div class="rule">' + x[1].map(function (r) { return '<span>' + r[0] + '</span><b>' + r[1] + '</b>'; }).join('') + '</div>'); }).join('') + '</div>' +
+    '<div style="margin-top:14px">' + MC.callout('blue', 'info', 'The Desk warns first', 'The Funding Desk warns before sending an application that falls outside these.') + '</div>';
+
+  var hist = '<div class="card flush">' + MC.table({ perPage: 8, search: false,
+    filters: [{ k: 'l', label: 'All lenders', opts: ['Lula', 'Retail Capital', 'Genfin'] }],
+    rows: [
+      { t: 'Today 11:58', w: 'Tshepho Joel', l: 'Genfin', s: 'smesa_genfin_enabled', f: '0', to: '1', n: 'Resumed: Genfin confirmed the test apps', r: 1 },
+      { t: 'Today 10:42', w: 'Tshepho Joel', l: 'Genfin', s: 'smesa_genfin › env', f: 'uat', to: 'prod', n: '', r: 1 },
+      { t: 'Today 10:41', w: 'Tshepho Joel', l: 'Genfin', s: 'smesa_genfin › pass_enc_prod', f: '(empty)', to: '•••• (new value)', n: '', r: 0 },
+      { t: '20 Oct 14:05', w: 'Tshepho Joel', l: 'Lula', s: 'smesa_lula_send_off', f: '1', to: '0', n: 'Resumed: maintenance window over', r: 1 },
+      { t: '20 Oct 13:30', w: 'Tshepho Joel', l: 'Lula', s: 'smesa_lula_send_off', f: '0', to: '1', n: 'Paused: Lula maintenance window', r: 1 }],
+    cols: [{ k: 't', label: 'When' }, { k: 'w', label: 'Who' }, { k: 'l', label: 'Lender' }, { k: 's', label: 'Setting', render: function (r) { return '<code>' + r.s + '</code>'; } }, { k: 'f', label: 'From' }, { k: 'to', label: 'To' }, { k: 'n', label: 'Note' },
+      { k: 'r', label: '', sort: false, render: function (r) { return r.r ? '<button class="btn sm" data-act="Restored (owner only, recorded in Change history)" data-ico="rotate-ccw">' + MC.icon('rotate-ccw') + 'Restore</button>' : '<small style="color:var(--muted)">secret, not kept</small>'; } }]
+  }) + '</div>';
+
+  var tabs = [{ k: 'overview', label: 'Overview', icon: 'layout-dashboard', html: over, dev: 'la_over' }, { k: 'log', label: 'Send log', icon: 'list', html: log, dev: 'la_log' }, { k: 'settings', label: 'Connection settings', icon: 'lock', html: conn, dev: 'la_set' }, { k: 'rules', label: 'Lending rules', icon: 'scale', html: rules, dev: 'la_rules' }, { k: 'history', label: 'Change history', icon: 'history', html: hist, dev: 'la_hist' }];
+  var html =
+    '<section class="hero"><div class="hero-in"><div><span class="eyebrow"><i></i> Solutions tracking &middot; Lender APIs &middot; mockup, illustrative data</span><h1>Every lender connection, one safe place</h1><p>Lula, Retail Capital and Genfin: live status, every send from the Funding Desk, and settings that cannot be broken by a stray click.</p></div>' +
+    '<div class="hero-stats"><div class="hs g"><b>3/3</b><small>Live</small></div><div class="hs"><b>' + sent + '</b><small>Sent 7d</small></div><div class="hs' + (fails ? ' a' : '') + '"><b>' + fails + '</b><small>Failed 7d</small></div><div class="hs"><b>' + MC.icon('lock') + '</b><small>Locked</small></div></div></div></section>' +
+    MC.tabs('ws', tabs) + tabs.map(function (t) { return '<div class="panel" data-k="' + t.k + '"><div style="display:flex;justify-content:flex-end;margin:-6px 0 8px">' + MC.dev(t.dev) + '</div>' + t.html + '</div>'; }).join('');
+  MC.page({ active: 'tracking', crumbs: ['Workspaces', 'Solutions tracking', 'Lender APIs'], html: html, workspace: tabs });
+
+  // The live flows, clickable in the mockup
+  var byK = {}; L.forEach(function (l) { byK[l.k] = l; });
+  var flows = {
+    pause: function (l) { return MC.drawer('Pause sends to ' + l.n + '?', 'Pausing needs a reason', '<p style="margin:0 0 12px;line-height:1.6">"Send to ' + l.n + '" is hidden on the Funding Desk. Nothing is deleted, no settings change, and applications already sent are not affected. Resume puts the button back.</p><div class="typed"><input data-need placeholder="Reason (required, shown in Change history)"><button class="btn pri" disabled data-act="' + l.n + ' paused: &quot;Send to ' + l.n + '&quot; is hidden on the Funding Desk" data-ico="pause">' + MC.icon('pause') + 'Pause</button></div>'); },
+    log: function (l) { return MC.drawer(l.n + ': recent sends', 'Read-only', '<p style="margin:0">Opens the Send log filtered to ' + l.n + '.</p>'); },
+    unlock: function (l) {
+      return MC.drawer('Unlock the ' + l.n + ' connection', 'Owner only · every change is recorded',
+        '<p style="margin:0 0 12px;line-height:1.6">Type <b>' + l.n + '</b> to open ' + l.n + '\'s own settings page for 15 minutes. Every change lands in Change history; settings other than passwords and keys can be restored there. "Lock again" closes it early.</p>' +
+        '<div class="typed"><input data-name="' + l.n + '" autocomplete="off" placeholder="Type ' + l.n + '"><button class="btn pri" disabled data-act="' + l.n + ' settings unlocked for you for 15 minutes" data-ico="lock-open">' + MC.icon('lock-open') + 'Unlock for 15 minutes</button></div>' +
+        '<h4 style="margin:22px 0 8px;font:800 13px \'Plus Jakarta Sans\'">Next: after go-live</h4>' +
+        '<div class="steps"><div class="st"><div><b>Edit a draft</b><small>Not built yet. Changes would go into a draft while the live connection keeps working.</small></div></div><div class="st"><div><b>Test the draft</b><small>Not built yet. A login with the draft settings before Apply is allowed.</small></div></div><div class="st"><div><b>Type the name to apply</b><small>Not built yet. Today the unlock above opens the lender\'s own page instead.</small></div></div></div>');
+    }
+  };
+  document.addEventListener('click', function (e) {
+    var b = e.target.closest('[data-open]'); if (!b) { return; }
+    var p = b.getAttribute('data-open').split('-'); if (flows[p[0]] && byK[p[1]]) { flows[p[0]](byK[p[1]]); }
+  });
+  // Pause needs a reason; unlock needs the lender name typed exactly (case does not matter, as on the live page)
+  document.addEventListener('input', function (e) {
+    var i = e.target, btn = i.parentNode && i.parentNode.querySelector('button');
+    if (!btn) { return; }
+    if (i.hasAttribute('data-need')) { btn.disabled = i.value.trim() === ''; }
+    if (i.hasAttribute('data-name')) { btn.disabled = i.value.trim().toLowerCase() !== i.getAttribute('data-name').toLowerCase(); }
+  });
+})();
+</script>
+</body>
+</html>
