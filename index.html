@@ -392,9 +392,9 @@
   const DEV = window.MOCKUP_DEV || {};
   const GROUP_OVERRIDES = window.MOCKUP_GROUPS || {};
   // Modules Joel has already built herself: shown as "Built" so the developer does not pick them up.
-  // Built on Tshepho's Local (built-local.js): developer must not build or change these.
+  // Built in-house (built-local.js): live, not for the developer to build or change.
   const BUILT = window.MOCKUP_BUILT_LOCAL || [];
-  const DEVMETA = { 'pending-review':{label:'Pending review',c:'#FF9900'}, 'reviewed':{label:'Reviewed',c:'#3B82F6'}, 'approved':{label:'Approved',c:'#29A37A'}, 'live':{label:'Live (Nas)',c:'#29A37A'}, 'live-members':{label:'Live for members, visitors see legacy',c:'#3B82F6'}, 'to-confirm':{label:'Built by Nas, live state to confirm',c:'#FF9900'}, 'staging':{label:'Built by Nas on staging only',c:'#8A97A4'}, 'tshepho':{label:'Built by Tshepho (live)',c:'#8B5CF6'} };
+  const DEVMETA = { 'pending-review':{label:'Pending review',c:'#FF9900'}, 'reviewed':{label:'Reviewed',c:'#3B82F6'}, 'approved':{label:'Approved',c:'#29A37A'}, 'live':{label:'Live',c:'#29A37A'}, 'live-members':{label:'Live for members, visitors see legacy',c:'#3B82F6'}, 'to-confirm':{label:'Built, live state to confirm',c:'#FF9900'}, 'staging':{label:'Built on staging only',c:'#8A97A4'}, 'tshepho':{label:'Live',c:'#29A37A'} };
   const isLive = f => STATUS[f] === 'finalised';
   const DEFAULT_NAV = [
     { group:'Single Pages', tag:'Pages', accent:'#FF9900', icon:'file-text', items:[
@@ -647,7 +647,7 @@
       ? Feedback.readyForLiveFiles().filter(f => isLive(f))
       : [];
     const approvedDevFiles = devFiles.filter(f => (DEV[f]||{}).status === 'approved');
-    // Built by Tshepho counts as ready (Joel, 2026-10-02).
+    // Built in-house counts as ready (2026-10-02).
     const readyForLiveFiles = Array.from(new Set([...approvedDevFiles, ...notesReadyFiles, ...BUILT.filter(f => FILE_INDEX[f])]));
     const currentIsReadyForLive = currentFile && readyForLiveFiles.indexOf(currentFile) >= 0;
 
@@ -709,19 +709,19 @@
       });
     });
     const SM = {
-      live:     { c:'#29A37A', label:'Live (Nas)' },
+      live:     { c:'#29A37A', label:'Live' },
       livemem:  { c:'#3B82F6', label:'Live for members, visitors see legacy' },
-      confirm:  { c:'#FF9900', label:'Built by Nas, live state to confirm' },
-      staging:  { c:'#B0A4C8', label:'Built by Nas on staging only' },
+      confirm:  { c:'#FF9900', label:'Built, live state to confirm' },
+      staging:  { c:'#B0A4C8', label:'Built on staging only' },
       ready:    { c:'#29A37A', label:'Ready for live' },
       reviewed: { c:'#3B82F6', label:'Reviewed, dev build' },
       dev:      { c:'#FF9900', label:'Dev build pending review' },
       nodev:    { c:'#8A97A4', label:'Designed, not built yet' },
-      built:    { c:'#8B5CF6', label:'Built by Tshepho (live)' },
+      built:    { c:'#29A37A', label:'Live' },
       design:   { c:'#DC183C', label:'Not designed yet' }
     };
     function stateOf(file){
-      if(BUILT.indexOf(file) >= 0 || (DEV[file]||{}).status === 'tshepho') return 'built';  // Built by Tshepho wins over any dev-build state
+      if(BUILT.indexOf(file) >= 0 || (DEV[file]||{}).status === 'tshepho') return 'live';  // built in-house and live
       const ls = (DEV[file]||{}).status; // the live-era states (20 Nov 2026)
       if(ls === 'live') return 'live'; if(ls === 'live-members') return 'livemem'; if(ls === 'to-confirm') return 'confirm'; if(ls === 'staging') return 'staging';
       if(readyForLiveFiles.indexOf(file) >= 0) return 'ready';
@@ -733,9 +733,8 @@
     const FILTERS = [
       ['all','All', () => true],
       ['notes','Open notes', f => !!noteCounts[f]],
-      ['live','Live (Nas)', f => stateOf(f) === 'live' || stateOf(f) === 'ready'],
+      ['live','Live', f => stateOf(f) === 'live' || stateOf(f) === 'ready'],
       ['livemem','Live for members', f => stateOf(f) === 'livemem'],
-      ['built','Built by Tshepho', f => stateOf(f) === 'built'],
       ['confirm','To confirm', f => stateOf(f) === 'confirm' || stateOf(f) === 'reviewed' || stateOf(f) === 'dev'],
       ['staging','Staging only', f => stateOf(f) === 'staging'],
       ['nodev','Not built yet', f => stateOf(f) === 'nodev'],
@@ -858,7 +857,7 @@
           `<a href="compare.html?m=${encodeURIComponent(file)}" class="inline-flex items-center gap-1.5 px-3 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-[#121A21] text-xs font-bold transition" title="Compare dev build vs mockup"><i data-lucide="git-compare" class="w-4 h-4"></i><span class="hidden sm:inline">Compare</span></a>`+
           `<a href="${dev.url}" target="_blank" rel="noopener" class="inline-flex items-center gap-1.5 px-3 h-8 rounded-full bg-[#0C1F31] hover:bg-[#16314a] text-white text-xs font-bold transition" title="Open the developer build"><i data-lucide="external-link" class="w-4 h-4"></i><span class="hidden sm:inline">Dev build</span></a>`;
         db.classList.remove('hidden'); db.classList.add('flex'); lucide.createIcons();
-      } else if(BUILT.indexOf(file)>=0){ db.innerHTML = `<span class="inline-flex items-center gap-1.5 px-2.5 h-8 rounded-full text-[11px] font-bold" style="background:#8B5CF61f;color:#7C3AED" title="Built by Tshepho. Developer: do not build or change this page."><i data-lucide="badge-check" class="w-3.5 h-3.5"></i> Built by Tshepho</span>`; db.classList.remove('hidden'); db.classList.add('flex'); lucide.createIcons();
+      } else if(BUILT.indexOf(file)>=0){ db.innerHTML = `<span class="inline-flex items-center gap-1.5 px-2.5 h-8 rounded-full text-[11px] font-bold" style="background:#29A37A1f;color:#1F7A5C" title="Live on the site."><i data-lucide="badge-check" class="w-3.5 h-3.5"></i> Live</span>`; db.classList.remove('hidden'); db.classList.add('flex'); lucide.createIcons();
       } else { db.classList.add('hidden'); db.classList.remove('flex'); db.innerHTML=''; }
     }
     document.querySelectorAll('.nav-item').forEach(n=> n.classList.toggle('active', n.dataset.file===file || n.dataset.devfile===file));
