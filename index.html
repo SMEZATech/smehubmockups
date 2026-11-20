@@ -394,7 +394,7 @@
   // Modules Joel has already built herself: shown as "Built" so the developer does not pick them up.
   // Built on Tshepho's Local (built-local.js): developer must not build or change these.
   const BUILT = window.MOCKUP_BUILT_LOCAL || [];
-  const DEVMETA = { 'pending-review':{label:'Pending review',c:'#FF9900'}, 'reviewed':{label:'Reviewed',c:'#3B82F6'}, 'approved':{label:'Approved',c:'#29A37A'} };
+  const DEVMETA = { 'pending-review':{label:'Pending review',c:'#FF9900'}, 'reviewed':{label:'Reviewed',c:'#3B82F6'}, 'approved':{label:'Approved',c:'#29A37A'}, 'live':{label:'Live (Nas)',c:'#29A37A'}, 'live-members':{label:'Live for members, visitors see legacy',c:'#3B82F6'}, 'to-confirm':{label:'Built by Nas, live state to confirm',c:'#FF9900'}, 'staging':{label:'Built by Nas on staging only',c:'#8A97A4'}, 'tshepho':{label:'Built by Tshepho (live)',c:'#8B5CF6'} };
   const isLive = f => STATUS[f] === 'finalised';
   const DEFAULT_NAV = [
     { group:'Single Pages', tag:'Pages', accent:'#FF9900', icon:'file-text', items:[
@@ -709,15 +709,21 @@
       });
     });
     const SM = {
+      live:     { c:'#29A37A', label:'Live (Nas)' },
+      livemem:  { c:'#3B82F6', label:'Live for members, visitors see legacy' },
+      confirm:  { c:'#FF9900', label:'Built by Nas, live state to confirm' },
+      staging:  { c:'#B0A4C8', label:'Built by Nas on staging only' },
       ready:    { c:'#29A37A', label:'Ready for live' },
       reviewed: { c:'#3B82F6', label:'Reviewed, dev build' },
       dev:      { c:'#FF9900', label:'Dev build pending review' },
-      nodev:    { c:'#8A97A4', label:'Designed, no dev build yet' },
-      built:    { c:'#8B5CF6', label:'Built by Tshepho' },
+      nodev:    { c:'#8A97A4', label:'Designed, not built yet' },
+      built:    { c:'#8B5CF6', label:'Built by Tshepho (live)' },
       design:   { c:'#DC183C', label:'Not designed yet' }
     };
     function stateOf(file){
-      if(BUILT.indexOf(file) >= 0) return 'built';  // Built on Tshepho's Local wins over any dev-build state
+      if(BUILT.indexOf(file) >= 0 || (DEV[file]||{}).status === 'tshepho') return 'built';  // Built by Tshepho wins over any dev-build state
+      const ls = (DEV[file]||{}).status; // the live-era states (20 Nov 2026)
+      if(ls === 'live') return 'live'; if(ls === 'live-members') return 'livemem'; if(ls === 'to-confirm') return 'confirm'; if(ls === 'staging') return 'staging';
       if(readyForLiveFiles.indexOf(file) >= 0) return 'ready';
       if(signedOffFiles.indexOf(file) >= 0) return 'reviewed';
       if(pendingDevFiles.indexOf(file) >= 0) return 'dev';
@@ -727,11 +733,12 @@
     const FILTERS = [
       ['all','All', () => true],
       ['notes','Open notes', f => !!noteCounts[f]],
-      ['ready','Ready for live', f => stateOf(f) === 'ready'],
-      ['reviewed','Reviewed', f => stateOf(f) === 'reviewed'],
-      ['dev','Dev pending', f => stateOf(f) === 'dev'],
-      ['nodev','No dev yet', f => stateOf(f) === 'nodev'],
+      ['live','Live (Nas)', f => stateOf(f) === 'live' || stateOf(f) === 'ready'],
+      ['livemem','Live for members', f => stateOf(f) === 'livemem'],
       ['built','Built by Tshepho', f => stateOf(f) === 'built'],
+      ['confirm','To confirm', f => stateOf(f) === 'confirm' || stateOf(f) === 'reviewed' || stateOf(f) === 'dev'],
+      ['staging','Staging only', f => stateOf(f) === 'staging'],
+      ['nodev','Not built yet', f => stateOf(f) === 'nodev'],
       ['design','Not designed', f => stateOf(f) === 'design']
     ];
     const treeItems = [];
