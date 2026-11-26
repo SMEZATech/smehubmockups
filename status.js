@@ -50,7 +50,6 @@ window.MOCKUP_STATUS = {
   "member-hub.html": "finalised",
   "members.html": "finalised",
   "single-member.html": "finalised",
-  "member-hover-card.html": "finalised",
   "single-post.html": "finalised",
   "groups.html": "finalised",
   "single-group.html": "finalised",
@@ -88,8 +87,6 @@ window.MOCKUP_STATUS = {
   "public-search.html": "finalised",
   "public-404.html": "finalised",
   "public-unauthorized.html": "finalised",
-  "event-register.html": "finalised",
-  "event-confirmed.html": "finalised",
   "event-live.html": "finalised",
 };
 window.MOCKUP_STATUS_PUBLISHED = "2026-11-26T07:30:00.000Z";
@@ -106,6 +103,7 @@ window.MOCKUP_DEV = {
   "public-resource-category.html": {"url":"https://smesastg.wpengine.com/sme-resources/e-books/","status":"live-members"},
   "public-resource.html": {"url":"https://smesastg.wpengine.com/sme-resource/your-guide-to-ai-prompting/","status":"live-members"},
   "public-funding.html": {"url":"https://smesastg.wpengine.com/sme-funding/","status":"to-confirm"},
+  "public-funding-apply.html": {"url":"https://smesouthafrica.co.za/sme-funding/apply/","status":"live"},
   "public-funding-category.html": {"url":"https://smesastg.wpengine.com/funding-articles/","status":"live"},
   "public-loan-option.html": {"url":"https://smesastg.wpengine.com/sme-funding/inventory-finance/","status":"live-members"},
   "public-solutions.html": {"url":"https://smesastg.wpengine.com/reviews/","status":"live-members"},
