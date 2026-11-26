@@ -736,9 +736,7 @@
     const FILTERS = [
       ['all','All', () => true],
       ['live','Live', f => stateOf(f) === 'live' || stateOf(f) === 'ready' || stateOf(f) === 'livemem'],
-      ['confirm','To confirm', f => stateOf(f) === 'confirm' || stateOf(f) === 'reviewed' || stateOf(f) === 'dev'],
-      ['nodev','Not built yet', f => stateOf(f) === 'nodev'],
-      ['design','Not designed', f => stateOf(f) === 'design']
+      ['notlive','Not live', f => !(stateOf(f) === 'live' || stateOf(f) === 'ready' || stateOf(f) === 'livemem')]
     ];
     const treeItems = [];
     NAV.forEach(sec => { if(sec.group === 'Reference') return; sec.items.forEach(it => { if(it.file !== 'chrome-preview.html') treeItems.push(it.file); }); });
