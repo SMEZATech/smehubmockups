@@ -66,8 +66,8 @@ window.MOCKUP_STATUS = {
   "event-single-online.html": "finalised",
   "event-speaker.html": "finalised",
   "event-speakers.html": "finalised",
-  "event-speaker-talks.html": "under-review",
-  "event-single-online-v2.html": "under-review",
+  "event-speaker-talks.html": "finalised",
+  "event-single-online-v2.html": "finalised",
   "public-glossary.html": "finalised",
   "public-glossary-categories.html": "finalised",
   "public-glossary-category.html": "finalised",
@@ -89,7 +89,15 @@ window.MOCKUP_STATUS = {
   "public-support-detailed-ticket.html": "finalised",
   "public-search.html": "finalised",
   "public-404.html": "finalised",
-  "public-unauthorized.html": "finalised"
+  "public-unauthorized.html": "finalised",
+  "event-register.html": "finalised",
+  "event-confirmed.html": "finalised",
+  "event-live.html": "finalised",
+  "events-home-real.html": "finalised",
+  "event-signup-flow.html": "finalised",
+  "event-messages.html": "finalised",
+  "event-replay-summary.html": "finalised",
+  "feedback-email-real.html": "finalised"
 };
 window.MOCKUP_STATUS_PUBLISHED = "2026-10-23T05:10:07.000Z";
 /* Developer builds, { mockup file: { url, status } }; status now the site is live (20 Nov 2026): "live" | "live-members" | "to-confirm" | "staging" ("pending-review" | "reviewed" | "approved" are the older staging states) */

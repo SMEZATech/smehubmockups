@@ -463,7 +463,7 @@
       { label:'Messages',         file:'member-messages.html', icon:'inbox' },
       { label:'Notifications',    file:'member-notifications.html', icon:'bell' },
     ]},
-    { group:'App (phone)', tag:'PWA', accent:'#DC183C', icon:'smartphone', items:[
+    { group:'App (phone)', tag:'PWA', accent:'#DC183C', icon:'smartphone', localOnly:true, items:[
       { label:'Inbox (phone)',            file:'member-inbox.html',      icon:'mails' },
       { label:'Me',                       file:'member-me.html',         icon:'circle-user' },
       { label:'Saved',                    file:'saved.html',             icon:'bookmark' },
@@ -485,6 +485,12 @@
       { label:'Speakers Archive',    file:'event-speakers.html',            icon:'users' },
       { label:'Speaker Profile',     file:'event-speaker.html',             icon:'mic' },
       { label:'Speaker Talks',       file:'event-speaker-talks.html',       icon:'presentation' },
+      { label:'SME Live room',       file:'event-live.html',                icon:'radio' },
+      { label:'Events home',         file:'events-home-real.html',          icon:'calendar-range' },
+      { label:'Event sign-up flow',  file:'event-signup-flow.html',         icon:'user-plus' },
+      { label:'Event messages',      file:'event-messages.html',            icon:'messages-square' },
+      { label:'Replay summary page', file:'event-replay-summary.html',      icon:'file-video' },
+      { label:'Feedback email',      file:'feedback-email-real.html',       icon:'mail-check' },
     ]},
     { group:'Newsletter', tag:'Comms', accent:'#3B82F6', icon:'mail', items:[
       { label:'Newsletter',       file:'newsletter.html',       icon:'mail' },
@@ -518,6 +524,8 @@
   // Mission Control (the owner's back end) is listed only when the mockups are opened locally (Joel's :8891 set), never on the
   // published site (Joel, 2026-10-07).
   const SME_LOCAL_ADMIN = /^(127\.0\.0\.1|localhost)$/.test(location.hostname);
+  // App (phone) pages stay in Joel's local hub only; the published hub never lists them (Joel, 2026-11-26).
+  if (!SME_LOCAL_ADMIN) { for (let i = DEFAULT_NAV.length - 1; i >= 0; i--) { if (DEFAULT_NAV[i].localOnly) DEFAULT_NAV.splice(i, 1); } }
   if (SME_LOCAL_ADMIN) {
     DEFAULT_NAV.push({ group:'Mission Control', tag:'Admin, local only', accent:'#0C1F31', icon:'gauge', items:[
       { label:'Sign in',             file:'mission-control/mc-login.html',       icon:'log-in' },
