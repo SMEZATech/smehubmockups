@@ -479,18 +479,16 @@
       { label:'Events Archive',       file:'events.html',                    icon:'calendar' },
       { label:'Single (In-person)',   file:'event-single-in-person.html',    icon:'map-pin' },
       { label:'Single (Online)',      file:'event-single-online.html',       icon:'video' },
-      { label:'Single (Online) v2',   file:'event-single-online-v2.html',    icon:'video' },
       { label:'Registration',         file:'event-register.html',            icon:'clipboard-list' },
       { label:'Registration Confirmed', file:'event-confirmed.html',         icon:'calendar-check' },
       { label:'Speakers Archive',    file:'event-speakers.html',            icon:'users' },
       { label:'Speaker Profile',     file:'event-speaker.html',             icon:'mic' },
-      { label:'Speaker Talks',       file:'event-speaker-talks.html',       icon:'presentation' },
       { label:'SME Live room',       file:'event-live.html',                icon:'radio' },
-      { label:'Events home',         file:'events-home-real.html',          icon:'calendar-range' },
-      { label:'Event sign-up flow',  file:'event-signup-flow.html',         icon:'user-plus' },
-      { label:'Event messages',      file:'event-messages.html',            icon:'messages-square' },
-      { label:'Replay summary page', file:'event-replay-summary.html',      icon:'file-video' },
-      { label:'Feedback email',      file:'feedback-email-real.html',       icon:'mail-check' },
+      { label:'Events home',         file:'events-home-real.html',          icon:'calendar-range', localOnly:true },
+      { label:'Event sign-up flow',  file:'event-signup-flow.html',         icon:'user-plus', localOnly:true },
+      { label:'Event messages',      file:'event-messages.html',            icon:'messages-square', localOnly:true },
+      { label:'Replay summary page', file:'event-replay-summary.html',      icon:'file-video', localOnly:true },
+      { label:'Feedback email',      file:'feedback-email-real.html',       icon:'mail-check', localOnly:true },
     ]},
     { group:'Newsletter', tag:'Comms', accent:'#3B82F6', icon:'mail', items:[
       { label:'Newsletter',       file:'newsletter.html',       icon:'mail' },
@@ -524,8 +522,8 @@
   // Mission Control (the owner's back end) is listed only when the mockups are opened locally (Joel's :8891 set), never on the
   // published site (Joel, 2026-10-07).
   const SME_LOCAL_ADMIN = /^(127\.0\.0\.1|localhost)$/.test(location.hostname);
-  // App (phone) pages stay in Joel's local hub only; the published hub never lists them (Joel, 2026-11-26).
-  if (!SME_LOCAL_ADMIN) { for (let i = DEFAULT_NAV.length - 1; i >= 0; i--) { if (DEFAULT_NAV[i].localOnly) DEFAULT_NAV.splice(i, 1); } }
+  // App (phone) pages and the Events working pages (home, sign-up flow, messages, replay summary, feedback email) stay in Joel's local hub only; the published hub never lists them (Joel, 2026-11-26).
+  if (!SME_LOCAL_ADMIN) { for (let i = DEFAULT_NAV.length - 1; i >= 0; i--) { if (DEFAULT_NAV[i].localOnly) DEFAULT_NAV.splice(i, 1); else DEFAULT_NAV[i].items = DEFAULT_NAV[i].items.filter(it => !it.localOnly); } }
   if (SME_LOCAL_ADMIN) {
     DEFAULT_NAV.push({ group:'Mission Control', tag:'Admin, local only', accent:'#0C1F31', icon:'gauge', items:[
       { label:'Sign in',             file:'mission-control/mc-login.html',       icon:'log-in' },
