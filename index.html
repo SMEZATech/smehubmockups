@@ -738,11 +738,8 @@
     }
     const FILTERS = [
       ['all','All', () => true],
-      ['notes','Open notes', f => !!noteCounts[f]],
-      ['live','Live', f => stateOf(f) === 'live' || stateOf(f) === 'ready'],
-      ['livemem','Live for members', f => stateOf(f) === 'livemem'],
+      ['live','Live', f => stateOf(f) === 'live' || stateOf(f) === 'ready' || stateOf(f) === 'livemem'],
       ['confirm','To confirm', f => stateOf(f) === 'confirm' || stateOf(f) === 'reviewed' || stateOf(f) === 'dev'],
-      ['staging','Staging only', f => stateOf(f) === 'staging'],
       ['nodev','Not built yet', f => stateOf(f) === 'nodev'],
       ['design','Not designed', f => stateOf(f) === 'design']
     ];
