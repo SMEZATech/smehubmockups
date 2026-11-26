@@ -66,8 +66,6 @@ window.MOCKUP_STATUS = {
   "event-single-online.html": "finalised",
   "event-speaker.html": "finalised",
   "event-speakers.html": "finalised",
-  "event-speaker-talks.html": "finalised",
-  "event-single-online-v2.html": "finalised",
   "public-glossary.html": "finalised",
   "public-glossary-categories.html": "finalised",
   "public-glossary-category.html": "finalised",
@@ -93,13 +91,8 @@ window.MOCKUP_STATUS = {
   "event-register.html": "finalised",
   "event-confirmed.html": "finalised",
   "event-live.html": "finalised",
-  "events-home-real.html": "finalised",
-  "event-signup-flow.html": "finalised",
-  "event-messages.html": "finalised",
-  "event-replay-summary.html": "finalised",
-  "feedback-email-real.html": "finalised"
 };
-window.MOCKUP_STATUS_PUBLISHED = "2026-10-23T05:10:07.000Z";
+window.MOCKUP_STATUS_PUBLISHED = "2026-11-26T07:30:00.000Z";
 /* Developer builds, { mockup file: { url, status } }; status now the site is live (20 Nov 2026): "live" | "live-members" | "to-confirm" | "staging" ("pending-review" | "reviewed" | "approved" are the older staging states) */
 window.MOCKUP_DEV = {
   "public-home.html": {"url":"https://smesastg.wpengine.com/","status":"to-confirm"},
