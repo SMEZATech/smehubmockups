@@ -24,7 +24,7 @@
     events: [['overview', 'Overview'], ['events', 'Events'], ['create', 'Create event'], ['guests', 'Guests'], ['checkin', 'Check-in'], ['messages', 'Reminders & messages'], ['replays', 'Replays'], ['insights', 'Insights'], ['settings', 'Settings'], ['status', 'Build status']],
     solutions: [['health', 'Health'], ['brands', 'Brand catalogue'], ['roundups', 'Roundups'], ['earnings', 'Earnings'], ['deals', 'Tracked partners']],
     resources: [['library', 'Library'], ['leads', 'Leads'], ['revival', 'Revival engine']],
-    tracking: [['ads', 'Ad Manager'], ['money', 'Money Links'], ['conversion', 'Conversion Tracking'], ['capi', 'Meta CAPI'], ['lula', 'Lula API'], ['gotyme', 'GoTyme Web-to-Lead'], ['dripcel', 'Dripcel SMS']]
+    tracking: [['ads', 'Ad Manager'], ['money', 'Money Links'], ['conversion', 'Conversion Tracking'], ['capi', 'Meta CAPI'], ['lenders', 'Lender APIs'], ['dripcel', 'Dripcel SMS']]
   };
 
   /* ---------- tiny helpers ---------- */
